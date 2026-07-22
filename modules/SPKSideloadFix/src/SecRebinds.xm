@@ -39,8 +39,9 @@ static NSString *SPKAccessGroupFromEntitlements(void) {
 	return applicationIdentifier.length > 0 ? applicationIdentifier : nil;
 }
 
-static NSString *SPKAccessGroupFromSentinelKeychainItem(void) {
+static NSString *SPKAccessGroupFromSentinelKeychainItem(OSStatus *statusOut) {
 	if (!origSecItemCopyMatching || !origSecItemAdd) {
+		if (statusOut) *statusOut = errSecUnimplemented;
 		return nil;
 	}
 
@@ -58,13 +59,16 @@ static NSString *SPKAccessGroupFromSentinelKeychainItem(void) {
 	if (status == errSecItemNotFound) {
 		status = origSecItemAdd((__bridge CFDictionaryRef)attributes, &result);
 	}
+	if (statusOut) *statusOut = status;
 	if (status != errSecSuccess || !result) {
 		if (result) CFRelease(result);
-		SPKSideloadLog(@"Unable to resolve keychain access group from sentinel item; status=%d", (int)status);
 		return nil;
 	}
 
-	NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
+	id resultObject = (__bridge id)result;
+	NSString *accessGroup = [resultObject isKindOfClass:[NSDictionary class]]
+		? [resultObject objectForKey:(__bridge NSString *)kSecAttrAccessGroup]
+		: nil;
 	accessGroup = [accessGroup copy];
 	CFRelease(result);
 	return accessGroup.length > 0 ? accessGroup : nil;
@@ -72,50 +76,88 @@ static NSString *SPKAccessGroupFromSentinelKeychainItem(void) {
 
 static NSString *SPKSideloadAccessGroup(void) {
 	static NSString *accessGroup;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		NSString *entitlementGroup = SPKAccessGroupFromEntitlements();
-		BOOL resolvedFromEntitlements = entitlementGroup.length > 0;
-		accessGroup = [entitlementGroup copy];
-		if (accessGroup.length == 0) {
-			accessGroup = [SPKAccessGroupFromSentinelKeychainItem() copy];
+	static NSObject *resolutionLock;
+	static BOOL loggedResolutionFailure = NO;
+	static dispatch_once_t lockOnceToken;
+	dispatch_once(&lockOnceToken, ^{
+		resolutionLock = [NSObject new];
+	});
+
+	@synchronized (resolutionLock) {
+		if (accessGroup.length > 0) {
+			return accessGroup;
 		}
 
-		if (accessGroup.length > 0) {
-			SPKSideloadLog(@"Resolved keychain access group from %@", resolvedFromEntitlements ? @"entitlements" : @"sentinel item");
-		} else {
-			SPKSideloadLog(@"No keychain access group resolved; keychain calls will pass through unchanged");
+		OSStatus sentinelStatus = errSecSuccess;
+		NSString *sentinelGroup = SPKAccessGroupFromSentinelKeychainItem(&sentinelStatus);
+		NSString *entitlementGroup = sentinelGroup.length == 0 ? SPKAccessGroupFromEntitlements() : nil;
+		NSString *resolvedGroup = sentinelGroup.length > 0 ? sentinelGroup : entitlementGroup;
+		if (resolvedGroup.length > 0) {
+			accessGroup = [resolvedGroup copy];
+			SPKSideloadLog(@"Resolved usable keychain access group source=%@ sentinelStatus=%d",
+				sentinelGroup.length > 0 ? @"sentinel" : @"runtime-entitlements",
+				(int)sentinelStatus);
+			return accessGroup;
 		}
-	});
-	return accessGroup;
+
+		if (!loggedResolutionFailure) {
+			loggedResolutionFailure = YES;
+			SPKSideloadLog(@"No usable keychain access group resolved sentinelStatus=%d; operation will pass through unchanged",
+				(int)sentinelStatus);
+		}
+		return nil;
+	}
 }
 
-static CFDictionaryRef SPKCopyDictionaryByInjectingAccessGroup(CFDictionaryRef dictionary, NSString **mode) {
+typedef struct {
+	BOOL validDictionary;
+	BOOL originalGroupPresent;
+	BOOL patchApplied;
+	BOOL usableGroupDiscovered;
+} SPKAccessGroupPatchInfo;
+
+static CFDictionaryRef SPKCopyDictionaryByReplacingAccessGroup(CFDictionaryRef dictionary,
+	BOOL injectWhenMissing,
+	SPKAccessGroupPatchInfo *info) {
+	SPKAccessGroupPatchInfo patchInfo = {0};
 	NSDictionary *source = (__bridge NSDictionary *)dictionary;
 	if (![source isKindOfClass:[NSDictionary class]]) {
-		if (mode) *mode = @"pass-through";
+		if (info) *info = patchInfo;
 		return NULL;
 	}
+	patchInfo.validDictionary = YES;
 
 	id existingAccessGroup = source[(__bridge NSString *)kSecAttrAccessGroup];
-	if (existingAccessGroup) {
-		if (mode) *mode = @"preserved";
-		return NULL;
-	}
+	patchInfo.originalGroupPresent = existingAccessGroup != nil;
 
 	NSString *accessGroup = SPKSideloadAccessGroup();
-	if (accessGroup.length == 0) {
-		if (mode) *mode = @"pass-through";
+	patchInfo.usableGroupDiscovered = accessGroup.length > 0;
+	if (accessGroup.length == 0 || (!patchInfo.originalGroupPresent && !injectWhenMissing)) {
+		if (info) *info = patchInfo;
 		return NULL;
 	}
 
 	NSMutableDictionary *mutableDictionary = [source mutableCopy];
+	if (!mutableDictionary) {
+		if (info) *info = patchInfo;
+		return NULL;
+	}
+
 	mutableDictionary[(__bridge NSString *)kSecAttrAccessGroup] = accessGroup;
-	if (mode) *mode = @"injected";
+	patchInfo.patchApplied = YES;
+	if (info) *info = patchInfo;
 	return (CFDictionaryRef)CFBridgingRetain(mutableDictionary);
 }
 
-static void SPKLogSecOperation(NSString *operation, OSStatus status, CFAbsoluteTime startedAt, NSString *mode) {
+static NSString *SPKBooleanLogValue(BOOL value) {
+	return value ? @"yes" : @"no";
+}
+
+static void SPKLogSecOperation(NSString *operation,
+	OSStatus status,
+	CFAbsoluteTime startedAt,
+	SPKAccessGroupPatchInfo queryInfo,
+	const SPKAccessGroupPatchInfo *updateInfo) {
 	static NSMutableDictionary<NSString *, NSNumber *> *lastLogTimes;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -123,7 +165,15 @@ static void SPKLogSecOperation(NSString *operation, OSStatus status, CFAbsoluteT
 	});
 
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
-	NSString *key = [NSString stringWithFormat:@"%@:%@:%d", operation, mode ?: @"unknown", (int)status];
+	NSString *key = [NSString stringWithFormat:@"%@:%d:%d:%d:%d:%d:%d:%d",
+		operation,
+		(int)status,
+		queryInfo.originalGroupPresent,
+		queryInfo.patchApplied,
+		queryInfo.usableGroupDiscovered,
+		updateInfo ? updateInfo->originalGroupPresent : NO,
+		updateInfo ? updateInfo->patchApplied : NO,
+		updateInfo ? updateInfo->usableGroupDiscovered : NO];
 	@synchronized (lastLogTimes) {
 		NSNumber *last = lastLogTimes[key];
 		if (last && now - last.doubleValue < 2.0 && status == errSecSuccess) {
@@ -132,51 +182,72 @@ static void SPKLogSecOperation(NSString *operation, OSStatus status, CFAbsoluteT
 		lastLogTimes[key] = @(now);
 	}
 
-	SPKSideloadLog(@"Keychain %@ status=%d duration=%.2fms mainThread=%@ accessGroup=%@",
+	if (updateInfo) {
+		SPKSideloadLog(@"Keychain %@ status=%d duration=%.2fms mainThread=%@ usableSignedGroup=%@ queryOriginalGroup=%@ queryGroupReplaced=%@ queryGroupInjected=%@ updateOriginalGroup=%@ updateGroupReplaced=%@",
+			operation,
+			(int)status,
+			(now - startedAt) * 1000.0,
+			[NSThread isMainThread] ? @"yes" : @"no",
+			SPKBooleanLogValue(queryInfo.usableGroupDiscovered || updateInfo->usableGroupDiscovered),
+			SPKBooleanLogValue(queryInfo.originalGroupPresent),
+			SPKBooleanLogValue(queryInfo.originalGroupPresent && queryInfo.patchApplied),
+			SPKBooleanLogValue(!queryInfo.originalGroupPresent && queryInfo.patchApplied),
+			SPKBooleanLogValue(updateInfo->originalGroupPresent),
+			SPKBooleanLogValue(updateInfo->originalGroupPresent && updateInfo->patchApplied));
+		return;
+	}
+
+	SPKSideloadLog(@"Keychain %@ status=%d duration=%.2fms mainThread=%@ usableSignedGroup=%@ originalGroup=%@ groupReplaced=%@ groupInjected=%@",
 		operation,
 		(int)status,
 		(now - startedAt) * 1000.0,
 		[NSThread isMainThread] ? @"yes" : @"no",
-		mode ?: @"unknown");
+		SPKBooleanLogValue(queryInfo.usableGroupDiscovered),
+		SPKBooleanLogValue(queryInfo.originalGroupPresent),
+		SPKBooleanLogValue(queryInfo.originalGroupPresent && queryInfo.patchApplied),
+		SPKBooleanLogValue(!queryInfo.originalGroupPresent && queryInfo.patchApplied));
 }
 
 static OSStatus zxSecItemAdd(CFDictionaryRef attributes, CFTypeRef *result) {
 	CFAbsoluteTime startedAt = CFAbsoluteTimeGetCurrent();
-	NSString *mode = nil;
-	CFDictionaryRef patchedAttributes = SPKCopyDictionaryByInjectingAccessGroup(attributes, &mode);
+	SPKAccessGroupPatchInfo patchInfo = {0};
+	CFDictionaryRef patchedAttributes = SPKCopyDictionaryByReplacingAccessGroup(attributes, YES, &patchInfo);
 	OSStatus status = origSecItemAdd(patchedAttributes ?: attributes, result);
 	if (patchedAttributes) CFRelease(patchedAttributes);
-	SPKLogSecOperation(@"SecItemAdd", status, startedAt, mode);
+	SPKLogSecOperation(@"SecItemAdd", status, startedAt, patchInfo, NULL);
 	return status;
 }
 
 static OSStatus zxSecItemCopyMatching(CFDictionaryRef query, CFTypeRef *result) {
 	CFAbsoluteTime startedAt = CFAbsoluteTimeGetCurrent();
-	NSString *mode = nil;
-	CFDictionaryRef patchedQuery = SPKCopyDictionaryByInjectingAccessGroup(query, &mode);
+	SPKAccessGroupPatchInfo patchInfo = {0};
+	CFDictionaryRef patchedQuery = SPKCopyDictionaryByReplacingAccessGroup(query, YES, &patchInfo);
 	OSStatus status = origSecItemCopyMatching(patchedQuery ?: query, result);
 	if (patchedQuery) CFRelease(patchedQuery);
-	SPKLogSecOperation(@"SecItemCopyMatching", status, startedAt, mode);
+	SPKLogSecOperation(@"SecItemCopyMatching", status, startedAt, patchInfo, NULL);
 	return status;
 }
 
 static OSStatus zxSecItemUpdate(CFDictionaryRef query, CFDictionaryRef attributesToUpdate) {
 	CFAbsoluteTime startedAt = CFAbsoluteTimeGetCurrent();
-	NSString *mode = nil;
-	CFDictionaryRef patchedQuery = SPKCopyDictionaryByInjectingAccessGroup(query, &mode);
-	OSStatus status = origSecItemUpdate(patchedQuery ?: query, attributesToUpdate);
+	SPKAccessGroupPatchInfo queryInfo = {0};
+	SPKAccessGroupPatchInfo updateInfo = {0};
+	CFDictionaryRef patchedQuery = SPKCopyDictionaryByReplacingAccessGroup(query, YES, &queryInfo);
+	CFDictionaryRef patchedAttributes = SPKCopyDictionaryByReplacingAccessGroup(attributesToUpdate, NO, &updateInfo);
+	OSStatus status = origSecItemUpdate(patchedQuery ?: query, patchedAttributes ?: attributesToUpdate);
 	if (patchedQuery) CFRelease(patchedQuery);
-	SPKLogSecOperation(@"SecItemUpdate", status, startedAt, mode);
+	if (patchedAttributes) CFRelease(patchedAttributes);
+	SPKLogSecOperation(@"SecItemUpdate", status, startedAt, queryInfo, &updateInfo);
 	return status;
 }
 
 static OSStatus zxSecItemDelete(CFDictionaryRef query) {
 	CFAbsoluteTime startedAt = CFAbsoluteTimeGetCurrent();
-	NSString *mode = nil;
-	CFDictionaryRef patchedQuery = SPKCopyDictionaryByInjectingAccessGroup(query, &mode);
+	SPKAccessGroupPatchInfo patchInfo = {0};
+	CFDictionaryRef patchedQuery = SPKCopyDictionaryByReplacingAccessGroup(query, YES, &patchInfo);
 	OSStatus status = origSecItemDelete(patchedQuery ?: query);
 	if (patchedQuery) CFRelease(patchedQuery);
-	SPKLogSecOperation(@"SecItemDelete", status, startedAt, mode);
+	SPKLogSecOperation(@"SecItemDelete", status, startedAt, patchInfo, NULL);
 	return status;
 }
 
