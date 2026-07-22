@@ -28,6 +28,13 @@ Keychain diagnostics report only the operation, result status, timing, and
 whether a group was found/replaced/injected. Access-group strings, Keychain
 values, cookies, and credentials are never logged.
 
+For duplicate-app sideloads, main-bundle runtime queries are normalized to
+Instagram's original `com.burbn.instagram` identifier through both
+`bundleIdentifier` and `objectForInfoDictionaryKey:`. The packaged identifier
+is not changed, and non-main bundles keep their actual identities. This matches
+Instagram's original runtime namespace for code that derives persisted-state
+identifiers while still allowing a distinct identifier at install time.
+
 Build with:
 
 ```sh

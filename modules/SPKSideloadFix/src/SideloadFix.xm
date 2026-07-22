@@ -1,5 +1,20 @@
 #import "Header.h"
 
+static NSString * const SPKOriginalInstagramBundleIdentifier = @"com.burbn.instagram";
+
+static BOOL SPKIsMainBundle(NSBundle *bundle) {
+	return bundle != nil && bundle == [NSBundle mainBundle];
+}
+
+static void SPKLogBundleIdentitySpoofOnce(NSString *runtimeIdentifier) {
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		SPKSideloadLog(@"Normalizing duplicate-app runtime bundle identity original=%@ runtime=%@",
+			SPKOriginalInstagramBundleIdentifier,
+			runtimeIdentifier.length > 0 ? runtimeIdentifier : @"unavailable");
+	});
+}
+
 static NSURL *redirectedAppGroupURL(NSString *groupIdentifier) {
 	if (![groupIdentifier hasPrefix:@"group"]) return nil;
 
@@ -67,5 +82,31 @@ static BOOL isAppExtensionProcess(void) {
 
 	SPKSideloadLog(@"Unable to construct app group container for suite=%@; using original container", suiteName);
 	return %orig(suiteName, container);
+}
+%end
+
+// Keep the install-time identifier on disk, but present Instagram's original
+// identifier to code querying the main bundle. Restrict this to the main bundle
+// so embedded frameworks and resources retain their real identities.
+%hook NSBundle
+- (NSString *)bundleIdentifier {
+	NSString *runtimeIdentifier = %orig;
+	if (SPKIsMainBundle(self) &&
+		![runtimeIdentifier isEqualToString:SPKOriginalInstagramBundleIdentifier]) {
+		SPKLogBundleIdentitySpoofOnce(runtimeIdentifier);
+		return SPKOriginalInstagramBundleIdentifier;
+	}
+	return runtimeIdentifier;
+}
+
+- (id)objectForInfoDictionaryKey:(NSString *)key {
+	id value = %orig(key);
+	if (SPKIsMainBundle(self) &&
+		[key isEqualToString:@"CFBundleIdentifier"] &&
+		![value isEqual:SPKOriginalInstagramBundleIdentifier]) {
+		SPKLogBundleIdentitySpoofOnce([value isKindOfClass:[NSString class]] ? value : nil);
+		return SPKOriginalInstagramBundleIdentifier;
+	}
+	return value;
 }
 %end
