@@ -31,11 +31,23 @@
         },
         {
           "class": "DepictionTableTextView",
-          "title": "Updated",
-          "text": "2026-08-09"
+          "title": "Released",
+          "text": "2026-08-08"
         },
         {
           "class": "DepictionSeparatorView"
+        },
+        {
+          "class": "DepictionTableButtonView",
+          "title": "Telegram channel",
+          "action": "https://t.me/sparkle_ig",
+          "openExternal": true
+        },
+        {
+          "class": "DepictionTableButtonView",
+          "title": "Chat and support",
+          "action": "https://t.me/+f-Xo21HnfCY3NmE0",
+          "openExternal": true
         },
         {
           "class": "DepictionTableButtonView",
