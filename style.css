@@ -1,6 +1,6 @@
 :root {
   color-scheme: light dark;
-  --tint: #8A5CF6;
+  --tint: #ED1E9C;
   --bg: #f6f7f9; --fg: #14161a; --muted: rgba(20,22,26,.62);
   --card: #ffffff; --line: rgba(20,22,26,.12);
   --code: rgba(20,22,26,.06);
@@ -36,6 +36,30 @@ h1 { font-size: 1.6rem; margin: 0; letter-spacing: -.02em; }
        transition: opacity .15s ease; }
 .btn:hover { opacity: .85; }
 .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--fg); }
+
+/* --- add-to-manager buttons -------------------------------------------
+   Each carries its own app's icon and brand colour, sampled from the icons
+   themselves: Sileo's teal gradient, Zebra's monochrome. Zebra is inverted to
+   dark rather than matching its light grey icon, which would vanish against
+   the card in light mode. */
+.stores { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 4px; }
+@media (max-width: 460px) { .stores { grid-template-columns: 1fr; } }
+
+.store { display: flex; align-items: center; gap: 12px; text-decoration: none;
+         padding: 11px 14px; border-radius: 14px; color: #fff;
+         transition: transform .15s ease, filter .15s ease; }
+.store:hover { transform: translateY(-1px); filter: brightness(1.06); }
+.store:active { transform: translateY(0); filter: brightness(.96); }
+.store img { width: 44px; height: 44px; border-radius: 11px; flex: none;
+             box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.store span { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.store small { font-size: .7rem; opacity: .8; letter-spacing: .01em; }
+.store strong { font-size: 1.08rem; font-weight: 650; letter-spacing: -.01em; }
+
+.store-sileo { background: linear-gradient(160deg, #36E1CF, #04A5AB); }
+.store-zebra { background: linear-gradient(160deg, #3A3A3C, #1C1C1E); }
+
+.hint { font-size: .82rem; color: var(--muted); margin: 16px 0 8px; }
 
 .url { display: flex; align-items: center; gap: 10px; margin: 0 0 16px;
        background: var(--code); border-radius: 10px; padding: 11px 13px; }

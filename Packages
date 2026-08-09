@@ -1,7 +1,7 @@
 Package: com.sparkle.sparkle
 SileoDepiction: https://efibalogh.github.io/sparkle-ig/depiction.json
 Depiction: https://efibalogh.github.io/sparkle-ig/changelog.html
-Icon: https://efibalogh.github.io/sparkle-ig/CydiaIcon.png
+Icon: https://efibalogh.github.io/sparkle-ig/icon.png
 Version: 1.2.0
 Architecture: iphoneos-arm64
 Maintainer: efibalogh
@@ -21,7 +21,7 @@ Name: Sparkle for Instagram
 Package: com.sparkle.sparkle
 SileoDepiction: https://efibalogh.github.io/sparkle-ig/depiction.json
 Depiction: https://efibalogh.github.io/sparkle-ig/changelog.html
-Icon: https://efibalogh.github.io/sparkle-ig/CydiaIcon.png
+Icon: https://efibalogh.github.io/sparkle-ig/icon.png
 Version: 1.2.0
 Architecture: iphoneos-arm
 Maintainer: efibalogh

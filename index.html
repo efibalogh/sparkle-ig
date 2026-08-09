@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sparkle for Instagram</title>
 <meta name="description" content="Bring the spark back to Instagram.">
-<link rel="icon" href="CydiaIcon.png">
+<link rel="icon" href="CydiaIcon@3x.png">
+<meta property="og:title" content="Sparkle for Instagram">
+<meta property="og:description" content="Bring the spark back to Instagram.">
+<meta property="og:image" content="https://efibalogh.github.io/sparkle-ig/banner.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <img src="CydiaIcon.png" alt="">
+    <img src="icon.png" alt="">
     <div>
       <h1>Sparkle for Instagram</h1>
       <p class="tagline">Bring the spark back to Instagram.</p>
@@ -21,14 +24,25 @@
 
   <div class="card">
     <h2>Add this repo</h2>
-    <p>Works in Sileo and Zebra.</p>
+    <p>Open on your device and tap one.</p>
+    <!-- Sileo strips the literal prefix "sileo://source/" and prefills the rest
+         (AppDelegate -> presentAddSourceEntryField). Zebra takes the URL from
+         the *path* after "/add/" (ZBSourceListTableViewController handleURL:);
+         the ?url= form some sites use opens Zebra's prompt empty. -->
+    <div class="stores">
+      <a class="store store-sileo" href="sileo://source/https://efibalogh.github.io/sparkle-ig/">
+        <img src="client-sileo.png" alt="" width="44" height="44">
+        <span><small>Add to</small><strong>Sileo</strong></span>
+      </a>
+      <a class="store store-zebra" href="zbra://sources/add/https://efibalogh.github.io/sparkle-ig/">
+        <img src="client-zebra.png" alt="" width="44" height="44">
+        <span><small>Add to</small><strong>Zebra</strong></span>
+      </a>
+    </div>
+    <p class="hint">Any other package manager: add the URL by hand.</p>
     <div class="url">
       <code id="repo-url">https://efibalogh.github.io/sparkle-ig/</code>
       <button type="button" onclick="copyURL(this)">Copy</button>
-    </div>
-    <div class="row">
-      <a class="btn" href="sileo://source/https://efibalogh.github.io/sparkle-ig/">Sileo</a>
-      <a class="btn ghost" href="zbra://sources/add?url=https://efibalogh.github.io/sparkle-ig/">Zebra</a>
     </div>
   </div>
 
@@ -37,8 +51,7 @@
     <table>
       <tr><td>Version</td><td>1.2.0</td></tr>
       <tr><td>Identifier</td><td>com.sparkle.sparkle</td></tr>
-      <tr><td>Flavour</td><td>rootful, rootless</td></tr>
-      <tr><td>Updated</td><td>2026-08-08</td></tr>
+      <tr><td>Updated</td><td>2026-08-09</td></tr>
     </table>
     <div class="row" style="margin-top:16px">
       <a class="btn ghost" href="changelog.html">Changelog</a>

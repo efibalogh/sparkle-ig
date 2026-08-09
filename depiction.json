@@ -1,7 +1,7 @@
 {
   "minVersion": "0.1",
   "class": "DepictionTabView",
-  "tintColor": "#8A5CF6",
+  "tintColor": "#ED1E9C",
   "tabs": [
     {
       "class": "DepictionStackView",
@@ -26,18 +26,13 @@
         },
         {
           "class": "DepictionTableTextView",
-          "title": "Flavour",
-          "text": "rootful, rootless"
-        },
-        {
-          "class": "DepictionTableTextView",
           "title": "Size",
-          "text": "8,5 MB"
+          "text": "8.5 MB"
         },
         {
           "class": "DepictionTableTextView",
           "title": "Updated",
-          "text": "2026-08-08"
+          "text": "2026-08-09"
         },
         {
           "class": "DepictionSeparatorView"
