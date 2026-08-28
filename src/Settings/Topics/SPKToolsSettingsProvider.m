@@ -4,6 +4,7 @@
 #import "../../App/SPKFlexLoader.h"
 #import "../../App/SPKStabilityGuard.h"
 #import "../../AssetUtils.h"
+#import "../../Features/Tools/SPKSideloadDiagnostics.h"
 #import "../../Shared/Gallery/SPKGalleryLockViewController.h"
 #import "../../Shared/Settings/SPKSettingsLockManager.h"
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
@@ -189,6 +190,19 @@ static NSDictionary *SPKSettingsLockSection(void) {
 #endif
     [instagramCells addObject:[SPKSetting switchCellWithTitle:@"Fix Duplicate Notifications"
                                                   defaultsKey:@"tools_fix_duplicate_notifications"]];
+    SPKSetting *notificationDiagnostics = [SPKSetting switchCellWithTitle:@"Log Notification Diagnostics"
+                                                               defaultsKey:@""];
+    notificationDiagnostics.switchValueProvider = ^BOOL {
+        return SPKSideloadDiagnosticsEnabled();
+    };
+    notificationDiagnostics.switchChangeHandler = ^(BOOL enabled) {
+        SPKSetSideloadDiagnosticsEnabled(enabled);
+    };
+    [instagramCells addObject:notificationDiagnostics];
+    [instagramCells addObject:[SPKSetting navigationCellWithTitle:@"View Notification Diagnostics"
+                                                          subtitle:@""
+                                                              icon:SPKSettingsIcon(@"logs")
+                                                    viewController:[SPKSideloadDiagnosticsViewController new]]];
     [instagramCells addObject:[SPKSetting switchCellWithTitle:@"Disable Safe Mode"
                                                   defaultsKey:@"tools_disable_safe_mode"]];
 
@@ -196,11 +210,15 @@ static NSDictionary *SPKSettingsLockSection(void) {
     NSString *instagramFooter =
         @"1. Suppresses the Instagram Beta update popup.\n"
         @"2. Drops the duplicate in-app banner sideloaded Instagram posts while the notification extension is already delivering the same push. Only acts while the app is foregrounded.\n"
-        @"3. Makes Instagram not reset settings after subsequent crashes. Use at your own risk.";
+        @"3. Records privacy-safe app and notification-extension routing events after you reproduce a sideload notification issue. Notification text, stored values, and credentials are never recorded.\n"
+        @"4. Review, copy, share, or clear the collected diagnostics.\n"
+        @"5. Makes Instagram not reset settings after subsequent crashes. Use at your own risk.";
 #else
     NSString *instagramFooter =
         @"1. Drops the duplicate in-app banner sideloaded Instagram posts while the notification extension is already delivering the same push. Only acts while the app is foregrounded.\n"
-        @"2. Makes Instagram not reset settings after subsequent crashes. Use at your own risk.";
+        @"2. Records privacy-safe app and notification-extension routing events after you reproduce a sideload notification issue. Notification text, stored values, and credentials are never recorded.\n"
+        @"3. Review, copy, share, or clear the collected diagnostics.\n"
+        @"4. Makes Instagram not reset settings after subsequent crashes. Use at your own risk.";
 #endif
 
     [sections addObject:SPKTopicSection(@"Instagram", instagramCells, instagramFooter)];

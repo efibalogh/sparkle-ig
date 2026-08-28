@@ -381,6 +381,7 @@ Every surface has the same **Filter Mode**: `All` saves everything except what y
 - **Default Video Quality**: Save/share quality. `High` merges DASH video + audio; `Default` uses ready-to-play files; `Always Ask` prompts each time. **Requires FFmpegKit** for the merge/quality options.
 - **Encoding Settings**: Advanced codec / preset / bitrate / CRF / resolution / audio overrides for the merge step (requires FFmpegKit). A **Reset Encoding Settings** button restores every advanced encoding option to its default (the toggle stays on).
 - **View Encoding Logs**: Inspect and share the FFmpeg loader/merge logs.
+- **Notification Diagnostics**: Opt in to privacy-safe sideload notification routing logs shared by Instagram and its notification extension, then copy, share, or clear them from Tools.
 
 ### Audio
 - **Audio Downloads**: Adds audio actions (save/share/copy download URL) to supported media.

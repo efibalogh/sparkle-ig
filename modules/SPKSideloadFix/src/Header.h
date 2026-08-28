@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <os/log.h>
 
+extern void SPKSideloadWriteLogLine(NSString *line);
+
 static inline void SPKSideloadLog(NSString *format, ...) NS_FORMAT_FUNCTION(1, 2);
 static inline void SPKSideloadLog(NSString *format, ...) {
 	NSString *body = @"";
@@ -13,6 +15,7 @@ static inline void SPKSideloadLog(NSString *format, ...) {
 
 	NSString *line = [NSString stringWithFormat:@"[Sparkle SideloadFix]: %@", body ?: @""];
 	os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEFAULT, "%{public}s", line.UTF8String);
+	SPKSideloadWriteLogLine(line);
 }
 
 extern void rebindSecFuncs();
