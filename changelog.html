@@ -20,9 +20,87 @@
 
   <section class="rel">
     <div class="rel-head">
+      <h2>v1.3.0</h2>
+      <span class="date">2026-09-01</span>
+      <span class="pill">Current</span>
+    </div>
+    <div class="notes">
+<h2>✨ What's new?</h2>
+<ul>
+<li>Support for Instagram version 444.0.0</li>
+</ul>
+<p><strong>Languages</strong></p>
+<ul>
+<li>Sparkle is now translated into 16 more languages, downloaded from the release page and imported in Settings as language packs</li>
+<li>Import several packs at once from the Files picker, see each one's coverage in the list, and remove one with a swipe</li>
+<li>A pack overrides a shipped catalog of the same language, so a translator can preview their corrections on device</li>
+<li>New <strong>Help Translate</strong> entry and a contributor guide for anyone who wants to improve a language</li>
+</ul>
+<p><strong>Interface</strong></p>
+<ul>
+<li><strong>Tab Editor</strong>: the launch tab, icon order, swipe behavior, per-tab hiding and messages-only mode collapse into one screen that stages the whole bar with a live preview and applies it in a single action</li>
+<li><strong>Saved</strong> is its own tab entry now rather than a Reels replacement, borrowing a hidden tab's slot in the custom layout</li>
+<li>Hiding the tab bar generalizes from messages-only to any single-tab configuration, and is refused where it would leave no way into Sparkle settings</li>
+<li><strong>App Font</strong>: import an <code>.otf</code>, <code>.ttf</code> or <code>.ttc</code> and set both Instagram and Sparkle in it, previewed face by face with alphabet and figure lines before you pick</li>
+</ul>
+<p><strong>Stories</strong></p>
+<ul>
+<li><strong>Hide Recent Highlights</strong>: resurfaced highlights are dropped from the tray, from tapping forward, and from swiping sideways, since all three read a different list</li>
+<li>Filter your viewer list (Don't Follow You / You Follow / You Don't Follow / Starred) and star the people you look for</li>
+<li><strong>Mention Count Badge</strong>: how many unique accounts a story mentions, redacted along with the glyph by Hide UI on Capture</li>
+<li><strong>Story Audio Button</strong>: mute or unmute a story from the viewer, restoring the previous audio state on close so Feed and Reels stay isolated</li>
+</ul>
+<p><strong>Messages</strong></p>
+<ul>
+<li><strong>Activity notifications</strong>: online, offline, typing and read events from tracked users, with per-account lists, group-aware context and their own settings page</li>
+<li>Audio and upload rows expand as native submenus instead of opening an action sheet over the thread</li>
+<li>Look up a GIF's real name and channel from the comment and Direct menus (off by default, since each uncached lookup tells giphy.com which GIF is on screen)</li>
+</ul>
+<p><strong>Instants</strong></p>
+<ul>
+<li>Confirm a recorded video before Instagram sends it, with the camera feed preserved if you cancel. Photo instants remain unsupported</li>
+<li>Toggle instant auto-save for an account straight from the action menu, which also saves the instant already on screen</li>
+</ul>
+<p><strong>Media</strong></p>
+<ul>
+<li><strong>Select Text in Photos</strong>: Sparkle's own select-text button and Copy All capsule replace VisionKit's, with real Liquid Glass on iOS 26 and the info overlay stepping aside while text is highlighted</li>
+</ul>
+<p><strong>Reels</strong></p>
+<ul>
+<li><strong>Hide Viewer Comment Bar</strong>: removes the bottom comment field from the reels viewer</li>
+</ul>
+<p><strong>Settings</strong></p>
+<ul>
+<li>Contextual information sheets opened from section headers, in place of long footers, and included in settings search</li>
+<li>Sparkle's own lists use Instagram's follow control, gaining the Requested and Follow back states the previous two-state button could not express</li>
+</ul>
+<h2>🛠 Fixes &amp; Improvements</h2>
+<ul>
+<li><strong>Rootful packages install to <code>/Library</code> again.</strong> A makefile variable overrode the build environment, so both build paths produced rootless packages and the "rootful" debs in v1.1.0 and v1.2.0 unpacked to <code>/var/jb</code></li>
+<li>Inbox seen menu and message preview unlock work again on Instagram 442, which ships a second inbox controller behind a server experiment</li>
+<li>The reels header hides again on the navigation bar the viewer actually uses, and comes back when the preference is turned off instead of staying gone until relaunch</li>
+<li>Explore and recent-search hiding repaired</li>
+<li>Reels opened from a profile scroll freely instead of hitting the doom-scroll cap, which now applies only to the Reels home and tab feeds</li>
+<li>Stories get marked as seen again</li>
+<li>A story no longer lists the same account several times over on a reshare, and follow state is no longer read off a localized button title</li>
+<li>Fixed a crash around message reactions</li>
+<li>Gallery backups that need a schema migration import again, including pre-rename stores. The backup file itself is never modified</li>
+<li>Gallery import rows update when a thumbnail finishes off screen, and retry after a render that came back empty</li>
+<li>Clearing finished download history is scoped to the current account</li>
+<li>Unfollowing asks for confirmation again now that the follow controller moved to Swift, and every prompt is worded from the account's actual state instead of announcing an unfollow as a follow</li>
+<li>Instants act on the media actually on screen, and keep their expanded order across sessions</li>
+<li>Notifications reach the right account on sideloaded multi-account installs instead of arriving generic or claiming the account is logged out</li>
+<li>Uploaded audio shows its real waveform instead of a static pattern</li>
+<li>Copied links no longer carry the <code>igsi</code> tracking parameter</li>
+<li>FFmpeg frameworks are signed correctly for each output path, and bundle resources resolve per file so encoding still works on development installs</li>
+<li>Bundled resources stay readable when the package is installed as root</li>
+</ul>
+    </div>
+  </section>
+  <section class="rel">
+    <div class="rel-head">
       <h2>v1.2.0</h2>
       <span class="date">2026-08-08</span>
-      <span class="pill">Current</span>
     </div>
     <div class="notes">
 <h2>✨ What's new?</h2>

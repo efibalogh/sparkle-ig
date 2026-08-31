@@ -17,7 +17,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Version",
-          "text": "1.2.0"
+          "text": "1.3.0"
         },
         {
           "class": "DepictionTableTextView",
@@ -27,12 +27,12 @@
         {
           "class": "DepictionTableTextView",
           "title": "Size",
-          "text": "8.5 MB"
+          "text": "8.3 MB"
         },
         {
           "class": "DepictionTableTextView",
           "title": "Released",
-          "text": "2026-08-08"
+          "text": "2026-09-01"
         },
         {
           "class": "DepictionSeparatorView"
@@ -67,6 +67,24 @@
       "class": "DepictionStackView",
       "tabname": "Changelog",
       "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "v1.3.0",
+          "useBoldText": true
+        },
+        {
+          "class": "DepictionLabelView",
+          "text": "2026-09-01",
+          "textColor": "#8E8E93",
+          "fontSize": 12
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "## ✨ What's new?\n\n- Support for Instagram version 444.0.0\n\n**Languages**\n- Sparkle is now translated into 16 more languages, downloaded from the release page and imported in Settings as language packs\n- Import several packs at once from the Files picker, see each one's coverage in the list, and remove one with a swipe\n- A pack overrides a shipped catalog of the same language, so a translator can preview their corrections on device\n- New **Help Translate** entry and a contributor guide for anyone who wants to improve a language\n\n**Interface**\n- **Tab Editor**: the launch tab, icon order, swipe behavior, per-tab hiding and messages-only mode collapse into one screen that stages the whole bar with a live preview and applies it in a single action\n- **Saved** is its own tab entry now rather than a Reels replacement, borrowing a hidden tab's slot in the custom layout\n- Hiding the tab bar generalizes from messages-only to any single-tab configuration, and is refused where it would leave no way into Sparkle settings\n- **App Font**: import an `.otf`, `.ttf` or `.ttc` and set both Instagram and Sparkle in it, previewed face by face with alphabet and figure lines before you pick\n\n**Stories**\n- **Hide Recent Highlights**: resurfaced highlights are dropped from the tray, from tapping forward, and from swiping sideways, since all three read a different list\n- Filter your viewer list (Don't Follow You / You Follow / You Don't Follow / Starred) and star the people you look for\n- **Mention Count Badge**: how many unique accounts a story mentions, redacted along with the glyph by Hide UI on Capture\n- **Story Audio Button**: mute or unmute a story from the viewer, restoring the previous audio state on close so Feed and Reels stay isolated\n\n**Messages**\n- **Activity notifications**: online, offline, typing and read events from tracked users, with per-account lists, group-aware context and their own settings page\n- Audio and upload rows expand as native submenus instead of opening an action sheet over the thread\n- Look up a GIF's real name and channel from the comment and Direct menus (off by default, since each uncached lookup tells giphy.com which GIF is on screen)\n\n**Instants**\n- Confirm a recorded video before Instagram sends it, with the camera feed preserved if you cancel. Photo instants remain unsupported\n- Toggle instant auto-save for an account straight from the action menu, which also saves the instant already on screen\n\n**Media**\n- **Select Text in Photos**: Sparkle's own select-text button and Copy All capsule replace VisionKit's, with real Liquid Glass on iOS 26 and the info overlay stepping aside while text is highlighted\n\n**Reels**\n- **Hide Viewer Comment Bar**: removes the bottom comment field from the reels viewer\n\n**Settings**\n- Contextual information sheets opened from section headers, in place of long footers, and included in settings search\n- Sparkle's own lists use Instagram's follow control, gaining the Requested and Follow back states the previous two-state button could not express\n\n## 🛠 Fixes & Improvements\n\n- **Rootful packages install to `/Library` again.** A makefile variable overrode the build environment, so both build paths produced rootless packages and the \"rootful\" debs in v1.1.0 and v1.2.0 unpacked to `/var/jb`\n- Inbox seen menu and message preview unlock work again on Instagram 442, which ships a second inbox controller behind a server experiment\n- The reels header hides again on the navigation bar the viewer actually uses, and comes back when the preference is turned off instead of staying gone until relaunch\n- Explore and recent-search hiding repaired\n- Reels opened from a profile scroll freely instead of hitting the doom-scroll cap, which now applies only to the Reels home and tab feeds\n- Stories get marked as seen again\n- A story no longer lists the same account several times over on a reshare, and follow state is no longer read off a localized button title\n- Fixed a crash around message reactions\n- Gallery backups that need a schema migration import again, including pre-rename stores. The backup file itself is never modified\n- Gallery import rows update when a thumbnail finishes off screen, and retry after a render that came back empty\n- Clearing finished download history is scoped to the current account\n- Unfollowing asks for confirmation again now that the follow controller moved to Swift, and every prompt is worded from the account's actual state instead of announcing an unfollow as a follow\n- Instants act on the media actually on screen, and keep their expanded order across sessions\n- Notifications reach the right account on sideloaded multi-account installs instead of arriving generic or claiming the account is logged out\n- Uploaded audio shows its real waveform instead of a static pattern\n- Copied links no longer carry the `igsi` tracking parameter\n- FFmpeg frameworks are signed correctly for each output path, and bundle resources resolve per file so encoding still works on development installs\n- Bundled resources stay readable when the package is installed as root\n"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
         {
           "class": "DepictionSubheaderView",
           "title": "v1.2.0",
