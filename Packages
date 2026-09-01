@@ -2,16 +2,16 @@ Package: com.sparkle.sparkle
 SileoDepiction: https://efibalogh.github.io/sparkle-ig/depiction.json
 Depiction: https://efibalogh.github.io/sparkle-ig/changelog.html
 Icon: https://efibalogh.github.io/sparkle-ig/icon.png
-Version: 1.3.0
+Version: 1.3.1
 Architecture: iphoneos-arm64
 Maintainer: efibalogh
-Installed-Size: 35144
+Installed-Size: 35136
 Depends: mobilesubstrate
-Filename: https://github.com/efibalogh/sparkle-ig/releases/download/v1.3.0/Sparkle_v1.3.0_rootless.deb
-Size: 8696768
-MD5sum: fbe85652105954ce6790da17efead74e
-SHA1: 25c7d2aca8489e97d6d8aa7b08d09f7e6393ccaa
-SHA256: 83a774b1239250a3fabaabbcae5dcbac99a4132401e7af1ffeb2280ec75d66c0
+Filename: https://github.com/efibalogh/sparkle-ig/releases/download/v1.3.1/Sparkle_v1.3.1_rootless.deb
+Size: 8692332
+MD5sum: 9076e6cad46a51cdb446abdeec64e51c
+SHA1: bb6df3ea6f87e456fbe6e9da1d9dd096fcaa6a21
+SHA256: 93215e107a7d616888184b6925de0379989c5e08ab02c247ecaa57ce37ecd888
 Section: Tweaks
 Homepage: https://github.com/efibalogh/sparkle-ig
 Description: Bring the spark back to Instagram!
@@ -22,16 +22,16 @@ Package: com.sparkle.sparkle
 SileoDepiction: https://efibalogh.github.io/sparkle-ig/depiction.json
 Depiction: https://efibalogh.github.io/sparkle-ig/changelog.html
 Icon: https://efibalogh.github.io/sparkle-ig/icon.png
-Version: 1.3.0
+Version: 1.3.1
 Architecture: iphoneos-arm
 Maintainer: efibalogh
-Installed-Size: 35144
+Installed-Size: 35136
 Depends: mobilesubstrate
-Filename: https://github.com/efibalogh/sparkle-ig/releases/download/v1.3.0/Sparkle_v1.3.0_rootful.deb
-Size: 8688738
-MD5sum: 02c2ea0dbaacbb19f7ea1cb6e5adddd1
-SHA1: 4ddaeb36bbb8becf2db74c39e95f27e6f9ebf5db
-SHA256: dcfb10f6627e51ee7f9ba83686d4d59216ac1f3eb017e23e34b20f7e55163a99
+Filename: https://github.com/efibalogh/sparkle-ig/releases/download/v1.3.1/Sparkle_v1.3.1_rootful.deb
+Size: 8691172
+MD5sum: 016573b82e82e4da422af7a5bfa4ecfd
+SHA1: 67da89f6527173b3bbf473427294696f997248c0
+SHA256: 64fd2bc6459542dc497bf6c7b7486a65fdaf2c60bb083280b0b399e4f758b8f6
 Section: Tweaks
 Homepage: https://github.com/efibalogh/sparkle-ig
 Description: Bring the spark back to Instagram!

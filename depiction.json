@@ -17,7 +17,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Version",
-          "text": "1.3.0"
+          "text": "1.3.1"
         },
         {
           "class": "DepictionTableTextView",
@@ -32,7 +32,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Released",
-          "text": "2026-09-01"
+          "text": "2026-09-02"
         },
         {
           "class": "DepictionSeparatorView"
@@ -67,6 +67,24 @@
       "class": "DepictionStackView",
       "tabname": "Changelog",
       "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "v1.3.1",
+          "useBoldText": true
+        },
+        {
+          "class": "DepictionLabelView",
+          "text": "2026-09-02",
+          "textColor": "#8E8E93",
+          "fontSize": 12
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "## 🛠 Fixes & Improvements\n\n- Support for Instagram version 445.0.0\n- Active status and typing updates work again on 445, which renamed the realtime presence callback\n- The reels viewer comment bar is back to its proper size on 445\n- **Sideloaded installs:** downloading, converting and trimming media work again. AltStore and SideStore only re-sign frameworks directly inside the app bundle, so the FFmpeg frameworks moved into `Sparkle.bundle` in v1.3.0 kept an ad-hoc signature and failed to load\n- FFmpeg frameworks now carry Sparkle's own `spk.*` names, so they can never replace the `libavutil` and `libavcodec` frameworks Instagram ships\n- **About** shows the app's real bundle identifier instead of Instagram's\n"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
         {
           "class": "DepictionSubheaderView",
           "title": "v1.3.0",

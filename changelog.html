@@ -20,9 +20,26 @@
 
   <section class="rel">
     <div class="rel-head">
+      <h2>v1.3.1</h2>
+      <span class="date">2026-09-02</span>
+      <span class="pill">Current</span>
+    </div>
+    <div class="notes">
+<h2>🛠 Fixes &amp; Improvements</h2>
+<ul>
+<li>Support for Instagram version 445.0.0</li>
+<li>Active status and typing updates work again on 445, which renamed the realtime presence callback</li>
+<li>The reels viewer comment bar is back to its proper size on 445</li>
+<li><strong>Sideloaded installs:</strong> downloading, converting and trimming media work again. AltStore and SideStore only re-sign frameworks directly inside the app bundle, so the FFmpeg frameworks moved into <code>Sparkle.bundle</code> in v1.3.0 kept an ad-hoc signature and failed to load</li>
+<li>FFmpeg frameworks now carry Sparkle's own <code>spk.*</code> names, so they can never replace the <code>libavutil</code> and <code>libavcodec</code> frameworks Instagram ships</li>
+<li><strong>About</strong> shows the app's real bundle identifier instead of Instagram's</li>
+</ul>
+    </div>
+  </section>
+  <section class="rel">
+    <div class="rel-head">
       <h2>v1.3.0</h2>
       <span class="date">2026-09-01</span>
-      <span class="pill">Current</span>
     </div>
     <div class="notes">
 <h2>✨ What's new?</h2>
