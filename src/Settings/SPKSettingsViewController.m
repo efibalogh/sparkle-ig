@@ -993,14 +993,24 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
             [tableView reloadData];
         }
     } else if (row.type == SPKTableCellNavigation) {
-        if (row.navSections.count > 0) {
-            UIViewController *vc = [[SPKSettingsViewController alloc] initWithTitle:row.title sections:row.navSections reduceMargin:NO];
-            ((SPKSettingsViewController *)vc).defersRestartPrompt = [row.userInfo[@"deferRestartPrompt"] boolValue];
-            vc.title = row.title;
-            [self.navigationController pushViewController:vc animated:YES];
-        } else if (row.navViewController) {
-            [self.navigationController pushViewController:row.navViewController animated:YES];
-        }
+        __weak __typeof(self) weakSelf = self;
+        void (^push)(void) = ^{
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if (!strongSelf)
+                return;
+            if (row.navSections.count > 0) {
+                UIViewController *vc = [[SPKSettingsViewController alloc] initWithTitle:row.title sections:row.navSections reduceMargin:NO];
+                ((SPKSettingsViewController *)vc).defersRestartPrompt = [row.userInfo[@"deferRestartPrompt"] boolValue];
+                vc.title = row.title;
+                [strongSelf.navigationController pushViewController:vc animated:YES];
+            } else if (row.navViewController) {
+                [strongSelf.navigationController pushViewController:row.navViewController animated:YES];
+            }
+        };
+        if (row.navigationGate)
+            row.navigationGate(push);
+        else
+            push();
     }
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

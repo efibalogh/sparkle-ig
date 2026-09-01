@@ -32,6 +32,7 @@ static NSMutableArray<SPKDirectInboxMenuTransformerEntry *> *SPKDirectInboxMenuT
 // original implementation.
 static id (*SPKDirectOrigInboxContextMenu)(id, SEL, id);
 static id (*SPKDirectOrigInboxSwiftContextMenu)(id, SEL, id);
+static id (*SPKDirectOrigInboxLegacyContextMenu)(id, SEL, id);
 
 static id SPKDirectInboxMenuKVCObject(id target, NSString *key) {
     if (!target || key.length == 0)
@@ -132,13 +133,11 @@ static id SPKDirectInboxMenuViewModelForIndexPath(id controller, id indexPath) {
     return viewModel;
 }
 
-static id SPKDirectInboxMenuWrapConfiguration(id controller, id indexPath, id configuration) {
+static id SPKDirectInboxMenuWrapConfigurationForViewModel(id viewModel, id configuration) {
     if (SPKDirectInboxMenuEntries.count == 0 && SPKDirectInboxMenuTransformerEntries.count == 0)
         return configuration;
     if (![configuration isKindOfClass:[UIContextMenuConfiguration class]])
         return configuration;
-
-    id viewModel = SPKDirectInboxMenuViewModelForIndexPath(controller, indexPath);
     if (!viewModel)
         return configuration;
 
@@ -228,12 +227,26 @@ static id SPKDirectInboxMenuWrapConfiguration(id controller, id indexPath, id co
                                                    actionProvider:wrappedProvider];
 }
 
+// Newer builds hand the delegate an index path and expect the callee to find the
+// thread behind it; older ones pass the view model straight in. Both funnel into the
+// same wrap, so a feature's rows never depend on which callback is live.
+static id SPKDirectInboxMenuWrapConfiguration(id controller, id indexPath, id configuration) {
+    if (![configuration isKindOfClass:[UIContextMenuConfiguration class]])
+        return configuration;
+    return SPKDirectInboxMenuWrapConfigurationForViewModel(SPKDirectInboxMenuViewModelForIndexPath(controller, indexPath),
+                                                           configuration);
+}
+
 static id SPKDirectInboxContextMenu(id self, SEL _cmd, id indexPath) {
     return SPKDirectInboxMenuWrapConfiguration(self, indexPath, SPKDirectOrigInboxContextMenu(self, _cmd, indexPath));
 }
 
 static id SPKDirectInboxSwiftContextMenu(id self, SEL _cmd, id indexPath) {
     return SPKDirectInboxMenuWrapConfiguration(self, indexPath, SPKDirectOrigInboxSwiftContextMenu(self, _cmd, indexPath));
+}
+
+static id SPKDirectInboxLegacyContextMenu(id self, SEL _cmd, id viewModel) {
+    return SPKDirectInboxMenuWrapConfigurationForViewModel(viewModel, SPKDirectOrigInboxLegacyContextMenu(self, _cmd, viewModel));
 }
 
 static BOOL SPKDirectInboxMenuHookClass(NSString *className, SEL selector, IMP replacement, IMP *orig) {
@@ -258,7 +271,15 @@ void SPKDirectInboxMenuInstallHooksIfNeeded(void) {
                                                  selector,
                                                  (IMP)SPKDirectInboxSwiftContextMenu,
                                                  (IMP *)&SPKDirectOrigInboxSwiftContextMenu);
+        if (!installed) {
+            // Builds before the networking-coordinator callback existed build the
+            // configuration from the view model itself.
+            installed = SPKDirectInboxMenuHookClass(@"IGDirectInboxViewController",
+                                                    NSSelectorFromString(@"_contextMenuConfigurationForThreadCellWithViewModel:"),
+                                                    (IMP)SPKDirectInboxLegacyContextMenu,
+                                                    (IMP *)&SPKDirectOrigInboxLegacyContextMenu);
+        }
         if (!installed)
-            SPKLog(@"Messages", @"[Sparkle InboxMenu] No inbox context menu hook installed: neither inbox class implements the delegate callback");
+            SPKLog(@"Messages", @"[Sparkle InboxMenu] No inbox context menu hook installed: no inbox class implements a known menu callback");
     });
 }

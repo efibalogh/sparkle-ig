@@ -24,6 +24,12 @@ NSDictionary *_Nullable SPKDirectThreadEntryFromContext(SPKDirectThreadContext *
 /// row ("Unknown Chat") than in a sentence ("this chat"). Both DM thread lists and every
 /// current-thread prompt name threads through here so they can never disagree.
 NSString *_Nullable SPKDirectDisplayNameForThreadEntry(NSDictionary *_Nullable entry);
+
+/// Handle-first name for a thread: "@username" for a 1:1, the group's own title for a
+/// group. Sparkle's lists render handles, so anything else in Sparkle's UI that names a
+/// chat uses this rather than switching to display names halfway through a flow.
+NSString *_Nullable SPKDirectHandleNameForThreadEntry(NSDictionary *_Nullable entry);
+NSString *_Nullable SPKDirectHandleNameForThreadContext(SPKDirectThreadContext *_Nullable context);
 NSString *_Nullable SPKDirectDisplayNameForThreadContext(SPKDirectThreadContext *_Nullable context);
 
 /// Row-tap behaviour shared by every DM thread list: a 1:1 opens the partner's profile,

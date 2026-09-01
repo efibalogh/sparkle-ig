@@ -38,6 +38,7 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationAutoSavePending;
 FOUNDATION_EXPORT NSString *const kSPKNotificationDirectVisualMarkSeen;
 FOUNDATION_EXPORT NSString *const kSPKNotificationThreadMessagesMarkSeen;
 FOUNDATION_EXPORT NSString *const kSPKNotificationDirectThreadSeenRule;
+FOUNDATION_EXPORT NSString *const kSPKNotificationDirectHiddenChat;
 FOUNDATION_EXPORT NSString *const kSPKNotificationDirectAutoSave;
 FOUNDATION_EXPORT NSString *const kSPKNotificationDirectAutoSaveThreadRule;
 FOUNDATION_EXPORT NSString *const kSPKNotificationUnsentMessage;

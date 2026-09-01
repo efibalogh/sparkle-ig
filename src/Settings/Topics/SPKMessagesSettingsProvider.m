@@ -4,8 +4,12 @@
 #import "../../Features/Messages/AccurateActiveStatus.h"
 #import "../../Features/Messages/DeletedMessagesLog/SPKDeletedMessagesViewController.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
+#import "../../Shared/Gallery/SPKGalleryLockViewController.h"
+#import "../../Shared/Messages/SPKDirectHiddenChats.h"
+#import "../../Shared/Messages/SPKDirectHiddenChatsLockManager.h"
 #import "../../Shared/Messages/SPKDirectSeenContext.h"
 #import "../../Shared/Messages/SPKPresenceTracking.h"
+#import "../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../Utils.h"
 #import "../SPKSettingsViewController.h"
 #import "../SPKTopicSettingsSupport.h"
@@ -16,6 +20,199 @@ static NSString *const kSPKMessagesAudioCallConfirmKey = @"msgs_confirm_audio_ca
 static NSString *const kSPKMessagesVideoCallConfirmKey = @"msgs_confirm_video_call";
 
 static NSArray *SPKMessagesSettingsSections(void);
+
+// Passcode/biometric lock over the reveal gesture and the hidden chat list. Kept in
+// its own section because it is the one part of the feature that is not a per account
+// preference: the passcode lives in the keychain and covers the device.
+static NSArray<SPKSetting *> *SPKHiddenChatsLockRows(void) {
+    SPKSetting *lockSwitch = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_TITLE")
+                                                        icon:SPKSettingsIcon(@"lock")
+                                                 defaultsKey:@""];
+    lockSwitch.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_HELP");
+    lockSwitch.switchValueProvider = ^BOOL {
+        return [SPKDirectHiddenChatsLockManager sharedManager].isLockEnabled;
+    };
+    lockSwitch.switchChangeHandler = ^(BOOL enabled) {
+        SPKDirectHiddenChatsLockManager *manager = [SPKDirectHiddenChatsLockManager sharedManager];
+        UIViewController *presenter = SPKSettingsTopPresenter();
+        if (enabled && !manager.isLockEnabled) {
+            [SPKGalleryLockViewController presentMode:SPKGalleryLockModeSetPasscode
+                                           forManager:manager
+                                   fromViewController:presenter
+                                           completion:^(__unused BOOL success) {
+                                               SPKSettingsReloadPresenter(presenter);
+                                           }];
+            return;
+        }
+        if (!enabled && manager.isLockEnabled) {
+            [SPKIGAlertPresenter presentAlertFromViewController:presenter
+                                                          title:SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_DISABLE_TITLE")
+                                                        message:SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_DISABLE_MESSAGE")
+                                                        actions:@[
+                                                            [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_CANCEL")
+                                                                                        style:SPKIGAlertActionStyleCancel
+                                                                                      handler:^{
+                                                                                          SPKSettingsReloadPresenter(presenter);
+                                                                                      }],
+                                                            [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_DISABLE")
+                                                                                        style:SPKIGAlertActionStyleDestructive
+                                                                                      handler:^{
+                                                                                          [manager removePasscode];
+                                                                                          SPKSettingsReloadPresenter(presenter);
+                                                                                      }],
+                                                        ]];
+        }
+    };
+
+    SPKSetting *changePasscode = [SPKSetting buttonCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_CHANGE_TITLE")
+                                                        subtitle:nil
+                                                            icon:SPKSettingsIcon(@"key")
+                                                          action:^{
+                                                              [SPKGalleryLockViewController presentMode:SPKGalleryLockModeChangePasscode
+                                                                                             forManager:[SPKDirectHiddenChatsLockManager sharedManager]
+                                                                                     fromViewController:SPKSettingsTopPresenter()
+                                                                                             completion:^(__unused BOOL success){
+                                                                                             }];
+                                                          }];
+    changePasscode.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_CHANGE_HELP");
+    changePasscode.enabledProvider = ^BOOL {
+        return [SPKDirectHiddenChatsLockManager sharedManager].isLockEnabled;
+    };
+
+    return @[ lockSwitch, changePasscode ];
+}
+
+
+static NSArray *SPKHiddenChatsSettingsSections(void);
+
+// Own page rather than two sections on the Messages topic: the feature carries a
+// master switch, three behaviour controls, a list and a device-wide lock, which is
+// more than the surrounding rows and reads as a feature of its own.
+@interface SPKHiddenChatsSettingsViewController : SPKSettingsViewController
+@end
+
+@implementation SPKHiddenChatsSettingsViewController
+- (instancetype)init {
+    return [super initWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_HEADER") sections:SPKHiddenChatsSettingsSections() reduceMargin:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self replaceSections:SPKHiddenChatsSettingsSections()];
+}
+
+- (void)switchChanged:(UISwitch *)sender {
+    SPKSetting *row = [self settingForSender:sender];
+    [super switchChanged:sender];
+    if ([row.defaultsKey isEqualToString:@"msgs_hidden_chats"])
+        [self replaceSections:SPKHiddenChatsSettingsSections()];
+}
+@end
+
+static NSArray *SPKHiddenChatsSettingsSections(void) {
+    // Hidden chats. The list row doubles as the recovery path: if a future IG build
+    // moves the inbox title the reveal gesture hangs off, the chats are still
+    // reachable and un-hideable from here.
+    SPKSetting *hiddenChats = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_TITLE")
+                                                         icon:SPKSettingsIcon(@"messages_off")
+                                                  defaultsKey:@"msgs_hidden_chats"];
+    hiddenChats.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_HELP");
+
+    SPKSetting *hiddenChatsRevealReset = SPKSettingApplySelectedMenuIcon([SPKSetting menuCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_REVEAL_RESET_TITLE")
+                                                                                                  icon:SPKSettingsIcon(@"clock")
+                                                                                                  menu:SPKHiddenChatsRevealResetMenu()],
+                                                                         SPKSettingsIcon(@"clock"));
+    hiddenChatsRevealReset.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_REVEAL_RESET_HELP");
+    hiddenChatsRevealReset.enabledProvider = ^BOOL {
+        return [SPKUtils getBoolPref:@"msgs_hidden_chats"];
+    };
+
+    SPKSetting *hiddenChatsMuteNotifications = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_MUTE_NOTIFICATIONS_TITLE")
+                                                                          icon:SPKSettingsIcon(@"notification_off")
+                                                                   defaultsKey:@"msgs_hidden_chats_mute_notifications"];
+    hiddenChatsMuteNotifications.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_MUTE_NOTIFICATIONS_HELP");
+    // Runs after the preference is written, so chats hidden before the switch was
+    // touched end up in the same state as ones hidden after it.
+    hiddenChatsMuteNotifications.action = ^{
+        SPKDirectHiddenChatsSyncNativeMute([SPKUtils getBoolPref:@"msgs_hidden_chats_mute_notifications"]);
+    };
+    hiddenChatsMuteNotifications.enabledProvider = ^BOOL {
+        return [SPKUtils getBoolPref:@"msgs_hidden_chats"];
+    };
+
+    SPKSetting *hiddenChatsExcludeBadge = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_EXCLUDE_BADGE_TITLE")
+                                                                     icon:SPKSettingsSystemIcon(@"app.badge", SPKSettingsCellIconPointSize, UIImageSymbolWeightSemibold)
+                                                              defaultsKey:@"msgs_hidden_chats_exclude_badge"];
+    hiddenChatsExcludeBadge.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_EXCLUDE_BADGE_HELP");
+    hiddenChatsExcludeBadge.enabledProvider = ^BOOL {
+        return [SPKUtils getBoolPref:@"msgs_hidden_chats"];
+    };
+
+    SPKSetting *hiddenChatsShareSheet = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_SHARE_SHEET_TITLE")
+                                                                   icon:SPKSettingsIcon(@"messages")
+                                                            defaultsKey:@"msgs_hidden_chats_hide_in_share_sheet"];
+    hiddenChatsShareSheet.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_SHARE_SHEET_HELP");
+    hiddenChatsShareSheet.enabledProvider = ^BOOL {
+        return [SPKUtils getBoolPref:@"msgs_hidden_chats"];
+    };
+
+    SPKSetting *hiddenChatsList = [SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_LIST_TITLE")
+                                                             subtitle:@""
+                                                                 icon:SPKSettingsIcon(@"users")
+                                                       viewController:SPKDirectHiddenChatsListViewController()];
+    // The count is withheld while the lock is armed: how many chats are hidden is
+    // part of what the lock is protecting.
+    hiddenChatsList.userInfo = @{
+        @"accessoryText" : [[SPKDirectHiddenChatsLockManager sharedManager] requiresAuthentication]
+            ? @""
+            : [NSString stringWithFormat:@"%lu", (unsigned long)SPKDirectHiddenChatCount()]
+    };
+    hiddenChatsList.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_LIST_HELP");
+    // Authenticated on the way in rather than once the list is already open: a prompt
+    // over a screen the user has reached reads as an afterthought, and the row's own
+    // count stays withheld until it clears either way.
+    hiddenChatsList.navigationGate = ^(void (^allow)(void)) {
+        SPKDirectHiddenChatsAuthenticate(SPKSettingsTopPresenter(), ^(BOOL granted) {
+            if (granted)
+                allow();
+        });
+    };
+    hiddenChatsList.enabledProvider = ^BOOL {
+        return [SPKUtils getBoolPref:@"msgs_hidden_chats"];
+    };
+
+    return @[
+        SPKTopicSection(@"", @[
+            hiddenChats,
+        ],
+                        nil),
+        SPKTopicSection(SPKL(@"MESSAGES_HIDDEN_CHATS_BEHAVIOR_HEADER"), @[
+            hiddenChatsRevealReset,
+            hiddenChatsMuteNotifications,
+            hiddenChatsExcludeBadge,
+            hiddenChatsShareSheet,
+        ],
+                        SPKL(@"MESSAGES_HIDDEN_CHATS_BEHAVIOR_FOOTER")),
+        SPKTopicSection(@"", @[
+            hiddenChatsList,
+        ],
+                        nil),
+        SPKTopicSection(SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_HEADER"),
+                        SPKHiddenChatsLockRows(),
+                        SPKL(@"MESSAGES_HIDDEN_CHATS_LOCK_FOOTER"))
+    ];
+}
+
+// Off, or how many chats are hidden. The count is withheld while the lock is armed,
+// for the same reason the list row withholds it.
+static NSString *SPKHiddenChatsSettingsSummary(void) {
+    if (![SPKUtils getBoolPref:@"msgs_hidden_chats"])
+        return SPKL(@"MENU_OFF");
+    if ([[SPKDirectHiddenChatsLockManager sharedManager] requiresAuthentication])
+        return @"";
+    return [NSString stringWithFormat:SPKL(@"MESSAGES_HIDDEN_CHATS_SUMMARY_HIDDEN_COUNT"), (unsigned long)SPKDirectHiddenChatCount()];
+}
+
 static NSArray *SPKActivityNotificationsSettingsSections(void);
 
 // A switch cell that stays visible but is disabled while the "Audio Downloads"
@@ -238,6 +435,16 @@ static NSArray *SPKMessagesSettingsSections(void) {
         return [SPKUtils getBoolPref:kSPKMessagesActionButtonEnabledKey];
     };
 
+    SPKSetting *hiddenChatsEntry = [SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_HIDDEN_CHATS_HEADER")
+                                                              subtitle:@""
+                                                                  icon:SPKSettingsIcon(@"messages_off")
+                                                        viewController:[[SPKHiddenChatsSettingsViewController alloc] init]];
+    hiddenChatsEntry.userInfo = @{ @"accessoryText" : SPKHiddenChatsSettingsSummary() };
+    hiddenChatsEntry.helpText = SPKL(@"MESSAGES_HIDDEN_CHATS_HELP");
+    hiddenChatsEntry.searchSectionsProvider = ^NSArray * {
+        return SPKHiddenChatsSettingsSections();
+    };
+
     SPKSetting *activityNotifications = [SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_ACTIVITY_NOTIFICATIONS_TITLE")
                                                                    subtitle:@""
                                                                        icon:SPKSettingsIcon(@"activity")
@@ -280,6 +487,10 @@ static NSArray *SPKMessagesSettingsSections(void) {
             seenOnReaction,
             seenOnTyping,
             manualSeenList,
+        ],
+                        nil),
+        SPKTopicSection(@"", @[
+            hiddenChatsEntry,
         ],
                         nil),
         SPKTopicSection(SPKL(@"MESSAGES_ACTIVITY_HEADER"), @[

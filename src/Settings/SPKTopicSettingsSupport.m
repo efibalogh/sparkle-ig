@@ -8,6 +8,7 @@
 #import "SPKBulkActionMenuEditViewController.h"
 #import "SPKEditActionsListViewController.h"
 #import "SPKPreferences.h"
+#import "SPKSettingsViewController.h"
 
 #import "../AssetUtils.h"
 #import "../Shared/AutoSave/SPKAutoSave.h"
@@ -16,6 +17,25 @@
 #import "../Utils.h"
 
 CGFloat const SPKSettingsCellIconPointSize = 24.0;
+
+UIViewController *SPKSettingsTopPresenter(void) {
+    UIViewController *presenter = UIApplication.sharedApplication.keyWindow.rootViewController;
+    while (presenter.presentedViewController)
+        presenter = presenter.presentedViewController;
+    return presenter;
+}
+
+void SPKSettingsReloadPresenter(UIViewController *presenter) {
+    SPKSettingsViewController *settingsVC = nil;
+    if ([presenter isKindOfClass:SPKSettingsViewController.class]) {
+        settingsVC = (SPKSettingsViewController *)presenter;
+    } else if ([presenter isKindOfClass:UINavigationController.class]) {
+        UIViewController *top = ((UINavigationController *)presenter).topViewController;
+        if ([top isKindOfClass:SPKSettingsViewController.class])
+            settingsVC = (SPKSettingsViewController *)top;
+    }
+    [settingsVC.tableView reloadData];
+}
 
 NSDictionary *SPKTopicSection(NSString *header, NSArray *rows, NSString *footer) {
     NSMutableDictionary *section = [@{
@@ -218,6 +238,14 @@ UIMenu *SPKSeenButtonPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), @"arrow_up", nil, @"msgs_seen_button_position", @"top", NO),
         SPKMenuCommand(SPKL(@"MENU_BOTTOM"), @"arrow_down", nil, @"msgs_seen_button_position", @"bottom", NO)
+    ]];
+}
+
+UIMenu *SPKHiddenChatsRevealResetMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_LEAVING_THE_INBOX"), nil, nil, @"msgs_hidden_chats_reveal_reset", @"leave_inbox", NO),
+        SPKMenuCommand(SPKL(@"MENU_APP_BACKGROUNDED"), nil, nil, @"msgs_hidden_chats_reveal_reset", @"background", NO),
+        SPKMenuCommand(SPKL(@"MENU_MANUALLY"), nil, nil, @"msgs_hidden_chats_reveal_reset", @"never", NO)
     ]];
 }
 

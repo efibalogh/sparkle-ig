@@ -6,6 +6,7 @@
 #import "../AutoSave/SPKAutoSaveFilter.h"
 #import "../Instants/SPKInstantsAutoSave.h"
 #import "../Messages/SPKDirectAutoSave.h"
+#import "../Messages/SPKDirectHiddenChats.h"
 #import "../Messages/SPKDirectSeenContext.h"
 #import "../Messages/SPKPresenceTracking.h"
 #import "../Stories/SPKStoryAutoSave.h"
@@ -64,6 +65,7 @@ SPK_NOTIF_CONST(kSPKNotificationAutoSavePending, "auto_save_pending");
 SPK_NOTIF_CONST(kSPKNotificationDirectVisualMarkSeen, "direct_visual_mark_seen");
 SPK_NOTIF_CONST(kSPKNotificationThreadMessagesMarkSeen, "thread_messages_mark_seen");
 SPK_NOTIF_CONST(kSPKNotificationDirectThreadSeenRule, "direct_thread_seen_rule");
+SPK_NOTIF_CONST(kSPKNotificationDirectHiddenChat, "direct_hidden_chat");
 SPK_NOTIF_CONST(kSPKNotificationDirectAutoSave, "direct_auto_save");
 SPK_NOTIF_CONST(kSPKNotificationDirectAutoSaveThreadRule, "toggle_direct_auto_save_thread_rule");
 SPK_NOTIF_CONST(kSPKNotificationUnsentMessage, "unsent_message");
@@ -230,6 +232,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationDirectVisualMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_VISUAL_MESSAGE_SEEN_MESSAGE"), @"view_twice"),
               SPKNotificationItem(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE"), @"messages"),
               SPKNotificationItem(kSPKNotificationDirectThreadSeenRule, SPKL(@"UI_NOTIFICATION_CENTER_CHAT_SEEN_LIST_CHANGES_TEXT"), @"eye"),
+              SPKNotificationItem(kSPKNotificationDirectHiddenChat, SPKL(@"UI_NOTIFICATION_CENTER_HIDDEN_CHAT_CHANGES_TEXT"), @"eye_off"),
               SPKNotificationItem(kSPKNotificationUnsentMessage, SPKL(@"UI_NOTIFICATION_CENTER_UNSENT_MESSAGE"), @"undo"),
               SPKNotificationItem(kSPKNotificationUnsentReaction, SPKL(@"UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION"), @"reactions"),
               SPKNotificationItem(kSPKNotificationPresenceOnline, SPKL(@"MESSAGES_ACTIVITY_USER_ONLINE_TITLE"), @"circle_check_filled"),
@@ -710,6 +713,8 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
                        [identifier isEqualToString:kSPKNotificationProfileMessagesSeenUserRule]) {
                 BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"msgs_manual_seen"];
                 resolvedSubtitle = manualSeenEnabled ? SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_EXCLUDED_LIST_TEXT") : SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_INCLUDED_LIST_TEXT");
+            } else if ([identifier isEqualToString:kSPKNotificationDirectHiddenChat]) {
+                resolvedSubtitle = SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_HIDDEN_CHATS_TEXT");
             } else if ([identifier isEqualToString:kSPKNotificationPresenceUserRule]) {
                 resolvedSubtitle = SPKL(@"MESSAGES_ACTIVITY_TAP_TO_OPEN_LIST_SUBTITLE");
             } else if (SPKAutoSaveListViewControllerForRuleIdentifier(identifier)) {
@@ -733,6 +738,10 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
                        [identifier isEqualToString:kSPKNotificationProfileMessagesSeenUserRule]) {
                 pill.onTapWhenCompleted = ^{
                     [SPKUtils presentViewControllerInSheet:SPKDirectManualSeenListViewController()];
+                };
+            } else if ([identifier isEqualToString:kSPKNotificationDirectHiddenChat]) {
+                pill.onTapWhenCompleted = ^{
+                    [SPKUtils presentViewControllerInSheet:SPKDirectHiddenChatsListViewController()];
                 };
             } else if (SPKAutoSaveListViewControllerForRuleIdentifier(identifier)) {
                 pill.onTapWhenCompleted = ^{

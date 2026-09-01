@@ -3,6 +3,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// Point size for icons in Sparkle's own menus.
+FOUNDATION_EXPORT const CGFloat kSPKMenuIconPointSize;
+// Native point size of Instagram's menu glyphs, for rows Sparkle adds to them.
+FOUNDATION_EXPORT const CGFloat kSPKInstagramMenuIconPointSize;
+
 typedef NS_ENUM(NSInteger, SPKAssetCatalogSource) {
     SPKAssetCatalogSourceAutomatic = 0,
     SPKAssetCatalogSourceFBSharedFramework = 1,
@@ -35,12 +40,21 @@ typedef NS_ENUM(NSInteger, SPKResolvedImageSource) {
 // AlwaysTemplate image.
 + (nullable UIImage *)menuIconNamed:(NSString *)name;
 
+// menuIconNamed: at an explicit point size. Pass kSPKInstagramMenuIconPointSize
+// for a row Sparkle inserts into one of Instagram's own menus, whose glyphs are
+// 24pt: a 22pt row next to them reads as a smaller, foreign icon.
++ (nullable UIImage *)menuIconNamed:(NSString *)name pointSize:(CGFloat)pointSize;
+
 // Same 22pt menu sizing as menuIconNamed:, but applied to an already-resolved
 // image — for callers that build the icon themselves (e.g. the action-button
 // menu, which picks reels/toggle variants). Pass an image loaded at its native
 // size (no downscale); this reinterprets its scale to 22pt with no redraw, so
 // it stays renderable in iOS 16's UIMenu. Returns an AlwaysTemplate image.
 + (nullable UIImage *)menuSizedIcon:(nullable UIImage *)image;
+
+// menuSizedIcon: at an explicit point size. A size at or above the image's
+// native size returns it untouched.
++ (nullable UIImage *)menuSizedIcon:(nullable UIImage *)image pointSize:(CGFloat)pointSize;
 
 + (nullable UIImage *)resolvedImageNamed:(NSString *)name
                                pointSize:(CGFloat)pointSize

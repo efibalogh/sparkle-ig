@@ -25,6 +25,7 @@ SPKSetting *SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSource 
 UIMenu *SPKReelsTapControlMenu(void);
 UIMenu *SPKMainFeedModeMenu(void);
 UIMenu *SPKSeenButtonPositionMenu(void);
+UIMenu *SPKHiddenChatsRevealResetMenu(void);
 UIMenu *SPKLastActiveFormatMenu(void);
 UIMenu *SPKLiquidGlassTabBarStateMenu(void);
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
@@ -40,5 +41,14 @@ UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, NSString *subjectPlur
 UIMenu *SPKStoryAutoSaveFilterModeMenu(void);
 UIMenu *SPKGalleryShortcutTargetMenu(void);
 SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void);
+
+/// The view controller a settings row should present from: the topmost presented
+/// controller, which is normally the navigation controller wrapping the page.
+UIViewController *SPKSettingsTopPresenter(void);
+
+/// Reloads whichever settings page is on screen behind `presenter`, so rows whose
+/// enabled state depends on something outside NSUserDefaults (a keychain-backed lock,
+/// for one) redraw after the flow that changed it finishes.
+void SPKSettingsReloadPresenter(UIViewController *presenter);
 
 NS_ASSUME_NONNULL_END

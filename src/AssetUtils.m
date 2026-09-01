@@ -6,6 +6,9 @@ typedef NSDictionary<NSString *, id> SPKAssetDescriptor;
 
 static NSString *const kSPKAssetFallbackSystemName = @"questionmark.square.dashed";
 
+const CGFloat kSPKMenuIconPointSize = 22.0;
+const CGFloat kSPKInstagramMenuIconPointSize = 24.0;
+
 static UIImage *SPKAssetScaleImage(UIImage *image, CGFloat maxPointSize) {
     if (!image || maxPointSize <= 0) {
         return image;
@@ -199,14 +202,16 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"mention" : @{@"candidates" : @[ @"ig_icon_story_mention_pano_outline_24" ]},
             @"message" : @{@"candidates" : @[ @"ig_icon_app_whatsapp_chat_prism_outline_24", @"ig_icon_app_whatsapp_chat_outline_24" ]},
             @"messages" : @{@"candidates" : @[ @"ig_icon_direct_prism_outline_24", @"ig_icon_direct_outline_24" ]},
-            @"messages_filled" : @{@"candidates" : @[ @"ig_icon_direct_prism_filled_24", @"ig_icon_direct_filled_24" ]},
             @"messages_empty" : @{@"candidates" : @[ @"ig_icon_channels_outline_96" ]},
+            @"messages_filled" : @{@"candidates" : @[ @"ig_icon_direct_prism_filled_24", @"ig_icon_direct_filled_24" ]},
+            @"messages_off" : @{@"candidates" : @[ @"ig_icon_direct_off_prism_outline_24", @"ig_icon_direct_off_outline_24" ]},
             @"mirror" : @{@"candidates" : @[ @"ig_icon_mirror_outline_24" ]},
             @"music_reels" : @{@"candidates" : @[ @"ig_icon_music_outline_44" ]},
             @"meta_ai" : @{@"candidates" : @[ @"ig_icon_meta_ai_orbit_7_segment_outline_24", @"ig_icon_meta_gen_ai_outline_24" ]},
             @"more" : @{@"candidates" : @[ @"ig_icon_more_horizontal_outline_24" ]},
             @"notes" : @{@"candidates" : @[ @"ig_icon_content_note_outline_24", @"ig_icon_content_note_add_outline_24" ]},
             @"notification" : @{@"candidates" : @[ @"ig_icon_alert_pano_outline_24", @"ig_icon_alert_outline_24" ]},
+            @"notification_off" : @{@"candidates" : @[ @"ig_icon_alert_off_pano_outline_24", @"ig_icon_alert_off_outline_24" ]},
             @"notifications" : @{@"candidates" : @[ @"bells-stacked_Outline_24" ]},
             @"palette" : @{@"candidates" : @[ @"ig_icon_palette_outline_24" ]},
             @"parallel" : @{@"candidates" : @[ @"ig_icon_pause_filled_24" ]},
@@ -596,6 +601,10 @@ static UIImage *SPKAssetLookupInstagramIcon(NSString *name, CGFloat pointSize, S
 }
 
 + (UIImage *)menuIconNamed:(NSString *)name {
+    return [self menuIconNamed:name pointSize:kSPKMenuIconPointSize];
+}
+
++ (UIImage *)menuIconNamed:(NSString *)name pointSize:(CGFloat)pointSize {
     // pointSize 0 = SPKAssetScaleImage no-ops, so the catalog image is returned
     // untouched with no UIGraphicsImageRenderer pass. That pass is exactly what
     // iOS 16's UIMenu refuses to render for vector-backed (.svg) glyphs — even
@@ -604,24 +613,29 @@ static UIImage *SPKAssetLookupInstagramIcon(NSString *name, CGFloat pointSize, S
                                     pointSize:0
                                        source:SPKAssetCatalogSourceAutomatic
                                 renderingMode:UIImageRenderingModeAlwaysTemplate];
-    return [self menuSizedIcon:image];
+    return [self menuSizedIcon:image pointSize:pointSize];
 }
 
 + (UIImage *)menuSizedIcon:(UIImage *)image {
-    if (!image) {
-        return nil;
+    return [self menuSizedIcon:image pointSize:kSPKMenuIconPointSize];
+}
+
++ (UIImage *)menuSizedIcon:(UIImage *)image pointSize:(CGFloat)pointSize {
+    if (!image || pointSize <= 0.0) {
+        return image;
     }
 
-    // IG menu glyphs are 24pt native, but our menus want the standard 22pt.
+    // IG menu glyphs are 24pt native, but our own menus want the standard 22pt.
     // We can't downscale through a renderer (see menuIconNamed:), so instead
     // reinterpret the image's scale: relabelling its existing pixels at a higher
     // scale makes the same bitmap map to a smaller point size, with no redraw —
-    // so it renders like the native image does, just at 22pt.
-    static const CGFloat kSPKMenuIconPointSize = 22.0;
+    // so it renders like the native image does, just smaller. A caller asking for
+    // the native 24pt therefore falls through untouched, which is what a row
+    // sitting inside one of Instagram's own menus wants.
     CGFloat maxDimension = MAX(image.size.width, image.size.height);
     CGImageRef cgImage = image.CGImage;
-    if (cgImage && maxDimension > kSPKMenuIconPointSize + 0.01) {
-        CGFloat rescaled = image.scale * (maxDimension / kSPKMenuIconPointSize);
+    if (cgImage && maxDimension > pointSize + 0.01) {
+        CGFloat rescaled = image.scale * (maxDimension / pointSize);
         image = [[UIImage imageWithCGImage:cgImage
                                      scale:rescaled
                                orientation:image.imageOrientation]

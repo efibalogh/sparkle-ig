@@ -133,8 +133,21 @@ static NSMutableURLRequest *spkBuildRequest(NSString *method, NSURL *url, NSDict
 
 static void spkPerformRequest(NSMutableURLRequest *request, SPKAPICompletion completion) {
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request
-                                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                                     (void)response;
+                                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *transportError) {
+                                                                     // An HTTP failure is not a transport error, and a rejected or retired
+                                                                     // endpoint often answers with no JSON at all. Without this, callers
+                                                                     // read "no error, no body" as success.
+                                                                     NSError *error = transportError;
+                                                                     NSInteger statusCode = [response isKindOfClass:[NSHTTPURLResponse class]]
+                                                                                                ? ((NSHTTPURLResponse *)response).statusCode
+                                                                                                : 0;
+                                                                     if (!error && statusCode >= 400) {
+                                                                         error = [NSError errorWithDomain:@"SPKInstagramAPI"
+                                                                                                     code:statusCode
+                                                                                                 userInfo:@{
+                                                                                                     NSLocalizedDescriptionKey : [NSString stringWithFormat:@"HTTP %ld", (long)statusCode]
+                                                                                                 }];
+                                                                     }
                                                                      NSDictionary *parsedResponse = nil;
                                                                      if (data.length > 0) {
                                                                          @try {
@@ -240,6 +253,91 @@ static void spkPerformRequest(NSMutableURLRequest *request, SPKAPICompletion com
                          }
                          if (completion)
                              completion(url.length > 0 ? url : nil, error);
+                     }];
+}
+
++ (void)spk_postThreadAction:(NSString *)action
+                    threadId:(NSString *)threadId
+                  parameters:(NSDictionary *)parameters
+                  completion:(SPKAPICompletion)completion {
+    if (threadId.length == 0) {
+        if (completion)
+            completion(nil, nil);
+        return;
+    }
+    // Empty (not nil) body: these endpoints reject a bodyless POST.
+    NSString *path = [NSString stringWithFormat:@"direct_v2/threads/%@/%@/", threadId, action];
+    [self sendRequestWithMethod:@"POST"
+                           path:path
+                           body:parameters ?: @{}
+                     completion:^(NSDictionary *response, NSError *error) {
+                         // The mute endpoints are the one place Sparkle writes account
+                         // state that it cannot read back from the UI, so the server's
+                         // own answer is logged verbatim.
+                         // Flattened: a dictionary description spans lines, and os_log
+                         // keeps only the first one.
+                         NSString *body = response ? [[[response description]
+                                                         stringByReplacingOccurrencesOfString:@"\n" withString:@" "]
+                                                         stringByReplacingOccurrencesOfString:@"  " withString:@""]
+                                                   : @"(no body)";
+                         SPKLog(@"Messages", @"[Sparkle DirectAPI] %@ -> %@ error=%@", path, body,
+                                error.localizedDescription ?: @"(none)");
+                         if (completion)
+                             completion(response, error);
+                     }];
+}
+
++ (void)setThreadMuted:(BOOL)muted threadId:(NSString *)threadId completion:(SPKAPICompletion)completion {
+    [self spk_postThreadAction:muted ? @"mute" : @"unmute" threadId:threadId parameters:nil completion:completion];
+}
+
++ (void)setThreadCallsMuted:(BOOL)muted threadId:(NSString *)threadId completion:(SPKAPICompletion)completion {
+    [self setThreadCallsMuted:muted threadId:threadId parameters:nil completion:completion];
+}
+
++ (void)setThreadCallsMuted:(BOOL)muted
+                   threadId:(NSString *)threadId
+                 parameters:(NSDictionary *)parameters
+                 completion:(SPKAPICompletion)completion {
+    [self spk_postThreadAction:muted ? @"mute_video_call" : @"unmute_video_call"
+                      threadId:threadId
+                    parameters:parameters
+                    completion:completion];
+}
+
+static NSNumber *spkThreadFlag(NSDictionary *thread, NSArray<NSString *> *keys, NSString **matchedKey) {
+    for (NSString *key in keys) {
+        id value = thread[key];
+        if (![value respondsToSelector:@selector(boolValue)])
+            continue;
+        if (matchedKey)
+            *matchedKey = key;
+        return @([value boolValue]);
+    }
+    return nil;
+}
+
++ (void)fetchThreadMuteStateForThreadId:(NSString *)threadId
+                             completion:(void (^)(NSNumber *_Nullable, NSNumber *_Nullable, NSError *_Nullable))completion {
+    if (!completion)
+        return;
+    if (threadId.length == 0) {
+        completion(nil, nil, nil);
+        return;
+    }
+    // limit=0 asks for the thread's metadata without its message page.
+    [self sendRequestWithMethod:@"GET"
+                           path:[NSString stringWithFormat:@"direct_v2/threads/%@/?limit=0", threadId]
+                           body:nil
+                     completion:^(NSDictionary *response, NSError *error) {
+                         NSDictionary *thread = [response[@"thread"] isKindOfClass:[NSDictionary class]] ? response[@"thread"] : nil;
+                         // The calls flag has gone by more than one name across
+                         // versions, and is absent entirely on threads that cannot
+                         // take calls.
+                         NSString *callsKey = nil;
+                         NSNumber *callsMuted = spkThreadFlag(thread, @[ @"vc_muted", @"video_call_muted", @"is_video_call_muted" ], &callsKey);
+                         SPKLog(@"Messages", @"[Sparkle DirectAPI] thread %@ callsMuteKey=%@", threadId, callsKey ?: @"(none)");
+                         completion(spkThreadFlag(thread, @[ @"muted" ], NULL), callsMuted, error);
                      }];
 }
 

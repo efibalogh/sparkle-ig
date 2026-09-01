@@ -494,6 +494,27 @@
 @interface IGDirectInboxSuggestedThreadCellViewModel : NSObject
 @end
 
+// Backs the main DM inbox list. ObjC on IG 410, migrated to a Swift class of the
+// same bare name on newer builds, so it is always resolved through
+// SPKResolveIGClass rather than referenced directly.
+@interface IGDirectInboxListAdapterDataSource : NSObject
+- (id)objectsForListAdapter:(id)adapter;
+@end
+
+@interface IGDirectInboxViewController : UIViewController
+@end
+
+// Same inbox screen, rebuilt in Swift. Not a subclass of the above.
+@interface IGDirectInboxSwiftViewController : UIViewController
+@end
+
+// Aggregate unread counts behind the app's badges. The two Direct fields are the
+// only ones Sparkle touches.
+@interface IGBadgeData : NSObject
+@property (readonly, nonatomic) unsigned long long directMessagesServerCalculated;
+@property (readonly, nonatomic) NSNumber *directMessagesClientCalculated;
+@end
+
 @interface IGDirectInboxHeaderCellViewModel : NSObject
 - (id)title;
 @end

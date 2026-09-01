@@ -87,6 +87,7 @@ FOUNDATION_EXPORT void SPKInstallFullLastActiveHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallShhConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideFriendsMapHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallKeepDeletedMessagesHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallHiddenChatsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallPresenceNotificationsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAccurateActiveStatusHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCallConfirmHooksIfEnabled(void);
@@ -258,6 +259,7 @@ void SPKInstallMessagesSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallInstantsGalleryUploadHooksIfEnabled);
     SPK_INSTALL(SPKInstallVisualMsgModifierHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedChatsHooksIfEnabled);
+    SPK_INSTALL(SPKInstallHiddenChatsHooksIfEnabled);
     SPK_INSTALL(SPKInstallChangeThemeConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallFollowRequestConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableTypingStatusHooksIfEnabled);

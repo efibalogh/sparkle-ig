@@ -565,6 +565,25 @@ NSString *SPKDirectDisplayNameForThreadEntry(NSDictionary *entry) {
     return SPKDirectNameFromUsers([entry[@"users"] isKindOfClass:[NSArray class]] ? entry[@"users"] : @[]);
 }
 
+NSString *SPKDirectHandleNameForThreadEntry(NSDictionary *entry) {
+    if (![entry isKindOfClass:[NSDictionary class]])
+        return nil;
+    // A group has no handle, so its own title is already the most recognisable name.
+    if (![entry[@"isGroup"] boolValue]) {
+        NSArray *users = [entry[@"users"] isKindOfClass:[NSArray class]] ? entry[@"users"] : @[];
+        for (NSDictionary *user in users) {
+            NSString *username = SPKDirectStringFromValue(user[@"username"]);
+            if (username.length > 0)
+                return [@"@" stringByAppendingString:username];
+        }
+    }
+    return SPKDirectDisplayNameForThreadEntry(entry);
+}
+
+NSString *SPKDirectHandleNameForThreadContext(SPKDirectThreadContext *context) {
+    return context ? SPKDirectHandleNameForThreadEntry(SPKDirectThreadEntryFromContext(context)) : nil;
+}
+
 NSString *SPKDirectParticipantSubtitleForThreadEntry(NSDictionary *entry) {
     if (![entry isKindOfClass:[NSDictionary class]] || ![entry[@"isGroup"] boolValue])
         return nil;

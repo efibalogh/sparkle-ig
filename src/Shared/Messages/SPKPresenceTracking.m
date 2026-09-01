@@ -9,6 +9,7 @@
 #import "../UI/SPKMediaChrome.h"
 #import "../UI/SPKNotificationCenter.h"
 #import "../UI/SPKUserListViewController.h"
+#import "SPKDirectHiddenChats.h"
 #import "SPKDirectSeenContext.h"
 #import "../../Features/Messages/AccurateActiveStatus.h"
 #import "SPKDirectUserResolver.h"
@@ -569,6 +570,10 @@ void SPKPresenceHandleUpdate(NSString *pk, BOOL isActive, __unused double lastAc
         }
 
         notified[pk] = @(isActive);
+        if (SPKDirectHiddenChatsSuppressesNotification(nil, pk)) {
+            SPKLog(@"Presence", @"[Sparkle Presence] drop pk=%@ reason=hidden-chat", pk);
+            return;
+        }
         times[cooldownKey] = @(now);
         SPKLog(@"Presence", @"[Sparkle Presence] notify pk=%@ isActive=%d", pk, isActive);
         SPKPresenceNotify(pk, isActive);
@@ -640,6 +645,11 @@ void SPKPresenceHandleTypingSnapshot(NSDictionary<NSString *, NSDictionary *> *a
                 return;
             }
 
+            if (SPKDirectHiddenChatsSuppressesNotification(threadID, pk)) {
+                SPKLog(@"Presence", @"[Sparkle Presence] typing drop pk=%@ thread=%@ reason=hidden-chat",
+                       pk, threadID ?: @"unknown");
+                return;
+            }
             times[eventKey] = @(now);
             SPKLog(@"Presence", @"[Sparkle Presence] typing notify pk=%@ thread=%@", pk, threadID ?: @"unknown");
             SPKPresenceNotifyTyping(pk, threadID);
@@ -1087,6 +1097,10 @@ void SPKPresenceHandleDirectThreadUpdates(id applicator, id updates, NSString *o
             NSNumber *last = times[cursorKey];
             if (last && now - last.doubleValue < kSPKPresenceReadCooldown) {
                 SPKLog(@"Presence", @"[Sparkle Presence] read drop thread=%@ reader=%@ reason=cooldown", threadID, readerPK);
+                continue;
+            }
+            if (SPKDirectHiddenChatsSuppressesNotification(threadID, readerPK)) {
+                SPKLog(@"Presence", @"[Sparkle Presence] read drop thread=%@ reader=%@ reason=hidden-chat", threadID, readerPK);
                 continue;
             }
             times[cursorKey] = @(now);
