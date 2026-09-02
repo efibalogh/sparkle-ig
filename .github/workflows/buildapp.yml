@@ -165,8 +165,9 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: ${{ steps.package_name.outputs.package }}
-                path: ${{ github.workspace }}/main/${{ steps.package_name.outputs.path }}
+                path: ${{ steps.package_name.outputs.path }} # <- Remplacé ici
                 if-no-files-found: error
+
 
             - name: Create Release
               uses: softprops/action-gh-release@v2.0.6
