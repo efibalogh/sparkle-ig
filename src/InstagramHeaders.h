@@ -609,6 +609,17 @@
 - (BOOL)_isChatPeekEligibleForThreadId:(id)threadId;
 @end
 
+@interface _TtC29IGConsumerSubsDirectChatPeeks35IGDirectInboxChatPeekPreviewHandler : NSObject
+- (id)previewViewControllerForThreadId:(id)threadId userSession:(id)session containerWidth:(double)width;
+@end
+
+@interface _TtC39IGDirectLightweightThreadViewController39IGDirectLightweightThreadViewController : UIViewController
+- (id)initWithUserSession:(id)session threadId:(id)threadId onLoadCompletion:(id)completion;
+- (void)setShouldHideHeader:(BOOL)shouldHideHeader;
+- (void)setBypassSeenStateUpdate:(BOOL)bypassSeenStateUpdate;
+- (void)setShouldSkipScrollToNewMessagesSeparator:(BOOL)shouldSkip;
+@end
+
 @interface IGDirectMediaPickerConfig : NSObject
 @end
 

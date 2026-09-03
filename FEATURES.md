@@ -227,7 +227,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Also Show on Chat Media**: Extends the action button to the full-screen viewer for permanent chat media — camera-roll photos and videos opened from a thread or the chat's shared-media grid. Replaces Instagram's native Save button, so media can be downloaded to Photos, the Sparkle Gallery, copied, shared, etc. Chat videos honor the **Download Video Quality** setting: when set to *Always Ask* the quality picker offers the video's full DASH ladder, same as feed/reels. Requires the Messages Action Button toggle.
 
 ### Messaging
-- **Unlock Message Preview (not available in v410.1.0)**: Unlocks the Instagram Plus "Message Preview" (chat peeks) — long-pressing a chat shows the real preview instead of the blurred upgrade upsell.
+- **Unlock Message Preview (not available in v410.1.0)**: Unlocks the Instagram Plus "Message Preview" (chat peeks): long-pressing a chat shows the real preview instead of the blurred upgrade upsell, and hides the redundant preview upsell menu entry. Follows the current account's setting without a restart; turning it off restores native preview behavior.
 - **Manually Mark Seen**: adds an eye button to mark chats seen.
 - **Mark Seen on Message Send / Reply / Reaction / Typing**: auto-seen triggers; disabled unless Manually Mark Seen is on.
 - **Seen Button Position**: choose whether the eye button sits in the top nav bar or as a bubble above the composer, within thumb reach and hidden while you type. The bubble can be dragged aside to peek underneath and snaps back when you scroll. Disabled unless Manually Mark Seen is on.
