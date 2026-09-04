@@ -324,11 +324,13 @@ static NSArray *SPKActivityNotificationsSettingsSections(void) {
                         nil),
         SPKTopicSection(SPKL(@"MESSAGES_ACTIVITY_TRACKING_HEADER"), @[
             trackedUsers,
+#if SPK_DEV
             SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE")
                                                           subtitle:@""
                                                               icon:SPKSettingsIcon(@"info")
                                                     viewController:SPKPresenceDiagnosticsViewController()],
                                SPKL(@"MESSAGES_ACTIVITY_DIAGNOSTICS_HELP")),
+#endif
         ],
                         nil),
         SPKTopicSection(SPKL(@"MESSAGES_ACTIVITY_ACCURACY_HEADER"), @[

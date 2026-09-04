@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "Profil açılıyor...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "Yeniden Başlatma Gerekli";
 "HOOKBISECT_BISECT_HEADER" = "İkiye Böl";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "Hook İkiye Bölme";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] Hook İkiye Bölme";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "Henüz kayıtlı yükleyici yok";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "Başlatmadan hemen sonra bu sayfayı yeniden açın.";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "Engellenen Zaman";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "Instagram'ın canlı etkinlik durumunu incele ve Sparkle'ın geçiş belleğini ve bekleme sürelerini temizle.";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "Tanılama yenilendi";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "Yenile";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "Etkinlik Tanılama";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] Etkinlik Tanılama";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "Bildirim almak istediğin kullanıcıları ekle veya bir sohbet içinde Etkinliği İzle'yi kullan.";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "Henüz kullanıcı yok";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "Biri";

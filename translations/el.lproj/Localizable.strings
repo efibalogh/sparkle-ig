@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "Άνοιγμα προφίλ...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "Απαιτείται Επανεκκίνηση";
 "HOOKBISECT_BISECT_HEADER" = "Bisect";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "Hook Bisect";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] Hook Bisect";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "Δεν υπάρχουν ακόμα εγκαταστάσεις καταγράμματα";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "Ανοίξτε αυτή τη σελίδα μια στιγμή μετά την εκκίνηση.";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "Χρόνος Φραγής";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "Εξέτασε τη ζωντανή κατάσταση δραστηριότητας του Instagram και καθάρισε τη μνήμη μεταβάσεων και τις αναμονές του Sparkle.";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "Τα διαγνωστικά ανανεώθηκαν";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "Ανανέωση";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "Διαγνωστικά Δραστηριότητας";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] Διαγνωστικά Δραστηριότητας";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "Προσθέστε χρήστες για τους οποίους θέλετε να ειδοποιείστε, ή χρησιμοποιήστε την επιλογή Παρακολούθηση Δραστηριότητας μέσα σε μια συνομιλία.";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "Δεν υπάρχουν χρήστες ακόμα";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "Κάποιος";

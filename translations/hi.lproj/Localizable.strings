@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "प्रोफाइल खोला जा रहा है...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "पुनः प्रारंभ आवश्यक है";
 "HOOKBISECT_BISECT_HEADER" = "आधा भाग करें";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "Hook आधा भाग";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] Hook आधा भाग";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "अभी कोई इंस्टॉलर दर्ज नहीं";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "लॉन्च के एक पल बाद इस पेज को फिर से खोलें।";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "अवरुद्ध समय";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "Instagram की लाइव गतिविधि स्थिति देखें और Sparkle की परिवर्तन स्मृति व कूलडाउन साफ करें।";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "निदान रीफ्रेश किया गया";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "रीफ्रेश";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "गतिविधि निदान";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] गतिविधि निदान";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "उन उपयोगकर्ताओं को जोड़ें जिनके बारे में आप सूचित होना चाहते हैं, या चैट के अंदर गतिविधि ट्रैक करें का उपयोग करें।";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "अभी तक कोई उपयोगकर्ता नहीं";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "कोई";

@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "جاري فتح الملف الشخصي...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "إعادة تشغيل مطلوبة";
 "HOOKBISECT_BISECT_HEADER" = "المنصف";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "منصف الخطاف";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] منصف الخطاف";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "لم يتم تسجيل أي مثبتات حتى الآن";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "أعد فتح هذه الصفحة لحظة بعد التشغيل.";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "الوقت المحظور";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "افحص حالة النشاط الحية في Instagram وامسح ذاكرة التنقلات وفترات التهدئة في Sparkle.";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "تم تحديث التشخيص";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "تحديث";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "تشخيص النشاط";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] تشخيص النشاط";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "أضف المستخدمين الذين تريد تلقي إخطارات بشأنهم، أو استخدم \"تتبع النشاط\" داخل إحدى الدردشات.";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "لا يوجد مستخدمون بعد";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "شخص ما";

@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "Открытие профиля...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "Требуется перезагрузка";
 "HOOKBISECT_BISECT_HEADER" = "Бисекция";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "Бисекция хуков";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] Бисекция хуков";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "Установщики ещё не записаны";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "Откройте эту страницу через момент после запуска.";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "Заблокированное время";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "Изучите текущее состояние активности Instagram и очистите память переходов и задержки Sparkle.";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "Диагностика обновлена";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "Обновить";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "Диагностика активности";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] Диагностика активности";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "Добавьте пользователей, о которых хотите получать уведомления, или используйте «Отслеживать активность» внутри чата.";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "Пока нет пользователей";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "Кто-то";

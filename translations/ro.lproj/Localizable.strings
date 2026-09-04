@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "Se deschide profilul...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "Repornire necesară";
 "HOOKBISECT_BISECT_HEADER" = "Înjumătățire";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "Înjumătățire hook";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] Înjumătățire hook";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "Nici un instalator înregistrat încă";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "Redeschide această pagină o clipă după lansare.";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "Timp blocat";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "Inspectează starea de activitate în timp real a Instagram și golește memoria tranzițiilor și pauzele Sparkle.";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "Diagnostice reîmprospătate";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "Reîmprospătează";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "Diagnostice de activitate";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] Diagnostice de activitate";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "Adaugă utilizatorii despre care vrei să fii notificat, sau folosește Urmărește Activitatea dintr-o conversație.";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "Niciun utilizator încă";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "Cineva";

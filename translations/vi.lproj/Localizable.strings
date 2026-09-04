@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "Đang mở hồ sơ...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "Yêu cầu khởi động lại";
 "HOOKBISECT_BISECT_HEADER" = "Bisect";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "Hook Bisect";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] Hook Bisect";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "Chưa ghi nhận trình cài đặt nào";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "Mở lại trang này một lúc sau khi khởi động.";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "Thời Gian Chặn";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "Xem trạng thái hoạt động trực tiếp của Instagram và xóa bộ nhớ chuyển trạng thái cùng thời gian chờ của Sparkle.";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "Đã làm mới chẩn đoán";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "Làm mới";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "Chẩn Đoán Hoạt động";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] Chẩn Đoán Hoạt động";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "Thêm những người dùng bạn muốn nhận thông báo, hoặc sử dụng Theo dõi Hoạt động bên trong một cuộc trò chuyện.";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "Chưa có người dùng nào";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "Ai đó";

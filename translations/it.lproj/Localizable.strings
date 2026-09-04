@@ -920,7 +920,7 @@
 "GENERAL_UTILS_OPENING_PROFILE_TEXT" = "Apertura profilo...";
 "GENERAL_UTILS_RESTART_REQUIRED_TEXT" = "Riavvio Richiesto";
 "HOOKBISECT_BISECT_HEADER" = "Bisezione";
-"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "Hook Bisect";
+"HOOKBISECT_BISECT_HOOK_BISECT_TITLE" = "[DEV] Hook Bisect";
 "HOOKBISECT_BISECT_NO_INSTALLERS_RECORDED_YET_TITLE" = "Nessun programma di installazione registrato ancora";
 "HOOKBISECT_BISECT_REOPEN_PAGE_MOMENT_AFTER_LAUNCH_SUBTITLE" = "Riapri questa pagina un momento dopo l'avvio.";
 "HOOKBISECT_GENERAL_BLOCKED_TIME_TITLE" = "Tempo bloccato";
@@ -1297,7 +1297,7 @@
 "MESSAGES_ACTIVITY_DIAGNOSTICS_HELP" = "Esamina lo stato di attività in tempo reale di Instagram e svuota la memoria delle transizioni e le attese di Sparkle.";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESHED_TOAST" = "Diagnostica aggiornata";
 "MESSAGES_ACTIVITY_DIAGNOSTICS_REFRESH_ACCESSIBILITY_LABEL" = "Aggiorna";
-"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "Diagnostica Attività";
+"MESSAGES_ACTIVITY_DIAGNOSTICS_TITLE" = "[DEV] Diagnostica Attività";
 "MESSAGES_ACTIVITY_EMPTY_SUBTITLE" = "Aggiungi gli utenti di cui vuoi essere notificato, oppure usa Traccia Attività all'interno di una chat.";
 "MESSAGES_ACTIVITY_EMPTY_TITLE" = "Nessun utente ancora";
 "MESSAGES_ACTIVITY_FALLBACK_NAME" = "Qualcuno";
