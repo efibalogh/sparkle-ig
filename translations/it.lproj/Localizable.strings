@@ -2016,6 +2016,9 @@
 "STORIES_PLAYBACK_AUDIO_TOGGLE_ACCESSIBILITY_LABEL" = "Attiva o disattiva l'audio delle storie";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_HELP" = "Aggiunge un pulsante dell’altoparlante sopra la barra inferiore delle storie. Toccalo per disattivare o riattivare l’audio delle storie.";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_TITLE" = "Pulsante audio delle storie";
+"STORIES_PLAYBACK_HEADER" = "Riproduzione";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_HELP" = "Nasconde il messaggio di Instagram quando l’audio di una storia non può essere riprodotto nella tua area geografica.";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_TITLE" = "Nascondi avviso audio non disponibile";
 "STORIES_SEARCH_STORY_VIEWERS_SEARCH_VIEWERS_TEXT" = "Ricerca spettatori";
 "STORIES_SEARCH_STORY_VIEWERS_STORY_VIEWERS_TEXT" = "Visualizzatori storie";
 "STORIES_SEEN_RECEIPTS_EXCLUDED_USERS_HELP" = "Questi utenti mantengono il normale comportamento di visualizzazione di Instagram e non hanno bisogno del pulsante occhio.";
@@ -2067,6 +2070,7 @@
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VALUE_VIEWERS_FORMAT" = "%ld di %ld spettatori";
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VIEWERS_FORMAT" = "%ld spettatori";
 "STORIES_STORY_VIEWERS_SEARCH_VIEWER_TEXT" = "1 spettatore";
+"STORIES_TOOLS_HEADER" = "Strumenti per le storie";
 "STORIES_VIEWERS_FILTER_ACCESSIBILITY_LABEL_FORMAT" = "Filtra visualizzatori, %@";
 "STORIES_VIEWERS_FILTER_ALL_VIEWERS" = "Tutti i Visualizzatori";
 "STORIES_VIEWERS_FILTER_DOESNT_FOLLOW_YOU" = "Non Ti Seguono";

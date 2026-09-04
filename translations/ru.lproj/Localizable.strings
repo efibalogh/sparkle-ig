@@ -2016,6 +2016,9 @@
 "STORIES_PLAYBACK_AUDIO_TOGGLE_ACCESSIBILITY_LABEL" = "Переключить звук истории";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_HELP" = "Добавляет кнопку динамика над нижней панелью истории. Нажмите её, чтобы выключить или включить звук истории.";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_TITLE" = "Кнопка звука историй";
+"STORIES_PLAYBACK_HEADER" = "Воспроизведение";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_HELP" = "Скрывает сообщение Instagram, если аудио истории недоступно для воспроизведения в вашем регионе.";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_TITLE" = "Скрыть уведомление о недоступном аудио";
 "STORIES_SEARCH_STORY_VIEWERS_SEARCH_VIEWERS_TEXT" = "Поиск просмотров";
 "STORIES_SEARCH_STORY_VIEWERS_STORY_VIEWERS_TEXT" = "Просмотры историй";
 "STORIES_SEEN_RECEIPTS_EXCLUDED_USERS_HELP" = "Для этих пользователей сохраняется обычное поведение просмотров Instagram, и кнопка-глаз не нужна.";
@@ -2067,6 +2070,7 @@
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VALUE_VIEWERS_FORMAT" = "%ld из %ld зрителей";
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VIEWERS_FORMAT" = "%ld зрителей";
 "STORIES_STORY_VIEWERS_SEARCH_VIEWER_TEXT" = "1 зритель";
+"STORIES_TOOLS_HEADER" = "Инструменты историй";
 "STORIES_VIEWERS_FILTER_ACCESSIBILITY_LABEL_FORMAT" = "Фильтр зрителей, %@";
 "STORIES_VIEWERS_FILTER_ALL_VIEWERS" = "Все зрители";
 "STORIES_VIEWERS_FILTER_DOESNT_FOLLOW_YOU" = "Не подписаны на вас";

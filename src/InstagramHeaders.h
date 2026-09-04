@@ -14,15 +14,21 @@
 - (id)normalizedURL; // method provided by Instagram app
 @end
 
-@interface IGActionableConfirmationToastViewModel : NSObject {
-    NSString *_text_annotatedTitleText;
-    NSString *_text_annotatedSubtitleText;
-}
+@interface IGActionableConfirmationToastViewModel : NSObject
+- (id)identifier;
 @end
 
 @interface IGActionableConfirmationToastPresenter : NSObject
-- (void)showAlertWithViewModel:(id)model isAnimated:(_Bool)animated animationDuration:(double)duration presentationPriority:(long long)priority tapActionBlock:(id)tap presentedHandler:(id)presented dismissedHandler:(id)dismissed;
+- (void)_showAlertWithViewModel:(id)model presentationContext:(id)context isAnimated:(_Bool)animated animationDuration:(double)duration presentationPriority:(long long)priority origin:(unsigned long long)origin toastType:(unsigned long long)type tapActionBlock:(id)tap tapToastBlock:(id)tapToast presentedHandler:(id)presented dismissedHandler:(id)dismissed;
 - (void)hideAlert;
+@end
+
+@interface IGSundialViewerInteractionCoordinator : NSObject
+- (void)presentAudioUnavailableToastFor:(id)media;
+@end
+
+@interface _TtC30IGStorySectionAudioCoordinator30IGStorySectionAudioCoordinator : NSObject
+- (void)showAudioUnavailableToast;
 @end
 
 @interface IGRootViewController : UIViewController

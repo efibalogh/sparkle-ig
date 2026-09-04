@@ -82,7 +82,35 @@ static NSArray *SPKStoriesSettingsSections(void) {
             SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSourceStories, SPKL(@"STORIES_OTHER_STORIES_TITLE"), SPKActionButtonSupportedActionsForSource(SPKActionButtonSourceStories), SPKActionButtonDefaultSectionsForSource(SPKActionButtonSourceStories))
         ],
                         nil),
-        SPKStoriesSeenReceiptsSection(), SPKTopicSection(SPKL(@"STORIES_STORY_NAVIGATION_HEADER"), @[
+        SPKStoriesSeenReceiptsSection(),
+        SPKTopicSection(SPKL(@"STORIES_PLAYBACK_HEADER"), @[
+            ({
+                SPKSetting *storyAudioToggle = [SPKSetting switchCellWithTitle:SPKL(@"STORIES_PLAYBACK_AUDIO_TOGGLE_TITLE")
+                                                                           icon:SPKSettingsIcon(@"volume")
+                                                                    defaultsKey:@"stories_audio_toggle"];
+                storyAudioToggle.switchChangeHandler = ^(BOOL isOn) {
+                    SPKPreferenceSetObject(@(isOn), @"stories_audio_toggle");
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SPKStoryAudioTogglePreferenceDidChangeNotification object:nil];
+                };
+                storyAudioToggle.helpText = SPKL(@"STORIES_PLAYBACK_AUDIO_TOGGLE_HELP");
+                storyAudioToggle;
+            }),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_TITLE")
+                                           icon:SPKSettingsIcon(@"error")
+                                    defaultsKey:@"stories_hide_audio_unavailable_toast"],
+                               SPKL(@"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE")
+                                           icon:SPKSettingsIcon(@"arrow_up_right")
+                                    defaultsKey:@"stories_hide_join_trending"],
+                               SPKL(@"STORIES_OTHER_HIDE_JOIN_TRENDING_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE")
+                                           icon:SPKSettingsIcon(@"highlights")
+                                    defaultsKey:@"stories_hide_recent_highlights"],
+                               SPKL(@"STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP")),
+        ],
+                        nil),
+
+        SPKTopicSection(SPKL(@"STORIES_STORY_NAVIGATION_HEADER"), @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_VISUAL_MESSAGES_STOP_AUTO_ADVANCE_TITLE")
                                            icon:SPKSettingsIcon(@"autoscroll")
                                     defaultsKey:@"stories_stop_auto_advance"],
@@ -145,30 +173,11 @@ static NSArray *SPKStoriesSettingsSections(void) {
         ],
                         nil),
 
-        SPKTopicSection(SPKL(@"STORIES_OTHER_HEADER"), @[
-            ({
-                SPKSetting *storyAudioToggle = [SPKSetting switchCellWithTitle:SPKL(@"STORIES_PLAYBACK_AUDIO_TOGGLE_TITLE")
-                                                                           icon:SPKSettingsIcon(@"volume")
-                                                                    defaultsKey:@"stories_audio_toggle"];
-                storyAudioToggle.switchChangeHandler = ^(BOOL isOn) {
-                    SPKPreferenceSetObject(@(isOn), @"stories_audio_toggle");
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SPKStoryAudioTogglePreferenceDidChangeNotification object:nil];
-                };
-                storyAudioToggle.helpText = SPKL(@"STORIES_PLAYBACK_AUDIO_TOGGLE_HELP");
-                storyAudioToggle;
-            }),
+        SPKTopicSection(SPKL(@"STORIES_TOOLS_HEADER"), @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_SEARCH_VIEWER_LIST_TITLE")
                                            icon:SPKSettingsIcon(@"search")
                                     defaultsKey:@"stories_search_viewer_list"],
                                SPKL(@"STORIES_OTHER_SEARCH_VIEWER_LIST_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE")
-                                           icon:SPKSettingsIcon(@"arrow_up_right")
-                                    defaultsKey:@"stories_hide_join_trending"],
-                               SPKL(@"STORIES_OTHER_HIDE_JOIN_TRENDING_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE")
-                                           icon:SPKSettingsIcon(@"highlights")
-                                    defaultsKey:@"stories_hide_recent_highlights"],
-                               SPKL(@"STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_SHOW_STORY_MENTIONS_TITLE")
                                            icon:SPKSettingsIcon(@"mention")
                                     defaultsKey:@"stories_mentions_btn"],

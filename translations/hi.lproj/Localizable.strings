@@ -2016,6 +2016,9 @@
 "STORIES_PLAYBACK_AUDIO_TOGGLE_ACCESSIBILITY_LABEL" = "स्टोरी ऑडियो टॉगल करें";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_HELP" = "स्टोरी की निचली बार के ऊपर एक स्पीकर बटन जोड़ता है। स्टोरी का प्लेबैक ऑडियो म्यूट या अनम्यूट करने के लिए इसे टैप करें।";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_TITLE" = "स्टोरी ऑडियो बटन";
+"STORIES_PLAYBACK_HEADER" = "प्लेबैक";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_HELP" = "जब आपके क्षेत्र में किसी स्टोरी का ऑडियो नहीं चलाया जा सकता, तो Instagram का संदेश छिपाता है।";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_TITLE" = "अनुपलब्ध ऑडियो सूचना छिपाएँ";
 "STORIES_SEARCH_STORY_VIEWERS_SEARCH_VIEWERS_TEXT" = "दर्शकों को खोजें";
 "STORIES_SEARCH_STORY_VIEWERS_STORY_VIEWERS_TEXT" = "Story दर्शक";
 "STORIES_SEEN_RECEIPTS_EXCLUDED_USERS_HELP" = "इन उपयोगकर्ताओं के लिए Instagram का सामान्य सीन व्यवहार बना रहता है और आँख वाले बटन की ज़रूरत नहीं होती।";
@@ -2067,6 +2070,7 @@
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VALUE_VIEWERS_FORMAT" = "%ld में से %ld दर्शक";
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VIEWERS_FORMAT" = "%ld दर्शक";
 "STORIES_STORY_VIEWERS_SEARCH_VIEWER_TEXT" = "1 दर्शक";
+"STORIES_TOOLS_HEADER" = "स्टोरी टूल";
 "STORIES_VIEWERS_FILTER_ACCESSIBILITY_LABEL_FORMAT" = "दर्शक फ़िल्टर करें, %@";
 "STORIES_VIEWERS_FILTER_ALL_VIEWERS" = "सभी दर्शक";
 "STORIES_VIEWERS_FILTER_DOESNT_FOLLOW_YOU" = "आपको फ़ॉलो नहीं करते";

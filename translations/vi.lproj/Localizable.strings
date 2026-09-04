@@ -2016,6 +2016,9 @@
 "STORIES_PLAYBACK_AUDIO_TOGGLE_ACCESSIBILITY_LABEL" = "Bật hoặc tắt âm thanh story";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_HELP" = "Thêm nút loa phía trên thanh story bên dưới. Nhấn để tắt hoặc bật âm thanh phát story.";
 "STORIES_PLAYBACK_AUDIO_TOGGLE_TITLE" = "Nút âm thanh Story";
+"STORIES_PLAYBACK_HEADER" = "Phát";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_HELP" = "Ẩn thông báo của Instagram khi không thể phát âm thanh của tin trong khu vực của bạn.";
+"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_TITLE" = "Ẩn thông báo âm thanh không khả dụng";
 "STORIES_SEARCH_STORY_VIEWERS_SEARCH_VIEWERS_TEXT" = "Tìm kiếm người xem";
 "STORIES_SEARCH_STORY_VIEWERS_STORY_VIEWERS_TEXT" = "Những người xem Story";
 "STORIES_SEEN_RECEIPTS_EXCLUDED_USERS_HELP" = "Những người dùng này giữ hành vi đã xem thông thường của Instagram và không cần nút hình con mắt.";
@@ -2067,6 +2070,7 @@
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VALUE_VIEWERS_FORMAT" = "%ld của %ld người xem";
 "STORIES_STORY_VIEWERS_SEARCH_VALUE_VIEWERS_FORMAT" = "%ld người xem";
 "STORIES_STORY_VIEWERS_SEARCH_VIEWER_TEXT" = "1 người xem";
+"STORIES_TOOLS_HEADER" = "Công cụ tin";
 "STORIES_VIEWERS_FILTER_ACCESSIBILITY_LABEL_FORMAT" = "Lọc người xem, %@";
 "STORIES_VIEWERS_FILTER_ALL_VIEWERS" = "Tất cả Người xem";
 "STORIES_VIEWERS_FILTER_DOESNT_FOLLOW_YOU" = "Không Theo dõi Bạn";

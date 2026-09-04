@@ -166,6 +166,12 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Included / Excluded Users**: Two separate per-account lists, selected by Manually Mark Seen: when off, the *Included Users* list (only those users get the eye button / require manual seen); when on, the *Excluded Users* list (those users keep normal automatic seen). Each list is independent and stored per account. Manageable from the eye button, long-press, or the list.
 - **Mark Seen on Like**, **Mark Seen on Reply**: disabled unless Manually Mark Seen is on.
 
+### Playback
+- **Story Audio Button**: Adds an animated speaker button above the bottom Story bar for Story media with playable audio. Tap it to mute or unmute Story playback without changing Feed or Reels audio. It distinguishes playing, muted, and zero system volume; at zero volume, tapping gives selection feedback and animates the icon without changing playback or device volume.
+- **Hide Audio Unavailable Toast**: Hides Instagram's message when a Story's audio cannot be played in your region. The unavailable audio remains muted.
+- **Hide Story Midcards**: Removes the "Join a trending" / "Add Yours" promo cards from the stories tray.
+- **Hide Recent Highlights**: Removes resurfaced highlights, the stories Instagram serves once you have watched every unseen story. They are dropped in three places, because the story tray, tapping forward and swiping sideways each read a different list: from the tray, so they no longer appear as rings; from the viewer's own reel list, so tapping forward past the last story no longer walks into them; and from the viewer's data store, so swiping to the next person does not reach them either. Opening a highlight yourself from a profile is unaffected.
+
 ### Story Navigation
 - **Stop Auto Advance**: Prevents auto-advancing to the next story.
 - **Advance on Eye Button / Story Like / Story Reply**: Advances after the respective mark-seen action.
@@ -182,11 +188,8 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Show Gallery Upload Button**: Adds a direct **Sparkle Gallery** button in the photo sticker picker to attach media saved in Sparkle as stickers.
 - **Use Detailed Color Picker**: Long-press the eyedropper for finer text-color control.
 
-### Other
-- **Story Audio Button**: Adds an animated speaker button above the bottom Story bar for Story media with playable audio. Tap it to mute or unmute Story playback without changing Feed or Reels audio. It distinguishes playing, muted, and zero system volume; at zero volume, tapping gives selection feedback and animates the icon without changing playback or device volume.
+### Story Tools
 - **Search Viewer List**: Adds a search button to your own story's viewer list. Tapping it fetches the complete viewer list and opens a sheet where you can search by username or name; use a native top-bar menu to filter by who you follow, who you do not follow, people who do not follow you, or starred viewers; and star viewers for persistent quick lookup. Starred viewers follow the per-account setting scope. A fully Sparkle-native alternative to the Instagram Plus viewer search.
-- **Hide Story Midcards**: Removes the "Join a trending" / "Add Yours" promo cards from the stories tray. 
-- **Hide Recent Highlights**: Removes resurfaced highlights, the stories Instagram serves once you have watched every unseen story. They are dropped in three places, because the story tray, tapping forward and swiping sideways each read a different list: from the tray, so they no longer appear as rings; from the viewer's own reel list, so tapping forward past the last story no longer walks into them; and from the viewer's data store, so swiping to the next person does not reach them either. Opening a highlight yourself from a profile is unaffected.
 - **Show Story Mentions**: Adds a mentions button listing mentioned users. Each account appears once no matter how many mention stickers point at it, and the story's own author is left out of the list. Tapping a user opens their real profile over the story viewer instead of closing it, so swiping back or tapping the back button returns you straight to the story. The follow button beside each account is Instagram's own control, showing Follow, Following, Requested, or Follow back.
 - **Mention Count Badge**: Shows the number of unique mentioned accounts on the story mentions button. Requires Show Story Mentions. The badge is redacted along with the button when Hide UI on Capture is on.
 - **Show Poll Vote Counts**: Shows vote counts next to poll options.
