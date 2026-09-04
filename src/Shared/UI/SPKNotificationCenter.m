@@ -232,7 +232,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationDirectVisualMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_VISUAL_MESSAGE_SEEN_MESSAGE"), @"view_twice"),
               SPKNotificationItem(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE"), @"messages"),
               SPKNotificationItem(kSPKNotificationDirectThreadSeenRule, SPKL(@"UI_NOTIFICATION_CENTER_CHAT_SEEN_LIST_CHANGES_TEXT"), @"eye"),
-              SPKNotificationItem(kSPKNotificationDirectHiddenChat, SPKL(@"UI_NOTIFICATION_CENTER_HIDDEN_CHAT_CHANGES_TEXT"), @"eye_off"),
+              SPKNotificationItem(kSPKNotificationDirectHiddenChat, SPKL(@"UI_NOTIFICATION_CENTER_HIDDEN_CHAT_CHANGES_TEXT"), @"messages_off"),
               SPKNotificationItem(kSPKNotificationUnsentMessage, SPKL(@"UI_NOTIFICATION_CENTER_UNSENT_MESSAGE"), @"undo"),
               SPKNotificationItem(kSPKNotificationUnsentReaction, SPKL(@"UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION"), @"reactions"),
               SPKNotificationItem(kSPKNotificationPresenceOnline, SPKL(@"MESSAGES_ACTIVITY_USER_ONLINE_TITLE"), @"circle_check_filled"),
@@ -703,8 +703,15 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
         // When the user is already in the manage list (or anywhere in Settings),
         // don't advertise/enable "tap to open" — there's nothing to open.
         BOOL suppressSeenListTap = SPKManualSeenSettingsUIVisible();
+        // Hidden chat pills are informational rather than success toned, because their
+        // icon says which way the chat went and the success tone replaces it with a
+        // checkmark. They still open their list, so the tap is offered for that
+        // identifier on any tone.
+        BOOL offersListTap = (tone == SPKNotificationToneSuccess ||
+                              [identifier isEqualToString:kSPKNotificationDirectHiddenChat]) &&
+                             !suppressSeenListTap;
         NSString *resolvedSubtitle = subtitle;
-        if (tone == SPKNotificationToneSuccess && !suppressSeenListTap) {
+        if (offersListTap) {
             if ([identifier isEqualToString:kSPKNotificationStorySeenUserRule] ||
                 [identifier isEqualToString:kSPKNotificationProfileStorySeenUserRule]) {
                 BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
@@ -714,7 +721,11 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
                 BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"msgs_manual_seen"];
                 resolvedSubtitle = manualSeenEnabled ? SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_EXCLUDED_LIST_TEXT") : SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_INCLUDED_LIST_TEXT");
             } else if ([identifier isEqualToString:kSPKNotificationDirectHiddenChat]) {
-                resolvedSubtitle = SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_HIDDEN_CHATS_TEXT");
+                // Only when the pill has nothing more specific to say: the hide pill's
+                // own subtitle explains how to get the chat back, which is worth more
+                // than naming the screen the tap opens.
+                if (resolvedSubtitle.length == 0)
+                    resolvedSubtitle = SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_HIDDEN_CHATS_TEXT");
             } else if ([identifier isEqualToString:kSPKNotificationPresenceUserRule]) {
                 resolvedSubtitle = SPKL(@"MESSAGES_ACTIVITY_TAP_TO_OPEN_LIST_SUBTITLE");
             } else if (SPKAutoSaveListViewControllerForRuleIdentifier(identifier)) {
@@ -728,7 +739,7 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
                             : nil;
         SPKNotificationPillView *pill = [SPKNotificationPillView toastPillWithTitle:title subtitle:resolvedSubtitle icon:icon tone:tone];
 
-        if (tone == SPKNotificationToneSuccess && !suppressSeenListTap) {
+        if (offersListTap) {
             if ([identifier isEqualToString:kSPKNotificationStorySeenUserRule] ||
                 [identifier isEqualToString:kSPKNotificationProfileStorySeenUserRule]) {
                 pill.onTapWhenCompleted = ^{
