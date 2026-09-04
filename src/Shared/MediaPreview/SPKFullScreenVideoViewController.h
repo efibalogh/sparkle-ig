@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cleanup;
 - (void)resetZoomIfNeeded;
 - (void)setPlayerControlOverlayInsets:(UIEdgeInsets)insets animated:(BOOL)animated;
+/// Keeps AVKit's transport controls above the supplied bottom boundary while
+/// accounting for any safe area that UIKit already propagated to the player.
+- (void)synchronizePlayerControlsToBottomBoundaryInset:(CGFloat)bottomInset
+                                              animated:(BOOL)animated;
 - (void)applyMediaContentInsets:(UIEdgeInsets)insets;
 - (void)play;
 - (void)pause;

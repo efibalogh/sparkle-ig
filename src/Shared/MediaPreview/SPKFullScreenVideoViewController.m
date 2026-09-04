@@ -297,6 +297,26 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     }
 }
 
+- (void)synchronizePlayerControlsToBottomBoundaryInset:(CGFloat)bottomInset
+                                              animated:(BOOL)animated {
+    if (!_playerViewController)
+        return;
+
+    // additionalSafeAreaInsets is additive. Subtract our previous contribution
+    // from AVKit's effective safe area to recover what UIKit currently
+    // propagates, then provide only the missing distance to the toolbar. This
+    // also removes our inset if a later appearance cycle starts propagating the
+    // complete safe area on its own.
+    UIEdgeInsets currentAdditional =
+        _playerViewController.additionalSafeAreaInsets;
+    CGFloat inheritedBottom =
+        MAX(0.0, _playerViewController.view.safeAreaInsets.bottom -
+                     currentAdditional.bottom);
+    UIEdgeInsets required = UIEdgeInsetsZero;
+    required.bottom = MAX(0.0, bottomInset - inheritedBottom);
+    [self setPlayerControlOverlayInsets:required animated:animated];
+}
+
 - (void)setupLoadingIndicator {
     _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
     _loadingIndicator.translatesAutoresizingMaskIntoConstraints = NO;

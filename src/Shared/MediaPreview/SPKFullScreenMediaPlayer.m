@@ -47,12 +47,6 @@ static NSTimeInterval const kDismissFadeDuration = 0.18;
 static NSString *SPKPreviewMediumDateString(NSDate *date) {
     return [SPKUtils spk_formattedDate:date includingYear:YES];
 }
-// The bottom toolbar is a real UIToolbar now, so the navigation controller
-// folds it into the safe area that AVPlayerViewController already respects. No
-// manual control inset is needed; keep it at zero so the scrubber sits just
-// above it.
-static CGFloat const kVideoPlayerControlBottomInset = 0.0;
-
 static UIImage *SPKGalleryPreviewMenuIcon(NSString *resourceName) {
     // menuIconNamed: avoids the UIGraphicsImageRenderer downscale that iOS 16's
     // UIMenu renders blank for vector-backed (.svg) glyphs. See SPKAssetUtils.
@@ -794,6 +788,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     [self updateMediaContentBarInsetsIfNeeded];
     [self updateInfoOverlayPositionIfNeeded];
     [self updateChromeBottomLimitIfNeeded];
+    [self updateCurrentVideoPlayerControlInsetsAnimated:NO];
 }
 
 // On non-notched devices the opaque top/bottom bars overlap edge-to-edge media,
@@ -1254,9 +1249,27 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 - (void)updatePlayerControlInsetsForVideoController:
             (SPKFullScreenVideoViewController *)videoController
                                            animated:(BOOL)animated {
-    UIEdgeInsets insets =
-        UIEdgeInsetsMake(0.0, 0.0, kVideoPlayerControlBottomInset, 0.0);
-    [videoController setPlayerControlOverlayInsets:insets animated:animated];
+    CGFloat bottomBoundaryInset = 0.0;
+    BOOL usesLegacyToolbar = YES;
+    if (@available(iOS 26.0, *)) {
+        usesLegacyToolbar = NO;
+    }
+    if (usesLegacyToolbar && self.isToolbarVisible && !self.previewOnly &&
+        !SPKFullScreenPreviewShouldInsetMediaBetweenBars()) {
+        UIToolbar *toolbar = self.navigationController.toolbar;
+        if (toolbar && !toolbar.hidden && toolbar.window) {
+            CGRect toolbarFrame = [self.view convertRect:toolbar.bounds
+                                                 fromView:toolbar];
+            bottomBoundaryInset =
+                MAX(0.0, CGRectGetMaxY(self.view.bounds) -
+                             CGRectGetMinY(toolbarFrame));
+        } else if (self.hasChromeBottomLimit) {
+            bottomBoundaryInset = self.chromeBottomLimit;
+        }
+    }
+    [videoController synchronizePlayerControlsToBottomBoundaryInset:
+                         bottomBoundaryInset
+                                                          animated:animated];
 }
 
 - (void)updateCurrentVideoPlayerControlInsetsAnimated:(BOOL)animated {
