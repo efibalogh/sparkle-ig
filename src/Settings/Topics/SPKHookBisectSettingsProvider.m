@@ -29,6 +29,67 @@ static void SPKHookBisectReloadVisibleSettings(void) {
     [settingsVC.tableView reloadData];
 }
 
+static UIViewController *SPKHookBisectVisiblePresenter(void) {
+    UIViewController *presenter = UIApplication.sharedApplication.keyWindow.rootViewController;
+    while (presenter.presentedViewController)
+        presenter = presenter.presentedViewController;
+    return presenter;
+}
+
+static NSString *SPKHookBisectStateReport(void) {
+    NSMutableArray<NSString *> *skipped = [NSMutableArray array];
+    for (NSDictionary *group in SPKHookBisectRegisteredGroups()) {
+        for (NSString *installerName in group[@"installers"] ?: @[]) {
+            if (SPKHookBisectInstallerIsSkipped(installerName))
+                [skipped addObject:[NSString stringWithFormat:@"%@ / %@", group[@"surface"] ?: @"Unknown", installerName]];
+        }
+    }
+
+    NSMutableString *state = [NSMutableString stringWithFormat:@"\n\nHook bisect\nMaster disable all: %@\nConfigured to skip on launch: %lu of %lu\n",
+                                                               [SPKUtils getBoolPref:@"tools_disable_all"] ? @"yes" : @"no",
+                                                               (unsigned long)SPKHookBisectSkippedCount(),
+                                                               (unsigned long)SPKHookBisectRegisteredInstallerCount()];
+    if (skipped.count == 0) {
+        [state appendString:@"(none)\n"];
+    } else {
+        for (NSString *entry in skipped)
+            [state appendFormat:@"%@\n", entry];
+    }
+    return state;
+}
+
+static void SPKSharePerformanceReport(void) {
+    NSMutableString *report = [SPKPerfMeterTextReport() mutableCopy];
+    [report appendString:SPKHookBisectStateReport()];
+
+    NSDateFormatter *filenameFormatter = [[NSDateFormatter alloc] init];
+    filenameFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    filenameFormatter.dateFormat = @"yyyyMMdd-HHmmss";
+    NSString *filename = [NSString stringWithFormat:@"Sparkle-Performance-%@.txt",
+                                                     [filenameFormatter stringFromDate:[NSDate date]]];
+    NSURL *fileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:filename]];
+    NSError *writeError = nil;
+    BOOL wroteFile = [report writeToURL:fileURL atomically:YES encoding:NSUTF8StringEncoding error:&writeError];
+
+    UIViewController *presenter = SPKHookBisectVisiblePresenter();
+    if (!presenter)
+        return;
+    NSArray *items = wroteFile ? @[ fileURL ] : @[ report ];
+    UIActivityViewController *share = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+    share.popoverPresentationController.sourceView = presenter.view;
+    share.popoverPresentationController.sourceRect = CGRectMake(CGRectGetMidX(presenter.view.bounds),
+                                                                CGRectGetMidY(presenter.view.bounds), 1.0, 1.0);
+    if (wroteFile) {
+        share.completionWithItemsHandler = ^(__unused UIActivityType activityType,
+                                             __unused BOOL completed,
+                                             __unused NSArray *returnedItems,
+                                             __unused NSError *activityError) {
+            [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+        };
+    }
+    [presenter presentViewController:share animated:YES completion:nil];
+}
+
 static SPKSetting *SPKHookBisectInstallerRow(NSString *installerName) {
     BOOL essential = SPKHookBisectInstallerIsEssential(installerName);
     // ON = installed. Reading "turn the hook off" matches what the user is
@@ -123,7 +184,17 @@ static NSArray<SPKSetting *> *SPKPerfMeterRows(void) {
         return SPKPerfMeterIsEnabled();
     };
 
-    return @[ meter, hud, summary, worst, reset, log ];
+    SPKSetting *share = [SPKSetting buttonCellWithTitle:SPKL(@"HOOKBISECT_GENERAL_SHARE_PERFORMANCE_REPORT_TITLE")
+                                               subtitle:@""
+                                                   icon:nil
+                                                 action:^{
+                                                     SPKSharePerformanceReport();
+                                                 }];
+    share.enabledProvider = ^BOOL {
+        return SPKPerfMeterIsEnabled();
+    };
+
+    return @[ meter, hud, summary, worst, reset, log, share ];
 }
 
 @implementation SPKHookBisectSettingsProvider

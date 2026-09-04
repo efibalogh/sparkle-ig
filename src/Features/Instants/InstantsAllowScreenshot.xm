@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
+#import "../../App/SPKPerfMeter.h"
 #import "../../Shared/UI/SPKChrome.h"
 #import "../../Utils.h"
 
@@ -48,6 +49,7 @@ static BOOL spkInstantsBypassCached = NO;
 static CFTimeInterval spkInstantsBypassCachedAt = 0;
 
 static BOOL SPKInstantsScreenshotBypassComputeOnMain(void) {
+    SPK_PERF_SCOPE(@"InstantsAllowScreenshot.treeWalk");
     if (!SPKInstantsAllowScreenshotEnabled())
         return NO;
     for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {

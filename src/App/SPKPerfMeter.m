@@ -9,7 +9,9 @@
 #import <mach/mach.h>
 #import <os/lock.h>
 #import <pthread.h>
+#import <sys/utsname.h>
 
+#import "../Tweak.h"
 #import "../Utils.h"
 
 NSString *const kSPKPerfMeterEnabledKey = @"tools_perf_meter";
@@ -561,6 +563,107 @@ NSString *SPKPerfMeterWorstScopeSummary(void) {
                                       worst,
                                       [scopeTime[worst] doubleValue],
                                       scopeCalls[worst]];
+}
+
+static NSString *SPKPerfDeviceMachine(void) {
+    struct utsname systemInfo;
+    if (uname(&systemInfo) != 0)
+        return UIDevice.currentDevice.model ?: @"unknown";
+    return [NSString stringWithUTF8String:systemInfo.machine] ?: UIDevice.currentDevice.model ?: @"unknown";
+}
+
+static NSString *SPKPerfReportTimestamp(void) {
+    NSISO8601DateFormatter *formatter = [[NSISO8601DateFormatter alloc] init];
+    formatter.formatOptions = NSISO8601DateFormatWithInternetDateTime |
+                              NSISO8601DateFormatWithFractionalSeconds;
+    return [formatter stringFromDate:[NSDate date]] ?: @"unknown";
+}
+
+NSString *SPKPerfMeterTextReport(void) {
+    NSDictionary *snapshot = SPKPerfMeterSnapshot();
+    NSDictionary *scopeTime = snapshot[@"scopeTime"] ?: @{};
+    NSDictionary *scopeCalls = snapshot[@"scopeCalls"] ?: @{};
+    NSDictionary *counters = snapshot[@"counters"] ?: @{};
+
+    os_unfair_lock_lock(&spkPerfCounterLock);
+    NSDictionary *stacks = [spkPerfStallStacks copy] ?: @{};
+    os_unfair_lock_unlock(&spkPerfCounterLock);
+
+    NSDictionary *appInfo = NSBundle.mainBundle.infoDictionary ?: @{};
+    NSString *instagramVersion = [SPKUtils IGVersionString] ?: @"unknown";
+    NSString *instagramBuild = [appInfo[@"CFBundleVersion"] description] ?: @"unknown";
+    UIDevice *device = UIDevice.currentDevice;
+
+    NSMutableString *report = [NSMutableString string];
+    [report appendString:@"Sparkle Performance Report\n"];
+    [report appendFormat:@"Generated: %@\n", SPKPerfReportTimestamp()];
+    [report appendFormat:@"Sparkle: %@ (developer diagnostics)\n", SPKVersionString ?: @"unknown"];
+    [report appendFormat:@"Instagram: %@ (%@)\n", instagramVersion, instagramBuild];
+    [report appendFormat:@"OS: %@ %@\n", device.systemName ?: @"iOS", device.systemVersion ?: @"unknown"];
+    [report appendFormat:@"Device: %@\n", SPKPerfDeviceMachine()];
+    [report appendString:@"Privacy: no usernames, account identifiers, or media URLs are included.\n\n"];
+
+    [report appendString:@"Measurement\n"];
+    [report appendFormat:@"Elapsed: %.3fs\n", [snapshot[@"elapsed"] doubleValue]];
+    [report appendFormat:@"Blocked: %.3fs (%.2f%%)\n",
+                         [snapshot[@"blockedMs"] doubleValue] / 1000.0,
+                         [snapshot[@"blockedPercent"] doubleValue]];
+    [report appendFormat:@"Worst stall: %.0fms\n", [snapshot[@"worstMs"] doubleValue]];
+    [report appendFormat:@"Stalls: %@\n", snapshot[@"stalls"] ?: @0];
+    [report appendFormat:@"Long stalls: %@\n", snapshot[@"longStalls"] ?: @0];
+    [report appendFormat:@"Samples: %@\n\n", snapshot[@"samples"] ?: @0];
+
+    [report appendString:@"UI hierarchy\n"];
+    [report appendFormat:@"Windows: %@\n", snapshot[@"windows"] ?: @0];
+    [report appendFormat:@"View controllers: %@\n", snapshot[@"viewControllers"] ?: @0];
+    [report appendFormat:@"Views: %@\n", snapshot[@"views"] ?: @0];
+    [report appendFormat:@"Gesture recognizers: %@\n", snapshot[@"gestureRecognizers"] ?: @0];
+    [report appendFormat:@"Deepest navigation stack: %@\n\n", snapshot[@"deepestNavStack"] ?: @0];
+
+    [report appendString:@"Timed scopes\n"];
+    NSArray<NSString *> *rankedScopes = SPKPerfScopeNamesByCost(scopeTime);
+    if (rankedScopes.count == 0) {
+        [report appendString:@"(none)\n"];
+    } else {
+        for (NSString *key in rankedScopes) {
+            double seconds = [scopeTime[key] doubleValue];
+            NSInteger calls = [scopeCalls[key] integerValue];
+            [report appendFormat:@"%@ | %.3fs total | %ld calls | %.3fms average\n",
+                                 key,
+                                 seconds,
+                                 (long)calls,
+                                 calls > 0 ? seconds * 1000.0 / calls : 0.0];
+        }
+    }
+
+    [report appendString:@"\nCounters\n"];
+    NSArray<NSString *> *rankedCounters =
+        [counters keysSortedByValueUsingComparator:^NSComparisonResult(NSNumber *a, NSNumber *b) {
+            return [b compare:a];
+        }];
+    if (rankedCounters.count == 0) {
+        [report appendString:@"(none)\n"];
+    } else {
+        for (NSString *key in rankedCounters)
+            [report appendFormat:@"%@ = %@\n", key, counters[key]];
+    }
+
+    [report appendString:@"\nSampled main-thread freeze stacks\n"];
+    NSArray<NSString *> *rankedStacks =
+        [stacks keysSortedByValueUsingComparator:^NSComparisonResult(NSNumber *a, NSNumber *b) {
+            return [b compare:a];
+        }];
+    if (rankedStacks.count == 0) {
+        [report appendString:@"(none captured)\n"];
+    } else {
+        NSUInteger shown = 0;
+        for (NSString *stack in rankedStacks) {
+            if (shown++ >= 5)
+                break;
+            [report appendFormat:@"x%@ %@\n", stacks[stack], stack];
+        }
+    }
+    return report;
 }
 
 void SPKPerfMeterLogSnapshot(NSString *label) {

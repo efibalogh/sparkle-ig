@@ -67,6 +67,12 @@ FOUNDATION_EXPORT void SPKPerfMeterLogSnapshot(NSString *label);
 /// has been recorded yet.
 FOUNDATION_EXPORT NSString *SPKPerfMeterWorstScopeSummary(void);
 
+/// Complete, shareable diagnostic report for the current measurement window.
+/// Contains build/device metadata, aggregate stalls, timed scopes, counters and
+/// sampled main-thread freeze stacks. It intentionally contains no account or
+/// media identifiers.
+FOUNDATION_EXPORT NSString *SPKPerfMeterTextReport(void);
+
 /// Ad-hoc counters, for when the stall meter says "something is slow" and the
 /// question becomes "how often does this run". Thread-safe and cheap enough to
 /// drop into a layout path while hunting; remove them once the hunt is over.

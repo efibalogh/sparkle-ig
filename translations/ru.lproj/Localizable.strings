@@ -930,6 +930,7 @@
 "HOOKBISECT_GENERAL_RELAUNCH_INSTAGRAM_TITLE" = "Перезапустить Instagram";
 "HOOKBISECT_GENERAL_RESTORE_ALL_TITLE" = "Восстановить всё";
 "HOOKBISECT_GENERAL_SCREEN_HUD_TITLE" = "HUD на экране";
+"HOOKBISECT_GENERAL_SHARE_PERFORMANCE_REPORT_TITLE" = "Поделиться отчётом о производительности";
 "HOOKBISECT_GENERAL_SKIPPED_INSTALLERS_TITLE" = "Пропущенные установщики";
 "HOOKBISECT_GENERAL_SKIP_ALL_TITLE" = "Пропустить всё";
 "HOOKBISECT_GENERAL_SKIP_HALF_REMAINING_TITLE" = "Пропустить половину оставшихся";

@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../../App/SPKPerfMeter.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Accelerate/Accelerate.h>
 #import <CoreMedia/CoreMedia.h>
@@ -958,6 +959,7 @@ static void SPKRemoveInstantsGalleryButton(UIView *header) {
 }
 
 static void SPKInstantsInstallGalleryButton(UIView *header) {
+    SPK_PERF_SCOPE(@"InstantsGalleryUpload.placeButton");
     if (!header)
         return;
     UIView *host = [header viewWithTag:kSPKInstantsGalleryButtonTag];

@@ -1,5 +1,6 @@
 #import "../../Shared/ActionButton/ActionButtonCore.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
+#import "../../App/SPKPerfMeter.h"
 #import "../../Utils.h"
 #import "InstantsResolver.h"
 #import <objc/runtime.h>
@@ -184,6 +185,7 @@ static CGRect SPKInstantsButtonFrame(UIView *header, UIButton *button) {
 }
 
 static void SPKInstantsPlaceButton(UIView *header) {
+    SPK_PERF_SCOPE(@"InstantsActionButton.placeButton");
     if (!header)
         return;
 
@@ -275,6 +277,7 @@ typedef void (*SPKInstantsHeaderLayoutIMP)(id, SEL);
 static SPKInstantsHeaderLayoutIMP orig_instantsHeaderLayoutSubviews = NULL;
 
 static void replaced_instantsHeaderLayoutSubviews(id self, SEL _cmd) {
+    SPK_PERF_SCOPE(@"InstantsActionButton.headerLayout");
     if (orig_instantsHeaderLayoutSubviews)
         orig_instantsHeaderLayoutSubviews(self, _cmd);
     SPKInstantsPlaceButton((UIView *)self);

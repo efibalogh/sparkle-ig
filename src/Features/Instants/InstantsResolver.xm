@@ -3,6 +3,7 @@
 #import <objc/runtime.h>
 #import <substrate.h>
 
+#import "../../App/SPKPerfMeter.h"
 #import "../../Shared/ActionButton/ActionButtonCore.h"
 #import "../../Shared/ActionButton/ActionButtonLookupUtils.h"
 #import "../../Shared/Account/SPKAccountManager.h"
@@ -1753,6 +1754,7 @@ static SPKInstantsResolvedSnap *SPKInstantsStoreSnapMatchingIdentityKey(NSString
 }
 
 SPKInstantsResolvedSnap *SPKInstantsResolveActiveSnapInView(UIView *viewInHierarchy) {
+    SPK_PERF_SCOPE(@"InstantsResolver.resolveActiveSnap");
     sConsumptionSessionActive = YES;
     UIView *activeView = SPKInstantsActiveSnapViewInWindow(viewInHierarchy);
     NSString *visualIdentityKey = activeView
@@ -2172,6 +2174,7 @@ static NSInteger SPKInstantsFindSnapIndexByPK(NSArray<SPKInstantsResolvedSnap *>
 /// and returns a complete SPKInstantsResolverResult.
 /// When no service media is available, falls back to the live stack view.
 SPKInstantsResolverResult *SPKInstantsResolveForHeader(UIView *header, NSString *reason) {
+    SPK_PERF_SCOPE(@"InstantsResolver.resolveForHeader");
     sConsumptionSessionActive = YES;
     // Seed the session from whatever Instagram exposed before/while opening the viewer,
     // then keep appending later service updates. These arrays are cleared on genuine exit.

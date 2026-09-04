@@ -930,6 +930,7 @@
 "HOOKBISECT_GENERAL_RELAUNCH_INSTAGRAM_TITLE" = "Επανεκκίνηση Instagram";
 "HOOKBISECT_GENERAL_RESTORE_ALL_TITLE" = "Επαναφορά Όλων";
 "HOOKBISECT_GENERAL_SCREEN_HUD_TITLE" = "HUD σε Οθόνη";
+"HOOKBISECT_GENERAL_SHARE_PERFORMANCE_REPORT_TITLE" = "Κοινοποίηση αναφοράς απόδοσης";
 "HOOKBISECT_GENERAL_SKIPPED_INSTALLERS_TITLE" = "Πρόγραμμα Εγκατάστασης που Παραλήφθηκαν";
 "HOOKBISECT_GENERAL_SKIP_ALL_TITLE" = "Παράλειψη Όλων";
 "HOOKBISECT_GENERAL_SKIP_HALF_REMAINING_TITLE" = "Παράλειψη Ήμισυ των Υπολοίπων";
