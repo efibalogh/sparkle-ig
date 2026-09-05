@@ -1,15 +1,15 @@
-#import "SPKStrings.h"
 #import "SPKGeneralSettingsProvider.h"
+#import "SPKStrings.h"
 
 #import "../../AssetUtils.h"
 #import "../../Shared/Account/SPKAccountManager.h"
 #import "../../Shared/ActionButton/ActionButtonCore.h"
+#import "../../Shared/MediaPreview/SPKFullScreenImageViewController.h"
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../Utils.h"
 #import "../SPKActionSectionIconPickerViewController.h"
 #import "../SPKAppIconCatalog.h"
 #import "../SPKAppIconPickerViewController.h"
-#import "../../Shared/MediaPreview/SPKFullScreenImageViewController.h"
 #import "../SPKPreferenceAvailability.h"
 #import "../SPKTopicSettingsSupport.h"
 
@@ -33,6 +33,14 @@ static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
                                                            defaultsKey:@"general_action_btn_show_date"],
                                        SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_HELP"))];
     return rows;
+}
+
+static SPKSetting *SPKTappableTextLinksSetting(void) {
+    SPKSetting *setting = [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_TEXT_LINKS_TITLE")
+                                                     icon:SPKSettingsIcon(@"web")
+                                              defaultsKey:@"general_tappable_text_links"];
+    setting.requiresRestart = YES;
+    return setting;
 }
 
 @implementation SPKGeneralSettingsProvider
@@ -87,17 +95,17 @@ static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
 
 + (SPKSetting *)perAccountInfoSetting {
     return SPKSettingWithHelp([SPKSetting buttonCellWithTitle:SPKL(@"ALERT_ACTION_HOW_WORKS")
-                                  subtitle:nil
-                                      icon:SPKSettingsIcon(@"info")
-                                    action:^{
-                                        NSString *message =
-                                            SPKL(@"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT");
+                                                     subtitle:nil
+                                                         icon:SPKSettingsIcon(@"info")
+                                                       action:^{
+                                                           NSString *message =
+                                                               SPKL(@"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT");
 
-                                        [SPKIGAlertPresenter presentAlertFromViewController:topMostController()
-                                                                                      title:SPKL(@"GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE")
-                                                                                    message:message
-                                                                                    actions:@[ [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_OK") style:SPKIGAlertActionStyleCancel handler:nil] ]];
-                                    }],
+                                                           [SPKIGAlertPresenter presentAlertFromViewController:topMostController()
+                                                                                                         title:SPKL(@"GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE")
+                                                                                                       message:message
+                                                                                                       actions:@[ [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_OK") style:SPKIGAlertActionStyleCancel handler:nil] ]];
+                                                       }],
                               SPKL(@"GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP"));
 }
 
@@ -143,6 +151,12 @@ static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
                                                           icon:SPKSettingsIcon(@"link")
                                                    defaultsKey:@"general_hold_send_copy_link"],
                                SPKL(@"GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP")),
+            SPKSettingWithHelp(SPKTappableTextLinksSetting(), SPKL(@"GENERAL_TEXT_LINKS_HELP")),
+            SPKSettingWithHelp(SPKSettingApplySelectedMenuIcon([SPKSetting menuCellWithTitle:SPKL(@"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE")
+                                                                                        icon:SPKSettingsIcon(@"link")
+                                                                                        menu:SPKTextLinkOpeningModeMenu()],
+                                                               SPKSettingsIcon(@"external_link")),
+                               SPKL(@"GENERAL_TEXT_LINKS_OPENING_MODE_HELP")),
         ],
                         nil),
         SPKTopicSection(SPKL(@"GENERAL_SHARING_HEADER"), @[
@@ -162,74 +176,73 @@ static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
                         nil),
         SPKTopicSection(SPKL(@"GENERAL_RECOMMENDATIONS_HEADER"), @[
             SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"GENERAL_ADS_HEADER")
-                                       subtitle:@""
-                                           icon:SPKSettingsIcon(@"ads")
-                                    navSections:@[
-                                        SPKTopicSection(SPKL(@"GENERAL_ADS_HEADER"), @[
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_FEED_ADS_TITLE")
-                                                                defaultsKey:@"general_hide_ads_feed"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_STORY_ADS_TITLE")
-                                                                defaultsKey:@"general_hide_ads_stories"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_REELS_ADS_TITLE")
-                                                                defaultsKey:@"general_hide_ads_reels"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_EXPLORE_ADS_TITLE")
-                                                                defaultsKey:@"general_hide_ads_explore"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_REELS_SHOPPING_CTA_TITLE")
-                                                                defaultsKey:@"general_hide_reels_shopping_cta"]
-                                        ],
-                                                        nil)
-                                    ]],
+                                                          subtitle:@""
+                                                              icon:SPKSettingsIcon(@"ads")
+                                                       navSections:@[
+                                                           SPKTopicSection(SPKL(@"GENERAL_ADS_HEADER"), @[
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_FEED_ADS_TITLE")
+                                                                                   defaultsKey:@"general_hide_ads_feed"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_STORY_ADS_TITLE")
+                                                                                   defaultsKey:@"general_hide_ads_stories"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_REELS_ADS_TITLE")
+                                                                                   defaultsKey:@"general_hide_ads_reels"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_EXPLORE_ADS_TITLE")
+                                                                                   defaultsKey:@"general_hide_ads_explore"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_REELS_SHOPPING_CTA_TITLE")
+                                                                                   defaultsKey:@"general_hide_reels_shopping_cta"]
+                                                           ],
+                                                                           nil)
+                                                       ]],
                                SPKL(@"GENERAL_RECOMMENDATIONS_ADS_HELP")),
             SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"GENERAL_ADS_META_AI_TITLE")
-                                       subtitle:@""
-                                           icon:SPKSettingsIcon(@"meta_ai")
-                                    navSections:@[
-                                        SPKTopicSection(@"", @[
-                                            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_DIRECT_TITLE")
-                                                                                  defaultsKey:@"general_hide_meta_ai_msgs"],
-                                                               SPKL(@"GENERAL_ADS_HIDE_DIRECT_HELP")),
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_EXPLORE_SEARCH_TITLE")
-                                                                defaultsKey:@"general_hide_meta_ai_explore"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_COMMENTS_TITLE")
-                                                                defaultsKey:@"general_hide_meta_ai_comments"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE")
-                                                                defaultsKey:@"general_hide_meta_ai_creation"],
-                                            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_GLOBAL_AI_CHROME_TITLE")
-                                                                                  defaultsKey:@"general_hide_meta_ai_global"],
-                                                               SPKL(@"GENERAL_ADS_HIDE_GLOBAL_AI_CHROME_HELP"))
-                                        ],
-                                                        nil)
-                                    ]],
+                                                          subtitle:@""
+                                                              icon:SPKSettingsIcon(@"meta_ai")
+                                                       navSections:@[
+                                                           SPKTopicSection(@"", @[
+                                                               SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_DIRECT_TITLE")
+                                                                                                      defaultsKey:@"general_hide_meta_ai_msgs"],
+                                                                                  SPKL(@"GENERAL_ADS_HIDE_DIRECT_HELP")),
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_EXPLORE_SEARCH_TITLE")
+                                                                                   defaultsKey:@"general_hide_meta_ai_explore"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_COMMENTS_TITLE")
+                                                                                   defaultsKey:@"general_hide_meta_ai_comments"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE")
+                                                                                   defaultsKey:@"general_hide_meta_ai_creation"],
+                                                               SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_ADS_HIDE_GLOBAL_AI_CHROME_TITLE")
+                                                                                                      defaultsKey:@"general_hide_meta_ai_global"],
+                                                                                  SPKL(@"GENERAL_ADS_HIDE_GLOBAL_AI_CHROME_HELP"))
+                                                           ],
+                                                                           nil)
+                                                       ]],
                                SPKL(@"GENERAL_RECOMMENDATIONS_META_AI_HELP")),
             SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"GENERAL_ADS_SUGGESTED_USERS_TITLE")
-                                       subtitle:@""
-                                           icon:SPKSettingsIcon(@"users")
-                                    navSections:@[
-                                        SPKTopicSection(SPKL(@"GENERAL_ADS_SUGGESTED_USERS_TITLE"), @[
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_feed"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_reels"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_msgs"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_search"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_profile"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_ACTIVITY_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_activity"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_follow_lists"],
-                                            [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE")
-                                                                defaultsKey:@"general_hide_suggested_users_subscriptions"]
-                                        ],
-                                                        nil)
-                                    ]],
+                                                          subtitle:@""
+                                                              icon:SPKSettingsIcon(@"users")
+                                                       navSections:@[
+                                                           SPKTopicSection(SPKL(@"GENERAL_ADS_SUGGESTED_USERS_TITLE"), @[
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_feed"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_reels"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_msgs"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_search"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_profile"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_ACTIVITY_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_activity"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_follow_lists"],
+                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE")
+                                                                                   defaultsKey:@"general_hide_suggested_users_subscriptions"]
+                                                           ],
+                                                                           nil)
+                                                       ]],
                                SPKL(@"GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP"))
         ],
                         nil),
-        SPKTopicSection(SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_HEADER"),
-                        SPKGeneralMediaPreviewRows(), nil),
+        SPKTopicSection(SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_HEADER"), SPKGeneralMediaPreviewRows(), nil),
         SPKTopicSection(SPKL(@"GENERAL_COMMENTS_HEADER"), @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_COMMENTS_COPY_COMMENT_TITLE")
                                                           icon:SPKSettingsIcon(@"copy")

@@ -234,6 +234,17 @@ UIMenu *SPKMainFeedModeMenu(void) {
     ]];
 }
 
+UIMenu *SPKTextLinkOpeningModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT"), nil, nil,
+                       @"general_tappable_text_links_opening_mode", @"in_app", NO),
+        SPKMenuCommand(SPKL(@"GENERAL_TEXT_LINKS_SAFARI_TEXT"), nil, nil,
+                       @"general_tappable_text_links_opening_mode", @"safari", NO),
+        SPKMenuCommand(SPKL(@"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT"), nil, nil,
+                       @"general_tappable_text_links_opening_mode", @"ask", NO)
+    ]];
+}
+
 UIMenu *SPKSeenButtonPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), @"arrow_up", nil, @"msgs_seen_button_position", @"top", NO),

@@ -445,10 +445,44 @@
 @property (nonatomic, readonly) BOOL showMessageButtonWhenFollowing;
 @end
 
+@class IGStyledString;
+
 @interface IGCoreTextView : UIView
+@property (nonatomic, copy) IGStyledString *styledString;
+@property (nonatomic, weak) id linkHandler;
 @property (nonatomic, strong) NSString *text;
 - (void)addHandleLongPress;                                     // new
 - (void)handleLongPress:(UILongPressGestureRecognizer *)sender; // new
+@end
+
+@interface IGFeedItemHeaderCoreTextView : UIView
+@property (nonatomic, copy) IGStyledString *styledString;
+@end
+
+@interface IGFeedItemTextCell : UIView
+@property (readonly, nonatomic) IGCoreTextView *coreTextView;
+@property (readonly, nonatomic) IGStyledString *styledString;
+- (void)setStyledString:(IGStyledString *)styledString;
+- (void)updateStyledString;
+@end
+
+@interface IGUnifiedVideoCaptionView : UIView
+@property (retain, nonatomic) id viewModel;
+- (CGSize)sizeThatFits:(CGSize)size;
+- (void)prepareForAnimationToExpansionPercentage:(double)percentage;
+@end
+
+// Runtime-resolved Swift class used by expanded post and Reels caption sheets.
+@interface IGCommentRichCaptionView : UIView
+- (void)configureWith:(id)viewModel;
+- (void)setCoreTextLinkHandler:(id)handler;
+@end
+
+// Runtime-resolved to IGCommentCell on 410 and
+// IGCommentCells.IGCommentCell on newer Instagram builds.
+@interface IGCommentCell : UIView
+@property (readonly, nonatomic) UIView *commentView;
+- (void)bindViewModel:(id)viewModel;
 @end
 
 @interface IGUserSession : NSObject
@@ -469,6 +503,8 @@
 @interface IGStyledString : NSObject
 @property (retain, nonatomic) NSMutableAttributedString *attributedString;
 - (void)appendString:(id)arg1;
+- (void)setURL:(id)url range:(NSRange)range;
+- (void)setColor:(id)color range:(NSRange)range;
 @end
 
 @interface IGInstagramAppDelegate : NSObject <UIApplicationDelegate>

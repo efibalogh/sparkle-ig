@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels-Vorschläge ausblenden";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Such-Vorschläge ausblenden";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Abonnement-Vorschläge ausblenden";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Jedes Mal fragen";
+"GENERAL_TEXT_LINKS_HELP" = "Erkennt http:// und https:// Links in Kommentaren sowie Beitrags- oder Reel-Bildunterschriften, ohne den Link zu kontaktieren, bis du darauf tippst.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "App-interner Browser";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Wähle, wo angetippte Web-Links geöffnet werden.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Öffnen in";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Link öffnen";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Links im Text erkennen";
 "GENERAL_TITLE" = "Allgemein";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Reel-Repost bestätigen";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Möchtest du diesen Beitrag wirklich teilen?";

@@ -28,6 +28,8 @@ marked **(restart)** and prompt for a relaunch when changed.
 - **Hide Recent Searches** *(restart)*: Hides existing recent searches and stops search bars from saving new queries.
 - **Copy Links Without Tracking**: Strips the username path and tracking parameters from copied links.
 - **Hold Send to Copy Link**: Long-press the send/share button to copy the post link.
+- **Detect Links in Text** *(restart)*: Finds explicit `http://` and `https://` links in comments, post captions, and reel captions, colors them in Instagram's blue and makes them tappable. Nothing is requested from a link until you tap it. Off by default.
+- **Open In**: Chooses where a tapped link opens: an in-app Safari view, the Safari app, or Ask Every Time. The in-app Safari view is the default.
 
 ### Sharing
 - **Hide Create Group Button**: Hides the create group button on the Instagram send/share sheet.

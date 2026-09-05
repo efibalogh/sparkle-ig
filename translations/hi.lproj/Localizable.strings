@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "सर्च सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "सदस्यता सुझाव छिपाएं";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "हर बार पूछें";
+"GENERAL_TEXT_LINKS_HELP" = "टिप्पणियों और पोस्ट या रील कैप्शन में http:// और https:// लिंक का पता लगाता है, और जब तक आप टैप न करें तब तक लिंक से संपर्क नहीं करता।";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "इन-ऐप ब्राउज़र";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "चुनें कि टैप किए गए वेब लिंक कहां खुलें।";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "इसमें खोलें";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "लिंक खोलें";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "टेक्स्ट में लिंक पहचानें";
 "GENERAL_TITLE" = "सामान्य";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Reel को रीपोस्ट करने की पुष्टि करें";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "क्या आप निश्चित रूप से इस पोस्ट को रीपोस्ट करना चाहते हैं?";

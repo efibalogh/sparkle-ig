@@ -48,6 +48,7 @@ FOUNDATION_EXPORT void SPKInstallNavigationHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallSettingsShortcutsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableHapticsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCopyDescriptionHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallTappableTextLinksHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideRecentSearchesHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSearchBarIconRemapHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDetailedColorPickerHooksIfEnabled(void);
@@ -191,6 +192,7 @@ void SPKInstallFeedSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallHideRepostButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableHomeButtonRefreshHooksIfEnabled);
     SPK_INSTALL(SPKInstallCopyDescriptionHooksIfEnabled);
+    SPK_INSTALL(SPKInstallTappableTextLinksHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideMetricsHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableAppIconGestureHooksIfEnabled);
 }
@@ -236,6 +238,7 @@ void SPKInstallReelsSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallDisableScrollingReelsHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideRepostButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideMetricsHooksIfEnabled);
+    SPK_INSTALL(SPKInstallTappableTextLinksHooksIfEnabled);
 }
 
 void SPKInstallMessagesSurfaceHooksIfNeeded(void) {

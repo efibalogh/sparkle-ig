@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Ricerca";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Abbonamento";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Chiedi ogni volta";
+"GENERAL_TEXT_LINKS_HELP" = "Rileva i link http:// e https:// nei commenti e nelle didascalie di post o reel senza contattare il link finché non lo tocchi.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Browser integrato";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Scegli dove aprire i link web toccati.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Apri in";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Apri link";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Rileva i link nel testo";
 "GENERAL_TITLE" = "Generale";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Conferma Repost Reel";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Sei sicuro di voler ricondividere questo post?";

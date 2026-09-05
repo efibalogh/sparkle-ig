@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels Önerilerini Gizle";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Arama Önerilerini Gizle";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Abonelik Önerilerini Gizle";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Her Seferinde Sor";
+"GENERAL_TEXT_LINKS_HELP" = "Yorumlardaki ve gönderi veya reels açıklamalarındaki http:// ve https:// bağlantılarını, siz dokununcaya kadar bağlantıyla iletişime geçmeden algılar.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Uygulama İçi Tarayıcı";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Dokunulan web bağlantılarının nerede açılacağını seçin.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Şununla aç";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Bağlantıyı Aç";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Metindeki bağlantıları algıla";
 "GENERAL_TITLE" = "Genel";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Reel'i Yeniden Paylaşmayı Onayla";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Bu gönderiyi yeniden paylaşmak istediğinden emin misin?";

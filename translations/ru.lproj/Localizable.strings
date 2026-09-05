@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Скрыть рекомендации Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Скрыть рекомендации поиска";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Скрыть рекомендации подписок";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Спрашивать каждый раз";
+"GENERAL_TEXT_LINKS_HELP" = "Обнаруживает ссылки http:// и https:// в комментариях и подписях к постам или Reels, не обращаясь к ссылке, пока вы её не нажмёте.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Встроенный браузер";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Выберите, где будут открываться нажатые веб-ссылки.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Открывать в";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Открыть ссылку";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Распознавать ссылки в тексте";
 "GENERAL_TITLE" = "Основное";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Подтвердить репост Reels";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Вы уверены, что хотите переопубликовать этот пост?";

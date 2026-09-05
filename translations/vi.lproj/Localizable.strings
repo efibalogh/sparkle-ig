@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ẩn Gợi ý Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ẩn Gợi ý Tìm kiếm";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Ẩn Gợi ý Đăng ký";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Hỏi mỗi lần";
+"GENERAL_TEXT_LINKS_HELP" = "Phát hiện liên kết http:// và https:// trong bình luận và chú thích bài viết hoặc reel mà không kết nối đến liên kết cho đến khi bạn nhấn vào.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Trình duyệt trong ứng dụng";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Chọn nơi mở liên kết web khi được nhấn.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Mở bằng";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Mở liên kết";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Phát hiện liên kết trong văn bản";
 "GENERAL_TITLE" = "Chung";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Xác nhận chia sẻ lại Reel";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Bạn có chắc chắn muốn chia sẻ lại bài viết này?";

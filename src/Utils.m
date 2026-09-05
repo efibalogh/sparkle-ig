@@ -1895,7 +1895,20 @@ static NSDate *SPKScanObjectForPostedDate(id target, NSInteger depth) {
 + (BOOL)openURL:(NSURL *)url {
     if (!url)
         return NO;
-    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    UIApplication *application = [UIApplication sharedApplication];
+    // canOpenURL: answers NO for any scheme the host app has not declared in
+    // LSApplicationQueriesSchemes even when openURL: would still succeed, so it
+    // is only a safe pre-check for web URLs. Custom schemes go straight through
+    // and report their real outcome via the completion handler.
+    NSString *scheme = url.scheme.lowercaseString;
+    BOOL isWebURL = [scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"];
+    if (isWebURL && ![application canOpenURL:url]) {
+        SPKLog(@"General", @"External URL rejected by UIApplication host=%@", url.host ?: @"(none)");
+        return NO;
+    }
+    [application openURL:url options:@{} completionHandler:^(BOOL success) {
+        SPKLog(@"General", @"External URL handoff %@ host=%@", success ? @"accepted" : @"failed", url.host ?: @"(none)");
+    }];
     return YES;
 }
 

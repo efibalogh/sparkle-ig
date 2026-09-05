@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "إخفاء اقتراحات Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "إخفاء اقتراحات البحث";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "إخفاء اقتراحات الاشتراك";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "السؤال في كل مرة";
+"GENERAL_TEXT_LINKS_HELP" = "يكتشف روابط http:// و https:// في التعليقات وتسميات المنشورات أو الريلز التوضيحية دون الاتصال بالرابط حتى تنقر عليه.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "المتصفح داخل التطبيق";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "اختر مكان فتح روابط الويب التي يتم النقر عليها.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "فتح في";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "فتح الرابط";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "اكتشاف الروابط في النص";
 "GENERAL_TITLE" = "عام";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "تأكيد إعادة نشر Reel";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "هل أنت متأكد من أنك تريد إعادة نشر هذا المنشور؟";

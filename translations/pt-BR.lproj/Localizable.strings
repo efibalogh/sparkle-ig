@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Pesquisa";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Inscrição";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Perguntar sempre";
+"GENERAL_TEXT_LINKS_HELP" = "Detecta links http:// e https:// em comentários e legendas de publicações ou reels sem contatar o link até você tocar nele.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Navegador no app";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Escolha onde os links da web tocados serão abertos.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Abrir em";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Abrir link";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Detectar links no texto";
 "GENERAL_TITLE" = "Geral";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Confirmar Republicação no Reel";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Tem certeza de que deseja repostar esta postagem?";

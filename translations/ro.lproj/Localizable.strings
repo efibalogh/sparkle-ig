@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ascunde sugestii Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ascunde sugestii căutare";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Ascunde sugestii abonament";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Întreabă de fiecare dată";
+"GENERAL_TEXT_LINKS_HELP" = "Detectează linkurile http:// și https:// din comentarii și din descrierile postărilor sau Reels-urilor fără a contacta linkul până când îl atingi.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Browser din aplicație";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Alege unde se deschid linkurile web atinse.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Deschide în";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Deschide linkul";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Detectează linkurile din text";
 "GENERAL_TITLE" = "General";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Confirma republicarea Reel";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Sigur doriți să repostați această postare?";

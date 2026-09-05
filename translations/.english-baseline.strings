@@ -910,6 +910,14 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Hide Reels Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Hide Search Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Hide Subscription Suggestions";
+"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Ask Every Time";
+"GENERAL_TEXT_LINKS_HELP" = "Detects http:// and https:// links in comments and post or reel captions without contacting the link until you tap it.";
+"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "In-App Browser";
+"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Choose where tapped web links open.";
+"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Open In";
+"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Open Link";
+"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
+"GENERAL_TEXT_LINKS_TITLE" = "Detect Links in Text";
 "GENERAL_TITLE" = "General";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Confirm Reel Repost";
 "GENERAL_TWEAK_REPOST_POST_CONFIRMATION_MESSAGE" = "Are you sure you want to repost this post?";
