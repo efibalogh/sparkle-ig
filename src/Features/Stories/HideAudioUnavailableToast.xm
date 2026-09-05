@@ -97,12 +97,23 @@ extern "C" void SPKInstallHideAudioUnavailableToastHooksIfEnabled(void) {
                                                                          NSSelectorFromString(@"presentAudioUnavailableToastFor:"),
                                                                          (IMP)SPKPresentAudioUnavailableToast,
                                                                          (IMP *)&SPKOriginalPresentAudioUnavailableToast);
+        // Older Instagram builds funnel actionable toasts through the presenter
+        // itself; newer ones delegate to a concrete presenter and leave the
+        // original class as a dispatcher without the method. Try both.
+        SEL showAlertSelector = NSSelectorFromString(@"_showAlertWithViewModel:presentationContext:isAnimated:animationDuration:presentationPriority:origin:toastType:tapActionBlock:tapToastBlock:presentedHandler:dismissedHandler:");
         BOOL installedActionablePresenter = SPKHookAudioUnavailableToastMethod("IGActionableConfirmationToastPresenter",
-                                                                               NSSelectorFromString(@"_showAlertWithViewModel:presentationContext:isAnimated:animationDuration:presentationPriority:origin:toastType:tapActionBlock:tapToastBlock:presentedHandler:dismissedHandler:"),
+                                                                               showAlertSelector,
                                                                                (IMP)SPKShowActionableToast,
                                                                                (IMP *)&SPKOriginalShowActionableToast);
-        (void)installedCurrentStory;
-        (void)installedLegacySundial;
-        (void)installedActionablePresenter;
+        if (!installedActionablePresenter)
+            installedActionablePresenter = SPKHookAudioUnavailableToastMethod("IGActionableConfirmationToastConcretePresenter",
+                                                                              showAlertSelector,
+                                                                              (IMP)SPKShowActionableToast,
+                                                                              (IMP *)&SPKOriginalShowActionableToast);
+
+        SPKLog(@"Stories", @"Audio unavailable toast hooks installed currentStory=%@ legacySundial=%@ actionablePresenter=%@",
+               installedCurrentStory ? @"YES" : @"NO",
+               installedLegacySundial ? @"YES" : @"NO",
+               installedActionablePresenter ? @"YES" : @"NO");
     });
 }
