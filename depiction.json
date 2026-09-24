@@ -17,7 +17,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Version",
-          "text": "1.3.1"
+          "text": "1.4.0"
         },
         {
           "class": "DepictionTableTextView",
@@ -27,12 +27,12 @@
         {
           "class": "DepictionTableTextView",
           "title": "Size",
-          "text": "8.3 MB"
+          "text": "8.4 MB"
         },
         {
           "class": "DepictionTableTextView",
           "title": "Released",
-          "text": "2026-09-02"
+          "text": "2026-09-24"
         },
         {
           "class": "DepictionSeparatorView"
@@ -67,6 +67,24 @@
       "class": "DepictionStackView",
       "tabname": "Changelog",
       "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "v1.4.0",
+          "useBoldText": true
+        },
+        {
+          "class": "DepictionLabelView",
+          "text": "2026-09-24",
+          "textColor": "#8E8E93",
+          "fontSize": 12
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "## ✨ What's new?\n\n- Support for Instagram version 448.0.0\n\n**Languages**\n- Download languages from Settings, or import a pack from a file or a link\n- Installed packs update themselves when Sparkle updates, so new strings arrive translated\n- Eight new languages: Spanish (Latin America), Persian, Filipino, Swiss German, Indonesian, Thai, Traditional Chinese and Lithuanian, for 24 in total\n\n**Stories & Reels**\n- **Playback Controls**: a floating panel to change the speed, scrub and pause, growing out of its button, with Liquid Glass on iOS 26 and later\n- **Stop Looping Reels**: a reel stops on its last frame with Instagram's own paused state, and plays from the start on the next play\n- **Manually Mark Seen** becomes Off / On Tap / Toggle. In Toggle, the eye button turns seen receipts on for the rest of the story session\n- Optionally confirm before marking a story seen\n- Hide the \"Audio unavailable\" message on stories\n- Story hide toggles have their own settings section\n\n**Messages**\n- **Hide Chats**: hidden chats are muted and leave the inbox and every list built from recent conversations, like the share sheet. Hold the inbox title to show them again\n- **Friends Map location**: choose where friends see you, with a map picker, place search, saved places and an optional Friends Map button\n\n**Instants**\n- **Manually Mark Seen**: Instants stay unseen and in the tray while you watch them, and the eye button releases the one on screen\n- **Advance on Eye Button**: move on to the next Instant after marking one seen\n- **Hide Instants in Inbox**: an alternative to the official Hide Instants setting\n\n**General & Interface**\n- **Open Links In**: send links Instagram would open in its own browser to an in-app Safari view or the Safari app, with redirects unwrapped and click-tracking parameters removed\n- Links in captions, reel captions and comments are tappable\n- **Square Grid** for profiles and Explore\n- **Scroll Edge Style**: Off / Default / Soft / Hard replaces the Progressive Blur toggle, applied live to the top edge only\n- The `stkn` tracking parameter is removed from shared links\n\n**Profile & Reposts**\n- A **Saved** tab on your own profile\n- The reposted bubble's sheet shows the date it was reposted at\n\n**Media & Downloads**\n- Downloads keep running in the background until the queue drains, including FFmpeg merges and conversions\n- **Picture in Picture** for expanded videos (off by default)\n- Trim, crop and photo edit saves appear in Download History, and every entry shows its real file size\n- Select Gallery items with a two-finger drag in list view\n\n**Tools**\n- **Debug Button** (Tools > Diagnostics): a floating button that builds an element, screen or view hierarchy report for bug reports. On-screen text is left out unless you include it\n\n## 🛠 Fixes & Improvements\n\n- Story Preview works again on Instagram 447 and later, including when Instagram withholds it for the account\n- Message previews open the thread again instead of Instagram Plus's upsell\n- Swiping comments away sideways drives Instagram's own sheet dismissal\n- The deleted messages log no longer gets the app killed while a large DM backlog syncs\n- Muting or unmuting a story lasts for the whole viewer session, and closing the viewer still restores Feed and Reels audio\n- **Start Reels Muted** (previously Disable Auto-Unmuting Reels) writes Instagram's own sound state instead of blocking unmute events, so reels reliably start muted and the volume buttons, ringer and headphones behave normally again. It now applies to every account\n- Long-pressing Explore opens the copied post/reel link on its own page instead of the feed\n- The feed's send button responds to taps in its center again when Hold Send to Copy Link is on\n- Encoding settings behave as labeled: max resolution limits the shorter side and never enlarges, and rows that did nothing are gone\n- Copied download links follow the photo and video quality settings\n- Less lag around Instants and deep in the app, and when messages are unsent\n- A paused expanded video stays paused when you return to it\n- Video controls in the expanded preview line up with the toolbar, which now fits within the width on iOS 27\n- The reels action button no longer renders as a black shape when its menu opens\n- The mentions badge matches the brightness of HDR stories\n- The story viewer search button is in place as soon as the viewer list opens\n- The bottom seen button fades out while the sticker/GIF sheet is open in a chat\n- Clearing the cache runs in the background\n- Short info sheets and lists no longer scroll as if there were more content below\n- Fixed a crash when tapping a swatch in the story color picker\n- Story Preview works on posts and profiles even with Long Press to Expand on\n- Hiding feed ads no longer removes the loading spinner from a short feed, so more posts keep loading\n- Even spacing in the visited profiles subtitle and around profile indicators when a name wraps\n"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
         {
           "class": "DepictionSubheaderView",
           "title": "v1.3.1",

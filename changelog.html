@@ -20,9 +20,97 @@
 
   <section class="rel">
     <div class="rel-head">
+      <h2>v1.4.0</h2>
+      <span class="date">2026-09-24</span>
+      <span class="pill">Current</span>
+    </div>
+    <div class="notes">
+<h2>✨ What's new?</h2>
+<ul>
+<li>Support for Instagram version 448.0.0</li>
+</ul>
+<p><strong>Languages</strong></p>
+<ul>
+<li>Download languages from Settings, or import a pack from a file or a link</li>
+<li>Installed packs update themselves when Sparkle updates, so new strings arrive translated</li>
+<li>Eight new languages: Spanish (Latin America), Persian, Filipino, Swiss German, Indonesian, Thai, Traditional Chinese and Lithuanian, for 24 in total</li>
+</ul>
+<p><strong>Stories &amp; Reels</strong></p>
+<ul>
+<li><strong>Playback Controls</strong>: a floating panel to change the speed, scrub and pause, growing out of its button, with Liquid Glass on iOS 26 and later</li>
+<li><strong>Stop Looping Reels</strong>: a reel stops on its last frame with Instagram's own paused state, and plays from the start on the next play</li>
+<li><strong>Manually Mark Seen</strong> becomes Off / On Tap / Toggle. In Toggle, the eye button turns seen receipts on for the rest of the story session</li>
+<li>Optionally confirm before marking a story seen</li>
+<li>Hide the "Audio unavailable" message on stories</li>
+<li>Story hide toggles have their own settings section</li>
+</ul>
+<p><strong>Messages</strong></p>
+<ul>
+<li><strong>Hide Chats</strong>: hidden chats are muted and leave the inbox and every list built from recent conversations, like the share sheet. Hold the inbox title to show them again</li>
+<li><strong>Friends Map location</strong>: choose where friends see you, with a map picker, place search, saved places and an optional Friends Map button</li>
+</ul>
+<p><strong>Instants</strong></p>
+<ul>
+<li><strong>Manually Mark Seen</strong>: Instants stay unseen and in the tray while you watch them, and the eye button releases the one on screen</li>
+<li><strong>Advance on Eye Button</strong>: move on to the next Instant after marking one seen</li>
+<li><strong>Hide Instants in Inbox</strong>: an alternative to the official Hide Instants setting</li>
+</ul>
+<p><strong>General &amp; Interface</strong></p>
+<ul>
+<li><strong>Open Links In</strong>: send links Instagram would open in its own browser to an in-app Safari view or the Safari app, with redirects unwrapped and click-tracking parameters removed</li>
+<li>Links in captions, reel captions and comments are tappable</li>
+<li><strong>Square Grid</strong> for profiles and Explore</li>
+<li><strong>Scroll Edge Style</strong>: Off / Default / Soft / Hard replaces the Progressive Blur toggle, applied live to the top edge only</li>
+<li>The <code>stkn</code> tracking parameter is removed from shared links</li>
+</ul>
+<p><strong>Profile &amp; Reposts</strong></p>
+<ul>
+<li>A <strong>Saved</strong> tab on your own profile</li>
+<li>The reposted bubble's sheet shows the date it was reposted at</li>
+</ul>
+<p><strong>Media &amp; Downloads</strong></p>
+<ul>
+<li>Downloads keep running in the background until the queue drains, including FFmpeg merges and conversions</li>
+<li><strong>Picture in Picture</strong> for expanded videos (off by default)</li>
+<li>Trim, crop and photo edit saves appear in Download History, and every entry shows its real file size</li>
+<li>Select Gallery items with a two-finger drag in list view</li>
+</ul>
+<p><strong>Tools</strong></p>
+<ul>
+<li><strong>Debug Button</strong> (Tools &gt; Diagnostics): a floating button that builds an element, screen or view hierarchy report for bug reports. On-screen text is left out unless you include it</li>
+</ul>
+<h2>🛠 Fixes &amp; Improvements</h2>
+<ul>
+<li>Story Preview works again on Instagram 447 and later, including when Instagram withholds it for the account</li>
+<li>Message previews open the thread again instead of Instagram Plus's upsell</li>
+<li>Swiping comments away sideways drives Instagram's own sheet dismissal</li>
+<li>The deleted messages log no longer gets the app killed while a large DM backlog syncs</li>
+<li>Muting or unmuting a story lasts for the whole viewer session, and closing the viewer still restores Feed and Reels audio</li>
+<li><strong>Start Reels Muted</strong> (previously Disable Auto-Unmuting Reels) writes Instagram's own sound state instead of blocking unmute events, so reels reliably start muted and the volume buttons, ringer and headphones behave normally again. It now applies to every account</li>
+<li>Long-pressing Explore opens the copied post/reel link on its own page instead of the feed</li>
+<li>The feed's send button responds to taps in its center again when Hold Send to Copy Link is on</li>
+<li>Encoding settings behave as labeled: max resolution limits the shorter side and never enlarges, and rows that did nothing are gone</li>
+<li>Copied download links follow the photo and video quality settings</li>
+<li>Less lag around Instants and deep in the app, and when messages are unsent</li>
+<li>A paused expanded video stays paused when you return to it</li>
+<li>Video controls in the expanded preview line up with the toolbar, which now fits within the width on iOS 27</li>
+<li>The reels action button no longer renders as a black shape when its menu opens</li>
+<li>The mentions badge matches the brightness of HDR stories</li>
+<li>The story viewer search button is in place as soon as the viewer list opens</li>
+<li>The bottom seen button fades out while the sticker/GIF sheet is open in a chat</li>
+<li>Clearing the cache runs in the background</li>
+<li>Short info sheets and lists no longer scroll as if there were more content below</li>
+<li>Fixed a crash when tapping a swatch in the story color picker</li>
+<li>Story Preview works on posts and profiles even with Long Press to Expand on</li>
+<li>Hiding feed ads no longer removes the loading spinner from a short feed, so more posts keep loading</li>
+<li>Even spacing in the visited profiles subtitle and around profile indicators when a name wraps</li>
+</ul>
+    </div>
+  </section>
+  <section class="rel">
+    <div class="rel-head">
       <h2>v1.3.1</h2>
       <span class="date">2026-09-02</span>
-      <span class="pill">Current</span>
     </div>
     <div class="notes">
 <h2>🛠 Fixes &amp; Improvements</h2>
