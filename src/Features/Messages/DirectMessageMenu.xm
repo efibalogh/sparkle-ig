@@ -539,6 +539,18 @@ static void SPKDMClearUploadComposerContext(void) {
     sSPKDMComposerMediaInjected = NO;
 }
 
+// Records the message a long-press menu is being built for, so the prism menu
+// init that follows can add the rows that depend on it.
+static void SPKDMNoteMessageMenuViewModel(id viewModel) {
+    SPKDMGifTitleNoteMenuViewModel(viewModel);
+    if ([SPKUtils getBoolPref:@"downloads_audio_enabled"] &&
+        [SPKUtils getBoolPref:@"msgs_download_audio_messages"] &&
+        [SPKAudioDownloadCoordinator bestAudioURLFromMediaObject:viewModel]) {
+        sSPKDMAudioRowPending = YES;
+        sSPKDMAudioRowViewModel = viewModel;
+    }
+}
+
 %group SPKDirectMessageMenuHooks
 
 %hook IGDirectComposerOverflowController
@@ -670,13 +682,23 @@ static id SPKDMProcessMenuItems(id menuItems) {
                                userSession:(id)userSession
                                 tapHandler:(id)tapHandler {
     id config = %orig(options, viewModel, contentType, isSticker, isMusicSticker, directNuxManager, sessionUserDefaults, launcherSet, userSession, tapHandler);
-    SPKDMGifTitleNoteMenuViewModel(viewModel);
-    if ([SPKUtils getBoolPref:@"downloads_audio_enabled"] &&
-        [SPKUtils getBoolPref:@"msgs_download_audio_messages"] &&
-        [SPKAudioDownloadCoordinator bestAudioURLFromMediaObject:viewModel]) {
-        sSPKDMAudioRowPending = YES;
-        sSPKDMAudioRowViewModel = viewModel;
-    }
+    SPKDMNoteMessageMenuViewModel(viewModel);
+    return config;
+}
+
+// IG 448 renamed the launcherSet: argument to mobileConfig: with the same shape.
++ (id)menuConfigurationWithEligibleOptions:(id)options
+                          messageViewModel:(id)viewModel
+                               contentType:(id)contentType
+                                 isSticker:(_Bool)isSticker
+                            isMusicSticker:(_Bool)isMusicSticker
+                          directNuxManager:(id)directNuxManager
+                       sessionUserDefaults:(id)sessionUserDefaults
+                              mobileConfig:(id)mobileConfig
+                               userSession:(id)userSession
+                                tapHandler:(id)tapHandler {
+    id config = %orig(options, viewModel, contentType, isSticker, isMusicSticker, directNuxManager, sessionUserDefaults, mobileConfig, userSession, tapHandler);
+    SPKDMNoteMessageMenuViewModel(viewModel);
     return config;
 }
 

@@ -22,6 +22,16 @@ static inline BOOL SPKHideMetaAIGlobal(void) {
     return [SPKUtils getBoolPref:@"general_hide_meta_ai_global"];
 }
 
+// Drops the gen-AI rows from a Direct message long-press menu.
+// 31: Restyle
+// 41: Make AI image
+static NSArray *SPKHideMetaAIDirectMenuOptions(NSArray *options) {
+    if (!SPKHideMetaAIDirect() || ![options isKindOfClass:NSArray.class])
+        return options;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", @[ @(31), @(41) ]];
+    return [options filteredArrayUsingPredicate:predicate];
+}
+
 %group SPKHideMetaAIHooks
 
 // Direct
@@ -259,15 +269,21 @@ return [config copy];
                                launcherSet:(id)arg8
                                userSession:(id)arg9
                                 tapHandler:(id)arg10 {
-    // 31: Restyle
-    // 41: Make AI image
-    NSArray *newOptions = options;
-    if (SPKHideMetaAIDirect()) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", @[ @(31), @(41) ]];
-        newOptions = [options filteredArrayUsingPredicate:predicate];
-    }
+    return %orig(SPKHideMetaAIDirectMenuOptions(options), arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+}
 
-    return %orig([newOptions copy], arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+// IG 448 renamed the launcherSet: argument to mobileConfig: with the same shape.
++ (id)menuConfigurationWithEligibleOptions:(id)options
+                          messageViewModel:(id)arg2
+                               contentType:(id)arg3
+                                 isSticker:(_Bool)arg4
+                            isMusicSticker:(_Bool)arg5
+                          directNuxManager:(id)arg6
+                       sessionUserDefaults:(id)arg7
+                              mobileConfig:(id)arg8
+                               userSession:(id)arg9
+                                tapHandler:(id)arg10 {
+    return %orig(SPKHideMetaAIDirectMenuOptions(options), arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
 }
 %end
 
