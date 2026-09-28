@@ -232,7 +232,7 @@
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_COULD_NOT_IMPORT_SELECTED_FILE_TEXT" = "選択したファイルをインポートできませんでした。";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_COULD_NOT_TRIM_AUDIO_TEXT" = "音声をトリムできませんでした。";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_DIRECT_AUDIO_SENDER_DISAPPEARED_BEFORE_SENDING_TEXT" = "ダイレクトオーディオの送信者が送信前に消えました。";
-"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_INSTAGRAM_BUILD_NOT_EXPOSE_DIRECT_AUDIO_SENDER_TEXT" = "このInstagramビルドはダイレクトオーディオ送信者をが提供されていません。";
+"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_INSTAGRAM_BUILD_NOT_EXPOSE_DIRECT_AUDIO_SENDER_TEXT" = "このInstagramビルドはダイレクトオーディオ送信者を提供していません。";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_INSTAGRAM_MAY_NOT_SUPPORT_MEDIA_FORMAT" = "Instagramはこのメディア形式をサポートしていない可能性があります。";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_LIBRARY_UNAVAILABLE_TEXT" = "ライブラリは利用できません";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_NO_GALLERY_AUDIO_TEXT" = "ギャラリーオーディオなし";
@@ -2148,7 +2148,7 @@
 "STORIES_INSTAGRAM_PLUS_UNLOCK_STORY_PREVIEW_TITLE" = "ストーリープレビューをアンロック";
 "STORIES_MENTIONS_COUNT_BADGE_OVERFLOW_FORMAT" = "%@+";
 "STORIES_MENTIONS_OPENED_TOAST" = "ストーリーズのメンションを開きました";
-"STORIES_NAVIGATION_ADVANCE_EYE_BUTTON_HELP" = "目のボタンでストーリーを既読にした後、次のストーリーに進みます。切り替えモードでは使用できません。";
+"STORIES_NAVIGATION_ADVANCE_EYE_BUTTON_HELP" = "眼のアイコンでストーリーを既読にした後、次のストーリーに進みます。切り替えモードでは使用できません。";
 "STORIES_NAVIGATION_ADVANCE_STORY_LIKE_HELP" = "いいねを押すと次のストーリーズに進みます。";
 "STORIES_NAVIGATION_ADVANCE_STORY_REPLY_HELP" = "返信すると次のストーリーズに進みます。";
 "STORIES_NAVIGATION_STOP_AUTO_ADVANCE_HELP" = "ビューアが自動的に次のストーリーズへ進まないようにします。";
@@ -2178,8 +2178,8 @@
 "STORIES_SEARCH_STORY_VIEWERS_STORY_VIEWERS_TEXT" = "ストーリービューアー";
 "STORIES_SEEN_RECEIPTS_EXCLUDED_USERS_HELP" = "これらのユーザーのストーリーは、通常どおり視聴時に既読になります。";
 "STORIES_SEEN_RECEIPTS_HEADER" = "既読";
-"STORIES_SEEN_RECEIPTS_INCLUDED_USERS_HELP" = "これらのユーザーのストーリーは、目のボタンで既読にするまで未読のままです。";
-"STORIES_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "オフ：視聴したストーリーは既読になります（含まれるユーザーのリストにいるユーザーを除く）。\nタップ時：各ストーリーで目のボタンをタップするまで未読のままです。\n切り替え：ストーリーは未読のままで、目のボタンをタップすると、もう一度タップするかストーリーを閉じるまで視聴したストーリーが既読になります。";
+"STORIES_SEEN_RECEIPTS_INCLUDED_USERS_HELP" = "これらのユーザーのストーリーは、眼のアイコンで既読にするまで未読のままです。";
+"STORIES_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "オフ：視聴したストーリーは既読になります（含まれるユーザーのリストにいるユーザーを除く）。\nタップ時：各ストーリーで眼のアイコンをタップするまで未読のままです。\n切り替え：ストーリーは未読のままで、眼のアイコンをタップすると、もう一度タップするかストーリーを閉じるまで視聴したストーリーが既読になります。";
 "STORIES_SEEN_RECEIPTS_MANUAL_SEEN_MODE_TAP" = "タップ時";
 "STORIES_SEEN_RECEIPTS_MANUAL_SEEN_MODE_TOGGLE" = "切り替え";
 "STORIES_SEEN_RECEIPTS_MARK_SEEN_LIKE_HELP" = "いいねを押すとストーリーズを既読にします。";
@@ -2202,11 +2202,11 @@
 "STORIES_STORY_CONTEXT_ENTER_INSTAGRAM_USERNAME_ADD_TEXT" = "追加するInstagramユーザーネームを入力します。";
 "STORIES_STORY_CONTEXT_EXCLUDED_USERS_TEXT" = "除外ユーザー";
 "STORIES_STORY_CONTEXT_INCLUDED_USERS_TEXT" = "含まれるユーザー";
-"STORIES_STORY_CONTEXT_MANUALLY_MARK_SEEN_DISABLED_ONLY_USERS_LIST_REQUIRE_EYE_TEXT" = "手動で既読をマークを無効にしている場合、このリストのユーザーのみが既読にするために目ボタンまたはストーリーズのいいね！/返信を必要とします。";
-"STORIES_STORY_CONTEXT_MANUALLY_MARK_SEEN_ENABLED_USERS_LIST_USE_INSTAGRAM_S_TEXT" = "手動で既読をマークを有効にしている場合、このリストのユーザーはInstagramのデフォルトの既読動作を使用し、目ボタンは不要です。";
+"STORIES_STORY_CONTEXT_MANUALLY_MARK_SEEN_DISABLED_ONLY_USERS_LIST_REQUIRE_EYE_TEXT" = "手動で既読をマークを無効にしている場合、このリストのユーザーのみが既読にするために眼のアイコンまたはストーリーズのいいね！/返信を必要とします。";
+"STORIES_STORY_CONTEXT_MANUALLY_MARK_SEEN_ENABLED_USERS_LIST_USE_INSTAGRAM_S_TEXT" = "手動で既読をマークを有効にしている場合、このリストのユーザーはInstagramのデフォルトの既読動作を使用し、眼のアイコンは不要です。";
 "STORIES_STORY_CONTEXT_REMOVED_VALUE_FORMAT" = "@%@を削除しました";
 "STORIES_STORY_MENTIONS_MENTIONS_TEXT" = "メンション";
-"STORIES_STORY_NAVIGATION_ADVANCE_EYE_BUTTON_TITLE" = "アイボタンで進む";
+"STORIES_STORY_NAVIGATION_ADVANCE_EYE_BUTTON_TITLE" = "眼のアイコンで進む";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE" = "ストーリーいいね！で進む";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_REPLY_TITLE" = "ストーリー返信で進む";
 "STORIES_STORY_NAVIGATION_HEADER" = "ストーリーナビゲーション";
@@ -2315,7 +2315,7 @@
 "UI_NOTIFICATION_CENTER_CHAT_SEEN_LIST_CHANGES_TEXT" = "メッセージ既読リストの変更";
 "UI_NOTIFICATION_CENTER_COPY_DESCRIPTION_TEXT" = "説明をコピー";
 "UI_NOTIFICATION_CENTER_COPY_GIF_TITLE" = "GIFタイトルをコピー";
-"UI_NOTIFICATION_CENTER_COPY_MEDIA_LINK_TEXT" = "メディア リンクをコピー";
+"UI_NOTIFICATION_CENTER_COPY_MEDIA_LINK_TEXT" = "メディアリンクをコピー";
 "UI_NOTIFICATION_CENTER_COPY_PROFILE_INFO_TEXT" = "プロフィール情報をコピー";
 "UI_NOTIFICATION_CENTER_DELETE_FILE_TEXT" = "ファイルを削除";
 "UI_NOTIFICATION_CENTER_DELETE_MEDIA_TEXT" = "メディアを削除";
