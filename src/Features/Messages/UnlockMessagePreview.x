@@ -33,6 +33,23 @@ static UIMenu *SPKMessagePreviewMenuByRemovingUpsell(UIMenu *menu) {
     return [menu menuByReplacingChildren:filteredChildren];
 }
 
+// IG 448 turned bypassSeenStateUpdate from an @objc property into a plain Swift
+// stored property, so the setter is gone but the ivar (a one-byte Swift.Bool) is
+// still registered with the runtime under its bare name. Without it the preview
+// marks the thread seen.
+static void SPKMessagePreviewBypassSeenState(id preview) {
+    if ([preview respondsToSelector:@selector(setBypassSeenStateUpdate:)]) {
+        [preview setBypassSeenStateUpdate:YES];
+        return;
+    }
+    Ivar ivar = class_getInstanceVariable(object_getClass(preview), "bypassSeenStateUpdate");
+    if (!ivar) {
+        SPKLog(@"Messages", @"[Sparkle MessagePreview] bypassSeenStateUpdate not found; preview may mark the thread seen");
+        return;
+    }
+    *((uint8_t *)(__bridge void *)preview + ivar_getOffset(ivar)) = 1;
+}
+
 %group SPKUnlockMessagePreviewHooks
 
 %hook _TtC29IGConsumerSubsDirectChatPeeks35IGDirectInboxChatPeekPreviewHandler
@@ -54,8 +71,7 @@ static UIMenu *SPKMessagePreviewMenuByRemovingUpsell(UIMenu *menu) {
 
     if ([preview respondsToSelector:@selector(setShouldHideHeader:)])
         [preview setShouldHideHeader:YES];
-    if ([preview respondsToSelector:@selector(setBypassSeenStateUpdate:)])
-        [preview setBypassSeenStateUpdate:YES];
+    SPKMessagePreviewBypassSeenState(preview);
     if ([preview respondsToSelector:@selector(setShouldSkipScrollToNewMessagesSeparator:)])
         [preview setShouldSkipScrollToNewMessagesSeparator:YES];
     return preview;
