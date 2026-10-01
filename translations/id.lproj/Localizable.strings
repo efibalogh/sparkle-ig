@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Tata Letak";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Menyembunyikan semua postingan dan hanya menyisakan header feed.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Sembunyikan Seluruh Feed";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Menghapus promosi Meta untuk produknya sendiri dari feed, seperti penawaran Meta Verified dan halaman Facebook yang disarankan.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Sembunyikan Promosi Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Menghapus tombol posting ulang dari postingan feed. Memerlukan restart.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Sembunyikan Tombol Posting Ulang";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Menghapus baris story dari bagian atas feed.";

@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Макет";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Приховує всі дописи й лишає тільки шапку стрічки.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Приховати всю стрічку";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Прибирає зі стрічки рекламу власних продуктів Meta, як-от пропозиції Meta Verified і рекомендовані сторінки Facebook.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Приховати промо Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Прибирає кнопку репосту з дописів стрічки. Потрібен перезапуск.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Приховати кнопку репосту";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Прибирає панель історій угорі стрічки.";

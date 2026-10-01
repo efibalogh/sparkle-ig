@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Макет";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Скрывает все публикации и оставляет только шапку ленты.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Скрыть всю ленту";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Удаляет из ленты рекламу собственных продуктов Meta, например предложения Meta Verified и рекомендуемые страницы Facebook.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Скрыть промо Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Убирает кнопку репоста из публикаций ленты. Требуется перезапуск.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Скрыть кнопку репоста";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Убирает панель историй сверху ленты.";

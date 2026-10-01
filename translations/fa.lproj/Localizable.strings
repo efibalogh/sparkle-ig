@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "چیدمان";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "همهٔ پست‌ها را مخفی می‌کند و فقط هدر فید باقی می‌ماند.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "مخفی کردن کل فید";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "تبلیغات Meta برای محصولات خودش، مانند پیشنهادهای Meta Verified و صفحه‌های پیشنهادی Facebook، را از فید حذف می‌کند.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "پنهان کردن تبلیغات Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "دکمهٔ ریپست را از پست‌های فید حذف می‌کند. نیاز به راه‌اندازی مجدد دارد.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "مخفی کردن دکمهٔ ریپست";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "نوار استوری‌ها را از بالای فید حذف می‌کند.";

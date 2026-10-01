@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Yerleşim";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Tüm gönderileri gizler ve yalnızca akış başlığını bırakır.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Tüm Akışı Gizle";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Meta'nın kendi ürünlerine ait tanıtımları akıştan kaldırır; örneğin Meta Verified teklifleri ve önerilen Facebook sayfaları.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Meta Tanıtımlarını Gizle";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Akış gönderilerinden yeniden paylaşma düğmesini kaldırır. Yeniden başlatma gerektirir.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Yeniden Paylaş Düğmesini Gizle";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Akışın üstündeki hikaye çubuğunu kaldırır.";

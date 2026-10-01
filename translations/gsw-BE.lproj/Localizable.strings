@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Layout";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Versteckt jede Post und laht nume dr Feed-Header übrig.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Ganze Feed verstecke";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Entfernt d Wärbig vo Meta für eigeni Produkt us em Feed, zum Bispiil Meta Verified-Aagebot und vorgschlageni Facebook-Siite.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Meta-Wärbig uusbländä";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Entfernt dr Repost-Chnopf vo Feed-Posts. Bruucht en Neustart.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Repost-Chnopf verstecke";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Entfernt d'Stories-Läiste vo obe im Feed.";

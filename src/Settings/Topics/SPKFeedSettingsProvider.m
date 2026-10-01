@@ -79,6 +79,10 @@ static NSString *const kSPKFeedActionButtonEnabledKey = @"feed_action_btn";
                                            icon:SPKSettingsIcon(@"threads")
                                     defaultsKey:@"feed_hide_suggested_threads"],
                                SPKL(@"FEED_LAYOUT_HIDE_SUGGESTED_THREADS_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE")
+                                           icon:SPKSettingsIcon(@"ads")
+                                    defaultsKey:@"feed_hide_meta_promotions"],
+                               SPKL(@"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE")
                                            icon:SPKSettingsIcon(@"repost")
                                     defaultsKey:@"feed_hide_repost_btn"

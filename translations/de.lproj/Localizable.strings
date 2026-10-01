@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Layout";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Blendet alle Beiträge aus und lässt nur den Feed-Header stehen.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Gesamten Feed ausblenden";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Entfernt Metas Werbung für eigene Produkte aus dem Feed, etwa Meta Verified-Angebote und vorgeschlagene Facebook-Seiten.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Meta-Werbung ausblenden";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Entfernt den Repost-Button aus Feed-Beiträgen. Erfordert einen Neustart.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Repost-Schaltfläche ausblenden";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Entfernt die Story-Leiste am oberen Rand des Feeds.";

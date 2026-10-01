@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "版面配置";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "隱藏所有貼文，只保留動態消息的標題列。";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "隱藏整個動態消息";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "從動態中移除 Meta 為自家產品所做的推廣，例如 Meta Verified 優惠和推薦的 Facebook 專頁。";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "隱藏 Meta 推廣";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "移除動態消息貼文上的轉發按鈕，需要重新啟動才會生效。";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "隱藏轉發按鈕";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "移除動態消息頂端的限時動態列。";

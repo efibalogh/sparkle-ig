@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "เค้าโครง";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "ซ่อนโพสต์ทั้งหมดและเหลือไว้เพียงส่วนหัวของฟีด";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "ซ่อนฟีดทั้งหมด";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "ลบโปรโมชันผลิตภัณฑ์ของ Meta เองออกจากฟีด เช่น ข้อเสนอ Meta Verified และเพจ Facebook ที่แนะนำ";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "ซ่อนโปรโมชันของ Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "ลบปุ่มรีโพสต์ออกจากโพสต์ในฟีด ต้องรีสตาร์ทแอป";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "ซ่อนปุ่มรีโพสต์";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "ลบแถบสตอรี่ออกจากด้านบนของฟีด";

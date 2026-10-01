@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Disenyo";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Itinatago ang bawat post at iniiwan lang ang header ng feed.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Itago ang Buong Feed";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Inaalis sa feed ang mga promosyon ng Meta para sa sarili nitong mga produkto, gaya ng mga alok ng Meta Verified at mga iminumungkahing Facebook page.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Itago ang mga Promosyon ng Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Inaalis ang repost button sa mga post sa feed. Kailangan ng restart.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Itago ang Repost Button";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Inaalis ang stories tray sa itaas ng feed.";

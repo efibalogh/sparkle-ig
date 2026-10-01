@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "लेआउट";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "हर पोस्ट छिपा देता है और केवल फीड हेडर छोड़ता है।";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "पूरे फीड को छिपाएं";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "फ़ीड से Meta के अपने उत्पादों के प्रचार हटाता है, जैसे Meta Verified ऑफ़र और सुझाए गए Facebook पेज।";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Meta प्रचार छिपाएँ";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "फीड पोस्ट से रीपोस्ट बटन हटाता है। रीस्टार्ट आवश्यक है।";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "रीपोस्ट बटन छिपाएं";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "फीड के ऊपर से स्टोरी ट्रे हटाता है।";

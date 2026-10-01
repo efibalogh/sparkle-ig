@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Aspect";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Ascunde toate postările și lasă doar antetul feedului.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Ascunde feed complet";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Elimină din feed promoțiile Meta pentru propriile produse, cum ar fi ofertele Meta Verified și paginile Facebook sugerate.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Ascunde promoțiile Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Elimină butonul de repostare din postările feedului. Necesită repornire.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Ascunde buton repostare";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Elimină bara de povești din partea de sus a feedului.";

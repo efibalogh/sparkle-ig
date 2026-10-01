@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Διάταξη";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Κρύβει όλες τις δημοσιεύσεις και αφήνει μόνο την κεφαλίδα της ροής.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Απόκρυψη Ολόκληρης της Ροής";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Αφαιρεί από τη ροή τις προωθήσεις της Meta για τα δικά της προϊόντα, όπως προσφορές Meta Verified και προτεινόμενες σελίδες Facebook.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Απόκρυψη προωθήσεων της Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Αφαιρεί το κουμπί αναδημοσίευσης από τις δημοσιεύσεις της ροής. Απαιτεί επανεκκίνηση.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Απόκρυψη Κουμπιού Αναδημοσίευσης";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Αφαιρεί τη γραμμή ιστοριών από την κορυφή της ροής.";

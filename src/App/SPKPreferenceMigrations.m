@@ -18,6 +18,9 @@ typedef id _Nullable (^SPKPreferenceMigrationMerge)(NSArray *values);
 @property (nonatomic, copy, nullable) NSString *replacementKey;
 /// nil copies the value unchanged.
 @property (nonatomic, copy, nullable) SPKPreferenceMigrationTransform transform;
+/// Copies the value to `replacementKey` and leaves the legacy key in place, for a
+/// new setting that splits off from one that keeps existing.
+@property (nonatomic, assign) BOOL keepsLegacyKey;
 /// Per-migration completion flag written before the shared ledger existed.
 @property (nonatomic, copy, nullable) NSString *legacyCompletionFlag;
 /// Set when a per-account key becomes device-global: every per-account copy of
@@ -81,7 +84,17 @@ static NSArray<SPKPreferenceMigration *> *SPKPreferenceMigrationList(void) {
             return nil;
         };
 
-        list = @[ instantsCameraButton, hideRecentSearches, scrollEdgeStyle, storyManualSeenMode, reelsStartMutedGlobal ];
+        // Meta's own-product promotions in the feed were hidden by Hide Suggested
+        // Threads before getting their own switch. Anyone who had it on keeps them
+        // hidden.
+        SPKPreferenceMigration *feedMetaPromotions = SPKMigration(@"feed_hide_meta_promotions", @"feed_hide_suggested_threads", @"feed_hide_meta_promotions", ^id(id value) {
+            if (![value respondsToSelector:@selector(boolValue)] || ![value boolValue])
+                return nil;
+            return @YES;
+        });
+        feedMetaPromotions.keepsLegacyKey = YES;
+
+        list = @[ instantsCameraButton, hideRecentSearches, scrollEdgeStyle, storyManualSeenMode, reelsStartMutedGlobal, feedMetaPromotions ];
     });
     return list;
 }
@@ -146,6 +159,8 @@ static void SPKApplyPreferenceMigration(SPKPreferenceMigration *migration, NSMut
                     write(target, converted);
             }
         }
+        if (migration.keepsLegacyKey)
+            continue;
         [state removeObjectForKey:key];
         if (write)
             write(key, nil);

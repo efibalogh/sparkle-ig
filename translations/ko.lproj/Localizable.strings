@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "레이아웃";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "모든 게시물을 숨기고 피드 헤더만 남깁니다.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "전체 피드 숨기기";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Meta Verified 혜택이나 추천 Facebook 페이지 등 Meta 자사 제품 프로모션을 피드에서 제거합니다.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Meta 프로모션 숨기기";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "피드 게시물에서 리포스트 버튼을 제거합니다. 재시작이 필요합니다.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "리포스트 버튼 숨기기";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "피드 상단의 스토리 트레이를 제거합니다.";

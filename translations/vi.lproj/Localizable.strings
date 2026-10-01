@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Bố cục";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Ẩn mọi bài đăng và chỉ để lại header bảng tin.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Ẩn Toàn bộ Bảng tin";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Xóa khỏi bảng feed các nội dung Meta quảng bá sản phẩm của chính mình, như ưu đãi Meta Verified và trang Facebook được đề xuất.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Ẩn quảng bá của Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Gỡ nút đăng lại khỏi bài đăng trong bảng tin. Cần khởi động lại.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Ẩn Nút Đăng lại";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Gỡ khay tin khỏi đầu bảng tin.";

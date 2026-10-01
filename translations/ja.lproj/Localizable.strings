@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "レイアウト";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "すべての投稿を非表示にし、フィードのヘッダーだけを残します。";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "フィード全体を非表示";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Meta VerifiedのオファーやおすすめのFacebookページなど、Meta自社製品のプロモーションをフィードから削除します。";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Metaのプロモーションを非表示";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "フィードの投稿からリポストボタンを削除します。再起動が必要です。";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "再投稿ボタンを非表示";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "フィード上部のストーリーズトレイを削除します。";

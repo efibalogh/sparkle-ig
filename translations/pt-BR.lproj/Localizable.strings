@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Layout";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Oculta todas as publicações e deixa apenas o cabeçalho do feed.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Ocultar Feed Inteiro";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Remove do feed as promoções da Meta para os próprios produtos, como ofertas do Meta Verified e páginas do Facebook sugeridas.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Ocultar promoções da Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Remove o botão de repostar das publicações do feed. Requer reiniciar.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Ocultar Botão de Repostagem";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Remove a barra de stories do topo do feed.";

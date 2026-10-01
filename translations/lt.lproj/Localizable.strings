@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Išdėstymas";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Slepia visus įrašus ir palieka tik srauto antraštę.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Slėpti visą srautą";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Pašalina iš sklaidos kanalo „Meta“ savų produktų reklamas, pvz., „Meta Verified“ pasiūlymus ir siūlomus „Facebook“ puslapius.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Slėpti „Meta“ reklamas";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Pašalina pakartotinio skelbimo mygtuką iš srauto įrašų. Reikia paleisti iš naujo.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Slėpti pakartotinio skelbimo mygtuką";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Pašalina Stories juostą iš srauto viršaus.";

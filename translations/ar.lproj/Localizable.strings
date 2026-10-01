@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "التخطيط";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "يخفي كل المنشورات ويترك رأس التغذية فقط.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "إخفاء التغذية بالكامل";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "يزيل عروض Meta الترويجية لمنتجاتها من التغذية، مثل عروض Meta Verified وصفحات Facebook المقترحة.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "إخفاء عروض Meta الترويجية";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "يزيل زر إعادة النشر من منشورات التغذية. يتطلب إعادة تشغيل.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "إخفاء زر إعادة النشر";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "يزيل شريط القصص من أعلى التغذية.";

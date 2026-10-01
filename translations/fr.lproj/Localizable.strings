@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "Disposition";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "Masque toutes les publications et ne laisse que l'en-tête du fil.";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "Masquer le fil entier";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "Retire du fil les promotions de Meta pour ses propres produits, comme les offres Meta Verified et les pages Facebook suggérées.";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "Masquer les promotions Meta";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Retire le bouton de republication des publications du fil. Nécessite un redémarrage.";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "Masquer le bouton de repartage";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "Retire la barre de stories en haut du fil.";

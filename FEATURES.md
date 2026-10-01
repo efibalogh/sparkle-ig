@@ -143,6 +143,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Main Feed**: `For You` or `Following`. Following mode forces the chronological feed, keeps pagination and cold starts on that source, and removes the For You picker entry. **(restart)**
 - **Disable App Icon Gesture**: Stops the feed header logo long-press from opening Instagram's app icon picker (Sparkle has its own under Settings).
 - **Hide Stories Tray**, **Hide Entire Feed**, **Hide Suggested Posts**, **Hide Suggested Accounts**, **Hide Suggested Reels**, **Hide Suggested Threads**.
+- **Hide Meta Promotions**: Removes Meta's promotions for its own products from the feed, such as Meta Verified offers and suggested Facebook pages.
 - **Hide Repost Button**: Removes the repost button from posts. **(restart)**
 
 ### Metrics

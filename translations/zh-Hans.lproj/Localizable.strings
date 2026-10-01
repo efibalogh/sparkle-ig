@@ -520,6 +520,8 @@
 "FEED_LAYOUT_HEADER" = "布局";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_HELP" = "隐藏所有帖子，仅保留动态顶栏。";
 "FEED_LAYOUT_HIDE_ENTIRE_FEED_TITLE" = "隐藏整个动态";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_HELP" = "从动态中移除 Meta 为自家产品所做的推广，例如 Meta Verified 优惠和推荐的 Facebook 主页。";
+"FEED_LAYOUT_HIDE_META_PROMOTIONS_TITLE" = "隐藏 Meta 推广";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "移除动态帖子中的转发按钮。需要重启。";
 "FEED_LAYOUT_HIDE_REPOST_BUTTON_TITLE" = "隐藏转贴按钮";
 "FEED_LAYOUT_HIDE_STORIES_TRAY_HELP" = "移除动态顶部的快拍栏。";
