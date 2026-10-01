@@ -126,7 +126,7 @@ static NSArray<NSURL *> *SPKDownloadSucceededFileURLsForJob(SPKDownloadJob *job)
     NSString *percentString = [NSString stringWithFormat:@"%ld%%", (long)percent];
 
     // Check style
-    NSString *style = [NSUserDefaults.standardUserDefaults stringForKey:kSPKNotificationProgressSubtitleStyleKey];
+    NSString *style = [SPKUtils getStringPref:kSPKNotificationProgressSubtitleStyleKey];
     if (style.length == 0)
         style = @"both";
     if ([style isEqualToString:@"off"]) {

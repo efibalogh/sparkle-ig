@@ -120,6 +120,7 @@ NSString *const kSPKNotificationPillGlowEnabledKey = @"notifs_pill_glow";
 NSString *const kSPKNotificationPillLiquidGlassEnabledKey = @"notifs_pill_liquid_glass";
 NSString *const kSPKNotificationProgressSubtitleStyleKey = @"notifs_progress_subtitle_style";
 NSString *const kSPKNotificationPillPositionKey = @"notifs_pill_position";
+NSString *const kSPKNotificationStyleKey = @"notifs_style";
 
 static CGFloat const kSPKNotificationStackSpacing = 8.0;
 static CGFloat const kSPKNotificationTopMargin = 8.0;
@@ -127,6 +128,9 @@ static CGFloat const kSPKNotificationTopMargin = 8.0;
 // toolbar above it that the safe area doesn't cover. Lift bottom pills further so
 // they float clear of that chrome instead of overlapping it.
 static CGFloat const kSPKNotificationBottomMargin = 60.0;
+// Where Instagram presents its own toast: bottom edge 57pt above the safe area
+// (measured on 448 over the feed, 91pt from the bottom of an 874pt screen).
+static CGFloat const kSPKNotificationInstagramBottomMargin = 57.0;
 static NSTimeInterval const kSPKNotificationInsertDuration = 0.55;
 static NSTimeInterval const kSPKNotificationDefaultPillDuration = 1.5;
 static NSTimeInterval const kSPKNotificationMinPillDuration = 0.5;
@@ -324,6 +328,7 @@ NSDictionary<NSString *, id> *SPKNotificationDefaultPreferences(void) {
         kSPKNotificationPillDurationKey : @(kSPKNotificationDefaultPillDuration),
         kSPKNotificationProgressSubtitleStyleKey : @"both",
         kSPKNotificationPillPositionKey : @"top",
+        kSPKNotificationStyleKey : @"pill",
     } mutableCopy];
     for (NSDictionary *section in SPKNotificationPreferenceSections()) {
         for (NSDictionary *item in section[@"items"] ?: @[]) {
@@ -349,6 +354,25 @@ NSTimeInterval SPKNotificationPillDuration(void) {
     if (duration <= 0.0)
         duration = kSPKNotificationDefaultPillDuration;
     return MIN(kSPKNotificationMaxPillDuration, MAX(kSPKNotificationMinPillDuration, duration));
+}
+
+BOOL SPKNotificationUsesInstagramStyle(void) {
+    return [[SPKUtils getStringPref:kSPKNotificationStyleKey] isEqualToString:@"instagram"];
+}
+
+UIImage *SPKNotificationIconNamed(NSString *iconResource, BOOL instagramStyle) {
+    if (iconResource.length == 0)
+        return nil;
+    NSString *name = iconResource;
+    if (instagramStyle) {
+        NSString *base = [name hasSuffix:@"_filled"] ? [name substringToIndex:name.length - @"_filled".length] : name;
+        NSString *outline = [base stringByAppendingString:@"_outline"];
+        if ([SPKAssetUtils resolvedInstagramIconNameForName:outline].length > 0)
+            name = outline;
+    }
+    return [SPKAssetUtils instagramIconNamed:name
+                                   pointSize:instagramStyle ? kSPKNotificationInstagramIconSize : 16.0
+                               renderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 void SPKNotificationTriggerHaptic(NSString *identifier, SPKNotificationTone tone) {
@@ -553,7 +577,8 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
 
 - (CGFloat)offsetForIndex:(NSUInteger)index {
     BOOL isBottom = [[SPKUtils getStringPref:kSPKNotificationPillPositionKey] isEqualToString:@"bottom"];
-    CGFloat offset = isBottom ? kSPKNotificationBottomMargin : kSPKNotificationTopMargin;
+    CGFloat bottomMargin = SPKNotificationUsesInstagramStyle() ? kSPKNotificationInstagramBottomMargin : kSPKNotificationBottomMargin;
+    CGFloat offset = isBottom ? bottomMargin : kSPKNotificationTopMargin;
     for (NSUInteger i = 0; i < index && i < self.visible.count; i++) {
         SPKNotificationPillView *pill = self.visible[i].pill;
         CGFloat height = CGRectGetHeight(pill.bounds);
@@ -740,9 +765,7 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
         }
 
         NSString *resolvedIconResource = SPKNotificationIconResourceForTone(iconResource, tone);
-        UIImage *icon = resolvedIconResource.length
-                            ? [SPKAssetUtils instagramIconNamed:resolvedIconResource pointSize:16.0 renderingMode:UIImageRenderingModeAlwaysTemplate]
-                            : nil;
+        UIImage *icon = SPKNotificationIconNamed(resolvedIconResource, SPKNotificationUsesInstagramStyle());
         SPKNotificationPillView *pill = [SPKNotificationPillView toastPillWithTitle:title subtitle:resolvedSubtitle icon:icon tone:tone];
 
         if (offersListTap) {

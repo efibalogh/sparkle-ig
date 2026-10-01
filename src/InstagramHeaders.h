@@ -19,6 +19,13 @@
 - (id)identifier;
 @end
 
+// Sparkle renders this view itself, in its own notification window, for the
+// Instagram notification style. The model is filled through KVC (see
+// SPKNotificationPillView): 410 has no factory for the case it uses.
+@interface IGActionableConfirmationToastView : UIView
+- (void)configureWithViewModel:(id)model;
+@end
+
 @interface IGActionableConfirmationToastPresenter : NSObject
 - (void)_showAlertWithViewModel:(id)model presentationContext:(id)context isAnimated:(_Bool)animated animationDuration:(double)duration presentationPriority:(long long)priority origin:(unsigned long long)origin toastType:(unsigned long long)type tapActionBlock:(id)tap tapToastBlock:(id)tapToast presentedHandler:(id)presented dismissedHandler:(id)dismissed;
 - (void)hideAlert;

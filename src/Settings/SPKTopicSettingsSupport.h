@@ -38,6 +38,7 @@ UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
 UIMenu *SPKLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);
 UIMenu *SPKNotificationProgressSubtitleStyleMenu(void);
+UIMenu *SPKNotificationStyleMenu(void);
 UIMenu *SPKNotificationPillPositionMenu(void);
 UIMenu *SPKMediaVideoQualityMenu(void);
 UIMenu *SPKMediaPhotoQualityMenu(void);

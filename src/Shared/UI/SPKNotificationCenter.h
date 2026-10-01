@@ -91,6 +91,7 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationPillGlowEnabledKey;
 FOUNDATION_EXPORT NSString *const kSPKNotificationPillLiquidGlassEnabledKey;
 FOUNDATION_EXPORT NSString *const kSPKNotificationProgressSubtitleStyleKey;
 FOUNDATION_EXPORT NSString *const kSPKNotificationPillPositionKey;
+FOUNDATION_EXPORT NSString *const kSPKNotificationStyleKey;
 
 #ifdef __cplusplus
 extern "C" {
@@ -102,6 +103,15 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void);
 NSDictionary<NSString *, id> *SPKNotificationDefaultPreferences(void);
 BOOL SPKNotificationIsEnabled(NSString *identifier);
 NSTimeInterval SPKNotificationPillDuration(void);
+// Notifications render as Instagram's own toast view instead of Sparkle's pill. Read
+// when a notification is created, so the setting applies to the next one.
+BOOL SPKNotificationUsesInstagramStyle(void);
+// Glyph size for the Instagram style, which draws its icon larger than the pill.
+static CGFloat const kSPKNotificationInstagramIconSize = 24.0;
+// The glyph for a notification icon in the given style. The pill sets its glyph on a
+// coloured badge, so it takes the filled variants; the Instagram toast has no badge
+// and takes Instagram's outline variant of the same glyph, as its own toasts do.
+UIImage *_Nullable SPKNotificationIconNamed(NSString *_Nullable iconResource, BOOL instagramStyle);
 void SPKNotificationTriggerHaptic(NSString *identifier, SPKNotificationTone tone);
 SPKNotificationTone SPKNotificationToneForIconResource(NSString *_Nullable iconResource);
 

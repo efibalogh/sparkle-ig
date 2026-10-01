@@ -1948,6 +1948,10 @@ static NSDate *SPKScanObjectForPostedDate(id target, NSInteger depth) {
     return SPKInstagramDestructiveColor();
 }
 
++ (UIColor *)SPKColor_InstagramSuccess {
+    return [UIColor colorWithRed:28.0 / 255.0 green:209.0 / 255.0 blue:79.0 / 255.0 alpha:1.0];
+}
+
 + (UIColor *)SPKColor_InstagramPressedBackground {
     return SPKDynamicInstagramColor(232.0, 233.0, 238.0, 51.0, 60.0, 69.0);
 }

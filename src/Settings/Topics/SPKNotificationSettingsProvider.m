@@ -66,19 +66,52 @@
 }
 
 + (NSArray *)sections {
-    NSMutableArray *sections = [NSMutableArray arrayWithArray:@[
-        SPKTopicSection(SPKL(@"NOTIFICATION_APPEARANCE_HEADER"), @[
-            [SPKSetting switchCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_GLOW_TITLE")
-                                   subtitle:SPKL(@"NOTIFICATION_APPEARANCE_SHOW_GLOW_EFFECT_AROUND_NOTIFICATIONS_SUBTITLE")
-                                defaultsKey:kSPKNotificationPillGlowEnabledKey],
-            [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_CAPTURE_LIQUID_GLASS_TITLE")
-                                   subtitle:(SPKPrefIsAvailable(kSPKNotificationPillLiquidGlassEnabledKey)
-                                                 ? SPKL(@"SETTINGS_NOTIFICATION_RENDER_NOTIFICATIONS_IOS_LIQUID_GLASS_TEXT")
-                                                 : SPKL(@"SETTINGS_NOTIFICATION_REQUIRES_IOS_LATER_TEXT"))
-                                   defaultsKey:kSPKNotificationPillLiquidGlassEnabledKey],
-            [SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_DOWNLOAD_PROGRESS_TITLE")
-                                 subtitle:@""
-                                     menu:SPKNotificationProgressSubtitleStyleMenu()],
+    BOOL (^instagramStyle)(void) = ^BOOL {
+        return SPKNotificationUsesInstagramStyle();
+    };
+
+    SPKSetting *style = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_STYLE_TITLE")
+                                                                subtitle:@""
+                                                                    menu:SPKNotificationStyleMenu()],
+                                           SPKL(@"NOTIFICATION_APPEARANCE_STYLE_HELP"));
+    SPKSetting *example = [SPKSetting buttonCellWithTitle:SPKL(@"NOTIFICATION_PREVIEW_TEST_NOTIFICATION_TITLE")
+                                                 subtitle:@""
+                                                     icon:nil
+                                                   action:^{
+                                                       [self spk_showNextNotificationPreview];
+                                                   }];
+
+    // Glow and Tint by Result are one preference: the pill shows the result's colour
+    // as a glow, the Instagram toast as a tint, so each style names it for what it does.
+    SPKSetting *glow = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_GLOW_TITLE")
+                                                                 subtitle:@""
+                                                              defaultsKey:kSPKNotificationPillGlowEnabledKey],
+                                          SPKL(@"NOTIFICATION_APPEARANCE_GLOW_HELP"));
+    glow.hiddenProvider = instagramStyle;
+    SPKSetting *tint = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_TINT_TITLE")
+                                                                 subtitle:@""
+                                                              defaultsKey:kSPKNotificationPillGlowEnabledKey],
+                                          SPKL(@"NOTIFICATION_APPEARANCE_TINT_HELP"));
+    tint.hiddenProvider = ^BOOL {
+        return !instagramStyle();
+    };
+    SPKSetting *liquidGlass = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_CAPTURE_LIQUID_GLASS_TITLE")
+                                                                        subtitle:@""
+                                                                     defaultsKey:kSPKNotificationPillLiquidGlassEnabledKey],
+                                                 SPKL(@"NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP"));
+    liquidGlass.hiddenProvider = ^BOOL {
+        return instagramStyle() || !SPKPrefIsAvailable(kSPKNotificationPillLiquidGlassEnabledKey);
+    };
+
+    SPKSetting *progress = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_DOWNLOAD_PROGRESS_TITLE")
+                                                                   subtitle:@""
+                                                                       menu:SPKNotificationProgressSubtitleStyleMenu()],
+                                              SPKL(@"NOTIFICATION_APPEARANCE_DOWNLOAD_PROGRESS_HELP"));
+
+    return @[
+        SPKTopicSection(SPKL(@"NOTIFICATION_STYLE_HEADER"), @[ style, example ], nil),
+        SPKTopicSection(SPKL(@"NOTIFICATION_APPEARANCE_HEADER"), @[ glow, tint, liquidGlass ], nil),
+        SPKTopicSection(SPKL(@"NOTIFICATION_BEHAVIOR_HEADER"), @[
             [SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_POSITION_TITLE")
                                  subtitle:@""
                                      menu:SPKNotificationPillPositionMenu()],
@@ -89,29 +122,22 @@
                                          max:5.0
                                         step:0.25
                                        label:SPKL(@"NOTIFICATION_APPEARANCE_DURATION_UNIT")
-                               singularLabel:@" second"]
-        ],
-                        nil),
-        SPKTopicSection(SPKL(@"NOTIFICATION_PREVIEW_HEADER"), @[
-            [SPKSetting buttonCellWithTitle:SPKL(@"NOTIFICATION_PREVIEW_TEST_NOTIFICATION_TITLE")
-                                   subtitle:@""
-                                       icon:nil
-                                     action:^{
-                                         [self spk_showNextNotificationPreview];
-                                     }]
+                               singularLabel:@" second"],
+            progress
         ],
                         nil),
         SPKTopicSection(@"", @[
+            [SPKSetting navigationCellWithTitle:SPKL(@"NOTIFICATION_CATEGORIES_TITLE")
+                                       subtitle:@""
+                                           icon:SPKSettingsIcon(@"notification")
+                                    navSections:[self spk_featureSectionsForHaptics:NO]],
             [SPKSetting navigationCellWithTitle:SPKL(@"NOTIFICATION_PREVIEW_HAPTICS_TITLE")
                                        subtitle:@""
                                            icon:SPKSettingsIcon(@"haptics")
                                     navSections:[self spk_featureSectionsForHaptics:YES]]
         ],
                         nil)
-    ]];
-
-    [sections addObjectsFromArray:[self spk_featureSectionsForHaptics:NO]];
-    return [sections copy];
+    ];
 }
 
 @end

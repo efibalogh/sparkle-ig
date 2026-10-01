@@ -151,6 +151,7 @@ FOUNDATION_EXPORT Class _Nullable SPKResolveIGClass(NSString *qualified, NSStrin
 + (UIColor *)SPKColor_InstagramSeparator;
 + (UIColor *)SPKColor_InstagramFavorite;
 + (UIColor *)SPKColor_InstagramDestructive;
++ (UIColor *)SPKColor_InstagramSuccess;
 + (UIColor *)SPKColor_InstagramPressedBackground;
 + (UIColor *)SPKColor_ListRowPressedOverlay;
 + (UIColor *)SPKColor_SettingsSwitchOnTintForTraitCollection:(UITraitCollection *)traitCollection;

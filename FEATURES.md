@@ -539,20 +539,26 @@ can't be analyzed because a single scan would hit Instagram's rate limits.
 
 The Sparkle notification pill is configurable.
 
+### Style
+- **Style**: **Sparkle Pill** (default) or **Instagram**, which draws every Sparkle notification with Instagram's own toast view, the one it uses for confirmations like "Removed from Saved". The toast follows the app's light or dark appearance, uses Instagram's outline icons, shows download progress as a ring in place of the icon with a **Cancel** button and the progress line in fixed-width digits so the toast holds still while it counts, and appears everywhere the pill does, including over Settings, the Gallery and the full-screen preview. Position, duration, tap, and swipe to dismiss work as with the pill.
+- **Test Notification**: Cycles success / error / info previews in the chosen style.
+
 ### Appearance
-- **Glow**: Glow effect around notifications.
-- **Liquid Glass**: Renders the notification pill with iOS 26 Liquid Glass (adaptive text/icons). Requires iOS 26; falls back to the standard material on iOS 18 and lower.
-- **Download Progress**: Subtitle style for download-progress pills.
+Rows follow the chosen style.
+- **Glow** (Sparkle Pill): Soft glow around the pill in the result's color: green for success, red for errors, blue otherwise.
+- **Liquid Glass** (Sparkle Pill, iOS 26 and later only): Draws the pill with Liquid Glass instead of the standard blur.
+- **Tint by Result** (Instagram): Tints the toast in the result's color. Same setting as Glow.
+
+### Behavior
+- **Position**: Top or bottom. Notifications enter and leave on that edge.
 - **Duration**: Auto-dismiss delay (0.5–5.0s).
+- **Download Progress**: What the line under a running download shows: percent, size, both, or off.
 
-### Preview
-- **Test Notification**: Cycles success / error / info previews.
-
-### Per-feature toggles
-Every notification category has an independent **visibility** toggle and a
-matching **haptic** toggle (under Haptics), covering downloads, copies,
-story/message seen actions, gallery actions, settings export/import, cache
-clearing, and more.
+### Notify Me About / Haptics
+Every notification category has an independent **visibility** toggle (under
+Notify Me About) and a matching **haptic** toggle (under Haptics), covering
+downloads, copies, story/message seen actions, gallery actions, settings
+export/import, cache clearing, and more.
 
 ---
 

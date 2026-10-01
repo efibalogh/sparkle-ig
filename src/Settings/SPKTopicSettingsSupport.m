@@ -360,6 +360,13 @@ UIMenu *SPKNotificationProgressSubtitleStyleMenu(void) {
     ]];
 }
 
+UIMenu *SPKNotificationStyleMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_STYLE_PILL"), nil, nil, kSPKNotificationStyleKey, @"pill", NO),
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_STYLE_INSTAGRAM"), nil, nil, kSPKNotificationStyleKey, @"instagram", NO)
+    ]];
+}
+
 UIMenu *SPKNotificationPillPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), nil, nil, kSPKNotificationPillPositionKey, @"top", NO),
