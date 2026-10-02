@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Κοινοποίηση";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Κρύβει το κουμπί δημιουργίας ομάδας στο φύλλο αποστολής και κοινοποίησης του Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Απόκρυψη Κουμπιού Δημιουργίας Ομάδας";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Καρφίτσωμα στην κορυφή";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Ξεκαρφίτσωμα";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Πατήστε παρατεταμένα τη φωτογραφία ή το όνομα ενός ατόμου στο φύλλο κοινοποίησης για να το καρφιτσώσετε στην κορυφή της λίστας και ξανά για ξεκαρφίτσωμα. Το παρατεταμένο πάτημα σε ομάδα εξακολουθεί να εμφανίζει τα μέλη της, με ένα κουμπί από κάτω για καρφίτσωμα ή ξεκαρφίτσωμα της ομάδας.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Καρφίτσωμα παραληπτών στο φύλλο κοινοποίησης";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Καρφιτσώθηκε στην κορυφή";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Ξεκαρφιτσώθηκε";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Πόσο συχνά καθαρίζεται μόνη της η προσωρινή μνήμη. Ελέγχεται κάθε φορά που το Instagram γίνεται ενεργό.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Αυτόματη Εκκαθάριση Λανθάνουσας Μνήμης";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Καθαρίζει την προσωρινή μνήμη του Instagram στη συσκευή. Η γραμμή δείχνει πόσο χώρο καταλαμβάνει τώρα.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Η Ανάλυση Προφίλ ολοκληρώθηκε";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Αφαιρέθηκε Αντίδραση";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Ρυθμίσεις & Εργαλεία";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Καρφιτσώματα φύλλου κοινοποίησης";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Αλλαγές λίστας αυτόματης αποθήκευσης ιστορίας";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Ξεκίνησε η αυτόματη αποθήκευση ιστορίας";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Αλλαγές λίστας εμφανίσεων ιστορίας";

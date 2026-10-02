@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Udostępnianie";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Ukrywa przycisk tworzenia grupy w arkuszu wysyłania i udostępniania Instagrama.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Ukryj przycisk tworzenia grupy";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Przypnij na górze";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Odepnij";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Przytrzymaj zdjęcie lub nazwę osoby w arkuszu udostępniania, aby przypiąć ją na górze listy, i przytrzymaj ponownie, aby odpiąć. Przytrzymanie grupy nadal pokazuje jej członków, a przycisk pod nimi przypina lub odpina grupę.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Przypinaj odbiorców w arkuszu udostępniania";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Przypięto na górze";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Odpięto";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Jak często cache sam się czyści. Sprawdzane przy każdym uaktywnieniu Instagrama.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Automatyczne czyszczenie pamięci podręcznej";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Czyści pamięć podręczną Instagrama na urządzeniu. Wiersz pokazuje, ile miejsca ona obecnie zajmuje.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Analizator profilu zakończony";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Usunięto reakcję";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Ustawienia i narzędzia";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Przypięci w arkuszu udostępniania";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Zmiany listy automatycznego zapisu relacji";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Rozpoczęto automatyczny zapis relacji";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Zmiany listy oznaczania relacji jako wyświetlonych";

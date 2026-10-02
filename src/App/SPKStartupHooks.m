@@ -31,6 +31,7 @@ FOUNDATION_EXPORT void SPKInstallConfirmSendHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSharedLinkCleanupHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallBrowserLinkRoutingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallShareLongPressCopyHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallShareSheetPinsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideMetaAIHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAccountSwitchHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallAdBlockingEarlyHooksIfEnabled(void);
@@ -348,6 +349,7 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     // Installed regardless of the setting: the mode is read on every browser launch.
     SPK_INSTALL(SPKInstallBrowserLinkRoutingHooksIfNeeded);
     SPK_INSTALL(SPKInstallShareLongPressCopyHooksIfNeeded);
+    SPK_INSTALL(SPKInstallShareSheetPinsHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
     SPK_INSTALL(SPKInstallOpenLinkFromClipboardHooksIfEnabled);

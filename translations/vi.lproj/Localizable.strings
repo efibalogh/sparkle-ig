@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Chia sẻ";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Ẩn nút tạo nhóm trong bảng gửi và chia sẻ của Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Ẩn nút Tạo nhóm";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Ghim lên đầu";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Bỏ ghim";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Nhấn giữ ảnh hoặc tên của một người trong bảng chia sẻ để ghim họ lên đầu danh sách, và nhấn giữ lần nữa để bỏ ghim. Nhấn giữ một nhóm vẫn hiển thị các thành viên, kèm một nút bên dưới để ghim hoặc bỏ ghim nhóm.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Ghim người nhận trong bảng chia sẻ";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Đã ghim lên đầu";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Đã bỏ ghim";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Tần suất tự động xóa bộ nhớ đệm. Hệ thống sẽ kiểm tra mỗi khi Instagram hoạt động.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Tự động xóa bộ nhớ đệm";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Xóa bộ nhớ đệm của Instagram trên thiết bị. Dòng này hiển thị dung lượng hiện đang sử dụng.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Hoàn tất phân tích trang cá nhân";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Đã xóa cảm xúc";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Cài đặt & Công cụ";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Ghim trong bảng chia sẻ";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Thay đổi danh sách tự động lưu Tin";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Đã bắt đầu tự động lưu Tin";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Thay đổi danh sách người xem Tin";

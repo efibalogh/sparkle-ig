@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Sharing";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Hides the create group button in Instagram's send and share sheet.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Hide Create Group Button";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Pin to Top";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Unpin";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Hold a person's photo or name in the share sheet to pin them to the top of the list, and hold again to unpin. Holding a group still shows its members, with a button below them to pin or unpin the group.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Pin Recipients in Share Sheet";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Pinned to top";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Unpinned";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "How often the cache clears itself. Checked whenever Instagram becomes active.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Auto Clear Cache";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Clears Instagram's on-device cache. The row shows how much space it is using now.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer Complete";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Removed Reaction";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Settings & Tools";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Share Sheet Pins";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Story Auto-Save List Changes";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Story Auto-Save Started";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Story Seen List Changes";

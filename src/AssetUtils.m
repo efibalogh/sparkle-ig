@@ -230,6 +230,7 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"photo_gallery" : @{@"candidates" : @[ @"ig_icon_photo_gallery_outline_24" ]},
             @"pin" : @{@"candidates" : @[ @"ig_icon_pin_outline_24" ]},
             @"pin_filled" : @{@"candidates" : @[ @"ig_icon_pin_filled_24" ]},
+            @"pin_off" : @{@"candidates" : @[ @"ig_icon_unpin_outline_24" ]},
             @"pinch" : @{@"candidates" : @[ @"ig_icon_fill_outline_24" ]},
             @"play" : @{@"candidates" : @[ @"ig_icon_play_prism_outline_24", @"ig_icon_play_outline_24" ]},
             @"playback" : @{@"candidates" : @[ @"ig_icon_speed_outline_24" ]},

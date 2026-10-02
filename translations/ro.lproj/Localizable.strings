@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Partajare";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Ascunde butonul de creare a unui grup din panoul de trimitere și distribuire al Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Ascunde buton creare grup";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Fixează sus";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Anulează fixarea";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Ține apăsat pe fotografia sau numele unei persoane în foaia de partajare pentru a o fixa în partea de sus a listei, și ține apăsat din nou pentru a anula fixarea. Ținerea apăsată pe un grup afișează în continuare membrii acestuia, cu un buton dedesubt pentru a fixa sau a anula fixarea grupului.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Fixează destinatari în foaia de partajare";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Fixat sus";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Fixare anulată";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Cât de des se golește memoria cache singură. Se verifică de fiecare dată când Instagram devine activ.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Ștergere automată cache";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Golește memoria cache a Instagram de pe dispozitiv. Rândul arată cât spațiu ocupă acum.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Analiză de profil completă";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reacție eliminată";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Setări și instrumente";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Fixări în foaia de partajare";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Modificări lista salvare automată povești";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Salvare automată povești pornită";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Modificări listă povești văzute";

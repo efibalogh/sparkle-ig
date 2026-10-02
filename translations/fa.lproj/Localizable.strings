@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "اشتراک‌گذاری";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "دکمه ساخت گروه را در برگه ارسال و اشتراک‌گذاری اینستاگرام پنهان می‌کند.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "پنهان‌سازی دکمه ساخت گروه";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "سنجاق در بالا";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "برداشتن سنجاق";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "در برگه اشتراک‌گذاری، عکس یا نام یک نفر را نگه دارید تا در بالای فهرست سنجاق شود و برای برداشتن سنجاق دوباره نگه دارید. نگه داشتن یک گروه همچنان اعضای آن را نشان می‌دهد و دکمه‌ای زیر آن‌ها گروه را سنجاق می‌کند یا سنجاقش را برمی‌دارد.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "سنجاق کردن گیرندگان در برگه اشتراک‌گذاری";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "در بالا سنجاق شد";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "سنجاق برداشته شد";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "هر چند وقت یک‌بار کش به‌طور خودکار پاک شود. هر بار که اینستاگرام فعال می‌شود بررسی می‌شود.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "پاک‌سازی خودکار کش";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "کش داخل دستگاه اینستاگرام را پاک می‌کند. این ردیف نشان می‌دهد الان چقدر فضا اشغال کرده است.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer کامل شد";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "واکنش حذف شد";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "تنظیمات و ابزارها";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "سنجاق‌های برگه اشتراک‌گذاری";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "تغییرات فهرست ذخیره خودکار استوری";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "ذخیره خودکار استوری شروع شد";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "تغییرات فهرست دیده‌شدن استوری";

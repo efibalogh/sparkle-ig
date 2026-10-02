@@ -661,8 +661,20 @@
 @end
 
 @interface IGDirectShareRecipient : NSObject
+@property (copy, nonatomic) NSString *threadID;
+@property (readonly, nonatomic) NSArray *users;
 - (NSString *)threadName;
 - (BOOL)isBroadcastChannel;
+- (BOOL)isGroupThread;
+@end
+
+// The share sheet's recipient grid, and its own IGListAdapter data source.
+@interface IGDirectRecipientListViewController : UIViewController
+@property (readonly, nonatomic) UICollectionView *collectionView;
+@property (readonly, nonatomic) id listAdapter;
+- (id)objectsForListAdapter:(id)adapter;
+- (void)v3RecipientDidLongPress:(id)viewModel;
+- (void)recipientSectionController:(id)controller didLongPressViewModel:(id)viewModel;
 @end
 
 @interface IGDirectRecipientCellViewModel : NSObject

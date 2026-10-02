@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Поділення";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Приховує кнопку створення групи у вікні надсилання та поширення Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Приховати кнопку створення групи";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Закріпити вгорі";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Відкріпити";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Утримуйте фото або ім'я людини в меню «Поділитися», щоб закріпити її вгорі списку, і утримуйте знову, щоб відкріпити. Утримання групи, як і раніше, показує її учасників, а кнопка під ними закріплює або відкріплює групу.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Закріплювати отримувачів у меню «Поділитися»";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Закріплено вгорі";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Відкріплено";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Як часто кеш очищається сам. Перевіряється щоразу, коли Instagram стає активним.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Автоматичне очищення кешу";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Очищає кеш Instagram на пристрої. У рядку видно, скільки місця він займає зараз.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Аналізатор профілю завершено";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Реакція видалена";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Налаштування та інструменти";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Закріплені в меню «Поділитися»";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Зміни списку автозбереження Історії";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Автозбереження Історії розпочато";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Зміни списку перегляду Історії";

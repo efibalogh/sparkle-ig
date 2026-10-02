@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Berbagi";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Menyembunyikan tombol buat grup di lembar kirim dan bagikan Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Sembunyikan Tombol Buat Grup";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Sematkan di Atas";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Lepas Sematan";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Tahan foto atau nama seseorang di lembar berbagi untuk menyematkannya di bagian atas daftar, dan tahan lagi untuk melepas sematan. Menahan grup tetap menampilkan anggotanya, dengan tombol di bawahnya untuk menyematkan atau melepas sematan grup.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Sematkan Penerima di Lembar Berbagi";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Disematkan di atas";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Sematan dilepas";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Seberapa sering cache menghapus dirinya sendiri. Diperiksa setiap kali Instagram menjadi aktif.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Hapus Cache Otomatis";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Menghapus cache Instagram di perangkat. Baris ini menunjukkan berapa banyak ruang yang sedang digunakan.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer Selesai";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reaksi Dihapus";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Pengaturan & Alat";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Sematan Lembar Berbagi";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Perubahan Daftar Simpan Otomatis Story";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Simpan Otomatis Story Dimulai";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Perubahan Daftar Dilihat Story";

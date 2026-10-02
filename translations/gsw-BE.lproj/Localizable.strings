@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Teile";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Versteckt dr Gruppe-erstelle-Chnopf im Sände- u Teile-Blatt vo Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Gruppe-erstelle-Chnopf Verstecke";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Zoberst aahefte";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Löse";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Heb im Teile-Menü s Foto oder dr Name vonere Person druckt, zum se zoberst i dr Lischte aaz'hefte, und nomol, zum se wieder z löse. Bi Gruppe wärde wie bisher d Mitglieder aazeigt, drunter mit emne Chnopf zum d Gruppe aahefte oder löse.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Empfänger im Teile-Menü aahefte";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Zoberst aagheftet";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Glöst";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Wie oft dr Cache sich sälber läärt. Wird gprüeft, jedesmal wenn Instagram aktiv wird.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Cache Automatisch Läere";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Läärt dr Cache vo Instagram uf em Gerät. D'Zylä zeigt, wie vüu Platz är grad bruucht.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer fertig";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "E Reaction entfernt";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Ystellige & Werchzüg";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Aaheftige im Teile-Menü";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Änderige vor Story-Auto-Speichere-Lischte";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Story-Auto-Speichere gstartet";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Änderige vor Story-Gseh-Lischte";

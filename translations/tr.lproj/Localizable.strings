@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Paylaşım";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Instagram'ın gönderme ve paylaşma sayfasındaki grup oluşturma düğmesini gizler.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Grup Oluştur Düğmesini Gizle";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "En Üste Sabitle";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Sabitlemeyi Kaldır";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Paylaşım sayfasında bir kişinin fotoğrafını veya adını basılı tutarak onu listenin en üstüne sabitleyin, kaldırmak için yeniden basılı tutun. Bir grubu basılı tutmak yine üyelerini gösterir; altlarındaki düğme grubu sabitler veya sabitlemesini kaldırır.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Paylaşım Sayfasında Alıcıları Sabitle";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "En üste sabitlendi";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Sabitleme kaldırıldı";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Önbelleğin kendini ne sıklıkta temizleyeceği. Instagram her etkin hale geldiğinde denetlenir.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Önbelleği Otomatik Temizle";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Instagram'ın cihazdaki önbelleğini temizler. Satır, şu an ne kadar yer kapladığını gösterir.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profil Analiz Edici Tamamlandı";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Tepki Kaldırıldı";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Ayarlar ve Araçlar";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Paylaşım Sayfası Sabitlemeleri";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Hikaye Otomatik Kaydetme Listesi Değişiklikleri";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Hikaye Otomatik Kaydı Başladı";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Hikaye Görüldü Listesi Değişiklikleri";

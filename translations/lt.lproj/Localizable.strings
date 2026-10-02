@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Bendrinimas";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Slėpia grupės kūrimo mygtuką Instagram siuntimo ir bendrinimo lape.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Slėpti grupės kūrimo mygtuką";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Prisegti viršuje";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Atsegti";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Bendrinimo lape palaikykite paspaudę asmens nuotrauką arba vardą, kad prisegtumėte jį sąrašo viršuje, ir palaikykite dar kartą, kad atsegtumėte. Palaikius grupę, kaip ir anksčiau rodomi jos nariai, o po jais esantis mygtukas prisega arba atsega grupę.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Prisegti gavėjus bendrinimo lape";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Prisegta viršuje";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Atsegta";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Kaip dažnai talpykla išsivalo automatiškai. Tikrinama kiekvieną kartą suaktyvinus Instagram.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Automatiškai valyti talpyklą";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Išvalo Instagram įrenginyje saugomą talpyklą. Eilutėje rodoma, kiek vietos ji šiuo metu užima.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profilis analizė baigta";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Pašalinta reakcija";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Nustatymai ir įrankiai";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Bendrinimo lapo prisegimai";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Stories automatinio išsaugojimo sąrašo pokyčiai";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Stories automatinis išsaugojimas pradėtas";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Stories matymo sąrašo pokyčiai";

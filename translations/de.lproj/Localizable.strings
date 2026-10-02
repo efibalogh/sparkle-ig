@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Teilen";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Blendet den Button zum Erstellen einer Gruppe im Senden- und Teilen-Fenster von Instagram aus.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Schaltfläche \"Gruppe erstellen\" ausblenden";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Oben anheften";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Loslösen";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Halte im Teilen-Menü das Foto oder den Namen einer Person gedrückt, um sie oben in der Liste anzuheften, und erneut, um sie wieder zu lösen. Bei Gruppen werden weiterhin die Mitglieder angezeigt, darunter mit einer Taste zum Anheften oder Lösen der Gruppe.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Empfänger im Teilen-Menü anheften";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Oben angeheftet";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Losgelöst";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Wie oft sich der Cache selbst leert. Wird geprüft, sobald Instagram aktiv wird.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Cache automatisch leeren";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Leert den Cache von Instagram auf dem Gerät. Die Zeile zeigt, wie viel Speicher er derzeit belegt.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profilanalyse abgeschlossen";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reaktion entfernt";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Einstellungen & Tools";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Anheftungen im Teilen-Menü";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Änderungen der Story-Automatisch-Speichern-Liste";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Automatisches Speichern von Storys gestartet";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Änderungen der Story-Sichtbarkeitsliste";

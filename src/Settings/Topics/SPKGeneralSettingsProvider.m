@@ -189,6 +189,10 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                           icon:SPKSettingsIcon(@"messages")
                                                    defaultsKey:@"general_confirm_send"],
                                SPKL(@"GENERAL_SHARING_CONFIRM_SENDING_POST_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SHARING_PIN_RECIPIENTS_TITLE")
+                                                          icon:SPKSettingsIcon(@"pin")
+                                                   defaultsKey:@"general_share_sheet_pins"],
+                               SPKL(@"GENERAL_SHARING_PIN_RECIPIENTS_HELP")),
         ],
                         nil),
         SPKTopicSection(SPKL(@"GENERAL_RECOMMENDATIONS_HEADER"), @[

@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "การแชร์";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "ซ่อนปุ่มสร้างกลุ่มในแผงส่งและแชร์ของ Instagram";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "ซ่อนปุ่มสร้างกลุ่ม";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "ปักหมุดไว้ด้านบน";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "เลิกปักหมุด";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "กดรูปภาพหรือชื่อของบุคคลค้างไว้ในแผ่นแชร์เพื่อปักหมุดไว้ด้านบนสุดของรายการ และกดค้างอีกครั้งเพื่อเลิกปักหมุด การกดกลุ่มค้างไว้จะยังคงแสดงสมาชิกของกลุ่ม พร้อมปุ่มด้านล่างสำหรับปักหมุดหรือเลิกปักหมุดกลุ่ม";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "ปักหมุดผู้รับในแผ่นแชร์";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "ปักหมุดไว้ด้านบนแล้ว";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "เลิกปักหมุดแล้ว";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "ความถี่ในการล้างแคชอัตโนมัติ ตรวจสอบทุกครั้งที่ Instagram กลับมาทำงาน";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "ล้างแคชอัตโนมัติ";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "ล้างแคชของ Instagram บนอุปกรณ์ แถวนี้จะแสดงพื้นที่ที่ใช้อยู่ในขณะนี้";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer เสร็จสมบูรณ์";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "ลบการรีแอกต์แล้ว";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "การตั้งค่าและเครื่องมือ";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "การปักหมุดในแผ่นแชร์";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "การเปลี่ยนแปลงรายชื่อบันทึกสตอรี่อัตโนมัติ";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "เริ่มบันทึกสตอรี่อัตโนมัติแล้ว";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "การเปลี่ยนแปลงรายชื่อดูสตอรี่แล้ว";

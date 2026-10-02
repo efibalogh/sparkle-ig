@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Condivisione";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Nasconde il pulsante di creazione gruppo nel pannello di invio e condivisione di Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Nascondi Pulsante Crea Gruppo";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Fissa in cima";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Sblocca";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Tieni premuta la foto o il nome di una persona nel foglio di condivisione per fissarla in cima all'elenco, e tieni premuto di nuovo per sbloccarla. Tenere premuto un gruppo mostra ancora i suoi membri, con un pulsante sotto per fissare o sbloccare il gruppo.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Fissa destinatari nel foglio di condivisione";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Fissato in cima";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Non più fissato";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Ogni quanto la cache si svuota da sola. Viene controllato ogni volta che Instagram diventa attivo.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Cancella Cache Automaticamente";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Svuota la cache di Instagram sul dispositivo. La riga indica quanto spazio occupa adesso.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Analisi Profilo Completata";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reazione Rimossa";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Impostazioni e Strumenti";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Fissati nel foglio di condivisione";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Modifiche elenco salvataggio automatico storie";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Salvataggio automatico storie iniziato";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Modifiche all'elenco di visualizzazione delle storie";

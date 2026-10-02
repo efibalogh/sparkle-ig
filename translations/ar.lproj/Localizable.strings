@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "المشاركة";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "يخفي زر إنشاء مجموعة في ورقة الإرسال والمشاركة في Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "إخفاء زر إنشاء مجموعة";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "تثبيت في الأعلى";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "إلغاء التثبيت";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "اضغط مطولًا على صورة الشخص أو اسمه في ورقة المشاركة لتثبيته في أعلى القائمة، واضغط مطولًا مرة أخرى لإلغاء التثبيت. الضغط المطول على مجموعة لا يزال يعرض أعضاءها، مع زر أسفلهم لتثبيت المجموعة أو إلغاء تثبيتها.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "تثبيت المستلمين في ورقة المشاركة";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "تم التثبيت في الأعلى";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "تم إلغاء التثبيت";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "عدد المرات التي تُمسح فيها الذاكرة المؤقتة تلقائياً. يتم التحقق كلما أصبح Instagram نشطاً.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "مسح الذاكرة المؤقتة تلقائيًا";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "يمسح الذاكرة المؤقتة لـ Instagram على الجهاز. يعرض الصف حجم المساحة المستخدمة حالياً.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "اكتمل محلل الملف التعريفي";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "تم إزالة التفاعل";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "الإعدادات والأدوات";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "التثبيت في ورقة المشاركة";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "تغييرات قائمة الحفظ التلقائي لـ Story";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "بدأ الحفظ التلقائي لـ Story";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "تغييرات قائمة مشاهدي Story";

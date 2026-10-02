@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Partage";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Masque le bouton de création de groupe dans la feuille d'envoi et de partage d'Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Masquer le bouton Créer un groupe";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Épingler en haut";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Désépingler";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Maintenez la photo ou le nom d'une personne dans la feuille de partage pour l'épingler en haut de la liste, et maintenez à nouveau pour la désépingler. Maintenir un groupe affiche toujours ses membres, avec un bouton en dessous pour épingler ou désépingler le groupe.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Épingler des destinataires dans la feuille de partage";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Épinglé en haut";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Désépinglé";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "À quelle fréquence le cache se vide de lui-même. Vérifié chaque fois qu'Instagram devient actif.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Vider le cache automatiquement";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Vide le cache d'Instagram sur l'appareil. La ligne indique l'espace qu'il occupe actuellement.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Analyseur de profil terminé";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Réaction supprimée";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Paramètres et outils";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Épingles de la feuille de partage";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Modifications de la liste d'enregistrement automatique des stories";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Enregistrement automatique des stories commencé";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Modifications de la liste des stories vues";

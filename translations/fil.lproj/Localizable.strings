@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Pagbabahagi";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Itinatago ang create group button sa send at share sheet ng Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Itago ang Create Group Button";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "I-pin sa Itaas";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "I-unpin";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Pindutin nang matagal ang larawan o pangalan ng isang tao sa share sheet para i-pin sila sa itaas ng listahan, at pindutin muli nang matagal para i-unpin. Ang pagpindot nang matagal sa isang grupo ay nagpapakita pa rin ng mga miyembro nito, na may button sa ilalim para i-pin o i-unpin ang grupo.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "I-pin ang mga Recipient sa Share Sheet";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Na-pin sa itaas";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Na-unpin";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Gaano kadalas kusang mag-clear ang cache. Chinicheck tuwing gumagana ang Instagram.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Awtomatikong Pagbura ng Cache";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Nililinis ang on-device cache ng Instagram. Ipinapakita ng row kung gaano kalaking espasyo ang ginagamit nito ngayon.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Kumpleto na ang Profile Analyzer";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Inalis na Reaction";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Settings at Tools";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Mga Pin sa Share Sheet";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Pagbabago sa Auto-Save List ng Story";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Nagsimula na ang Auto-Save ng Story";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Pagbabago sa Story Seen List";

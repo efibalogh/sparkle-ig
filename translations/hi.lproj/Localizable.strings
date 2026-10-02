@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "साझाकरण";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Instagram की भेजें और शेयर शीट में ग्रुप बनाएं बटन छिपाता है।";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "समूह बनाएं बटन छिपाएं";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "सबसे ऊपर पिन करें";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "अनपिन करें";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "शेयर शीट में किसी व्यक्ति की फ़ोटो या नाम को दबाकर रखें ताकि वह सूची में सबसे ऊपर पिन हो जाए, और अनपिन करने के लिए फिर से दबाकर रखें। किसी ग्रुप को दबाकर रखने पर अब भी उसके सदस्य दिखते हैं, और उनके नीचे ग्रुप को पिन या अनपिन करने का बटन होता है।";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "शेयर शीट में प्राप्तकर्ताओं को पिन करें";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "सबसे ऊपर पिन किया गया";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "अनपिन किया गया";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "कैश कितनी बार अपने आप साफ होता है। जब भी Instagram सक्रिय होता है, तब जांचा जाता है।";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "स्वचालित कैश साफ़ करें";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Instagram का डिवाइस पर मौजूद कैश साफ करता है। यह पंक्ति दिखाती है कि अभी कितनी जगह इस्तेमाल हो रही है।";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "प्रोफ़ाइल विश्लेषक पूर्ण";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "प्रतिक्रिया हटाई गई";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "सेटिंग्स और उपकरण";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "शेयर शीट पिन";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Story स्वचालित सहेज सूची परिवर्तन";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Story स्वचालित सहेज शुरू हो गई";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Story देखी गई सूची परिवर्तन";

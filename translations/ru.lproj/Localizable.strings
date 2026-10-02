@@ -924,6 +924,12 @@
 "GENERAL_SHARING_HEADER" = "Поделиться";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_HELP" = "Скрывает кнопку создания группы в окне отправки и публикации Instagram.";
 "GENERAL_SHARING_HIDE_CREATE_GROUP_BUTTON_TITLE" = "Скрыть кнопку создания группы";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_PIN_ACTION" = "Закрепить вверху";
+"GENERAL_SHARING_PIN_RECIPIENTS_GROUP_UNPIN_ACTION" = "Открепить";
+"GENERAL_SHARING_PIN_RECIPIENTS_HELP" = "Удерживайте фото или имя человека в меню «Поделиться», чтобы закрепить его вверху списка, и удерживайте снова, чтобы открепить. Удержание группы по-прежнему показывает её участников, а кнопка под ними закрепляет или открепляет группу.";
+"GENERAL_SHARING_PIN_RECIPIENTS_TITLE" = "Закреплять получателей в меню «Поделиться»";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_PINNED" = "Закреплено вверху";
+"GENERAL_SHARING_PIN_RECIPIENTS_TOAST_UNPINNED" = "Откреплено";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_HELP" = "Как часто кэш очищается сам. Проверяется каждый раз, когда Instagram становится активным.";
 "GENERAL_STORAGE_AUTO_CLEAR_CACHE_TITLE" = "Автоматически очищать кэш";
 "GENERAL_STORAGE_CLEAR_CACHE_HELP" = "Очищает кэш Instagram на устройстве. В строке видно, сколько места он занимает сейчас.";
@@ -2353,6 +2359,7 @@
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Анализ профиля завершен";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Реакция удалена";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Настройки и инструменты";
+"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Закреплённые в меню «Поделиться»";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Изменения списка автосохранения историй";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT" = "Автосохранение историй запущено";
 "UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT" = "Изменения списка просмотренных историй";
