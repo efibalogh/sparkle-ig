@@ -41,7 +41,7 @@ static NSDictionary<NSString *, NSString *> *SPKLangNames(void) {
         @"en":@"English", @"ar":@"العربية", @"de":@"Deutsch", @"el":@"Ελληνικά",
         @"es-ES":@"Español", @"fr":@"Français", @"hi":@"हिन्दी", @"it":@"Italiano",
         @"ja":@"日本語", @"ko":@"한국어", @"lt":@"Lietuvių", @"pt-BR":@"Português (Brasil)", @"ru":@"Русский",
-        @"ro":@"Română",
+        @"pl":@"Polski", @"ro":@"Română",
         @"tr":@"Türkçe", @"uk":@"Українська", @"vi":@"Tiếng Việt", @"zh-Hans":@"简体中文",
         @"zh-Hant":@"繁體中文", @"fa":@"فارسی", @"th":@"ไทย", @"fil":@"Filipino",
         // Named here rather than left to the endonym fallback, which gets these three wrong:

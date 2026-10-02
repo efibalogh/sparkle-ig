@@ -18,9 +18,9 @@ static NSArray<NSString *> *spk_cachedAvailableLanguages = nil;
 
 #pragma mark - Language resolution
 
-/// Codes shipped inside Sparkle.bundle. Only English ships today, but the split
-/// is read from the bundle so promoting a reviewed community catalog stays a
-/// matter of moving its directory in, with no code change.
+/// Codes shipped inside Sparkle.bundle. The split is read from the bundle so
+/// promoting a reviewed community catalog stays a matter of moving its directory
+/// in, with no code change.
 + (NSArray<NSString *> *)shippedLanguages {
     static NSArray<NSString *> *langs = nil;
     static dispatch_once_t once;
@@ -38,6 +38,9 @@ static NSArray<NSString *> *spk_cachedAvailableLanguages = nil;
             }
         }
         langs = [found copy];
+        // Before the first lookup resolves a language, so a superseded pack never gets read.
+        if (SPKLanguagePackRetireSuperseded(langs).count > 0)
+            [self flushCaches];
     });
     return langs;
 }

@@ -55,8 +55,17 @@ instagram sparkle ffmpeg ffmpegkit gif gifs reels reel meta ai ios url urls
 id ok live story stories http https png jpg jpeg mp4 mp3 m4a hdr sdr qr flex json
 zip pdf regram giphy plus app apps api cdn ui hd fps kbps mbps threads igtv boomerang
 liquid glass theos core data gallery settings analyzer profile testflight beta home
-vault mediavault otf ttf ttc crf explorer hook hooks push
+vault mediavault otf ttf ttc crf explorer hook hooks push instant instants web mobile
+face touch s
+ryuk ryukgram socuul scinsta instasane zxpluginsinject
 """.split())
+# English a native reviewer of a shipped catalog chose to keep. Checked per key, so
+# the same words left untranslated anywhere else still count against the catalog.
+REVIEWED_ENGLISH = {
+    "pl": {"ABOUT_INFORMATION_BUNDLE_ID_TITLE", "FONT_STYLE_ULTRA_LIGHT"},
+}
+# Contributor handles name people, and format specifiers are not words.
+NEUTRAL_STRIP_RE = re.compile(r"@[\w.]+|" + PLACEHOLDER_RE.pattern)
 # Hyphenated compounds count as one token: German glues "Instagram-Plus-Button"
 # into a single legitimate word, and feature names like "view-once" are kept
 # verbatim on purpose, so splitting on the hyphen invents English runs that are
@@ -258,7 +267,7 @@ def is_language_neutral(value: str) -> bool:
     # an aspect ratio, a unit - not a phrase somebody forgot to translate.
     if value and not any(character.isspace() for character in value):
         return True
-    words = carryover_words(value)
+    words = carryover_words(NEUTRAL_STRIP_RE.sub(" ", value))
     return not words or all(word.lower() in UNTRANSLATED_TOKENS for word in words)
 
 
@@ -284,6 +293,7 @@ def check_catalog(locale, values, plurals, english, english_plurals, shipped):
         untouched = sorted(
             key for key in set(english) & set(values)
             if values[key] == english[key] and not is_language_neutral(english[key])
+            and key not in REVIEWED_ENGLISH.get(locale, ())
         )
         translated = len(set(english) & set(values)) - len(untouched)
         if untouched:
@@ -416,8 +426,10 @@ def main(only_locale: str | None = None, emit_table: bool = False) -> int:
         return 1
     shipped = ", ".join(locale for locale, _, is_shipped in discover_catalogs() if is_shipped)
     print(f"i18n lint passed: {len(english)} strings, {len(english_plurals)} plural keys; shipped: {shipped}")
-    if coverage:
-        print("community catalogs: " + ", ".join(f"{locale} {percent}%" for locale, percent in coverage))
+    shipped_codes = {locale for locale, _, is_shipped in discover_catalogs() if is_shipped}
+    community = [(locale, percent) for locale, percent in coverage if locale not in shipped_codes]
+    if community:
+        print("community catalogs: " + ", ".join(f"{locale} {percent}%" for locale, percent in community))
     if emit_table:
         print()
         print("| Language | Coverage | Ships in Sparkle |")

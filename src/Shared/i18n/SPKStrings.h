@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Keys are SEMANTIC (e.g. `FEED_LAYOUT_HIDE_STORIES_TRAY_TITLE`), matching the
 /// a stable-key convention — stable when English copy is reworded, no paragraph-
 /// length footer keys, no homograph collisions. `en.lproj` is the source of truth
-/// for English and is the only catalog Sparkle ships; every other language is a
-/// community pack the user imports. Lookup falls back active → English, so the raw
+/// for English. Sparkle also ships the catalogs a native speaker has reviewed; every
+/// other language is a community pack the user imports. Lookup falls back active → English, so the raw
 /// key is only ever returned if `en.lproj` itself is missing it, which
 /// `tools/lint-i18n.py` exists to catch.
 FOUNDATION_EXPORT NSString *SPKLocalizedString(NSString *key, NSString *_Nullable comment);

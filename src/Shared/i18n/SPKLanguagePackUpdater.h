@@ -1,7 +1,7 @@
 //  SPKLanguagePackUpdater.h
 //  Keeps installed language packs in step with the catalog.
 //
-//  Sparkle ships English and nothing else, so every other language a user reads is a pack that was
+//  Sparkle ships only reviewed languages, so every other language a user reads is a pack that was
 //  published alongside some earlier release. A release that adds strings leaves every one of those
 //  packs short of the new keys, and the user sees the new screens in English with no way of knowing
 //  a translated pack already exists. This closes that: on launch, quietly, Sparkle asks the catalog

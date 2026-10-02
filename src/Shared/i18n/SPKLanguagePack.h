@@ -19,7 +19,7 @@ FOUNDATION_EXPORT BOOL SPKLanguageCodeIsWellFormed(NSString *code);
 /// Directory holding user-imported language packs, one `<code>.lproj` per
 /// language. Created on demand.
 ///
-/// Sparkle ships only English, because a translation nobody who speaks the
+/// Sparkle ships only reviewed languages, because a translation nobody who speaks the
 /// language has read is worse than no translation: it looks official while
 /// quietly describing the wrong setting. Every other catalog is community work,
 /// distributed as a pack the user chooses to install, and promoted into the
@@ -44,6 +44,12 @@ FOUNDATION_EXPORT NSString *_Nullable SPKLanguagePackRecordedSHA256(NSString *co
 
 /// Forgets a pack's provenance. Called when the pack is deleted.
 FOUNDATION_EXPORT void SPKLanguagePackForgetProvenance(NSString *code);
+
+/// Deletes packs installed from the catalog whose language now ships in Sparkle.bundle, and returns
+/// their codes. Such a pack would otherwise shadow the reviewed catalog forever: an installed pack
+/// wins over a shipped one, and a promoted language is no longer published, so the pack never
+/// refreshes. A pack imported from a file is kept, since that is how a reviewer previews corrections.
+FOUNDATION_EXPORT NSArray<NSString *> *SPKLanguagePackRetireSuperseded(NSArray<NSString *> *shippedCodes);
 
 /// One installed pack, as the settings UI presents it.
 @interface SPKLanguagePack : NSObject

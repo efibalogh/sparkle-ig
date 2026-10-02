@@ -38,7 +38,7 @@ ENDONYMS = {
     "ru": "Русский", "tr": "Türkçe", "uk": "Українська", "vi": "Tiếng Việt",
     "zh-Hans": "简体中文", "zh-Hant": "繁體中文",
     "es-419": "Español (Latinoamérica)", "fa": "فارسی", "fil": "Filipino",
-    "gsw-BE": "Bärndütsch", "id": "Bahasa Indonesia", "th": "ไทย",
+    "gsw-BE": "Bärndütsch", "id": "Bahasa Indonesia", "pl": "Polski", "th": "ไทย",
 }
 NAMES = {
     "ar": "Arabic", "de": "German", "el": "Greek", "es-ES": "Spanish",
@@ -47,7 +47,7 @@ NAMES = {
     "ru": "Russian", "tr": "Turkish", "uk": "Ukrainian", "vi": "Vietnamese",
     "zh-Hans": "Chinese (Simplified)", "zh-Hant": "Chinese (Traditional)",
     "es-419": "Spanish (Latin America)", "fa": "Persian", "fil": "Filipino",
-    "gsw-BE": "Swiss German (Bern)", "id": "Indonesian", "th": "Thai",
+    "gsw-BE": "Swiss German (Bern)", "id": "Indonesian", "pl": "Polish", "th": "Thai",
 }
 
 

@@ -118,6 +118,24 @@ void SPKLanguagePackForgetProvenance(NSString *code) {
     [NSUserDefaults.standardUserDefaults setObject:records forKey:kSPKLanguagePackProvenanceKey];
 }
 
+NSArray<NSString *> *SPKLanguagePackRetireSuperseded(NSArray<NSString *> *shippedCodes) {
+    NSMutableArray<NSString *> *retired = [NSMutableArray array];
+    for (NSString *code in SPKInstalledLanguagePackCodes()) {
+        if (![shippedCodes containsObject:code] || !SPKLanguagePackRecordedSHA256(code))
+            continue;
+        NSError *error = nil;
+        if (![NSFileManager.defaultManager removeItemAtPath:SPKLanguagePackPathForCode(code) error:&error]) {
+            SPKWarnLog(@"i18n", @"Could not retire language pack %@: %@", code, error.localizedDescription);
+            continue;
+        }
+        // The language override is left alone: the same code still resolves, now to the shipped catalog.
+        SPKLanguagePackForgetProvenance(code);
+        [retired addObject:code];
+        SPKLog(@"i18n", @"Retired language pack %@, the language now ships with Sparkle", code);
+    }
+    return retired;
+}
+
 // A .strings file is an old-style property list, so the system parser reads it
 // without a hand-written lexer and rejects a malformed one for us.
 static NSDictionary<NSString *, NSString *> *SPKCatalogAtPath(NSString *path) {

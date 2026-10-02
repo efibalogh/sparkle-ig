@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bring every community catalog to key parity with English.
 
-Sparkle ships English only, but the catalogs in translations/ are distributed as
+The catalogs in translations/ do not ship with Sparkle, but they are distributed as
 language packs, so a key missing from one is a string the pack cannot translate
 at all. New keys are inserted with the English value: the pack stays complete,
 and the linter reports the entry as still-in-English, which is the to-do list a

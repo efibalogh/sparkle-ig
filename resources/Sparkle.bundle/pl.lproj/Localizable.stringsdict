@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>COMMON_FILE_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld pliki</string>
+			<key>many</key>
+			<string>%ld plików</string>
+			<key>one</key>
+			<string>%ld plik</string>
+			<key>other</key>
+			<string>%ld plików</string>
+		</dict>
+	</dict>
+	<key>COMMON_ITEM_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld elementy</string>
+			<key>many</key>
+			<string>%ld elementów</string>
+			<key>one</key>
+			<string>%ld element</string>
+			<key>other</key>
+			<string>%ld elementów</string>
+		</dict>
+	</dict>
+	<key>COMMON_MESSAGE_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld wiadomości</string>
+			<key>many</key>
+			<string>%ld wiadomości</string>
+			<key>one</key>
+			<string>%ld wiadomość</string>
+			<key>other</key>
+			<string>%ld wiadomości</string>
+		</dict>
+	</dict>
+	<key>COMMON_OTHER_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld innych</string>
+			<key>many</key>
+			<string>%ld innych</string>
+			<key>one</key>
+			<string>%ld inny</string>
+			<key>other</key>
+			<string>%ld innych</string>
+		</dict>
+	</dict>
+	<key>COMMON_PARTICIPANT_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld uczestników</string>
+			<key>many</key>
+			<string>%ld uczestników</string>
+			<key>one</key>
+			<string>%ld uczestnik</string>
+			<key>other</key>
+			<string>%ld uczestników</string>
+		</dict>
+	</dict>
+	<key>COMMON_SENDER_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld nadawcy</string>
+			<key>many</key>
+			<string>%ld nadawców</string>
+			<key>one</key>
+			<string>%ld nadawca</string>
+			<key>other</key>
+			<string>%ld nadawców</string>
+		</dict>
+	</dict>
+	<key>COMMON_USER_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld użytkowników</string>
+			<key>many</key>
+			<string>%ld użytkowników</string>
+			<key>one</key>
+			<string>%ld użytkownik</string>
+			<key>other</key>
+			<string>%ld użytkowników</string>
+		</dict>
+	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_FAILED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld nieudanych</string>
+			<key>many</key>
+			<string>%ld nieudanych</string>
+			<key>one</key>
+			<string>%ld nieudany</string>
+			<key>other</key>
+			<string>%ld nieudanych</string>
+		</dict>
+	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld elementy</string>
+			<key>many</key>
+			<string>%ld elementów</string>
+			<key>one</key>
+			<string>%ld element</string>
+			<key>other</key>
+			<string>%ld elementów</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

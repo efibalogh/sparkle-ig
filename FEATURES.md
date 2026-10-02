@@ -9,7 +9,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 
 ## Localization
 
-- **Language** *(restart)*: Use the Translate button in the top-right of Sparkle Settings to open the language sheet. Sparkle ships English, and with nothing else installed English is the selection. Installing a language pack adds it to the same list, with how much of it is translated, and brings back a System Default row that follows Instagram first, then the device language, then English.
+- **Language** *(restart)*: Use the Translate button in the top-right of Sparkle Settings to open the language sheet. Sparkle ships English, Japanese, and Polish, plus a System Default row that follows Instagram first, then the device language, then English. Installing a language pack adds it to the same list, with how much of it is translated.
 - The choice is device-wide, applies to every Instagram account after restart, and falls back to English when a language or individual string is unavailable.
 - Sparkle-owned dates use the selected language's ordering, punctuation, and month names while retaining the device's 12/24-hour clock preference across Action Button menus, Gallery, Downloads, media details, logs, and diagnostics.
 - Built-in collapsible Action Button section names follow the selected language. A section name explicitly customized by the user remains verbatim.
@@ -19,7 +19,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 - **Export English Strings**: Shares the English catalog as a `.zip`, the file a new translation starts from.
 - **Report a Translation Issue**: Opens the translation issue form, with the language prefilled when Sparkle is running in an imported one.
 - **Contribute a Translation**: Opens the translation guide, for correcting a language or starting a new one.
-- Translation quality: English is the only hand-written catalog and the only one Sparkle ships. The 24 community catalogs live in the repository as installable packs rather than in the app. They were machine translated and have not been reviewed by native speakers, so some strings read unnaturally or describe a setting inaccurately. A language ships with Sparkle once a native speaker has reviewed it.
+- Translation quality: Sparkle ships English and the languages a native speaker has reviewed, currently Japanese and Polish. The 23 community catalogs live in the repository as installable packs rather than in the app. They were machine translated and most have not been reviewed by native speakers, so some strings read unnaturally or describe a setting inaccurately. A language ships with Sparkle once a native speaker has reviewed it. A pack installed from the list is removed on its own once its language ships, so it never hides the reviewed catalog.
 
 ---
 
