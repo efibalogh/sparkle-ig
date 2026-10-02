@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "Kommentar";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "Entfärnt Shopping-Karussells us Kommentar-Threads.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "Kommentar-Shopping Verstecke";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "Nimmt d Reihe mit de Schnällreaktions-Emojis über em Kommentarfäld wäg.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "Emoji-Leischte uusblände";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "Entfärnt dr Gschänk-Kurzbefähl us em Kommentar-Composer.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "Gschänk-Chnopf Verstecke";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "Lueg im Menü dr Name u Kanal vomene GIF-Kommentar nache, drno tippe zum Kopiere. Jedi Aafrag frögt giphy.com nach däm GIF.";

@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "댓글";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "댓글 스레드에서 쇼핑 캐러셀을 제거합니다.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "댓글 쇼핑 숨기기";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "댓글 입력창 위의 빠른 반응 이모지 줄을 제거합니다.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "이모지 막대 숨기기";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "댓글 작성 화면에서 선물 바로가기를 제거합니다.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "선물 버튼 숨기기";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "메뉴에서 GIF 댓글의 이름과 채널을 조회한 뒤 탭하여 복사합니다. 조회할 때마다 giphy.com에 해당 GIF 정보를 요청합니다.";

@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "टिप्पणियां";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "कमेंट थ्रेड से शॉपिंग कैरोसेल हटाता है।";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "टिप्पणी शॉपिंग छिपाएं";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "कमेंट लिखने वाले बॉक्स के ऊपर से क्विक रिएक्शन इमोजी की पंक्ति हटाता है।";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "इमोजी बार छिपाएँ";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "कमेंट कंपोजर से गिफ्ट शॉर्टकट हटाता है।";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "उपहार बटन छिपाएं";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "किसी GIF कमेंट का नाम और चैनल उसके मेन्यू में देखें, फिर कॉपी करने के लिए टैप करें। हर बार giphy.com से उस GIF के बारे में पूछा जाता है।";

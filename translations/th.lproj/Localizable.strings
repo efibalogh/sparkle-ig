@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "ความคิดเห็น";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "ลบแถบสินค้าออกจากกระทู้ความคิดเห็น";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "ซ่อนการช้อปปิ้งในความคิดเห็น";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "นำแถวอีโมจิรีแอคชันด่วนเหนือช่องเขียนความคิดเห็นออก";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "ซ่อนแถบอีโมจิ";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "ลบปุ่มลัดของขวัญออกจากช่องเขียนความคิดเห็น";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "ซ่อนปุ่มของขวัญ";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "ค้นหาชื่อและช่องของ GIF ในความคิดเห็นได้จากเมนู แล้วแตะเพื่อคัดลอก การค้นหาแต่ละครั้งจะสอบถามข้อมูล GIF นั้นจาก giphy.com";

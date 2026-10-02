@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "التعليقات";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "يزيل دوارات التسوق من سلاسل التعليقات.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "إخفاء تسوق التعليقات";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "يزيل صف الرموز التعبيرية للتفاعل السريع فوق مربع كتابة التعليقات.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "إخفاء شريط الرموز التعبيرية";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "يزيل اختصار الهدايا من مربع كتابة التعليقات.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "إخفاء زر الهدايا";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "اعرف اسم صورة GIF في التعليق وقناتها من قائمتها، ثم اضغط للنسخ. كل عملية بحث تسأل giphy.com عن تلك الصورة.";

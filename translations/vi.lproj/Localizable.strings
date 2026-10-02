@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "Bình luận";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "Xóa các thanh cuộn sản phẩm mua sắm khỏi luồng bình luận.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "Ẩn Mua sắm trong bình luận";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "Gỡ hàng biểu tượng cảm xúc phản ứng nhanh phía trên ô viết bình luận.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "Ẩn thanh biểu tượng cảm xúc";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "Ẩn lối tắt gửi quà tặng khỏi khung soạn bình luận.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "Ẩn nút tặng quà";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "Tra cứu tên và kênh của bình luận GIF trong menu của nó, sau đó nhấn để sao chép. Mỗi lần tra cứu sẽ gửi yêu cầu tới giphy.com về GIF đó.";

@@ -543,6 +543,11 @@
 - (void)prepareForAnimationToExpansionPercentage:(double)percentage;
 @end
 
+@interface IGCommentComposerView : UIView
+@property (weak, nonatomic) id delegate;
+@property (retain, nonatomic) UIView *emojiBar;
+@end
+
 // Runtime-resolved Swift class used by expanded post and Reels caption sheets.
 @interface IGCommentRichCaptionView : UIView
 - (void)configureWith:(id)viewModel;

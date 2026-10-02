@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "Comentarii";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "Elimină caruselele comerciale din firele de comentarii.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "Ascunde cumpărături comentariu";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "Elimină rândul de emoji pentru reacții rapide de deasupra câmpului de comentarii.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "Ascunde bara de emoji";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "Elimină scurtătura pentru cadouri din câmpul de comentarii.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "Ascunde buton cadouri";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "Caută numele și canalul unui comentariu GIF în meniul lui, apoi atinge pentru a copia. Fiecare căutare întreabă giphy.com despre acel GIF.";

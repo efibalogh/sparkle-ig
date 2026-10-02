@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "Komentar";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "Menghapus carousel belanja dari utas komentar.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "Sembunyikan Belanja di Komentar";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "Menghapus baris emoji reaksi cepat di atas kolom komentar.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "Sembunyikan Bilah Emoji";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "Menghapus pintasan hadiah dari penyusun komentar.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "Sembunyikan Tombol Hadiah";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "Lihat nama dan saluran komentar GIF di menunya, lalu ketuk untuk menyalin. Setiap pencarian bertanya ke giphy.com tentang GIF tersebut.";

@@ -57,6 +57,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 - **Confirm Comment Like**.
 - **Hide Comment Shopping**: Removes commerce carousels in comment threads.
 - **Hide Gifts Button**: Removes the Gifts shortcut from the comment composer and lets the input use the freed space.
+- **Hide Emoji Bar**: Removes the row of quick-reaction emojis above the comment composer.
 - **Upload Photos from Gallery**: Long-press the composer's photo button to attach an image from your Sparkle Gallery (a normal tap still opens Instagram's photo picker).
 - Comment options apply everywhere comments appear (feed, reels, etc.).
 

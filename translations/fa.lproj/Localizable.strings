@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "کامنت‌ها";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "کاروسل‌های خرید را از تردهای کامنت حذف می‌کند.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "پنهان‌سازی خرید در کامنت‌ها";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "ردیف ایموجی‌های واکنش سریع را از بالای کادر نوشتن نظر حذف می‌کند.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "پنهان کردن نوار ایموجی";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "میان‌بر هدیه را از کادر نوشتن کامنت حذف می‌کند.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "پنهان‌سازی دکمه هدیه";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "نام و کانال یک کامنت GIF را در منویش جستجو کنید، سپس برای کپی کردن ضربه بزنید. هر جستجو از giphy.com درباره آن GIF سؤال می‌کند.";

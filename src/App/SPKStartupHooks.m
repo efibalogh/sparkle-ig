@@ -66,6 +66,7 @@ FOUNDATION_EXPORT void SPKInstallPostCommentConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSwipeCloseCommentsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCommentActionsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideCommentGiftsButtonHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallHideCommentEmojiBarHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCommentComposerGalleryUploadHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideStoryTrayHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideRepostButtonHooksIfEnabled(void);
@@ -203,6 +204,7 @@ void SPKInstallFeedSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallSwipeCloseCommentsHooksIfEnabled);
     SPK_INSTALL(SPKInstallCommentActionsHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideCommentGiftsButtonHooksIfEnabled);
+    SPK_INSTALL(SPKInstallHideCommentEmojiBarHooksIfEnabled);
     SPK_INSTALL(SPKInstallCommentComposerGalleryUploadHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideStoryTrayHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideRecentHighlightsHooksIfEnabled);

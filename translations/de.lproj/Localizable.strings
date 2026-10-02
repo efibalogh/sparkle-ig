@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "Kommentare";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "Entfernt Shopping-Karussells aus Kommentarverläufen.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "Kommentar-Shopping ausblenden";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "Entfernt die Reihe mit Schnellreaktions-Emojis über dem Kommentarfeld.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "Emoji-Leiste ausblenden";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "Entfernt die Geschenk-Verknüpfung aus dem Kommentarfeld.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "Geschenke-Schaltfläche ausblenden";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "Schlage Name und Kanal eines GIF-Kommentars in dessen Menü nach und tippe zum Kopieren. Jede Abfrage fragt giphy.com nach diesem GIF.";

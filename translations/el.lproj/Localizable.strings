@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "Σχόλια";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "Αφαιρεί τα εμπορικά καρουζέλ από τα νήματα σχολίων.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "Απόκρυψη Αγορών Σχολίου";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "Αφαιρεί τη σειρά με τα emoji γρήγορης αντίδρασης πάνω από το πεδίο σχολίων.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "Απόκρυψη γραμμής emoji";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "Αφαιρεί τη συντόμευση δώρων από το πεδίο σύνταξης σχολίων.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "Απόκρυψη Κουμπιού Δώρων";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "Δες το όνομα και το κανάλι ενός σχολίου GIF στο μενού του και πάτα για αντιγραφή. Κάθε αναζήτηση ρωτά το giphy.com για αυτό το GIF.";

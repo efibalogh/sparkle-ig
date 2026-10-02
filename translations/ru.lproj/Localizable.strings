@@ -878,6 +878,8 @@
 "GENERAL_COMMENTS_HEADER" = "Комментарии";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_HELP" = "Убирает торговые карусели из веток комментариев.";
 "GENERAL_COMMENTS_HIDE_COMMENT_SHOPPING_TITLE" = "Скрыть торговлю в комментариях";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_HELP" = "Убирает ряд эмодзи быстрых реакций над полем ввода комментария.";
+"GENERAL_COMMENTS_HIDE_EMOJI_BAR_TITLE" = "Скрыть панель эмодзи";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_HELP" = "Убирает ярлык подарков из поля ввода комментария.";
 "GENERAL_COMMENTS_HIDE_GIFTS_BUTTON_TITLE" = "Скрыть кнопку подарков";
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_HELP" = "Посмотрите название и канал GIF-комментария в его меню, затем нажмите, чтобы скопировать. Каждый запрос обращается к giphy.com за этой GIF.";
