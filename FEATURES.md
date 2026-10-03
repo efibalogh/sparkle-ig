@@ -219,12 +219,13 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Tap Controls**: `Default`, `Pause/Play`, or `Mute/Unmute`.
 - **Playback Controls**: Long press a reel's more button for the same floating playback panel as Stories: speed from 0.5x to 2x, scrubbing, 5 second skips, and pause/play. While a reel plays at another speed, the speed is shown above the action button; tap it to reopen the panel. After pausing from the panel, tapping the reel resumes it. Video reels only.
 - **Keep Speed For**: `This Video`, `This Session` (until you leave Reels), or `Always`.
-- **Stop Looping Reels**: Reels stop on their last frame instead of looping, with Instagram's play button shown. Tap play, or scroll back to the reel, to watch it again from the start. The play button needs tap to pause; with tap set to mute the reel just stops. Other videos keep looping.
+- **Auto Scroll**: `Default`, `On`, or `Off`. Starts Instagram's reels auto scroll in that state every launch; the toggle in Reels still works for the rest of the session. **Disable Scrolling Reels** forces it off. `On` pauses **Stop Looping Reels**. Rows that are overridden are greyed out, and their saved values are kept. Only works on accounts where Instagram has rolled out auto scroll; Instagram decides this per account on its servers.
 - **Start Reels Muted**: Reels start without sound until you unmute them, in the Reels tab and in reels opened from Feed or elsewhere. **(restart)**
 - **Disable Reels Tab Refresh**: No refresh when re-tapping the Reels tab.
 
 ### Limits
 - **Disable Scrolling Reels**: Blocks scrolling to the next reel. **(restart)**
+- **Stop Looping Reels**: Reels stop on their last frame instead of looping, with Instagram's play button shown. Tap play, or scroll back to the reel, to watch it again from the start. The play button needs tap to pause; with tap set to mute the reel just stops. Other videos keep looping.
 - **Prevent Doom Scrolling** + **Doom Scrolling Limit**: Caps the number of reels that load in the main Reels feed (1–100). Profile reels are unaffected.
 
 ### Layout

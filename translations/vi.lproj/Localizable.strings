@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Về \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Nhấn để thực hiện hành động mặc định. Nhấn giữ để mở menu hành động đầy đủ.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Nút thao tác Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Bắt đầu tự động cuộn reels ở trạng thái bật hoặc tắt mỗi lần mở. Mặc định giữ lựa chọn của Instagram. Nút gạt trong Reels vẫn hoạt động đến lần mở tiếp theo. Bật cũng tạm dừng \"Dừng phát lặp lại Reels\". Chỉ hoạt động trên tài khoản được Instagram cung cấp tính năng tự động cuộn.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Tự động cuộn";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Tắt làm mới thẻ Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Nhấn lại vào thẻ Reels giữ nguyên Reel hiện tại thay vì tải danh sách mới.";
 "REELS_BEHAVIOR_HEADER" = "Hành vi";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Điều khiển phát";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels bắt đầu không có tiếng cho đến khi bạn bật tiếng. Cần khởi động lại.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Bắt đầu Reels ở chế độ tắt tiếng";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels dừng ở khung hình cuối thay vì phát lặp lại. Nhấn phát để xem lại.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Dừng phát lặp lại Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Thao tác khi nhấn vào Reel: Mặc định của Instagram, tạm dừng/phát, hoặc tắt/bật tiếng.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Điều khiển bằng cách nhấn";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Hỏi xác nhận trước khi nhấn hai lần để thích Reels.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Chỉ tải %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Ngừng tải Reels mới khi bạn đạt đến giới hạn bên dưới.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Ngăn lướt vô định";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels dừng ở khung hình cuối thay vì phát lặp lại. Nhấn phát để xem lại.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Dừng phát lặp lại Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Ẩn số lượt lưu";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Xác nhận làm mới Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Bạn có chắc chắn muốn làm mới bảng tin Reels không?";

@@ -649,6 +649,20 @@
 - (IGQuickSnapPresentationManager *)quickSnapPresentationManager;
 @end
 
+// Swift class (IGSundialAutoScroll module) behind the reels auto scroll toggle.
+// 410 exposes a writable isEnabled; newer builds make it a computed getter and
+// route the user's choice through setUserEnabled:. respondsToSelector: first.
+@interface _TtC19IGSundialAutoScroll19IGSundialAutoScroll : NSObject
+@property (nonatomic, readonly) BOOL isEnabled;
+- (void)setIsEnabled:(BOOL)enabled;
+- (void)setUserEnabled:(BOOL)enabled;
+@end
+
+// Category on IGUserSession in IG; lazily creates the session's auto scroll controller.
+@interface IGUserSession (SPKSundialAutoScroll)
+- (_TtC19IGSundialAutoScroll19IGSundialAutoScroll *)autoScrollController;
+@end
+
 // Aggregate unread counts behind the app's badges. The two Direct fields are the
 // only ones Sparkle touches.
 @interface IGBadgeData : NSObject

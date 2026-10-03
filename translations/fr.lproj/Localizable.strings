@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Sur \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Un appui lance l'action par défaut. Un appui long ouvre le menu d'actions complet.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Bouton d'action Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Démarre le défilement automatique des reels activé ou désactivé à chaque lancement. Par défaut conserve le choix d'Instagram. Le bouton dans Reels reste utilisable jusqu'au prochain lancement. Activé suspend aussi « Ne plus lire les reels en boucle ». Fonctionne uniquement sur les comptes auxquels Instagram propose le défilement automatique.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Défilement automatique";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Désactiver l'actualisation de l'onglet Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Réappuyer sur l'onglet Reels garde le reel actuel au lieu de charger une nouvelle série.";
 "REELS_BEHAVIOR_HEADER" = "Comportement";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Commandes de lecture";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Les reels démarrent sans son jusqu'à ce que vous l'activiez. Nécessite un redémarrage.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Démarrer les Reels sans son";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Les reels s'arrêtent sur leur dernière image au lieu de tourner en boucle. Touchez lecture pour les revoir.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Ne plus lire les reels en boucle";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ce que fait un appui sur un reel : le comportement par défaut d'Instagram, pause et lecture, ou couper et rétablir le son.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Contrôles d'appui";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Demande confirmation avant qu'un double appui n'aime un reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Charge uniquement %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Cesse de charger de nouveaux reels une fois la limite ci-dessous atteinte.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Prévenir le défilement infini";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Les reels s'arrêtent sur leur dernière image au lieu de tourner en boucle. Touchez lecture pour les revoir.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Ne plus lire les reels en boucle";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Masquer le nombre d'enregistrements";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Confirmer l'actualisation des Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Êtes-vous sûr de vouloir actualiser le fil des Reels ?";

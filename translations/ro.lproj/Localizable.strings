@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "La \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "O atingere execută acțiunea implicită. Apăsarea lungă deschide meniul complet de acțiuni.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Buton de acțiune Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Pornește derularea automată a reels activată sau dezactivată la fiecare lansare. Implicit păstrează alegerea Instagram. Comutatorul din Reels funcționează până la următoarea lansare. Activat suspendă și „Oprește repetarea reels”. Funcționează doar pe conturile cărora Instagram le oferă derularea automată.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Derulare automată";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Dezactivează reîncărcarea filei Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Reatingerea filei Reels păstrează reel-ul curent în loc să încarce un set nou.";
 "REELS_BEHAVIOR_HEADER" = "Comportament";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Comenzi de redare";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels-urile pornesc fără sunet până activezi sunetul. Necesită repornire.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Pornește Reels fără sunet";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels se opresc la ultimul cadru în loc să se repete. Atinge redare pentru a le urmări din nou.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Oprește repetarea reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ce face o atingere pe un reel: comportamentul implicit al Instagram, pauză și redare, sau sunet oprit și pornit.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Comenzi de atingere";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Cere confirmare înainte ca o atingere dublă să aprecieze un reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Încarcă doar %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Nu mai încarcă reels noi după ce atingi limita de mai jos.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Prevenire derulare nesfârșită";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels se opresc la ultimul cadru în loc să se repete. Atinge redare pentru a le urmări din nou.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Oprește repetarea reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Ascunde numărul salvărilor";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Confirma reîmprospătarea Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Sigur doriți să reîmprospătați fluxul Reels?";

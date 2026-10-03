@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "\"%@\" için";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Dokunmak varsayılan işlemi çalıştırır. Uzun basmak tam işlem menüsünü açar.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels Eylem Düğmesi";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Reels otomatik kaydırmayı her açılışta açık veya kapalı başlatır. Varsayılan, Instagram'ın seçimini korur. Reels içindeki anahtar bir sonraki açılışa kadar çalışır. Açık seçeneği \"Reels döngüsünü durdur\" özelliğini de duraklatır. Yalnızca Instagram'ın otomatik kaydırma sunduğu hesaplarda çalışır.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Otomatik Kaydırma";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Reels Sekmesi Yenilemesini Devre Dışı Bırak";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Reels sekmesine tekrar dokunmak yeni bir set yüklemek yerine mevcut reel'i korur.";
 "REELS_BEHAVIOR_HEADER" = "Davranış";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Oynatma Kontrolleri";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels, sesi açana kadar sessiz başlar. Yeniden başlatma gerektirir.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels'i Sessiz Başlat";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels döngüye girmek yerine son karede durur. Tekrar izlemek için oynat'a dokun.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Reels döngüsünü durdur";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Bir reel'e dokunmanın ne yapacağı: Instagram'ın varsayılanı, duraklat ve oynat, ya da sesi kapat ve aç.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Dokunuş Kontrolleri";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Çift dokunuş bir reel'i beğenmeden önce onay ister.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Yalnızca %@ %@ yükler";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Aşağıdaki sınıra ulaştığında yeni reels yüklemeyi bırakır.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Sonsuz Kaydırmayı Önle";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels döngüye girmek yerine son karede durur. Tekrar izlemek için oynat'a dokun.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Reels döngüsünü durdur";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Kaydetme Sayısını Gizle";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Reels'i Yenileyi Onayla";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Reels akışını yenilemek istediğinden emin misin?";

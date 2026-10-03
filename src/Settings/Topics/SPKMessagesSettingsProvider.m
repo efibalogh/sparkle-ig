@@ -569,7 +569,7 @@ static NSArray *SPKMessagesSettingsSections(void) {
                                SPKL(@"MESSAGES_VISUAL_MESSAGES_MANUALLY_MARK_SEEN_HELP")),
             advanceVisual,
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_VISUAL_MESSAGES_STOP_AUTO_ADVANCE_TITLE")
-                                           icon:SPKSettingsIcon(@"autoscroll")
+                                           icon:SPKSettingsIcon(@"autoscroll_off")
                                     defaultsKey:@"msgs_stop_visual_auto_advance"],
                                SPKL(@"MESSAGES_VISUAL_MESSAGES_STOP_AUTO_ADVANCE_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_VISUAL_MESSAGES_DISABLE_VIEW_ONCE_LIMITATIONS_TITLE")

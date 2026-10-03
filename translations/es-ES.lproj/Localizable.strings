@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "En \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Un toque ejecuta la acción predeterminada. Una pulsación larga abre el menú de acciones completo.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Botón de acción de Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Inicia el desplazamiento automático de reels activado o desactivado en cada inicio. Predeterminado mantiene la elección de Instagram. El interruptor de Reels sigue funcionando hasta el siguiente inicio. Activado también pausa «Dejar de repetir reels». Solo funciona en cuentas en las que Instagram ofrece el desplazamiento automático.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Desplazamiento automático";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Desactivar actualización de pestaña de Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Volver a tocar la pestaña Reels mantiene el reel actual en lugar de cargar un conjunto nuevo.";
 "REELS_BEHAVIOR_HEADER" = "Comportamiento";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Controles de reproducción";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Los reels empiezan sin sonido hasta que lo activas. Requiere reiniciar.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Iniciar Reels sin sonido";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Los reels se detienen en el último fotograma en lugar de repetirse. Toca reproducir para volver a verlos.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Dejar de repetir reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Qué hace un toque sobre un reel: lo predeterminado de Instagram, pausar y reproducir, o silenciar y activar el sonido.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Controles de toque";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Pide confirmación antes de que un doble toque le dé me gusta a un reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Solo carga %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Deja de cargar reels nuevos cuando alcanzas el límite de abajo.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Prevenir desplazamiento infinito";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Los reels se detienen en el último fotograma en lugar de repetirse. Toca reproducir para volver a verlos.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Dejar de repetir reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Ocultar conteo de guardados";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Confirmar actualizar Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "¿Estás seguro de que deseas actualizar el muro de Reels?";

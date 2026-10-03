@@ -1,5 +1,6 @@
 #import "../../InstagramHeaders.h"
 #import "../../Utils.h"
+#import "ReelsAutoScrollDefault.h"
 #import <objc/message.h>
 #import <objc/runtime.h>
 
@@ -36,7 +37,11 @@ static NSInteger sSPKReelsStopLoopingObservedTapPauses = -1;
 @implementation SPKReelsStopLoopingWeakPlayer
 @end
 
+// Auto Scroll in force wins: an ended reel has to keep going for Instagram to
+// advance, so the saved Stop Looping choice is left alone but not acted on.
 static BOOL SPKReelsStopLoopingEnabled(void) {
+    if ([SPKReelsAutoScrollEffectiveMode() isEqualToString:@"on"])
+        return NO;
     return [SPKUtils getBoolPref:kSPKReelsStopLoopingPrefKey];
 }
 

@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "W \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Dotknięcie wykonuje domyślną akcję. Przytrzymanie otwiera pełne menu akcji.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Przycisk akcji rolek";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Przy każdym uruchomieniu włącza lub wyłącza automatyczne przewijanie rolek. Domyślnie pozostaje wybór Instagrama. Przełącznik w rolkach działa do następnego uruchomienia. Włączenie wstrzymuje też opcję „Zatrzymaj zapętlanie rolek”. Działa tylko na kontach, na których Instagram oferuje automatyczne przewijanie.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Automatyczne przewijanie";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Wyłącz odświeżanie karty Rolki";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Ponowne dotknięcie zakładki Rolki zachowuje bieżącą rolkę zamiast ładować nowy zestaw.";
 "REELS_BEHAVIOR_HEADER" = "Zachowanie";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Sterowanie odtwarzaniem";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Rolki startują bez dźwięku, dopóki ich nie wyciszysz. Wymaga restartu.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Uruchamiaj rolki wyciszone";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Rolki zatrzymują się na ostatniej klatce zamiast zapętlać. Dotknij odtwarzania, aby obejrzeć ponownie.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Zatrzymaj zapętlanie rolek";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Co robi dotknięcie rolki: zachowanie domyślne Instagrama, pauza i odtwarzanie albo wyciszenie i odciszenie.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Sterowanie dotknięciem";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Prosi o potwierdzenie przed polubieniem rolki podwójnym stuknięciem.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Ładuje tylko %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Zatrzymuje ładowanie nowych rolek po osiągnięciu poniższego limitu.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Zapobiega doom scrollingowi";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Rolki zatrzymują się na ostatniej klatce zamiast zapętlać. Dotknij odtwarzania, aby obejrzeć ponownie.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Zatrzymaj zapętlanie rolek";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Ukryj liczbę zapisów";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Potwierdź odświeżanie rolek";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Czy na pewno chcesz odświeżyć kanał rolek?";

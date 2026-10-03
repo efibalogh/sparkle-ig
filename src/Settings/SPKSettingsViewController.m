@@ -1382,22 +1382,22 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 
     SPKLog(@"General", @"Menu changed: %@ = %@", writeKey, properties[@"value"]);
 
-    // A menu selection can gate another row's visibility (e.g. the Create Tab
-    // toggle only shows for the Classic tab order). Only pay for a full rebuild
-    // on pages that actually have hideable rows; otherwise keep the animated
-    // single-cell refresh.
-    BOOL hasHideableRows = NO;
+    // A menu selection can gate another row's visibility or enabled state (e.g.
+    // the Create Tab toggle only shows for the Classic tab order). Only pay for a
+    // full rebuild on pages that actually have such rows; otherwise keep the
+    // animated single-cell refresh.
+    BOOL hasDependentRows = NO;
     for (NSDictionary *section in self.originalSections) {
         for (id row in section[@"rows"]) {
-            if ([row isKindOfClass:[SPKSetting class]] && ((SPKSetting *)row).hiddenProvider) {
-                hasHideableRows = YES;
+            if ([row isKindOfClass:[SPKSetting class]] && (((SPKSetting *)row).hiddenProvider || ((SPKSetting *)row).enabledProvider)) {
+                hasDependentRows = YES;
                 break;
             }
         }
-        if (hasHideableRows)
+        if (hasDependentRows)
             break;
     }
-    if (hasHideableRows && ![self isSearching]) {
+    if (hasDependentRows && ![self isSearching]) {
         [self rebuildVisibleSections];
     } else {
         [self reloadCellForView:command.sender animated:YES];

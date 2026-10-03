@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Prie \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Palietimas vykdo numatytąjį veiksmą. Ilgas paspaudimas atveria visą veiksmų meniu.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels veiksmų mygtukas";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Kiekvieno paleidimo metu įjungia arba išjungia automatinį reels slinkimą. Numatytasis palieka Instagram pasirinkimą. Jungiklis Reels veikia iki kito paleidimo. Įjungus taip pat pristabdoma „Nekartoti „Reels““. Veikia tik paskyrose, kuriose Instagram siūlo automatinį slinkimą.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Automatinis slinkimas";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Išjungti Reels skirtuko atnaujinimą";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Pakartotinai palietus Reels skirtuką išlaikomas dabartinis įrašas, o ne įkeliamas naujas rinkinys.";
 "REELS_BEHAVIOR_HEADER" = "Elgsena";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Atkūrimo valdikliai";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels prasideda be garso, kol jo neįjungiate. Reikia paleisti iš naujo.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Paleisti Reels nutildytus";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "„Reels“ sustoja ties paskutiniu kadru, užuot kartojęsi. Bakstelėkite leisti, kad pažiūrėtumėte dar kartą.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Nekartoti „Reels“";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ką daro palietimas ant įrašo: numatytasis Instagram veiksmas, pristabdymas ir leidimas arba nutildymas ir įgarsinimas.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Palietimo valdikliai";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Prašo patvirtinimo prieš dvigubu palietimu pažymint įrašą patiktuku.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Įkeliama tik %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Nustoja įkelti naujus įrašus pasiekus toliau nurodytą ribą.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Neleisti slinkimo be pabaigos";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "„Reels“ sustoja ties paskutiniu kadru, užuot kartojęsi. Bakstelėkite leisti, kad pažiūrėtumėte dar kartą.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Nekartoti „Reels“";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Slėpti išsaugojimų skaičių";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Patvirtinti Reels atnaujinimą";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Ar tikrai norite atnaujinti įrašų srautą?";

@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Pada \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Ketuk menjalankan aksi default. Tekan lama membuka menu aksi lengkap.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Tombol Aksi Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Memulai gulir otomatis reels dalam keadaan aktif atau nonaktif setiap kali dibuka. Default mempertahankan pilihan Instagram. Tombol di Reels tetap berfungsi hingga pembukaan berikutnya. Aktif juga menjeda \"Hentikan Pengulangan Reels\". Hanya berfungsi di akun yang mendapatkan gulir otomatis dari Instagram.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Gulir Otomatis";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Nonaktifkan Penyegaran Tab Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Mengetuk ulang tab Reels akan mempertahankan reel saat ini alih-alih memuat set baru.";
 "REELS_BEHAVIOR_HEADER" = "Perilaku";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Kontrol Pemutaran";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels dimulai tanpa suara sampai Anda membunyikannya. Memerlukan restart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Mulai Reels Tanpa Suara";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels berhenti di bingkai terakhir alih-alih berulang. Ketuk putar untuk menonton lagi.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Hentikan Pengulangan Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Apa yang dilakukan ketukan pada reel: default Instagram, jeda dan putar, atau bisukan dan bunyikan.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Kontrol Ketukan";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Meminta konfirmasi sebelum ketukan ganda menyukai reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Hanya memuat %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Berhenti memuat reels baru setelah Anda mencapai batas di bawah ini.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Cegah Doom Scrolling";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels berhenti di bingkai terakhir alih-alih berulang. Ketuk putar untuk menonton lagi.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Hentikan Pengulangan Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Sembunyikan Jumlah Simpan";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Konfirmasi Segarkan Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Apakah Anda yakin ingin menyegarkan feed reels?";

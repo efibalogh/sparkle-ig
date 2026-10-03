@@ -139,7 +139,7 @@ static NSArray *SPKStoriesSettingsSections(void) {
 
         SPKTopicSection(SPKL(@"STORIES_STORY_NAVIGATION_HEADER"), @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_VISUAL_MESSAGES_STOP_AUTO_ADVANCE_TITLE")
-                                           icon:SPKSettingsIcon(@"autoscroll")
+                                           icon:SPKSettingsIcon(@"autoscroll_off")
                                     defaultsKey:@"stories_stop_auto_advance"],
                                SPKL(@"STORIES_NAVIGATION_STOP_AUTO_ADVANCE_HELP")),
             ({

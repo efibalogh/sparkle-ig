@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "\"%@\" पर";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "यह सेटिंग टैप करने पर डिफ़ॉल्ट कार्रवाई चलाती है। लंबे समय तक दबाने पर पूरा कार्रवाई मेन्यू खुलता है।";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels कार्रवाई बटन";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "हर लॉन्च पर रील्स ऑटो स्क्रॉल को चालू या बंद से शुरू करता है। डिफ़ॉल्ट Instagram की पसंद रखता है। रील्स में टॉगल अगले लॉन्च तक काम करता है। चालू होने पर \"रील्स का लूप बंद करें\" भी रुक जाता है। केवल उन खातों पर काम करता है जहाँ Instagram ऑटो स्क्रॉल देता है।";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "ऑटो स्क्रॉल";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Reels टैब रिफ़्रेश बंद करें";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "यह सेटिंग Reels टैब को दोबारा टैप करने पर नया सेट लोड करने के बजाय मौजूदा Reel को बनाए रखती है।";
 "REELS_BEHAVIOR_HEADER" = "व्यवहार";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "प्लेबैक नियंत्रण";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels तब तक बिना आवाज़ के शुरू होते हैं जब तक आप उन्हें अनम्यूट नहीं करते। रीस्टार्ट आवश्यक है।";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels को म्यूट करके शुरू करें";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "रील्स लूप होने के बजाय अपने आखिरी फ़्रेम पर रुक जाती हैं। फिर से देखने के लिए प्ले पर टैप करें।";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "रील्स का लूप बंद करें";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "यह सेटिंग तय करती है कि Reel पर टैप करने से क्या होगा: Instagram की डिफ़ॉल्ट कार्रवाई, रोकना और चलाना, या म्यूट और अनम्यूट करना।";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "टैप नियंत्रण";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "यह सेटिंग डबल-टैप करके Reel को पसंद करने से पहले पुष्टि माँगती है।";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "केवल %@ %@ लोड करता है";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "यह सेटिंग नीचे दी गई सीमा तक पहुँचने के बाद नए Reels लोड होने से रोकती है।";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "लगातार स्क्रॉल करना रोकें";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "रील्स लूप होने के बजाय अपने आखिरी फ़्रेम पर रुक जाती हैं। फिर से देखने के लिए प्ले पर टैप करें।";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "रील्स का लूप बंद करें";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "सेव की संख्या छिपाएँ";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Reels को रिफ़्रेश करने की पुष्टि करें";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "क्या आप निश्चित रूप से Reels फ़ीड को रिफ़्रेश करना चाहते हैं?";

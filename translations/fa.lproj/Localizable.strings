@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "روی \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "ضربه‌زدن اقدام پیش‌فرض را اجرا می‌کند. فشار طولانی منوی کامل اقدامات را باز می‌کند.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "دکمهٔ اقدام ریلز";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "پیمایش خودکار ریلز را در هر بار اجرا روشن یا خاموش شروع می‌کند. پیش‌فرض انتخاب Instagram را حفظ می‌کند. کلید داخل ریلز تا اجرای بعدی کار می‌کند. روشن، «توقف تکرار ریلز» را نیز متوقف می‌کند. فقط در حساب‌هایی کار می‌کند که Instagram پیمایش خودکار را ارائه می‌دهد.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "پیمایش خودکار";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "غیرفعال کردن تازه‌سازی تب ریلز";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "ضربهٔ دوباره روی تب ریلز، ریل فعلی را نگه می‌دارد به‌جای بارگذاری مجموعهٔ جدید.";
 "REELS_BEHAVIOR_HEADER" = "رفتار";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "کنترل‌های پخش";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "ریلزها تا زمانی که صدا را فعال نکنید بی‌صدا شروع می‌شوند. نیاز به راه‌اندازی مجدد دارد.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "شروع ریلز بدون صدا";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "ریلزها به جای تکرار، روی آخرین فریم متوقف می‌شوند. برای تماشای دوباره، روی پخش بزنید.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "توقف تکرار ریلز";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ضربه روی ریل چه کاری انجام می‌دهد: پیش‌فرض اینستاگرام، توقف و پخش، یا بی‌صدا و باصدا کردن.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "کنترل‌های ضربه";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "پیش از لایک کردن ریل با دو ضربه، تأیید می‌خواهد.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "فقط %@ %@ بارگذاری می‌شود";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "پس از رسیدن به محدودیت زیر، بارگذاری ریلز جدید متوقف می‌شود.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "جلوگیری از اسکرول بی‌پایان";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "ریلزها به جای تکرار، روی آخرین فریم متوقف می‌شوند. برای تماشای دوباره، روی پخش بزنید.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "توقف تکرار ریلز";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "پنهان کردن تعداد ذخیره";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "تأیید تازه‌سازی ریلز";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "آیا مطمئن هستید که می‌خواهید فید ریلز را تازه‌سازی کنید؟";

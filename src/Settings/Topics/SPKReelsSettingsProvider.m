@@ -2,6 +2,7 @@
 #import "SPKStrings.h"
 
 #import "../../Features/Reels/HideReelsHeader.h"
+#import "../../Features/Reels/ReelsAutoScrollDefault.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
@@ -46,10 +47,17 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                 };
                 speedScope;
             }),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_STOP_LOOPING_TITLE")
-                                           icon:SPKSettingsIcon(@"loop")
-                                    defaultsKey:@"reels_stop_looping"],
-                               SPKL(@"REELS_BEHAVIOR_STOP_LOOPING_HELP")),
+            ({
+                SPKSetting *autoScroll = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE")
+                                                                                     icon:SPKSettingsIcon(@"autoscroll")
+                                                                                     menu:SPKReelsAutoScrollDefaultMenu()],
+                                                           SPKL(@"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP"));
+                // Disable Scrolling Reels forces it off.
+                autoScroll.enabledProvider = ^BOOL {
+                    return ![SPKUtils getBoolPref:@"reels_disable_scrolling"];
+                };
+                autoScroll;
+            }),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_START_MUTED_TITLE")
                                            icon:SPKSettingsIcon(@"volume_off")
                                     defaultsKey:@"reels_disable_auto_unmute"
@@ -62,11 +70,27 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
         ],
                         nil),
         SPKTopicSection(SPKL(@"REELS_LIMITS_HEADER"), @[
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LIMITS_DISABLE_SCROLLING_REELS_TITLE")
-                                           icon:SPKSettingsIcon(@"autoscroll")
-                                    defaultsKey:@"reels_disable_scrolling"
-                                requiresRestart:YES],
-                               SPKL(@"REELS_LIMITS_DISABLE_SCROLLING_HELP")),
+            ({
+                SPKSetting *stopLooping = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LIMITS_STOP_LOOPING_TITLE")
+                                                                                        icon:SPKSettingsIcon(@"loop")
+                                                                                 defaultsKey:@"reels_stop_looping"],
+                                                            SPKL(@"REELS_LIMITS_STOP_LOOPING_HELP"));
+                // Auto Scroll in force overrides it.
+                stopLooping.enabledProvider = ^BOOL {
+                    return ![SPKReelsAutoScrollEffectiveMode() isEqualToString:@"on"];
+                };
+                stopLooping;
+            }),
+            ({
+                SPKSetting *disableScrolling = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LIMITS_DISABLE_SCROLLING_REELS_TITLE")
+                                                                                             icon:SPKSettingsIcon(@"autoscroll_off")
+                                                                                      defaultsKey:@"reels_disable_scrolling"
+                                                                                  requiresRestart:YES],
+                                                                 SPKL(@"REELS_LIMITS_DISABLE_SCROLLING_HELP"));
+                // Gates the Auto Scroll and Stop Looping rows.
+                disableScrolling.reloadsTableOnSwitchChange = YES;
+                disableScrolling;
+            }),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE")
                                            icon:SPKSettingsIcon(@"arrow_down")
                                     defaultsKey:@"reels_prevent_doom_scroll"],

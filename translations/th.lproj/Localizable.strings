@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "บน \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "การแตะจะเรียกใช้การทำงานเริ่มต้น การกดค้างจะเปิดเมนูการทำงานทั้งหมด";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "ปุ่มการทำงานของ Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "เริ่มการเลื่อนรีลอัตโนมัติแบบเปิดหรือปิดทุกครั้งที่เปิดแอป ค่าเริ่มต้นจะคงตัวเลือกของ Instagram ไว้ ปุ่มสลับใน Reels ยังใช้ได้จนถึงการเปิดครั้งถัดไป เมื่อเปิด \"หยุดเล่นรีลวนซ้ำ\" จะหยุดทำงานด้วย ใช้ได้เฉพาะบัญชีที่ Instagram เปิดให้ใช้การเลื่อนอัตโนมัติ";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "เลื่อนอัตโนมัติ";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "ปิดการรีเฟรชแท็บ Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "การแตะแท็บ Reels ซ้ำจะคงรีลปัจจุบันไว้แทนการโหลดชุดใหม่";
 "REELS_BEHAVIOR_HEADER" = "พฤติกรรม";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "ตัวควบคุมการเล่น";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels จะเริ่มโดยไม่มีเสียงจนกว่าคุณจะเปิดเสียง ต้องรีสตาร์ทแอป";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "เริ่ม Reels แบบปิดเสียง";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "รีลจะหยุดที่เฟรมสุดท้ายแทนการเล่นวนซ้ำ แตะเล่นเพื่อดูอีกครั้ง";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "หยุดเล่นรีลวนซ้ำ";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "การแตะที่รีลจะทำอะไร: ค่าเริ่มต้นของ Instagram, หยุด/เล่น หรือปิด/เปิดเสียง";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "การควบคุมด้วยการแตะ";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "ขอการยืนยันก่อนที่การแตะสองครั้งจะกดถูกใจรีล";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "โหลดเพียง %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "หยุดโหลดรีลใหม่เมื่อถึงขีดจำกัดด้านล่าง";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "ป้องกันการเลื่อนดูไม่หยุด";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "รีลจะหยุดที่เฟรมสุดท้ายแทนการเล่นวนซ้ำ แตะเล่นเพื่อดูอีกครั้ง";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "หยุดเล่นรีลวนซ้ำ";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "ซ่อนจำนวนการบันทึก";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "ยืนยันการรีเฟรช Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการรีเฟรชฟีด Reels?";

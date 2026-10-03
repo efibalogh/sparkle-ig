@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "\"%@\"에서";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "탭하면 기본 동작을 실행하고, 길게 누르면 전체 동작 메뉴를 엽니다.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "릴스 액션 버튼";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "실행할 때마다 릴스 자동 스크롤을 켜거나 끈 상태로 시작합니다. 기본값은 Instagram의 선택을 유지합니다. 릴스 안의 토글은 다음 실행까지 계속 작동합니다. 켜기를 선택하면 \"릴스 반복 재생 중지\"도 일시 중지됩니다. Instagram에서 자동 스크롤을 제공하는 계정에서만 작동합니다.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "자동 스크롤";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "릴스 탭 새로고침 비활성화";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "릴스 탭을 다시 탭해도 새 목록을 불러오지 않고 현재 릴을 유지합니다.";
 "REELS_BEHAVIOR_HEADER" = "동작";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "재생 컨트롤";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "음소거를 해제할 때까지 릴스가 소리 없이 시작됩니다. 다시 시작해야 적용됩니다.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "릴스 음소거로 시작";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "릴스가 반복 재생되지 않고 마지막 프레임에서 멈춥니다. 다시 보려면 재생을 탭하세요.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "릴스 반복 재생 중지";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "릴을 탭했을 때의 동작을 Instagram 기본값, 일시 정지/재생, 음소거/음소거 해제 중에서 선택합니다.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "탭 컨트롤";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "더블 탭으로 릴에 좋아요를 표시하기 전에 확인을 요청합니다.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "오직 %@ %@ 로드";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "아래 한도에 도달하면 새 릴 불러오기를 중단합니다.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "무한 스크롤 방지";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "릴스가 반복 재생되지 않고 마지막 프레임에서 멈춥니다. 다시 보려면 재생을 탭하세요.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "릴스 반복 재생 중지";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "저장 수 숨기기";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "릴스 새로고침 확인";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "릴스 피드를 새로고침하시겠습니까?";

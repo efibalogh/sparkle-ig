@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Στο \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Το πάτημα εκτελεί την προεπιλεγμένη ενέργεια. Το παρατεταμένο πάτημα ανοίγει το πλήρες μενού ενεργειών.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Κουμπί Ενέργειας Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Ξεκινά την αυτόματη κύλιση των reels ενεργή ή ανενεργή σε κάθε εκκίνηση. Η προεπιλογή διατηρεί την επιλογή του Instagram. Ο διακόπτης στα Reels λειτουργεί μέχρι την επόμενη εκκίνηση. Το Ενεργό απενεργοποιεί επίσης το «Διακοπή επανάληψης Reels». Λειτουργεί μόνο σε λογαριασμούς όπου το Instagram προσφέρει αυτόματη κύλιση.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Αυτόματη κύλιση";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Απενεργοποίηση Ανανέωσης Καρτέλας Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Το ξαναπάτημα της καρτέλας Reels κρατά το τρέχον reel αντί να φορτώνει νέα σειρά.";
 "REELS_BEHAVIOR_HEADER" = "Συμπεριφορά";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Στοιχεία ελέγχου αναπαραγωγής";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Τα reels ξεκινούν χωρίς ήχο μέχρι να τον ενεργοποιήσετε. Απαιτεί επανεκκίνηση.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Έναρξη Reels σε σίγαση";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Τα Reels σταματούν στο τελευταίο καρέ αντί να επαναλαμβάνονται. Πάτησε αναπαραγωγή για να τα δεις ξανά.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Διακοπή επανάληψης Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Τι κάνει ένα πάτημα σε ένα reel: η προεπιλογή του Instagram, παύση και αναπαραγωγή, ή σίγαση και άρση σίγασης.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Έλεγχοι Πατήματος";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Ζητά επιβεβαίωση πριν ένα διπλό πάτημα κάνει like σε ένα reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Φορτώνει μόνο %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Σταματά να φορτώνει νέα reels μόλις φτάσεις το παρακάτω όριο.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Πρόληψη Doom Scrolling";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Τα Reels σταματούν στο τελευταίο καρέ αντί να επαναλαμβάνονται. Πάτησε αναπαραγωγή για να τα δεις ξανά.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Διακοπή επανάληψης Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Απόκρυψη Αριθμού Αποθηκεύσεων";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Επιβεβαίωση Ανανέωσης Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Είστε σίγουρος ότι θέλετε να ανανεώσετε τη σελίδα Reels;";

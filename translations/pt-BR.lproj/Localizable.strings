@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Em \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Um toque executa a ação padrão. Um toque longo abre o menu de ações completo.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Botão de Ação de Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Inicia a rolagem automática dos reels ativada ou desativada a cada abertura. Padrão mantém a escolha do Instagram. O botão nos Reels continua funcionando até a próxima abertura. Ativado também pausa \"Parar de repetir reels\". Só funciona em contas em que o Instagram oferece a rolagem automática.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Rolagem automática";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Desativar Atualização da Aba de Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Tocar de novo na aba Reels mantém o reel atual em vez de carregar um novo conjunto.";
 "REELS_BEHAVIOR_HEADER" = "Comportamento";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Controles de reprodução";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Os reels começam sem som até você ativá-lo. Requer reiniciar.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Iniciar Reels sem som";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Os reels param no último quadro em vez de repetir. Toque em reproduzir para assistir de novo.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Parar de repetir reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "O que um toque em um reel faz: o padrão do Instagram, pausar e reproduzir, ou silenciar e ativar o som.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Controles de Toque";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Pede confirmação antes que um toque duplo curta um reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Carrega apenas %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Para de carregar novos reels assim que você atinge o limite abaixo.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Prevenir Doom Scrolling";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Os reels param no último quadro em vez de repetir. Toque em reproduzir para assistir de novo.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Parar de repetir reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Ocultar Contagem de Salvamentos";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Confirmar Atualização dos Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Tem certeza de que deseja atualizar o feed de Reels?";

@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "On \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Tap runs the default action. Long press opens the full action menu.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels Action Button";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Starts reels auto scroll on or off every launch. Default leaves Instagram's choice. The toggle in Reels still works until the next launch. On also pauses Stop Looping Reels. Only works on accounts where Instagram offers auto scroll.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Auto Scroll";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Disable Reels Tab Refresh";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Re-tapping the Reels tab keeps the current reel instead of loading a new set.";
 "REELS_BEHAVIOR_HEADER" = "Behavior";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Playback Controls";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels start without sound until you unmute them. Requires a restart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Start Reels Muted";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels stop on their last frame instead of looping. Tap play to watch again.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Stop Looping Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "What a tap on a reel does: Instagram's default, pause and play, or mute and unmute.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tap Controls";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Asks for confirmation before a double tap likes a reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Only loads %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Stops loading new reels once you reach the limit below.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Prevent Doom Scrolling";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels stop on their last frame instead of looping. Tap play to watch again.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Stop Looping Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Hide Save Count";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Confirm Reels Refresh";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Are you sure you want to refresh the reels feed?";

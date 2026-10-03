@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Uf \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Aatippe führt d'Standard-Aktion us. Lang drücke macht s ganze Aktione-Menü uf.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels-Aktions-Chnopf";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Startet s automatische Scrolle vo Reels bi jedem Start ii- oder usgschaltet. Standard laat d Wahl vo Instagram. De Schalter i de Reels funktioniert bis zum nächschte Start. Ii setzt au „Reels nümme widerhole“ us. Funktioniert nur bi Konte, wo Instagram s automatische Scrolle aabietet.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Automatisch scrolle";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Reels-Tab-Aktualisierig usschaute";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Nomau uf dr Reels-Tab tippe behautet dr aktuelle Reel, aastatt en nöie Satz z'lade.";
 "REELS_BEHAVIOR_HEADER" = "Verhaute";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Playback-Steurig";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels starte ohni Ton, bis du de Ton iischaltisch. Bruucht en Neustart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels stumm starte";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels bliibe bim letschte Bild stah, statt sich z widerhole. Tipp uf Abspiele, zum si nomal aaluege.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Reels nümme widerhole";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Was e Tipp uf en Reel macht: Instagram Standard, Pause und Play, oder Stumm und Entstumme.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tipp-Stüürig";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Frögt nach ere Bestätigung, bevor en Doppu-Tipp en Reel liket.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Lad nume %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Ghört uf, nöi Reels z'lade, sobald du s Limit unde erreichsch.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Doomscrolling verhindere";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels bliibe bim letschte Bild stah, statt sich z widerhole. Tipp uf Abspiele, zum si nomal aaluege.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Reels nümme widerhole";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Speicherigs-Azahl verstecke";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Reels-Aktualisierig bestätige";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Bisch sicher, dass du dr Reels-Feed wottsch aktualisiere?";

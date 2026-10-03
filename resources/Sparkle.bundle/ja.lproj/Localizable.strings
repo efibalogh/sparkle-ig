@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "「%@」について";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "タップで既定のアクションを実行し、長押しで完全なアクションメニューを開きます。";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "リールのアクションボタン";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "起動のたびにリールの自動スクロールをオンまたはオフで開始します。デフォルトはInstagramの設定のままです。リール内の切り替えは次回起動まで使えます。オンの場合、「リールのループを停止」は無効になります。Instagramで自動スクロールが提供されているアカウントでのみ機能します。";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "自動スクロール";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "リールタブの更新を無効化";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "リールタブを再度タップしても新しいセットを読み込まず、現在のリールを維持します。";
 "REELS_BEHAVIOR_HEADER" = "動作";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "再生コントロール";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "ミュートを解除するまでリールは音声なしで始まります。再起動が必要です。";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "リールをミュートで開始";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "リールはループせず最後のフレームで停止します。もう一度見るには再生をタップします。";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "リールのループを停止";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "リールをタップしたときの動作(Instagramの既定、一時停止と再生、またはミュートとミュート解除)を設定します。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "タップコントロール";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "ダブルタップでリールに「いいね！」する前に確認します。";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "読み込み: %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "下の上限に達すると、新しいリールの読み込みを停止します。";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "ドゥームスクローリングを防止";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "リールはループせず最後のフレームで停止します。もう一度見るには再生をタップします。";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "リールのループを停止";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "保存数を非表示";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "リールの更新を確認";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "リールフィードを更新してもよろしいですか?";

@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "在 \"%@\" 上";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "点按执行默认操作。长按打开完整操作菜单。";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels 操作按钮";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "每次启动时以开启或关闭状态开始 Reels 自动滚动。默认保留 Instagram 的选择。Reels 中的开关在下次启动前仍可使用。选择开启时，“停止循环播放 Reels”也会暂停。仅在 Instagram 提供自动滚动的账户上有效。";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "自动滚动";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "禁用 Reels 标签刷新";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "再次点按 Reels 标签会停留在当前 Reel，而不是加载一批新内容。";
 "REELS_BEHAVIOR_HEADER" = "行为";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 开始播放时保持静音，直到你取消静音。需要重启。";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "静音启动 Reels";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels 会停在最后一帧，而不是循环播放。轻点播放即可重新观看。";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "停止循环播放 Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "点按 Reel 时的行为：Instagram 默认、暂停与播放，或静音与取消静音。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "点击控制";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "双击点赞 Reel 前先询问确认。";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "仅加载 %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "达到下方的上限后停止加载新的 Reels。";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "防止无限滚动";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels 会停在最后一帧，而不是循环播放。轻点播放即可重新观看。";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "停止循环播放 Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "隐藏保存数";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "确认刷新Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "你确定要刷新Reels动态吗？";

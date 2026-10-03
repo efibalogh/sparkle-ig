@@ -36,6 +36,11 @@
         %orig(enabled);
     }
 }
+
+// 448+ made isEnabled computed; the user's choice goes through this setter.
+- (void)setUserEnabled:(BOOL)enabled {
+    %orig([SPKUtils getBoolPref:@"reels_disable_scrolling"] ? NO : enabled);
+}
 %end
 
 %end

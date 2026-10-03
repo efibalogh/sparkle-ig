@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "На \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Дотик виконує типову дію. Довге натискання відкриває повне меню дій.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Кнопка дії Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Запускає автопрокручування Reels увімкненим або вимкненим під час кожного запуску. За замовчуванням зберігається вибір Instagram. Перемикач у Reels працює до наступного запуску. Увімкнено також призупиняє «Не повторювати Reels». Працює лише в акаунтах, де Instagram пропонує автопрокручування.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Автопрокручування";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Відключити оновлення вкладки Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Повторний дотик до вкладки Reels зберігає поточний ролик замість завантаження нової добірки.";
 "REELS_BEHAVIOR_HEADER" = "Поведінка";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Керування відтворенням";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels починаються без звуку, доки ви не ввімкнете його. Потрібен перезапуск.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Запускати Reels без звуку";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels зупиняються на останньому кадрі замість повторення. Натисніть «Відтворити», щоб переглянути знову.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Не повторювати Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Що робить дотик до ролика: як типово в Instagram, пауза й відтворення, або вимкнення та ввімкнення звуку.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Керування натисканням";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Запитує підтвердження, перш ніж подвійний дотик уподобає ролик.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Завантажує тільки %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Перестає завантажувати нові ролики, коли ви досягаєте ліміту нижче.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Запобігти ненажерливому прокруванню";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels зупиняються на останньому кадрі замість повторення. Натисніть «Відтворити», щоб переглянути знову.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Не повторювати Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Приховати кількість збережень";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Підтвердити оновлення Рилсів";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Ви впевнені, що хочете оновити стрічку Reels?";

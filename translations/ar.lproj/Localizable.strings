@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "على \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "الضغط ينفذ الإجراء الافتراضي. الضغط المطول يفتح قائمة الإجراءات الكاملة.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "زر إجراء Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "يبدأ التمرير التلقائي للريلز مفعّلاً أو معطّلاً عند كل تشغيل. الإعداد الافتراضي يترك اختيار Instagram. يظل المفتاح داخل الريلز يعمل حتى التشغيل التالي. عند التشغيل يتم إيقاف «إيقاف تكرار المقاطع» مؤقتًا. يعمل فقط في الحسابات التي يوفر فيها Instagram التمرير التلقائي.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "التمرير التلقائي";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "تعطيل تحديث علامة تبويب Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "إعادة الضغط على تبويب Reels تبقي المقطع الحالي بدل تحميل مجموعة جديدة.";
 "REELS_BEHAVIOR_HEADER" = "السلوك";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "عناصر التحكم في التشغيل";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "تبدأ Reels بدون صوت حتى تشغّل الصوت. يتطلب إعادة تشغيل.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "بدء Reels بدون صوت";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "تتوقف المقاطع عند آخر إطار بدلًا من التكرار. اضغط على تشغيل للمشاهدة مجددًا.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "إيقاف تكرار المقاطع";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ما يفعله الضغط على Reel: الإجراء الافتراضي في Instagram، أو الإيقاف والتشغيل، أو الكتم وإلغاء الكتم.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "عناصر التحكم في الضغط";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "يطلب تأكيداً قبل أن يؤدي الضغط المزدوج إلى الإعجاب بـ Reel.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "تحميل فقط %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "يوقف تحميل Reels جديدة بمجرد بلوغك الحد أدناه.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "منع تمرير الدمار";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "تتوقف المقاطع عند آخر إطار بدلًا من التكرار. اضغط على تشغيل للمشاهدة مجددًا.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "إيقاف تكرار المقاطع";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "إخفاء عدد الحفظ";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "تأكيد تحديث Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "هل أنت متأكد من أنك تريد تحديث خلاصة ريل؟";

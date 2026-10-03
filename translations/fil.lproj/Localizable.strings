@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Sa \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Isinasagawa ng tap ang default action. Binubuksan ng long press ang buong action menu.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Pindutan ng Aksyon sa Reels";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Sinisimulan ang awtomatikong pag-scroll ng reels na naka-on o naka-off sa bawat pagbukas. Pinapanatili ng Default ang pinili ng Instagram. Gumagana pa rin ang toggle sa Reels hanggang sa susunod na pagbukas. Ang On ay pansamantalang pinapatay din ang \"Ihinto ang Pag-ulit ng Reels\". Gumagana lang sa mga account kung saan nag-aalok ang Instagram ng awtomatikong pag-scroll.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Awtomatikong Pag-scroll";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "I-disable ang Reels Tab Refresh";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Ang pag-tap ulit sa Reels tab ay pinapanatili ang kasalukuyang reel sa halip na mag-load ng bagong set.";
 "REELS_BEHAVIOR_HEADER" = "Kilos";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Mga Kontrol sa Playback";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Nagsisimula ang mga Reel nang walang tunog hanggang i-unmute mo ito. Kailangan ng restart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Simulan ang Reels nang Naka-mute";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Humihinto ang reels sa huling frame sa halip na umulit. I-tap ang play para panoorin ulit.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Ihinto ang Pag-ulit ng Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Kung ano ang ginagawa ng tap sa reel: default ng Instagram, i-pause at i-play, o i-mute at i-unmute.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Mga Kontrol sa Tap";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Humihingi ng kumpirmasyon bago mag-like sa isang reel gamit ang double tap.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Nagla-load lang ng %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Ihinto ang pag-load ng mga bagong reel kapag naabot mo na ang limitasyon sa ibaba.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Pigilan ang Doom Scrolling";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Humihinto ang reels sa huling frame sa halip na umulit. I-tap ang play para panoorin ulit.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Ihinto ang Pag-ulit ng Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Itago ang Bilang ng Save";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Kumpirmahin ang Pag-refresh ng Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Sigurado ka bang gusto mong i-refresh ang reels feed?";

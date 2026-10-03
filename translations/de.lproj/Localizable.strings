@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "Bei \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Tippen führt die Standardaktion aus. Langes Drücken öffnet das vollständige Aktionsmenü.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels Aktionsschaltfläche";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "Startet das automatische Scrollen von Reels bei jedem Start ein- oder ausgeschaltet. Standard belässt die Wahl von Instagram. Der Schalter in Reels funktioniert bis zum nächsten Start weiter. Ein setzt außerdem „Reels nicht wiederholen“ aus. Funktioniert nur bei Konten, denen Instagram automatisches Scrollen anbietet.";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "Automatisch scrollen";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Reels-Tab-Aktualisierung deaktivieren";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Erneutes Tippen auf den Reels-Tab behält das aktuelle Reel, statt einen neuen Satz zu laden.";
 "REELS_BEHAVIOR_HEADER" = "Verhalten";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Wiedergabesteuerung";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels starten ohne Ton, bis du den Ton einschaltest. Erfordert einen Neustart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels stumm starten";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels halten beim letzten Bild an, statt sich zu wiederholen. Tippe auf Abspielen, um sie erneut anzusehen.";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Reels nicht wiederholen";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Was ein Tippen auf ein Reel bewirkt: Standard von Instagram, Pause und Wiedergabe oder stumm und laut.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tap-Steuerelemente";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Fragt nach einer Bestätigung, bevor ein Doppeltippen ein Reel liket.";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "Lädt nur %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "Lädt keine neuen Reels mehr, sobald du das Limit unten erreichst.";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "Doom-Scrolling verhindern";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels halten beim letzten Bild an, statt sich zu wiederholen. Tippe auf Abspielen, um sie erneut anzusehen.";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "Reels nicht wiederholen";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "Gespeichert-Anzahl ausblenden";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "Reels-Aktualisierung bestätigen";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "Möchtest du den Reels-Feed wirklich aktualisieren?";

@@ -1896,6 +1896,8 @@
 "REACTION_CONTEXT_FORMAT" = "於「%@」";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "點一下會執行預設動作。長按會開啟完整的操作選單。";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels 操作按鈕";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_HELP" = "每次啟動時以開啟或關閉狀態開始 Reels 自動捲動。預設保留 Instagram 的選擇。Reels 中的開關在下次啟動前仍可使用。選擇開啟時，「停止重複播放 Reels」也會暫停。僅在 Instagram 提供自動捲動的帳號上有效。";
+"REELS_BEHAVIOR_AUTO_SCROLL_DEFAULT_TITLE" = "自動捲動";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "停用 Reels 分頁重新整理";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "再次點按 Reels 分頁會保留目前的影片,而不會載入新的一批。";
 "REELS_BEHAVIOR_HEADER" = "行為";
@@ -1903,8 +1905,6 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制項";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 開始播放時會保持靜音，直到你取消靜音。需要重新啟動。";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "靜音啟動 Reels";
-"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels 會停在最後一格，而不是重複播放。點一下播放即可再看一次。";
-"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "停止重複播放 Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "點按 Reel 時會執行的動作:Instagram 預設、暫停與播放,或靜音與取消靜音。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "點按控制";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "在雙擊按讚 Reel 之前要求確認。";
@@ -1927,6 +1927,8 @@
 "REELS_LIMITS_ONLY_LOADS_SUBTITLE" = "只會載入 %@ %@";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP" = "達到下方設定的上限後,就會停止載入新的 Reels。";
 "REELS_LIMITS_PREVENT_DOOM_SCROLLING_TITLE" = "防止無限捲動";
+"REELS_LIMITS_STOP_LOOPING_HELP" = "Reels 會停在最後一格，而不是重複播放。點一下播放即可再看一次。";
+"REELS_LIMITS_STOP_LOOPING_TITLE" = "停止重複播放 Reels";
 "REELS_METRICS_HIDE_SAVE_COUNT_TITLE" = "隱藏收藏次數";
 "REELS_REELS_PLAYBACK_CONFIRM_REELS_REFRESH_TEXT" = "確認重新整理 Reels";
 "REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE" = "你確定要重新整理 Reels 動態嗎?";

@@ -238,6 +238,20 @@ UIMenu *SPKReelsTapControlMenu(void) {
     ]];
 }
 
+UIMenu *SPKReelsAutoScrollDefaultMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"reels_auto_scroll_default", @"default", NO),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, @"reels_auto_scroll_default", @"on", NO),
+                         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"reels_auto_scroll_default", @"off", NO)
+                     ]]
+    ]];
+}
+
 UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_VIDEO"), nil, nil, defaultsKey, @"video", NO),
