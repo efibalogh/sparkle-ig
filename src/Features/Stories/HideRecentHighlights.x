@@ -435,8 +435,10 @@ void SPKInstallHideRecentHighlightsHooksIfEnabled(void) {
     dispatch_once(&onceToken, ^{
         BOOL installedAny = NO;
 
-        if (objc_getClass("IGInFeedStoryTrayDataSource") != nil) {
-            %init(SPKHideRecentHighlightsInFeedHooks);
+        // Swift class from 448, where only the mangled name is guaranteed.
+        Class inFeedDataSource = objc_getClass("IGInFeedStoryTrayDataSource") ?: objc_getClass("_TtC27IGInFeedStoryTrayDataSource27IGInFeedStoryTrayDataSource");
+        if (inFeedDataSource != nil) {
+            %init(SPKHideRecentHighlightsInFeedHooks, IGInFeedStoryTrayDataSource = inFeedDataSource);
             installedAny = YES;
         }
         if (objc_getClass("_TtC25IGMainStoryTrayDataSource25IGMainStoryTrayDataSource") != nil) {
