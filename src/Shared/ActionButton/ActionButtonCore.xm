@@ -109,6 +109,7 @@ static void SPKPauseDirectPlaybackFromController(UIViewController *controller);
 static void SPKResumeDirectPlaybackFromController(UIViewController *controller);
 static BOOL SPKActionIdentifierOpensPreview(NSString *identifier);
 static id SPKResolveMediaForContext(SPKActionButtonContext *context);
+static NSString *SPKActionMenuDateTitle(SPKActionButtonContext *context);
 static UIViewController *SPKActionContextPresenter(SPKActionButtonContext *context);
 static UIView *SPKActionContextAnchorView(SPKActionButtonContext *context);
 static UIColor *SPKActionButtonTintForSource(SPKActionButtonSource source);
@@ -167,6 +168,20 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     if (source)
         alpha = source.hidden ? 0.0 : source.alpha;
     [super setAlpha:alpha];
+}
+
+// The Instants button keeps one menu while the snap under it changes, so the posted
+// date in its title is read again for the snap on screen, before UIKit builds the menu.
+- (UIContextMenuConfiguration *)contextMenuInteraction:(UIContextMenuInteraction *)interaction
+                        configurationForMenuAtLocation:(CGPoint)location {
+    SPKActionButtonContext *context = SPKActionButtonContextFromButton(self);
+    UIMenu *menu = self.menu;
+    if (menu && context.source == SPKActionButtonSourceInstants) {
+        NSString *title = SPKActionMenuDateTitle(context);
+        if (![title isEqualToString:menu.title])
+            self.menu = [UIMenu menuWithTitle:title image:menu.image identifier:menu.identifier options:menu.options children:menu.children];
+    }
+    return [super contextMenuInteraction:interaction configurationForMenuAtLocation:location];
 }
 
 - (UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction
@@ -3642,6 +3657,22 @@ static NSArray<UIMenuElement *> *SPKBuildBulkMenuChildren(SPKActionButtonConfigu
     return section ? @[ section ] : @[];
 }
 
+// The posted date shown at the top of the menu, or an empty string.
+static NSString *SPKActionMenuDateTitle(SPKActionButtonContext *context) {
+    // Profile pictures have no posted date — the media object is an IGUser. Skip the
+    // lookup rather than walking a large user object to conclude nothing every time.
+    if (![SPKUtils getBoolPref:@"general_action_btn_show_date"] || context.source == SPKActionButtonSourceProfile)
+        return @"";
+    id media = SPKResolveMediaForContext(context);
+    NSDate *postedDate = [SPKUtils postedDateFromMediaObject:media];
+    if (!postedDate) {
+        SPKLog(@"ActionButton", @"menu title has no date: source=%ld media=%@", (long)context.source,
+               media ? NSStringFromClass([media class]) : @"(nil)");
+        return @"";
+    }
+    return [SPKUtils spk_formattedDateHeader:postedDate] ?: @"";
+}
+
 // Builds the ordered section menu elements from a FRESH resolve of the current
 // media / carousel slide. Extracted so the feed menu can re-run it lazily at
 // open time (via a UIDeferredMenuElement) — this is what makes a mixed carousel
@@ -3921,19 +3952,9 @@ void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context)
     // lazily at open time, so video-only actions track what is on screen and the bulk
     // resolve stays off the layout path. Other surfaces build eagerly.
     UIMenu *fullMenu;
-    NSString *menuTitle = @"";
-    // Profile pictures have no posted date — the media object is an IGUser. Skip the
-    // lookup rather than walking a large user object to conclude nothing every time.
-    if ([SPKUtils getBoolPref:@"general_action_btn_show_date"] && context.source != SPKActionButtonSourceProfile) {
-        id media = SPKResolveMediaForContext(context);
-        NSDate *postedDate = [SPKUtils postedDateFromMediaObject:media];
-        if (postedDate) {
-            menuTitle = [SPKUtils spk_formattedDateHeader:postedDate] ?: @"";
-        } else {
-            SPKLog(@"ActionButton", @"menu title has no date: source=%ld media=%@", (long)context.source,
-                   media ? NSStringFromClass([media class]) : @"(nil)");
-        }
-    }
+    // The Instants menu outlives the snap it was built for; SPKActionMenuButton re-dates
+    // it each time it opens.
+    NSString *menuTitle = SPKActionMenuDateTitle(context);
 
     if (defersMenu) {
         UIDeferredMenuElement *deferred = [UIDeferredMenuElement elementWithUncachedProvider:^(void (^completion)(NSArray<UIMenuElement *> *)) {
