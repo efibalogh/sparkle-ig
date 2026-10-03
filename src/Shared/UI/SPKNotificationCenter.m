@@ -133,6 +133,7 @@ static CGFloat const kSPKNotificationBottomMargin = 60.0;
 // (measured on 448 over the feed, 91pt from the bottom of an 874pt screen).
 static CGFloat const kSPKNotificationInstagramBottomMargin = 57.0;
 static NSTimeInterval const kSPKNotificationInsertDuration = 0.55;
+static NSTimeInterval const kSPKNotificationInstagramFadeInDuration = 0.15;
 static NSTimeInterval const kSPKNotificationDefaultPillDuration = 1.5;
 static NSTimeInterval const kSPKNotificationMinPillDuration = 0.5;
 static NSTimeInterval const kSPKNotificationMaxPillDuration = 5.0;
@@ -650,13 +651,27 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
     CGFloat entranceY = isBottom ? 24.0 : -24.0;
     pill.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(0.0, entranceY), CGAffineTransformMakeScale(0.88, 0.88));
     anchor.constant = isBottom ? -[self offsetForIndex:self.visible.count - 1] : [self offsetForIndex:self.visible.count - 1];
+    // Instagram's toast is glass, and glass doesn't show a tint change while its fade
+    // runs: a download that finishes inside the entrance only turned green once the
+    // spring had settled. Its fade is kept short so the result shows almost at once;
+    // the slide and scale keep the spring.
+    if (pill.instagramSkin) {
+        [UIView animateWithDuration:kSPKNotificationInstagramFadeInDuration
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             pill.alpha = 1.0;
+                         }
+                         completion:nil];
+    }
     [UIView animateWithDuration:kSPKNotificationInsertDuration
                           delay:0
          usingSpringWithDamping:0.78
           initialSpringVelocity:0.85
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         pill.alpha = 1.0;
+                         if (!pill.instagramSkin)
+                             pill.alpha = 1.0;
                          pill.transform = CGAffineTransformIdentity;
                          [self relayoutAnimated:NO];
                      }

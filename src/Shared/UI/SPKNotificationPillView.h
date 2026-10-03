@@ -16,6 +16,9 @@ typedef NS_ENUM(NSUInteger, SPKNotificationTone) {
 
 - (void)setPresentationTopConstraint:(NSLayoutConstraint *)constraint;
 
+/// YES when the pill is drawn as Instagram's own toast (the Instagram notification style).
+@property (nonatomic, readonly) BOOL instagramSkin;
+
 /// Updates progress (0.0 – 1.0) for progress-style pills.
 - (void)setProgress:(float)progress animated:(BOOL)animated;
 - (void)setProgress:(float)progress
