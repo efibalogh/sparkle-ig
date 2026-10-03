@@ -29,8 +29,12 @@ static const NSInteger kSPKProfileSavedTabType = 1000;
 // Placeholder shown while the page loads; Tagged's is a plain grid placeholder.
 static const NSInteger kSPKProfileSavedTabPlaceholderSourceType = 1;
 
-static NSNumber *SPKProfileSavedTabIdentifier(void) {
-    return @(kSPKProfileSavedTabType);
+// Tabs are keyed by NSNumber types until 448 and by NSString tab IDs from 449.
+static NSString *const kSPKProfileSavedTabID = @"spk_saved";
+static id sSPKProfileSavedTabIdentifier;
+
+static id SPKProfileSavedTabIdentifier(void) {
+    return sSPKProfileSavedTabIdentifier ?: @(kSPKProfileSavedTabType);
 }
 
 static BOOL SPKProfileSavedTabEnabled(void) {
@@ -38,7 +42,7 @@ static BOOL SPKProfileSavedTabEnabled(void) {
 }
 
 static BOOL SPKIsProfileSavedTabIdentifier(id identifier) {
-    return [identifier isKindOfClass:[NSNumber class]] && [identifier integerValue] == kSPKProfileSavedTabType;
+    return identifier && [identifier isEqual:SPKProfileSavedTabIdentifier()];
 }
 
 #pragma mark - Segment
@@ -88,9 +92,11 @@ static BOOL SPKIsProfileSavedTabIdentifier(id identifier) {
 
 #pragma mark - Tabs plugin
 
-static id (*orig_eligibleLegacyTabIdentifiers)(id, SEL, id, id, BOOL, id, BOOL, BOOL, BOOL);
-static id hooked_eligibleLegacyTabIdentifiers(id self, SEL _cmd, id user, id userSession, BOOL isCurrentUser, id configuration, BOOL showReelsOnboardingTab, BOOL hideClipsTab, BOOL hasClipsDrafts) {
-    id identifiers = orig_eligibleLegacyTabIdentifiers(self, _cmd, user, userSession, isCurrentUser, configuration, showReelsOnboardingTab, hideClipsTab, hasClipsDrafts);
+static id sSPKProfileSavedTabPlaceholderSourceID;
+
+static id (*orig_eligibleTabIdentifiers)(id, SEL, id, id, BOOL, id, BOOL, BOOL, BOOL);
+static id hooked_eligibleTabIdentifiers(id self, SEL _cmd, id user, id userSession, BOOL isCurrentUser, id configuration, BOOL showReelsOnboardingTab, BOOL hideClipsTab, BOOL hasClipsDrafts) {
+    id identifiers = orig_eligibleTabIdentifiers(self, _cmd, user, userSession, isCurrentUser, configuration, showReelsOnboardingTab, hideClipsTab, hasClipsDrafts);
     if (!isCurrentUser || ![identifiers isKindOfClass:[NSArray class]] || !SPKProfileSavedTabEnabled())
         return identifiers;
     if ([identifiers containsObject:SPKProfileSavedTabIdentifier()])
@@ -98,18 +104,18 @@ static id hooked_eligibleLegacyTabIdentifiers(id self, SEL _cmd, id user, id use
     return [identifiers arrayByAddingObject:SPKProfileSavedTabIdentifier()];
 }
 
-static id (*orig_segmentsForLegacyTabIdentifiers)(id, SEL, id, id);
-static id hooked_segmentsForLegacyTabIdentifiers(id self, SEL _cmd, id identifiers, id badge) {
+static id (*orig_segmentsForTabIdentifiers)(id, SEL, id, id);
+static id hooked_segmentsForTabIdentifiers(id self, SEL _cmd, id identifiers, id badge) {
     if (![identifiers isKindOfClass:[NSArray class]])
-        return orig_segmentsForLegacyTabIdentifiers(self, _cmd, identifiers, badge);
+        return orig_segmentsForTabIdentifiers(self, _cmd, identifiers, badge);
 
     NSUInteger savedIndex = [identifiers indexOfObject:SPKProfileSavedTabIdentifier()];
     if (savedIndex == NSNotFound)
-        return orig_segmentsForLegacyTabIdentifiers(self, _cmd, identifiers, badge);
+        return orig_segmentsForTabIdentifiers(self, _cmd, identifiers, badge);
 
     NSMutableArray *nativeIdentifiers = [identifiers mutableCopy];
     [nativeIdentifiers removeObjectAtIndex:savedIndex];
-    id segments = orig_segmentsForLegacyTabIdentifiers(self, _cmd, nativeIdentifiers, badge);
+    id segments = orig_segmentsForTabIdentifiers(self, _cmd, nativeIdentifiers, badge);
     if (![segments isKindOfClass:[NSArray class]])
         return segments;
 
@@ -126,11 +132,11 @@ static id hooked_segmentsForLegacyTabIdentifiers(id self, SEL _cmd, id identifie
     return result;
 }
 
-static long long (*orig_placeholderStyleForLegacyTabIdentifier)(id, SEL, id);
-static long long hooked_placeholderStyleForLegacyTabIdentifier(id self, SEL _cmd, id identifier) {
+static long long (*orig_placeholderStyleForTabIdentifier)(id, SEL, id);
+static long long hooked_placeholderStyleForTabIdentifier(id self, SEL _cmd, id identifier) {
     if (SPKIsProfileSavedTabIdentifier(identifier))
-        identifier = @(kSPKProfileSavedTabPlaceholderSourceType);
-    return orig_placeholderStyleForLegacyTabIdentifier(self, _cmd, identifier);
+        identifier = sSPKProfileSavedTabPlaceholderSourceID;
+    return orig_placeholderStyleForTabIdentifier(self, _cmd, identifier);
 }
 
 #pragma mark - Page
@@ -545,19 +551,34 @@ extern "C" void SPKInstallProfileSavedTabHooksIfNeeded(void) {
             // has to be the app's registered protocol object.
             class_addProtocol([SPKProfileSavedTabSegment class], segmentProtocol);
 
+            // The hooks only rewrite the identifier list and segments, so the same
+            // implementations serve both identifier generations.
             Class metaClass = object_getClass(plugin);
+            BOOL usesTabIDs = [plugin respondsToSelector:@selector(segmentsForTabIDs:badge:)];
+            if (usesTabIDs) {
+                id taggedTabID = [plugin respondsToSelector:@selector(taggedTabID)] ? ((id (*)(id, SEL))objc_msgSend)(plugin, @selector(taggedTabID)) : nil;
+                if (![taggedTabID isKindOfClass:[NSString class]]) {
+                    SPKLog(@"ProfileSavedTab", @"Tagged tab ID unavailable; Saved tab not installed");
+                    return;
+                }
+                sSPKProfileSavedTabIdentifier = kSPKProfileSavedTabID;
+                sSPKProfileSavedTabPlaceholderSourceID = taggedTabID;
+            } else {
+                sSPKProfileSavedTabPlaceholderSourceID = @(kSPKProfileSavedTabPlaceholderSourceType);
+            }
             SPKHookProfileTabsPluginClassMethod(metaClass,
-                                                @selector(eligibleLegacyTabIdentifiersWithUser:userSession:isCurrentUser:configuration:shouldShowReelsOnboardingTab:hideClipsTab:hasClipsDrafts:),
-                                                (IMP)hooked_eligibleLegacyTabIdentifiers,
-                                                (IMP *)&orig_eligibleLegacyTabIdentifiers);
+                                                usesTabIDs ? @selector(eligibleTabIDsWithUser:userSession:isCurrentUser:configuration:shouldShowReelsOnboardingTab:hideClipsTab:hasClipsDrafts:)
+                                                           : @selector(eligibleLegacyTabIdentifiersWithUser:userSession:isCurrentUser:configuration:shouldShowReelsOnboardingTab:hideClipsTab:hasClipsDrafts:),
+                                                (IMP)hooked_eligibleTabIdentifiers,
+                                                (IMP *)&orig_eligibleTabIdentifiers);
             SPKHookProfileTabsPluginClassMethod(metaClass,
-                                                @selector(segmentsForLegacyTabIdentifiers:badge:),
-                                                (IMP)hooked_segmentsForLegacyTabIdentifiers,
-                                                (IMP *)&orig_segmentsForLegacyTabIdentifiers);
+                                                usesTabIDs ? @selector(segmentsForTabIDs:badge:) : @selector(segmentsForLegacyTabIdentifiers:badge:),
+                                                (IMP)hooked_segmentsForTabIdentifiers,
+                                                (IMP *)&orig_segmentsForTabIdentifiers);
             SPKHookProfileTabsPluginClassMethod(metaClass,
-                                                @selector(placeholderStyleForLegacyTabIdentifier:),
-                                                (IMP)hooked_placeholderStyleForLegacyTabIdentifier,
-                                                (IMP *)&orig_placeholderStyleForLegacyTabIdentifier);
+                                                usesTabIDs ? @selector(placeholderStyleForTabID:) : @selector(placeholderStyleForLegacyTabIdentifier:),
+                                                (IMP)hooked_placeholderStyleForTabIdentifier,
+                                                (IMP *)&orig_placeholderStyleForTabIdentifier);
         } else {
             Protocol *segmentProtocol = objc_getProtocol("IGTabControlSegment");
             if (!segmentProtocol || !NSClassFromString(@"IGSegmentedTabControl") || !NSClassFromString(@"IGDynamicPageViewController")) {
