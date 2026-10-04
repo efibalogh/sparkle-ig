@@ -80,6 +80,34 @@ static NSString *SPKViewerMediaIDFromItem(id item) {
     return nil;
 }
 
+// Returns YES when any visible control other than `ignored` lives under `view`.
+static BOOL SPKViewHasVisibleControl(UIView *view, UIView *ignored, NSInteger depth) {
+    for (UIView *sub in view.subviews) {
+        if (sub == ignored || sub.hidden || sub.alpha < 0.01)
+            continue;
+        if ([sub isKindOfClass:[UIControl class]] && sub.userInteractionEnabled)
+            return YES;
+        if (depth < 4 && SPKViewHasVisibleControl(sub, ignored, depth + 1))
+            return YES;
+    }
+    return NO;
+}
+
+// The viewers list can show several label headers (comments, replies, viewers).
+// Only the viewer header is a bare title; the others carry a trailing accessory
+// such as "See all". Detect that structurally so the check does not depend on
+// localized header text.
+static BOOL SPKHeaderCanHostSearchButton(UIView *header, UIView *button) {
+    @try {
+        UIView *rightView = [header valueForKey:@"_rightView"];
+        if ([rightView isKindOfClass:[UIView class]] && rightView != button && !rightView.hidden && rightView.alpha > 0.01 &&
+            rightView.superview)
+            return NO;
+    } @catch (__unused NSException *e) {
+    }
+    return !SPKViewHasVisibleControl(header, button, 0);
+}
+
 %group SPKSearchViewerListHooks
 
 %hook IGLabelSupplementaryView
@@ -99,8 +127,18 @@ static NSString *SPKViewerMediaIDFromItem(id item) {
         return; // not a story viewer list header
 
     SPKChromeButton *button = objc_getAssociatedObject(vc, &kSPKSearchButtonKey);
-    if (button.superview && button.superview != self)
-        return; // already placed on another header
+    if (!SPKHeaderCanHostSearchButton(self, button)) {
+        // A header with its own trailing control (the comments section's
+        // "See all") would sit under the glyph. Evict the button if a reused
+        // header turned into one of those.
+        if (button.superview == self) {
+            [button removeFromSuperview];
+            SPKLog(@"ViewerSearch", @"[Sparkle] Moved search button off a header with its own accessory");
+        }
+        return;
+    }
+    if (button.superview && button.superview != self && button.window)
+        return; // already placed on another eligible header
 
     if (!button) {
         // SPKChromeButton keeps the glyph inside a secure canvas so it stays
