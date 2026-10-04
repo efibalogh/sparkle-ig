@@ -100,10 +100,19 @@ static NSArray *removeItemsInList(NSArray *list, SPKFeedFilterSurface surface) {
             }
         }
 
-        // Remove suggested reels (carousel)
+        // Remove suggested reels
         if (isFeed && [SPKUtils getBoolPref:@"feed_hide_suggested_reels"]) {
+            // Carousel
             if ([obj isKindOfClass:%c(IGFeedScrollableClipsModel)]) {
                 SPKLog(@"General", @"[Sparkle] Hiding suggested reels carousel");
+
+                continue;
+            }
+
+            // Single reels: newer builds place suggested reels inline as
+            // recommended IGMedia items instead of the carousel.
+            if ([obj isKindOfClass:%c(IGMedia)] && [((IGMedia *)obj).explorePostInFeed isEqual:@YES] && [obj respondsToSelector:@selector(isClipsMedia)] && [(IGMedia *)obj isClipsMedia]) {
+                SPKLog(@"General", @"[Sparkle] Hiding suggested reel");
 
                 continue;
             }
@@ -198,6 +207,15 @@ static NSArray *removeItemsInList(NSArray *list, SPKFeedFilterSurface surface) {
 %hook IGMainFeedListAdapterDataSource
 - (NSArray *)objectsForListAdapter:(id)arg1 {
     // Preserve native loading items even when the feed is initially empty or short.
+    return removeItemsInList(%orig, SPKFeedFilterSurfaceFeed);
+}
+%end
+
+// Demangled name: IGMainFeedSwiftHelpers.IGMainFeedListAdapterDataSource_swift (IG 445+).
+// Server-gated Swift twin of the main feed data source, paired with
+// IGMainFeedViewController_swift; accounts in that group never hit the class above.
+%hook _TtC22IGMainFeedSwiftHelpers37IGMainFeedListAdapterDataSource_swift
+- (NSArray *)objectsForListAdapter:(id)arg1 {
     return removeItemsInList(%orig, SPKFeedFilterSurfaceFeed);
 }
 %end
