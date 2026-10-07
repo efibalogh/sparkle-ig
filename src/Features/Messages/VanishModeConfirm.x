@@ -187,6 +187,8 @@ void SPKInstallShhConfirmHooksIfNeeded(void) {
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        %init(SPKShhConfirmHooks);
+        // Swift class from 450, where only the mangled name is guaranteed.
+        Class scrollManager = objc_getClass("IGDirectBottomSwipeableScrollManager") ?: objc_getClass("_TtC46IGDirectThreadViewBottomSwipeFeatureController36IGDirectBottomSwipeableScrollManager");
+        %init(SPKShhConfirmHooks, IGDirectBottomSwipeableScrollManager = scrollManager);
     });
 }
