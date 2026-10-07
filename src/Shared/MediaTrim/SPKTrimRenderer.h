@@ -48,6 +48,14 @@ typedef void (^SPKTrimRenderCompletionBlock)(NSURL *_Nullable outputURL, NSError
                    basename:(NSString *)basename
                  completion:(SPKTrimRenderCompletionBlock)completion;
 
+/// Same as `renderFrameForAsset:` for a local file, but when AVFoundation can't
+/// decode the video (AV1 on devices without a hardware decoder) the frame is
+/// pulled with FFmpeg instead, so the still keeps the file's full resolution.
++ (void)renderFrameForVideoURL:(NSURL *)videoURL
+                     atSeconds:(NSTimeInterval)seconds
+                      basename:(NSString *)basename
+                    completion:(SPKTrimRenderCompletionBlock)completion;
+
 /// Renders `[startSeconds, startSeconds + durationSeconds)` of an audio source to
 /// a temp `.m4a` (AAC) via `AVAssetExportSession` — native, exact, and the format
 /// the DM voice-note sender expects. Delivers completion on the main thread.

@@ -64,6 +64,14 @@ typedef void (^SPKMediaFFmpegCancelBlockPublisher)(dispatch_block_t cancelBlock)
                completion:(SPKMediaFFmpegCompletionBlock)completion
                 cancelOut:(nullable SPKMediaFFmpegCancelBlockPublisher)cancelOut;
 
+/// Decodes the frame at `seconds` of a local video into a lossless PNG. For
+/// codecs AVFoundation can't decode on every device (IG's high-resolution DASH
+/// representations are AV1). Completion is delivered on FFmpegKit's thread.
++ (void)extractFrameFromVideoFileURL:(NSURL *)videoFileURL
+                           atSeconds:(NSTimeInterval)seconds
+                   preferredBasename:(NSString *)preferredBasename
+                          completion:(SPKMediaFFmpegCompletionBlock)completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

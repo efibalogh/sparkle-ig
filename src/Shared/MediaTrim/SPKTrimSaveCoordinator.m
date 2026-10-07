@@ -494,10 +494,10 @@ static void SPKRecordTrimSaveToHistory(NSURL *_Nullable rendered,
 
     if (isFrameOnly) {
         // Extract from the chosen-quality video when overridden, else the edit
-        // file. For DASH the chosen-quality source is a standalone fragmented
-        // MP4 that AVFoundation can occasionally fail to decode a still from, so
-        // fall back to the muxed edit file the user actually scrubbed (always
-        // AVFoundation-friendly) before giving up.
+        // file. The chosen-quality DASH source is often AV1, which AVFoundation
+        // can't decode on most devices, so the renderer retries it with FFmpeg.
+        // The muxed edit file the user scrubbed (lower resolution) is the last
+        // resort, used only when both decoders fail on the full-quality file.
         NSMutableArray<NSURL *> *frameSources = [NSMutableArray array];
         if (result.renderVideoURL)
             [frameSources addObject:result.renderVideoURL];
@@ -550,7 +550,7 @@ static void SPKRecordTrimSaveToHistory(NSURL *_Nullable rendered,
 
 // Tries each candidate URL in order, returning the first frame that decodes.
 // Lets us prefer the chosen-quality video but fall back to the muxed edit file
-// when AVFoundation can't pull a still from a DASH fragment.
+// when neither AVFoundation nor FFmpeg can pull a still from it.
 + (void)extractFrameFromURLs:(NSArray<NSURL *> *)urls
                    atSeconds:(NSTimeInterval)seconds
                     basename:(NSString *)basename
@@ -563,27 +563,25 @@ static void SPKRecordTrimSaveToHistory(NSURL *_Nullable rendered,
         }
         return;
     }
-    NSURL *candidate = urls.firstObject;
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:candidate options:nil];
-    [SPKTrimRenderer renderFrameForAsset:asset
-                               atSeconds:seconds
-                                basename:basename
-                              completion:^(NSURL *output, NSError *error) {
-                                  if (output) {
-                                      if (completion)
-                                          completion(output, nil);
-                                      return;
-                                  }
-                                  if (urls.count <= 1) {
-                                      if (completion)
-                                          completion(nil, error);
-                                      return;
-                                  }
-                                  [self extractFrameFromURLs:[urls subarrayWithRange:NSMakeRange(1, urls.count - 1)]
-                                                   atSeconds:seconds
-                                                    basename:basename
-                                                  completion:completion];
-                              }];
+    [SPKTrimRenderer renderFrameForVideoURL:urls.firstObject
+                                  atSeconds:seconds
+                                   basename:basename
+                                 completion:^(NSURL *output, NSError *error) {
+                                     if (output) {
+                                         if (completion)
+                                             completion(output, nil);
+                                         return;
+                                     }
+                                     if (urls.count <= 1) {
+                                         if (completion)
+                                             completion(nil, error);
+                                         return;
+                                     }
+                                     [self extractFrameFromURLs:[urls subarrayWithRange:NSMakeRange(1, urls.count - 1)]
+                                                      atSeconds:seconds
+                                                       basename:basename
+                                                     completion:completion];
+                                 }];
 }
 
 #pragma mark - Cancel confirmation

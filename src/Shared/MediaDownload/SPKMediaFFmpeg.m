@@ -2005,6 +2005,40 @@ static void SPKFFmpegRunMergeAttempts(NSArray<NSDictionary<NSString *, id> *> *a
                               nil);
 }
 
++ (void)extractFrameFromVideoFileURL:(NSURL *)videoFileURL
+                           atSeconds:(NSTimeInterval)seconds
+                   preferredBasename:(NSString *)preferredBasename
+                          completion:(SPKMediaFFmpegCompletionBlock)completion {
+    NSString *basename = preferredBasename.length > 0 ? preferredBasename : NSUUID.UUID.UUIDString;
+    NSURL *outputURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-frame.png", basename]]];
+    [[NSFileManager defaultManager] removeItemAtURL:outputURL error:nil];
+
+    // Input seek is frame accurate here: FFmpeg seeks to the preceding keyframe
+    // and decodes forward to the requested time before emitting the frame.
+    NSArray<NSString *> *arguments = @[
+        @"-y",
+        @"-hide_banner",
+        @"-loglevel", @"warning",
+        @"-ss", [NSString stringWithFormat:@"%.3f", MAX(0.0, seconds)],
+        @"-i", videoFileURL.path,
+        @"-map", @"0:v:0",
+        @"-frames:v", @"1",
+        @"-an",
+        @"-c:v", @"png",
+        outputURL.path
+    ];
+    SPKFFmpegRunAsyncCommand(arguments, @"frame-extract", SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_EXTRACTING_FRAME_TEXT"), 0.0, nil, ^(NSURL *_Nullable url, NSError *_Nullable error) {
+        // A seek past the last decodable frame exits cleanly with no output.
+        if (url && ![[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+            url = nil;
+            error = SPKFFmpegError(SPKL(@"MEDIA_TRIM_TRIM_RENDERER_COULD_NOT_EXTRACT_SELECTED_FRAME_TEXT"), 21);
+        }
+        if (completion)
+            completion(url, error);
+    },
+                             nil, outputURL);
+}
+
 + (void)trimMergeVideoURL:(NSURL *)videoURL
                  audioURL:(NSURL *)audioURL
              startSeconds:(NSTimeInterval)startSeconds

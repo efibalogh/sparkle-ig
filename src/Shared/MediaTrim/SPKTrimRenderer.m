@@ -1,6 +1,7 @@
-#import "SPKStrings.h"
 #import "SPKTrimRenderer.h"
+#import "../../Utils.h"
 #import "../MediaDownload/SPKMediaFFmpeg.h"
+#import "SPKStrings.h"
 
 #import <ImageIO/ImageIO.h>
 #import <UIKit/UIKit.h>
@@ -329,6 +330,46 @@ static NSURL *SPKTrimWriteCGImage(CGImageRef image, NSString *basename) {
                                           allowTolerance:NO
                                               completion:completion];
                          }];
+}
+
++ (void)renderFrameForVideoURL:(NSURL *)videoURL
+                     atSeconds:(NSTimeInterval)seconds
+                      basename:(NSString *)basename
+                    completion:(SPKTrimRenderCompletionBlock)completion {
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:videoURL options:nil];
+    [self renderFrameForAsset:asset
+                    atSeconds:seconds
+                     basename:basename
+                   completion:^(NSURL *output, NSError *error) {
+                       if (output || !videoURL.isFileURL || ![SPKMediaFFmpeg isAvailable]) {
+                           if (completion)
+                               completion(output, error);
+                           return;
+                       }
+                       SPKLog(@"Trim", @"[Sparkle] AVFoundation frame extraction failed (%@), retrying with FFmpeg", error.localizedDescription);
+                       [SPKMediaFFmpeg extractFrameFromVideoFileURL:videoURL
+                                                          atSeconds:seconds
+                                                  preferredBasename:basename
+                                                         completion:^(NSURL *pngURL, NSError *ffmpegError) {
+                                                             // Re-encode through the same writer so the
+                                                             // still lands as HEIC like every other frame.
+                                                             NSURL *frameURL = nil;
+                                                             CGImageSourceRef source = pngURL ? CGImageSourceCreateWithURL((__bridge CFURLRef)pngURL, NULL) : NULL;
+                                                             if (source) {
+                                                                 CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+                                                                 frameURL = SPKTrimWriteCGImage(image, basename);
+                                                                 if (image)
+                                                                     CGImageRelease(image);
+                                                                 CFRelease(source);
+                                                             }
+                                                             if (pngURL)
+                                                                 [[NSFileManager defaultManager] removeItemAtURL:pngURL error:nil];
+                                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                                 if (completion)
+                                                                     completion(frameURL, frameURL ? nil : (ffmpegError ?: error));
+                                                             });
+                                                         }];
+                   }];
 }
 
 // Photo only attempt. We first try an exact (zero-tolerance) extraction; on
