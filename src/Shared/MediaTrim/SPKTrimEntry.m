@@ -25,6 +25,8 @@
 @property (nonatomic, strong, nullable) id mediaObject;
 @property (nonatomic, copy, nullable) NSURL *photoURL;
 @property (nonatomic, copy, nullable) NSURL *videoURL;
+@property (nonatomic, copy, nullable) NSURL *localFileURL;
+@property (nonatomic, copy, nullable) NSURL *localSourceURL;
 @property (nonatomic, strong) SPKTrimSourcePlan *plan;
 @property (nonatomic, strong) NSMutableArray<NSString *> *tempPaths;
 @property (nonatomic, assign) BOOL cancelled;
@@ -44,6 +46,22 @@
                               videoURL:(NSURL *)videoURL
                               metadata:(SPKGallerySaveMetadata *)metadata
                              presenter:(UIViewController *)presenter {
+    [self beginTrimAndSaveForMediaObject:mediaObject
+                                photoURL:photoURL
+                                videoURL:videoURL
+                            localFileURL:nil
+                          localSourceURL:nil
+                                metadata:metadata
+                               presenter:presenter];
+}
+
++ (void)beginTrimAndSaveForMediaObject:(id)mediaObject
+                              photoURL:(NSURL *)photoURL
+                              videoURL:(NSURL *)videoURL
+                          localFileURL:(NSURL *)localFileURL
+                        localSourceURL:(NSURL *)localSourceURL
+                              metadata:(SPKGallerySaveMetadata *)metadata
+                             presenter:(UIViewController *)presenter {
     if (!presenter) {
         return;
     }
@@ -53,6 +71,10 @@
     entry.mediaObject = mediaObject;
     entry.photoURL = photoURL;
     entry.videoURL = videoURL;
+    if (localFileURL.isFileURL && [[NSFileManager defaultManager] fileExistsAtPath:localFileURL.path]) {
+        entry.localFileURL = localFileURL;
+        entry.localSourceURL = localSourceURL;
+    }
     entry.tempPaths = [NSMutableArray array];
     entry.selfRetain = entry; // keep alive across the async flow
 
@@ -94,6 +116,13 @@
     // music). For progressive quality the chosen file is the final, so edit and
     // final are the same download.
     NSURL *editURL = self.plan.needsHighQualityFetch ? self.plan.editURL : self.plan.finalVideoURL;
+    // A caller-supplied local copy stands in for the scrub preview, but only
+    // stands in for the final source when it is that exact file; otherwise the
+    // chosen quality is still fetched before rendering.
+    if (self.localFileURL &&
+        (self.plan.needsHighQualityFetch || [self.plan.finalVideoURL isEqual:self.localSourceURL])) {
+        editURL = self.localFileURL;
+    }
     if (editURL.isFileURL) {
         [self presentEditorForLocalURL:editURL];
         return;

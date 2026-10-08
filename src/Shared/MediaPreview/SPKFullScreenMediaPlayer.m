@@ -19,6 +19,7 @@
 #import "../MediaDownload/SPKMediaQualityManager.h"
 #import "../MediaTrim/SPKTrimConfiguration.h"
 #import "../MediaTrim/SPKTrimEditorViewController.h"
+#import "../MediaTrim/SPKTrimEntry.h"
 #import "../MediaTrim/SPKTrimResult.h"
 #import "../MediaTrim/SPKTrimSaveCoordinator.h"
 #import "../PhotoEdit/SPKPhotoEditEntry.h"
@@ -1691,6 +1692,24 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
         return;
     }
     NSURL *url = item.resolvedFileURL ?: item.fileURL;
+    BOOL fromGallery = (item.galleryFile != nil);
+
+    // Expanded Instagram video: the file on screen is the playback rendition,
+    // which is usually well below the post's best quality. Hand off to the
+    // action button's flow so the cut (and any single frame) renders from the
+    // quality the download settings pick, scrubbing the on-screen copy meanwhile.
+    if (!fromGallery && !isAudio && item.sourceMediaObject && item.fileURL && !item.fileURL.isFileURL) {
+        [[self currentVideoViewController] suspendPlayback];
+        [SPKTrimEntry beginTrimAndSaveForMediaObject:item.sourceMediaObject
+                                            photoURL:nil
+                                            videoURL:item.fileURL
+                                        localFileURL:url
+                                      localSourceURL:item.fileURL
+                                            metadata:[self metadataForCurrentItem]
+                                           presenter:self];
+        return;
+    }
+
     if (!url || ![[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
         SPKNotify(@"spk.trim.preview", SPKL(@"MEDIA_TRIM_CANNOT_TRIM_TOAST"),
                   SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_MEDIA_FILE_UNAVAILABLE_TEXT"), @"error_filled",
@@ -1705,11 +1724,10 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
                                        : [SPKTrimConfiguration configurationWithVideoURL:url];
 
     // Gallery-origin files keep the Replace / Save-as-Copy flow (handled after
-    // dismiss). Expanded Instagram media (stories, feed, reels, DMs) instead pick
+    // dismiss). Other media (audio, or video with no remote source) instead pick
     // a destination in-editor — Photos / Gallery / Share / Copy — exactly like the
     // "Trim & Save" action button, so it no longer silently dumps a copy into the
     // Gallery (and carries source attribution so the filename isn't media_other_...).
-    BOOL fromGallery = (item.galleryFile != nil);
     if (!fromGallery) {
         NSMutableArray<SPKTrimDoneOption *> *options = [NSMutableArray array];
         // Photos can't hold an audio file, so for audio offer "Save Audio to Files"
