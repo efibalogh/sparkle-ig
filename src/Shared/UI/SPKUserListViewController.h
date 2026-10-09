@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *emptyTitle;
 @property (nonatomic, copy) NSString *emptySubtitle;
 @property (nonatomic, copy, nullable) NSString *emptySearchSubtitle;
+// Asset name of the empty-state glyph; defaults to "users_empty". Set before the view loads.
+@property (nonatomic, copy, nullable) NSString *emptyIconName;
 
 // When set, an "info" bar button presents this text in a "How It Works" alert.
 @property (nonatomic, copy, nullable) NSString *infoText;
@@ -45,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didDeleteItem:(SPKUserListItem *)item;              // default: no-op
 - (void)didTapAdd;                                          // default: no-op
 - (void)listDidUpdateItemCount:(NSUInteger)count;          // default: no-op (override to retitle)
+- (NSArray<UIBarButtonItem *> *)additionalTrailingBarItems; // default: none; own bubble at the trailing edge
 
 @end
 

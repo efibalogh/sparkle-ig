@@ -4,6 +4,7 @@
 #import "../../Features/Stories/StoryAudioToggle.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Shared/Stories/SPKStoryContext.h"
+#import "../../Shared/Stories/SPKStoryLocalSeen.h"
 #import "../../Utils.h"
 #import "../SPKSettingsViewController.h"
 #import "../SPKTopicSettingsSupport.h"
@@ -75,6 +76,29 @@ static NSDictionary *SPKStoriesSeenReceiptsSection(void) {
                            nil);
 }
 
+// Unnamed, so its help joins the Seen Receipts info sheet above it.
+static NSDictionary *SPKStoriesLocalSeenSection(void) {
+    // Only changes how manual seen behaves, so it locks with the other triggers.
+    SPKSetting *keepSeenLocally = [SPKSetting switchCellWithTitle:SPKL(@"STORIES_SEEN_RECEIPTS_KEEP_SEEN_LOCALLY_TITLE") icon:SPKSettingsIcon(@"story") defaultsKey:@"stories_manual_seen_keep_local"];
+    keepSeenLocally.helpText = SPKL(@"STORIES_SEEN_RECEIPTS_KEEP_SEEN_LOCALLY_HELP");
+    keepSeenLocally.enabledProvider = ^BOOL {
+        return SPKStoryManualSeenEnabled();
+    };
+
+    // Stays usable after Keep Seen Locally is switched off: stories marked while
+    // it was on stay seen until they are reset from this list.
+    SPKSetting *locallySeen = [SPKSetting navigationCellWithTitle:SPKL(@"STORIES_SEEN_RECEIPTS_LOCALLY_SEEN_TITLE")
+                                                         subtitle:@""
+                                                             icon:SPKSettingsIcon(@"history")
+                                                   viewController:SPKStoryLocalSeenListViewController()];
+    locallySeen.helpText = SPKL(@"STORIES_SEEN_RECEIPTS_LOCALLY_SEEN_HELP");
+    locallySeen.accessoryTextProvider = ^NSString * {
+        return [NSString stringWithFormat:@"%lu", (unsigned long)SPKStoryLocalSeenUserCount()];
+    };
+
+    return SPKTopicSection(@"", @[ keepSeenLocally, locallySeen ], nil);
+}
+
 static NSArray *SPKStoriesSettingsSections(void) {
     return @[
         SPKTopicSection(SPKL(@"FEED_ACTION_BUTTON_HEADER"), @[
@@ -87,6 +111,7 @@ static NSArray *SPKStoriesSettingsSections(void) {
         ],
                         nil),
         SPKStoriesSeenReceiptsSection(),
+        SPKStoriesLocalSeenSection(),
         SPKTopicSection(SPKL(@"STORIES_PLAYBACK_HEADER"), @[
             ({
                 SPKSetting *storyAudioToggle = [SPKSetting switchCellWithTitle:SPKL(@"STORIES_PLAYBACK_AUDIO_TOGGLE_TITLE")

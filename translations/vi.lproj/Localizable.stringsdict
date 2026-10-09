@@ -146,5 +146,21 @@
 			<string>Đã lưu %ld mục</string>
 		</dict>
 	</dict>
+	<key>STORIES_SEEN_RECEIPTS_LOCALLY_SEEN_STORY_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld tin</string>
+			<key>other</key>
+			<string>%ld tin</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

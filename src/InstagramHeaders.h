@@ -1006,6 +1006,25 @@
 @property (nonatomic, readonly, copy) NSString *reelPK;
 @end
 
+// The session's story seen state (`-[IGUserSession storySeenStateStore]`). Every
+// story ring reads it. Same API on 410 and current versions; the pog and media
+// stores are reached through the `_pogSeenStateStore` / `_mediaSeenStateStore` ivars.
+@interface IGStoryPogSeenStateStore : NSObject
+- (id)latestSeenMediaDateForReelPK:(id)reelPK;
+- (void)setLatestSeenMediaDate:(id)date forReelPK:(id)reelPK;
+- (void)setLatestSeenMediaDateForceUpdate:(id)date forReelPK:(id)reelPK;
+- (void)archive;
+@end
+
+@interface IGStoryMediaSeenStateStore : NSObject
+- (void)setSeenMediaId:(id)mediaId forReelPK:(id)reelPK;
+@end
+
+@interface IGStorySeenStateStore : NSObject
+- (void)addSeenDateForStoryItem:(id)item reelPK:(id)reelPK;
+- (void)removeSeenMediaIds:(id)mediaIds forReelPk:(id)reelPK;
+@end
+
 // Backing store for the reel list the story viewer pages through. The view
 // controller keeps its own copy for tap-forward navigation, while horizontal
 // swipes are driven by the list adapter reading this store.

@@ -218,5 +218,29 @@
 			<string>تم حفظ %ld عنصر</string>
 		</dict>
 	</dict>
+	<key>STORIES_SEEN_RECEIPTS_LOCALLY_SEEN_STORY_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>%ld قصة</string>
+			<key>one</key>
+			<string>%ld قصة</string>
+			<key>two</key>
+			<string>%ld قصتان</string>
+			<key>few</key>
+			<string>%ld قصص</string>
+			<key>many</key>
+			<string>%ld قصة</string>
+			<key>other</key>
+			<string>%ld قصة</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
