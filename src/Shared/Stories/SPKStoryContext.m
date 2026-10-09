@@ -351,14 +351,46 @@ BOOL SPKStoryMarkContextAsSeen(SPKStoryContext *context) {
                context.markSeenTarget ? [context.markSeenTarget respondsToSelector:markSelector] : NO);
         return NO;
     }
-    SPKForcedStorySeenMediaPK = [SPKStoryMediaIdentifier(context.media) copy];
-    SPKForceMarkStoryAsSeen = YES;
-    @try {
-        ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, context.sectionController, context.media);
-    } @finally {
-        SPKForceMarkStoryAsSeen = NO;
-        SPKForcedStorySeenMediaPK = nil;
+    // IG reports each story separately, so marking only the displayed one leaves
+    // the earlier stories of the reel unreported to the owner. Mark every story up
+    // to the displayed one, oldest first, so the reel's seen date only moves forward.
+    NSMutableArray *itemsToMark = [NSMutableArray array];
+    NSString *currentID = SPKStoryMediaID(context.media);
+    NSInteger currentIndex = context.currentIndex;
+    if (currentID.length > 0 && currentIndex > 0 && currentIndex < (NSInteger)context.allMedia.count &&
+        [SPKStoryMediaID(context.allMedia[currentIndex]) isEqualToString:currentID]) {
+        [itemsToMark addObjectsFromArray:[context.allMedia subarrayWithRange:NSMakeRange(0, currentIndex)]];
     }
+    [itemsToMark addObject:context.media];
+
+    // Earlier stories were usually reported by a previous tap; skip them so they
+    // are not reported again. Keyed by account because accounts share story ids.
+    static NSMutableSet<NSString *> *markedKeys;
+    static dispatch_once_t markedOnceToken;
+    dispatch_once(&markedOnceToken, ^{
+        markedKeys = [NSMutableSet set];
+    });
+    NSString *accountPK = [SPKUtils currentUserPK] ?: @"";
+
+    for (id item in itemsToMark) {
+        NSString *itemID = SPKStoryMediaID(item);
+        NSString *markedKey = itemID.length > 0 ? [NSString stringWithFormat:@"%@|%@", accountPK, itemID] : nil;
+        if (item != context.media && markedKey && [markedKeys containsObject:markedKey])
+            continue;
+        if (markedKey)
+            [markedKeys addObject:markedKey];
+        SPKForcedStorySeenMediaPK = [SPKStoryMediaIdentifier(item) copy];
+        SPKForceMarkStoryAsSeen = YES;
+        @try {
+            ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, context.sectionController, item);
+        } @catch (NSException *exception) {
+            SPKLog(@"Stories", @"[Sparkle StorySeen] Marking an earlier story failed: %@", exception.reason);
+        } @finally {
+            SPKForceMarkStoryAsSeen = NO;
+            SPKForcedStorySeenMediaPK = nil;
+        }
+    }
+    SPKLog(@"Stories", @"[Sparkle StorySeen] Marked %lu stories up to index %ld", (unsigned long)itemsToMark.count, (long)currentIndex);
     return YES;
 }
 
