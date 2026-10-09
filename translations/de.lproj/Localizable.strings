@@ -453,6 +453,7 @@
 "DOWNLOADS_DOWNLOAD_TRANSFER_DOWNLOADED_FILE_EMPTY_TEXT" = "Die heruntergeladene Datei war leer.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_RETURNED_MISSING_MEDIA_RESPONSE_TEXT" = "Instagram hat eine fehlende Medienantwort zurückgegeben.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_RETURNED_UNEXPECTED_RESPONSE_TEXT" = "Instagram hat eine unerwartete Antwort zurückgegeben.";
+"DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_THROTTLED_TEXT" = "Instagram ist gerade ausgelastet. Versuche es gleich noch einmal.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_INVALID_DOWNLOAD_URL_TEXT" = "Ungültige Download-URL.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_MEDIA_URL_EXPIRED_REFRESH_TRY_AGAIN_TEXT" = "Die Medien-URL ist abgelaufen. Aktualisiere und versuche es erneut.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_ONLY_HTTP_HTTPS_URLS_SUPPORTED_TEXT" = "Nur HTTP- und HTTPS-URLs werden unterstützt.";

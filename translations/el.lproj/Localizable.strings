@@ -453,6 +453,7 @@
 "DOWNLOADS_DOWNLOAD_TRANSFER_DOWNLOADED_FILE_EMPTY_TEXT" = "Το ληφθέν αρχείο ήταν άδειο.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_RETURNED_MISSING_MEDIA_RESPONSE_TEXT" = "Το Instagram επέστρεψε μια απάντηση με ελλιπή μέσα.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_RETURNED_UNEXPECTED_RESPONSE_TEXT" = "Το Instagram επέστρεψε μια απροσδόκητη απάντηση.";
+"DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_THROTTLED_TEXT" = "Το Instagram είναι απασχολημένο αυτή τη στιγμή. Δοκίμασε ξανά σε λίγο.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_INVALID_DOWNLOAD_URL_TEXT" = "Ακατάλληλη διεύθυνση URL λήψης.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_MEDIA_URL_EXPIRED_REFRESH_TRY_AGAIN_TEXT" = "Η διεύθυνση URL πολυμέσων έληξε. Ανανεώστε και δοκιμάστε ξανά.";
 "DOWNLOADS_DOWNLOAD_TRANSFER_ONLY_HTTP_HTTPS_URLS_SUPPORTED_TEXT" = "Υποστηρίζονται μόνο URL HTTP και HTTPS.";

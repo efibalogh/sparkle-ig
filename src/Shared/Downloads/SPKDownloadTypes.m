@@ -69,6 +69,8 @@ NSString *SPKDownloadErrorDisplayDescription(NSError *error) {
             return SPKL(@"DOWNLOADS_DOWNLOAD_JOB_INTERRUPTED_INSTAGRAM_EXITED_TEXT");
         case SPKDownloadErrorAudioPhotosUnsupported:
             return SPKL(@"DOWNLOADS_DOWNLOAD_DESTINATION_WRITER_AUDIO_CANNOT_SAVED_PHOTOS_TEXT");
+        case SPKDownloadErrorServerUnavailable:
+            return SPKL(@"DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_THROTTLED_TEXT");
         }
     }
 

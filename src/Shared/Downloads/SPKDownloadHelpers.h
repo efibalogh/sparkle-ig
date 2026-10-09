@@ -49,6 +49,18 @@ NS_ASSUME_NONNULL_BEGIN
           sourceSurface:(SPKDownloadSourceSurface)sourceSurface
            showProgress:(BOOL)showProgress;
 
+/// Same as above; `configureItem` can adjust the item request before submission.
++ (void)submitRemoteURL:(NSURL *)url
+              extension:(NSString *)extension
+            destination:(SPKDownloadDestination)destination
+               metadata:(nullable SPKGallerySaveMetadata *)metadata
+         notificationID:(NSString *)notificationID
+              presenter:(nullable UIViewController *)presenter
+             anchorView:(nullable UIView *)anchorView
+          sourceSurface:(SPKDownloadSourceSurface)sourceSurface
+           showProgress:(BOOL)showProgress
+          configureItem:(nullable void (^)(SPKDownloadItemRequest *item))configureItem;
+
 + (void)performBulkItems:(NSArray<SPKDownloadItemRequest *> *)items
                destination:(SPKDownloadDestination)destination
           actionIdentifier:(NSString *)identifier

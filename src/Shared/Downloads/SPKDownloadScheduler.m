@@ -526,6 +526,16 @@ static int64_t SPKFileSizeAtPath(NSString *path) {
             if (!strongSelf)
                 return;
             [strongSelf.activeTransfers removeObjectForKey:item.itemID];
+            if ([error.domain isEqualToString:SPKDownloadErrorDomain] && error.code == SPKDownloadErrorServerUnavailable &&
+                req.dashFallbackURLString.length > 0) {
+                SPKLog(@"Downloads", @"ready-to-play file unavailable, falling back to DASH %ldx%ld", (long)req.dashWidth, (long)req.dashHeight);
+                req.remoteURLString = req.dashFallbackURLString;
+                req.dashFallbackURLString = nil;
+                req.requiresDashMerge = YES;
+                req.preferredFileExtension = @"mp4";
+                [strongSelf startDashMergeItem:item job:job fromState:SPKDownloadStateRunning];
+                return;
+            }
             if (!stagedPath || error) {
                 [strongSelf transitionItemID:item.itemID
                                        jobID:job.jobID
@@ -544,13 +554,17 @@ static int64_t SPKFileSizeAtPath(NSString *path) {
 }
 
 - (void)startDashMergeItem:(SPKDownloadItem *)item job:(SPKDownloadJob *)job {
+    [self startDashMergeItem:item job:job fromState:SPKDownloadStateQueued];
+}
+
+- (void)startDashMergeItem:(SPKDownloadItem *)item job:(SPKDownloadJob *)job fromState:(SPKDownloadState)fromState {
     SPKDownloadItemRequest *req = item.request;
     NSURL *primary = [NSURL URLWithString:req.remoteURLString];
     NSURL *secondary = req.dashSecondaryURLString.length ? [NSURL URLWithString:req.dashSecondaryURLString] : nil;
     if (!primary) {
         [self transitionItemID:item.itemID
                          jobID:job.jobID
-                          from:SPKDownloadStateQueued
+                          from:fromState
                             to:SPKDownloadStateFailed
                         update:^(SPKDownloadMutableItemSnapshot *snap) {
                             snap.error = SPKDownloadError(SPKDownloadErrorInvalidURL, SPKL(@"DOWNLOADS_DOWNLOAD_SCHEDULER_INVALID_MEDIA_URL_TEXT"), nil);
@@ -561,7 +575,7 @@ static int64_t SPKFileSizeAtPath(NSString *path) {
     }
     [self transitionItemID:item.itemID
                      jobID:job.jobID
-                      from:SPKDownloadStateQueued
+                      from:fromState
                         to:SPKDownloadStateRunning
                     update:^(SPKDownloadMutableItemSnapshot *snap) {
                         snap.progress = 0.05;

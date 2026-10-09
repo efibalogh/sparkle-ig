@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger dashWidth;
 @property (nonatomic, assign) NSInteger dashHeight;
 @property (nonatomic, assign) NSInteger dashBandwidth;
+/// Ready-to-play items only: DASH video URL to merge instead when the CDN can't
+/// serve the progressive file. Uses the dash* fields above for the rest.
+@property (nonatomic, copy, nullable) NSString *dashFallbackURLString;
 
 + (instancetype)itemWithRemoteURL:(NSURL *)url mediaKind:(SPKDownloadMediaKind)kind;
 + (instancetype)itemWithLocalPath:(NSString *)path mediaKind:(SPKDownloadMediaKind)kind;

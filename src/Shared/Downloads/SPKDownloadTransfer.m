@@ -15,7 +15,19 @@
 @property (nonatomic, assign) SPKDownloadMediaKind mediaKind;
 @property (nonatomic, assign) float lastReportedProgress;
 @property (nonatomic, assign) BOOL finished;
+@property (nonatomic, strong, nullable) NSURL *url;
+@property (nonatomic, assign) NSUInteger throttleRetries;
+@property (nonatomic, assign) BOOL retryPending;
 @end
+
+// Ready-to-play files are remuxed from the DASH segments on request. When the
+// CDN can't build one it answers 429 or a 5xx, often for good, so retry once
+// and then report SPKDownloadErrorServerUnavailable for the caller to fall back.
+static NSUInteger const SPKDownloadThrottleMaxRetries = 1;
+
+static BOOL SPKDownloadStatusIsServerSide(NSInteger status) {
+    return status == 429 || status >= 500;
+}
 
 @implementation SPKDownloadTransfer
 
@@ -34,6 +46,9 @@
     self.mediaKind = mediaKind;
     self.lastReportedProgress = 0;
     self.finished = NO;
+    self.url = url;
+    self.throttleRetries = 0;
+    self.retryPending = NO;
 
     if (!url) {
         completion(nil, SPKDownloadError(SPKDownloadErrorInvalidURL, SPKL(@"DOWNLOADS_DOWNLOAD_TRANSFER_INVALID_DOWNLOAD_URL_TEXT"), nil));
@@ -53,6 +68,10 @@
 }
 
 - (void)cancel {
+    if (self.retryPending) {
+        [self finishWithPath:nil error:SPKDownloadError(SPKDownloadErrorCancelled, SPKL(@"DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR"), nil)];
+        return;
+    }
     [self.task cancel];
     [self.session invalidateAndCancel];
     self.task = nil;
@@ -73,6 +92,11 @@
     NSInteger status = ((NSHTTPURLResponse *)response).statusCode;
     if (status >= 200 && status < 300)
         return YES;
+    if (SPKDownloadStatusIsServerSide(status)) {
+        if (error)
+            *error = SPKDownloadError(SPKDownloadErrorServerUnavailable, SPKL(@"DOWNLOADS_DOWNLOAD_TRANSFER_INSTAGRAM_THROTTLED_TEXT"), nil);
+        return NO;
+    }
     if (status == 403 || status == 404 || status == 410) {
         if (error)
             *error = SPKDownloadError(SPKDownloadErrorExpiredURL, SPKL(@"DOWNLOADS_DOWNLOAD_TRANSFER_MEDIA_URL_EXPIRED_REFRESH_TRY_AGAIN_TEXT"), nil);
@@ -127,6 +151,16 @@
         return;
     NSError *httpError = nil;
     if (![self validateHTTPResponse:downloadTask.response error:&httpError]) {
+        NSInteger status = [downloadTask.response isKindOfClass:NSHTTPURLResponse.class] ? ((NSHTTPURLResponse *)downloadTask.response).statusCode : 0;
+        NSFileHandle *handle = [NSFileHandle fileHandleForReadingFromURL:location error:nil];
+        NSData *body = [handle readDataUpToLength:300 error:nil];
+        [handle closeAndReturnError:nil];
+        NSString *snippet = body.length ? [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding] : nil;
+        SPKLog(@"Downloads", @"transfer rejected with HTTP %ld for %@ (body: %@)", (long)status, downloadTask.originalRequest.URL.absoluteString, snippet ?: @"<none>");
+        if (SPKDownloadStatusIsServerSide(status) && self.throttleRetries < SPKDownloadThrottleMaxRetries) {
+            [self scheduleThrottleRetryForResponse:(NSHTTPURLResponse *)downloadTask.response];
+            return;
+        }
         [self finishWithPath:nil error:httpError];
         return;
     }
@@ -152,6 +186,29 @@
         return;
     }
     [self finishWithPath:dest error:nil];
+}
+
+- (void)scheduleThrottleRetryForResponse:(NSHTTPURLResponse *)response {
+    self.throttleRetries += 1;
+    self.retryPending = YES;
+    NSTimeInterval delay = pow(2.0, (double)self.throttleRetries);
+    NSString *retryAfter = [response valueForHTTPHeaderField:@"Retry-After"];
+    if (retryAfter.doubleValue > 0)
+        delay = fmin(10.0, retryAfter.doubleValue);
+    SPKLog(@"Downloads", @"throttled, retry %lu of %lu in %.1fs", (unsigned long)self.throttleRetries, (unsigned long)SPKDownloadThrottleMaxRetries, delay);
+    __weak __typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        NSOperationQueue *queue = weakSelf.session.delegateQueue;
+        [queue addOperationWithBlock:^{
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if (!strongSelf || strongSelf.finished || !strongSelf.session)
+                return;
+            strongSelf.retryPending = NO;
+            strongSelf.lastReportedProgress = 0;
+            strongSelf.task = [strongSelf.session downloadTaskWithURL:strongSelf.url];
+            [strongSelf.task resume];
+        }];
+    });
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {

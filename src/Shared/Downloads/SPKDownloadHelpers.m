@@ -168,6 +168,28 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
              anchorView:(UIView *)anchorView
           sourceSurface:(SPKDownloadSourceSurface)sourceSurface
            showProgress:(BOOL)showProgress {
+    [self submitRemoteURL:url
+                extension:extension
+              destination:destination
+                 metadata:metadata
+           notificationID:notificationID
+                presenter:presenter
+               anchorView:anchorView
+            sourceSurface:sourceSurface
+             showProgress:showProgress
+            configureItem:nil];
+}
+
++ (void)submitRemoteURL:(NSURL *)url
+              extension:(NSString *)extension
+            destination:(SPKDownloadDestination)destination
+               metadata:(SPKGallerySaveMetadata *)metadata
+         notificationID:(NSString *)notificationID
+              presenter:(UIViewController *)presenter
+             anchorView:(UIView *)anchorView
+          sourceSurface:(SPKDownloadSourceSurface)sourceSurface
+           showProgress:(BOOL)showProgress
+          configureItem:(void (^)(SPKDownloadItemRequest *item))configureItem {
     SPKDownloadMediaKind kind = [self mediaKindForExtension:extension];
     SPKDownloadItemRequest *item =
         [SPKDownloadItemRequest itemWithRemoteURL:url
@@ -178,6 +200,8 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
         [[self preferredFilenameForURL:url
                              mediaKind:kind
                               metadata:metadata] stringByDeletingPathExtension];
+    if (configureItem)
+        configureItem(item);
     SPKDownloadRequest *request =
         [SPKDownloadRequest requestWithItems:@[ item ]
                                  destination:destination];

@@ -22,6 +22,7 @@ typedef NS_ERROR_ENUM(SPKDownloadErrorDomain, SPKDownloadErrorCode){
     SPKDownloadErrorCancelled,
     SPKDownloadErrorInterrupted,
     SPKDownloadErrorAudioPhotosUnsupported,
+    SPKDownloadErrorServerUnavailable,
 };
 
 typedef NS_ENUM(NSInteger, SPKDownloadState) {

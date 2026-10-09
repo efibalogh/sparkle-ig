@@ -112,6 +112,7 @@ static SPKGallerySaveMetadata *SPKDownloadMetadataFromDict(NSDictionary *d) {
     c.dashWidth = _dashWidth;
     c.dashHeight = _dashHeight;
     c.dashBandwidth = _dashBandwidth;
+    c.dashFallbackURLString = [_dashFallbackURLString copy];
     return c;
 }
 
@@ -144,6 +145,8 @@ static SPKGallerySaveMetadata *SPKDownloadMetadataFromDict(NSDictionary *d) {
     d[@"dashWidth"] = @(self.dashWidth);
     d[@"dashHeight"] = @(self.dashHeight);
     d[@"dashBandwidth"] = @(self.dashBandwidth);
+    if (self.dashFallbackURLString)
+        d[@"dashFallbackURLString"] = self.dashFallbackURLString;
     return d;
 }
 
@@ -169,6 +172,7 @@ static SPKGallerySaveMetadata *SPKDownloadMetadataFromDict(NSDictionary *d) {
     item.dashWidth = [dict[@"dashWidth"] integerValue];
     item.dashHeight = [dict[@"dashHeight"] integerValue];
     item.dashBandwidth = [dict[@"dashBandwidth"] integerValue];
+    item.dashFallbackURLString = dict[@"dashFallbackURLString"];
     return item;
 }
 
