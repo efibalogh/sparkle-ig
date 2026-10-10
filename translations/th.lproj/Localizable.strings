@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "อัปโหลดรูปภาพจากแกลเลอรี";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "คัดลอกข้อความไปยังคลิปบอร์ดแล้ว";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "เลือกสี";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits ส่งวิดีโอผ่านพื้นที่จัดเก็บที่มีเพียง Instagram เวอร์ชัน App Store เท่านั้นที่อ่านได้ ให้บันทึกวิดีโอลงในรูปภาพจาก Edits แล้วโพสต์จาก Instagram";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "แชร์จาก Edits ไม่ได้";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "ยืนยันการติดตามทั้งหมด";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการติดตามบัญชีนี้?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการติดตามทุกคนในรายการนี้?";

@@ -486,6 +486,8 @@
 // its own, so anything else is presented as nothing at all.
 @interface IGAppCoordinator : NSObject
 - (void)userNotificationCenter:(id)center willPresentNotification:(id)notification withCompletionHandler:(id)handler;
+- (BOOL)application:(id)application openURL:(NSURL *)url options:(id)options;
+- (void)scene:(id)scene willConnectToSession:(id)session options:(id)options window:(id)window;
 @end
 
 // Holds the live typing state for every thread. The dictionary is replaced

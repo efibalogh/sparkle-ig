@@ -122,6 +122,7 @@ FOUNDATION_EXPORT void SPKInstallHideDirectCallButtonsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideFlagButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFixDuplicateNotificationsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallOpenPostNativePushHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallEditsShareFallbackHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableAppIconGestureHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallUnlockStoryPreviewHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallUnlockMessagePreviewHooksIfEnabled(void);
@@ -185,6 +186,9 @@ void SPKInstallLaunchCriticalHooks(void) {
     // that first upload carry the real position.
     SPK_INSTALL(SPKInstallFakeLocationHooksIfNeeded);
     SPK_INSTALL(SPKInstallStoryAdBlockingHooksIfEnabled);
+    // A share from Edits can be the URL that cold-launches the app, and that URL
+    // is delivered while the first scene connects.
+    SPK_INSTALL(SPKInstallEditsShareFallbackHooksIfNeeded);
     SPK_INSTALL(SPKInstallNavigationHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
 }

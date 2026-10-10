@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Upload Photo from Gallery";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Copied text to clipboard";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Select color";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits passes the video through storage that only the App Store version of Instagram can read. Save the video to Photos in Edits, then post it from Instagram.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Can't Share From Edits";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Confirm Follow All";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Are you sure you want to follow this account?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Are you sure you want to follow everyone in this list?";

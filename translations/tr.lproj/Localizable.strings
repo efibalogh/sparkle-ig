@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Galeriden Fotoğraf Yükle";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Metin panoya kopyalandı";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Renk seç";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits videoyu yalnızca Instagram'ın App Store sürümünün okuyabildiği bir depolama alanı üzerinden aktarır. Videoyu Edits'te Fotoğraflar'a kaydedin, ardından Instagram'dan paylaşın.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Edits'ten Paylaşılamıyor";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Tümünü Takip Etmeyi Onayla";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Bu hesabın takibini yapmak istediğinden emin misin?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Bu listedeki herkesin takibini yapmak istediğinden emin misin?";

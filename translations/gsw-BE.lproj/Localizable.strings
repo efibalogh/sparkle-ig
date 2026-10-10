@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Foti us dr Galerie Hochlade";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Text i d'Zwüschenablag kopiert";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Farb uswähle";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits git ds Video über ne Spycher wyter, wo nume d App Store Version vo Instagram cha läse. Sichere ds Video i Edits i de Fotos u poscht s när us Instagram.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Teile us Edits geit nid";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Aui Follege Bestätige";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Bisch sicher, dass du däm Account wottsch folge?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Bisch sicher, dass du aune i däre Lischte wottsch folge?";

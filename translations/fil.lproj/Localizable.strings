@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Mag-upload ng Larawan mula sa Gallery";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Kinopya ang text sa clipboard";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Pumili ng kulay";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Ipinapasa ng Edits ang video sa storage na ang bersyon lang ng Instagram mula sa App Store ang nakakabasa. I-save ang video sa Photos mula sa Edits, pagkatapos ay i-post ito mula sa Instagram.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Hindi Makapag-share Mula sa Edits";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Kumpirmahin ang I-follow Lahat";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Sigurado ka bang gusto mong i-follow ang account na ito?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Sigurado ka bang gusto mong i-follow ang lahat sa listahang ito?";

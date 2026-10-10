@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Tải ảnh lên từ Thư viện";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Đã sao chép văn bản vào khay nhớ tạm";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Chọn màu";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits chuyển video qua vùng lưu trữ mà chỉ phiên bản Instagram từ App Store mới đọc được. Hãy lưu video vào Ảnh trong Edits, rồi đăng video đó từ Instagram.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Không thể chia sẻ từ Edits";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Xác nhận theo dõi tất cả";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Bạn có chắc chắn muốn theo dõi tài khoản này không?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Bạn có chắc chắn muốn theo dõi tất cả mọi người trong danh sách này không?";

@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "गैलरी से फोटो अपलोड करें";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "पाठ को क्लिपबोर्ड में कॉपी किया गया";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "रंग चुनें";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits वीडियो को ऐसे स्टोरेज के ज़रिए भेजता है जिसे सिर्फ़ App Store वाला Instagram पढ़ सकता है। Edits में वीडियो को फ़ोटो में सेव करें, फिर उसे Instagram से पोस्ट करें।";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Edits से शेयर नहीं किया जा सकता";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "सभी का अनुसरण करने की पुष्टि करें";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "क्या आप निश्चित रूप से इस खाते को फ़ॉलो करना चाहते हैं?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "क्या आप निश्चित रूप से इस सूची में सभी को फ़ॉलो करना चाहते हैं?";

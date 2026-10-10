@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Wyślij zdjęcie z Galerii";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Skopiowano tekst do schowka";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Wybierz kolor";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits przekazuje wideo przez pamięć, którą może odczytać tylko Instagram z App Store. Zapisz wideo w Zdjęciach w aplikacji Edits, a potem opublikuj je z Instagrama.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Nie można udostępnić z Edits";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Potwierdź obserwowanie wszystkich";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Czy na pewno chcesz zaobserwować to konto?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Czy na pewno chcesz zaobserwować wszystkich z tej listy?";

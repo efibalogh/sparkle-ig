@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Завантажити фото з галереї";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Скопійовано текст до буфера обміну";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Вибрати колір";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits передає відео через сховище, яке може прочитати лише версія Instagram з App Store. Збережіть відео у Фото з Edits, а потім опублікуйте його з Instagram.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Не вдалося поділитися з Edits";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Підтвердити підписку на всіх";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Ви впевнені, що хочете підписатися на цей обліковий запис?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Ви впевнені, що хочете підписатися на всіх у цьому списку?";

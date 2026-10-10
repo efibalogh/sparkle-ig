@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Încărcă fotografie din Galerie";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Text copiat în clipboard";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Selectează culoare";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits transmite videoclipul printr-un spațiu de stocare pe care îl poate citi doar versiunea Instagram din App Store. Salvează videoclipul în Fotografii din Edits, apoi postează-l din Instagram.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Nu se poate partaja din Edits";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Confirma urmărirea tuturor";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Sigur doriți să urmăriți acest cont?";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Sigur doriți să urmăriți pe toată lumea din această listă?";

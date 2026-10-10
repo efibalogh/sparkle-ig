@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "Φόρτωση Φωτογραφίας από Γαλερί";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "Αντιγράφηκε το κείμενο στο πρόχειρο";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "Επιλογή χρώματος";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Το Edits παραδίδει το βίντεο μέσω αποθηκευτικού χώρου που μπορεί να διαβάσει μόνο η έκδοση του Instagram από το App Store. Αποθηκεύστε το βίντεο στις Φωτογραφίες από το Edits και μετά δημοσιεύστε το από το Instagram.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "Δεν είναι δυνατή η κοινοποίηση από το Edits";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "Επιβεβαίωση Ακολούθησης Όλων";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "Είστε σίγουρος ότι θέλετε να ακολουθήσετε αυτό το λογαριασμό;";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "Είστε σίγουρος ότι θέλετε να ακολουθήσετε όλους σε αυτήν τη λίστα;";

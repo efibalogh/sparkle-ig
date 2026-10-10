@@ -893,6 +893,8 @@
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_TITLE" = "آپلود عکس از گالری";
 "GENERAL_COPY_DESCRIPTION_COPIED_TEXT_CLIPBOARD_TEXT" = "متن در کلیپ‌بورد کپی شد";
 "GENERAL_DETAILED_COLOR_PICKER_SELECT_COLOR_TEXT" = "انتخاب رنگ";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_MESSAGE" = "Edits ویدیو را از طریق فضایی منتقل می‌کند که فقط نسخه App Store اینستاگرام می‌تواند آن را بخواند. ویدیو را در Edits در Photos ذخیره کنید و سپس از اینستاگرام منتشرش کنید.";
+"GENERAL_EDITS_SHARE_UNAVAILABLE_TITLE" = "اشتراک‌گذاری از Edits ممکن نیست";
 "GENERAL_FOLLOW_CONFIRM_CONFIRM_FOLLOW_TEXT" = "تأیید فالو کردن همه";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_ACCOUNT_CONFIRMATION_MESSAGE" = "مطمئنید می‌خواهید این اکانت را فالو کنید؟";
 "GENERAL_FOLLOW_CONFIRM_FOLLOW_EVERYONE_LIST_CONFIRMATION_MESSAGE" = "مطمئنید می‌خواهید همه افراد این فهرست را فالو کنید؟";
