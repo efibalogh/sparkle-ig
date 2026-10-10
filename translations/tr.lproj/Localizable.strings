@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Reels'ten yeniden paylaşma düğmesini kaldırır. Yeniden başlatma gerektirir.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Kısa ekranlarda açıklamalara daha çok yer kalması için reels görüntüleyicisindeki alt yorum alanını gizler. Yeniden başlatma gerektirir.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Görüntüleyici yorum çubuğunu gizle";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Görsel arama düğmesini Reels videolarından kaldırır.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Görsel Arama Düğmesini Gizle";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Yeniden paylaşım balonundan açılan sayfada, adın altında reel'in ne zaman yeniden paylaşıldığını gösterir.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Yeniden Paylaşım Tarihini Göster";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Görüntüleyiciyi mevcut reel'e kilitler ve başka birine geçmek için kaydırmanızı engeller. Yeniden başlatma gerektirir.";

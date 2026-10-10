@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "यह सेटिंग Reels से रीपोस्ट बटन हटा देती है। रीस्टार्ट आवश्यक है।";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "यह सेटिंग छोटे डिस्प्ले पर कैप्शन के लिए अधिक जगह देने हेतु Reels व्यूअर में नीचे का टिप्पणी फ़ील्ड छिपाती है। रीस्टार्ट आवश्यक है।";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "व्यूअर टिप्पणी बार छिपाएँ";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "रील्स से विज़ुअल सर्च बटन हटाता है।";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "विज़ुअल सर्च बटन छिपाएँ";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "रीपोस्ट बबल से खुलने वाली शीट में नाम के नीचे दिखाता है कि रील कब रीपोस्ट की गई थी।";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "रीपोस्ट की तारीख दिखाएँ";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "व्यूअर को मौजूदा Reel पर लॉक करता है ताकि आप दूसरी Reel पर स्वाइप न कर सकें। रीस्टार्ट आवश्यक है।";

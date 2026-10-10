@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "移除 Reels 中的转发按钮。需要重启。";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "隐藏 Reels 查看器底部的评论框，在较小屏幕上为文案留出更多空间。需要重启。";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "隐藏查看器评论栏";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "从 Reels 中移除视觉搜索按钮。";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "隐藏视觉搜索按钮";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "在从转发气泡打开的面板中，于名称下方显示 Reel 被转发的时间。";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "显示转发日期";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "将查看器锁定在当前 Reel，使你无法滑动到其他 Reel。需要重启。";

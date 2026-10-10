@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Entfernt den Repost-Button aus Reels. Erfordert einen Neustart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Blendet das untere Kommentarfeld im Reels-Viewer aus, um auf kleineren Displays mehr Platz für Bildunterschriften zu lassen. Erfordert einen Neustart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Kommentarleiste im Viewer ausblenden";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Entfernt die Schaltfläche für die visuelle Suche aus Reels.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Schaltfläche für visuelle Suche ausblenden";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Zeigt unter dem Namen im Fenster, das sich über die Repost-Blase öffnet, wann ein Reel erneut gepostet wurde.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Repost-Datum anzeigen";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Sperrt den Viewer auf das aktuelle Reel, sodass nicht weitergescrollt werden kann. Erfordert einen Neustart.";

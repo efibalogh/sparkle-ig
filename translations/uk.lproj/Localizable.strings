@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Прибирає кнопку репосту з reels. Потрібен перезапуск.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Приховує нижнє поле коментарів у переглядачі reels, щоб на невисоких екранах лишалося більше місця для підписів. Потрібен перезапуск.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Приховати панель коментарів";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Прибирає кнопку візуального пошуку з Reels.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Приховати кнопку візуального пошуку";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Показує, коли рілс було репостнуто, під іменем у вікні, що відкривається з бульбашки репосту.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Показувати дату репосту";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Фіксує переглядач на поточному Reel, щоб ви не могли перейти до іншого свайпом. Потрібен перезапуск.";

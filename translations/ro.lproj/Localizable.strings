@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Elimină butonul de repostare din reels. Necesită repornire.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Ascunde câmpul de comentarii de jos din vizualizatorul de reels, ca să rămână mai mult loc pentru descrieri pe ecranele scurte. Necesită repornire.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Ascunde bara de comentarii";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Elimină butonul de căutare vizuală din reels.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Ascunde butonul de căutare vizuală";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Afișează când a fost repostat un reel sub nume, în fereastra care se deschide din bula de repostare.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Afișează data repostării";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Blochează vizualizatorul pe reel-ul curent, astfel încât să nu poți glisa la altul. Necesită repornire.";

@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Inaalis ang repost button mula sa mga reel. Kailangan ng restart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Itinatago ang comment field sa ibaba ng reels viewer para may mas maraming espasyo ang caption sa mas maiikling display. Kailangan ng restart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Itago ang Comment Bar sa Viewer";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Inaalis ang button ng visual na paghahanap mula sa mga reel.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Itago ang Button ng Visual na Paghahanap";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Ipinapakita kung kailan ni-repost ang reel sa ilalim ng pangalan sa sheet na bumubukas mula sa repost bubble.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Ipakita ang Petsa ng Repost";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Ikinukulong ang viewer sa kasalukuyang reel para hindi ka makapag-swipe sa iba. Kailangan ng restart.";

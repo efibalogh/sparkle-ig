@@ -130,6 +130,10 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                     defaultsKey:@"reels_hide_repost_btn"
                                 requiresRestart:YES],
                                SPKL(@"REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE")
+                                           icon:SPKSettingsIcon(@"visual_search")
+                                    defaultsKey:@"reels_hide_visual_search_btn"],
+                               SPKL(@"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE")
                                            icon:SPKSettingsIcon(@"calendar")
                                     defaultsKey:@"reels_show_repost_date"],

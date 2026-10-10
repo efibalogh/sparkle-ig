@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "ลบปุ่มรีโพสต์ออกจากรีล ต้องรีสตาร์ทแอป";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "ซ่อนช่องแสดงความคิดเห็นด้านล่างในตัวแสดงรีล เพื่อเพิ่มพื้นที่ให้กับคำบรรยายบนหน้าจอขนาดเล็ก ต้องรีสตาร์ทแอป";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "ซ่อนแถบความคิดเห็นในตัวแสดง";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "นำปุ่มค้นหาด้วยภาพออกจาก Reels";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "ซ่อนปุ่มค้นหาด้วยภาพ";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "แสดงเวลาที่รีลถูกรีโพสต์ใต้ชื่อในแผ่นที่เปิดจากบับเบิลรีโพสต์";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "แสดงวันที่รีโพสต์";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "ล็อกตัวแสดงไว้ที่รีลปัจจุบัน เพื่อไม่ให้ปัดไปยังรีลอื่นได้ ต้องรีสตาร์ทแอป";

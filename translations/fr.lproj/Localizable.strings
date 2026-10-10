@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Retire le bouton de republication des reels. Nécessite un redémarrage.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Masque le champ de commentaire du bas dans la visionneuse de reels pour laisser plus de place aux légendes sur les écrans courts. Nécessite un redémarrage.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Masquer la barre de commentaires";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Retire le bouton de recherche visuelle des reels.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Masquer le bouton de recherche visuelle";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Affiche quand un reel a été republié sous le nom dans la fenêtre qui s'ouvre depuis la bulle de republication.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Afficher la date de republication";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Verrouille la visionneuse sur le reel actuel pour empêcher le balayage vers un autre reel. Nécessite un redémarrage.";

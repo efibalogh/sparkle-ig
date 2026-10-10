@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Usuwa przycisk udostępnienia ponownego z rolek. Wymaga restartu.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Ukrywa dolne pole komentarza w podglądzie rolek, aby zostawić więcej miejsca na podpisy na mniejszych ekranach. Wymaga restartu.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Ukryj pasek komentarzy w podglądzie";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Usuwa przycisk wyszukiwania wizualnego z rolek.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Ukryj przycisk wyszukiwania wizualnego";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Pokazuje, kiedy rolka została udostępniona ponownie, pod nazwą w arkuszu otwieranym z dymku udostępnienia ponownego.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Pokazuj datę udostępnienia ponownego";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Blokuje podgląd na bieżącej rolce, aby nie można było przesunąć do innej. Wymaga restartu.";

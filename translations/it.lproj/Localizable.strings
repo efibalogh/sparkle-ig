@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Rimuove il pulsante di ripubblicazione dai reel. Richiede un riavvio.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Nasconde il campo commenti in basso nel visualizzatore dei reel per lasciare più spazio alle didascalie sugli schermi corti. Richiede un riavvio.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Nascondi barra commenti del visualizzatore";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Rimuove il pulsante di ricerca visiva dai reel.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Nascondi pulsante di ricerca visiva";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Mostra quando un reel è stato ripubblicato sotto il nome nel pannello che si apre dalla bolla del repost.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Mostra data del repost";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Blocca il visualizzatore sul reel corrente, così non puoi scorrere verso un altro reel. Richiede un riavvio.";

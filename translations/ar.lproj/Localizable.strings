@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "يزيل زر إعادة النشر من Reels. يتطلب إعادة تشغيل.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "يخفي حقل التعليق السفلي في عارض Reels لإتاحة مساحة أكبر للتسميات التوضيحية على الشاشات الأقصر. يتطلب إعادة تشغيل.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "إخفاء شريط التعليقات في العارض";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "يزيل زر البحث البصري من مقاطع ريلز.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "إخفاء زر البحث البصري";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "يعرض وقت إعادة نشر الريل أسفل الاسم في النافذة التي تفتح من فقاعة إعادة النشر.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "إظهار تاريخ إعادة النشر";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "يثبّت العارض على الـ Reel الحالي حتى لا تتمكن من التمرير إلى آخر. يتطلب إعادة التشغيل.";

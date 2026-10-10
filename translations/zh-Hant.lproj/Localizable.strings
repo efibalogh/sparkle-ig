@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "從 Reels 中移除轉發按鈕。需要重新啟動。";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "隱藏 Reels 檢視器底部的留言欄位,讓較小的螢幕有更多空間顯示字幕。需要重新啟動。";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "隱藏檢視器留言欄";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "從 Reels 中移除視覺搜尋按鈕。";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "隱藏視覺搜尋按鈕";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "在從轉發氣泡開啟的面板中，於名稱下方顯示 Reel 被轉發的時間。";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "顯示轉發日期";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "將檢視器鎖定在目前的 Reel，讓你無法滑到其他影片。需要重新啟動。";

@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Pašalina perskelbimo mygtuką iš įrašų. Reikia paleisti iš naujo.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Slepia apatinį komentarų lauką įrašų peržiūroje, kad liktų daugiau vietos aprašams mažesniuose ekranuose. Reikia paleisti iš naujo.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Slėpti peržiūros komentarų juostą";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Pašalina vaizdinės paieškos mygtuką iš „Reels“.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Slėpti vaizdinės paieškos mygtuką";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Rodo, kada reel buvo paskelbtas pakartotinai, po vardu lange, kuris atsidaro iš pakartotinio paskelbimo burbulo.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Rodyti pakartotinio paskelbimo datą";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Užrakina peržiūrą prie dabartinio įrašo, kad negalėtumėte perbraukti į kitą. Reikia paleisti iš naujo.";

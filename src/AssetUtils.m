@@ -314,6 +314,7 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"video_filled" : @{@"candidates" : @[ @"ig_icon_video_chat_pano_filled_24" ]},
             @"view_once" : @{@"candidates" : @[ @"ig_icon_view_once_pano_outline_24", @"ig_icon_view_once_outline_24" ]},
             @"view_twice" : @{@"candidates" : @[ @"ig_icon_view_twice_outline_24" ]},
+            @"visual_search" : @{@"candidates" : @[ @"ig_icon_visual_search_pano_outline_24" ]},
             @"voice" : @{@"candidates" : @[ @"ig_icon_microphone_pano_outline_24", @"ig_icon_microphone_outline_24" ]},
             @"voice_filled" : @{@"candidates" : @[ @"ig_icon_microphone_filled_24" ]},
             @"volume" : @{@"candidates" : @[ @"ig_icon_volume_pano_outline_24", @"ig_icon_volume_outline_24" ]},

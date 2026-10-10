@@ -284,6 +284,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"reels_confirm_repost" : @(NO),
         @"feed_hide_repost_btn" : @(NO),
         @"reels_hide_repost_btn" : @(NO),
+        @"reels_hide_visual_search_btn" : @(NO),
         @"reels_show_repost_date" : @(NO),
         @"stories_poll_vote_counts" : @(NO),
         @"gallery_show_favorites_top" : @(NO),

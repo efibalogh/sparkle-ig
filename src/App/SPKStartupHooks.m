@@ -70,6 +70,7 @@ FOUNDATION_EXPORT void SPKInstallHideCommentEmojiBarHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCommentComposerGalleryUploadHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideStoryTrayHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideRepostButtonHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallHideVisualSearchButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallDisableHomeButtonRefreshHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallDisableStorySeenHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallStickerInteractConfirmHooksIfEnabled(void);
@@ -262,6 +263,7 @@ void SPKInstallReelsSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallDisableScrollingReelsHooksIfEnabled);
     SPK_INSTALL(SPKInstallReelsAutoScrollDefaultHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideRepostButtonHooksIfEnabled);
+    SPK_INSTALL(SPKInstallHideVisualSearchButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideMetricsHooksIfEnabled);
     SPK_INSTALL(SPKInstallTappableTextLinksHooksIfEnabled);
 }

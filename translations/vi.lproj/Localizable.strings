@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Xóa nút đăng lại khỏi thước phim. Yêu cầu khởi động lại ứng dụng.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Ẩn thanh bình luận bên dưới khi xem Reels để có thêm không gian hiển thị chú thích trên màn hình nhỏ. Yêu cầu khởi chạy lại ứng dụng.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Ẩn thanh bình luận của người xem";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Xóa nút tìm kiếm bằng hình ảnh khỏi thước phim.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Ẩn nút tìm kiếm bằng hình ảnh";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Hiển thị thời điểm reel được đăng lại bên dưới tên trong bảng mở ra từ bong bóng đăng lại.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Hiện ngày đăng lại";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Khóa trình xem ở Reel hiện tại để bạn không thể vuốt sang Reel khác. Yêu cầu khởi chạy lại ứng dụng.";

@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "リールから再投稿ボタンを取り除きます。再起動が必要です。";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "小さい画面でキャプションのスペースを広げるため、リールビューア下部のコメント欄を非表示にします。再起動が必要です。";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "ビューアのコメントバーを非表示";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "リールからビジュアル検索ボタンを削除します。";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "ビジュアル検索ボタンを非表示";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "リポストのバブルから開くシートで、名前の下にリールがリポストされた日時を表示します。";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "リポスト日時を表示";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "ビューアを現在のリールに固定し、別のリールへスワイプできないようにします。再起動が必要です。";

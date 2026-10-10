@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Entfernt dr Repost-Chnopf vo Reels. Bruucht en Neustart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Versteckt s Kommentarfäud unde im Reels-Viewer, für meh Platz für Ungertitu bi chlyneri Displays. Bruucht e Neustart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Kommentar-Läiste im Viewer verstecke";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Entfernt d Schaltflächi für d visuelli Suechi us de Reels.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Schaltflächi für visuelli Suechi usblände";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Zeigt under em Name im Fänschter, wo sich über d Repost-Blase öffnet, wänn es Reel neu postet worde isch.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Repost-Datum aazeige";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Sperrt dr Viewer uf dr aktuelle Reel, so dass du nid zu emene andere chasch wüsche. Bruucht e Neustart.";

@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Removes the repost button from reels. Requires a restart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Hides the bottom comment field in the reels viewer to leave more room for captions on shorter displays. Requires a restart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Hide Viewer Comment Bar";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Removes the visual search button from reels.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Hide Visual Search Button";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Shows when a reel was reposted under the name in the sheet that opens from the reposted bubble.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Show Repost Date";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Locks the viewer to the current reel so you cannot swipe to another one. Requires a restart.";

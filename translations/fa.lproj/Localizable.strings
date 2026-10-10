@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "دکمهٔ بازنشر را از ریلز حذف می‌کند. نیاز به راه‌اندازی مجدد دارد.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "فیلد نظر پایین را در نمایشگر ریلز پنهان می‌کند تا فضای بیشتری برای زیرنویس‌ها در نمایشگرهای کوچک‌تر باقی بماند. نیاز به راه‌اندازی مجدد دارد.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "پنهان کردن نوار نظر نمایشگر";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "دکمه جستجوی تصویری را از ریلزها حذف می‌کند.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "پنهان کردن دکمه جستجوی تصویری";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "زمان بازنشر ریل را زیر نام در برگه‌ای که از حباب بازنشر باز می‌شود نشان می‌دهد.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "نمایش تاریخ بازنشر";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "نمایشگر را روی ریل فعلی قفل می‌کند تا نتوانید به ریل دیگری سوایپ کنید. نیاز به راه‌اندازی مجدد دارد.";

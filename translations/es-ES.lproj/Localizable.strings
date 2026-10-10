@@ -1918,6 +1918,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Quita el botón de volver a publicar de los reels. Requiere reiniciar.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Oculta el campo de comentarios inferior del visor de reels para dejar más espacio a los pies de foto en pantallas cortas. Requiere reiniciar.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Ocultar barra de comentarios del visor";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_HELP" = "Quita el botón de búsqueda visual de los reels.";
+"REELS_LAYOUT_HIDE_VISUAL_SEARCH_BUTTON_TITLE" = "Ocultar botón de búsqueda visual";
 "REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Muestra cuándo se republicó un reel debajo del nombre en la hoja que se abre desde la burbuja de republicación.";
 "REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Mostrar fecha de republicación";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Bloquea el visor en el reel actual para que no puedas deslizar hasta otro. Requiere reiniciar.";
