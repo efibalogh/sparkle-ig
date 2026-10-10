@@ -15,6 +15,10 @@ typedef NS_ENUM(NSInteger, SPKIconPickerCellStyle) {
 @property (nonatomic, copy, nullable) NSString *title;      // display label
 @property (nonatomic, copy, nullable) NSString *searchText; // lowercased haystack for search
 @property (nonatomic, strong, nullable) id userInfo;        // optional subclass payload
+/// When set, the item takes a full-width row showing these previews instead of
+/// a single grid cell, one equal column per preview with its title beneath.
+@property (nonatomic, copy, nullable) NSArray<UIImage *> *previewImages;
+@property (nonatomic, copy, nullable) NSArray<NSString *> *previewTitles;
 + (instancetype)itemWithIdentifier:(NSString *)identifier
                              title:(nullable NSString *)title
                         searchText:(nullable NSString *)searchText;

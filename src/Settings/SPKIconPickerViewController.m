@@ -5,6 +5,7 @@
 #import "../Utils.h"
 
 static NSString *const kSPKIconPickerCellIdentifier = @"SPKIconPickerCell";
+static NSString *const kSPKIconPickerPreviewRowCellIdentifier = @"SPKIconPickerPreviewRowCell";
 static NSString *const kSPKIconPickerHeaderIdentifier = @"SPKIconPickerHeader";
 
 #pragma mark - Model
@@ -192,6 +193,102 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
 
 @end
 
+#pragma mark - Preview row cell
+
+/// Full-width cell for one icon that has several looks: one captioned preview
+/// per grid column, selected as a whole.
+@interface SPKIconPickerPreviewRowCell : UICollectionViewCell
+@property (nonatomic, strong) UIStackView *stackView;
+@property (nonatomic, strong) UIImageView *checkmarkView;
+- (void)configureWithImages:(NSArray<UIImage *> *)images titles:(NSArray<NSString *> *)titles spacing:(CGFloat)spacing selected:(BOOL)selected;
+@end
+
+@implementation SPKIconPickerPreviewRowCell
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (!self)
+        return nil;
+
+    self.contentView.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
+    self.contentView.layer.cornerRadius = 8.0;
+
+    _stackView = [[UIStackView alloc] initWithFrame:CGRectZero];
+    _stackView.translatesAutoresizingMaskIntoConstraints = NO;
+    _stackView.axis = UILayoutConstraintAxisHorizontal;
+    _stackView.distribution = UIStackViewDistributionFillEqually;
+    _stackView.alignment = UIStackViewAlignmentTop;
+    [self.contentView addSubview:_stackView];
+
+    _checkmarkView = [[UIImageView alloc] initWithImage:[SPKAssetUtils instagramIconNamed:@"circle_check_filled" pointSize:18.0]];
+    _checkmarkView.translatesAutoresizingMaskIntoConstraints = NO;
+    _checkmarkView.tintColor = [SPKUtils SPKColor_InstagramBlue];
+    _checkmarkView.hidden = YES;
+    [self.contentView addSubview:_checkmarkView];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [_stackView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+                                             constant:13.0],
+        [_stackView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+        [_stackView.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+        [_stackView.bottomAnchor constraintLessThanOrEqualToAnchor:self.contentView.bottomAnchor
+                                                          constant:-8.0],
+
+        [_checkmarkView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor
+                                                 constant:6.0],
+        [_checkmarkView.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor
+                                                      constant:-6.0],
+        [_checkmarkView.widthAnchor constraintEqualToConstant:18.0],
+        [_checkmarkView.heightAnchor constraintEqualToConstant:18.0]
+    ]];
+
+    return self;
+}
+
+- (UIView *)columnWithImage:(UIImage *)image title:(NSString *)title {
+    // Same metrics as a grid cell: 72pt artwork with a caption beneath. The
+    // previews already carry the icon shape, so nothing is clipped here.
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [imageView.heightAnchor constraintEqualToConstant:72.0].active = YES;
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.text = title;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.adjustsFontSizeToFitWidth = YES;
+    label.minimumScaleFactor = 0.8;
+    label.lineBreakMode = NSLineBreakByTruncatingTail;
+    label.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
+    label.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
+
+    UIStackView *column = [[UIStackView alloc] initWithArrangedSubviews:@[ imageView, label ]];
+    column.axis = UILayoutConstraintAxisVertical;
+    column.spacing = 7.0;
+    column.layoutMargins = UIEdgeInsetsMake(0.0, 6.0, 0.0, 6.0);
+    column.layoutMarginsRelativeArrangement = YES;
+    return column;
+}
+
+- (void)configureWithImages:(NSArray<UIImage *> *)images titles:(NSArray<NSString *> *)titles spacing:(CGFloat)spacing selected:(BOOL)selected {
+    for (UIView *column in self.stackView.arrangedSubviews) {
+        [column removeFromSuperview];
+    }
+    self.stackView.spacing = spacing;
+    for (NSUInteger index = 0; index < images.count; index++) {
+        [self.stackView addArrangedSubview:[self columnWithImage:images[index] title:index < titles.count ? titles[index] : @""]];
+    }
+
+    self.checkmarkView.hidden = !selected;
+    if (selected)
+        self.contentView.layer.borderColor = [SPKUtils SPKColor_InstagramBlue].CGColor;
+    self.contentView.layer.borderWidth = selected ? 2.0 : 0.0;
+    self.contentView.backgroundColor = selected
+                                           ? [[SPKUtils SPKColor_InstagramBlue] colorWithAlphaComponent:0.12]
+                                           : [SPKUtils SPKColor_InstagramSecondaryBackground];
+}
+
+@end
+
 #pragma mark - Header
 
 @interface SPKIconPickerHeaderView : UICollectionReusableView
@@ -293,6 +390,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     [self.collectionView registerClass:[SPKIconPickerCell class] forCellWithReuseIdentifier:kSPKIconPickerCellIdentifier];
+    [self.collectionView registerClass:[SPKIconPickerPreviewRowCell class] forCellWithReuseIdentifier:kSPKIconPickerPreviewRowCellIdentifier];
     [self.collectionView registerClass:[SPKIconPickerHeaderView class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                    withReuseIdentifier:kSPKIconPickerHeaderIdentifier];
@@ -424,8 +522,18 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SPKIconPickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSPKIconPickerCellIdentifier forIndexPath:indexPath];
     SPKIconPickerItem *item = self.filteredSections[indexPath.section].items[indexPath.item];
+    if (item.previewImages.count > 0) {
+        SPKIconPickerPreviewRowCell *row = [collectionView dequeueReusableCellWithReuseIdentifier:kSPKIconPickerPreviewRowCellIdentifier forIndexPath:indexPath];
+        UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionView.collectionViewLayout;
+        [row configureWithImages:item.previewImages
+                          titles:item.previewTitles
+                         spacing:layout.minimumInteritemSpacing
+                        selected:[self isSelectedItem:item]];
+        return row;
+    }
+
+    SPKIconPickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSPKIconPickerCellIdentifier forIndexPath:indexPath];
     [cell configureWithTitle:item.title
                        image:[self cachedImageForItem:item]
                        style:[self cellStyle]
@@ -441,6 +549,17 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
                                                                                 forIndexPath:indexPath];
     header.titleLabel.text = self.filteredSections[indexPath.section].title;
     return header;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
+    SPKIconPickerItem *item = self.filteredSections[indexPath.section].items[indexPath.item];
+    if (item.previewImages.count == 0)
+        return layout.itemSize;
+    CGFloat width = collectionView.bounds.size.width - layout.sectionInset.left - layout.sectionInset.right;
+    return CGSizeMake(MAX(1.0, width), [self itemHeight]);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

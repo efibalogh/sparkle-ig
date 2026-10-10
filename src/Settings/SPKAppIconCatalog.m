@@ -155,7 +155,13 @@ static UIImage *SPKAppIconImageNamed(NSString *name) {
 
 + (NSString *)storedSelectedIdentifier {
     id value = [[NSUserDefaults standardUserDefaults] objectForKey:kSPKAppIconSelectionDefaultsKey];
-    return [value isKindOfClass:[NSString class]] ? value : nil;
+    if (![value isKindOfClass:[NSString class]])
+        return nil;
+    // The dark and neutral Sparkle icons were folded into the single Sparkle
+    // icon, which follows the system appearance itself.
+    if ([value isEqualToString:@"sparkle-dark"] || [value isEqualToString:@"sparkle-neutral"])
+        return @"sparkle";
+    return value;
 }
 
 + (void)setStoredSelectedIdentifier:(NSString *)identifier {
@@ -207,7 +213,47 @@ static UIImage *SPKAppIconImageNamed(NSString *name) {
     return nil;
 }
 
++ (NSArray<UIImage *> *)appearancePreviewImagesForAppIcon:(SPKAppIconItem *)item {
+    if (item.isPrimary || item.identifier.length == 0)
+        return nil;
+
+    // The default preview carries a light and a dark variant; pull both out
+    // explicitly instead of letting the current appearance pick one.
+    NSString *base = [@"SPKAppIconPreview-" stringByAppendingString:item.identifier];
+    UIImage *image = SPKAppIconImageNamed(base);
+    if (!image.imageAsset)
+        return nil;
+    NSMutableArray<UIImage *> *images = [NSMutableArray array];
+    for (NSNumber *style in @[ @(UIUserInterfaceStyleLight), @(UIUserInterfaceStyleDark) ]) {
+        UITraitCollection *traits = [UITraitCollection traitCollectionWithTraitsFromCollections:@[
+            UIScreen.mainScreen.traitCollection,
+            [UITraitCollection traitCollectionWithUserInterfaceStyle:style.integerValue]
+        ]];
+        UIImage *variant = [image.imageAsset imageWithTraitCollection:traits];
+        if (!variant.CGImage)
+            return nil;
+        // Rewrap the bitmap: an image still tied to its asset is re-resolved
+        // by the image view for the current appearance.
+        [images addObject:[UIImage imageWithCGImage:variant.CGImage scale:variant.scale orientation:variant.imageOrientation]];
+    }
+
+    // The clear look stays tied to its asset so it follows the appearance.
+    UIImage *clear = SPKAppIconImageNamed([base stringByAppendingString:@"-Clear"]);
+    if (!clear)
+        return nil;
+    [images addObject:clear];
+    return images;
+}
+
 + (UIImage *)imageForAppIcon:(SPKAppIconItem *)item {
+    // Icon Composer icons are icon stacks, which UIImage cannot load; the build
+    // renders an appearance-aware preview beside each one.
+    if (!item.isPrimary) {
+        UIImage *preview = SPKAppIconImageNamed([@"SPKAppIconPreview-" stringByAppendingString:item.identifier]);
+        if (preview)
+            return preview;
+    }
+
     NSArray *files = item.iconFiles;
     for (NSString *file in [files reverseObjectEnumerator]) {
         UIImage *image = SPKAppIconImageNamed(file);

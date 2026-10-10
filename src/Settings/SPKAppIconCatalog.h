@@ -22,6 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable SPKAppIconItem *)appIconWithIdentifier:(nullable NSString *)identifier;
 + (nullable UIImage *)imageForAppIcon:(SPKAppIconItem *)item;
 
+/// Previews of an icon that restyles itself with the system appearance:
+/// default, dark, and clear (which itself follows the current appearance).
+/// Nil for icons that ship as one image.
++ (nullable NSArray<UIImage *> *)appearancePreviewImagesForAppIcon:(SPKAppIconItem *)item;
+
 /// Persist the user's chosen icon so the picker stays accurate even when
 /// UIApplication.alternateIconName reads nil on re-signed/injected builds.
 + (void)setStoredSelectedIdentifier:(nullable NSString *)identifier;

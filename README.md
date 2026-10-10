@@ -213,21 +213,9 @@ Sideload builds hand the same `.deb` to Cyan. Cyan hoists every framework inside
 
 Icons, the Safari extension, extension stripping, FLEX, bundle-ID changes, and `SPKSideloadFix` remain explicit IPA stages. Launch and FFmpeg operations still need on-device testing for each release.
 
-### Recompiling the Liquid Glass app icons
+### Liquid Glass app icon
 
-The app icons are pre-compiled into `resources/sparkle_icons/` to keep IPA packaging fast. If you change the source `.icon` bundles in `resources/`, recompile them with `actool` before building:
-
-```zsh
-mkdir -p resources/compiled_sparkle resources/compiled_sparkle_dark resources/compiled_sparkle_neutral
-
-xcrun actool resources/sparkle.icon         --compile resources/compiled_sparkle         --platform iphoneos --minimum-deployment-target 15.0 --app-icon sparkle         --output-partial-info-plist resources/sparkle_partial.plist         --target-device iphone --target-device ipad
-xcrun actool resources/sparkle-dark.icon    --compile resources/compiled_sparkle_dark    --platform iphoneos --minimum-deployment-target 15.0 --app-icon sparkle-dark    --output-partial-info-plist resources/sparkle_dark_partial.plist    --target-device iphone --target-device ipad
-xcrun actool resources/sparkle-neutral.icon --compile resources/compiled_sparkle_neutral --platform iphoneos --minimum-deployment-target 15.0 --app-icon sparkle-neutral --output-partial-info-plist resources/sparkle_neutral_partial.plist --target-device iphone --target-device ipad
-
-mkdir -p resources/sparkle_icons
-cp resources/compiled_sparkle/*.png resources/compiled_sparkle_dark/*.png resources/compiled_sparkle_neutral/*.png resources/sparkle_icons/
-rm -rf resources/compiled_sparkle resources/compiled_sparkle_dark resources/compiled_sparkle_neutral resources/*_partial.plist
-```
+The Sparkle app icon is the Icon Composer package `resources/sparkle.icon`. Sideload builds compile it with `actool` and splice it into Instagram's own `Assets.car` with `tools/splice-glass-icons.sh`, which adds Sparkle's icon and rendered picker previews (default, dark and clear) while leaving every Instagram asset untouched. It needs Xcode 26 or later with Icon Composer installed; edit the `.icon` package directly, there is nothing to precompile.
 
 ## Contributing
 

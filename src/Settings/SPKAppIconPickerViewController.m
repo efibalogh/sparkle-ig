@@ -48,6 +48,14 @@
 }
 
 - (NSArray<SPKIconPickerSection *> *)buildSections {
+    // Icons that restyle themselves with the system appearance get a row each,
+    // previewing their looks, above the grid of Instagram's single-image icons.
+    NSArray<NSString *> *appearanceTitles = @[
+        SPKL(@"SETTINGS_APP_ICON_PICKER_APPEARANCE_DEFAULT_LABEL"),
+        SPKL(@"SETTINGS_APP_ICON_PICKER_APPEARANCE_DARK_LABEL"),
+        SPKL(@"SETTINGS_APP_ICON_PICKER_APPEARANCE_CLEAR_LABEL")
+    ];
+    NSMutableArray<SPKIconPickerSection *> *sections = [NSMutableArray array];
     NSMutableArray<SPKIconPickerItem *> *items = [NSMutableArray array];
     for (SPKAppIconItem *icon in [SPKAppIconCatalog availableAppIcons]) {
         NSString *search = [NSString stringWithFormat:@"%@ %@ %@",
@@ -56,9 +64,20 @@
                                                                   title:icon.displayName
                                                              searchText:search];
         item.userInfo = icon;
+
+        NSArray<UIImage *> *previews = [SPKAppIconCatalog appearancePreviewImagesForAppIcon:icon];
+        if (previews.count == appearanceTitles.count) {
+            item.previewImages = previews;
+            item.previewTitles = appearanceTitles;
+            [sections addObject:[SPKIconPickerSection sectionWithTitle:icon.displayName items:@[ item ]]];
+            continue;
+        }
         [items addObject:item];
     }
-    return @[ [SPKIconPickerSection sectionWithTitle:nil items:items] ];
+
+    NSString *gridTitle = sections.count > 0 ? SPKL(@"ABOUT_INFORMATION_INSTAGRAM_TITLE") : nil;
+    [sections addObject:[SPKIconPickerSection sectionWithTitle:gridTitle items:items]];
+    return sections;
 }
 
 - (UIImage *)imageForItem:(SPKIconPickerItem *)item {
