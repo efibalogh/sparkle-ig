@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon + Teksto";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Kinukulayan ang indicator ng berde o pula sa halip na katutubong kulay abo ng Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Makulay na Indicator";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Ipinapakita ang buong bilang ng followers sa mga profile.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Eksaktong Bilang ng Followers";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Ipinapakita kung sumusunod din sa iyo ang isang profile, sa ilalim ng stats nila, bilang text, icon, o pareho.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Palatandaan ng Sinusundan";
 "PROFILE_INDICATORS_HEADER" = "Mga Indicator";

@@ -158,6 +158,10 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
         ],
                         nil),
         SPKTopicSection(SPKL(@"PROFILE_INDICATORS_HEADER"), @[
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE")
+                                           icon:SPKSettingsIcon(@"hashtag")
+                                    defaultsKey:@"profile_exact_follower_count"],
+                               SPKL(@"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP")),
             ({
                 SPKSetting *mode = [SPKSetting menuCellWithTitle:SPKL(@"PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE")
                                                             icon:SPKSettingsIcon(@"user_check")
@@ -195,7 +199,10 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                 };
                 colorful.helpText = SPKL(@"PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP");
                 colorful;
-            }),
+            })
+        ],
+                        nil),
+        SPKTopicSection(@"", @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE")
                                            icon:SPKSettingsIcon(@"notes")
                                     defaultsKey:@"profile_hide_notes_bubble"],

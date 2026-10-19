@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icône + Texte";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colore l'indicateur en vert ou en rouge au lieu du gris natif d'Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indicateur coloré";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Affiche le nombre complet d'abonnés sur les profils.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Nombre exact d'abonnés";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Indique sous les statistiques si un profil vous suit en retour, sous forme de texte, d'icône ou des deux.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Indicateur d'abonnement";
 "PROFILE_INDICATORS_HEADER" = "Indicateurs";

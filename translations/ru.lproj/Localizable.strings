@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Значок + Текст";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Окрашивает индикатор в зелёный или красный вместо стандартного серого Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Цветной индикатор";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Показывает полное число подписчиков в профилях.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Точное число подписчиков";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Показывает под статистикой профиля, подписан ли он на вас в ответ, текстом, значком или и тем, и другим.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Индикатор подписки";
 "PROFILE_INDICATORS_HEADER" = "Индикаторы";

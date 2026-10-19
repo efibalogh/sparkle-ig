@@ -75,6 +75,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Build a custom tab bar with a live preview: reorder or hide destinations, choose launch and swipe behavior, trade a hidden tab for one-tap access to Saved collections in the custom layout, and drop the bar entirely when a single tab is left.
   - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
   - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
+  - Show exact follower counts on profiles instead of abbreviated ones.
 - **Custom app font**:
   - Import your own `.otf`/`.ttf` font and use it across Instagram and Sparkle, matched per weight and previewed face by face before you pick it.
 - **Language packs**:

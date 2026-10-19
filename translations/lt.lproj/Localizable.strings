@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Piktograma + tekstas";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Spalvina indikatorių žaliai arba raudonai vietoj įprastos Instagram pilkos.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Spalvotas indikatorius";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Profiliuose rodo visą sekėjų skaičių.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Tikslus sekėjų skaičius";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Rodo, ar profilis seka jus atgal, po jo statistika, tekstu, piktograma arba abiem.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Sekimo indikatorius";
 "PROFILE_INDICATORS_HEADER" = "Indikatoriai";

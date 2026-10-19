@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Pictogramă + text";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colorează indicatorul în verde sau roșu în loc de grisul nativ al Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indicator colorat";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Afișează numărul complet de urmăritori pe profiluri.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Număr exact de urmăritori";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Arată sub statistici dacă un profil te urmărește la rândul lui, ca text, pictogramă sau ambele.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Indicator urmărire reciprocă";
 "PROFILE_INDICATORS_HEADER" = "Indicatori";

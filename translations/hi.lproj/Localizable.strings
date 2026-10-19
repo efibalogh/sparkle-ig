@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "आइकन + पाठ";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "संकेतक को Instagram के मूल स्लेटी रंग के बजाय हरा या लाल कर देता है।";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "रंगीन संकेतक";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "प्रोफ़ाइल पर फ़ॉलोअर की पूरी संख्या दिखाता है।";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "फ़ॉलोअर की सटीक संख्या";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "प्रोफ़ाइल के आँकड़ों के नीचे दिखाता है कि वह आपको वापस फ़ॉलो करती है या नहीं, टेक्स्ट, आइकन या दोनों के रूप में।";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Following संकेतक";
 "PROFILE_INDICATORS_HEADER" = "संकेतक";

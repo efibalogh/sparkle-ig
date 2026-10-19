@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "ไอคอน + ข้อความ";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "เปลี่ยนตัวบ่งชี้เป็นสีเขียวหรือสีแดง แทนสีเทาแบบดั้งเดิมของ Instagram";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "ตัวบ่งชี้แบบสีสัน";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "แสดงจำนวนผู้ติดตามแบบเต็มในโปรไฟล์";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "จำนวนผู้ติดตามที่แน่นอน";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "แสดงว่าโปรไฟล์นั้นติดตามคุณกลับหรือไม่ ใต้สถิติของพวกเขา ในรูปแบบข้อความ ไอคอน หรือทั้งสองอย่าง";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "ตัวบ่งชี้การติดตาม";
 "PROFILE_INDICATORS_HEADER" = "ตัวบ่งชี้";

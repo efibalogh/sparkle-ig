@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Ikon + Teks";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Mewarnai indikator dengan hijau atau merah alih-alih abu-abu bawaan Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indikator Berwarna";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Menampilkan jumlah pengikut lengkap di profil.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Jumlah Pengikut Persis";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Menampilkan apakah sebuah profil mengikuti balik Anda, di bawah statistik mereka, sebagai teks, ikon, atau keduanya.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Indikator Mengikuti";
 "PROFILE_INDICATORS_HEADER" = "Indikator";

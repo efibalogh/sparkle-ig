@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon + Text";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colors the indicator green or red instead of Instagram's native gray.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Colorful Indicator";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Shows the full follower count on profiles.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Exact Follower Count";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Shows whether a profile follows you back, under their stats, as text, an icon, or both.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Following Indicator";
 "PROFILE_INDICATORS_HEADER" = "Indicators";

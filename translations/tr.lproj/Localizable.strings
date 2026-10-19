@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "İkon + Metin";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Göstergeyi Instagram'ın yerel grisi yerine yeşil ya da kırmızı yapar.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Renkli Gösterge";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Profillerde takipçi sayısının tamamını gösterir.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Tam Takipçi Sayısı";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Bir profilin seni geri takip edip etmediğini istatistiklerinin altında metin, simge ya da ikisiyle birlikte gösterir.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Takip Göstergesi";
 "PROFILE_INDICATORS_HEADER" = "Göstergeler";

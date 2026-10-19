@@ -505,6 +505,11 @@
 @property BOOL followsCurrentUser;
 @end
 
+// Profile header stat (posts / followers / following). The count arrives pre-formatted.
+@interface IGStatButton : UIControl
+- (void)setCount:(id)count;
+@end
+
 @interface IGFollowController : NSObject
 @property IGUser *user;
 @end

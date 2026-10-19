@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Ikona + tekst";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Koloruje wskaźnik na zielono lub czerwono zamiast natywnego szarego Instagrama.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Kolorowy wskaźnik";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Pokazuje pełną liczbę obserwujących na profilach.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Dokładna liczba obserwujących";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Pokazuje, czy profil obserwuje Cię z powrotem, pod jego statystykami, jako tekst, ikonę lub jedno i drugie.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Wskaźnik obserwowania";
 "PROFILE_INDICATORS_HEADER" = "Wskaźniki";

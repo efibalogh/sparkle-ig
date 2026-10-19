@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Biểu tượng + Văn bản";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Đổi màu chỉ báo thành xanh lá hoặc đỏ thay vì màu xám mặc định của Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Chỉ báo nhiều màu";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Hiển thị đầy đủ số người theo dõi trên trang cá nhân.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Số người theo dõi chính xác";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Hiển thị xem trang cá nhân có theo dõi lại bạn không (nằm dưới mục thông số) dưới dạng văn bản, biểu tượng hoặc cả hai.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Chỉ báo theo dõi";
 "PROFILE_INDICATORS_HEADER" = "Thẻ chỉ báo";

@@ -116,6 +116,7 @@ FOUNDATION_EXPORT void SPKInstallDMRefreshConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCaptureHidingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallProfileHeaderControlsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallProfileSavedTabHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallProfileExactFollowerCountHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallAudioPageDownloadHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDirectMessageMenuHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallNotesActionsHooksIfEnabled(void);
@@ -337,6 +338,7 @@ void SPKInstallProfileSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallFollowIndicatorHooksIfEnabled);
     SPK_INSTALL(SPKInstallProfileHeaderControlsHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileSavedTabHooksIfNeeded);
+    SPK_INSTALL(SPKInstallProfileExactFollowerCountHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileAnalyzerVisitTrackerHooksIfEnabled);
     SPK_INSTALL(SPKInstallStoryHighlightTrayTrackingHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);

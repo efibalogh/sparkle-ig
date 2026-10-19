@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon u Text";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Färbt dr Yzeiger grüen oder rot, aastatt em native Grau vo Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Farbige Yzeiger";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Zeigt di vollständig Follower-Zahl uf Profil aa.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Exakti Follower-Zahl";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Zeigt, öb es Profil dir zrügg folgt, under sine Stats, als Text, Icon oder beides.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Folgt-zrügg-Yzeiger";
 "PROFILE_INDICATORS_HEADER" = "Yzeiger";

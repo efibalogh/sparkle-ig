@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "آیکون + متن";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "نشانگر را به‌جای خاکستری اصلی اینستاگرام، سبز یا قرمز رنگ می‌کند.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "نشانگر رنگی";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "تعداد کامل دنبال‌کنندگان را در پروفایل‌ها نشان می‌دهد.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "تعداد دقیق دنبال‌کنندگان";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "نشان می‌دهد که آیا یک پروفایل شما را فالو کرده یا نه، زیر آمار آن، به‌صورت متن، آیکون یا هر دو.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "نشانگر فالو متقابل";
 "PROFILE_INDICATORS_HEADER" = "نشانگرها";

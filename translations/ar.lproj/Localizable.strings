@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "الرمز + النص";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "يلوّن المؤشر بالأخضر أو الأحمر بدل الرمادي الأصلي في Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "مؤشر ملون";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "يعرض العدد الكامل للمتابعين في الملفات الشخصية.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "العدد الدقيق للمتابعين";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "يعرض ما إذا كان الحساب يتابعك، أسفل إحصاءاته، كنص أو أيقونة أو كليهما.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "مؤشر المتابعة";
 "PROFILE_INDICATORS_HEADER" = "المؤشرات";

@@ -381,6 +381,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Square Grid**: Shows thumbnails on the posts and tagged grids as squares instead of the taller 3:4 layout, and uses a square icon for the grid tab. Reopen a profile to apply.
 
 ### Indicators
+- **Exact Follower Count**: Shows the full follower count in the profile header, using your device's number format.
 - **Following Indicator**: Shows whether the profile follows you back, under their stats. Choose **Off**, **Icon**, **Text**, or **Icon & Text**.
 - **Colorful Indicator**: Turn on to use the colored green/red instead of the native gray.
 - **Hide Notes Bubble**: Removes the notes thought-bubble over the profile picture.

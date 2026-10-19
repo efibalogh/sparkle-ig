@@ -1847,6 +1847,8 @@
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Εικονίδιο + Κείμενο";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Χρωματίζει την ένδειξη πράσινη ή κόκκινη αντί για το εγγενές γκρι του Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Χρωματιστός Δείκτης";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Εμφανίζει τον πλήρη αριθμό ακολούθων στα προφίλ.";
+"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Ακριβής αριθμός ακολούθων";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Δείχνει κάτω από τα στατιστικά αν ένα προφίλ σε ακολουθεί κι εκείνο, ως κείμενο, εικονίδιο ή και τα δύο.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Δείκτης Αμοιβαίας Παρακολούθησης";
 "PROFILE_INDICATORS_HEADER" = "Δείκτες";
