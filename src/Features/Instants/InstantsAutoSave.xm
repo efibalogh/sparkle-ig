@@ -6,8 +6,12 @@
 #import "../../Shared/Instants/SPKInstantsAutoSave.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
+#import "InstantsManualSeen.h"
 #import "InstantsResolver.h"
 
+// These hooks are also the displayed-snap events for the Manually Mark Seen eye button, which
+// needs the on-screen author for the same reason and at the same moments.
+//
 // Instants auto-save is driven by events, not by layout: the viewer shows the topmost
 // snap when it opens, and each tap advances to the next one. Those are the only two
 // moments the displayed snap changes, so those are the only two moments worth looking.
@@ -200,6 +204,9 @@ static void replaced_instantsAutoSaveDidPress(id self, SEL _cmd, id recognizer) 
     if (![view isKindOfClass:UIView.class])
         return;
 
+    SPKInstantsManualSeenDisplayedSnapMayHaveChanged(view, YES);
+    if (![SPKUtils getBoolPref:@"instants_auto_save"])
+        return;
     SPKLog(@"Instants", @"[Sparkle AutoSave] Tap: waiting for the next snap (previous=%@)",
            SPKInstantsAutoSaveLoggableKey(sSPKInstantsAutoSaveLastKey));
     SPKInstantsAutoSaveScheduleConsider(view, YES);
@@ -210,8 +217,10 @@ static void replaced_instantsAutoSaveVCDidAppear(id self, SEL _cmd, BOOL animate
         orig_instantsAutoSaveVCDidAppear(self, _cmd, animated);
     // The topmost snap: shown on open without any tap, so nothing else would catch it.
     sSPKInstantsAutoSaveLastKey = nil;
-    if ([self isKindOfClass:UIViewController.class])
+    if ([self isKindOfClass:UIViewController.class]) {
+        SPKInstantsManualSeenDisplayedSnapMayHaveChanged(((UIViewController *)self).view, NO);
         SPKInstantsAutoSaveScheduleConsider(((UIViewController *)self).view, NO);
+    }
 }
 
 static void replaced_instantsAutoSaveVCDidDisappear(id self, SEL _cmd, BOOL animated) {
@@ -223,6 +232,7 @@ static void replaced_instantsAutoSaveVCDidDisappear(id self, SEL _cmd, BOOL anim
     sSPKInstantsAutoSaveLastKey = nil;
     SPKAutoSaveSessionDidEnd();
     SPKInstantsAutoSaveViewerSessionDidEnd();
+    SPKInstantsManualSeenDisplayedSnapSessionEnded();
 }
 
 // The QuickSnap classes are Swift and register late, so this mirrors the action

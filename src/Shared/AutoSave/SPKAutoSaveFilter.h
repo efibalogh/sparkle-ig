@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// surface, each one hands over a config describing its keys and wording.
 ///
 /// Lists are per-surface and never shared: excluding a user from story auto-save says
-/// nothing about their DMs, and none of this touches the Manually-Mark-Seen lists.
+/// nothing about their DMs. Instants' Manually-Mark-Seen list reuses the machinery with its
+/// own keys, its mode following its on/off switch through `allModeProvider`.
 
 @interface SPKAutoSaveFilterConfig : NSObject
 
@@ -21,6 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *enabledKey;
 /// Holds `all` or `selected`.
 @property (nonatomic, copy) NSString *filterModeKey;
+/// Overrides `filterModeKey` when set: YES selects the exclusion list, NO the inclusion
+/// list. For surfaces whose mode follows another preference rather than a mode menu.
+@property (nonatomic, copy, nullable) BOOL (^allModeProvider)(void);
+/// Overrides the generated "Excluded Users" / "Selected Users" title, for lists that have to
+/// match another surface's wording.
+@property (nonatomic, copy, nullable) NSString * (^listTitleProvider)(void);
 /// The two lists. Separate keys per mode, so switching Filter Mode back and forth
 /// doesn't destroy the list built for the other mode.
 @property (nonatomic, copy) NSString *excludedKey;

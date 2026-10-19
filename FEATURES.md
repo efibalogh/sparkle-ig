@@ -342,13 +342,15 @@ Its own page, reached from a single row on the Messages topic that shows how man
 ### Action Button
 - **Instants Action Button**, **Default Tap Action**, **Configure Actions**: Actions resolve the currently visible Instant with its author, posted date, and full-resolution media. Bulk actions retain every Instant encountered during the current viewer session until it closes, including ones already tapped past.
 - **Toggle Instant Auto-Save**: Adds or removes the author of the Instant on screen from the Instants auto-save list, mirroring the equivalent story and chat actions. Shown only while *Auto-Save Instants* is on and the author can be read. See *Downloads › Auto-Save › Instants*.
+- **Toggle Instant Seen Marking**: *Start / Stop Marking Instants Seen* for the author of the Instant on screen, by adding or removing them from the Manually Mark Seen users list (Excluded Users with the switch on, Included Users with it off). Shown whenever the author can be read, including while Manually Mark Seen is off, so it can be used to add the first Included User. The eye button updates for the Instant on screen straight away.
 
 ### Privacy
 - **Allow Screenshots**: Bypasses screenshot/screen-recording detection in the Instants viewer.
 
 ### Seen Receipts
-- **Manually Mark Seen**: Stops Instants from being marked seen as you watch them, so they stay in your tray, and adds an eye button to the viewer that marks the Instant on screen as seen. Each one is held out of Instagram's local seen state as it is consumed, the tray is refreshed when the viewer closes, and the seen state is never synced to the server, so a refresh does not clear them either. Instants still expire on Instagram's own schedule.
-- **Advance on Eye Button**: Moves to the next Instant after the eye button marks one as seen, the same as tapping it. Disabled while Manually Mark Seen is off.
+- **Manually Mark Seen**: Stops Instants from being marked seen as you watch them, so they stay in your tray, and adds an eye button to the viewer that marks the Instant on screen as seen. Each one is held out of Instagram's local seen state as it is consumed, the tray is refreshed when the viewer closes, and held Instants are never synced to the server as seen, so a refresh does not clear them either. Instants still expire on Instagram's own schedule.
+- **Advance on Eye Button**: Moves to the next Instant after the eye button marks one as seen, the same as tapping it. Disabled while Manually Mark Seen is off and no users are selected.
+- **Excluded / Included Users**: Two lists, chosen by the Manually Mark Seen switch, the same way Stories works. With the switch on, *Excluded Users* keep Instagram's normal seen behavior. With it off, only *Included Users* have their Instants held unseen. While only some users are held, Instagram's seen sync still runs and the held Instants are filtered out of it, so everyone else's Instants are marked seen normally.
 
 ### Creation
 - **Disable Instants Creation**: Hard-blocks the Instant shutter (photo and video); the shutter is darkened and capture is blocked, with an optional notification + haptic. Received Instants still work.

@@ -20,6 +20,7 @@
 #import "../MediaPreview/SPKMediaItem.h"
 #import "../../Features/Instants/InstantsResolver.h"
 #import "../Instants/SPKInstantsAutoSave.h"
+#import "../Instants/SPKInstantsManualSeenUsers.h"
 #import "../MediaTrim/SPKTrimEntry.h"
 #import "../Messages/SPKDirectAutoSave.h"
 #import "../Messages/SPKDirectSeenContext.h"
@@ -68,6 +69,7 @@ NSString *const kSPKActionToggleStoryAutoSaveUserRule = @"toggle_story_auto_save
 NSString *const kSPKActionToggleDirectAutoSaveThreadRule = @"toggle_direct_auto_save_thread_rule";
 NSString *const kSPKActionToggleInstantsAutoSaveUserRule = @"toggle_instants_auto_save_user_rule";
 NSString *const kSPKActionInstantsMarkSeen = @"instants_mark_seen";
+NSString *const kSPKActionToggleInstantsManualSeenUserRule = @"toggle_instants_manual_seen_user_rule";
 
 /// Defined further down, next to the other Instants executors, but needed by the
 /// action-availability switch above it.
@@ -1016,6 +1018,10 @@ static NSString *SPKActionButtonDisplayTitleForContext(NSString *identifier,
         NSString *title = SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context));
         return title ?: SPKActionDescriptorDisplayTitle(identifier, context.settingsTitle);
     }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        NSString *title = SPKInstantsManualSeenActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context));
+        return title ?: SPKActionDescriptorDisplayTitle(identifier, context.settingsTitle);
+    }
     if ([identifier isEqualToString:kSPKActionToggleProfileStorySeenUserRule]) {
         id user = SPKResolveMediaForContext(context);
         NSString *pk = user ? [SPKUtils pkFromIGUser:user] : nil;
@@ -1106,6 +1112,12 @@ static UIImage *SPKIconForActionIdentifier(NSString *identifier, SPKActionButton
         NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
         BOOL applies = username.length > 0 ? SPKInstantsAutoSaveAppliesToUsername(username) : NO;
         return [SPKAssetUtils instagramIconNamed:applies ? @"download_off" : @"download" pointSize:size];
+    }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        // Same mapping as the profile seen toggles: held reads as eye_off.
+        NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
+        BOOL held = username.length > 0 ? SPKInstantsManualSeenAppliesToUsername(username) : NO;
+        return [SPKAssetUtils instagramIconNamed:held ? @"eye_off" : @"eye" pointSize:size];
     }
     if ([identifier isEqualToString:kSPKActionToggleProfileStorySeenUserRule]) {
         id user = context ? SPKResolveMediaForContext(context) : nil;
@@ -2307,6 +2319,12 @@ static BOOL SPKIsActionVisible(SPKActionButtonContext *context,
                [SPKUtils getBoolPref:@"instants_auto_save"] &&
                SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context)).length > 0;
     }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        // Offered even while Manually Mark Seen is off: adding an Included User from here is
+        // how per-user holding starts.
+        return context.source == SPKActionButtonSourceInstants &&
+               SPKInstantsManualSeenActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context)).length > 0;
+    }
     if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
         // Not a menu action. It backs the viewer's own eye button, which has no need of a
         // menu row beside it, and the Instants menu is built once per button lifecycle so a
@@ -2491,6 +2509,10 @@ static NSString *SPKActionButtonMenuSignature(SPKActionButtonContext *context,
     NSString *dynamicInstantsAutoSaveTitle = [visibleActions containsObject:kSPKActionToggleInstantsAutoSaveUserRule]
                                                  ? SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context))
                                                  : @"";
+    if ([visibleActions containsObject:kSPKActionToggleInstantsManualSeenUserRule]) {
+        NSString *manualSeenTitle = SPKInstantsManualSeenActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context));
+        dynamicInstantsAutoSaveTitle = [NSString stringWithFormat:@"%@/%@", dynamicInstantsAutoSaveTitle ?: @"", manualSeenTitle ?: @""];
+    }
     NSString *dynamicProfileStoryRuleTitle = [visibleActions containsObject:kSPKActionToggleProfileStorySeenUserRule]
                                                  ? SPKActionButtonDisplayTitleForContext(kSPKActionToggleProfileStorySeenUserRule, context, nil)
                                                  : @"";
@@ -3157,6 +3179,41 @@ static BOOL SPKExecuteToggleInstantsAutoSaveUserRuleAction(SPKActionButtonContex
     return YES;
 }
 
+static BOOL SPKExecuteToggleInstantsManualSeenUserRuleAction(SPKActionButtonContext *context) {
+    NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
+    NSString *title = SPKInstantsManualSeenActionTitleForUsername(username);
+    NSString *message = SPKInstantsManualSeenConfirmationMessageForUsername(username);
+    if (title.length == 0 || message.length == 0) {
+        SPKNotify(kSPKNotificationInstantsMarkSeen, SPKL(@"INSTANTS_AUTO_SAVE_AUTHOR_NOT_FOUND_TOAST"), nil, @"error_filled", SPKNotificationToneError);
+        return YES;
+    }
+
+    __weak UIView *weakView = context.view;
+    [SPKUtils
+        showConfirmation:^{
+            SPKInstantsToggleManualSeenForUsername(username, ^(BOOL ok, NSString *notificationTitle, NSString *notificationSubtitle) {
+                if (!ok) {
+                    SPKNotify(kSPKNotificationInstantsMarkSeen, SPKL(@"INSTANTS_AUTO_SAVE_AUTHOR_NOT_FOUND_TOAST"), nil, @"error_filled", SPKNotificationToneError);
+                    return;
+                }
+                SPKNotify(kSPKNotificationInstantsMarkSeen, notificationTitle, notificationSubtitle, @"circle_check_filled", SPKNotificationToneSuccess);
+                UIView *view = weakView;
+                if (!view)
+                    return;
+                // The eye button follows the on-screen author, so re-decide it now rather
+                // than on the next tap.
+                SPKInstantsManualSeenDisplayedSnapMayHaveChanged(view, NO);
+                // Same reason as the auto-save toggle: the Instants menu is built once per
+                // button lifecycle, so its title only updates if rebuilt here.
+                if ([view isKindOfClass:[UIButton class]])
+                    SPKConfigureActionButton((UIButton *)view, context);
+            });
+        }
+                   title:title
+                 message:message];
+    return YES;
+}
+
 static BOOL SPKExecuteToggleStorySeenUserRuleAction(SPKActionButtonContext *context) {
     SPKStoryContext *storyContext = SPKStoryContextForActionButtonContext(context);
     NSString *title = SPKStoryCurrentUserRuleConfirmationTitle(storyContext);
@@ -3338,6 +3395,9 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
     }
     if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
         return SPKExecuteInstantsMarkSeenAction(context);
+    }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        return SPKExecuteToggleInstantsManualSeenUserRuleAction(context);
     }
     if ([identifier isEqualToString:kSPKActionToggleStoryAutoSaveUserRule]) {
         return SPKExecuteToggleStoryAutoSaveUserRuleAction(context);
