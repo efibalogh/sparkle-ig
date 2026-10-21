@@ -697,6 +697,8 @@
 - (NSString *)threadName;
 - (BOOL)isBroadcastChannel;
 - (BOOL)isGroupThread;
+- (BOOL)isMetaAiBot;
+- (BOOL)isConnectedAIBot;
 @end
 
 // The share sheet's recipient grid, and its own IGListAdapter data source.

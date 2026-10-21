@@ -361,6 +361,19 @@ static const void *kSPKFlexThreeFingerGestureKey = &kSPKFlexThreeFingerGestureKe
 // MARK: Hide items
 
 // Direct suggested chats (in search bar)
+// The recipient's own bot flags identify Meta AI, Support AI and AI agents
+// without matching their localized display names.
+static BOOL SPKDirectRecipientIsAIBot(id recipient) {
+    if (!recipient)
+        return NO;
+    if ([recipient respondsToSelector:@selector(isMetaAiBot)] && [recipient isMetaAiBot])
+        return YES;
+    if ([recipient respondsToSelector:@selector(isConnectedAIBot)] && [recipient isConnectedAIBot])
+        return YES;
+    Ivar metadataIvar = class_getInstanceVariable([recipient class], "_genAIBotMetadata");
+    return metadataIvar && object_getIvar(recipient, metadataIvar) != nil;
+}
+
 BOOL showSearchSectionLabelForTag(NSInteger tag) {
     if (
         (tag == 18 && [SPKUtils getBoolPref:@"general_hide_meta_ai_msgs"])           // AI
@@ -396,12 +409,27 @@ BOOL showSearchSectionLabelForTag(NSInteger tag) {
 - (id)objectsForListAdapter:(id)arg1 {
     NSArray *originalObjs = %orig();
     NSMutableArray *filteredObjs = [NSMutableArray arrayWithCapacity:[originalObjs count]];
+    BOOL hideMetaAI = [SPKUtils getBoolPref:@"general_hide_meta_ai_msgs"];
+
+    // Header of the section being walked, and whether this pass emptied it.
+    // Section tags shift between IG versions, so a header is also dropped when
+    // every row under it was filtered out.
+    id currentHeader = nil;
+    BOOL currentSectionKeptRow = NO;
+    BOOL currentSectionDroppedRow = NO;
+    NSMutableSet *emptiedHeaders = [NSMutableSet set];
 
     for (id obj in originalObjs) {
         BOOL shouldHide = NO;
+        BOOL isHeader = [obj isKindOfClass:%c(IGLabelItemViewModel)];
 
-        // Section headers
-        if ([obj isKindOfClass:%c(IGLabelItemViewModel)]) {
+        if (isHeader) {
+            if (currentHeader && currentSectionDroppedRow && !currentSectionKeptRow) {
+                [emptiedHeaders addObject:[NSValue valueWithNonretainedObject:currentHeader]];
+            }
+            currentHeader = obj;
+            currentSectionKeptRow = NO;
+            currentSectionDroppedRow = NO;
 
             NSNumber *tag = [obj valueForKey:@"tag"];
             if (tag && !showSearchSectionLabelForTag([tag intValue])) {
@@ -414,7 +442,7 @@ BOOL showSearchSectionLabelForTag(NSInteger tag) {
         else if (
             [obj isKindOfClass:%c(IGDirectInboxSearchAIAgentsPillsSectionViewModel)] || [obj isKindOfClass:%c(IGDirectInboxSearchAIAgentsSuggestedPromptViewModel)] || [obj isKindOfClass:%c(IGDirectInboxSearchAIAgentsSuggestedPromptLoggingViewModel)]) {
 
-            if ([SPKUtils getBoolPref:@"general_hide_meta_ai_msgs"]) {
+            if (hideMetaAI) {
                 SPKLog(@"General", @"[Sparkle] Hiding suggested chats (ai agents)");
 
                 shouldHide = YES;
@@ -436,20 +464,35 @@ BOOL showSearchSectionLabelForTag(NSInteger tag) {
 
             // Meta AI (special section types)
             else if (([obj sectionType] == 20) || [obj sectionType] == 18) {
-                if ([SPKUtils getBoolPref:@"general_hide_meta_ai_msgs"]) {
+                if (hideMetaAI) {
                     SPKLog(@"General", @"[Sparkle] Hiding meta ai suggested chats (meta ai recipient)");
 
                     shouldHide = YES;
                 }
             }
 
+            // Meta AI and other AI bots (Support AI, AI agents)
+            else if (hideMetaAI && SPKDirectRecipientIsAIBot([obj recipient])) {
+                SPKLog(@"General", @"[Sparkle] Hiding meta ai suggested chats (ai bot recipient)");
+
+                shouldHide = YES;
+            }
+
             // Meta AI (catch-all)
             else if ([[[obj recipient] threadName] isEqualToString:@"Meta AI"]) {
-                if ([SPKUtils getBoolPref:@"general_hide_meta_ai_msgs"]) {
+                if (hideMetaAI) {
                     SPKLog(@"General", @"[Sparkle] Hiding meta ai suggested chats (meta ai recipient)");
 
                     shouldHide = YES;
                 }
+            }
+        }
+
+        if (!isHeader) {
+            if (shouldHide) {
+                currentSectionDroppedRow = YES;
+            } else {
+                currentSectionKeptRow = YES;
             }
         }
 
@@ -457,6 +500,17 @@ BOOL showSearchSectionLabelForTag(NSInteger tag) {
         if (!shouldHide) {
             [filteredObjs addObject:obj];
         }
+    }
+
+    if (currentHeader && currentSectionDroppedRow && !currentSectionKeptRow) {
+        [emptiedHeaders addObject:[NSValue valueWithNonretainedObject:currentHeader]];
+    }
+
+    if (emptiedHeaders.count > 0) {
+        NSIndexSet *headerIndexes = [filteredObjs indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return [emptiedHeaders containsObject:[NSValue valueWithNonretainedObject:obj]];
+        }];
+        [filteredObjs removeObjectsAtIndexes:headerIndexes];
     }
 
     return [filteredObjs copy];
