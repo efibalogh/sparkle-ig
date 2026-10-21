@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Sustabdo Instants nuo žymėjimo kaip matytų joms žiūrint ir prideda akies mygtuką į žiūryklę, kad pažymėtumėte vieną kaip matytą.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Pakeičia šriftą visoje Instagram ir Sparkle. Importuokite .otf, .ttf arba .ttc failus. Instagram logotipas ir istorijų teksto įrankis išlaiko savo šriftus.";
 "INTERFACE_APPEARANCE_HEADER" = "Išvaizda";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram tamsųjį režimą paverčia visiškai juodu, įskaitant lapus. Žinučių burbulai, paieškos laukai ir panašūs elementai lieka atspalviu šviesesni, kad būtų matomi. Taikoma tik tamsiuoju režimu.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED tamsusis režimas";
 "INTERFACE_CAPTURE_HEADER" = "Fiksavimas";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Slepia Sparkle valdiklius ir perdangas iš ekrano kopijų, ekrano įrašų ir ekrano dubliavimo.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Slėpti sąsają fiksuojant";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle derinimo mygtukas";
 "TOOLS_DEBUG_BUTTON_HELP" = "Rodo slankiojantį mygtuką, kuris tikrina, kas rodoma ekrane, ir kuria ataskaitas, kurias galima pridėti prie pranešimo apie klaidą. Nuvilkite jį į bet kurį ekrano kraštą. Ataskaitose ekrano tekstas nerodomas, nebent jo meniu įjungsite „Įtraukti tekstą“.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Bakstelėkite bet kurį elementą, kad jį patikrintumėte";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Spalvų ataskaita";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Slėpti mygtuką";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Įtraukti tekstą";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Tikrinti elementą";

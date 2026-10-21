@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "इंस्टेंट्स को देखी गई चिह्नित होने से रोकता है जब आप उन्हें देख रहे हों, और व्यूअर में एक आंख बटन जोड़ता है।";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram और Sparkle में फ़ॉन्ट बदल देता है। .otf, .ttf या .ttc फाइलें आयात करें। Instagram का लोगो और स्टोरी टेक्स्ट टूल अपने ही फ़ॉन्ट रखते हैं।";
 "INTERFACE_APPEARANCE_HEADER" = "दृश्य";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram के डार्क मोड को शीट सहित पूरी तरह काला कर देता है। मैसेज बबल, सर्च फ़ील्ड और ऐसे तत्व थोड़े हल्के रहते हैं ताकि दिखते रहें। केवल डार्क मोड में लागू होता है।";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED डार्क मोड";
 "INTERFACE_CAPTURE_HEADER" = "कैप्चर";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "स्क्रीनशॉट, स्क्रीन रिकॉर्डिंग और मिररिंग में Sparkle का अपना UI छिपाता है।";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "कैप्चर पर UI छिपाएं";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle डीबग बटन";
 "TOOLS_DEBUG_BUTTON_HELP" = "एक फ़्लोटिंग बटन दिखाता है जो स्क्रीन पर मौजूद चीज़ों की जाँच करता है और बग रिपोर्ट के साथ जोड़ने के लिए रिपोर्ट बनाता है। इसे स्क्रीन के किसी भी किनारे पर खींचें। रिपोर्ट में स्क्रीन का टेक्स्ट शामिल नहीं होता, जब तक आप इसके मेन्यू में टेक्स्ट शामिल करें चालू नहीं करते।";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "जाँचने के लिए किसी भी एलिमेंट पर टैप करें";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "रंग रिपोर्ट";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "बटन छिपाएँ";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "टेक्स्ट शामिल करें";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "एलिमेंट की जाँच करें";

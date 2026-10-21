@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Instants را از علامت‌گذاری به‌عنوان دیده‌شده در حین تماشا متوقف می‌کند و یک دکمه‌ی چشم به نمایش‌گر اضافه می‌کند تا یکی را به‌عنوان دیده‌شده علامت‌گذاری کند.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "فونت را در سراسر اینستاگرام و Sparkle جایگزین می‌کند. فایل‌های .otf، .ttf یا .ttc را درون‌ریزی کنید. لوگوی اینستاگرام و ابزار متن استوری فونت مخصوص خودشان را حفظ می‌کنند.";
 "INTERFACE_APPEARANCE_HEADER" = "ظاهر";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "حالت تیره اینستاگرام را، همراه با برگه‌ها، کاملاً سیاه می‌کند. حباب‌های پیام، فیلدهای جستجو و عناصر مشابه کمی روشن‌تر می‌مانند تا دیده شوند. فقط در حالت تیره اعمال می‌شود.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "حالت تیره OLED";
 "INTERFACE_CAPTURE_HEADER" = "ضبط صفحه";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "کنترل‌ها و لایه‌های Sparkle را از اسکرین‌شات‌ها، اسکرین‌ریکوردها و آینه کردن صفحه پنهان می‌کند.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "پنهان‌سازی رابط کاربری هنگام ضبط";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "دکمه اشکال‌زدایی Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "یک دکمه شناور نشان می‌دهد که محتوای صفحه را بررسی می‌کند و گزارش‌هایی برای پیوست به گزارش خطا می‌سازد. آن را به هر طرف صفحه بکشید. گزارش‌ها متن روی صفحه را حذف می‌کنند، مگر اینکه «شامل کردن متن» را از منوی آن روشن کنید.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "روی هر عنصری ضربه بزنید تا بررسی شود";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "گزارش رنگ‌ها";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "پنهان کردن دکمه";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "شامل کردن متن";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "بررسی عنصر";

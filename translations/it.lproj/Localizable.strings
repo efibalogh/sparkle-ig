@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Impedisce che gli Instants siano contrassegnati come visti mentre li guardi, e aggiunge un pulsante occhio al visualizzatore per contrassegnarne uno come visto.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sostituisce il carattere in Instagram e in Sparkle. Importa file .otf, .ttf o .ttc. Il logo di Instagram e lo strumento testo delle storie mantengono i propri caratteri.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspetto";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Rende nera pura la modalità scura di Instagram, pannelli inclusi. Bolle dei messaggi, campi di ricerca ed elementi simili restano di una tonalità più chiara per rimanere visibili. Si applica solo in modalità scura.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Modalità scura OLED";
 "INTERFACE_CAPTURE_HEADER" = "Cattura";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Nasconde i controlli e le sovrapposizioni di Sparkle da screenshot, registrazioni e duplicazione dello schermo.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Nascondi UI su Cattura";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Pulsante di debug di Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Mostra un pulsante fluttuante che ispeziona ciò che è sullo schermo e crea rapporti da allegare a una segnalazione di bug. Trascinalo su uno dei due lati dello schermo. I rapporti escludono il testo sullo schermo, a meno che tu non attivi Includi testo nel suo menu.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Tocca un elemento per ispezionarlo";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Rapporto colori";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Nascondi pulsante";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Includi testo";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Ispeziona elemento";

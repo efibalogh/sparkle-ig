@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Oprește Instants din a fi marcate ca vizionate în timp ce le vizualizezi, și adaugă un buton ochi la vizualizator pentru a marca una ca vizionată.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Înlocuiește fontul în Instagram și în Sparkle. Importă fișiere .otf, .ttf sau .ttc. Sigla Instagram și instrumentul de text al poveștilor își păstrează propriile fonturi.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspect";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Face modul întunecat al Instagram negru pur, inclusiv foile. Bulele de mesaje, câmpurile de căutare și elementele similare rămân cu o nuanță mai deschise ca să se vadă. Se aplică doar în modul întunecat.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mod întunecat OLED";
 "INTERFACE_CAPTURE_HEADER" = "Captură";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Ascunde comenzile și suprapunerile Sparkle din capturi de ecran, înregistrări de ecran și oglindirea ecranului.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Ascunde UI la captură";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Butonul de depanare Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Afișează un buton plutitor care inspectează ce se află pe ecran și creează rapoarte de atașat la o raportare de eroare. Trage-l pe oricare parte a ecranului. Rapoartele omit textul de pe ecran, cu excepția cazului în care activezi Include textul din meniul său.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Atinge orice element pentru a-l inspecta";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Raport de culori";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Ascunde butonul";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Include textul";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Inspectează elementul";

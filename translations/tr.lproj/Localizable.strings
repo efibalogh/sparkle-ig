@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Instants'ın onları izlerken görüldü olarak işaretlenmesini durdurur ve görüntülemede birini görüldü olarak işaretlemek için bir göz düğmesi ekler.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram ve Sparkle genelinde yazı tipini değiştirir. .otf, .ttf veya .ttc dosyaları içe aktar. Instagram logosu ve hikaye metin aracı kendi yazı tiplerini korur.";
 "INTERFACE_APPEARANCE_HEADER" = "Görünüm";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram'ın karanlık modunu, sayfalar dahil saf siyaha çevirir. Mesaj balonları, arama alanları ve benzeri öğeler görünür kalmaları için bir ton açık kalır. Yalnızca karanlık modda uygulanır.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Karanlık Mod";
 "INTERFACE_CAPTURE_HEADER" = "Yakala";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Sparkle denetimlerini ve kaplamalarını ekran görüntülerinden, ekran kayıtlarından ve ekran yansıtmasından gizler.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Yakalamada UI'yi Gizle";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle Hata Ayıklama Düğmesi";
 "TOOLS_DEBUG_BUTTON_HELP" = "Ekrandakileri inceleyen ve hata bildirimine eklenecek raporlar oluşturan kayan bir düğme gösterir. Ekranın herhangi bir kenarına sürükleyin. Menüsünde Metni Dahil Et'i açmadığınız sürece raporlar ekrandaki metni içermez.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "İncelemek için herhangi bir öğeye dokunun";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Renk Raporu";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Düğmeyi Gizle";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Metni Dahil Et";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Öğeyi İncele";

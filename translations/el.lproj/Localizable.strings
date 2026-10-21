@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Σταματά τη σήμανση των Στιγμών ως Αναγνώσιμες καθώς τις παρακολουθείτε, και προσθέτει ένα κουμπί οφθαλμού στον προβολέα για να σημειώσετε ένα ως αναγνώσιμο.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Αντικαθιστά τη γραμματοσειρά σε όλο το Instagram και το Sparkle. Εισήγαγε αρχεία .otf, .ttf ή .ttc. Το λογότυπο του Instagram και το εργαλείο κειμένου των ιστοριών κρατούν τις δικές τους γραμματοσειρές.";
 "INTERFACE_APPEARANCE_HEADER" = "Εμφάνιση";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Κάνει τη σκοτεινή λειτουργία του Instagram καθαρά μαύρη, μαζί με τα φύλλα. Τα συννεφάκια μηνυμάτων, τα πεδία αναζήτησης και παρόμοια στοιχεία μένουν λίγο πιο ανοιχτά ώστε να φαίνονται. Ισχύει μόνο στη σκοτεινή λειτουργία.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Σκοτεινή λειτουργία OLED";
 "INTERFACE_CAPTURE_HEADER" = "Σύλληψη";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Αποκρύπτει τα χειριστήρια και τις επικαλύψεις του Sparkle από στιγμιότυπα, εγγραφές οθόνης και κατοπτρισμό οθόνης.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Απόκρυψη Περιβάλλοντος κατά τη Σύλληψη";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Κουμπί εντοπισμού σφαλμάτων Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Εμφανίζει ένα αιωρούμενο κουμπί που εξετάζει ό,τι υπάρχει στην οθόνη και δημιουργεί αναφορές για να επισυνάψεις σε μια αναφορά σφάλματος. Σύρε το σε οποιαδήποτε πλευρά της οθόνης. Οι αναφορές παραλείπουν το κείμενο της οθόνης, εκτός αν ενεργοποιήσεις τη «Συμπερίληψη κειμένου» στο μενού του.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Πάτησε οποιοδήποτε στοιχείο για να το εξετάσεις";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Αναφορά χρωμάτων";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Απόκρυψη κουμπιού";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Συμπερίληψη κειμένου";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Εξέταση στοιχείου";

@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "防止 Instants 在檢視時被標示為已讀，並在檢視器中新增眼睛按鈕來將其標示為已讀。";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "替換 Instagram 與 Sparkle 中的字型。可匯入 .otf、.ttf 或 .ttc 檔案。Instagram 的標誌與限時動態文字工具會保留原本的字型。";
 "INTERFACE_APPEARANCE_HEADER" = "外觀";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "將 Instagram 的深色模式連同面板一起變為純黑。訊息泡泡、搜尋欄等元素會保持稍亮，以便清楚辨識。僅在深色模式下生效。";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED 深色模式";
 "INTERFACE_CAPTURE_HEADER" = "擷取畫面";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "在截圖、螢幕錄影及螢幕鏡像時隱藏 Sparkle 控制項與疊加介面。";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "擷取畫面時隱藏介面";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle 除錯按鈕";
 "TOOLS_DEBUG_BUTTON_HELP" = "顯示一個浮動按鈕，可檢查螢幕上的內容，並產生可附加到錯誤回報的報告。可將它拖到螢幕任一側。除非在其選單中開啟「包含文字」，否則報告不會包含螢幕上的文字。";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "點一下任何元素進行檢查";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "顏色報告";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "隱藏按鈕";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "包含文字";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "檢查元素";

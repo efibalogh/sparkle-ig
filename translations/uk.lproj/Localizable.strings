@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Припиняє позначення Instants як переглянутих під час перегляду та додає кнопку ока до засобу перегляду для позначення як переглянутого.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Замінює шрифт в усьому Instagram і Sparkle. Імпортуйте файли .otf, .ttf або .ttc. Логотип Instagram і текстовий інструмент історій зберігають власні шрифти.";
 "INTERFACE_APPEARANCE_HEADER" = "Зовнішній вигляд";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Робить темний режим Instagram чисто чорним, разом з аркушами. Бульбашки повідомлень, поля пошуку й подібні елементи лишаються на тон світлішими, щоб їх було видно. Діє лише в темному режимі.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Темний режим OLED";
 "INTERFACE_CAPTURE_HEADER" = "Захоплення";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Приховує елементи керування та накладки Sparkle на знімках, записах і під час трансляції екрана.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Приховати UI при захопленні";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Кнопка налагодження Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Показує плаваючу кнопку, яка досліджує вміст екрана й створює звіти, які можна додати до повідомлення про помилку. Перетягніть її до будь-якого краю екрана. Звіти не містять тексту з екрана, якщо ви не ввімкнете «Включати текст» у її меню.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Торкніться будь-якого елемента, щоб дослідити його";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Звіт про кольори";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Сховати кнопку";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Включати текст";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Дослідити елемент";

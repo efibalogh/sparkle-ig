@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Ngăn Instants được đánh dấu là đã xem khi bạn xem chúng và thêm nút mắt vào trình xem để đánh dấu một nút là đã xem.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Thay thế phông chữ trên Instagram và Sparkle. Nhập các tệp .otf, .ttf hoặc .ttc. Logo Instagram và công cụ văn bản trong tin vẫn giữ phông chữ riêng.";
 "INTERFACE_APPEARANCE_HEADER" = "Giao diện";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Chuyển chế độ tối của Instagram thành đen tuyền, kể cả các bảng. Bong bóng tin nhắn, ô tìm kiếm và các thành phần tương tự vẫn sáng hơn một chút để dễ nhìn. Chỉ áp dụng ở chế độ tối.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Chế độ tối OLED";
 "INTERFACE_CAPTURE_HEADER" = "Ghi hình";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Ẩn các điều khiển và lớp phủ Sparkle khỏi ảnh chụp màn hình, ghi màn hình và phản chiếu màn hình.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Ẩn giao diện khi chụp/quay";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Nút gỡ lỗi Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Hiển thị một nút nổi giúp kiểm tra nội dung trên màn hình và tạo báo cáo để đính kèm vào báo cáo lỗi. Kéo nút sang bất kỳ cạnh nào của màn hình. Báo cáo sẽ bỏ qua văn bản trên màn hình trừ khi bạn bật Bao gồm văn bản trong menu của nút.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Chạm vào bất kỳ phần tử nào để kiểm tra";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Báo cáo màu";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Ẩn nút";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Bao gồm văn bản";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Kiểm tra phần tử";

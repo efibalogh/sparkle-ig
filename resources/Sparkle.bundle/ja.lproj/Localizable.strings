@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "視聴中のInstantsが既読としてマークされるのを防ぎ、ビューアに目ボタンを追加して、1つを既読としてマークできるようにします。";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "InstagramとSparkle全体のフォントを置き換えます。.otf、.ttf、.ttcファイルをインポートできます。Instagramのロゴとストーリーズのテキストツールは独自のフォントのままです。";
 "INTERFACE_APPEARANCE_HEADER" = "外観";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagramのダークモードを、シートも含めて真っ黒にします。メッセージの吹き出しや検索欄などは見やすいよう少し明るいまま残ります。ダークモードでのみ適用されます。";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLEDダークモード";
 "INTERFACE_CAPTURE_HEADER" = "キャプチャ";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "スクリーンショット、画面収録、画面ミラーリングからSparkleのコントロールとオーバーレイを隠します。";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "キャプチャ時に UI を非表示";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle デバッグボタン";
 "TOOLS_DEBUG_BUTTON_HELP" = "画面上の内容を調べ、バグ報告に添付するレポートを作成するフローティングボタンを表示します。画面の左右どちらかにドラッグできます。メニューで「テキストを含める」をオンにしない限り、レポートには画面上のテキストは含まれません。";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "調べたい要素をタップ";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "カラーレポート";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "ボタンを隠す";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "テキストを含める";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "要素を調べる";

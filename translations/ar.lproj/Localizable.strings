@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "توقف تحديد الـ Instants كمرئية أثناء مشاهدتك لها، وتضيف زر عين إلى العارض لتحديد واحد كمرئي.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "يستبدل الخط في كل أنحاء Instagram وSparkle. استورد ملفات ‎.otf أو ‎.ttf أو ‎.ttc. يحتفظ شعار Instagram وأداة نص القصص بخطوطهما.";
 "INTERFACE_APPEARANCE_HEADER" = "المظهر";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "يحوّل الوضع الداكن في Instagram إلى أسود خالص، بما في ذلك الأوراق. تبقى فقاعات الرسائل وحقول البحث والعناصر المشابهة أفتح بدرجة لتظل مرئية. يُطبَّق في الوضع الداكن فقط.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "الوضع الداكن OLED";
 "INTERFACE_CAPTURE_HEADER" = "الالتقاط";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "يخفي عناصر تحكم Sparkle وطبقاتها من لقطات الشاشة وتسجيل الشاشة وعرض الشاشة.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "إخفاء الواجهة عند الالتقاط";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "زر تصحيح أخطاء Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "يعرض زرًا عائمًا يفحص ما يظهر على الشاشة ويُنشئ تقارير لإرفاقها ببلاغ عن خطأ. اسحبه إلى أي جانب من الشاشة. تستبعد التقارير النصوص الظاهرة على الشاشة ما لم تفعّل «تضمين النص» من قائمته.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "اضغط على أي عنصر لفحصه";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "تقرير الألوان";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "إخفاء الزر";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "تضمين النص";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "فحص العنصر";

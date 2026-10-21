@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stops Instants from being marked seen as you watch them, and adds an eye button to the viewer to mark one as seen.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Replaces the font across Instagram and Sparkle. Import .otf, .ttf, or .ttc files. Instagram's logo and the story text tool keep their own fonts.";
 "INTERFACE_APPEARANCE_HEADER" = "Appearance";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Makes Instagram's dark mode pure black, sheets included. Message bubbles, search fields and similar elements stay a shade lighter so they remain visible. Only applies in dark mode.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Dark Mode";
 "INTERFACE_CAPTURE_HEADER" = "Capture";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Hides Sparkle controls and overlays from screenshots, screen recordings, and screen mirroring.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Hide UI on Capture";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle Debug Button";
 "TOOLS_DEBUG_BUTTON_HELP" = "Shows a floating button that inspects what is on screen and builds reports to attach to a bug report. Drag it to either side of the screen. Reports leave out on-screen text unless you turn on Include Text in its menu.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Tap any element to inspect it";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Color Report";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Hide Button";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Include Text";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Inspect Element";

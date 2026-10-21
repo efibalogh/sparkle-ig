@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stopp Instants vo gseh markiert z werden während du sie aluegsch, u fügt e Aug-Knopf zum Viewer hinzu zum e als gseh markiere.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt d'Schriftart i Instagram u Sparkle. Importier .otf-, .ttf- oder .ttc-Dateie. S'Instagram-Logo u s'Story-Text-Tool behaute ihri eigeti Schriftart.";
 "INTERFACE_APPEARANCE_HEADER" = "Ussgseh";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Macht de Dunkelmodus vo Instagram tüüfschwarz, Sheets inbegriffe. Nachrichteblase, Suechfälder und ähnlichi Elemänt blibed e Spur heller, damit mer sie gseht. Gilt nume im Dunkelmodus.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED-Dunkelmodus";
 "INTERFACE_CAPTURE_HEADER" = "Ufnahm";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Versteckt Sparkle-Steurige u -Overlays vor Screenshots, Biudschirmufnahm u Biudschirmspieglig.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "UI bi dr Ufnahm Verstecke";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle-Debug-Chnopf";
 "TOOLS_DEBUG_BUTTON_HELP" = "Zeigt e schwäbende Chnopf, wo undersuecht, was uf em Bildschirm isch, und Bricht für e Fählermäldig erstellt. Zie ne uf e Syte vom Bildschirm. D Bricht lö Tekscht vom Bildschirm wäg, usser du schaltisch «Tekscht mitnäh» i sym Menü y.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Tipp uf es Elemänt, zum’s undersueche";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Farbbricht";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Chnopf verstecke";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Tekscht mitnäh";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Elemänt undersueche";

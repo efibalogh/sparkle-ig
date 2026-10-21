@@ -76,6 +76,8 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
   - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
   - Show exact follower counts on profiles instead of abbreviated ones.
+- **OLED dark mode**:
+  - Turns Instagram's dark mode pure black, sheets included, with message bubbles and search fields kept a shade lighter so they stay visible.
 - **Custom app font**:
   - Import your own `.otf`/`.ttf` font and use it across Instagram and Sparkle, matched per weight and previewed face by face before you pick it.
 - **Language packs**:

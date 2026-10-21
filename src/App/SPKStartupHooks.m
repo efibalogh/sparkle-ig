@@ -52,6 +52,7 @@ FOUNDATION_EXPORT void SPKInstallOpenLinkFromClipboardHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideExploreGridHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideTrendingSearchesHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCustomFontHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallOLEDDarkModeHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallNavigationHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallSettingsShortcutsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableHapticsHooksIfEnabled(void);
@@ -373,6 +374,7 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallSquareGridHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideTrendingSearchesHooksIfEnabled);
     SPK_INSTALL(SPKInstallCustomFontHooksIfEnabled);
+    SPK_INSTALL(SPKInstallOLEDDarkModeHooksIfEnabled);
     SPK_INSTALL(SPKInstallNavigationHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
     SPK_INSTALL(SPKInstallDisableHapticsHooksIfEnabled);

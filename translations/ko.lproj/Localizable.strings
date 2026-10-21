@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "시청 중 Instants가 읽음으로 표시되는 것을 방지하고 뷰어에 눈 버튼을 추가하여 하나를 읽음으로 표시합니다.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram과 Sparkle 전체의 글꼴을 교체합니다. .otf, .ttf, .ttc 파일을 가져올 수 있습니다. Instagram 로고와 스토리 텍스트 도구는 자체 글꼴을 유지합니다.";
 "INTERFACE_APPEARANCE_HEADER" = "모양";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "시트를 포함해 Instagram의 다크 모드를 완전한 검은색으로 바꿉니다. 메시지 말풍선, 검색창 등은 잘 보이도록 조금 더 밝게 유지됩니다. 다크 모드에서만 적용됩니다.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED 다크 모드";
 "INTERFACE_CAPTURE_HEADER" = "캡처";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "스크린샷, 화면 녹화 및 화면 미러링에서 Sparkle 컨트롤과 오버레이를 숨깁니다.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "캡처 시 UI 숨기기";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle 디버그 버튼";
 "TOOLS_DEBUG_BUTTON_HELP" = "화면에 표시된 내용을 검사하고 버그 신고에 첨부할 보고서를 만드는 플로팅 버튼을 표시합니다. 화면의 양쪽 가장자리로 끌어서 옮길 수 있습니다. 메뉴에서 텍스트 포함을 켜지 않으면 보고서에 화면의 텍스트가 포함되지 않습니다.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "검사할 요소를 탭하세요";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "색상 보고서";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "버튼 숨기기";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "텍스트 포함";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "요소 검사";

@@ -105,6 +105,11 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
   - A font family is matched per weight, so bold text stays bold if the family ships a bold face, and falls back to the nearest weight it does ship. Italic requests fall back to the upright face when there is no italic.
   - Restart to apply everywhere: text already on screen keeps the font it was built with. Deleting the last file of the font in use falls back to the default.
   - Shared by every account on the device, since fonts are resolved before Instagram knows which account is signed in.
+- **OLED Dark Mode**: Makes Instagram's dark mode pure black. **(restart)**
+  - Backgrounds and sheets (comments, sharing, the map) become pure black. A few elements, such as message bubbles, search fields, and image placeholders, stay a neutral dark gray a shade lighter than the background, so they remain visible.
+  - Only applies while Instagram is in dark mode; light mode is untouched.
+  - The keyboard keeps the system's look: iOS draws it outside Instagram, so it can't be recolored.
+  - Shared by every account on the device, since colors are created before Instagram knows which account is signed in.
 
 ### Explore & Search
 - **Hide Explore Posts Grid**: Hides the suggested-post grid on Explore. This follows the active account when **Per-Account Settings** is enabled.

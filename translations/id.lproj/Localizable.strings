@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Mencegah Instants ditandai terlihat saat Anda menontonnya, dan menambahkan tombol mata ke penampil untuk menandainya sebagai terlihat.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Mengganti font di seluruh Instagram dan Sparkle. Impor file .otf, .ttf, atau .ttc. Logo Instagram dan alat teks story tetap menggunakan fontnya sendiri.";
 "INTERFACE_APPEARANCE_HEADER" = "Tampilan";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Mengubah mode gelap Instagram menjadi hitam pekat, termasuk lembar. Gelembung pesan, kolom pencarian, dan elemen serupa tetap sedikit lebih terang agar tetap terlihat. Hanya berlaku dalam mode gelap.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mode Gelap OLED";
 "INTERFACE_CAPTURE_HEADER" = "Tangkapan";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Menyembunyikan kontrol dan overlay Sparkle dari tangkapan layar, rekaman layar, dan screen mirroring.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Sembunyikan UI saat Menangkap Layar";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Tombol Debug Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Menampilkan tombol mengambang yang memeriksa isi layar dan membuat laporan untuk dilampirkan pada laporan bug. Seret ke sisi mana pun dari layar. Laporan tidak menyertakan teks di layar kecuali Anda mengaktifkan Sertakan Teks di menunya.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Ketuk elemen apa pun untuk memeriksanya";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Laporan Warna";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Sembunyikan Tombol";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Sertakan Teks";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Periksa Elemen";

@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "หยุดการทำเครื่องหมายว่า Instants ถูกมองเห็นขณะที่คุณดูพวกเขาและเพิ่มปุ่มตาในตัวดูเพื่อทำเครื่องหมายว่า ดู";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "เปลี่ยนแบบอักษรทั่วทั้ง Instagram และ Sparkle นำเข้าไฟล์ .otf, .ttf หรือ .ttc โลโก้ Instagram และเครื่องมือข้อความในสตอรียังคงใช้แบบอักษรของตัวเอง";
 "INTERFACE_APPEARANCE_HEADER" = "รูปลักษณ์";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "เปลี่ยนโหมดมืดของ Instagram เป็นสีดำสนิท รวมถึงชีต ส่วนบับเบิลข้อความ ช่องค้นหา และองค์ประกอบที่คล้ายกันจะสว่างกว่าเล็กน้อยเพื่อให้ยังมองเห็นได้ ใช้ได้เฉพาะในโหมดมืด";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "โหมดมืด OLED";
 "INTERFACE_CAPTURE_HEADER" = "การจับภาพ";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "ซ่อนตัวควบคุมและองค์ประกอบซ้อนทับของ Sparkle จากภาพหน้าจอ การบันทึกหน้าจอ และการมิเรอร์หน้าจอ";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "ซ่อน UI เมื่อจับภาพ";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "ปุ่มดีบัก Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "แสดงปุ่มลอยที่ตรวจสอบสิ่งที่อยู่บนหน้าจอและสร้างรายงานเพื่อแนบไปกับการรายงานบั๊ก ลากไปไว้ด้านใดก็ได้ของหน้าจอ รายงานจะไม่รวมข้อความบนหน้าจอ เว้นแต่คุณจะเปิด รวมข้อความ ในเมนูของปุ่ม";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "แตะองค์ประกอบใดก็ได้เพื่อตรวจสอบ";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "รายงานสี";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "ซ่อนปุ่ม";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "รวมข้อความ";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "ตรวจสอบองค์ประกอบ";

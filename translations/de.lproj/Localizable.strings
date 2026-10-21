@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stoppt, dass Instants als gesehen markiert werden, während du sie ansiehst, und fügt eine Augenschaltfläche zum Betrachter hinzu, um einen als gesehen zu markieren.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt die Schrift in Instagram und Sparkle. Importiere .otf-, .ttf- oder .ttc-Dateien. Das Instagram-Logo und das Story-Textwerkzeug behalten ihre eigenen Schriften.";
 "INTERFACE_APPEARANCE_HEADER" = "Aussehen";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Macht den Dunkelmodus von Instagram tiefschwarz, Sheets eingeschlossen. Nachrichtenblasen, Suchfelder und ähnliche Elemente bleiben eine Spur heller, damit sie sichtbar bleiben. Gilt nur im Dunkelmodus.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED-Dunkelmodus";
 "INTERFACE_CAPTURE_HEADER" = "Erfassung";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Blendet die Sparkle-Oberfläche in Screenshots, Bildschirmaufnahmen und bei der Bildschirmsynchronisierung aus.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "UI bei Erfassung ausblenden";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle-Debug-Taste";
 "TOOLS_DEBUG_BUTTON_HELP" = "Zeigt eine schwebende Taste, die untersucht, was auf dem Bildschirm zu sehen ist, und Berichte für einen Fehlerbericht erstellt. Zieh sie an eine der beiden Bildschirmseiten. Berichte lassen Text auf dem Bildschirm weg, außer du aktivierst „Text einschließen“ in ihrem Menü.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Tippe auf ein Element, um es zu untersuchen";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Farbbericht";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Taste ausblenden";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Text einschließen";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Element untersuchen";

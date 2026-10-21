@@ -26,6 +26,11 @@
 - (void)configureWithViewModel:(id)model;
 @end
 
+@interface IGActionSheetController : UIViewController
+@property (readonly, nonatomic) UIView *contentContainerView;
+@property (readonly, nonatomic) UIView *overlayView;
+@end
+
 @interface IGActionableConfirmationToastPresenter : NSObject
 - (void)_showAlertWithViewModel:(id)model presentationContext:(id)context isAnimated:(_Bool)animated animationDuration:(double)duration presentationPriority:(long long)priority origin:(unsigned long long)origin toastType:(unsigned long long)type tapActionBlock:(id)tap tapToastBlock:(id)tapToast presentedHandler:(id)presented dismissedHandler:(id)dismissed;
 - (void)hideAlert;

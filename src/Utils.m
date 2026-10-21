@@ -1096,6 +1096,8 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             // hooks installed in %ctor -- long before any account session exists. A
             // per-account key would read the global default on every cold launch.
             @"interface_custom_font",
+            // Read in %ctor, before any account session exists, like the font.
+            @"interface_oled_dark_mode",
             @"interface_language",
             // Language packs live in one shared directory, so a pack installed or
             // refreshed under one account is the file every other account reads.

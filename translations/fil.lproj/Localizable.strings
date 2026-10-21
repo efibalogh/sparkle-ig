@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Humihinto sa mga Instants na maging markado bilang nakita habang tinitingnan mo ang mga ito, at nagdadagdag ng eye button sa viewer upang markahan ang isa bilang nakita.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Pinapalitan ang font sa buong Instagram at Sparkle. Mag-import ng .otf, .ttf, o .ttc na file. Pinapanatili ng logo ng Instagram at ng story text tool ang sarili nilang font.";
 "INTERFACE_APPEARANCE_HEADER" = "Hitsura";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Ginagawang purong itim ang dark mode ng Instagram, kasama ang mga sheet. Bahagyang mas maliwanag ang mga message bubble, search field, at katulad na elemento para manatiling nakikita. Sa dark mode lang ito gumagana.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Dark Mode";
 "INTERFACE_CAPTURE_HEADER" = "Pagkuha";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Itinatago ang mga control at overlay ng Sparkle mula sa mga screenshot, screen recording, at screen mirroring.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Itago ang UI sa Capture";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Debug Button ng Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Nagpapakita ng lumulutang na button na sinusuri ang nasa screen at gumagawa ng mga ulat na maikakabit sa isang bug report. I-drag ito sa alinmang gilid ng screen. Hindi isinasama ng mga ulat ang text sa screen maliban kung i-on mo ang Isama ang Text sa menu nito.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "I-tap ang anumang elemento para suriin ito";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Ulat ng Kulay";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Itago ang Button";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Isama ang Text";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Suriin ang Elemento";

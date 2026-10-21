@@ -43,6 +43,11 @@
                 appFont.helpText = SPKL(@"INTERFACE_APPEARANCE_APP_FONT_HELP");
                 appFont;
             }),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE")
+                                                          icon:SPKSettingsIcon(@"moon")
+                                                   defaultsKey:@"interface_oled_dark_mode"
+                                               requiresRestart:YES],
+                               SPKL(@"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP")),
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_EXPLORE_SEARCH_HEADER"), @[

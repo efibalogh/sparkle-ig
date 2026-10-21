@@ -1064,6 +1064,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Empêche les Instants d'être marqués comme vus pendant que vous les regardez, et ajoute un bouton d'œil à la visionneuse pour en marquer un comme vu.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Remplace la police dans Instagram et Sparkle. Importez des fichiers .otf, .ttf ou .ttc. Le logo Instagram et l'outil texte des stories gardent leurs propres polices.";
 "INTERFACE_APPEARANCE_HEADER" = "Apparence";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Rend le mode sombre d'Instagram noir pur, feuilles comprises. Les bulles de message, les champs de recherche et les éléments similaires restent un ton plus clair pour rester visibles. S'applique uniquement en mode sombre.";
+"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mode sombre OLED";
 "INTERFACE_CAPTURE_HEADER" = "Capture";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Masque l'interface de Sparkle dans les captures d'écran, les enregistrements d'écran et la recopie vidéo.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Masquer l'interface lors de la capture";
@@ -2319,6 +2321,7 @@
 "TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Bouton de débogage Sparkle";
 "TOOLS_DEBUG_BUTTON_HELP" = "Affiche un bouton flottant qui inspecte ce qui est à l’écran et crée des rapports à joindre à un signalement de bug. Faites-le glisser d’un côté ou de l’autre de l’écran. Les rapports omettent le texte affiché à l’écran, sauf si vous activez Inclure le texte dans son menu.";
 "TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Touchez un élément pour l’inspecter";
+"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT" = "Rapport des couleurs";
 "TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Masquer le bouton";
 "TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Inclure le texte";
 "TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Inspecter l’élément";
