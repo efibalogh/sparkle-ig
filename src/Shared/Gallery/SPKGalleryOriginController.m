@@ -17,7 +17,19 @@
 FOUNDATION_EXPORT BOOL SPKOpenPostPushMediaURL(NSURL *url, UIViewController *presentingVC, void (^fallback)(void), void (^onDismiss)(void));
 
 static NSString *SPKGalleryStringValue(id value) {
-    if (!value)
+    if (!value || [value isKindOfClass:[NSNull class]])
+        return nil;
+    // KVC on a collection maps the key over its elements, so asking an array for
+    // "pk" answers an array of pks. Its description is "(\n    123\n)", which used
+    // to be stored as the pk itself. A single element is the value that was meant;
+    // more than one is ambiguous, so it is no value at all.
+    if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSOrderedSet class]] || [value isKindOfClass:[NSSet class]]) {
+        NSArray *elements = [value isKindOfClass:[NSSet class]] ? [(NSSet *)value allObjects]
+                            : [value isKindOfClass:[NSOrderedSet class]] ? [(NSOrderedSet *)value array]
+                                                                           : (NSArray *)value;
+        return elements.count == 1 ? SPKGalleryStringValue(elements.firstObject) : nil;
+    }
+    if ([value isKindOfClass:[NSDictionary class]])
         return nil;
     if ([value isKindOfClass:[NSString class]])
         return [(NSString *)value length] > 0 ? value : nil;
@@ -547,6 +559,17 @@ static BOOL SPKGalleryURLIsPostOrReel(NSURL *url) {
                    fromViewController:(UIViewController *)presentingVC
                            completion:(void (^)(BOOL success, BOOL didLink))completion {
     NSString *cleanUsername = [SPKUtils sanitizedInstagramUsername:file.sourceUsername];
+
+    // A user pk is all digits. Anything else (an older build stored a collection's
+    // description here) opens a profile IG cannot load, so drop it and let the
+    // username path below resolve and store the real one.
+    NSString *storedPK = file.sourceUserPK;
+    if (storedPK.length > 0 &&
+        [storedPK rangeOfCharacterFromSet:NSCharacterSet.decimalDigitCharacterSet.invertedSet].location != NSNotFound) {
+        SPKLog(@"Gallery", @"discarding malformed sourceUserPK for @%@", cleanUsername ?: @"");
+        file.sourceUserPK = nil;
+        [[SPKGalleryCoreDataStack shared] saveContext];
+    }
 
     // Items saved from a source that carried no user object have a username but
     // no pk, so every open pays the username -> pk lookup again. Resolve it once
