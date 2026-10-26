@@ -825,6 +825,7 @@
 
 @interface IGDirectInboxFeatureManager : NSObject
 - (BOOL)_isChatPeekEligibleForThreadId:(id)threadId;
+- (BOOL)_isChatPeekEligibleForThreadId:(id)threadId experience:(id)experience;
 @end
 
 @interface _TtC29IGConsumerSubsDirectChatPeeks35IGDirectInboxChatPeekPreviewHandler : NSObject

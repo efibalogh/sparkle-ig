@@ -39,6 +39,18 @@ static inline BOOL SPKHideVanishScreenshotEnabled(void) {
 %end
 
 %hook IGDirectThreadViewBottomSwipeFeatureController
+// From 453 the Swift controller builds the scroll manager through its Swift
+// initializer, which skips the init hooks above. Every swipe path no-ops while
+// the manager is nil, and this setup is only reached through objc_msgSend.
+- (void)setupBottomSwipeableScrollManagerIfNecessary {
+    if (SPKBlockDisappearingSwipeUpEnabled()) {
+        SPKLog(@"General", @"[Sparkle] Blocking disappearing swipe-up scroll manager setup");
+        return;
+    }
+
+    %orig;
+}
+
 - (void)swipeableScrollManagerDidEndDraggingAboveSwipeThreshold:(id)arg1 {
     if (SPKBlockDisappearingSwipeUpEnabled()) {
         SPKLog(@"General", @"[Sparkle] Blocking disappearing swipe-up threshold action");
@@ -189,6 +201,8 @@ void SPKInstallShhConfirmHooksIfNeeded(void) {
     dispatch_once(&onceToken, ^{
         // Swift class from 450, where only the mangled name is guaranteed.
         Class scrollManager = objc_getClass("IGDirectBottomSwipeableScrollManager") ?: objc_getClass("_TtC46IGDirectThreadViewBottomSwipeFeatureController36IGDirectBottomSwipeableScrollManager");
-        %init(SPKShhConfirmHooks, IGDirectBottomSwipeableScrollManager = scrollManager);
+        // The feature controller followed it into Swift in 453.
+        Class bottomSwipeController = objc_getClass("IGDirectThreadViewBottomSwipeFeatureController") ?: objc_getClass("_TtC46IGDirectThreadViewBottomSwipeFeatureController46IGDirectThreadViewBottomSwipeFeatureController");
+        %init(SPKShhConfirmHooks, IGDirectBottomSwipeableScrollManager = scrollManager, IGDirectThreadViewBottomSwipeFeatureController = bottomSwipeController);
     });
 }

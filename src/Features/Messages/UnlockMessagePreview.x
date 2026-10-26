@@ -100,6 +100,14 @@ static id SPKMessagePreviewController(id threadId, id session) {
     return %orig;
 }
 
+// IG 453 replaced the launcher set and service arguments with session and experience.
++ (BOOL)isChatPeekFeatureEligibleWithSession:(id)session experience:(id)experience {
+    if (SPKUnlockMessagePreviewEnabled()) {
+        return YES;
+    }
+    return %orig;
+}
+
 + (BOOL)isUpsellEligibleWithLauncherSet:(id)set consumerSubsService:(id)service {
     if (SPKUnlockMessagePreviewEnabled()) {
         return NO;
@@ -141,6 +149,14 @@ static id SPKMessagePreviewController(id threadId, id session) {
 %hook IGDirectInboxFeatureManager
 
 - (BOOL)_isChatPeekEligibleForThreadId:(id)threadId {
+    if (SPKUnlockMessagePreviewEnabled()) {
+        return YES;
+    }
+    return %orig;
+}
+
+// IG 453 added a trailing experience argument.
+- (BOOL)_isChatPeekEligibleForThreadId:(id)threadId experience:(id)experience {
     if (SPKUnlockMessagePreviewEnabled()) {
         return YES;
     }
