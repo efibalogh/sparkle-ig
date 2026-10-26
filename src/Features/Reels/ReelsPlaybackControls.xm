@@ -136,6 +136,13 @@ static void SPKReelsPlaybackSendReason(UICollectionViewCell *cell, NSString *sel
     sSPKReelsPlaybackTogglingPlayback = NO;
 }
 
+/// The cell's media gesture controller. IG 452 rewrote the cell in Swift and made
+/// it a lazy var, so its storage ivar lost the plain `_gestureController` name.
+static id SPKReelsPlaybackGestureController(UICollectionViewCell *cell) {
+    return [SPKUtils getIvarForObj:cell name:"_gestureController"]
+               ?: [SPKUtils getIvarForObj:cell name:"$__lazy_storage_$_gestureController"];
+}
+
 /// The cell's own single-tap recognizer, which Instagram's tap handler expects.
 static UIGestureRecognizer *SPKReelsPlaybackSingleTapRecognizer(id gestureController) {
     // A Swift stored property on current versions, an Objective-C ivar on older ones.
@@ -160,7 +167,7 @@ static BOOL SPKReelsPlaybackToggleThroughTap(UICollectionViewCell *cell) {
         !((BOOL (*)(id, SEL))objc_msgSend)(configuration, tapToPauseEnabled))
         return NO;
 
-    id gestureController = [SPKUtils getIvarForObj:cell name:"_gestureController"];
+    id gestureController = SPKReelsPlaybackGestureController(cell);
     UIGestureRecognizer *recognizer = SPKReelsPlaybackSingleTapRecognizer(gestureController);
     SEL singleTap = @selector(gestureController:didObserveSingleTap:);
     if (!gestureController || !recognizer || ![cell respondsToSelector:singleTap])
@@ -240,6 +247,23 @@ static SPKPlaybackTarget *SPKReelsPlaybackTargetForCell(UICollectionViewCell *ce
         SPKReelsPlaybackApplySpeed(weakCell, speed);
     };
     return target;
+}
+
+/// The speed to pass on for a speed Instagram sets on `view` (the reel cell or its
+/// video view). Instagram resets reels to 1x after its hold-for-2x gesture, on
+/// reuse and when a reel starts; those resets keep the chosen speed instead, while
+/// its own 2x passes through untouched.
+static float SPKReelsPlaybackIncomingSpeed(UIView *view, float speed) {
+    if (sSPKReelsPlaybackApplyingSpeed || !SPKPlaybackSpeedIsNormal(speed) || !SPKReelsPlaybackEnabled())
+        return speed;
+    UICollectionViewCell *cell = SPKReelsPlaybackVideoCellForView(view);
+    if (!cell)
+        return speed;
+    double wanted = SPKPlaybackSpeedEffective(SPKPlaybackSurfaceReels, SPKReelsPlaybackItem(cell));
+    if (SPKPlaybackSpeedIsNormal(wanted))
+        return speed;
+    SPKLog(@"ReelsPlayback", @"Kept %.2fx over a 1x reset on %@", wanted, NSStringFromClass(view.class));
+    return (float)wanted;
 }
 
 static void SPKReelsPlaybackSyncSpeed(UICollectionViewCell *cell) {
@@ -534,20 +558,50 @@ static void SPKReelsRefreshAllPlaybackControls(void) {
 
 %end
 
+// The speed and play choke points sit on the reel's video view. Every speed and
+// play the cell forwards reaches it through an Objective-C protocol, but since
+// IG 452 rewrote the cell in Swift, Instagram's own calls into the cell no longer
+// pass through the cell's Objective-C methods. One group per video view class.
+%group SPKReelsPlaybackVideoViewHooks
+%hook SPKReelsPlaybackVideoViewClass
+- (void)setPlaybackSpeed:(float)speed {
+    %orig(SPKReelsPlaybackIncomingSpeed((UIView *)self, speed));
+}
+
+- (void)playWithReason:(long long)reason {
+    %orig(reason);
+    if (SPKReelsPlaybackEnabled())
+        SPKReelsPlaybackSyncSpeed(SPKReelsPlaybackVideoCellForView((UIView *)self));
+}
+%end
+%end
+
+%group SPKReelsPlaybackModernVideoViewHooks
+%hook SPKReelsPlaybackModernVideoViewClass
+- (void)setPlaybackSpeed:(float)speed {
+    %orig(SPKReelsPlaybackIncomingSpeed((UIView *)self, speed));
+}
+
+- (void)playWithReason:(long long)reason {
+    %orig(reason);
+    if (SPKReelsPlaybackEnabled())
+        SPKReelsPlaybackSyncSpeed(SPKReelsPlaybackVideoCellForView((UIView *)self));
+}
+%end
+%end
+
+// Fallback when neither video view class resolves.
+%group SPKReelsPlaybackCellSpeedHooks
+%hook IGSundialViewerVideoCell
+- (void)setPlaybackSpeed:(float)speed {
+    %orig(SPKReelsPlaybackIncomingSpeed((UIView *)self, speed));
+}
+%end
+%end
+
 %group SPKReelsPlaybackControlsHooks
 
 %hook IGSundialViewerVideoCell
-- (void)setPlaybackSpeed:(float)speed {
-    // Instagram resets reels to 1x after its hold-for-2x gesture and when a cell
-    // is reused. Keep the chosen speed; its own 2x passes through untouched.
-    if (!sSPKReelsPlaybackApplyingSpeed && SPKPlaybackSpeedIsNormal(speed) && SPKReelsPlaybackEnabled()) {
-        double wanted = SPKPlaybackSpeedEffective(SPKPlaybackSurfaceReels, SPKReelsPlaybackItem((UICollectionViewCell *)self));
-        if (!SPKPlaybackSpeedIsNormal(wanted))
-            speed = (float)wanted;
-    }
-    %orig(speed);
-}
-
 - (void)gestureController:(id)controller didObserveSingleTap:(id)tap {
     UICollectionViewCell *cell = (UICollectionViewCell *)self;
     if ([objc_getAssociatedObject(cell, kSPKReelsPausedByPanelAssocKey) boolValue]) {
@@ -606,8 +660,22 @@ extern "C" void SPKInstallReelsPlaybackControlsHooksIfEnabled(void) {
                                                               SPKReelsRefreshAllPlaybackControls();
                                                       }];
         %init(SPKReelsPlaybackControlsUFIHooks, IGSundialViewerVerticalUFI = ufiClass);
-        if (NSClassFromString(@"IGSundialViewerVideoCell")) {
-            %init(SPKReelsPlaybackControlsHooks);
+        if (!NSClassFromString(@"IGSundialViewerVideoCell"))
+            return;
+        %init(SPKReelsPlaybackControlsHooks);
+
+        Class videoViewClass = SPKResolveIGClass(@"IGSundialCommonUIVideoPlayback.IGSundialVideoPlaybackView",
+                                                 @"IGSundialVideoPlaybackView");
+        Class modernVideoViewClass = SPKResolveIGClass(@"IGSundialCommonUIVideoPlayback.IGSundialModernVideoPlaybackView",
+                                                       @"IGSundialModernVideoPlaybackView");
+        if (videoViewClass) {
+            %init(SPKReelsPlaybackVideoViewHooks, SPKReelsPlaybackVideoViewClass = videoViewClass);
+        }
+        if (modernVideoViewClass) {
+            %init(SPKReelsPlaybackModernVideoViewHooks, SPKReelsPlaybackModernVideoViewClass = modernVideoViewClass);
+        }
+        if (!videoViewClass && !modernVideoViewClass) {
+            %init(SPKReelsPlaybackCellSpeedHooks);
         }
     });
 }
