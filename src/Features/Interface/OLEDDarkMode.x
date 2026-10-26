@@ -54,6 +54,9 @@ static const SPKOLEDMapping kSPKOLEDMappings[] = {
     {0x3A4048, 0x383838},
     // Inactive carousel page dots.
     {0x46505C, 0x4E4E4E},
+    // Pills (IGDSSegmentedPillControl), e.g. the profile's Threads, channel
+    // and music links. Too bright for the slate fallback.
+    {0x55606C, 0x5E5E5E},
 };
 
 static inline uint32_t SPKOLEDChannel(CGFloat value) {
