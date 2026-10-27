@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "หยุดการทำเครื่องหมายว่า Instants ถูกมองเห็นขณะที่คุณดูพวกเขาและเพิ่มปุ่มตาในตัวดูเพื่อทำเครื่องหมายว่า ดู";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "เปลี่ยนแบบอักษรทั่วทั้ง Instagram และ Sparkle นำเข้าไฟล์ .otf, .ttf หรือ .ttc โลโก้ Instagram และเครื่องมือข้อความในสตอรียังคงใช้แบบอักษรของตัวเอง";
 "INTERFACE_APPEARANCE_HEADER" = "รูปลักษณ์";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "ทำให้องค์ประกอบ Liquid Glass เช่น แถบแท็บ เป็นสีดำสนิทเหมือนพื้นหลัง เมื่อปิด จะมีโทนสีเทาเข้มเพื่อให้โดดเด่นจากพื้นหลัง";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "กระจกสีดำ";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "เปลี่ยนโหมดมืดของ Instagram เป็นสีดำสนิท รวมถึงชีต ส่วนบับเบิลข้อความ ช่องค้นหา และองค์ประกอบที่คล้ายกันจะสว่างกว่าเล็กน้อยเพื่อให้ยังมองเห็นได้ ใช้ได้เฉพาะในโหมดมืด";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "โหมดมืด OLED";
 "INTERFACE_CAPTURE_HEADER" = "การจับภาพ";

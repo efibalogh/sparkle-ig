@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Mencegah Instants ditandai terlihat saat Anda menontonnya, dan menambahkan tombol mata ke penampil untuk menandainya sebagai terlihat.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Mengganti font di seluruh Instagram dan Sparkle. Impor file .otf, .ttf, atau .ttc. Logo Instagram dan alat teks story tetap menggunakan fontnya sendiri.";
 "INTERFACE_APPEARANCE_HEADER" = "Tampilan";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Menjaga elemen Liquid Glass, seperti bilah tab, tetap hitam pekat seperti latar belakang. Saat nonaktif, elemen tersebut diberi rona abu-abu gelap agar menonjol dari latar.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Kaca Hitam";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Mengubah mode gelap Instagram menjadi hitam pekat, termasuk lembar. Gelembung pesan, kolom pencarian, dan elemen serupa tetap sedikit lebih terang agar tetap terlihat. Hanya berlaku dalam mode gelap.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mode Gelap OLED";
 "INTERFACE_CAPTURE_HEADER" = "Tangkapan";

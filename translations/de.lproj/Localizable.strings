@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stoppt, dass Instants als gesehen markiert werden, während du sie ansiehst, und fügt eine Augenschaltfläche zum Betrachter hinzu, um einen als gesehen zu markieren.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt die Schrift in Instagram und Sparkle. Importiere .otf-, .ttf- oder .ttc-Dateien. Das Instagram-Logo und das Story-Textwerkzeug behalten ihre eigenen Schriften.";
 "INTERFACE_APPEARANCE_HEADER" = "Aussehen";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Hält Liquid-Glass-Elemente wie die Tableiste tiefschwarz wie den Hintergrund. Wenn aus, erhalten sie einen dunkelgrauen Ton, damit sie sich davon abheben.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Schwarzes Glas";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Macht den Dunkelmodus von Instagram tiefschwarz, Sheets eingeschlossen. Nachrichtenblasen, Suchfelder und ähnliche Elemente bleiben eine Spur heller, damit sie sichtbar bleiben. Gilt nur im Dunkelmodus.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED-Dunkelmodus";
 "INTERFACE_CAPTURE_HEADER" = "Erfassung";

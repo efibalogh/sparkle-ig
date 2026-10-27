@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Zatrzymuje oznaczanie Instantów jako wyświetlonych podczas oglądania i dodaje do przeglądarki przycisk oka, aby oznaczyć pojedynczy.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Zastępuje font w całym Instagramie i Sparkle. Importuj pliki .otf, .ttf lub .ttc. Logo Instagrama i narzędzie tekstu relacji zachowują własne fonty.";
 "INTERFACE_APPEARANCE_HEADER" = "Wygląd";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Elementy Liquid Glass, takie jak pasek kart, pozostają czysto czarne jak tło. Po wyłączeniu otrzymują ciemnoszary odcień, aby odróżniały się od tła.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Czarne szkło";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Zmienia tryb ciemny Instagrama na czystą czerń, łącznie z arkuszami. Dymki wiadomości, pola wyszukiwania i podobne elementy pozostają o odcień jaśniejsze, aby były widoczne. Działa tylko w trybie ciemnym.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Tryb ciemny OLED";
 "INTERFACE_CAPTURE_HEADER" = "Przechwytywanie";

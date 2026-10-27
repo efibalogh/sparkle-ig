@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Humihinto sa mga Instants na maging markado bilang nakita habang tinitingnan mo ang mga ito, at nagdadagdag ng eye button sa viewer upang markahan ang isa bilang nakita.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Pinapalitan ang font sa buong Instagram at Sparkle. Mag-import ng .otf, .ttf, o .ttc na file. Pinapanatili ng logo ng Instagram at ng story text tool ang sarili nilang font.";
 "INTERFACE_APPEARANCE_HEADER" = "Hitsura";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Pinapanatiling purong itim ang mga elemento ng Liquid Glass, gaya ng tab bar, tulad ng background. Kapag naka-off, nagkakaroon sila ng madilim na kulay abo para lumitaw sila mula rito.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Itim na Glass";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Ginagawang purong itim ang dark mode ng Instagram, kasama ang mga sheet. Bahagyang mas maliwanag ang mga message bubble, search field, at katulad na elemento para manatiling nakikita. Sa dark mode lang ito gumagana.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Dark Mode";
 "INTERFACE_CAPTURE_HEADER" = "Pagkuha";

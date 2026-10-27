@@ -78,6 +78,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Show exact follower counts on profiles instead of abbreviated ones.
 - **OLED dark mode**:
   - Turns Instagram's dark mode pure black, sheets included, with message bubbles and search fields kept a shade lighter so they stay visible.
+  - Liquid Glass gets a dark gray tint so the tab bar stays visible over black, or stays pure black with Black Glass.
 - **Custom app font**:
   - Import your own `.otf`/`.ttf` font and use it across Instagram and Sparkle, matched per weight and previewed face by face before you pick it.
 - **Language packs**:

@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stops Instants from being marked seen as you watch them, and adds an eye button to the viewer to mark one as seen.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Replaces the font across Instagram and Sparkle. Import .otf, .ttf, or .ttc files. Instagram's logo and the story text tool keep their own fonts.";
 "INTERFACE_APPEARANCE_HEADER" = "Appearance";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Keeps Liquid Glass elements, such as the tab bar, pure black like the background. When off, they get a dark gray tint so they stand out against it.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Black Glass";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Makes Instagram's dark mode pure black, sheets included. Message bubbles, search fields and similar elements stay a shade lighter so they remain visible. Only applies in dark mode.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Dark Mode";
 "INTERFACE_CAPTURE_HEADER" = "Capture";

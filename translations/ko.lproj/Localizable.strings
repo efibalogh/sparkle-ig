@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "시청 중 Instants가 읽음으로 표시되는 것을 방지하고 뷰어에 눈 버튼을 추가하여 하나를 읽음으로 표시합니다.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram과 Sparkle 전체의 글꼴을 교체합니다. .otf, .ttf, .ttc 파일을 가져올 수 있습니다. Instagram 로고와 스토리 텍스트 도구는 자체 글꼴을 유지합니다.";
 "INTERFACE_APPEARANCE_HEADER" = "모양";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "탭 막대 같은 Liquid Glass 요소를 배경처럼 완전한 검은색으로 유지합니다. 끄면 배경과 구분되도록 어두운 회색 색조가 적용됩니다.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "검은 글래스";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "시트를 포함해 Instagram의 다크 모드를 완전한 검은색으로 바꿉니다. 메시지 말풍선, 검색창 등은 잘 보이도록 조금 더 밝게 유지됩니다. 다크 모드에서만 적용됩니다.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED 다크 모드";
 "INTERFACE_CAPTURE_HEADER" = "캡처";

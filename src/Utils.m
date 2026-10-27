@@ -1098,6 +1098,7 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"interface_custom_font",
             // Read in %ctor, before any account session exists, like the font.
             @"interface_oled_dark_mode",
+            @"interface_oled_black_glass",
             @"interface_language",
             // Language packs live in one shared directory, so a pack installed or
             // refreshed under one account is the file every other account reads.

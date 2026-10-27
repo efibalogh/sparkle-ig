@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Instants را از علامت‌گذاری به‌عنوان دیده‌شده در حین تماشا متوقف می‌کند و یک دکمه‌ی چشم به نمایش‌گر اضافه می‌کند تا یکی را به‌عنوان دیده‌شده علامت‌گذاری کند.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "فونت را در سراسر اینستاگرام و Sparkle جایگزین می‌کند. فایل‌های .otf، .ttf یا .ttc را درون‌ریزی کنید. لوگوی اینستاگرام و ابزار متن استوری فونت مخصوص خودشان را حفظ می‌کنند.";
 "INTERFACE_APPEARANCE_HEADER" = "ظاهر";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "عناصر Liquid Glass مانند نوار زبانه‌ها را مثل پس‌زمینه کاملاً سیاه نگه می‌دارد. وقتی خاموش باشد، رنگ خاکستری تیره می‌گیرند تا از پس‌زمینه متمایز شوند.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "شیشه سیاه";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "حالت تیره اینستاگرام را، همراه با برگه‌ها، کاملاً سیاه می‌کند. حباب‌های پیام، فیلدهای جستجو و عناصر مشابه کمی روشن‌تر می‌مانند تا دیده شوند. فقط در حالت تیره اعمال می‌شود.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "حالت تیره OLED";
 "INTERFACE_CAPTURE_HEADER" = "ضبط صفحه";

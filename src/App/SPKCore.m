@@ -37,6 +37,8 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         // Bootstrap rather than feature defaults: the font hooks install in %ctor.
         @"interface_custom_font" : @"",
         @"interface_oled_dark_mode" : @(NO),
+        // Off = Liquid Glass gets a gray tint over OLED black; read in %ctor too.
+        @"interface_oled_black_glass" : @(NO),
         // Device-global Sparkle language. "auto" follows Instagram, then iOS.
         @"interface_language" : @"auto",
         // Keeps installed language packs level with the release they came from. Device-global for

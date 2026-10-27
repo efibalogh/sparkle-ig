@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "防止 Instants 在您查看时被标记为已看，并在查看器中添加眼睛按钮来将其标记为已看。";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "替换 Instagram 和 Sparkle 的字体。可导入 .otf、.ttf 或 .ttc 文件。Instagram 的标志和快拍文字工具保留自有字体。";
 "INTERFACE_APPEARANCE_HEADER" = "外观";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "让标签栏等 Liquid Glass 元素与背景一样保持纯黑。关闭后，它们会带上深灰色调，以便从背景中区分出来。";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "黑色玻璃";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "将 Instagram 的深色模式连同面板一起变为纯黑。消息气泡、搜索栏等元素会保持稍亮，以便清楚辨识。仅在深色模式下生效。";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED 深色模式";
 "INTERFACE_CAPTURE_HEADER" = "捕获";

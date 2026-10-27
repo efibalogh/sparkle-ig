@@ -24,6 +24,12 @@
 @interface UIPlaceholderColor : UIColor
 @end
 
+// iOS 26 Liquid Glass. Not in the SDK this builds against; the hook only needs
+// the class name and the tint setter.
+@interface UIGlassEffect : UIVisualEffect
+@property (nonatomic, copy) UIColor *tintColor;
+@end
+
 typedef UIColor * (^SPKOLEDColorProvider)(UITraitCollection *);
 
 typedef struct {
@@ -160,7 +166,13 @@ NSString *SPKOLEDCensusReport(void) {
 }
 #endif
 
+// Set while a Liquid Glass tint resolves, so Instagram's own value comes back
+// and the glass rule below decides what to do with it.
+static __thread int sSPKOLEDBypass;
+
 static BOOL SPKOLEDLookup(CGFloat r, CGFloat g, CGFloat b, uint32_t *outRGB) {
+    if (sSPKOLEDBypass)
+        return NO;
     uint32_t rgb = SPKOLEDChannel(r) << 16 | SPKOLEDChannel(g) << 8 | SPKOLEDChannel(b);
 #if SPK_DEV
     SPKOLEDCensusRecord(rgb, nil);
@@ -420,6 +432,67 @@ static UIColor *SPKOLEDAlertColor(UIColor *color, BOOL pressed) {
     return result;
 }
 
+// Liquid Glass (the tab bar, glass buttons) is tinted with Instagram's
+// background color at partial alpha. Remapped, that is black glass over a
+// black page, so the bar's edge disappears and only its icons show. Glass
+// floats with no edge of its own, so like an alert it gets a neutral gray:
+// the tint becomes the gray that, at Instagram's alpha, lands on this level
+// over pure black. Some tints are fixed colors already remapped to black when
+// they were built, so near-black counts as the background too. Any brighter
+// palette tint takes its normal mapping.
+static const CGFloat kSPKOLEDGlassTintLevel = 0x22 / 255.0;
+
+static UIColor *SPKOLEDGlassTint(UIColor *color) {
+    if (!color || objc_getAssociatedObject(color, @selector(spk_oledGlassTint)))
+        return color;
+    sSPKOLEDDepth++;
+    UIColor *result = [UIColor colorWithDynamicProvider:^UIColor *(UITraitCollection *traits) {
+        sSPKOLEDBypass++;
+        UIColor *resolved = [color resolvedColorWithTraitCollection:traits];
+        sSPKOLEDBypass--;
+        CGFloat r, g, b, a;
+        uint32_t mapped = 0;
+        if (traits.userInterfaceStyle != UIUserInterfaceStyleDark || ![resolved getRed:&r green:&g blue:&b alpha:&a] || a < 0.01)
+            return resolved;
+        BOOL nearBlack = MAX(SPKOLEDChannel(r), MAX(SPKOLEDChannel(g), SPKOLEDChannel(b))) <= 0x14;
+        if (!SPKOLEDLookup(r, g, b, &mapped) && !nearBlack)
+            return resolved;
+        CGFloat level = MIN(kSPKOLEDGlassTintLevel / a, 0x60 / 255.0);
+        sSPKOLEDDepth++;
+        UIColor *tint = mapped > 0x1A1A1A
+                            ? [UIColor colorWithRed:SPKOLEDComponent(mapped, 16) green:SPKOLEDComponent(mapped, 8) blue:SPKOLEDComponent(mapped, 0) alpha:a]
+                            : [UIColor colorWithRed:level green:level blue:level alpha:a];
+        sSPKOLEDDepth--;
+        return tint;
+    }];
+    sSPKOLEDDepth--;
+    objc_setAssociatedObject(result, @selector(spk_oledGlassTint), @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+#if SPK_DEV
+    static int logged;
+    sSPKOLEDBypass++;
+    UIColor *dark = [color resolvedColorWithTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark]];
+    sSPKOLEDBypass--;
+    if (logged < 20) {
+        logged++;
+        SPKLog(@"OLED", @"Glass tint %@ %@ -> %@", NSStringFromClass(color.class), dark,
+               [result resolvedColorWithTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:UIUserInterfaceStyleDark]]);
+    }
+#endif
+    return result;
+}
+
+%group SPKOLEDGlassHooks
+
+%hook UIGlassEffect
+
+- (void)setTintColor:(UIColor *)color {
+    %orig(SPKOLEDGlassTint(color));
+}
+
+%end
+
+%end
+
 // Repaints a view with its own color so the alert gray is applied. This goes
 // through UIView's setter: IGTapButton overrides setBackgroundColor: to record
 // the color as its normal state, so repainting a highlighted button through it
@@ -524,6 +597,9 @@ static void SPKOLEDFlagAlertSurfaces(UIView *view, UIView *skip, NSUInteger dept
         %init(SPKOLEDPlaceholderHooks);
     SPKOLEDInstallDeviceRGBHook();
     %init(SPKOLEDBackgroundHooks);
+    Class glassClass = NSClassFromString(@"UIGlassEffect");
+    if (glassClass && ![defaults boolForKey:@"interface_oled_black_glass"])
+        %init(SPKOLEDGlassHooks, UIGlassEffect = glassClass);
 }
 
 // Most hooks install in %ctor. The action sheet lives in FBSharedFramework,

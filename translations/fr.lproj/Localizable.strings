@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Empêche les Instants d'être marqués comme vus pendant que vous les regardez, et ajoute un bouton d'œil à la visionneuse pour en marquer un comme vu.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Remplace la police dans Instagram et Sparkle. Importez des fichiers .otf, .ttf ou .ttc. Le logo Instagram et l'outil texte des stories gardent leurs propres polices.";
 "INTERFACE_APPEARANCE_HEADER" = "Apparence";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Garde les éléments Liquid Glass, comme la barre d'onglets, en noir pur comme l'arrière-plan. Désactivé, ils prennent une teinte gris foncé pour s'en détacher.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Verre noir";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Rend le mode sombre d'Instagram noir pur, feuilles comprises. Les bulles de message, les champs de recherche et les éléments similaires restent un ton plus clair pour rester visibles. S'applique uniquement en mode sombre.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mode sombre OLED";
 "INTERFACE_CAPTURE_HEADER" = "Capture";

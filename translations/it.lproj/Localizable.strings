@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Impedisce che gli Instants siano contrassegnati come visti mentre li guardi, e aggiunge un pulsante occhio al visualizzatore per contrassegnarne uno come visto.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sostituisce il carattere in Instagram e in Sparkle. Importa file .otf, .ttf o .ttc. Il logo di Instagram e lo strumento testo delle storie mantengono i propri caratteri.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspetto";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Mantiene gli elementi Liquid Glass, come la barra delle schede, nero puro come lo sfondo. Se disattivato, ricevono una tinta grigio scuro per distinguersi dallo sfondo.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Vetro nero";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Rende nera pura la modalità scura di Instagram, pannelli inclusi. Bolle dei messaggi, campi di ricerca ed elementi simili restano di una tonalità più chiara per rimanere visibili. Si applica solo in modalità scura.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Modalità scura OLED";
 "INTERFACE_CAPTURE_HEADER" = "Cattura";

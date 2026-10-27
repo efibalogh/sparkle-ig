@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Sustabdo Instants nuo žymėjimo kaip matytų joms žiūrint ir prideda akies mygtuką į žiūryklę, kad pažymėtumėte vieną kaip matytą.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Pakeičia šriftą visoje Instagram ir Sparkle. Importuokite .otf, .ttf arba .ttc failus. Instagram logotipas ir istorijų teksto įrankis išlaiko savo šriftus.";
 "INTERFACE_APPEARANCE_HEADER" = "Išvaizda";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Liquid Glass elementai, pvz., skirtukų juosta, lieka visiškai juodi kaip fonas. Išjungus jie gauna tamsiai pilką atspalvį, kad išsiskirtų iš fono.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Juodas stiklas";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram tamsųjį režimą paverčia visiškai juodu, įskaitant lapus. Žinučių burbulai, paieškos laukai ir panašūs elementai lieka atspalviu šviesesni, kad būtų matomi. Taikoma tik tamsiuoju režimu.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED tamsusis režimas";
 "INTERFACE_CAPTURE_HEADER" = "Fiksavimas";

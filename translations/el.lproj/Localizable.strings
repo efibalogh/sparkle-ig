@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Σταματά τη σήμανση των Στιγμών ως Αναγνώσιμες καθώς τις παρακολουθείτε, και προσθέτει ένα κουμπί οφθαλμού στον προβολέα για να σημειώσετε ένα ως αναγνώσιμο.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Αντικαθιστά τη γραμματοσειρά σε όλο το Instagram και το Sparkle. Εισήγαγε αρχεία .otf, .ttf ή .ttc. Το λογότυπο του Instagram και το εργαλείο κειμένου των ιστοριών κρατούν τις δικές τους γραμματοσειρές.";
 "INTERFACE_APPEARANCE_HEADER" = "Εμφάνιση";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Κρατά τα στοιχεία Liquid Glass, όπως τη γραμμή καρτελών, καθαρά μαύρα όπως το φόντο. Όταν είναι ανενεργό, παίρνουν μια σκούρα γκρι απόχρωση ώστε να ξεχωρίζουν.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Μαύρο γυαλί";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Κάνει τη σκοτεινή λειτουργία του Instagram καθαρά μαύρη, μαζί με τα φύλλα. Τα συννεφάκια μηνυμάτων, τα πεδία αναζήτησης και παρόμοια στοιχεία μένουν λίγο πιο ανοιχτά ώστε να φαίνονται. Ισχύει μόνο στη σκοτεινή λειτουργία.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Σκοτεινή λειτουργία OLED";
 "INTERFACE_CAPTURE_HEADER" = "Σύλληψη";

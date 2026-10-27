@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Instants'ın onları izlerken görüldü olarak işaretlenmesini durdurur ve görüntülemede birini görüldü olarak işaretlemek için bir göz düğmesi ekler.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram ve Sparkle genelinde yazı tipini değiştirir. .otf, .ttf veya .ttc dosyaları içe aktar. Instagram logosu ve hikaye metin aracı kendi yazı tiplerini korur.";
 "INTERFACE_APPEARANCE_HEADER" = "Görünüm";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Sekme çubuğu gibi Liquid Glass öğelerini arka plan gibi saf siyah tutar. Kapalıyken arka plandan ayrışmaları için koyu gri bir ton alırlar.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Siyah Cam";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram'ın karanlık modunu, sayfalar dahil saf siyaha çevirir. Mesaj balonları, arama alanları ve benzeri öğeler görünür kalmaları için bir ton açık kalır. Yalnızca karanlık modda uygulanır.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Karanlık Mod";
 "INTERFACE_CAPTURE_HEADER" = "Yakala";

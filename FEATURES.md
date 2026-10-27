@@ -107,8 +107,10 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
 - **OLED Dark Mode**: Makes Instagram's dark mode pure black. **(restart)**
   - Backgrounds and sheets (comments, sharing, the map) become pure black. A few elements, such as message bubbles, search fields, and image placeholders, stay a neutral dark gray a shade lighter than the background, so they remain visible.
   - Only applies while Instagram is in dark mode; light mode is untouched.
+  - On iOS 26 and later, Liquid Glass (the tab bar, glass buttons) gets a dark gray tint so it stays visible against the black background.
   - The keyboard keeps the system's look: iOS draws it outside Instagram, so it can't be recolored.
   - Shared by every account on the device, since colors are created before Instagram knows which account is signed in.
+- **Black Glass**: Keeps Liquid Glass pure black like the background instead. Shown only while OLED Dark Mode is on, on iOS 26 and later. **(restart)**
 
 ### Explore & Search
 - **Hide Explore Posts Grid**: Hides the suggested-post grid on Explore. This follows the active account when **Per-Account Settings** is enabled.

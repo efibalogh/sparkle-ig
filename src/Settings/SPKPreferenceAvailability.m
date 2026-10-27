@@ -27,6 +27,11 @@ BOOL SPKPrefIsAvailable(NSString *key) {
         return SPKIsIOSVersionAtLeast(@"26.0");
     }
 
+    // Liquid Glass, and so its OLED tint choice, only exists on iOS 26+.
+    if ([key isEqualToString:@"interface_oled_black_glass"]) {
+        return SPKIsIOSVersionAtLeast(@"26.0");
+    }
+
     if ([key isEqualToString:@"notifs_pill_liquid_glass"]) {
         return SPKIsIOSVersionAtLeast(@"26.0");
     }

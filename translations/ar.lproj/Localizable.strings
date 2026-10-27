@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "توقف تحديد الـ Instants كمرئية أثناء مشاهدتك لها، وتضيف زر عين إلى العارض لتحديد واحد كمرئي.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "يستبدل الخط في كل أنحاء Instagram وSparkle. استورد ملفات ‎.otf أو ‎.ttf أو ‎.ttc. يحتفظ شعار Instagram وأداة نص القصص بخطوطهما.";
 "INTERFACE_APPEARANCE_HEADER" = "المظهر";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "يُبقي عناصر Liquid Glass، مثل شريط علامات التبويب، سوداء خالصة مثل الخلفية. عند إيقافه تحصل على لون رمادي داكن لتبرز عنها.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "زجاج أسود";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "يحوّل الوضع الداكن في Instagram إلى أسود خالص، بما في ذلك الأوراق. تبقى فقاعات الرسائل وحقول البحث والعناصر المشابهة أفتح بدرجة لتظل مرئية. يُطبَّق في الوضع الداكن فقط.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "الوضع الداكن OLED";
 "INTERFACE_CAPTURE_HEADER" = "الالتقاط";

@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Припиняє позначення Instants як переглянутих під час перегляду та додає кнопку ока до засобу перегляду для позначення як переглянутого.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Замінює шрифт в усьому Instagram і Sparkle. Імпортуйте файли .otf, .ttf або .ttc. Логотип Instagram і текстовий інструмент історій зберігають власні шрифти.";
 "INTERFACE_APPEARANCE_HEADER" = "Зовнішній вигляд";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Залишає елементи Liquid Glass, як-от панель вкладок, чисто чорними, як фон. Якщо вимкнено, вони отримують темно-сірий відтінок, щоб вирізнятися на тлі.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Чорне скло";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Робить темний режим Instagram чисто чорним, разом з аркушами. Бульбашки повідомлень, поля пошуку й подібні елементи лишаються на тон світлішими, щоб їх було видно. Діє лише в темному режимі.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Темний режим OLED";
 "INTERFACE_CAPTURE_HEADER" = "Захоплення";

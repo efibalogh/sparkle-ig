@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Oprește Instants din a fi marcate ca vizionate în timp ce le vizualizezi, și adaugă un buton ochi la vizualizator pentru a marca una ca vizionată.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Înlocuiește fontul în Instagram și în Sparkle. Importă fișiere .otf, .ttf sau .ttc. Sigla Instagram și instrumentul de text al poveștilor își păstrează propriile fonturi.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspect";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Păstrează elementele Liquid Glass, cum ar fi bara de file, negru pur ca fundalul. Când este dezactivat, primesc o nuanță gri închis ca să se distingă de fundal.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Sticlă neagră";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Face modul întunecat al Instagram negru pur, inclusiv foile. Bulele de mesaje, câmpurile de căutare și elementele similare rămân cu o nuanță mai deschise ca să se vadă. Se aplică doar în modul întunecat.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mod întunecat OLED";
 "INTERFACE_CAPTURE_HEADER" = "Captură";

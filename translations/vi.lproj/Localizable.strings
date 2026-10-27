@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Ngăn Instants được đánh dấu là đã xem khi bạn xem chúng và thêm nút mắt vào trình xem để đánh dấu một nút là đã xem.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Thay thế phông chữ trên Instagram và Sparkle. Nhập các tệp .otf, .ttf hoặc .ttc. Logo Instagram và công cụ văn bản trong tin vẫn giữ phông chữ riêng.";
 "INTERFACE_APPEARANCE_HEADER" = "Giao diện";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Giữ các thành phần Liquid Glass, như thanh tab, đen tuyền giống nền. Khi tắt, chúng có sắc xám đậm để nổi bật trên nền.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Kính đen";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Chuyển chế độ tối của Instagram thành đen tuyền, kể cả các bảng. Bong bóng tin nhắn, ô tìm kiếm và các thành phần tương tự vẫn sáng hơn một chút để dễ nhìn. Chỉ áp dụng ở chế độ tối.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Chế độ tối OLED";
 "INTERFACE_CAPTURE_HEADER" = "Ghi hình";

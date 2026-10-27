@@ -43,11 +43,26 @@
                 appFont.helpText = SPKL(@"INTERFACE_APPEARANCE_APP_FONT_HELP");
                 appFont;
             }),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE")
-                                                          icon:SPKSettingsIcon(@"moon")
-                                                   defaultsKey:@"interface_oled_dark_mode"
-                                               requiresRestart:YES],
-                               SPKL(@"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP")),
+            ({
+                SPKSetting *oled = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE")
+                                                                                 icon:SPKSettingsIcon(@"moon")
+                                                                          defaultsKey:@"interface_oled_dark_mode"
+                                                                      requiresRestart:YES],
+                                                      SPKL(@"INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP"));
+                oled.reloadsTableOnSwitchChange = YES;
+                oled;
+            }),
+            ({
+                SPKSetting *blackGlass = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE")
+                                                                                       icon:SPKSettingsIcon(@"moon_filled")
+                                                                                defaultsKey:@"interface_oled_black_glass"
+                                                                            requiresRestart:YES],
+                                                            SPKL(@"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP"));
+                blackGlass.hiddenProvider = ^BOOL {
+                    return !SPKPrefIsAvailable(@"interface_oled_black_glass") || ![SPKUtils getBoolPref:@"interface_oled_dark_mode"];
+                };
+                blackGlass;
+            }),
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_EXPLORE_SEARCH_HEADER"), @[

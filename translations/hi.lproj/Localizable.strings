@@ -1062,6 +1062,8 @@
 "INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "इंस्टेंट्स को देखी गई चिह्नित होने से रोकता है जब आप उन्हें देख रहे हों, और व्यूअर में एक आंख बटन जोड़ता है।";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram और Sparkle में फ़ॉन्ट बदल देता है। .otf, .ttf या .ttc फाइलें आयात करें। Instagram का लोगो और स्टोरी टेक्स्ट टूल अपने ही फ़ॉन्ट रखते हैं।";
 "INTERFACE_APPEARANCE_HEADER" = "दृश्य";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "टैब बार जैसे Liquid Glass तत्वों को बैकग्राउंड की तरह पूरी तरह काला रखता है। बंद होने पर उन्हें गहरा ग्रे रंग मिलता है ताकि वे बैकग्राउंड से अलग दिखें।";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "काला ग्लास";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram के डार्क मोड को शीट सहित पूरी तरह काला कर देता है। मैसेज बबल, सर्च फ़ील्ड और ऐसे तत्व थोड़े हल्के रहते हैं ताकि दिखते रहें। केवल डार्क मोड में लागू होता है।";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED डार्क मोड";
 "INTERFACE_CAPTURE_HEADER" = "कैप्चर";
