@@ -139,6 +139,13 @@ static NSTimeInterval const kSPKNotificationDefaultPillDuration = 1.5;
 static NSTimeInterval const kSPKNotificationMinPillDuration = 0.5;
 static NSTimeInterval const kSPKNotificationMaxPillDuration = 5.0;
 static NSUInteger const kSPKNotificationMaxQueuedToasts = 3;
+// Gap between the keyboard top and the bottom stack. The keyboard covers the tab
+// bar the usual bottom margin clears, so the stack only needs a small gap here.
+static CGFloat const kSPKNotificationKeyboardMargin = 12.0;
+
+// Last keyboard end frame in screen coordinates, CGRectNull while hidden. Tracked
+// from load because the center is created lazily, often after the keyboard is up.
+static CGRect sSPKNotificationKeyboardScreenFrame = {{INFINITY, INFINITY}, {0, 0}};
 
 @interface SPKNotificationSlot : NSObject
 @property (nonatomic, strong) SPKNotificationPillView *pill;
@@ -501,11 +508,51 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
 
 @implementation SPKNotificationCenter
 
++ (void)load {
+    [NSNotificationCenter.defaultCenter addObserverForName:UIKeyboardWillChangeFrameNotification
+                                                    object:nil
+                                                     queue:NSOperationQueue.mainQueue
+                                                usingBlock:^(NSNotification *note) {
+                                                    [self spk_keyboardWillChange:note hiding:NO];
+                                                }];
+    [NSNotificationCenter.defaultCenter addObserverForName:UIKeyboardWillHideNotification
+                                                    object:nil
+                                                     queue:NSOperationQueue.mainQueue
+                                                usingBlock:^(NSNotification *note) {
+                                                    [self spk_keyboardWillChange:note hiding:YES];
+                                                }];
+}
+
++ (void)spk_keyboardWillChange:(NSNotification *)note hiding:(BOOL)hiding {
+    NSValue *endFrame = note.userInfo[UIKeyboardFrameEndUserInfoKey];
+    sSPKNotificationKeyboardScreenFrame = (hiding || !endFrame) ? CGRectNull : endFrame.CGRectValue;
+    SPKNotificationCenter *center = [self spk_existingCenter];
+    if (center.visible.count == 0)
+        return;
+    NSTimeInterval duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    UIViewAnimationCurve curve = (UIViewAnimationCurve)[note.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [center relayout];
+    [UIView animateWithDuration:duration > 0.0 ? duration : 0.25
+                          delay:0
+                        options:(UIViewAnimationOptions)curve << 16 | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [center.overlayRoot.view layoutIfNeeded];
+                     }
+                     completion:nil];
+}
+
+static SPKNotificationCenter *sSPKNotificationSharedCenter;
+
++ (instancetype)spk_existingCenter {
+    return sSPKNotificationSharedCenter;
+}
+
 + (instancetype)shared {
     static SPKNotificationCenter *center;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         center = [SPKNotificationCenter new];
+        sSPKNotificationSharedCenter = center;
     });
     return center;
 }
@@ -584,10 +631,35 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
         dispatch_async(dispatch_get_main_queue(), block);
 }
 
+// How far the keyboard rises above the host's safe-area bottom, 0 while it is
+// hidden, undocked or floating (narrower than the host).
+- (CGFloat)keyboardLift {
+    UIView *host = self.overlayRoot.view;
+    UIScreen *screen = host.window.screen;
+    if (!host.window || !screen || CGRectIsNull(sSPKNotificationKeyboardScreenFrame) || CGRectIsEmpty(sSPKNotificationKeyboardScreenFrame))
+        return 0.0;
+    CGRect keyboard = [host convertRect:sSPKNotificationKeyboardScreenFrame fromCoordinateSpace:screen.coordinateSpace];
+    if (CGRectGetWidth(keyboard) < CGRectGetWidth(host.bounds) - 1.0 || CGRectGetMinY(keyboard) >= CGRectGetMaxY(host.bounds))
+        return 0.0;
+    CGFloat safeBottom = CGRectGetMaxY(host.bounds) - host.safeAreaInsets.bottom;
+    return MAX(0.0, safeBottom - CGRectGetMinY(keyboard));
+}
+
+- (CGFloat)baseBottomMargin {
+    return SPKNotificationUsesInstagramStyle() ? kSPKNotificationInstagramBottomMargin : kSPKNotificationBottomMargin;
+}
+
+// How much the keyboard raised the bottom stack above its usual base.
+- (CGFloat)bottomStackLift {
+    CGFloat lift = [self keyboardLift];
+    return lift > 0.0 ? MAX(0.0, lift + kSPKNotificationKeyboardMargin - [self baseBottomMargin]) : 0.0;
+}
+
 - (CGFloat)offsetForIndex:(NSUInteger)index {
     BOOL isBottom = [[SPKUtils getStringPref:kSPKNotificationPillPositionKey] isEqualToString:@"bottom"];
-    CGFloat bottomMargin = SPKNotificationUsesInstagramStyle() ? kSPKNotificationInstagramBottomMargin : kSPKNotificationBottomMargin;
-    CGFloat offset = isBottom ? bottomMargin : kSPKNotificationTopMargin;
+    CGFloat offset = isBottom ? [self baseBottomMargin] : kSPKNotificationTopMargin;
+    if (isBottom)
+        offset += [self bottomStackLift];
     for (NSUInteger i = 0; i < index && i < self.visible.count; i++) {
         SPKNotificationPillView *pill = self.visible[i].pill;
         CGFloat height = CGRectGetHeight(pill.bounds);
@@ -598,13 +670,19 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
     return offset;
 }
 
-- (void)relayoutAnimated:(BOOL)animated {
-    UIView *host = self.overlayRoot.view;
+- (void)relayout {
     BOOL isBottom = [[SPKUtils getStringPref:kSPKNotificationPillPositionKey] isEqualToString:@"bottom"];
+    CGFloat bottomLift = isBottom ? [self bottomStackLift] : 0.0;
     for (NSUInteger i = 0; i < self.visible.count; i++) {
         CGFloat offset = [self offsetForIndex:i];
         self.visible[i].topConstraint.constant = isBottom ? -offset : offset;
+        self.visible[i].pill.presentationBottomLift = bottomLift;
     }
+}
+
+- (void)relayoutAnimated:(BOOL)animated {
+    UIView *host = self.overlayRoot.view;
+    [self relayout];
     void (^layout)(void) = ^{
         [host layoutIfNeeded];
     };
@@ -621,7 +699,10 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
     BOOL isBottom = [[SPKUtils getStringPref:kSPKNotificationPillPositionKey] isEqualToString:@"bottom"];
     NSLayoutConstraint *anchor;
     if (isBottom) {
-        anchor = [pill.bottomAnchor constraintEqualToAnchor:host.safeAreaLayoutGuide.bottomAnchor constant:90.0];
+        // Starts just under the stack's base, so with the keyboard up it rises from
+        // the keyboard edge rather than through it.
+        CGFloat lift = [self bottomStackLift];
+        anchor = [pill.bottomAnchor constraintEqualToAnchor:host.safeAreaLayoutGuide.bottomAnchor constant:90.0 - lift];
     } else {
         anchor = [pill.topAnchor constraintEqualToAnchor:host.safeAreaLayoutGuide.topAnchor constant:-90.0];
     }

@@ -15,6 +15,9 @@ typedef NS_ENUM(NSUInteger, SPKNotificationTone) {
                               tone:(SPKNotificationTone)tone;
 
 - (void)setPresentationTopConstraint:(NSLayoutConstraint *)constraint;
+/// How far the bottom stack is lifted off the safe-area bottom (the keyboard), so a
+/// bottom pill exits from where it is rather than sliding down across the keyboard.
+@property (nonatomic, assign) CGFloat presentationBottomLift;
 
 /// YES when the pill is drawn as Instagram's own toast (the Instagram notification style).
 @property (nonatomic, readonly) BOOL instagramSkin;

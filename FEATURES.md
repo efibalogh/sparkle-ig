@@ -566,7 +566,7 @@ Rows follow the chosen style.
 - **Tint by Result** (Instagram): Tints the toast in the result's color. Same setting as Glow.
 
 ### Behavior
-- **Position**: Top or bottom. Notifications enter and leave on that edge.
+- **Position**: Top or bottom. Notifications enter and leave on that edge. Bottom notifications rise above the keyboard while it is open.
 - **Duration**: Auto-dismiss delay (0.5–5.0s).
 - **Download Progress**: What the line under a running download shows: percent, size, both, or off.
 

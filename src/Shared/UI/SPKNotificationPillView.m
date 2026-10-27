@@ -1135,7 +1135,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     BOOL isBottom = [[SPKUtils getStringPref:kSPKNotificationPillPositionKey] isEqualToString:@"bottom"];
     if (isBottom) {
-        self.topConstraint.constant = self.heightConstraint.constant + 10.0;
+        self.topConstraint.constant = self.heightConstraint.constant + 10.0 - self.presentationBottomLift;
     } else {
         self.topConstraint.constant = -(self.heightConstraint.constant + 10.0);
     }
