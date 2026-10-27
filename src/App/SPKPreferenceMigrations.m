@@ -94,7 +94,17 @@ static NSArray<SPKPreferenceMigration *> *SPKPreferenceMigrationList(void) {
         });
         feedMetaPromotions.keepsLegacyKey = YES;
 
-        list = @[ instantsCameraButton, hideRecentSearches, scrollEdgeStyle, storyManualSeenMode, reelsStartMutedGlobal, feedMetaPromotions ];
+        // Pin People in Search moved from General to Explore & Search, and its keys
+        // with it.
+        SPKPreferenceMigration *searchPinsEnabled = SPKMigration(@"interface_search_pins", @"general_search_pins", @"interface_search_pins", nil);
+        SPKPreferenceMigration *searchPinned = SPKMigration(@"interface_search_pinned", @"general_search_pinned", @"interface_search_pinned", nil);
+        SPKPreferenceMigration *searchPinsListTypes = SPKMigration(@"interface_search_pins_list_types", @"general_search_pins_list_types",
+                                                                   @"interface_search_pins_list_types", nil);
+
+        list = @[
+            instantsCameraButton, hideRecentSearches, scrollEdgeStyle, storyManualSeenMode, reelsStartMutedGlobal, feedMetaPromotions, searchPinsEnabled,
+            searchPinned, searchPinsListTypes
+        ];
     });
     return list;
 }

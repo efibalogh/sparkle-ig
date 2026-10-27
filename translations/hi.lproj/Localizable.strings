@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "ट्रैकिंग के बिना लिंक कॉपी करें";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Instagram में समर्थित टेक्स्ट को कॉपी करने के लिए उसे लंबा दबाएं।";
 "GENERAL_BEHAVIOR_HEADER" = "व्यवहार";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "मौजूदा हाल की सर्च छिपाता है और नई सहेजना बंद कर देता है। रीस्टार्ट आवश्यक है।";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "हाल की खोजें छिपाएं";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "किसी स्टोरी, हाइलाइट, पोस्ट या रील पर लिंक कॉपी करने के लिए भेजें बटन को लंबा दबाएं।";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "लिंक कॉपी करने के लिए भेजें दबाए रखें";
 "GENERAL_BROWSER_LINKS_HELP" = "बायो, कैप्शन, स्टोरी, मैसेज और विज्ञापनों के लिंक Instagram के ब्राउज़र के बाहर खोलता है, ताकि उसकी ट्रैकिंग स्क्रिप्ट कभी लोड न हों। Instagram का रीडायरेक्ट और ट्रैकिंग पैरामीटर पहले हटा दिए जाते हैं। Meta पेज और साइन-इन अब भी Instagram के ब्राउज़र में खुलते हैं।";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore और सर्च";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Explore टैब पर सुझाई गई पोस्ट का ग्रिड छिपाता है।";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Explore पोस्ट ग्रिड छिपाएं";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "मौजूदा हाल की सर्च छिपाता है और नई सहेजना बंद कर देता है। रीस्टार्ट आवश्यक है।";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "हाल की खोजें छिपाएं";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "सर्च फ़ील्ड में ट्रेंडिंग सर्च छिपाता है। रीस्टार्ट आवश्यक है।";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "ट्रेंडिंग सर्च छिपाएं";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "सर्च पर फ़ोकस करने पर क्लिपबोर्ड में मौजूद Instagram लिंक खोलने का विकल्प देता है।";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "क्लिपबोर्ड लिंक खोलें";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "किसी व्यक्ति को पिन या अनपिन करने के लिए खोज में उसे दबाकर रखें। पिन किए गए लोग आपकी हाल की खोजों के ऊपर रहते हैं, उन्हें साफ़ करने के बाद भी।";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "क्रम बदलें";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "हो गया";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "पिन किए गए";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "खोज में लोगों को पिन करें";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "खोज में पिन किया गया";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "खोज से अनपिन किया गया";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "एक्सप्लोर ग्रिड की टाइलों को लंबे 3:4 लेआउट के बजाय चौकोर दिखाता है। लागू करने के लिए एक्सप्लोर फिर से खोलें।";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "चौकोर ग्रिड";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass और Blur";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "विषय सेटिंग खोलें";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "प्रोफ़ाइल विश्लेषक पूर्ण";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "प्रतिक्रिया हटाई गई";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "खोज पिन";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "सेटिंग्स और उपकरण";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "शेयर शीट पिन";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Story स्वचालित सहेज सूची परिवर्तन";

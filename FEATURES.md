@@ -27,7 +27,6 @@ marked **(restart)** and prompt for a relaunch when changed.
 
 ### Behavior
 - **Copy Text**: Long-press text fields across the app to copy them.
-- **Hide Recent Searches** *(restart)*: Hides existing recent searches and stops search bars from saving new queries.
 - **Copy Links Without Tracking**: Strips the username path and tracking parameters from copied links.
 - **Hold Send to Copy Link**: Long-press the send/share button to copy the post link. A story viewed inside a highlight copies the highlight's own link, which keeps working after the story expires.
 - **Detect Links in Text** *(restart)*: Finds explicit `http://` and `https://` links in comments, post captions, and reel captions, colors them in Instagram's blue and makes them tappable. Nothing is requested from a link until you tap it. Off by default. Tapped links open per Open Links In below.
@@ -115,6 +114,8 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
 - **Hide Explore Posts Grid**: Hides the suggested-post grid on Explore. This follows the active account when **Per-Account Settings** is enabled.
 - **Square Grid**: Shows Explore grid tiles as squares instead of the taller 3:4 layout. Reopen Explore to apply.
 - **Hide Trending Searches** *(restart)*: Hides trending searches under the Explore search bar.
+- **Hide Recent Searches** *(restart)*: Hides existing recent searches and stops search bars from saving new queries.
+- **Pin People in Search**: Hold a person in search to pin or unpin them. Pinned people get their own **Pinned** section above your recent searches, with no limit, and are left out of Recent so nobody appears twice. Pins are kept by Sparkle, so they survive Instagram trimming, syncing or clearing its history. Tap **Reorder** on the section, then hold and drag to change the order. Per account.
 - **Open Clipboard Link**: Long-press the Explore tab to open an Instagram URL from the clipboard. Post and reel links open on their own page with the same native single-post push as the Gallery, instead of landing in the main feed, and never disturb the tab destination when Saved borrows a tab slot. Story and highlight links (`instagram.com/stories/...`, `instagram.com/s/...`) open the story viewer directly, on the linked story when the link names one. A link to a story older than 24 hours opens the account's profile and looks for the story in its highlights instead.
 
 ### Capture

@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "کپی لینک بدون ردیابی";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "برای کپی کردن متن‌های پشتیبانی‌شده در سراسر اینستاگرام، آن‌ها را لمس طولانی کنید.";
 "GENERAL_BEHAVIOR_HEADER" = "رفتار";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "جستجوهای اخیر موجود را پنهان می‌کند و ذخیره جستجوهای جدید را متوقف می‌کند. نیاز به راه‌اندازی مجدد دارد.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "پنهان‌سازی جستجوهای اخیر";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "برای کپی کردن لینک یک استوری، هایلایت، پست یا ریل، دکمه ارسال آن را لمس طولانی کنید.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "لمس طولانی دکمه ارسال برای کپی لینک";
 "GENERAL_BROWSER_LINKS_HELP" = "پیوندهای بیوگرافی‌ها، کپشن‌ها، استوری‌ها، پیام‌ها و تبلیغات را خارج از مرورگر Instagram باز می‌کند تا اسکریپت‌های ردیابی آن هرگز بارگیری نشوند. ابتدا تغییر مسیر و پارامترهای ردیابی Instagram حذف می‌شوند. صفحات Meta و مراحل ورود همچنان در مرورگر Instagram باز می‌شوند.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "اکسپلور و جستجو";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "شبکه پست‌های پیشنهادی را در تب اکسپلور پنهان می‌کند.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "پنهان‌سازی شبکه پست‌های اکسپلور";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "جستجوهای اخیر موجود را پنهان می‌کند و ذخیره جستجوهای جدید را متوقف می‌کند. نیاز به راه‌اندازی مجدد دارد.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "پنهان‌سازی جستجوهای اخیر";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "جستجوهای پرطرفدار را در فیلد جستجو پنهان می‌کند. نیاز به راه‌اندازی مجدد دارد.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "پنهان‌سازی جستجوهای پرطرفدار";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "تب اکسپلور را لمس طولانی کنید تا لینک پشتیبانی‌شده اینستاگرامی از کلیپ‌بورد شما باز شود. اگر کلیپ‌بورد حاوی لینک معتبری نباشد، اینستاگرام جستجو را به‌طور معمول باز می‌کند.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "باز کردن لینک کلیپ‌بورد";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "یک فرد را در جستجو نگه دارید تا سنجاق یا از سنجاق خارج شود. افراد سنجاق‌شده بالای جستجوهای اخیر شما می‌مانند، حتی پس از پاک کردن آن‌ها.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "مرتب‌سازی";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "تمام";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "سنجاق‌شده";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "سنجاق کردن افراد در جستجو";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "در جستجو سنجاق شد";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "سنجاق از جستجو برداشته شد";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "کاشی‌های شبکه اکسپلور را به‌جای چیدمان بلندتر ۳:۴ به‌صورت مربع نشان می‌دهد. برای اعمال، اکسپلور را دوباره باز کن.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "شبکه مربعی";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "شیشه مایع و تاری";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "باز کردن تنظیمات موضوع";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer کامل شد";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "واکنش حذف شد";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "سنجاق‌های جستجو";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "تنظیمات و ابزارها";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "سنجاق‌های برگه اشتراک‌گذاری";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "تغییرات فهرست ذخیره خودکار استوری";

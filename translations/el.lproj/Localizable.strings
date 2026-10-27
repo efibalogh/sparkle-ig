@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Αντιγραφή Συνδέσμων χωρίς Παρακολούθηση";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Πατήστε παρατεταμένα υποστηριζόμενο κείμενο σε όλο το Instagram για να το αντιγράψετε.";
 "GENERAL_BEHAVIOR_HEADER" = "Συμπεριφορά";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Κρύβει τις υπάρχουσες πρόσφατες αναζητήσεις και σταματά να αποθηκεύει νέες. Απαιτεί επανεκκίνηση.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Απόκρυψη Πρόσφατων Αναζητήσεων";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Πατήστε παρατεταμένα το κουμπί αποστολής σε story, highlight, δημοσίευση ή reel για να αντιγράψετε τον σύνδεσμό του.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Κράτημα Αποστολής για Αντιγραφή Συνδέσμου";
 "GENERAL_BROWSER_LINKS_HELP" = "Ανοίγει συνδέσμους από βιογραφικά, λεζάντες, ιστορίες, μηνύματα και διαφημίσεις εκτός του προγράμματος περιήγησης του Instagram, ώστε τα σενάρια παρακολούθησής του να μη φορτώνονται ποτέ. Η ανακατεύθυνση και οι παράμετροι παρακολούθησης του Instagram αφαιρούνται πρώτα. Οι σελίδες της Meta και οι διαδικασίες σύνδεσης ανοίγουν ακόμα στο πρόγραμμα περιήγησης του Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Εξερεύνηση & Αναζήτηση";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Κρύβει το πλέγμα προτεινόμενων δημοσιεύσεων στην καρτέλα Εξερεύνηση.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Απόκρυψη Πλέγματος Αναρτήσεων Εξερεύνησης";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Κρύβει τις υπάρχουσες πρόσφατες αναζητήσεις και σταματά να αποθηκεύει νέες. Απαιτεί επανεκκίνηση.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Απόκρυψη Πρόσφατων Αναζητήσεων";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Κρύβει τις δημοφιλείς αναζητήσεις στο πεδίο αναζήτησης. Απαιτεί επανεκκίνηση.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Απόκρυψη Αναζητήσεων Τάσης";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Πατήστε παρατεταμένα την καρτέλα Εξερεύνηση για να ανοίξετε έναν υποστηριζόμενο σύνδεσμο Instagram από το πρόχειρο. Αν το πρόχειρο δεν περιέχει έγκυρο σύνδεσμο, το Instagram ανοίγει κανονικά την αναζήτηση.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Άνοιγμα Συνδέσμου Clipboard";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Πατήστε παρατεταμένα ένα άτομο στην αναζήτηση για να το καρφιτσώσετε ή να το ξεκαρφιτσώσετε. Τα καρφιτσωμένα άτομα μένουν πάνω από τις πρόσφατες αναζητήσεις, ακόμη και αφού τις διαγράψετε.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Αναδιάταξη";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Τέλος";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Καρφιτσωμένα";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Καρφίτσωμα ατόμων στην αναζήτηση";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Καρφιτσώθηκε στην αναζήτηση";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Ξεκαρφιτσώθηκε από την αναζήτηση";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Εμφανίζει τα πλακίδια του πλέγματος Εξερεύνησης ως τετράγωνα αντί για την ψηλότερη διάταξη 3:4. Άνοιξε ξανά την Εξερεύνηση για εφαρμογή.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Τετράγωνο πλέγμα";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Θόλωμα";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Άνοιγμα ρυθμίσεων θέματος";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Η Ανάλυση Προφίλ ολοκληρώθηκε";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Αφαιρέθηκε Αντίδραση";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Καρφιτσώματα αναζήτησης";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Ρυθμίσεις & Εργαλεία";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Καρφιτσώματα φύλλου κοινοποίησης";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Αλλαγές λίστας αυτόματης αποθήκευσης ιστορίας";

@@ -17,17 +17,17 @@
     NSMutableArray *sections = [NSMutableArray arrayWithArray:@[
         SPKTopicSection(SPKL(@"INTERFACE_NOTIFICATIONS_HEADER"), @[
             SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"INTERFACE_NOTIFICATIONS_HEADER")
-                                           subtitle:nil
-                                               icon:SPKSettingsIcon(@"notification")
-                                        navSections:[SPKNotificationSettingsProvider sections]],
+                                                          subtitle:nil
+                                                              icon:SPKSettingsIcon(@"notification")
+                                                       navSections:[SPKNotificationSettingsProvider sections]],
                                SPKL(@"INTERFACE_NOTIFICATIONS_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_TABS_HEADER"), @[
             SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"INTERFACE_TABS_TAB_EDITOR_TITLE")
-                                           subtitle:nil
-                                               icon:SPKSettingsIcon(@"edit")
-                                     viewController:[[SPKTabEditorViewController alloc] init]],
+                                                          subtitle:nil
+                                                              icon:SPKSettingsIcon(@"edit")
+                                                    viewController:[[SPKTabEditorViewController alloc] init]],
                                SPKL(@"INTERFACE_TABS_TAB_EDITOR_HELP")),
         ],
                         nil),
@@ -63,18 +63,31 @@
                 s;
             }),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE")
-                                           icon:SPKSettingsIcon(@"grid_square")
-                                    defaultsKey:@"interface_explore_square_grid"],
+                                                          icon:SPKSettingsIcon(@"grid_square")
+                                                   defaultsKey:@"interface_explore_square_grid"],
                                SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE")
-                                           icon:SPKSettingsIcon(@"trending")
-                                    defaultsKey:@"interface_hide_trending_searches"
-                                requiresRestart:YES],
-                               SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE")
-                                           icon:SPKSettingsIcon(@"link")
-                                    defaultsKey:@"interface_open_clipboard_link"],
+                                                          icon:SPKSettingsIcon(@"link")
+                                                   defaultsKey:@"interface_open_clipboard_link"],
                                SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP"))
+        ],
+                        nil),
+
+        SPKTopicSection(@"", @[
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE")
+                                                          icon:SPKSettingsIcon(@"trending")
+                                                   defaultsKey:@"interface_hide_trending_searches"
+                                               requiresRestart:YES],
+                               SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE")
+                                                          icon:SPKSettingsIcon(@"search")
+                                                   defaultsKey:@"general_hide_recent_searches"
+                                               requiresRestart:YES],
+                               SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE")
+                                                          icon:SPKSettingsIcon(@"pin")
+                                                   defaultsKey:@"interface_search_pins"],
+                               SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP")),
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_CAPTURE_HEADER"), @[

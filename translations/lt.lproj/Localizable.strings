@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Kopijuoti nuorodas be stebėjimo";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Ilgai paspauskite palaikomą tekstą visame Instagram, kad jį nukopijuotumėte.";
 "GENERAL_BEHAVIOR_HEADER" = "Elgsena";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Slėpia esamas naujausias paieškas ir nebeįrašo naujų. Reikia paleisti iš naujo.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Slėpti naujausias paieškas";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Ilgai paspauskite siuntimo mygtuką prie istorijos, akcento, įrašo ar Reels vaizdo įrašo, kad nukopijuotumėte jo nuorodą.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Laikyti siuntimą nuorodai kopijuoti";
 "GENERAL_BROWSER_LINKS_HELP" = "Atidaro nuorodas iš biografijų, aprašų, istorijų, žinučių ir reklamų už Instagram naršyklės ribų, todėl jos sekimo scenarijai niekada neįkeliami. Pirmiausia pašalinamas Instagram peradresavimas ir sekimo parametrai. Meta puslapiai ir prisijungimai vis tiek atidaromi Instagram naršyklėje.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Naršyti ir paieška";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Slepia siūlomų įrašų tinklelį skirtuke „Naršyti“.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Slėpti „Naršyti“ įrašų tinklelį";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Slėpia esamas naujausias paieškas ir nebeįrašo naujų. Reikia paleisti iš naujo.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Slėpti naujausias paieškas";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Slepia populiarias paieškas paieškos lauke. Reikia paleisti iš naujo.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Slėpti populiarias paieškas";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Ilgai palieskite skirtuką „Naršyti“, kad atidarytumėte palaikomą Instagram nuorodą iš mainų srities. Jei mainų srityje nėra tinkamos nuorodos, Instagram paiešką atidaro įprastai.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Atidaryti mainų srities nuorodą";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Paieškoje palaikykite paspaudę žmogų, kad jį prisegtumėte arba atsegtumėte. Prisegti žmonės lieka virš naujausių paieškų, net jas išvalius.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Pertvarkyti";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Atlikta";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Prisegti";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Prisegti žmones paieškoje";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Prisegta paieškoje";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Atsegta iš paieškos";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Naršymo tinklelio langelius rodo kvadratais, o ne aukštesniu 3:4 išdėstymu. Norėdami pritaikyti, iš naujo atidarykite Naršymą.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Kvadratinis tinklelis";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ir suliejimas";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Atidaryti temos nustatymus";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profilis analizė baigta";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Pašalinta reakcija";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Paieškos prisegimai";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Nustatymai ir įrankiai";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Bendrinimo lapo prisegimai";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Stories automatinio išsaugojimo sąrašo pokyčiai";

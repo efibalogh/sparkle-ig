@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Copiază linkuri fără urmărire";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Apasă lung pe textul acceptat din Instagram pentru a-l copia.";
 "GENERAL_BEHAVIOR_HEADER" = "Comportament";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Ascunde căutările recente existente și nu mai salvează altele noi. Necesită repornire.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Ascunde căutări recente";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Apasă lung pe butonul de trimitere dintr-o poveste, evidențiere, postare sau reel pentru a-i copia linkul.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Ține apăsat trimite pentru copiază link";
 "GENERAL_BROWSER_LINKS_HELP" = "Deschide linkurile din biografii, descrieri, povești, mesaje și reclame în afara browserului Instagram, astfel încât scripturile sale de urmărire nu se încarcă niciodată. Redirecționarea și parametrii de urmărire ai Instagram sunt eliminați mai întâi. Paginile Meta și autentificările se deschid în continuare în browserul Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explorare și căutare";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Ascunde grila de postări sugerate din fila Explorează.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Ascunde grilă postări explorare";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Ascunde căutările recente existente și nu mai salvează altele noi. Necesită repornire.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Ascunde căutări recente";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Ascunde căutările în tendințe din câmpul de căutare. Necesită repornire.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ascunde căutări trending";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Apasă lung fila Explore pentru a deschide un link Instagram acceptat din clipboard. Dacă clipboardul nu conține un link valid, Instagram deschide normal căutarea.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Deschide link din clipboard";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Ține apăsat pe o persoană în căutare pentru a o fixa sau a anula fixarea. Persoanele fixate rămân deasupra căutărilor recente, chiar și după ce le ștergi.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Reordonează";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Gata";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Fixate";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Fixează persoane în căutare";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Fixat în căutare";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Fixare anulată în căutare";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Afișează casetele din grila Explorează ca pătrate în loc de aspectul 3:4 mai înalt. Redeschide Explorează pentru a aplica.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grilă pătrată";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass și estompare";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Deschide setările subiectului";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Analiză de profil completă";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reacție eliminată";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Fixări în căutare";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Setări și instrumente";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Fixări în foaia de partajare";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Modificări lista salvare automată povești";

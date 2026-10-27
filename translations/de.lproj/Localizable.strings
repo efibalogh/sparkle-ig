@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Links ohne Tracking kopieren";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Drücke in ganz Instagram lange auf unterstützten Text, um ihn zu kopieren.";
 "GENERAL_BEHAVIOR_HEADER" = "Verhalten";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Blendet vorhandene letzte Suchanfragen aus und speichert keine neuen mehr. Erfordert einen Neustart.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Letzte Suchen ausblenden";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Drücke lange auf den Senden-Button einer Story, eines Highlights, Beitrags oder Reels, um den Link zu kopieren.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Sende-Schaltfläche halten zum Kopieren des Links";
 "GENERAL_BROWSER_LINKS_HELP" = "Öffnet Links aus Bios, Bildunterschriften, Stories, Nachrichten und Werbung außerhalb des Instagram-Browsers, sodass dessen Tracking-Skripte nie geladen werden. Instagrams Weiterleitung und Tracking-Parameter werden vorher entfernt. Meta-Seiten und Anmeldevorgänge werden weiterhin im Instagram-Browser geöffnet.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Erkunden & Suche";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Blendet das Raster vorgeschlagener Beiträge im Erkunden-Tab aus.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Erkunden-Beitrags-Gitter ausblenden";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Blendet vorhandene letzte Suchanfragen aus und speichert keine neuen mehr. Erfordert einen Neustart.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Letzte Suchen ausblenden";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Blendet angesagte Suchanfragen im Suchfeld aus. Erfordert einen Neustart.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trendingsuchen ausblenden";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Bietet an, einen Instagram-Link aus der Zwischenablage zu öffnen, sobald du die Suche öffnest.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Link aus Zwischenablage öffnen";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Halte eine Person in der Suche gedrückt, um sie anzuheften oder zu lösen. Angeheftete Personen bleiben über deinen letzten Suchen, auch wenn du sie löschst.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Neu anordnen";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Fertig";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Angeheftet";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Personen in der Suche anheften";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "In der Suche angeheftet";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Aus der Suche gelöst";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Zeigt die Kacheln im Entdecken-Raster als Quadrate statt im höheren 3:4-Layout. Öffne Entdecken erneut, um die Änderung anzuwenden.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Quadratisches Raster";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Unschärfe";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Themeneinstellungen öffnen";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profilanalyse abgeschlossen";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reaktion entfernt";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Angeheftete Suchen";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Einstellungen & Tools";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Anheftungen im Teilen-Menü";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Änderungen der Story-Automatisch-Speichern-Liste";

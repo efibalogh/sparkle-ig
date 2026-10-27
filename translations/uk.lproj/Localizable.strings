@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Копіювати посилання без відстеження";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Утримуйте підтримуваний текст в Instagram, щоб скопіювати його.";
 "GENERAL_BEHAVIOR_HEADER" = "Поведінка";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Приховує наявні недавні запити й перестає зберігати нові. Потрібен перезапуск.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Приховати недавні пошуки";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Утримуйте кнопку надсилання в історії, актуальному, дописі або Reel, щоб скопіювати його посилання.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Утримання надіслати для копіювання посилання";
 "GENERAL_BROWSER_LINKS_HELP" = "Відкриває посилання з біографій, підписів, історій, повідомлень і реклами поза браузером Instagram, тож його скрипти відстеження ніколи не завантажуються. Спершу вилучаються переадресація та параметри відстеження Instagram. Сторінки Meta і вхід в обліковий запис і далі відкриваються в браузері Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore та пошук";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Приховує сітку рекомендованих дописів на вкладці Цікаве.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Приховати сітку постів Explore";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Приховує наявні недавні запити й перестає зберігати нові. Потрібен перезапуск.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Приховати недавні пошуки";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Приховує популярні запити в полі пошуку. Потрібен перезапуск.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Приховати популярні пошуки";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Утримуйте вкладку Explore, щоб відкрити підтримуване посилання Instagram із буфера обміну. Якщо буфер не містить дійсного посилання, Instagram відкриє пошук як зазвичай.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Відкрити посилання зі буфера обміну";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Утримуйте людину в пошуку, щоб закріпити або відкріпити її. Закріплені люди залишаються над недавніми пошуками, навіть після їх очищення.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Упорядкувати";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Готово";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Закріплені";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Закріплювати людей у пошуку";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Закріплено в пошуку";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Відкріплено з пошуку";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Показує плитки сітки «Цікаве» квадратами замість вищого макета 3:4. Відкрийте «Цікаве» знову, щоб застосувати.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Квадратна сітка";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass та розмиття";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Відкрити налаштування теми";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Аналізатор профілю завершено";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Реакція видалена";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Закріплення в пошуку";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Налаштування та інструменти";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Закріплені в меню «Поділитися»";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Зміни списку автозбереження Історії";

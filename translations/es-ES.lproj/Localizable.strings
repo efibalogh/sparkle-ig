@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Copiar enlaces sin seguimiento";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Mantén pulsado el texto compatible en Instagram para copiarlo.";
 "GENERAL_BEHAVIOR_HEADER" = "Comportamiento";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Oculta las búsquedas recientes existentes y deja de guardar nuevas. Requiere reiniciar.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Ocultar búsquedas recientes";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Mantén pulsado el botón de enviar en una historia, destacado, publicación o reel para copiar su enlace.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Mantener enviar para copiar enlace";
 "GENERAL_BROWSER_LINKS_HELP" = "Abre los enlaces de biografías, pies de foto, historias, mensajes y anuncios fuera del navegador de Instagram, para que sus scripts de rastreo nunca se carguen. Primero se eliminan la redirección y los parámetros de rastreo de Instagram. Las páginas de Meta y los inicios de sesión se siguen abriendo en el navegador de Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explorar y búsqueda";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Oculta la cuadrícula de publicaciones sugeridas en la pestaña Explorar.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Ocultar cuadrícula de publicaciones de Explorar";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Oculta las búsquedas recientes existentes y deja de guardar nuevas. Requiere reiniciar.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Ocultar búsquedas recientes";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Oculta las búsquedas en tendencia en el campo de búsqueda. Requiere reiniciar.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ocultar búsquedas de tendencias";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Mantén pulsada la pestaña Explorar para abrir un enlace compatible de Instagram desde el portapapeles. Si no contiene un enlace válido, Instagram abre la búsqueda normalmente.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Abrir enlace del portapapeles";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Mantén pulsada una persona en la búsqueda para fijarla o dejar de fijarla. Las personas fijadas se quedan encima de tus búsquedas recientes, incluso después de borrarlas.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Reordenar";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Hecho";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Fijados";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Fijar personas en la búsqueda";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Fijado en la búsqueda";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Ya no está fijado en la búsqueda";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Muestra los mosaicos de la cuadrícula de Explorar como cuadrados en lugar del diseño más alto 3:4. Vuelve a abrir Explorar para aplicarlo.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Cuadrícula cuadrada";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass y desenfoque";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Abrir configuración de tema";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Análisis de perfil completado";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reacción eliminada";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Fijados en la búsqueda";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Configuración y herramientas";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Fijados en la hoja para compartir";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Cambios en la lista de guardado automático de historias";

@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "İzlemeyi Kaldırarak Bağlantıları Kopyala";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Kopyalamak için Instagram genelinde desteklenen metinlere uzun basın.";
 "GENERAL_BEHAVIOR_HEADER" = "Davranış";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Mevcut son aramaları gizler ve yenilerini kaydetmeyi bırakır. Yeniden başlatma gerektirir.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Son Aramaları Gizle";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Bağlantısını kopyalamak için hikaye, öne çıkan, gönderi veya reel üzerindeki gönder düğmesine uzun basın.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Bağlantıyı Kopyalamak İçin Gönder'i Basılı Tut";
 "GENERAL_BROWSER_LINKS_HELP" = "Biyografilerdeki, açıklamalardaki, hikayelerdeki, mesajlardaki ve reklamlardaki bağlantıları Instagram tarayıcısının dışında açar, böylece izleme komut dosyaları hiç yüklenmez. Instagram'ın yönlendirmesi ve izleme parametreleri önce kaldırılır. Meta sayfaları ve oturum açma işlemleri yine Instagram tarayıcısında açılır.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Keşfet ve Araştır";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Keşfet sekmesindeki önerilen gönderi ızgarasını gizler.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Keşfet Gönderileri Izgarasını Gizle";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Mevcut son aramaları gizler ve yenilerini kaydetmeyi bırakır. Yeniden başlatma gerektirir.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Son Aramaları Gizle";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Arama alanındaki popüler aramaları gizler. Yeniden başlatma gerektirir.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trend Aramaları Gizle";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Desteklenen bir Instagram bağlantısını panodan açmak için Explore sekmesine uzun basın. Pano geçerli bir bağlantı içermiyorsa Instagram normal şekilde aramayı açar.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Pano Bağlantısını Aç";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Sabitlemek veya sabitlemeyi kaldırmak için aramada bir kişiye basılı tutun. Sabitlenen kişiler, son aramalarınızı temizledikten sonra bile onların üstünde kalır.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Yeniden sırala";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Bitti";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Sabitlenenler";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Aramada Kişileri Sabitle";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Aramada sabitlendi";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Aramadaki sabitleme kaldırıldı";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Keşfet ızgarasındaki kutucukları daha uzun 3:4 düzeni yerine kare olarak gösterir. Uygulamak için Keşfet'i yeniden açın.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Kare Izgara";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ve Bulanıklık";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Konu Ayarlarını Aç";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profil Analiz Edici Tamamlandı";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Tepki Kaldırıldı";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Arama Sabitlemeleri";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Ayarlar ve Araçlar";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Paylaşım Sayfası Sabitlemeleri";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Hikaye Otomatik Kaydetme Listesi Değişiklikleri";

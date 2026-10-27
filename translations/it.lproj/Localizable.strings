@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Copia Link Senza Tracciamento";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Tieni premuto il testo supportato in Instagram per copiarlo.";
 "GENERAL_BEHAVIOR_HEADER" = "Comportamento";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Nasconde le ricerche recenti esistenti e smette di salvarne di nuove. Richiede un riavvio.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Nascondi Ricerche Recenti";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Tieni premuto il pulsante di invio in una storia, un highlight, un post o un reel per copiarne il link.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Tieni Invia per Copiare Link";
 "GENERAL_BROWSER_LINKS_HELP" = "Apre i link di bio, didascalie, storie, messaggi e inserzioni fuori dal browser di Instagram, così i suoi script di tracciamento non vengono mai caricati. Il reindirizzamento e i parametri di tracciamento di Instagram vengono rimossi prima. Le pagine di Meta e gli accessi si aprono comunque nel browser di Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Esplora & Ricerca";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Nasconde la griglia di post suggeriti nella scheda Esplora.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Nascondi Griglia Post Esplora";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Nasconde le ricerche recenti esistenti e smette di salvarne di nuove. Richiede un riavvio.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Nascondi Ricerche Recenti";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Nasconde le ricerche di tendenza nel campo di ricerca. Richiede un riavvio.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Nascondi Ricerche Trending";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Tieni premuta la scheda Esplora per aprire un link Instagram supportato dagli appunti. Se gli appunti non contengono un link valido, Instagram apre normalmente la ricerca.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Apri Link Appunti";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Tieni premuta una persona nella ricerca per fissarla o sbloccarla. Le persone fissate restano sopra le ricerche recenti, anche dopo averle cancellate.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Riordina";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Fine";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Fissati";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Fissa persone nella ricerca";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Fissato nella ricerca";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Non più fissato nella ricerca";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Mostra i riquadri della griglia Esplora come quadrati invece del layout 3:4 più alto. Riapri Esplora per applicare.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Griglia quadrata";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Sfocatura";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Apri Impostazioni Argomento";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Analisi Profilo Completata";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reazione Rimossa";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Persone fissate nella ricerca";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Impostazioni e Strumenti";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Fissati nel foglio di condivisione";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Modifiche elenco salvataggio automatico storie";

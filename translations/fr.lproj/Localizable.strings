@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Copier les liens sans suivi";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Appuyez longuement sur un texte pris en charge dans Instagram pour le copier.";
 "GENERAL_BEHAVIOR_HEADER" = "Comportement";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Masque les recherches récentes existantes et cesse d'en enregistrer de nouvelles. Nécessite un redémarrage.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Masquer les recherches récentes";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Appuyez longuement sur le bouton d'envoi d'une story, d'un highlight, d'une publication ou d'un reel pour copier son lien.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Appui long sur envoyer pour copier le lien";
 "GENERAL_BROWSER_LINKS_HELP" = "Ouvre les liens des bios, légendes, stories, messages et publicités en dehors du navigateur d'Instagram, afin que ses scripts de suivi ne se chargent jamais. La redirection et les paramètres de suivi d'Instagram sont d'abord supprimés. Les pages Meta et les connexions s'ouvrent toujours dans le navigateur d'Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explorer et recherche";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Masque la grille de publications suggérées de l'onglet Explorer.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Masquer la grille de publications Explorer";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Masque les recherches récentes existantes et cesse d'en enregistrer de nouvelles. Nécessite un redémarrage.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Masquer les recherches récentes";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Masque les recherches tendance dans le champ de recherche. Nécessite un redémarrage.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Masquer les recherches tendance";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Appuyez longuement sur l'onglet Explorer pour ouvrir un lien Instagram pris en charge depuis le presse-papiers. Sans lien valide, Instagram ouvre normalement la recherche.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Ouvrir le lien du presse-papiers";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Maintenez une personne dans la recherche pour l'épingler ou la désépingler. Les personnes épinglées restent au-dessus de vos recherches récentes, même après les avoir effacées.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Réorganiser";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "OK";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Épinglés";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Épingler des personnes dans la recherche";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Épinglé dans la recherche";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Désépinglé de la recherche";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Affiche les vignettes de la grille Explorer en carrés au lieu de la mise en page 3:4 plus haute. Rouvrez Explorer pour appliquer.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grille carrée";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass et flou";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Ouvrir les paramètres du sujet";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Analyseur de profil terminé";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Réaction supprimée";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Épingles de recherche";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Paramètres et outils";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Épingles de la feuille de partage";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Modifications de la liste d'enregistrement automatique des stories";

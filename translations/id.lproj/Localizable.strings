@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Salin Tautan Tanpa Pelacakan";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Tekan lama teks yang didukung di seluruh Instagram untuk menyalinnya.";
 "GENERAL_BEHAVIOR_HEADER" = "Perilaku";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Menyembunyikan pencarian terbaru yang ada dan berhenti menyimpan yang baru. Memerlukan mulai ulang.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Sembunyikan Pencarian Terbaru";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Tekan lama tombol kirim pada story, sorotan, postingan, atau reel untuk menyalin tautannya.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Tahan Kirim untuk Salin Tautan";
 "GENERAL_BROWSER_LINKS_HELP" = "Membuka tautan dari bio, keterangan, cerita, pesan, dan iklan di luar browser Instagram, sehingga skrip pelacaknya tidak pernah dimuat. Pengalihan dan parameter pelacakan Instagram dihapus terlebih dahulu. Halaman Meta dan proses masuk tetap dibuka di browser Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore & Pencarian";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Menyembunyikan grid postingan yang disarankan di tab Explore.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Sembunyikan Grid Postingan Explore";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Menyembunyikan pencarian terbaru yang ada dan berhenti menyimpan yang baru. Memerlukan mulai ulang.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Sembunyikan Pencarian Terbaru";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Menyembunyikan pencarian populer di kolom pencarian. Memerlukan mulai ulang.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Sembunyikan Pencarian Populer";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Tekan lama tab Explore untuk membuka tautan Instagram yang didukung dari clipboard-mu. Jika clipboard tidak berisi tautan yang valid, Instagram akan membuka pencarian seperti biasa.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Buka Tautan dari Clipboard";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Tahan seseorang di pencarian untuk menyematkan atau melepas sematannya. Orang yang disematkan tetap di atas pencarian terbaru Anda, bahkan setelah Anda menghapusnya.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Urutkan Ulang";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Selesai";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Disematkan";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Sematkan Orang di Pencarian";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Disematkan di pencarian";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Sematan dilepas dari pencarian";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Menampilkan ubin grid Jelajahi sebagai persegi, bukan tata letak 3:4 yang lebih tinggi. Buka ulang Jelajahi untuk menerapkan.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grid Persegi";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Buram";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Buka Pengaturan Topik";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer Selesai";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Reaksi Dihapus";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Sematan Pencarian";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Pengaturan & Alat";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Sematan Lembar Berbagi";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Perubahan Daftar Simpan Otomatis Story";

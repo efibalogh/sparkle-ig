@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Kopyahin ang mga Link Nang Walang Tracking";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "I-long press ang suportadong text sa buong Instagram para kopyahin ito.";
 "GENERAL_BEHAVIOR_HEADER" = "Pag-uugali";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Itinatago ang mga umiiral na kamakailang paghahanap at itinitigil ang pag-save ng mga bago. Kailangan ng restart.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Itago ang Kamakailang Paghahanap";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "I-long press ang send button sa isang story, highlight, post, o reel para kopyahin ang link nito.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "I-hold ang Send para Kopyahin ang Link";
 "GENERAL_BROWSER_LINKS_HELP" = "Binubuksan ang mga link mula sa bio, caption, story, mensahe, at ad sa labas ng browser ng Instagram, kaya hindi kailanman naglo-load ang mga tracking script nito. Inaalis muna ang redirect at mga tracking parameter ng Instagram. Bumubukas pa rin sa browser ng Instagram ang mga pahina ng Meta at pag-sign in.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore at Search";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Itinatago ang grid ng mga iminumungkahing post sa Explore tab.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Itago ang Grid ng mga Post sa Explore";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Itinatago ang mga umiiral na kamakailang paghahanap at itinitigil ang pag-save ng mga bago. Kailangan ng restart.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Itago ang Kamakailang Paghahanap";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Itinatago ang mga trending search sa search field. Kailangan ng restart.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Itago ang mga Trending Search";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "I-long press ang Explore tab para buksan ang isang suportadong Instagram link mula sa clipboard mo. Kung walang valid na link sa clipboard, bubuksan ng Instagram ang search nang normal.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Buksan ang Link sa Clipboard";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Pindutin nang matagal ang isang tao sa paghahanap para i-pin o i-unpin siya. Nananatili ang mga naka-pin sa itaas ng iyong mga kamakailang paghahanap, kahit burahin mo ang mga ito.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Ayusin";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Tapos na";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Naka-pin";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "I-pin ang mga Tao sa Paghahanap";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Na-pin sa paghahanap";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Na-unpin sa paghahanap";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Ipinapakita ang mga tile sa Explore grid bilang square sa halip ng mas mataas na 3:4 na layout. Buksan muli ang Explore para ilapat.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Square na Grid";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass at Blur";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Buksan ang Topic Settings";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Kumpleto na ang Profile Analyzer";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Inalis na Reaction";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Mga Pin sa Paghahanap";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Settings at Tools";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Mga Pin sa Share Sheet";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Pagbabago sa Auto-Save List ng Story";

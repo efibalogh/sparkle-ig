@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Links ohni Tracking Kopiere";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Lang drücke uf unterstützte Text i Instagram, für ne z'kopiere.";
 "GENERAL_BEHAVIOR_HEADER" = "Verhaute";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Versteckt bestehendi Chürzlech-Suechi u hört uf, neui z'speichere. Bruucht en Neustart.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Chürzlechi Suechi Verstecke";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Lang drücke dr Sände-Chnopf uf ere Story, emene Highlight, ere Post oder emene Reel, für dr Link z'kopiere.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Sände Häute, für Link Z'kopiere";
 "GENERAL_BROWSER_LINKS_HELP" = "Macht Links us Bios, Bildunterschrifte, Stories, Nachrichte und Werbig usserhalb vom Instagram-Browser uf, so dass sini Tracking-Skript nie glade wärde. Dr Instagram-Umleitig und d Tracking-Parameter wärde vorher entfernt. Meta-Sitte und Aamäldige gönd witerhin im Instagram-Browser uf.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore & Suechi";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Versteckt s'Grid mit vorgschlagene Posts im Explore-Tab.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Explore-Posts-Grid Verstecke";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Versteckt bestehendi Chürzlech-Suechi u hört uf, neui z'speichere. Bruucht en Neustart.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Chürzlechi Suechi Verstecke";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Versteckt Trend-Suechi im Suechfäld. Bruucht en Neustart.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trend-Suechi Verstecke";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Lang drücke dr Explore-Tab, für en unterstützte Instagram-Link us dyner Zwüschenablag ufzmache. Wenn i dr Zwüschenablag kei güutige Link isch, macht Instagram d'Suechi ganz normal uf.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Zwüschenablag-Link Ufmache";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Druck e Person i de Suechi lang, zum si aahefte oder z löse. Aaghefteti Persone blibed über dine chürzleche Suechine, au wänn du die löschsch.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Neu aaordne";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Fertig";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Aagheftet";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Persone i de Suechi aahefte";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "I de Suechi aagheftet";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Us de Suechi glöst";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Zeigt d Kachle im Entdecke-Raster als Quadrat statt im höchere 3:4-Layout. Mach Entdecke nomol uf, damit s gilt.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Quadratischs Raster";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass u Blur";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Thema-Ystellige ufmache";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer fertig";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "E Reaction entfernt";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Aaghefteti Suechine";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Ystellige & Werchzüg";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Aaheftige im Teile-Menü";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Änderige vor Story-Auto-Speichere-Lischte";

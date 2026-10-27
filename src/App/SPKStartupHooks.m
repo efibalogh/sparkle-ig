@@ -33,6 +33,7 @@ FOUNDATION_EXPORT void SPKInstallSharedLinkCleanupHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallBrowserLinkRoutingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallShareLongPressCopyHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallShareSheetPinsHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallSearchPinsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideMetaAIHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAccountSwitchHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallAdBlockingEarlyHooksIfEnabled(void);
@@ -367,6 +368,7 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallBrowserLinkRoutingHooksIfNeeded);
     SPK_INSTALL(SPKInstallShareLongPressCopyHooksIfNeeded);
     SPK_INSTALL(SPKInstallShareSheetPinsHooksIfNeeded);
+    SPK_INSTALL(SPKInstallSearchPinsHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
     SPK_INSTALL(SPKInstallOpenLinkFromClipboardHooksIfEnabled);

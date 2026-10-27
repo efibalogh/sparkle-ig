@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Copy Links Without Tracking";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Long press supported text across Instagram to copy it.";
 "GENERAL_BEHAVIOR_HEADER" = "Behavior";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Hides existing recent searches and stops saving new ones. Requires a restart.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Hide Recent Searches";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Long press the send button on a story, highlight, post, or reel to copy its link.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Hold Send to Copy Link";
 "GENERAL_BROWSER_LINKS_HELP" = "Opens links outside Instagram's browser with tracking removed. Meta pages and sign-in flows stay in Instagram's browser, and tapped post links use In-App Safari under Default.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore & Search";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Hides the grid of suggested posts on the Explore tab.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Hide Explore Posts Grid";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Hides existing recent searches and stops saving new ones. Requires a restart.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Hide Recent Searches";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Hides trending searches in the search field. Requires a restart.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Hide Trending Searches";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Long press the Explore tab to open a supported Instagram link from your clipboard. If the clipboard does not contain a valid link, Instagram opens search normally.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Open Clipboard Link";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Hold a person in search to pin or unpin them. Pinned people stay above your recent searches, even after you clear them.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Reorder";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Done";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Pinned";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Pin People in Search";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Pinned in search";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Unpinned from search";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Shows Explore grid tiles as squares instead of the taller 3:4 layout. Reopen Explore to apply.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Square Grid";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Blur";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Open Topic Settings";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer Complete";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Removed Reaction";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Search Pins";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Settings & Tools";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Share Sheet Pins";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Story Auto-Save List Changes";

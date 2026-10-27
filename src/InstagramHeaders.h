@@ -691,6 +691,43 @@
 - (NSUInteger)itemType;
 @end
 
+// Swift as IGSearchViewModels.IGSearchResultDataModel on newer builds; same initializer.
+@interface IGSearchResultDataModel : NSObject
+- (instancetype)initWithSearchableItem:(id)item sectionType:(NSString *)sectionType subtitle:(NSString *)subtitle;
+@end
+
+// IGSearchViewModels.IGSearchRecentSearchesHorizontalViewModel: recents as a carousel.
+@interface IGSearchRecentSearchesHorizontalViewModel : NSObject
+@property (nonatomic, readonly) NSArray *items;
+@property (nonatomic) double contentOffsetX;
+- (instancetype)initWithItems:(NSArray *)items;
+@end
+
+@protocol IGListCollectionContext <NSObject>
+@property (nonatomic, readonly) CGSize containerSize;
+- (__kindof UICollectionViewCell *)dequeueReusableCellOfClass:(Class)cellClass forSectionController:(id)sectionController atIndex:(NSInteger)index;
+@end
+
+@interface IGListSectionController : NSObject
+@property (nonatomic, weak) id<IGListCollectionContext> collectionContext;
+@property (nonatomic, weak) UIViewController *viewController;
+- (NSInteger)numberOfItems;
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+- (__kindof UICollectionViewCell *)cellForItemAtIndex:(NSInteger)index;
+- (BOOL)shouldSelectItemAtIndex:(NSInteger)index;
+@end
+
+@interface IGListAdapter : NSObject
+@property (nonatomic, readonly) UICollectionView *collectionView;
+- (void)performUpdatesAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion;
+@end
+
+@class IGSearchBar;
+
+@interface IGSearchBarWithCancel : UIView
+@property (readonly, nonatomic) IGSearchBar *searchBar;
+@end
+
 @interface IGDirectShareRecipient : NSObject
 @property (copy, nonatomic) NSString *threadID;
 @property (readonly, nonatomic) NSArray *users;
@@ -799,6 +836,7 @@
 @end
 
 @interface IGSearchBar : UIView
+@property (retain, nonatomic) NSString *text;
 - (NSObject *)sanitizePlaceholderForConfig:(NSObject *)config; // new
 @end
 

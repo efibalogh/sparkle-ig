@@ -156,11 +156,6 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                           icon:SPKSettingsIcon(@"text")
                                                    defaultsKey:@"general_copy_text"],
                                SPKL(@"GENERAL_BEHAVIOR_COPY_TEXT_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE")
-                                                          icon:SPKSettingsIcon(@"search")
-                                                   defaultsKey:@"general_hide_recent_searches"
-                                               requiresRestart:YES],
-                               SPKL(@"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE")
                                                           icon:SPKSettingsIcon(@"user_unfollow")
                                                    defaultsKey:@"general_strip_share_link_tracking"],

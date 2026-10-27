@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "คัดลอกลิงก์โดยไม่มีการติดตาม";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "กดค้างที่ข้อความที่รองรับทั่วทั้ง Instagram เพื่อคัดลอก";
 "GENERAL_BEHAVIOR_HEADER" = "พฤติกรรม";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "ซ่อนการค้นหาล่าสุดที่มีอยู่และหยุดบันทึกรายการใหม่ ต้องรีสตาร์ท";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "ซ่อนการค้นหาล่าสุด";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "กดปุ่มส่งค้างไว้บนสตอรี ไฮไลต์ โพสต์ หรือรีล เพื่อคัดลอกลิงก์";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "กดปุ่มส่งค้างเพื่อคัดลอกลิงก์";
 "GENERAL_BROWSER_LINKS_HELP" = "เปิดลิงก์จากไบโอ แคปชัน สตอรี่ ข้อความ และโฆษณานอกเบราว์เซอร์ของ Instagram เพื่อไม่ให้สคริปต์ติดตามของ Instagram โหลดเลย การเปลี่ยนเส้นทางและพารามิเตอร์ติดตามของ Instagram จะถูกลบออกก่อน หน้าของ Meta และการลงชื่อเข้าใช้ยังคงเปิดในเบราว์เซอร์ของ Instagram";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "สำรวจและค้นหา";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "ซ่อนตารางโพสต์ที่แนะนำในแท็บสำรวจ";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "ซ่อนตารางโพสต์ในสำรวจ";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "ซ่อนการค้นหาล่าสุดที่มีอยู่และหยุดบันทึกรายการใหม่ ต้องรีสตาร์ท";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "ซ่อนการค้นหาล่าสุด";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "ซ่อนคำค้นหายอดนิยมในช่องค้นหา ต้องรีสตาร์ท";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "ซ่อนคำค้นหายอดนิยม";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "กดแท็บสำรวจค้างไว้เพื่อเปิดลิงก์ Instagram ที่รองรับจากคลิปบอร์ดของคุณ หากคลิปบอร์ดไม่มีลิงก์ที่ถูกต้อง Instagram จะเปิดหน้าค้นหาตามปกติ";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "เปิดลิงก์จากคลิปบอร์ด";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "กดค้างที่บุคคลในการค้นหาเพื่อปักหมุดหรือเลิกปักหมุด บุคคลที่ปักหมุดจะอยู่เหนือการค้นหาล่าสุดของคุณ แม้หลังจากล้างแล้ว";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "จัดลำดับใหม่";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "เสร็จ";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "ปักหมุดแล้ว";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "ปักหมุดบุคคลในการค้นหา";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "ปักหมุดในการค้นหาแล้ว";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "เลิกปักหมุดจากการค้นหาแล้ว";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "แสดงช่องในตารางสำรวจเป็นสี่เหลี่ยมจัตุรัสแทนเลย์เอาต์ 3:4 ที่สูงกว่า เปิดหน้าสำรวจใหม่เพื่อใช้";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "ตารางสี่เหลี่ยมจัตุรัส";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass และเบลอ";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "เปิดการตั้งค่าหัวข้อ";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Profile Analyzer เสร็จสมบูรณ์";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "ลบการรีแอกต์แล้ว";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "หมุดในการค้นหา";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "การตั้งค่าและเครื่องมือ";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "การปักหมุดในแผ่นแชร์";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "การเปลี่ยนแปลงรายชื่อบันทึกสตอรี่อัตโนมัติ";

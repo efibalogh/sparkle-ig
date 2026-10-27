@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "نسخ الروابط بدون تتبع";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "اضغط مطولاً على النصوص المدعومة في أنحاء Instagram لنسخها.";
 "GENERAL_BEHAVIOR_HEADER" = "السلوك";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "يخفي عمليات البحث الأخيرة الموجودة ويوقف حفظ الجديدة. يتطلب إعادة تشغيل.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "إخفاء عمليات البحث الأخيرة";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "اضغط مطولاً على زر الإرسال في قصة أو قصة مميزة أو منشور أو Reel لنسخ رابطه.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "اضغط على الإرسال لنسخ الرابط";
 "GENERAL_BROWSER_LINKS_HELP" = "يفتح الروابط من السير الذاتية والتعليقات التوضيحية والقصص والرسائل والإعلانات خارج متصفح Instagram، فلا يتم تحميل نصوص التتبع الخاصة به أبدًا. تتم إزالة إعادة التوجيه ومعلمات التتبع الخاصة بـ Instagram أولًا. لا تزال صفحات Meta وعمليات تسجيل الدخول تُفتح في متصفح Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "الاستكشاف والبحث";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "يخفي شبكة المنشورات المقترحة في تبويب الاستكشاف.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "إخفاء شبكة منشورات الاستكشاف";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "يخفي عمليات البحث الأخيرة الموجودة ويوقف حفظ الجديدة. يتطلب إعادة تشغيل.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "إخفاء عمليات البحث الأخيرة";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "يخفي عمليات البحث الرائجة في حقل البحث. يتطلب إعادة تشغيل.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "إخفاء عمليات البحث الرائجة";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "اضغط مطولاً على علامة Explore لفتح رابط Instagram مدعوم من الحافظة. إذا لم تحتوِ الحافظة على رابط صالح، يفتح Instagram البحث كالمعتاد.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "فتح رابط من الحافظة";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "اضغط مطولًا على شخص في البحث لتثبيته أو إلغاء تثبيته. يبقى الأشخاص المثبتون فوق عمليات البحث الأخيرة، حتى بعد مسحها.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "إعادة الترتيب";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "تم";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "مثبّت";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "تثبيت الأشخاص في البحث";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "تم التثبيت في البحث";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "تم إلغاء التثبيت من البحث";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "يعرض مربعات شبكة الاستكشاف كمربعات بدلًا من التخطيط الأطول 3:4. أعد فتح الاستكشاف للتطبيق.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "شبكة مربعة";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "الزجاج السائل والتمويه";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "فتح إعدادات الموضوع";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "اكتمل محلل الملف التعريفي";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "تم إزالة التفاعل";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "تثبيتات البحث";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "الإعدادات والأدوات";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "التثبيت في ورقة المشاركة";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "تغييرات قائمة الحفظ التلقائي لـ Story";

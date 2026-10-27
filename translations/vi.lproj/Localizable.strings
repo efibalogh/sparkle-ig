@@ -868,8 +868,6 @@
 "GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE" = "Sao chép liên kết không kèm theo theo dõi";
 "GENERAL_BEHAVIOR_COPY_TEXT_HELP" = "Nhấn giữ văn bản hỗ trợ trên Instagram để sao chép.";
 "GENERAL_BEHAVIOR_HEADER" = "Hành vi";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP" = "Ẩn các tìm kiếm gần đây và ngừng lưu các tìm kiếm mới. Yêu cầu khởi động lại ứng dụng.";
-"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Ẩn tìm kiếm gần đây";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Nhấn giữ nút gửi trên tin, tin nổi bật, bài viết hoặc thước phim để sao chép liên kết của nó.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Nhấn giữ Gửi để Sao chép Liên kết";
 "GENERAL_BROWSER_LINKS_HELP" = "Mở liên kết từ tiểu sử, chú thích, tin, tin nhắn và quảng cáo bên ngoài trình duyệt của Instagram, để các tập lệnh theo dõi của nó không bao giờ được tải. Chuyển hướng và tham số theo dõi của Instagram được xóa trước. Các trang của Meta và quá trình đăng nhập vẫn mở trong trình duyệt của Instagram.";
@@ -1074,10 +1072,19 @@
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Khám phá & Tìm kiếm";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Ẩn lưới các bài viết gợi ý trong thẻ Khám phá.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE" = "Ẩn lưới bài viết trên Khám phá";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_HELP" = "Ẩn các tìm kiếm gần đây và ngừng lưu các tìm kiếm mới. Yêu cầu khởi động lại ứng dụng.";
+"INTERFACE_EXPLORE_SEARCH_HIDE_RECENT_SEARCHES_TITLE" = "Ẩn tìm kiếm gần đây";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_HELP" = "Ẩn tìm kiếm xu hướng trong khung tìm kiếm. Yêu cầu khởi chạy lại ứng dụng.";
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ẩn tìm kiếm xu hướng";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Nhấn giữ thẻ Khám phá để mở liên kết Instagram được hỗ trợ trong bộ nhớ tạm. Nếu không có liên kết hợp lệ, ứng dụng sẽ mở trang tìm kiếm bình thường.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Mở liên kết trong bộ nhớ tạm";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Nhấn giữ một người trong tìm kiếm để ghim hoặc bỏ ghim. Người được ghim vẫn ở phía trên các tìm kiếm gần đây, kể cả sau khi bạn xóa chúng.";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Sắp xếp lại";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Xong";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE" = "Đã ghim";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Ghim người trong tìm kiếm";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Đã ghim trong tìm kiếm";
+"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Đã bỏ ghim khỏi tìm kiếm";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Hiển thị các ô trong lưới Khám phá dạng hình vuông thay vì bố cục 3:4 cao hơn. Mở lại Khám phá để áp dụng.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Lưới vuông";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Làm mờ";
@@ -2399,6 +2406,7 @@
 "UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT" = "Mở cài đặt chủ đề";
 "UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT" = "Hoàn tất phân tích trang cá nhân";
 "UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION" = "Đã xóa cảm xúc";
+"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT" = "Ghim tìm kiếm";
 "UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT" = "Cài đặt & Công cụ";
 "UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT" = "Ghim trong bảng chia sẻ";
 "UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT" = "Thay đổi danh sách tự động lưu Tin";
