@@ -26,6 +26,8 @@ static NSString *const kSPKSearchPinFullNameKey = @"full_name";
 static NSString *const kSPKSearchPinPictureKey = @"profile_pic_url";
 static NSString *const kSPKSearchPinVerifiedKey = @"is_verified";
 static NSString *const kSPKSearchPinUpdatedKey = @"updated";
+// Per account: whether the pinned section is folded down to its header.
+static NSString *const kSPKSearchPinsCollapsedKey = @"interface_search_pins_collapsed";
 
 // Profile picture links are signed and expire, so a stored one is only handed to
 // Instagram while it is fresh; an older one would replace a working picture with a
@@ -37,6 +39,11 @@ static const NSTimeInterval kSPKSearchPinPictureRefreshInterval = 12.0 * 60.0 * 
 
 static BOOL SPKSearchPinsEnabled(void) {
     return [SPKUtils getBoolPref:kSPKSearchPinsEnabledKey];
+}
+
+static BOOL SPKSearchPinsCollapsed(void) {
+    id stored = SPKPreferenceObjectForKey(kSPKSearchPinsCollapsedKey);
+    return [stored respondsToSelector:@selector(boolValue)] && [stored boolValue];
 }
 
 #pragma mark - Storage
@@ -327,12 +334,16 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
 
 @end
 
-@interface SPKSearchPinsHeaderCell : UICollectionViewCell
+@interface SPKSearchPinsHeaderCell : UICollectionViewCell <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIImageView *chevronView;
 @property (nonatomic, strong) UIButton *reorderButton;
+@property (nonatomic) BOOL collapsed;
 @property (nonatomic, copy) void (^onReorder)(void);
+@property (nonatomic, copy) void (^onToggleCollapsed)(void);
 @property (nonatomic, copy) void (^onLeaveWindow)(void);
 - (void)setReordering:(BOOL)reordering available:(BOOL)available;
+- (void)setCollapsed:(BOOL)collapsed count:(NSUInteger)count animated:(BOOL)animated;
 @end
 
 @implementation SPKSearchPinsHeaderCell
@@ -344,8 +355,17 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
         _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.text = SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE");
-        _titleLabel.accessibilityTraits = UIAccessibilityTraitHeader;
+        _titleLabel.accessibilityTraits = UIAccessibilityTraitHeader | UIAccessibilityTraitButton;
         [self.contentView addSubview:_titleLabel];
+
+        UIImage *chevron = [SPKAssetUtils instagramIconNamed:@"chevron_right" pointSize:12.0];
+        _chevronView = [[UIImageView alloc] initWithImage:chevron.imageFlippedForRightToLeftLayoutDirection];
+        _chevronView.translatesAutoresizingMaskIntoConstraints = NO;
+        _chevronView.tintColor = [SPKUtils SPKColor_InstagramSecondaryText];
+        _chevronView.contentMode = UIViewContentModeCenter;
+        [_chevronView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+        [_chevronView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+        [self.contentView addSubview:_chevronView];
 
         _reorderButton = [UIButton buttonWithType:UIButtonTypeSystem];
         _reorderButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -356,13 +376,61 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
 
         [NSLayoutConstraint activateConstraints:@[
             [_titleLabel.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:16.0],
-            [_titleLabel.trailingAnchor constraintLessThanOrEqualToAnchor:_reorderButton.leadingAnchor constant:-8.0],
             [_titleLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
+            [_chevronView.leadingAnchor constraintEqualToAnchor:_titleLabel.trailingAnchor constant:6.0],
+            [_chevronView.centerYAnchor constraintEqualToAnchor:_titleLabel.centerYAnchor],
+            [_chevronView.trailingAnchor constraintLessThanOrEqualToAnchor:_reorderButton.leadingAnchor constant:-8.0],
             [_reorderButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-16.0],
             [_reorderButton.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
         ]];
+
+        // The whole header folds the section, apart from the reorder button.
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTapped)];
+        tap.delegate = self;
+        [self.contentView addGestureRecognizer:tap];
     }
     return self;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return ![touch.view isDescendantOfView:self.reorderButton];
+}
+
+- (void)headerTapped {
+    if (self.onToggleCollapsed)
+        self.onToggleCollapsed();
+}
+
+/// Points the chevron down while the section is open and toward the trailing edge
+/// while it is folded. The title carries the pin count in both states, so folding
+/// never changes its width and the chevron stays put.
+- (void)setCollapsed:(BOOL)collapsed count:(NSUInteger)count animated:(BOOL)animated {
+    self.collapsed = collapsed;
+    NSString *number = [NSNumberFormatter localizedStringFromNumber:@(count) numberStyle:NSNumberFormatterDecimalStyle];
+    self.titleLabel.text = [NSString stringWithFormat:SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE_FORMAT"), number];
+    self.titleLabel.accessibilityValue = collapsed ? SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_COLLAPSED_ACCESSIBILITY_VALUE")
+                                                   : SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_EXPANDED_ACCESSIBILITY_VALUE");
+    self.reorderButton.userInteractionEnabled = !collapsed;
+
+    // The glyph points right, mirrored to point left in right-to-left layouts, so
+    // opening turns it a quarter toward the bottom either way.
+    BOOL rightToLeft = self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+    CGAffineTransform transform = collapsed ? CGAffineTransformIdentity : CGAffineTransformMakeRotation(rightToLeft ? -M_PI_2 : M_PI_2);
+    void (^apply)(void) = ^{
+        self.chevronView.transform = transform;
+        self.reorderButton.alpha = collapsed ? 0.0 : 1.0;
+    };
+    if (!animated) {
+        apply();
+        return;
+    }
+    [UIView animateWithDuration:0.4
+                          delay:0.0
+         usingSpringWithDamping:0.8
+          initialSpringVelocity:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction
+                     animations:apply
+                     completion:nil];
 }
 
 - (void)setReordering:(BOOL)reordering available:(BOOL)available {
@@ -389,6 +457,7 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
 - (void)prepareForReuse {
     [super prepareForReuse];
     self.onReorder = nil;
+    self.onToggleCollapsed = nil;
     self.onLeaveWindow = nil;
 }
 
@@ -588,11 +657,13 @@ static NSArray *SPKSearchApplyPins(NSArray *models, id owner, BOOL knownEligible
     if (recentHeader && recentCount > 0 && removedCount == recentCount)
         [rest removeObjectIdenticalTo:recentHeader];
 
-    // The pinned rows, in pin order.
+    // The pinned rows, in pin order. A folded section shows its header alone, and the
+    // pinned people stay out of the recent rows all the same.
+    BOOL collapsed = SPKSearchPinsCollapsed();
     id session = [SPKUtils activeUserSession];
     NSMutableArray *pinnedRows = [NSMutableArray arrayWithCapacity:entries.count];
     NSMutableArray<NSDictionary *> *refreshedEntries = nil;
-    for (NSUInteger index = 0; index < entries.count; index++) {
+    for (NSUInteger index = 0; !collapsed && index < entries.count; index++) {
         NSDictionary *entry = entries[index];
         NSString *pk = SPKSearchPinPKForEntry(entry);
         id user = recentUsers[pk] ?: SPKSearchUserForEntry(entry, session);
@@ -609,13 +680,13 @@ static NSArray *SPKSearchApplyPins(NSArray *models, id owner, BOOL knownEligible
     if (refreshedEntries)
         SPKSearchSaveEntries(refreshedEntries);
     static NSInteger lastLoggedRows = -1;
-    if ((NSInteger)pinnedRows.count != lastLoggedRows) {
+    if (!collapsed && (NSInteger)pinnedRows.count != lastLoggedRows) {
         lastLoggedRows = pinnedRows.count;
         SPKLog(@"General", @"[Sparkle SearchPins] %lu of %lu pinned rows built (%lu recent, %lu hidden, owner %@)",
                (unsigned long)pinnedRows.count, (unsigned long)entries.count, (unsigned long)recentCount,
                (unsigned long)removedCount, NSStringFromClass([owner class]));
     }
-    if (pinnedRows.count == 0)
+    if (!collapsed && pinnedRows.count == 0)
         return rest;
 
     NSUInteger insertionIndex = 0;
@@ -739,14 +810,21 @@ static void SPKSearchTogglePin(id user, id adapter) {
     // The header is the same list object whatever the pin count, so the list never
     // rebinds it; show or hide its reorder button directly.
     for (UICollectionViewCell *cell in listAdapter.collectionView.visibleCells) {
-        if ([cell isKindOfClass:[SPKSearchPinsHeaderCell class]])
+        if ([cell isKindOfClass:[SPKSearchPinsHeaderCell class]]) {
             [(SPKSearchPinsHeaderCell *)cell setReordering:NO available:entries.count > 1];
+            [(SPKSearchPinsHeaderCell *)cell setCollapsed:SPKSearchPinsCollapsed() count:entries.count animated:NO];
+        }
     }
     // A row moving between Recent and Pinned keeps its diff identity, so the list
     // slides the same cell over without binding the new row, and the remove-from-
     // history button would keep its old state. Bind the row the cell is about to
     // show now, fading over the slide.
-    id row = pinned ? SPKSearchRowForUser(user, pk, [SPKUtils activeUserSession]) : SPKSearchHiddenRecentRows[pk];
+    // A person pinned into a folded section leaves the list instead.
+    id row = nil;
+    if (!pinned)
+        row = SPKSearchHiddenRecentRows[pk];
+    else if (!SPKSearchPinsCollapsed())
+        row = SPKSearchRowForUser(user, pk, [SPKUtils activeUserSession]);
     if (row)
         SPKSearchRebindVisibleCell(listAdapter, pk, row);
     [listAdapter performUpdatesAnimated:YES completion:nil];
@@ -843,6 +921,9 @@ static void SPKSearchSetGrabberShown(UICollectionViewCell *cell, BOOL shown, BOO
             [cell.contentView addSubview:grabber];
         [cell.contentView bringSubviewToFront:grabber];
     }
+    // A row being reordered opens nothing when tapped. The drag hold lives on the list,
+    // so it still sees touches on the row.
+    cell.userInteractionEnabled = !shown;
     CGFloat alpha = shown ? 1.0 : 0.0;
     if (grabber.alpha == alpha)
         return;
@@ -1037,9 +1118,17 @@ static void SPKSearchSetGrabberShown(UICollectionViewCell *cell, BOOL shown, BOO
                 return [slot[0] isEqualToString:pk];
             }];
             UICollectionViewCell *cell = from != NSNotFound ? slots[from][2] : nil;
-            UIView *snapshot = [cell isKindOfClass:[UICollectionViewCell class]] ? [cell snapshotViewAfterScreenUpdates:NO] : nil;
+            // Rows take no touches while reordering, so the held row is drawn in its own
+            // pressed state for the lift, the way a touch used to show it.
+            BOOL isCell = [cell isKindOfClass:[UICollectionViewCell class]];
+            if (isCell)
+                cell.highlighted = YES;
+            UIView *snapshot = isCell ? [cell snapshotViewAfterScreenUpdates:YES] : nil;
+            if (isCell)
+                cell.highlighted = NO;
             if (!snapshot)
                 return;
+            snapshot.frame = cell.frame;
             self.dragging = YES;
             self.dragPK = pk;
             self.dragSlots = slots;
@@ -1049,7 +1138,6 @@ static void SPKSearchSetGrabberShown(UICollectionViewCell *cell, BOOL shown, BOO
             self.scrollWasEnabled = collectionView.scrollEnabled;
             collectionView.scrollEnabled = NO;
 
-            snapshot.frame = cell.frame;
             snapshot.layer.shadowColor = UIColor.blackColor.CGColor;
             snapshot.layer.shadowOpacity = 0.18;
             snapshot.layer.shadowRadius = 10.0;
@@ -1114,12 +1202,39 @@ static void SPKSearchSetGrabberShown(UICollectionViewCell *cell, BOOL shown, BOO
     return SPKSearchIsResultViewModel(object) ? SPKSearchUserForViewModel(object) : nil;
 }
 
+/// Whether a press lands on a part of a row that answers a hold itself, such as
+/// the profile picture of someone with a story, which opens a preview. Only views
+/// well inside the row count, so a hold handled by the whole row still pins.
+- (BOOL)pressHasOwnHoldAction:(UIGestureRecognizer *)recognizer {
+    UICollectionView *collectionView = self.collectionView;
+    CGPoint location = [recognizer locationInView:collectionView];
+    NSIndexPath *indexPath = [collectionView indexPathForItemAtPoint:location];
+    UICollectionViewCell *cell = indexPath ? [collectionView cellForItemAtIndexPath:indexPath] : nil;
+    if (!cell)
+        return NO;
+    UIView *hit = [cell hitTest:[cell convertPoint:location fromView:collectionView] withEvent:nil];
+    for (UIView *view = hit; view && view != cell; view = view.superview) {
+        BOOL holds = NO;
+        for (UIGestureRecognizer *other in view.gestureRecognizers) {
+            if (other != recognizer && other.enabled && [other isKindOfClass:[UILongPressGestureRecognizer class]])
+                holds = YES;
+        }
+        for (id<UIInteraction> interaction in view.interactions) {
+            if ([interaction isKindOfClass:[UIContextMenuInteraction class]])
+                holds = YES;
+        }
+        if (holds && CGRectGetWidth(view.bounds) < CGRectGetWidth(cell.bounds) * 0.5)
+            return YES;
+    }
+    return NO;
+}
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)recognizer {
     if (!SPKSearchPinsEnabled())
         return NO;
     if (self.reordering)
         return [self pinnedIndexPathForRecognizer:recognizer] != nil;
-    return [self userForRecognizer:recognizer] != nil;
+    return [self userForRecognizer:recognizer] != nil && ![self pressHasOwnHoldAction:recognizer];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)recognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other {
@@ -1165,6 +1280,8 @@ static void SPKSearchAttachPinGesture(id adapter) {
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:target
                                                                                             action:@selector(handleLongPress:)];
     recognizer.delegate = target;
+    // A little quicker than the system hold, for pinning and dragging alike.
+    recognizer.minimumPressDuration = 0.4;
     // The press that pins must not also land as a tap and open the profile.
     recognizer.cancelsTouchesInView = YES;
     [collectionView addGestureRecognizer:recognizer];
@@ -1177,6 +1294,12 @@ static void SPKSearchAttachPinGesture(id adapter) {
 
 @interface SPKSearchPinsHeaderSectionController : IGListSectionController
 @end
+
+// The list runs one update at a time and plays a second one only after the first
+// finishes, so a tap while the rows still move would leave them behind the chevron.
+// Taps wait for the rows; the cap keeps the header usable if the list never reports back.
+static CFAbsoluteTime SPKSearchFoldBusyUntil;
+static const CFTimeInterval kSPKSearchFoldMaxWait = 1.0;
 
 %subclass SPKSearchPinsHeaderSectionController : IGListSectionController
 
@@ -1195,10 +1318,30 @@ static void SPKSearchAttachPinGesture(id adapter) {
     SPKSearchPinGestureTarget *target = SPKSearchPinTargetForContext(self.collectionContext);
     BOOL available = target && SPKSearchCachedEntries().count > 1;
     [cell setReordering:target.reordering available:available];
+    [cell setCollapsed:SPKSearchPinsCollapsed() count:SPKSearchCachedEntries().count animated:NO];
     __weak SPKSearchPinsHeaderCell *weakCell = cell;
     cell.onReorder = ^{
         target.reordering = !target.reordering;
         [weakCell setReordering:target.reordering available:SPKSearchCachedEntries().count > 1];
+    };
+    id adapter = target.adapter ?: self.collectionContext;
+    cell.onToggleCollapsed = ^{
+        if (target.dragging || ![adapter isKindOfClass:objc_getClass("IGListAdapter")])
+            return;
+        if (CFAbsoluteTimeGetCurrent() < SPKSearchFoldBusyUntil)
+            return;
+        SPKSearchFoldBusyUntil = CFAbsoluteTimeGetCurrent() + kSPKSearchFoldMaxWait;
+        BOOL collapsed = !SPKSearchPinsCollapsed();
+        SPKPreferenceSetObject(@(collapsed), kSPKSearchPinsCollapsedKey);
+        if (collapsed)
+            target.reordering = NO;
+        NSUInteger count = SPKSearchCachedEntries().count;
+        [weakCell setReordering:NO available:count > 1];
+        [weakCell setCollapsed:collapsed count:count animated:YES];
+        [(IGListAdapter *)adapter performUpdatesAnimated:YES
+                                              completion:^(__unused BOOL finished) {
+                                                  SPKSearchFoldBusyUntil = 0;
+                                              }];
     };
     // Leaving the screen ends reorder mode, so the next visit starts out normal.
     cell.onLeaveWindow = ^{

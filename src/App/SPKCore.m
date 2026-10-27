@@ -97,6 +97,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"interface_search_pins" : @(NO),
         @"interface_search_pinned" : @[],
         @"interface_search_pins_list_types" : @[],
+        @"interface_search_pins_collapsed" : @(NO),
         @"msgs_keep_deleted" : @(NO),
         @"msgs_deleted_log" : @(NO),
         @"msgs_deleted_log_reactions" : @(NO),
