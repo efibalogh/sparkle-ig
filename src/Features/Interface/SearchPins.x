@@ -1251,9 +1251,32 @@ static id replaced_typeaheadSectionControllerForObject(id self, SEL _cmd, id ada
     return SPKSearchSectionControllerForObject(object) ?: orig_typeaheadSectionControllerForObject(self, _cmd, adapter, object);
 }
 
+/// Whether a search screen's field is empty, which is when its list is the null state.
+static BOOL SPKSearchFieldIsEmpty(id controller) {
+    if (![controller respondsToSelector:@selector(searchBarWithCancel)])
+        return NO;
+    IGSearchBarWithCancel *bar = ((id (*)(id, SEL))objc_msgSend)(controller, @selector(searchBarWithCancel));
+    NSString *text = [bar respondsToSelector:@selector(searchBar)] ? bar.searchBar.text : nil;
+    return [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length == 0;
+}
+
+/// Logs once per launch which path first added the pins, since Instagram serves
+/// the search list through different paths per account.
+static void SPKSearchNoteApplyPath(NSString *path) {
+    static NSMutableSet<NSString *> *seen;
+    if (!seen)
+        seen = [NSMutableSet set];
+    if ([seen containsObject:path])
+        return;
+    [seen addObject:path];
+    SPKLog(@"General", @"[Sparkle SearchPins] null state via %@", path);
+}
+
 // Older builds, where the main search's null state comes straight from here.
 static id (*orig_nullStateModels)(id, SEL);
 static id replaced_nullStateModels(id self, SEL _cmd) {
+    if (SPKSearchPinsEnabled())
+        SPKSearchNoteApplyPath(@"nullStateModels");
     return SPKSearchApplyPins(orig_nullStateModels(self, _cmd), self, NO);
 }
 
@@ -1263,12 +1286,20 @@ static id replaced_nullStateModels(id self, SEL _cmd) {
 static id (*orig_typeaheadViewModels)(id, SEL, id);
 static id replaced_typeaheadViewModels(id self, SEL _cmd, id dataSource) {
     id models = orig_typeaheadViewModels(self, _cmd, dataSource);
-    if (!SPKSearchPinsEnabled() || ![self respondsToSelector:@selector(searchBarWithCancel)])
+    if (!SPKSearchPinsEnabled() || !SPKSearchFieldIsEmpty(self))
         return models;
-    IGSearchBarWithCancel *bar = ((id (*)(id, SEL))objc_msgSend)(self, @selector(searchBarWithCancel));
-    NSString *text = [bar respondsToSelector:@selector(searchBar)] ? bar.searchBar.text : nil;
-    if ([text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length > 0)
+    SPKSearchNoteApplyPath(@"viewModelsForSearchListKitDataSource");
+    return SPKSearchApplyPins(models, nil, YES);
+}
+
+// On some accounts the search screen is the list's data source itself and builds
+// the null state without going through either path above.
+static id (*orig_typeaheadObjects)(id, SEL, id);
+static id replaced_typeaheadObjects(id self, SEL _cmd, id adapter) {
+    id models = orig_typeaheadObjects(self, _cmd, adapter);
+    if (!SPKSearchPinsEnabled() || !SPKSearchFieldIsEmpty(self))
         return models;
+    SPKSearchNoteApplyPath(@"objectsForListAdapter");
     return SPKSearchApplyPins(models, nil, YES);
 }
 
@@ -1319,11 +1350,12 @@ void SPKInstallSearchPinsHooksIfNeeded(void) {
         BOOL typeaheadSectionsHooked = SPKSearchHook(typeahead, @"listAdapter:sectionControllerForObject:",
                                                      (IMP)replaced_typeaheadSectionControllerForObject, (IMP *)&orig_typeaheadSectionControllerForObject);
         // Rows are only added where a section controller can be handed out for the header.
-        BOOL nullStateHooked = NO, typeaheadModelsHooked = NO;
+        BOOL nullStateHooked = NO, typeaheadModelsHooked = NO, typeaheadObjectsHooked = NO;
         if (listKitHooked || typeaheadSectionsHooked) {
             nullStateHooked = SPKSearchHook(nullState, @"nullStateModels", (IMP)replaced_nullStateModels, (IMP *)&orig_nullStateModels);
             typeaheadModelsHooked = SPKSearchHook(typeahead, @"viewModelsForSearchListKitDataSource:",
                                                   (IMP)replaced_typeaheadViewModels, (IMP *)&orig_typeaheadViewModels);
+            typeaheadObjectsHooked = SPKSearchHook(typeahead, @"objectsForListAdapter:", (IMP)replaced_typeaheadObjects, (IMP *)&orig_typeaheadObjects);
         }
         SPKSearchHook(objc_getClass("IGListAdapter"), @"dequeueReusableCellOfClass:forSectionController:atIndex:",
                       (IMP)replaced_adapterDequeueCell, (IMP *)&orig_adapterDequeueCell);
@@ -1331,7 +1363,7 @@ void SPKInstallSearchPinsHooksIfNeeded(void) {
         BOOL longPressHooked = SPKSearchHook(resultSection, @"searchCollectionViewCellDidLongPressCell:viewModel:",
                                              (IMP)replaced_searchRowLongPress, (IMP *)&orig_searchRowLongPress);
 
-        SPKLog(@"General", @"[Sparkle SearchPins] hooks listKit=%d typeaheadSections=%d nullState=%d typeaheadModels=%d longPress=%d recentType=%@",
-               listKitHooked, typeaheadSectionsHooked, nullStateHooked, typeaheadModelsHooked, longPressHooked, SPKSearchRecentSectionType());
+        SPKLog(@"General", @"[Sparkle SearchPins] hooks listKit=%d typeaheadSections=%d nullState=%d typeaheadModels=%d typeaheadObjects=%d longPress=%d recentType=%@",
+               listKitHooked, typeaheadSectionsHooked, nullStateHooked, typeaheadModelsHooked, typeaheadObjectsHooked, longPressHooked, SPKSearchRecentSectionType());
     });
 }
