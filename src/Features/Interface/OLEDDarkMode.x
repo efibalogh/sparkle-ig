@@ -420,17 +420,31 @@ static UIColor *SPKOLEDAlertColor(UIColor *color, BOOL pressed) {
     return result;
 }
 
+// Repaints a view with its own color so the alert gray is applied. This goes
+// through UIView's setter: IGTapButton overrides setBackgroundColor: to record
+// the color as its normal state, so repainting a highlighted button through it
+// would make the pressed color stick after the finger leaves.
+static void SPKOLEDRepaintBackground(UIView *view) {
+    static void (*viewSetter)(id, SEL, UIColor *);
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        viewSetter = (void (*)(id, SEL, UIColor *))class_getMethodImplementation(UIView.class, @selector(setBackgroundColor:));
+    });
+    viewSetter(view, @selector(setBackgroundColor:), view.backgroundColor);
+}
+
 // The bottom action sheet floats over the page like an alert, so it gets the
 // alert's gray. Its surfaces are plain views and buttons with no class of
-// their own, so each one inside the sheet is flagged once laid out; the flag
-// keeps the gray when a button is highlighted and repainted.
+// their own, so each one inside the sheet is flagged once laid out. The flag
+// keeps the gray when IG repaints a button for its highlighted state, which it
+// does after the state flips, so the pressed step is picked up there.
 static void SPKOLEDFlagAlertSurfaces(UIView *view, UIView *skip, NSUInteger depth) {
     if (view == skip || depth > 8)
         return;
     if (!objc_getAssociatedObject(view, @selector(spk_oledAlertSurface))) {
         objc_setAssociatedObject(view, @selector(spk_oledAlertSurface), @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         if (view.backgroundColor)
-            view.backgroundColor = view.backgroundColor;
+            SPKOLEDRepaintBackground(view);
     }
     for (UIView *subview in view.subviews)
         SPKOLEDFlagAlertSurfaces(subview, skip, depth + 1);
@@ -444,19 +458,6 @@ static void SPKOLEDFlagAlertSurfaces(UIView *view, UIView *skip, NSUInteger dept
     %orig;
     IGActionSheetController *sheet = (IGActionSheetController *)self;
     SPKOLEDFlagAlertSurfaces(sheet.contentContainerView, sheet.overlayView, 0);
-}
-
-%end
-
-// IG may repaint a button before its highlighted state flips, so a flagged
-// button is repainted once the state is final.
-%hook IGTapButton
-
-- (void)setHighlighted:(BOOL)highlighted {
-    %orig;
-    UIView *view = (UIView *)self;
-    if (view.backgroundColor && SPKOLEDIsAlertView(view))
-        view.backgroundColor = view.backgroundColor;
 }
 
 %end
@@ -532,8 +533,8 @@ void SPKInstallOLEDDarkModeHooksIfEnabled(void) {
     dispatch_once(&once, ^{
         if (![NSUserDefaults.standardUserDefaults boolForKey:@"interface_oled_dark_mode"])
             return;
-        Class sheetClass = NSClassFromString(@"IGActionSheetController"), buttonClass = NSClassFromString(@"IGTapButton");
-        if (sheetClass && buttonClass)
-            %init(SPKOLEDActionSheetHooks, IGActionSheetController = sheetClass, IGTapButton = buttonClass);
+        Class sheetClass = NSClassFromString(@"IGActionSheetController");
+        if (sheetClass)
+            %init(SPKOLEDActionSheetHooks, IGActionSheetController = sheetClass);
     });
 }
