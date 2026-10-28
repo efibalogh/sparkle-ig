@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "تبرع إلى waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "معرف الحزمة";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "سجل التغييرات";
 "ABOUT_INFORMATION_HEADER" = "معلومات";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "مطور Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle مجاني. تبرعك يدعم تطويره.";
 "ABOUT_SUPPORT_HEADER" = "الدعم";
 "ABOUT_TITLE" = "حول";
+"ABOUT_UPDATES_CHECKING_VALUE" = "جارٍ التحقق…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "تعذّر التحقق";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] رابط موجز التحديثات";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] الإصدار المثبت";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] إعادة تعيين حالة التحديث";
+"ABOUT_UPDATES_UPDATE_BADGE" = "تحديث";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "محدّث";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] سبب محاكى مرسل من Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "لإصدارات التطوير فقط. اختر حالة، ثم اخرج وأعد فتح هذه الصفحة. حالات التحميل تُطبَّق عند الفتح، وحالات الحفظ عند تبديل مفتاح.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "فشل التحميل";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "تم إزالة %lu تفاعلات";
 "BATCH_UNSENT_COUNT_FORMAT" = "تم سحب %lu رسائل";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ قام بسحب %lu رسائل";
+"CHANGELOG_INSTALLED_BADGE" = "مثبّت";
+"CHANGELOG_LOAD_FAILED_TEXT" = "تعذّر تحميل سجل التغييرات.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "فتح في Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "إظهار الإصدارات السابقة";
 "COMMON_ACTION_CLOSE" = "إغلاق";
 "COMMON_ACTION_OPEN_SETTINGS" = "فتح الإعدادات";
 "COMMON_DELETE_FAILED_TOAST" = "فشل الحذف";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "رسالة تم إلغاء إرسالها";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "اضغط للمحاولة مرة أخرى";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "البدء";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "احصل عليه من Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "تحديث";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "اسحب لأعلى لرؤية الجديد";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "أنت تستخدم %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "تخطي %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "يتوفر Sparkle %@";
 "VC_BTN_CANCEL" = "إلغاء";
 "VC_BTN_FOLLOW" = "متابعة";
 "VC_BTN_SKIP" = "تخطي";

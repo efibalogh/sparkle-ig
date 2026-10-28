@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "waffle को दान दें";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "बदलावों की सूची";
 "ABOUT_INFORMATION_HEADER" = "जानकारी";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Sparkle डेवलपर";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle मुफ्त है। दान इसके विकास में मदद करता है।";
 "ABOUT_SUPPORT_HEADER" = "समर्थन";
 "ABOUT_TITLE" = "परिचय";
+"ABOUT_UPDATES_CHECKING_VALUE" = "जाँच हो रही है…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "जाँच नहीं हो सकी";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] अपडेट फ़ीड URL";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] इंस्टॉल वर्शन";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] अपडेट स्थिति रीसेट करें";
+"ABOUT_UPDATES_UPDATE_BADGE" = "अपडेट करें";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "अप टू डेट";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Instagram द्वारा भेजा गया सिम्युलेटेड कारण।";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "केवल डेव बिल्ड। कोई केस चुनें, फिर यह पेज छोड़कर दोबारा खोलें। लोड वाले केस खोलने पर और सेव वाले केस स्विच बदलने पर लागू होते हैं।";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "लोड विफल";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu प्रतिक्रियाएं हटाई गईं";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu संदेशों को भेजना रद्द किया गया";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ ने %lu संदेशों को भेजना रद्द किया";
+"CHANGELOG_INSTALLED_BADGE" = "इंस्टॉल है";
+"CHANGELOG_LOAD_FAILED_TEXT" = "चेंजलॉग लोड नहीं हो सका।";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Safari में खोलें";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "पिछले संस्करण दिखाएँ";
 "COMMON_ACTION_CLOSE" = "बंद करें";
 "COMMON_ACTION_OPEN_SETTINGS" = "सेटिंग्स खोलें";
 "COMMON_DELETE_FAILED_TOAST" = "हटाने में विफल";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "हटाया गया संदेश";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "पुनः प्रयास करने के लिए टैप करें";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "शुरुआत करें";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Telegram पर पाएँ";
+"UPDATE_SHEET_ACTION_UPDATE" = "अपडेट करें";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "नया क्या है, देखने के लिए ऊपर स्वाइप करें";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "आप %@ इस्तेमाल कर रहे हैं।";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "%@ छोड़ें";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ उपलब्ध है";
 "VC_BTN_CANCEL" = "रद्द करें";
 "VC_BTN_FOLLOW" = "अनुसरण करें";
 "VC_BTN_SKIP" = "छोड़ें";

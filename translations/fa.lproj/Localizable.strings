@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "اهدا به waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "شناسه Bundle";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "تغییرات نسخه‌ها";
 "ABOUT_INFORMATION_HEADER" = "اطلاعات";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "توسعه‌دهنده Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle رایگان است. اهدای مالی به توسعه آن کمک می‌کند.";
 "ABOUT_SUPPORT_HEADER" = "پشتیبانی";
 "ABOUT_TITLE" = "درباره";
+"ABOUT_UPDATES_CHECKING_VALUE" = "در حال بررسی…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "بررسی ممکن نشد";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] نشانی خوراک به‌روزرسانی";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] نسخهٔ نصب‌شده";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] بازنشانی وضعیت به‌روزرسانی";
+"ABOUT_UPDATES_UPDATE_BADGE" = "به‌روزرسانی";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "به‌روز است";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] دلیل شبیه‌سازی‌شده از طرف Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "فقط نسخه‌های توسعه. یک حالت را انتخاب کنید، سپس از این صفحه خارج شوید و دوباره بازش کنید. حالت‌های بارگیری هنگام باز شدن و حالت‌های ذخیره هنگام تغییر یک کلید اعمال می‌شوند.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "بارگیری ناموفق";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu واکنش حذف شد";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu پیام لغو ارسال شد";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ ارسال %lu پیام را لغو کرد";
+"CHANGELOG_INSTALLED_BADGE" = "نصب‌شده";
+"CHANGELOG_LOAD_FAILED_TEXT" = "بارگیری فهرست تغییرات ممکن نشد.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "باز کردن در Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "نمایش نسخه‌های قبلی";
 "COMMON_ACTION_CLOSE" = "بستن";
 "COMMON_ACTION_OPEN_SETTINGS" = "باز کردن تنظیمات";
 "COMMON_DELETE_FAILED_TOAST" = "حذف ناموفق بود";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "پیام ارسال‌نشده";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "برای تلاش دوباره ضربه بزنید";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "شروع کنید";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "دریافت از Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "به‌روزرسانی";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "برای دیدن تازه‌ها به بالا بکشید";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "در حال استفاده از %@ هستید.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "رد کردن %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ در دسترس است";
 "VC_BTN_CANCEL" = "لغو";
 "VC_BTN_FOLLOW" = "دنبال کردن";
 "VC_BTN_SKIP" = "رد کردن";

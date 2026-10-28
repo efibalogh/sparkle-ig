@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Faire un don à waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Journal des modifications";
 "ABOUT_INFORMATION_HEADER" = "Informations";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Développeur de Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle est gratuit. Un don soutient son développement.";
 "ABOUT_SUPPORT_HEADER" = "Support";
 "ABOUT_TITLE" = "À propos";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Vérification…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Vérification impossible";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL du flux de mises à jour";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Version installée";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Réinitialiser l'état des mises à jour";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Mettre à jour";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "À jour";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Motif simulé envoyé par Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Builds de dev uniquement. Choisissez un cas, puis quittez et rouvrez cette page. Les cas de chargement s'appliquent à l'ouverture, ceux d'enregistrement quand vous basculez un interrupteur.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Le chargement échoue";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu réactions supprimées";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu messages non envoyés";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ a non envoyé %lu messages";
+"CHANGELOG_INSTALLED_BADGE" = "Installée";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Impossible de charger le journal des modifications.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Ouvrir dans Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Afficher les versions précédentes";
 "COMMON_ACTION_CLOSE" = "Fermer";
 "COMMON_ACTION_OPEN_SETTINGS" = "Ouvrir Réglages";
 "COMMON_DELETE_FAILED_TOAST" = "Échec de la suppression";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Message supprimé";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Appuyez pour réessayer";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Commencer";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Obtenir sur Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "Mettre à jour";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Balayez vers le haut pour voir les nouveautés";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "Vous utilisez %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Ignorer %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ est disponible";
 "VC_BTN_CANCEL" = "Annuler";
 "VC_BTN_FOLLOW" = "Suivre";
 "VC_BTN_SKIP" = "Ignorer";

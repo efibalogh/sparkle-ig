@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Ủng hộ cho waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Nhật ký thay đổi";
 "ABOUT_INFORMATION_HEADER" = "Thông tin";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Lập trình viên Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle hoàn toàn miễn phí. Việc ủng hộ (donate) sẽ giúp duy trì và phát triển tweak.";
 "ABOUT_SUPPORT_HEADER" = "Hỗ trợ";
 "ABOUT_TITLE" = "Giới thiệu";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Đang kiểm tra…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Không thể kiểm tra";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL nguồn cập nhật";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Phiên bản đã cài";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Đặt lại trạng thái cập nhật";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Cập nhật";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Mới nhất";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Lý do mô phỏng do Instagram gửi.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Chỉ dành cho bản dev. Chọn một trường hợp, rồi thoát và mở lại trang này. Trường hợp tải áp dụng khi mở, trường hợp lưu áp dụng khi bạn gạt công tắc.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Tải thất bại";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "Đã xóa %lu cảm xúc";
 "BATCH_UNSENT_COUNT_FORMAT" = "Đã thu hồi %lu tin nhắn";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ đã thu hồi %lu tin nhắn";
+"CHANGELOG_INSTALLED_BADGE" = "Đã cài đặt";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Không thể tải nhật ký thay đổi.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Mở trong Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Hiện các phiên bản trước";
 "COMMON_ACTION_CLOSE" = "Đóng";
 "COMMON_ACTION_OPEN_SETTINGS" = "Mở Cài đặt";
 "COMMON_DELETE_FAILED_TOAST" = "Xóa thất bại";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Tin nhắn đã thu hồi";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Nhấn để thử lại";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Bắt đầu";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Tải trên Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "Cập nhật";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Vuốt lên để xem tính năng mới";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "Bạn đang dùng %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Bỏ qua %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Đã có Sparkle %@";
 "VC_BTN_CANCEL" = "Hủy";
 "VC_BTN_FOLLOW" = "Theo dõi";
 "VC_BTN_SKIP" = "Bỏ qua";

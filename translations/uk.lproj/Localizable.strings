@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Пожертвувати на waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Список змін";
 "ABOUT_INFORMATION_HEADER" = "Інформація";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Розробник Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle безкоштовний. Донат підтримує його розробку.";
 "ABOUT_SUPPORT_HEADER" = "Підтримка";
 "ABOUT_TITLE" = "Про програму";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Перевірка…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Не вдалося перевірити";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL стрічки оновлень";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Встановлена версія";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Скинути стан оновлень";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Оновити";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Актуально";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Імітована причина від Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Лише для dev-збірок. Виберіть випадок, потім вийдіть і знову відкрийте цю сторінку. Випадки завантаження діють під час відкриття, випадки збереження, під час перемикання.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Збій завантаження";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu реакцій видалено";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu повідомлень видалено";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ видалив(-ла) %lu повідомлень";
+"CHANGELOG_INSTALLED_BADGE" = "Встановлена";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Не вдалося завантажити список змін.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Відкрити в Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Показати попередні версії";
 "COMMON_ACTION_CLOSE" = "Закрити";
 "COMMON_ACTION_OPEN_SETTINGS" = "Відкрити налаштування";
 "COMMON_DELETE_FAILED_TOAST" = "Не вдалося видалити";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Видалене повідомлення";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Торкніться, щоб повторити спробу";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Розпочати";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Отримати в Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "Оновити";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Проведіть угору, щоб побачити нове";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "Ви використовуєте %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Пропустити %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Доступний Sparkle %@";
 "VC_BTN_CANCEL" = "Скасувати";
 "VC_BTN_FOLLOW" = "Стежити";
 "VC_BTN_SKIP" = "Пропустити";

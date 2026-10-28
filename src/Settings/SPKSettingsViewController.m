@@ -142,6 +142,32 @@ static NSString *SPKSettingsAccessoryText(SPKSetting *row) {
     return staticText;
 }
 
+/// The accessory for a button row that also has a subtitle (which the side-by-side
+/// accessory text would otherwise replace), or whose accessory is prominent.
+static UIView *SPKSettingsAccessoryLabelView(NSString *text, BOOL prominent) {
+    UIFont *font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+    if (!prominent) {
+        UILabel *label = [UILabel new];
+        label.text = text;
+        label.font = font;
+        label.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
+        [label sizeToFit];
+        return label;
+    }
+    UIButtonConfiguration *configuration = [UIButtonConfiguration filledButtonConfiguration];
+    configuration.cornerStyle = UIButtonConfigurationCornerStyleCapsule;
+    configuration.baseBackgroundColor = [SPKUtils SPKColor_InstagramBlue];
+    configuration.baseForegroundColor = UIColor.whiteColor;
+    configuration.contentInsets = NSDirectionalEdgeInsetsMake(5.0, 12.0, 5.0, 12.0);
+    UIFont *badgeFont = [UIFont systemFontOfSize:font.pointSize - 2.0 weight:UIFontWeightSemibold];
+    configuration.attributedTitle = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName : badgeFont}];
+    UIButton *badge = [UIButton buttonWithConfiguration:configuration primaryAction:nil];
+    // Decoration only: the row's own tap runs the action.
+    badge.userInteractionEnabled = NO;
+    [badge sizeToFit];
+    return badge;
+}
+
 static NSArray<NSString *> *SPKSettingsSearchTokens(NSString *query) {
     NSString *normalized = SPKSettingsNormalizedQuery(query);
     if (normalized.length == 0)
@@ -668,6 +694,11 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 
     case SPKTableCellButton: {
         NSString *accessoryText = SPKSettingsAccessoryText(row);
+        BOOL prominentAccessory = row.accessoryTextProminentProvider && row.accessoryTextProminentProvider();
+        if (rowEnabled && accessoryText.length > 0 && (row.subtitle.length > 0 || prominentAccessory)) {
+            cell.accessoryView = SPKSettingsAccessoryLabelView(accessoryText, prominentAccessory);
+            break;
+        }
         if (rowEnabled && accessoryText.length > 0) {
             cellContentConfig.secondaryText = accessoryText;
             cellContentConfig.prefersSideBySideTextAndSecondaryText = YES;

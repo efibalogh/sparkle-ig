@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Mag-donate kay waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "ID ng Bundle";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Talaan ng mga Pagbabago";
 "ABOUT_INFORMATION_HEADER" = "Impormasyon";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Developer ng Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Libre ang Sparkle. Sinusuportahan ng donasyon ang pagpapaunlad nito.";
 "ABOUT_SUPPORT_HEADER" = "Suporta";
 "ABOUT_TITLE" = "Tungkol";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Tinitingnan…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Hindi Nasuri";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL ng Update Feed";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Naka-install na Bersyon";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] I-reset ang Update State";
+"ABOUT_UPDATES_UPDATE_BADGE" = "I-update";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Pinakabago";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Simulated na dahilan mula sa Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Para sa dev build lang. Pumili ng kaso, saka umalis at buksan ulit ang page na ito. Ang mga kaso sa pag-load ay gagana sa pagbukas, ang mga kaso sa pag-save kapag nag-flip ka ng switch.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Nabigo ang Pag-load";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu reaction ang naalis";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu mensahe ang na-unsend";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "Na-unsend ni %@ ang %lu mensahe";
+"CHANGELOG_INSTALLED_BADGE" = "Naka-install";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Hindi ma-load ang changelog.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Buksan sa Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Ipakita ang mga Naunang Bersyon";
 "COMMON_ACTION_CLOSE" = "Isara";
 "COMMON_ACTION_OPEN_SETTINGS" = "Buksan ang Settings";
 "COMMON_DELETE_FAILED_TOAST" = "Nabigong burahin";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Hindi Naipadalang Mensahe";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "I-tap para subukan ulit";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Simulan";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Kunin sa Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "I-update";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Mag-swipe pataas para makita ang bago";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "Gumagamit ka ng %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Laktawan ang %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Available na ang Sparkle %@";
 "VC_BTN_CANCEL" = "Kanselahin";
 "VC_BTN_FOLLOW" = "Sundan";
 "VC_BTN_SKIP" = "Laktawan";

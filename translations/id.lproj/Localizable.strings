@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Donasi ke waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Log Perubahan";
 "ABOUT_INFORMATION_HEADER" = "Informasi";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Pengembang Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle gratis. Donasi Anda mendukung pengembangannya.";
 "ABOUT_SUPPORT_HEADER" = "Dukungan";
 "ABOUT_TITLE" = "Tentang";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Memeriksa…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Gagal Memeriksa";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL Feed Pembaruan";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Versi Terpasang";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Atur Ulang Status Pembaruan";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Perbarui";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Terbaru";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Alasan simulasi dari Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Hanya build dev. Pilih kasus, lalu keluar dan buka lagi halaman ini. Kasus pemuatan berlaku saat dibuka, kasus penyimpanan saat Anda mengubah sakelar.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Pemuatan Gagal";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu reaksi dihapus";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu pesan dibatalkan kirim";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ membatalkan pengiriman %lu pesan";
+"CHANGELOG_INSTALLED_BADGE" = "Terpasang";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Tidak dapat memuat log perubahan.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Buka di Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Tampilkan Versi Sebelumnya";
 "COMMON_ACTION_CLOSE" = "Tutup";
 "COMMON_ACTION_OPEN_SETTINGS" = "Buka Pengaturan";
 "COMMON_DELETE_FAILED_TOAST" = "Gagal menghapus";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Pesan Dibatalkan";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Ketuk untuk coba lagi";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Mulai";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Dapatkan di Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "Perbarui";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Geser ke atas untuk melihat yang baru";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "Anda menggunakan %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Lewati %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ Tersedia";
 "VC_BTN_CANCEL" = "Batal";
 "VC_BTN_FOLLOW" = "Ikuti";
 "VC_BTN_SKIP" = "Lewati";

@@ -2,9 +2,59 @@
 #import "SPKAboutSettingsProvider.h"
 
 #import "../../AssetUtils.h"
+#import "../../Shared/Updates/SPKChangelogViewController.h"
+#import "../../Shared/Updates/SPKUpdateChecker.h"
 #import "../../Tweak.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
+
+/// The installed version, which doubles as the way to check for a newer one: it shows what the
+/// last check found, and a tap opens the update sheet or checks again.
+static SPKSetting *SPKSparkleVersionCell(void) {
+    SPKSetting *version = [SPKSetting buttonCellWithTitle:SPKL(@"ABOUT_INFORMATION_SPARKLE_TITLE")
+                                                 subtitle:SPKVersionString
+                                                     icon:SPKSettingsIcon(@"action")
+                                                   action:^{
+                                                       [SPKUpdateChecker checkNowFromViewController:SPKSettingsTopPresenter()];
+                                                   }];
+    version.accessoryTextProvider = ^NSString * {
+        if ([SPKUpdateChecker isChecking])
+            return SPKL(@"ABOUT_UPDATES_CHECKING_VALUE");
+        if ([SPKUpdateChecker updateAvailable])
+            return SPKL(@"ABOUT_UPDATES_UPDATE_BADGE");
+        if ([SPKUpdateChecker lastCheckFailed])
+            return SPKL(@"ABOUT_UPDATES_CHECK_FAILED_VALUE");
+        return [SPKUpdateChecker latestKnownVersion] ? SPKL(@"ABOUT_UPDATES_UP_TO_DATE_VALUE") : nil;
+    };
+    version.accessoryTextProminentProvider = ^BOOL {
+        return ![SPKUpdateChecker isChecking] && [SPKUpdateChecker updateAvailable];
+    };
+    return version;
+}
+
+#if SPK_DEV
+// Dev builds only: compare against a pretend installed version, or a feed of your own, to see the
+// update sheet without publishing a release.
+static NSDictionary *SPKUpdatesDevSection(void) {
+    return SPKTopicSection(@"", @[
+        [SPKSetting textFieldCellWithTitle:SPKL(@"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE")
+                               placeholder:SPKVersionString
+                              keyboardType:UIKeyboardTypeDefault
+                               defaultsKey:@"app_update_dev_installed_version"],
+        [SPKSetting textFieldCellWithTitle:SPKL(@"ABOUT_UPDATES_DEV_FEED_URL_TITLE")
+                               placeholder:@"https://…/latest.json or {\"version\":…}" // SPK_I18N_IGNORE: feed example
+                              keyboardType:UIKeyboardTypeURL
+                               defaultsKey:@"app_update_dev_feed_url"],
+        [SPKSetting buttonCellWithTitle:SPKL(@"ABOUT_UPDATES_DEV_RESET_STATE_TITLE")
+                               subtitle:nil
+                                   icon:nil
+                                 action:^{
+                                     [SPKUpdateChecker resetState];
+                                 }]
+    ],
+                           nil);
+}
+#endif
 
 @implementation SPKAboutSettingsProvider
 
@@ -19,21 +69,26 @@
         @"remoteImageCircular" : @NO
     };
 
-    return SPKTopicNavigationSetting(SPKL(@"ABOUT_TITLE"), @"info", 24.0, @[
+    NSMutableArray *sections = [@[
         SPKTopicSection(SPKL(@"ABOUT_SUPPORT_HEADER"), @[
             SPKSettingWithHelp(donate, SPKL(@"ABOUT_SUPPORT_DONATE_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"ABOUT_INFORMATION_HEADER"), @[
-            [SPKSetting staticCellWithTitle:SPKL(@"ABOUT_INFORMATION_SPARKLE_TITLE")
-                                   subtitle:SPKVersionString
-                                       icon:SPKSettingsIcon(@"action")],
+            SPKSparkleVersionCell(),
             [SPKSetting staticCellWithTitle:SPKL(@"ABOUT_INFORMATION_INSTAGRAM_TITLE")
                                    subtitle:[SPKUtils IGVersionString]
                                        icon:SPKSettingsIcon(@"app")],
             [SPKSetting staticCellWithTitle:SPKL(@"ABOUT_INFORMATION_BUNDLE_ID_TITLE")
                                    subtitle:[[NSBundle mainBundle] bundleIdentifier]
                                        icon:SPKSettingsIcon(@"key")]
+        ],
+                        nil),
+        SPKTopicSection(@"", @[
+            [SPKSetting navigationCellWithTitle:SPKL(@"ABOUT_INFORMATION_CHANGELOG_TITLE")
+                                       subtitle:@""
+                                           icon:SPKSettingsIcon(@"history")
+                                 viewController:[SPKChangelogViewController new]],
         ],
                         nil),
         SPKTopicSection(@"", @[
@@ -79,7 +134,12 @@
                                    imageUrl:@"https://avatars.githubusercontent.com/u/26267688?v=4"]
         ],
                         nil)
-    ]);
+    ] mutableCopy];
+#if SPK_DEV
+    // Right under Information, beside the version row it drives.
+    [sections insertObject:SPKUpdatesDevSection() atIndex:2];
+#endif
+    return SPKTopicNavigationSetting(SPKL(@"ABOUT_TITLE"), @"info", 24.0, sections);
 }
 
 @end

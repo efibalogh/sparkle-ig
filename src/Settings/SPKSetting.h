@@ -40,6 +40,9 @@ FOUNDATION_EXPORT NSNotificationName const SPKSettingAccessoryTextDidChangeNotif
 @property (nonatomic, strong, nullable) UIColor *iconTintColor;
 @property (nonatomic, copy, nullable) UIImage * (^iconProvider)(void);
 @property (nonatomic, copy, nullable) NSString * (^accessoryTextProvider)(void);
+/// When it returns YES, a button row's accessory text is drawn as a filled accent capsule
+/// (a call to action such as "Update") instead of plain secondary text.
+@property (nonatomic, copy, nullable) BOOL (^accessoryTextProminentProvider)(void);
 @property (nonatomic, copy, nullable) BOOL (^enabledProvider)(void);
 /// When set and it returns YES, the row is omitted from the table entirely
 /// (not merely greyed out). Evaluated whenever the table's visible sections are

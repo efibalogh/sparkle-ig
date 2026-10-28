@@ -630,3 +630,10 @@ export/import, cache clearing, and more.
 ### Reset
 - **Reset All Settings**: Restore every preference to its default value. When **per-account settings** is on, a prompt first asks whether to reset **All Accounts** or **This Account Only** (like Export) — a per-account reset clears only the active account's overrides and leaves other accounts untouched.
 - Individual **configurable** settings can also be reset in place, without wiping everything: **Reset Encoding Settings** on the Advanced Encoding page, and **Reset to Default** at the bottom of each surface's **Configure Actions** editor (resets that surface's menu sections, default action, and bulk menus only).
+
+## About
+
+### Updates
+- **Update prompt**: A little after launch, when a newer Sparkle is out, a compact sheet shows the new version against yours. Dragging the sheet up (the hint under the version says so; tapping it works too) grows it to full height with the changelog, which is already loaded by then and lists only the versions you do not have yet (**Show Earlier Versions** brings back the rest), with **Update**, **Not Now** and **Skip** still at the bottom; swiping down returns to the compact sheet. If the changelog cannot load, **Retry** or **Open in Safari**. It comes back on every launch until you update or tap **Skip vX.Y.Z**, which silences that version only; **Not Now** waits for the next launch; the sheet cannot be swiped or tapped away, so it is never dismissed unread. The main button opens the package in Sileo, Zebra or Cydia on jailbroken devices and the Telegram channel on sideloaded installs. Sparkle never downloads or installs anything itself. It waits for whatever else is on screen to close rather than covering it.
+- **Sparkle version row**: Shows what the last check found: **Up to Date**, or an **Update** badge. Tapping it opens the update sheet, even for a skipped version, or checks again right away.
+- **Changelog**: Every release's notes inside the app, with the version you have labeled **Installed**. Needs a connection; if it cannot load, **Retry** or **Open in Safari**.

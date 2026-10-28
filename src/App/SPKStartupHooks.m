@@ -2,6 +2,7 @@
 
 #import "../Utils.h"
 #import "../Shared/i18n/SPKLanguagePackUpdater.h"
+#import "../Shared/Updates/SPKUpdateChecker.h"
 #import "SPKHookBisect.h"
 #import "SPKStabilityGuard.h"
 
@@ -358,6 +359,8 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     // themselves exist. It throttles itself to once a day and delays past launch, so it costs a
     // no-op call here on every other launch.
     [SPKLanguagePackUpdater checkForUpdatesIfDue];
+    // Not a hook either: offers a newer Sparkle once launch settles, refreshing the feed when due.
+    [SPKUpdateChecker scheduleLaunchCheck];
     SPK_INSTALL(SPKInstallAccountSwitchHooksIfNeeded);
     SPK_INSTALL(SPKInstallTweakGeneralUIHooksIfNeeded);
     // Not a hook: shows the floating debug button from Tools > Diagnostics.

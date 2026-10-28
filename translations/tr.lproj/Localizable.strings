@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Waffle'a Bağış Yap";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle Kimliği";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Değişiklik Günlüğü";
 "ABOUT_INFORMATION_HEADER" = "Bilgi";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Sparkle geliştiricisi";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle ücretsizdir. Bağış, geliştirilmesini destekler.";
 "ABOUT_SUPPORT_HEADER" = "Destek";
 "ABOUT_TITLE" = "Hakkında";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Denetleniyor…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Denetlenemedi";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] Güncelleme Akışı URL'si";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Yüklü Sürüm";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Güncelleme Durumunu Sıfırla";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Güncelle";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Güncel";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Instagram'ın gönderdiği simüle edilmiş neden.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Yalnızca geliştirici derlemeleri. Bir durum seçin, ardından bu sayfadan çıkıp yeniden açın. Yükleme durumları açılışta, kaydetme durumları bir anahtarı değiştirdiğinizde uygulanır.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Yükleme Başarısız";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu tepki kaldırıldı";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu ileti geri çekildi";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ %lu iletiyi geri çekti";
+"CHANGELOG_INSTALLED_BADGE" = "Yüklü";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Değişiklik günlüğü yüklenemedi.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Safari’de Aç";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Önceki Sürümleri Göster";
 "COMMON_ACTION_CLOSE" = "Kapat";
 "COMMON_ACTION_OPEN_SETTINGS" = "Ayarlar'ı aç";
 "COMMON_DELETE_FAILED_TOAST" = "Silinemedi";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Gönderilmeyen İleti";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Yeniden denemek için dokunun";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Başla";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Telegram'dan Al";
+"UPDATE_SHEET_ACTION_UPDATE" = "Güncelle";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Yenilikler için yukarı kaydırın";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "%@ kullanıyorsunuz.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "%@ sürümünü atla";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ Kullanılabilir";
 "VC_BTN_CANCEL" = "İptal";
 "VC_BTN_FOLLOW" = "Takip Et";
 "VC_BTN_SKIP" = "Atla";

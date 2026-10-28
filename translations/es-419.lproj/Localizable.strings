@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Donar a waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "ID de paquete";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Registro de cambios";
 "ABOUT_INFORMATION_HEADER" = "Información";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Desarrollador de Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle es gratuito. Una donación apoya su desarrollo.";
 "ABOUT_SUPPORT_HEADER" = "Soporte";
 "ABOUT_TITLE" = "Acerca de";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Buscando…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "No se pudo comprobar";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL del feed de actualizaciones";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Versión instalada";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Restablecer estado de actualización";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Actualizar";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Actualizado";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Motivo simulado enviado por Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Solo compilaciones de desarrollo. Elige un caso, sal y vuelve a abrir esta página. Los casos de carga se aplican al abrirla y los de guardado al cambiar un interruptor.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Falla la carga";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu reacciones eliminadas";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu mensajes desinviados";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ desinvió %lu mensajes";
+"CHANGELOG_INSTALLED_BADGE" = "Instalada";
+"CHANGELOG_LOAD_FAILED_TEXT" = "No se pudo cargar el registro de cambios.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Abrir en Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Mostrar versiones anteriores";
 "COMMON_ACTION_CLOSE" = "Cerrar";
 "COMMON_ACTION_OPEN_SETTINGS" = "Abrir Configuración";
 "COMMON_DELETE_FAILED_TOAST" = "Error al eliminar";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Mensaje no enviado";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Toca para reintentar";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Comenzar";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Obtener en Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "Actualizar";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Desliza hacia arriba para ver las novedades";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "Estás usando %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Omitir %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ está disponible";
 "VC_BTN_CANCEL" = "Cancelar";
 "VC_BTN_FOLLOW" = "Seguir";
 "VC_BTN_SKIP" = "Omitir";

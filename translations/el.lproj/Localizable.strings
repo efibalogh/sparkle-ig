@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Δωρεά στο waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Αρχείο αλλαγών";
 "ABOUT_INFORMATION_HEADER" = "Πληροφορίες";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Δημιουργός του Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Το Sparkle είναι δωρεάν. Μια δωρεά στηρίζει την ανάπτυξή του.";
 "ABOUT_SUPPORT_HEADER" = "Υποστήριξη";
 "ABOUT_TITLE" = "Σχετικά";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Έλεγχος…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Δεν ήταν δυνατός ο έλεγχος";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL ροής ενημερώσεων";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Εγκατεστημένη έκδοση";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Επαναφορά κατάστασης ενημέρωσης";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Ενημέρωση";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Ενημερωμένο";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Προσομοιωμένη αιτία από το Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Μόνο εκδόσεις ανάπτυξης. Επιλέξτε μια περίπτωση, βγείτε και ανοίξτε ξανά αυτή τη σελίδα. Οι περιπτώσεις φόρτωσης ισχύουν στο άνοιγμα, οι περιπτώσεις αποθήκευσης όταν αλλάζετε έναν διακόπτη.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Η φόρτωση αποτυγχάνει";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu αντιδράσεις αφαιρέθηκαν";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu μηνύματα ανεστάλησαν";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ ανέστειλε %lu μηνύματα";
+"CHANGELOG_INSTALLED_BADGE" = "Εγκατεστημένη";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Δεν ήταν δυνατή η φόρτωση του αρχείου αλλαγών.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Άνοιγμα στο Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Εμφάνιση παλαιότερων εκδόσεων";
 "COMMON_ACTION_CLOSE" = "Κλείσιμο";
 "COMMON_ACTION_OPEN_SETTINGS" = "Άνοιγμα ρυθμίσεων";
 "COMMON_DELETE_FAILED_TOAST" = "Αποτυχία διαγραφής";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Ακύρωση αποστολής μηνύματος";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Αγγίξτε για να δοκιμάσετε ξανά";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Ξεκινήστε";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Λήψη από το Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "Ενημέρωση";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Σύρετε προς τα πάνω για τα νέα";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "Χρησιμοποιείς την %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Παράλειψη %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Το Sparkle %@ είναι διαθέσιμο";
 "VC_BTN_CANCEL" = "Ακύρωση";
 "VC_BTN_FOLLOW" = "Ακολούθηση";
 "VC_BTN_SKIP" = "Παράλειψη";

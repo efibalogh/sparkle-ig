@@ -1169,6 +1169,10 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
         return YES;
     if ([key hasPrefix:@"downloads_encoding_"])
         return YES;
+    // The update check compares the one installed Sparkle with the release feed, so what it found
+    // and the version it was told to skip belong to the install, not to whichever account is live.
+    if ([key hasPrefix:@"app_update_"])
+        return YES;
 #if SPK_DEV
     // Hook-bisect skip flags: read during hook installation (before the session
     // PK resolves) and meaningless per-account — a bisect must behave the same

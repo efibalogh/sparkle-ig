@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Donate to waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "Changelog";
 "ABOUT_INFORMATION_HEADER" = "Information";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "Sparkle developer";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle is free. A donation supports its development.";
 "ABOUT_SUPPORT_HEADER" = "Support";
 "ABOUT_TITLE" = "About";
+"ABOUT_UPDATES_CHECKING_VALUE" = "Checking…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "Couldn't Check";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] Update Feed URL";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] Installed Version";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] Reset Update State";
+"ABOUT_UPDATES_UPDATE_BADGE" = "Update";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "Up to Date";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] Simulated reason sent by Instagram.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "Dev builds only. Pick a case, then leave and reopen this page. Load cases apply on open, save cases when you flip a switch.";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "Loading Fails";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "%lu reactions removed";
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu messages unsent";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ unsent %lu messages";
+"CHANGELOG_INSTALLED_BADGE" = "Installed";
+"CHANGELOG_LOAD_FAILED_TEXT" = "Couldn't load the changelog.";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "Open in Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "Show Earlier Versions";
 "COMMON_ACTION_CLOSE" = "Close";
 "COMMON_ACTION_OPEN_SETTINGS" = "Open Settings";
 "COMMON_DELETE_FAILED_TOAST" = "Failed to delete";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "Unsent Message";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "Tap to retry";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "Get Started";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "Get It on Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "Update";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "Swipe up for what's new";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "You're using %@.";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "Skip %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ Is Available";
 "VC_BTN_CANCEL" = "Cancel";
 "VC_BTN_FOLLOW" = "Follow";
 "VC_BTN_SKIP" = "Skip";

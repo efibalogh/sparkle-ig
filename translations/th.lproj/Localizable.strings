@@ -14,6 +14,7 @@
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "บริจาคให้ waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
+"ABOUT_INFORMATION_CHANGELOG_TITLE" = "บันทึกการเปลี่ยนแปลง";
 "ABOUT_INFORMATION_HEADER" = "ข้อมูล";
 "ABOUT_INFORMATION_INSTAGRAM_TITLE" = "Instagram";
 "ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE" = "ผู้พัฒนา Sparkle";
@@ -24,6 +25,13 @@
 "ABOUT_SUPPORT_DONATE_HELP" = "Sparkle ใช้งานฟรี การบริจาคช่วยสนับสนุนการพัฒนา";
 "ABOUT_SUPPORT_HEADER" = "สนับสนุน";
 "ABOUT_TITLE" = "เกี่ยวกับ";
+"ABOUT_UPDATES_CHECKING_VALUE" = "กำลังตรวจสอบ…";
+"ABOUT_UPDATES_CHECK_FAILED_VALUE" = "ตรวจสอบไม่สำเร็จ";
+"ABOUT_UPDATES_DEV_FEED_URL_TITLE" = "[DEV] URL ฟีดอัปเดต";
+"ABOUT_UPDATES_DEV_INSTALLED_VERSION_TITLE" = "[DEV] เวอร์ชันที่ติดตั้ง";
+"ABOUT_UPDATES_DEV_RESET_STATE_TITLE" = "[DEV] รีเซ็ตสถานะอัปเดต";
+"ABOUT_UPDATES_UPDATE_BADGE" = "อัปเดต";
+"ABOUT_UPDATES_UP_TO_DATE_VALUE" = "เป็นเวอร์ชันล่าสุด";
 "ACCOUNT_PRIVACY_DEV_SIMULATED_REASON" = "[DEV] เหตุผลจำลองที่ส่งมาจาก Instagram";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_FOOTER" = "เฉพาะบิลด์สำหรับนักพัฒนา เลือกกรณี แล้วออกและเปิดหน้านี้ใหม่ กรณีการโหลดมีผลเมื่อเปิด กรณีการบันทึกมีผลเมื่อสลับสวิตช์";
 "ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS" = "โหลดไม่สำเร็จ";
@@ -317,6 +325,10 @@
 "BATCH_REACTIONS_REMOVED_FORMAT" = "ลบรีแอกชันแล้ว %lu รายการ";
 "BATCH_UNSENT_COUNT_FORMAT" = "เลิกส่งข้อความแล้ว %lu รายการ";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ เรียกคืนข้อความแล้ว %lu รายการ";
+"CHANGELOG_INSTALLED_BADGE" = "ติดตั้งแล้ว";
+"CHANGELOG_LOAD_FAILED_TEXT" = "โหลดบันทึกการเปลี่ยนแปลงไม่ได้";
+"CHANGELOG_OPEN_IN_SAFARI_ACTION" = "เปิดใน Safari";
+"CHANGELOG_SHOW_EARLIER_ACTION" = "แสดงเวอร์ชันก่อนหน้า";
 "COMMON_ACTION_CLOSE" = "ปิด";
 "COMMON_ACTION_OPEN_SETTINGS" = "เปิดการตั้งค่า";
 "COMMON_DELETE_FAILED_TOAST" = "ลบไม่สำเร็จ";
@@ -2448,6 +2460,12 @@
 "UI_NOTIFICATION_CENTER_UNSENT_MESSAGE" = "ยกเลิกส่งข้อความ";
 "UI_NOTIFICATION_PILL_VIEW_TAP_RETRY_TEXT" = "แตะเพื่อลองอีกครั้ง";
 "UI_PAGED_SHEET_GET_STARTED_TEXT" = "เริ่มต้นใช้งาน";
+"UPDATE_SHEET_ACTION_TELEGRAM" = "รับบน Telegram";
+"UPDATE_SHEET_ACTION_UPDATE" = "อัปเดต";
+"UPDATE_SHEET_CHANGELOG_SWIPE_HINT" = "ปัดขึ้นเพื่อดูสิ่งใหม่";
+"UPDATE_SHEET_INSTALLED_FORMAT" = "คุณกำลังใช้ %@";
+"UPDATE_SHEET_SKIP_VERSION_FORMAT" = "ข้าม %@";
+"UPDATE_SHEET_TITLE_FORMAT" = "Sparkle %@ พร้อมใช้งานแล้ว";
 "VC_BTN_CANCEL" = "ยกเลิก";
 "VC_BTN_FOLLOW" = "ติดตาม";
 "VC_BTN_SKIP" = "ข้าม";
