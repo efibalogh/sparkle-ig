@@ -38,10 +38,15 @@ static inline BOOL SPKShouldPassThroughManualDirectSeen(id message) {
 }
 %end
 
+%end
+
 // The DM visual-message viewer shares the story player's playback pipeline, so it
 // auto-advances to the next item (or dismisses) when the current media plays to
 // end. Blocking that keeps the current visual message on screen; manual taps and
-// the eye button still advance normally.
+// the eye button still advance normally. Installs unconditionally and re-checks
+// the pref per item, so enabling it mid-session or per account takes effect.
+%group SPKDMVisualAutoAdvanceHooks
+
 %hook IGDirectVisualMessageViewerController
 - (void)storyPlayerMediaViewDidPlayToEnd:(id)arg1 {
     if (SPKShouldBlockDMStoryAutoAdvance()) {
@@ -55,8 +60,12 @@ static inline BOOL SPKShouldPassThroughManualDirectSeen(id message) {
 %end
 
 void SPKInstallDisableDMStorySeenHooksIfNeeded(void) {
-    if (![SPKUtils getBoolPref:@"msgs_manual_visual_seen"] &&
-        ![SPKUtils getBoolPref:@"msgs_stop_visual_auto_advance"]) {
+    static dispatch_once_t advanceOnceToken;
+    dispatch_once(&advanceOnceToken, ^{
+        %init(SPKDMVisualAutoAdvanceHooks);
+    });
+
+    if (![SPKUtils getBoolPref:@"msgs_manual_visual_seen"]) {
         return;
     }
 

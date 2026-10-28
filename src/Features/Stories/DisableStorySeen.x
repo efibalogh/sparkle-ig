@@ -40,6 +40,13 @@ static inline BOOL SPKShouldBlockStoryAutoAdvance(void) {
 }
 %end
 
+%end
+
+// Auto-advance installs unconditionally and re-checks the pref per item, so the
+// toggle works after enabling it mid-session or switching to an account that
+// has it on.
+%group SPKStoryAutoAdvanceHooks
+
 %hook IGStoryFullscreenSectionController
 - (void)storyPlayerMediaViewDidPlayToEnd:(id)arg1 {
     if (SPKShouldBlockStoryAutoAdvance()) {
@@ -48,8 +55,16 @@ static inline BOOL SPKShouldBlockStoryAutoAdvance(void) {
 
     %orig;
 }
+%end
 
-- (void)advanceToNextReelForAutoScroll {
+%end
+
+// Instagram 450+ can serve a Swift section controller in place of the Objective-C
+// one, chosen per account server-side. It receives the same play-to-end callback.
+%group SPKStoryAutoAdvanceSwiftHooks
+
+%hook SPKStoryFullscreenSectionControllerSwift
+- (void)storyPlayerMediaViewDidPlayToEnd:(id)arg1 {
     if (SPKShouldBlockStoryAutoAdvance()) {
         return;
     }
@@ -61,9 +76,16 @@ static inline BOOL SPKShouldBlockStoryAutoAdvance(void) {
 %end
 
 void SPKInstallDisableStorySeenHooksIfNeeded(void) {
+    static dispatch_once_t advanceOnceToken;
+    dispatch_once(&advanceOnceToken, ^{
+        %init(SPKStoryAutoAdvanceHooks);
+        Class swiftSectionController = objc_getClass("_TtC39IGStoryFullscreenSectionControllerSwift39IGStoryFullscreenSectionControllerSwift");
+        if (swiftSectionController)
+            %init(SPKStoryAutoAdvanceSwiftHooks, SPKStoryFullscreenSectionControllerSwift = swiftSectionController);
+    });
+
     if (!SPKStoryManualSeenEnabled() &&
-        SPKStoryManualSeenUserList(NO).count == 0 &&
-        ![SPKUtils getBoolPref:@"stories_stop_auto_advance"]) {
+        SPKStoryManualSeenUserList(NO).count == 0) {
         return;
     }
 
