@@ -449,8 +449,10 @@ void SPKInstallHideRecentHighlightsHooksIfEnabled(void) {
             %init(SPKHideRecentHighlightsLegacyMainHooks);
             installedAny = YES;
         }
-        if (objc_getClass("IGFollowingStoryTrayDataSource") != nil) {
-            %init(SPKHideRecentHighlightsFollowingHooks);
+        // Swift from 454, where only the mangled name is guaranteed.
+        Class followingDataSource = objc_getClass("IGFollowingStoryTrayDataSource") ?: objc_getClass("_TtC30IGFollowingStoryTrayDataSource30IGFollowingStoryTrayDataSource");
+        if (followingDataSource != nil) {
+            %init(SPKHideRecentHighlightsFollowingHooks, IGFollowingStoryTrayDataSource = followingDataSource);
             installedAny = YES;
         }
 
