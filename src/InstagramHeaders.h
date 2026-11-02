@@ -1079,6 +1079,15 @@
 - (void)removeSeenMediaIds:(id)mediaIds forReelPk:(id)reelPK;
 @end
 
+// 454+: the viewer's `fullscreenSectionController:didMarkItemAsSeen:` moved into
+// this object. Every story section controller (ObjC, Swift twin, live archive)
+// holds one and calls it when a story item counts as seen, which queues the
+// view receipt. Reached from a section controller through `_itemSeenReporter`,
+// or from the viewer through `_viewerContext` → `-itemSeenReporter`.
+@interface IGStoryViewerItemSeenReporter : NSObject
+- (void)reportSeenItem:(id)item sectionController:(id)sectionController;
+@end
+
 // Backing store for the reel list the story viewer pages through. The view
 // controller keeps its own copy for tap-forward navigation, while horizontal
 // swipes are driven by the list adapter reading this store.

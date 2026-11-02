@@ -8,32 +8,62 @@ static inline BOOL SPKShouldBlockStoryAutoAdvance(void) {
     return [SPKUtils getBoolPref:@"stories_stop_auto_advance"] && !SPKForceStoryAutoAdvance;
 }
 
-%group SPKDisableStorySeenHooks
-
-%hook IGStoryViewerViewController
-- (void)fullscreenSectionController:(id)arg1 didMarkItemAsSeen:(id)arg2 {
+// Shared by both seen entry points. `viewer` only has to answer `userSession`
+// (and optionally `currentViewModel`) for Seen Locally, so the 454+ viewer
+// context stands in for the view controller.
+static void SPKHandleStorySeenReport(id viewer, id sectionController, id item, void (^orig)(void)) {
     BOOL forcedStoryMatches = SPKForceMarkStoryAsSeen;
     if (forcedStoryMatches && SPKForcedStorySeenMediaPK.length > 0) {
-        NSString *mediaPK = SPKStoryMediaIdentifier(arg2);
+        NSString *mediaPK = SPKStoryMediaIdentifier(item);
         forcedStoryMatches = [mediaPK isEqualToString:SPKForcedStorySeenMediaPK];
     }
 
     BOOL shouldBlockSeen = !SPKStorySeenReceiptsSessionEnabled() &&
-                           SPKStoryManualSeenAppliesToContext(SPKStoryContextFromMedia(arg2));
+                           SPKStoryManualSeenAppliesToContext(SPKStoryContextFromMedia(item));
     if (shouldBlockSeen && !forcedStoryMatches) {
         SPKLog(@"General", @"[Sparkle] Prevented automatic story seen marking");
         // Keep Seen Locally: the story still turns seen on this device, without
         // the view receipt Instagram's own mark would queue.
         if (SPKStoryLocalSeenEnabled())
-            SPKStoryLocalSeenMarkItem(self, arg1, arg2);
+            SPKStoryLocalSeenMarkItem(viewer, sectionController, item);
         return;
     }
 
-    %orig;
+    orig();
     if (shouldBlockSeen)
-        SPKStoryLocalSeenNoteItemSent(self, arg1, arg2);
+        SPKStoryLocalSeenNoteItemSent(viewer, sectionController, item);
 }
 
+// Up to 453 the viewer view controller receives the seen callback.
+%group SPKDisableStorySeenLegacyHooks
+
+%hook IGStoryViewerViewController
+- (void)fullscreenSectionController:(id)arg1 didMarkItemAsSeen:(id)arg2 {
+    SPKHandleStorySeenReport(self, arg1, arg2, ^{
+        %orig;
+    });
+}
+%end
+
+%end
+
+// 454+ moved the callback into a dedicated reporter object.
+%group SPKDisableStorySeenReporterHooks
+
+%hook IGStoryViewerItemSeenReporter
+- (void)reportSeenItem:(id)item sectionController:(id)sectionController {
+    id viewerContext = [SPKUtils getIvarForObj:self name:"_viewerContext"];
+    SPKHandleStorySeenReport(viewerContext, sectionController, item, ^{
+        %orig;
+    });
+}
+%end
+
+%end
+
+%group SPKDisableStorySeenHooks
+
+%hook IGStoryViewerViewController
 - (void)viewDidDisappear:(BOOL)animated {
     %orig(animated);
     SPKStoryEndSeenReceiptsSessionForViewer((UIViewController *)self);
@@ -92,5 +122,11 @@ void SPKInstallDisableStorySeenHooksIfNeeded(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         %init(SPKDisableStorySeenHooks);
+        Class viewerClass = objc_getClass("IGStoryViewerViewController");
+        if (viewerClass && class_getInstanceMethod(viewerClass, NSSelectorFromString(@"fullscreenSectionController:didMarkItemAsSeen:")))
+            %init(SPKDisableStorySeenLegacyHooks);
+        Class reporterClass = objc_getClass("IGStoryViewerItemSeenReporter");
+        if (reporterClass && class_getInstanceMethod(reporterClass, @selector(reportSeenItem:sectionController:)))
+            %init(SPKDisableStorySeenReporterHooks);
     });
 }

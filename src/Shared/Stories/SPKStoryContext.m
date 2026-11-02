@@ -222,6 +222,19 @@ static NSURL *SPKStoryURLForMedia(id media) {
 // associated object on the overlay does not create a retain cycle.
 static const void *kSPKStoryContextCacheKey = &kSPKStoryContextCacheKey;
 
+// 454+ reports seen items through a reporter object instead of the viewer. The
+// ObjC section controller holds it directly; the Swift twin is reached through
+// the viewer's context, which hands out the same scoped instance.
+static id SPKStoryItemSeenReporter(id sectionController, id viewerController) {
+    SEL reportSelector = NSSelectorFromString(@"reportSeenItem:sectionController:");
+    id reporter = sectionController ? [SPKUtils getIvarForObj:sectionController name:"_itemSeenReporter"] : nil;
+    if ([reporter respondsToSelector:reportSelector])
+        return reporter;
+    id viewerContext = viewerController ? [SPKUtils getIvarForObj:viewerController name:"_viewerContext"] : nil;
+    reporter = SPKObjectForSelector(viewerContext, @"itemSeenReporter");
+    return [reporter respondsToSelector:reportSelector] ? reporter : nil;
+}
+
 SPKStoryContext *SPKStoryContextFromOverlay(UIView *overlayView) {
     if (!overlayView)
         return nil;
@@ -241,6 +254,8 @@ SPKStoryContext *SPKStoryContextFromOverlay(UIView *overlayView) {
         if ([ancestor respondsToSelector:markSelector])
             context.markSeenTarget = ancestor;
     }
+    if (!context.markSeenTarget)
+        context.markSeenTarget = SPKStoryItemSeenReporter(context.sectionController, context.viewerController);
 
     if (!context.sectionController && context.markSeenTarget) {
         context.sectionController = SPKStoryFirstObjectForSelectors(context.markSeenTarget, @[ @"currentlyDisplayedSectionController", @"currentSectionController" ]) ?: [SPKUtils getIvarForObj:context.markSeenTarget name:"_currentSectionController"];
@@ -341,6 +356,12 @@ SPKStoryContext *SPKStoryContextFromMedia(id media) {
 
 BOOL SPKStoryMarkContextAsSeen(SPKStoryContext *context) {
     SEL markSelector = NSSelectorFromString(@"fullscreenSectionController:didMarkItemAsSeen:");
+    // 454+ reporter: same call with the arguments in the other order.
+    BOOL usesReporter = NO;
+    if (context.markSeenTarget && ![context.markSeenTarget respondsToSelector:markSelector]) {
+        markSelector = NSSelectorFromString(@"reportSeenItem:sectionController:");
+        usesReporter = YES;
+    }
     if (!context.markSeenTarget || !context.sectionController || !context.media || ![context.markSeenTarget respondsToSelector:markSelector]) {
         SPKLog(@"Stories",
                @"[Sparkle StorySeen] Unable to mark seen viewer=%@ section=%@ target=%@ media=%@ targetResponds=%d",
@@ -382,7 +403,10 @@ BOOL SPKStoryMarkContextAsSeen(SPKStoryContext *context) {
         SPKForcedStorySeenMediaPK = [SPKStoryMediaIdentifier(item) copy];
         SPKForceMarkStoryAsSeen = YES;
         @try {
-            ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, context.sectionController, item);
+            if (usesReporter)
+                ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, item, context.sectionController);
+            else
+                ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, context.sectionController, item);
         } @catch (NSException *exception) {
             SPKLog(@"Stories", @"[Sparkle StorySeen] Marking an earlier story failed: %@", exception.reason);
         } @finally {
