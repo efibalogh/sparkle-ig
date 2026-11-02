@@ -282,6 +282,20 @@ UIMenu *SPKLinkOpeningModeMenu(void) {
     ]];
 }
 
+#if SPK_DEV
+UIMenu *SPKAccountPrivacySimulationMenu(void) {
+    NSString *key = @"dev_account_privacy_simulate";
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, key, @"off", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_SLOW"), nil, nil, key, @"slow", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS"), nil, nil, key, @"read_failed", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_REFUSED_REASON"), nil, nil, key, @"write_refused", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_REFUSED_SILENT"), nil, nil, key, @"write_refused_silent", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_SAVE_FAILS"), nil, nil, key, @"write_failed", NO)
+    ]];
+}
+#endif
+
 UIMenu *SPKSeenButtonPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), @"arrow_up", nil, @"msgs_seen_button_position", @"top", NO),

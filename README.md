@@ -76,6 +76,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
   - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
   - Show exact follower counts on profiles instead of abbreviated ones.
+  - Hide your followers and following lists, and keep your account out of other people's lists, both saved to your Instagram account so they apply everywhere you sign in.
 - **OLED dark mode**:
   - Turns Instagram's dark mode pure black, sheets included, with message bubbles and search fields kept a shade lighter so they stay visible.
   - Liquid Glass gets a dark gray tint so the tab bar stays visible over black, or stays pure black with Black Glass.

@@ -6,6 +6,8 @@
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
+#import "../../Shared/Account/SPKAccountPrivacyService.h"
+#import "SPKAccountPrivacySettingsProvider.h"
 
 static NSString *const kSPKProfileActionNone = @"none";
 static NSString *const kSPKProfileActionCopyInfo = @"copy_info";
@@ -121,7 +123,16 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
 @implementation SPKProfileSettingsProvider
 
 + (SPKSetting *)rootSetting {
-    return SPKTopicNavigationSetting(SPKL(@"PROFILE_TITLE"), @"user_circle", 24.0, @[
+    NSMutableArray *sections = [NSMutableArray array];
+    // Only offered when this Instagram build has the settings builders; an
+    // entry that can only fail is worse than none.
+    if ([SPKAccountPrivacyService isSupported]) {
+        [sections addObject:SPKTopicSection(SPKL(@"PROFILE_PRIVACY_HEADER"), @[
+                                                [SPKAccountPrivacySettingsProvider rootSetting]
+                                            ],
+                                            nil)];
+    }
+    [sections addObjectsFromArray:@[
         // Two short explanations, each about one control: they read better as
         // footers under their own rows than behind a shared info button.
         SPKTopicSectionWithInfoSheet(SPKTopicSection(SPKL(@"FEED_ACTION_BUTTON_HEADER"), @[
@@ -224,7 +235,8 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                                SPKL(@"PROFILE_CONFIRMATION_CONFIRM_UNFOLLOW_HELP"))
         ],
                         nil)
-    ]);
+    ]];
+    return SPKTopicNavigationSetting(SPKL(@"PROFILE_TITLE"), @"user_circle", 24.0, sections);
 }
 
 @end

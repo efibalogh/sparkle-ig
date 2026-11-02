@@ -377,6 +377,12 @@ Its own page, reached from a single row on the Messages topic that shows how man
 
 ## Profile
 
+### Privacy
+- **Account Privacy**: Opens a sheet with two of Instagram's own account settings. They are saved to your Instagram account rather than to Sparkle, so they apply on every device, and they follow whichever account is active. The switches open on the last values Instagram reported for that account and update quietly if they changed. The first time, or if loading takes a moment, a Loading notification shows. A save that takes a moment shows a Saving notification that ends in a check; if a save fails, the switch goes back and a notification shows the reason, and tapping it tries again. A failed first load also shows a notification you can tap to retry. Hidden on Instagram builds without these settings.
+  - **Hide Followers and Following**: Hides both of your lists from other people (`hide_followers_following_list`).
+  - **Hide Me From Others' Lists**: Keeps your account out of the follower and following lists other people browse (`hide_self_from_others_lists`).
+  - Instagram decides who can use them, so an account outside its rollout gets an error. Works on the latest Instagram and on 410.1.0.
+
 ### Action Button
 - **Profile Action Button** + **Default Tap Action**: `None`, `Copy Info`, `View Picture`, `Share Picture`, `Save to Gallery`, or `Profile Settings`. Sits in the profile nav bar just left of Instagram's own buttons (More/Follow/notify), tracking them as they morph and collapse on scroll; on your own profile it is omitted. On iOS 26 it grows a matching Liquid Glass bubble that fades in with scroll, and long usernames truncate so they never run under it.
 - **Copy Info Default**: What Copy Info copies: `ID`, `Username`, `Name`, `Bio`, or `Profile Link`.
