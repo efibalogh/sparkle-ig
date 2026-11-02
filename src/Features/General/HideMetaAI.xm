@@ -829,6 +829,109 @@ static BOOL SPKHasShortcutManager(void) {
 }
 %end
 
+// Share sheet "Meta AI" destination in the external share row. The view, its
+// controller and the ordering helper are one Swift module, so their own calls
+// never reach an ObjC hook; layoutSubviews always comes through UIKit. Options
+// are matched by the helper's analytics string, which is stable across
+// languages, never by the label. The option list itself is left untouched: the
+// buttons are built once at init, and taps map back through that list.
+static BOOL SPKExternalShareOptionIsMetaAI(NSNumber *option) {
+    static NSMutableDictionary<NSNumber *, NSNumber *> *cache;
+    static Class helperClass;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cache = [NSMutableDictionary dictionary];
+        helperClass = objc_getClass("_TtC22IGExternalShareOptions28IGExternalShareOptionsHelper");
+    });
+    if (![option isKindOfClass:NSNumber.class])
+        return NO;
+    NSNumber *cached = cache[option];
+    if (cached)
+        return cached.boolValue;
+
+    SEL loggingSelector = NSSelectorFromString(@"externalShareOptionsLoggingString:");
+    NSString *loggingName = nil;
+    if ([helperClass respondsToSelector:loggingSelector]) {
+        @try {
+            id value = ((id (*)(id, SEL, long long))objc_msgSend)(helperClass, loggingSelector, option.longLongValue);
+            loggingName = [value isKindOfClass:NSString.class] ? [(NSString *)value lowercaseString] : nil;
+        } @catch (__unused NSException *exception) {
+        }
+    }
+    // 454 reports the destination as "meta_ai" (option 41).
+    BOOL isMetaAI = [loggingName isEqualToString:@"meta_ai"];
+    cache[option] = @(isMetaAI);
+    return isMetaAI;
+}
+
+// Hides the button and slides the buttons after it (same container) left by
+// one slot, so the row has no gap. Runs after every layout pass, which resets
+// the frames, so the shift never accumulates.
+static void SPKCollapseExternalShareButton(UIView *button) {
+    UIView *container = button.superview;
+    if (!container)
+        return;
+    button.hidden = YES;
+
+    CGFloat step = 0;
+    UIView *next = nil;
+    for (UIView *sibling in container.subviews) {
+        if (sibling == button || sibling.hidden || CGRectGetMinX(sibling.frame) <= CGRectGetMinX(button.frame))
+            continue;
+        if (!next || CGRectGetMinX(sibling.frame) < CGRectGetMinX(next.frame))
+            next = sibling;
+    }
+    step = next ? CGRectGetMinX(next.frame) - CGRectGetMinX(button.frame) : 0;
+    if (step <= 0)
+        return;
+    for (UIView *sibling in container.subviews) {
+        if (sibling != button && CGRectGetMinX(sibling.frame) > CGRectGetMinX(button.frame))
+            sibling.frame = CGRectOffset(sibling.frame, -step, 0);
+    }
+    if ([container isKindOfClass:UIScrollView.class]) {
+        UIScrollView *scrollView = (UIScrollView *)container;
+        CGSize size = scrollView.contentSize;
+        size.width = MAX(CGRectGetWidth(scrollView.bounds), size.width - step);
+        scrollView.contentSize = size;
+    }
+}
+
+%hook _TtC22IGExternalShareOptions26IGExternalShareOptionsView
+- (void)layoutSubviews {
+    %orig;
+    if (!SPKHideMetaAIGlobal() || ![self respondsToSelector:@selector(shareOptions)])
+        return;
+    NSArray *options = self.shareOptions;
+    if (![options isKindOfClass:NSArray.class])
+        return;
+    NSIndexSet *metaAI = [options indexesOfObjectsPassingTest:^BOOL(id option, NSUInteger idx, BOOL *stop) {
+        return SPKExternalShareOptionIsMetaAI(option);
+    }];
+    if (metaAI.count == 0)
+        return;
+
+    // Swift [UIView] storage bridges as an NSArray. Only trust it when it lines
+    // up one to one with the options, so a layout change can never hide the
+    // wrong destination.
+    id buttons = [SPKUtils getIvarForObj:self name:"buttons"];
+    if (![buttons isKindOfClass:NSArray.class] || [(NSArray *)buttons count] != options.count) {
+        static dispatch_once_t mismatchToken;
+        dispatch_once(&mismatchToken, ^{
+            SPKLog(@"General", @"[Sparkle] Share sheet meta ai: buttons %@ (%lu) do not match %lu options, skipping",
+                   buttons ? NSStringFromClass([buttons class]) : @"nil",
+                   [buttons respondsToSelector:@selector(count)] ? (unsigned long)[(NSArray *)buttons count] : 0UL,
+                   (unsigned long)options.count);
+        });
+        return;
+    }
+    [metaAI enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
+        UIView *button = [(NSArray *)buttons objectAtIndex:idx];
+        if ([button isKindOfClass:UIView.class])
+            SPKCollapseExternalShareButton(button);
+    }];
+}
+%end
+
 // Share menu recipients
 %hook IGDirectRecipientListViewController
 - (id)objectsForListAdapter:(id)arg1 {

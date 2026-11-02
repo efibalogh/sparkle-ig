@@ -46,7 +46,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 
 ### Recommendations
 - **Ads**: Per-surface ad hiding: Feed, Stories, Reels, Explore, plus Reels shopping CTA. Ad filtering preserves native feed loading indicators, including on short or initially empty lists.
-- **Meta AI**: Hide Meta AI in Direct, Explore & Search, Comments, Creation Tools, and global AI chrome. Creation Tools also removes the Meta AI effects button from the story camera's tools menu and the Restyle button from the editor shown after a capture. Hiding it in Explore & Search also restores the plain search glyph in the search bar (replacing the gen-AI search icon).
+- **Meta AI**: Hide Meta AI in Direct, Explore & Search, Comments, Creation Tools, and global AI chrome. Creation Tools also removes the Meta AI effects button from the story camera's tools menu and the Restyle button from the editor shown after a capture. Hiding it in Explore & Search also restores the plain search glyph in the search bar (replacing the gen-AI search icon). Global AI chrome also removes the Meta AI destination from the share sheet's external share row.
 - **Suggested Users**: Hide suggested-user surfaces: Feed, Reels, Direct, Search, Profile, Activity, follow lists, and subscriptions.
 
 ### Comments

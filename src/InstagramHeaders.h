@@ -1079,6 +1079,12 @@
 - (void)removeSeenMediaIds:(id)mediaIds forReelPk:(id)reelPK;
 @end
 
+// Share sheet row of external destinations (Swift, IGExternalShareOptions module).
+// `shareOptions` holds IGExternalShareOptionsType values as NSNumbers.
+@interface _TtC22IGExternalShareOptions26IGExternalShareOptionsView : UIView
+@property (nonatomic, copy) NSArray *shareOptions;
+@end
+
 // 454+: the viewer's `fullscreenSectionController:didMarkItemAsSeen:` moved into
 // this object. Every story section controller (ObjC, Swift twin, live archive)
 // holds one and calls it when a story item counts as seen, which queues the
