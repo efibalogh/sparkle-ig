@@ -934,7 +934,7 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
 
 - (NSString *)sourceSymbolName {
     if ([self isFromHighlight])
-        return @"highlights_filled";
+        return @"highlights";
     return [SPKGalleryFile symbolNameForSource:(SPKGallerySource)self.source];
 }
 
