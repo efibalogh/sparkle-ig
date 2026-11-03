@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Brak zdjęć w Galerii";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Prosi o potwierdzenie przed polubieniem posta podwójnym stuknięciem.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Potwierdź podwójne stuknięcie";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Prosi o potwierdzenie przed odświeżeniem kanału przez przeciągnięcie w dół, ponowne dotknięcie karty Ekran główny lub dotknięcie paska stanu.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Potwierdź odświeżanie kanału";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Prosi o potwierdzenie przed polubieniem posta.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Potwierdź polubienie";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Prosi o potwierdzenie przed opublikowaniem komentarza.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Ukryj liczbę udostępnień";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Potwierdź publikację komentarza";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Czy na pewno chcesz opublikować ten komentarz?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Czy na pewno chcesz odświeżyć swój kanał?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Odświeżyć kanał?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Zatrzymuje odświeżanie kanału po tym, jak Instagram był w tle.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Wyłącz odświeżanie w tle";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Ponowne dotknięcie zakładki Strona główna przewija do góry bez ponownego ładowania kanału.";

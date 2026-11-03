@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Keine Fotos in der Galerie";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Fragt nach einer Bestätigung, bevor ein Doppeltippen einen Beitrag liket.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Doppeltipp bestätigen";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Fragt nach einer Bestätigung, bevor der Feed durch Herunterziehen, erneutes Tippen auf den Home-Tab oder Tippen auf die Statusleiste aktualisiert wird.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Feed-Aktualisierung bestätigen";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Fragt nach einer Bestätigung, bevor ein Beitrag geliket wird.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Markierung bestätigen";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Fragt nach einer Bestätigung, bevor ein Kommentar gepostet wird.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Weitergabe-Anzahl ausblenden";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Kommentarbeitrag bestätigen";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Möchtest du diesen Kommentar wirklich posten?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Möchtest du deinen Feed wirklich aktualisieren?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Feed aktualisieren?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Verhindert das Neuladen des Feeds, nachdem Instagram im Hintergrund war.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Hintergrund-Aktualisierung deaktivieren";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Erneutes Tippen auf den Home-Tab scrollt nach oben, ohne den Feed neu zu laden.";

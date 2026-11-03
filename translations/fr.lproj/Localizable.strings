@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Aucune photo dans la Galerie";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Demande confirmation avant qu'un double appui n'aime une publication.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Confirmer le double appui";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Demande une confirmation avant d’actualiser le fil en tirant vers le bas, en touchant à nouveau l’onglet Accueil ou en touchant la barre d’état.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Confirmer l’actualisation du fil";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Demande confirmation avant d'aimer une publication.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Confirmer le j'aime";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Demande confirmation avant de publier un commentaire.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Masquer le nombre de partages";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Confirmer la publication du commentaire";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Êtes-vous sûr de vouloir publier ce commentaire ?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Voulez-vous vraiment actualiser votre fil ?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Actualiser le fil ?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Empêche le rechargement du fil après un passage d'Instagram en arrière-plan.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Désactiver l'actualisation en arrière-plan";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Réappuyer sur l'onglet Accueil remonte en haut sans recharger le fil.";

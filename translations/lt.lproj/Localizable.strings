@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Galerijoje nėra nuotraukų";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Prašo patvirtinimo, prieš dukart palietus pažymint įrašą kaip patinkantį.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Patvirtinti dukart palietimą";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Prašo patvirtinimo prieš atnaujinant srautą patraukus žemyn, dar kartą bakstelėjus skirtuką Pagrindinis arba bakstelėjus būsenos juostą.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Patvirtinti srauto atnaujinimą";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Prašo patvirtinimo, prieš pažymint įrašą kaip patinkantį.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Patvirtinti patiktuką";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Prašo patvirtinimo, prieš paskelbiant komentarą.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Slėpti persiuntimų skaičių";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Patvirtinti komentaro paskelbimą";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Ar tikrai norite paskelbti šį komentarą?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Ar tikrai norite atnaujinti savo srautą?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Atnaujinti srautą?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Sustabdo srauto įkėlimą iš naujo, kai Instagram buvo fone.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Išjungti atnaujinimą fone";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Pakartotinai palietus pradžios skirtuką grįžtama į viršų neįkeliant srauto iš naujo.";

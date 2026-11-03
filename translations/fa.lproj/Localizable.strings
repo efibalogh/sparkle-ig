@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "عکسی در گالری نیست";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "پیش از اینکه دابل‌تپ باعث لایک شدن پست شود، تأیید می‌گیرد.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "تأیید دابل‌تپ";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "پیش از تازه‌سازی فید با کشیدن به پایین، ضربهٔ دوباره روی زبانهٔ خانه یا ضربه روی نوار وضعیت، تأیید می‌خواهد.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "تأیید تازه‌سازی فید";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "پیش از لایک شدن پست، تأیید می‌گیرد.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "تأیید لایک";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "پیش از ارسال کامنت، تأیید می‌گیرد.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "مخفی کردن تعداد بازنشر";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "تأیید ارسال کامنت";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "مطمئنی می‌خواهی این کامنت را ارسال کنی؟";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "آیا مطمئنید می‌خواهید فید خود را تازه کنید؟";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "فید تازه شود؟";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "بارگذاری مجدد فید پس از بازگشت اینستاگرام از پس‌زمینه را متوقف می‌کند.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "غیرفعال کردن رفرش در پس‌زمینه";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "ضربهٔ دوباره روی تب Home بدون بارگذاری مجدد فید به بالا اسکرول می‌کند.";

@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Δεν υπάρχουν φωτογραφίες στη Συλλογή";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Ζητά επιβεβαίωση πριν ένα διπλό πάτημα κάνει like σε μια δημοσίευση.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Επιβεβαίωση Διπλού Πατήματος";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Ζητά επιβεβαίωση πριν ανανεωθεί η ροή με σύρσιμο προς τα κάτω, νέο πάτημα της καρτέλας Αρχική ή πάτημα της γραμμής κατάστασης.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Επιβεβαίωση ανανέωσης ροής";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Ζητά επιβεβαίωση πριν γίνει like σε μια δημοσίευση.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Επιβεβαίωση Αρέσκειας";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Ζητά επιβεβαίωση πριν δημοσιευτεί ένα σχόλιο.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Απόκρυψη Αριθμού Επανακοινοποιήσεων";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Επιβεβαίωση Δημοσίευσης Σχολίου";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Είστε σίγουρος ότι θέλετε να δημοσιεύσετε αυτό το σχόλιο;";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Θέλετε σίγουρα να ανανεώσετε τη ροή σας;";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Ανανέωση ροής;";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Σταματά την ανανέωση της ροής αφού το Instagram βρεθεί στο παρασκήνιο.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Απενεργοποίηση Ανανέωσης Παρασκηνίου";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Το ξαναπάτημα της καρτέλας Αρχική κάνει κύλιση στην κορυφή χωρίς να ανανεώνει τη ροή.";

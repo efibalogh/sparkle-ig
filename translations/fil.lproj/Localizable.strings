@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Walang larawan sa Gallery";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Nagtatanong ng kumpirmasyon bago mag-like ang double tap sa isang post.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Kumpirmahin ang Double Tap";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Humihingi ng kumpirmasyon bago i-refresh ang feed sa paghila pababa, muling pag-tap sa tab na Home, o pag-tap sa status bar.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Kumpirmahin ang Pag-refresh ng Feed";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Nagtatanong ng kumpirmasyon bago ma-like ang isang post.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Kumpirmahin ang Like";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Nagtatanong ng kumpirmasyon bago ma-post ang isang komento.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Itago ang Bilang ng Reshare";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Kumpirmahin ang Pag-post ng Komento";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Sigurado ka bang gusto mong i-post ang komentong ito?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Sigurado ka bang gusto mong i-refresh ang iyong feed?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "I-refresh ang feed?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Pinipigilan ang pag-reload ng feed matapos na naging nasa background ang Instagram.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "I-disable ang Background Refresh";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Ang muling pag-tap sa Home tab ay nag-scroll pabalik sa itaas nang hindi nire-reload ang feed.";

@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Sin fotos en la galería";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Pide confirmación antes de que un doble toque le dé me gusta a una publicación.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Confirmar doble toque";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Pide confirmación antes de actualizar el feed al deslizar hacia abajo, volver a tocar la pestaña Inicio o tocar la barra de estado.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Confirmar actualización del feed";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Pide confirmación antes de dar me gusta a una publicación.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Confirmar me gusta";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Pide confirmación antes de publicar un comentario.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Ocultar conteo de comparticiones";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Confirmar publicar comentario";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "¿Estás seguro de que deseas publicar este comentario?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "¿Seguro que quieres actualizar tu feed?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "¿Actualizar el feed?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Evita que el feed se recargue después de que Instagram haya estado en segundo plano.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Desactivar actualización en segundo plano";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Volver a tocar la pestaña Inicio sube al principio sin recargar el feed.";

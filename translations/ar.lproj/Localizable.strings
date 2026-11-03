@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "لا توجد صور في المعرض";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "يطلب تأكيداً قبل أن يؤدي الضغط المزدوج إلى الإعجاب بمنشور.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "تأكيد الضغط المزدوج";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "يطلب التأكيد قبل تحديث الموجز بالسحب لأسفل أو بإعادة النقر على علامة التبويب الرئيسية أو بالنقر على شريط الحالة.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "تأكيد تحديث الموجز";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "يطلب تأكيداً قبل الإعجاب بأي منشور.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "تأكيد الإعجاب";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "يطلب تأكيداً قبل نشر أي تعليق.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "إخفاء عدد المشاركات";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "تأكيد نشر التعليق";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "هل أنت متأكد من أنك تريد نشر هذا التعليق؟";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "هل تريد بالتأكيد تحديث الموجز؟";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "تحديث الموجز؟";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "يوقف إعادة تحميل التغذية بعد بقاء Instagram في الخلفية.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "تعطيل التحديث في الخلفية";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "إعادة الضغط على تبويب الرئيسية تعيدك إلى الأعلى دون إعادة تحميل التغذية.";

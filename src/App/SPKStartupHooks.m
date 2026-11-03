@@ -67,6 +67,7 @@ FOUNDATION_EXPORT void SPKInstallDetailedColorPickerHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallEnhancedMediaResolutionHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideMetricsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallDisableFeedAutoplayHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallFeedRefreshConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallPostCommentConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSwipeCloseCommentsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCommentActionsHooksIfEnabled(void);
@@ -211,6 +212,7 @@ void SPKInstallFeedSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallFeedActionButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallHeaderActionButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallBackgroundRefreshHooksIfEnabled);
+    SPK_INSTALL(SPKInstallFeedRefreshConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallLikeConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallDisableFeedAutoplayHooksIfEnabled);
     SPK_INSTALL(SPKInstallPostCommentConfirmHooksIfEnabled);

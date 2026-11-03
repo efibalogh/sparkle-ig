@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "ไม่มีรูปภาพในแกลเลอรี";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "ขอการยืนยันก่อนที่การแตะสองครั้งจะกดถูกใจโพสต์";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "ยืนยันการแตะสองครั้ง";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "ขอการยืนยันก่อนรีเฟรชฟีดด้วยการดึงลง แตะแท็บหน้าหลักซ้ำ หรือแตะแถบสถานะ";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "ยืนยันการรีเฟรชฟีด";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "ขอการยืนยันก่อนกดถูกใจโพสต์";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "ยืนยันการกดถูกใจ";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "ขอการยืนยันก่อนโพสต์คอมเมนต์";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "ซ่อนจำนวนการแชร์ต่อ";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "ยืนยันการโพสต์คอมเมนต์";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการโพสต์คอมเมนต์นี้?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการรีเฟรชฟีดของคุณ";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "รีเฟรชฟีดไหม";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "หยุดการโหลดฟีดใหม่หลังจาก Instagram ทำงานอยู่เบื้องหลัง";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "ปิดใช้งานการรีเฟรชเบื้องหลัง";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "การแตะแท็บหน้าแรกซ้ำจะเลื่อนกลับไปด้านบนโดยไม่โหลดฟีดใหม่";

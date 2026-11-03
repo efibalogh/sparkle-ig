@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Фото в Галерее отсутствуют";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Запрашивает подтверждение, прежде чем двойное нажатие поставит отметку публикации.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Подтвердить двойное нажатие";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Запрашивает подтверждение перед обновлением ленты свайпом вниз, повторным нажатием на вкладку «Главная» или нажатием на строку состояния.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Подтверждать обновление ленты";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Запрашивает подтверждение перед отметкой публикации.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Подтвердить лайк";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Запрашивает подтверждение перед публикацией комментария.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Скрыть количество поделиться";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Подтвердить публикацию комментария";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Вы уверены, что хотите опубликовать этот комментарий?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Вы уверены, что хотите обновить ленту?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Обновить ленту?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Не даёт ленте перезагружаться после того, как Instagram побывал в фоне.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Отключить обновление в фоне";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Повторное нажатие вкладки Главная прокручивает наверх без перезагрузки ленты.";

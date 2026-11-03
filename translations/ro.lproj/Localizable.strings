@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Nicio fotografie în Galerie";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Cere confirmare înainte ca o atingere dublă să aprecieze o postare.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Confirmă dublu tap";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Cere confirmare înainte ca fluxul să fie reîmprospătat prin tragere în jos, atingerea din nou a filei Acasă sau atingerea barei de stare.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Confirmă reîmprospătarea fluxului";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Cere confirmare înainte de aprecierea unei postări.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Confirmă apreciere";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Cere confirmare înainte de publicarea unui comentariu.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Ascunde numărul de redistribuiri";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Confirma postarea comentariului";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Sigur doriți să postați acest comentariu?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Sigur vrei să reîmprospătezi fluxul?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Reîmprospătezi fluxul?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Oprește reîncărcarea feedului după ce Instagram a stat în fundal.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Dezactivare reîmprosp. fundal";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Reatingerea filei Acasă derulează înapoi sus fără să reîncarce feedul.";

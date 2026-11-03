@@ -1041,6 +1041,7 @@
 
 @interface IGRefreshControl : UIControl
 @property (readonly, nonatomic) long long refreshState;
+- (void)startLoadingAnimated:(BOOL)animated;
 - (void)finishLoading;
 @end
 

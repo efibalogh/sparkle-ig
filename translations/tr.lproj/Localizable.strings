@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Galeri'de fotoğraf yok";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Çift dokunuş bir gönderiyi beğenmeden önce onay ister.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Çift Dokunuş Onayla";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Akış aşağı çekilerek, Ana Sayfa sekmesine yeniden dokunularak veya durum çubuğuna dokunularak yenilenmeden önce onay ister.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Akış Yenilemeyi Onayla";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Bir gönderi beğenilmeden önce onay ister.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Beğeni Onayla";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Bir yorum gönderilmeden önce onay ister.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Yeniden Paylaşım Sayısını Gizle";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Yorum Göndermeyi Onayla";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Bu yorumu göndermek istediğinden emin misin?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Akışını yenilemek istediğinden emin misin?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Akış yenilensin mi?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Instagram arka planda kaldıktan sonra akışın yeniden yüklenmesini engeller.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Arka Plan Yenilemesini Devre Dışı Bırak";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Ana Sayfa sekmesine tekrar dokunmak akışı yenilemeden başa döndürür.";

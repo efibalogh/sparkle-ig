@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "गैलरी में कोई फोटो नहीं";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "डबल टैप से पोस्ट को लाइक करने से पहले पुष्टि मांगता है।";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "डबल टैप की पुष्टि करें";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "नीचे खींचकर, होम टैब पर दोबारा टैप करके या स्टेटस बार पर टैप करके फ़ीड रीफ़्रेश होने से पहले पुष्टि मांगता है।";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "फ़ीड रीफ़्रेश की पुष्टि करें";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "पोस्ट को लाइक करने से पहले पुष्टि मांगता है।";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "लाइक की पुष्टि करें";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "कमेंट पोस्ट करने से पहले पुष्टि मांगता है।";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "पुनः साझा गिनती छिपाएं";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "टिप्पणी पोस्ट करने की पुष्टि करें";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "क्या आप निश्चित रूप से इस कमेंट को पोस्ट करना चाहते हैं?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "क्या आप वाकई अपनी फ़ीड रीफ़्रेश करना चाहते हैं?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "फ़ीड रीफ़्रेश करें?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Instagram के बैकग्राउंड में रहने के बाद फीड को दोबारा लोड होने से रोकता है।";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "पृष्ठभूमि रीफ्रेश अक्षम करें";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "होम टैब दोबारा टैप करने पर फीड दोबारा लोड हुए बिना ऊपर तक स्क्रॉल हो जाता है।";

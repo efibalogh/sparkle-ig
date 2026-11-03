@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Không có ảnh trong Thư viện";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Yêu cầu xác nhận trước khi nhấn hai lần để thích bài viết.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Xác nhận nhấn hai lần";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Yêu cầu xác nhận trước khi làm mới bảng feed bằng cách kéo xuống, chạm lại vào tab Trang chủ hoặc chạm vào thanh trạng thái.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Xác nhận làm mới bảng feed";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Yêu cầu xác nhận trước khi thích bài viết.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Xác nhận thích";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Yêu cầu xác nhận trước khi đăng bình luận.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Ẩn số lượt chia sẻ lại";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Xác nhận đăng bình luận";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Bạn có chắc chắn muốn đăng bình luận này không?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Bạn có chắc muốn làm mới bảng feed của mình không?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Làm mới bảng feed?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Chặn làm mới bảng tin sau khi Instagram chạy dưới nền.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Tắt làm mới trong nền";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Nhấn lại vào thẻ Trang chủ sẽ cuộn về đầu trang mà không làm mới lại bảng tin.";

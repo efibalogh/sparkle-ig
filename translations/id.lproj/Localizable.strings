@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Tidak ada foto di Galeri";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Meminta konfirmasi sebelum ketuk ganda menyukai sebuah postingan.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Konfirmasi Ketuk Ganda";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Meminta konfirmasi sebelum feed disegarkan dengan menarik ke bawah, mengetuk ulang tab Beranda, atau mengetuk bilah status.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Konfirmasi Penyegaran Feed";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Meminta konfirmasi sebelum postingan disukai.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Konfirmasi Suka";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Meminta konfirmasi sebelum komentar diposting.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Sembunyikan Jumlah Bagikan Ulang";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Konfirmasi Kirim Komentar";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Apakah Anda yakin ingin mengirim komentar ini?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Apakah Anda yakin ingin menyegarkan feed Anda?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Segarkan feed?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Menghentikan feed dimuat ulang setelah Instagram berada di latar belakang.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Nonaktifkan Penyegaran Latar Belakang";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Mengetuk ulang tab Home akan menggulir kembali ke atas tanpa memuat ulang feed.";

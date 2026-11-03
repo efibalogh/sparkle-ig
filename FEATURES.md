@@ -171,6 +171,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Confirmation
 - **Confirm Like**, **Confirm Double Tap**, **Confirm Repost**, **Confirm Posting Comment**.
+- **Confirm Feed Refresh**: Asks before the feed refreshes from a pull down, a Home tab re-tap or a status bar tap. A tap scrolls up first and shows the refresh spinner while it asks, like a pull; cancelling stops the spinner and leaves the feed at the top. With **Disable Home Tab Refresh** on, taps only scroll up and never refresh, so only pulls ask.
 
 ---
 

@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Kei Fotis i dr Galerie";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Frögt nach ere Bestätigung, bevor en Doppu-Tipp e Post liket.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Doppu-Tipp bestätige";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Fragt nach ere Bestätigung, bevor dr Feed dur Abezieh, nomol Tippe uf dr Home-Tab oder Tippe uf d Statusleischte aktualisiert wird.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Feed-Aktualisierig bestätige";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Frögt nach ere Bestätigung, bevor e Post gliket wird.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Like bestätige";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Frögt nach ere Bestätigung, bevor e Kommentar poschtet wird.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Reshare-Azahl verstecke";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Kommentar-Poschte bestätige";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Bisch sicher, dass du dää Kommentar wottsch poschte?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Wotsch dy Feed würklich aktualisiere?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Feed aktualisiere?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Ghört uf, dr Feed nach em Hintergrund vo Instagram nöi z'lade.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Hintergrund-Aktualisierig usschaute";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Nomau uf dr Home-Tab tippe scrollt zrugg uf ufe, ohni dr Feed nöi z'lade.";

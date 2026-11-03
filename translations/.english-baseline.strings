@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "No photos in Gallery";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Asks for confirmation before a double tap likes a post.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Confirm Double Tap";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Asks for confirmation before the feed is refreshed by pulling down, re-tapping the Home tab or tapping the status bar.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Confirm Feed Refresh";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Asks for confirmation before a post is liked.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Confirm Like";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Asks for confirmation before a comment is posted.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Hide Reshare Count";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Confirm Comment Post";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Are you sure you want to post this comment?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Are you sure you want to refresh your feed?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Refresh Feed?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Stops the feed reloading after Instagram has been in the background.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Disable Background Refresh";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Re-tapping the Home tab scrolls back to the top without reloading the feed.";

@@ -532,6 +532,8 @@
 "FEED_COMMENT_COMPOSER_GALLERY_UPLOAD_NO_PHOTOS_GALLERY_TEXT" = "Фото в галереї немає";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Запитує підтвердження, перш ніж подвійний дотик уподобає допис.";
 "FEED_CONFIRMATION_CONFIRM_DOUBLE_TAP_TITLE" = "Підтвердити подвійне натискання";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP" = "Запитує підтвердження перед оновленням стрічки свайпом униз, повторним натисканням вкладки «Головна» або натисканням рядка стану.";
+"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE" = "Підтверджувати оновлення стрічки";
 "FEED_CONFIRMATION_CONFIRM_LIKE_HELP" = "Запитує підтвердження перед уподобанням допису.";
 "FEED_CONFIRMATION_CONFIRM_LIKE_TITLE" = "Підтвердити вподобання";
 "FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_HELP" = "Запитує підтвердження перед публікацією коментаря.";
@@ -597,6 +599,8 @@
 "FEED_METRICS_HIDE_RESHARE_COUNT_TITLE" = "Приховати кількість переповідомлень";
 "FEED_POST_COMMENT_CONFIRM_CONFIRM_COMMENT_POST_TEXT" = "Підтвердити публікацію коментара";
 "FEED_POST_COMMENT_CONFIRM_POST_COMMENT_CONFIRMATION_MESSAGE" = "Ви впевнені, що хочете опублікувати цей коментар?";
+"FEED_REFRESH_CONFIRM_PROMPT_MESSAGE" = "Ви впевнені, що хочете оновити стрічку?";
+"FEED_REFRESH_CONFIRM_PROMPT_TITLE" = "Оновити стрічку?";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_HELP" = "Не дає стрічці перезавантажуватися після того, як Instagram побув у фоні.";
 "FEED_REFRESH_DISABLE_BACKGROUND_REFRESH_TITLE" = "Відключити фонове оновлення";
 "FEED_REFRESH_DISABLE_HOME_TAB_REFRESH_HELP" = "Повторний дотик до вкладки Головна прокручує вгору без перезавантаження стрічки.";
