@@ -5,6 +5,7 @@
 #import "../../Shared/i18n/SPKStrings.h"
 #import "../../Networking/SPKInstagramAPI.h"
 #import "../../Shared/Stories/SPKStoryOpener.h"
+#import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
 
 extern "C" void SPKBeginSavedTabRoutingBypass(void);
@@ -188,6 +189,37 @@ static BOOL SPKCanAttemptOpenInstagramClipboardURL(NSURL *url) {
     return NO;
 }
 
+// A copied handle, with or without its @: one token Instagram would accept as a
+// username. Anything else (sentences, emails, links) is left to search.
+static NSString *SPKClipboardUsername(NSString *raw) {
+    NSString *trimmed = [raw stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([trimmed hasPrefix:@"@"])
+        trimmed = [trimmed substringFromIndex:1];
+    if (trimmed.length == 0 || [trimmed hasPrefix:@"."] || [trimmed hasSuffix:@"."] || [trimmed containsString:@".."])
+        return nil;
+    return [SPKUtils sanitizedInstagramUsername:trimmed];
+}
+
+// The real recognizer has ended by the time a username lookup comes back, so a
+// miss replays a whole press to IG's handler: on some builds Began only arms a
+// flag on the tab bar controller and Ended is what opens search.
+@interface SPKReplayedLongPressGesture : UILongPressGestureRecognizer
+@property (nonatomic, weak) UIGestureRecognizer *spk_original;
+@property (nonatomic) UIGestureRecognizerState spk_state;
+@end
+
+@implementation SPKReplayedLongPressGesture
+- (UIGestureRecognizerState)state {
+    return self.spk_state;
+}
+- (UIView *)view {
+    return self.spk_original.view;
+}
+- (CGPoint)locationInView:(UIView *)view {
+    return self.spk_original ? [self.spk_original locationInView:view] : CGPointZero;
+}
+@end
+
 // Intercept the clipboard link at the moment IG's own long-press handler fires.
 // Returns YES if we consumed the gesture (opened a link), NO to let IG open search.
 static BOOL SPKHandleExploreLongPressClipboard(void) {
@@ -199,7 +231,7 @@ static BOOL SPKHandleExploreLongPressClipboard(void) {
     NSString *clipboard = UIPasteboard.generalPasteboard.string;
     NSURL *url = SPKNormalizedInstagramClipboardURL(clipboard);
     if (!SPKCanAttemptOpenInstagramClipboardURL(url)) {
-        SPKLog(@"Interface", @"[Sparkle] Explore long-press: clipboard (%@) is not an openable Instagram link, falling through to search", clipboard.length ? clipboard : @"<empty>");
+        SPKLog(@"Interface", @"[Sparkle] Explore long-press: clipboard (%@) is not an openable Instagram link", clipboard.length ? clipboard : @"<empty>");
         return NO;
     }
 
@@ -265,7 +297,39 @@ static BOOL SPKHandleExploreLongPressClipboard(void) {
         return; // consumed: skip IG's search behavior
     }
 
-    %orig;
+    // A copied username is looked up before anything opens: a match goes straight
+    // to the profile, a miss says so and opens IG's search as if Sparkle had not
+    // been asked. Cancelling the lookup pill leaves everything closed.
+    NSString *username = nil;
+    if (began && [SPKUtils getBoolPref:@"interface_open_clipboard_username"])
+        username = SPKClipboardUsername(UIPasteboard.generalPasteboard.string);
+    if (username.length == 0) {
+        %orig;
+        return;
+    }
+
+    SPKLog(@"Interface", @"[Sparkle] Explore long-press: resolving clipboard username @%@", username);
+    __weak UIGestureRecognizer *originalGesture = [gesture isKindOfClass:[UIGestureRecognizer class]] ? gesture : nil;
+    [SPKUtils resolvePKForUsername:username
+                        completion:^(NSString *pk, __unused NSString *fullName) {
+                            if (pk.length > 0 && [SPKUtils openInstagramProfileForUser:nil pk:pk username:username fromViewController:topMostController()]) {
+                                SPKLog(@"Interface", @"[Sparkle] Explore long-press: opened profile @%@ (%@)", username, pk);
+                                [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium] impactOccurred];
+                                return;
+                            }
+                            SPKLog(@"Interface", @"[Sparkle] Explore long-press: no account for @%@, opening search", username);
+                            SPKNotify(kSPKNotificationClipboardUsername,
+                                      SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST"),
+                                      [@"@" stringByAppendingString:username],
+                                      @"error_filled",
+                                      SPKNotificationToneError);
+                            SPKReplayedLongPressGesture *replay = [[SPKReplayedLongPressGesture alloc] initWithTarget:nil action:NULL];
+                            replay.spk_original = originalGesture;
+                            replay.spk_state = UIGestureRecognizerStateBegan;
+                            %orig(replay);
+                            replay.spk_state = UIGestureRecognizerStateEnded;
+                            %orig(replay);
+                        }];
 }
 
 %end

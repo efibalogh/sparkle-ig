@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "ट्रेंडिंग सर्च छिपाएं";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "सर्च पर फ़ोकस करने पर क्लिपबोर्ड में मौजूद Instagram लिंक खोलने का विकल्प देता है।";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "क्लिपबोर्ड लिंक खोलें";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "कॉपी किए गए यूज़रनेम (@ के साथ या बिना) के साथ Explore टैब को देर तक दबाएँ, ताकि वह प्रोफ़ाइल खुल जाए। अगर उस नाम का कोई अकाउंट नहीं है, तो इसके बजाय सर्च खुलता है।";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "कोई अकाउंट नहीं मिला";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "क्लिपबोर्ड यूज़रनेम खोलें";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "किसी व्यक्ति को पिन या अनपिन करने के लिए खोज में उसे दबाकर रखें। पिन किए गए लोग आपकी हाल की खोजों के ऊपर रहते हैं, उन्हें साफ़ करने के बाद भी।";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "क्रम बदलें";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "हो गया";

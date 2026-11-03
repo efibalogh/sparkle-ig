@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Nascondi Ricerche Trending";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Tieni premuta la scheda Esplora per aprire un link Instagram supportato dagli appunti. Se gli appunti non contengono un link valido, Instagram apre normalmente la ricerca.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Apri Link Appunti";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Tieni premuta la scheda Esplora con un nome utente copiato, con o senza @, per aprire quel profilo. Se nessun account ha quel nome, si apre invece la ricerca.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Nessun Account Trovato";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Apri Nome Utente Appunti";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Tieni premuta una persona nella ricerca per fissarla o sbloccarla. Le persone fissate restano sopra le ricerche recenti, anche dopo averle cancellate.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Riordina";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Fine";

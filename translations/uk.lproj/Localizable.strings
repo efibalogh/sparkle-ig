@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Приховати популярні пошуки";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Утримуйте вкладку Explore, щоб відкрити підтримуване посилання Instagram із буфера обміну. Якщо буфер не містить дійсного посилання, Instagram відкриє пошук як зазвичай.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Відкрити посилання зі буфера обміну";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Утримуйте вкладку Explore зі скопійованим іменем користувача, з @ або без, щоб відкрити цей профіль. Якщо облікового запису з таким ім'ям немає, натомість відкриється пошук.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Обліковий запис не знайдено";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Відкрити ім'я користувача з буфера обміну";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Утримуйте людину в пошуку, щоб закріпити або відкріпити її. Закріплені люди залишаються над недавніми пошуками, навіть після їх очищення.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Упорядкувати";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Готово";

@@ -68,6 +68,7 @@ SPK_NOTIF_CONST(kSPKNotificationDirectThreadSeenRule, "direct_thread_seen_rule")
 SPK_NOTIF_CONST(kSPKNotificationDirectHiddenChat, "direct_hidden_chat");
 SPK_NOTIF_CONST(kSPKNotificationShareSheetPin, "share_sheet_pin");
 SPK_NOTIF_CONST(kSPKNotificationSearchPin, "search_pin");
+SPK_NOTIF_CONST(kSPKNotificationClipboardUsername, "clipboard_username");
 SPK_NOTIF_CONST(kSPKNotificationDirectAutoSave, "direct_auto_save");
 SPK_NOTIF_CONST(kSPKNotificationDirectAutoSaveThreadRule, "toggle_direct_auto_save_thread_rule");
 SPK_NOTIF_CONST(kSPKNotificationUnsentMessage, "unsent_message");
@@ -308,6 +309,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationShareLongPressCopyLink, SPKL(@"GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE"), @"link"),
               SPKNotificationItem(kSPKNotificationShareSheetPin, SPKL(@"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT"), @"pin"),
               SPKNotificationItem(kSPKNotificationSearchPin, SPKL(@"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT"), @"pin"),
+              SPKNotificationItem(kSPKNotificationClipboardUsername, SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE"), @"user_circle"),
               SPKNotificationItem(kSPKNotificationFlexUnavailable, SPKL(@"UI_NOTIFICATION_CENTER_FLEX_UNAVAILABLE_TEXT"), @"warning"),
           ]},
     ];

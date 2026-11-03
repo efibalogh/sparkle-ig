@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ocultar Pesquisas em Tendência";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Mantenha pressionada a aba Explorar para abrir um link compatível do Instagram na área de transferência. Sem um link válido, o Instagram abre a busca normalmente.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Abrir Link da Área de Transferência";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Mantenha pressionada a aba Explorar com um nome de usuário copiado, com ou sem @, para abrir esse perfil. Se não houver conta com esse nome, a busca abre no lugar.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Nenhuma Conta Encontrada";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Abrir Nome de Usuário da Área de Transferência";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Mantenha pressionada uma pessoa na pesquisa para fixá-la ou desafixá-la. As pessoas fixadas ficam acima das suas pesquisas recentes, mesmo depois de limpá-las.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Reordenar";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Concluir";

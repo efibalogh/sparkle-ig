@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ẩn tìm kiếm xu hướng";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Nhấn giữ thẻ Khám phá để mở liên kết Instagram được hỗ trợ trong bộ nhớ tạm. Nếu không có liên kết hợp lệ, ứng dụng sẽ mở trang tìm kiếm bình thường.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Mở liên kết trong bộ nhớ tạm";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Nhấn giữ thẻ Khám phá khi đã sao chép một tên người dùng, có hoặc không có @, để mở trang cá nhân đó. Nếu không có tài khoản nào mang tên này, trang tìm kiếm sẽ mở thay thế.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Không tìm thấy tài khoản";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Mở tên người dùng trong bộ nhớ tạm";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Nhấn giữ một người trong tìm kiếm để ghim hoặc bỏ ghim. Người được ghim vẫn ở phía trên các tìm kiếm gần đây, kể cả sau khi bạn xóa chúng.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Sắp xếp lại";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Xong";

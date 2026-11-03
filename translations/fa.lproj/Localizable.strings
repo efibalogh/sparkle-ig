@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "پنهان‌سازی جستجوهای پرطرفدار";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "تب اکسپلور را لمس طولانی کنید تا لینک پشتیبانی‌شده اینستاگرامی از کلیپ‌بورد شما باز شود. اگر کلیپ‌بورد حاوی لینک معتبری نباشد، اینستاگرام جستجو را به‌طور معمول باز می‌کند.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "باز کردن لینک کلیپ‌بورد";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "با یک نام کاربری کپی‌شده، با @ یا بدون آن، تب اکسپلور را لمس طولانی کنید تا آن پروفایل باز شود. اگر حسابی با این نام وجود نداشته باشد، جستجو باز می‌شود.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "حسابی پیدا نشد";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "باز کردن نام کاربری کلیپ‌بورد";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "یک فرد را در جستجو نگه دارید تا سنجاق یا از سنجاق خارج شود. افراد سنجاق‌شده بالای جستجوهای اخیر شما می‌مانند، حتی پس از پاک کردن آن‌ها.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "مرتب‌سازی";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "تمام";

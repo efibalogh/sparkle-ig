@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Hide Trending Searches";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Long press the Explore tab to open a supported Instagram link from your clipboard. If the clipboard does not contain a valid link, Instagram opens search normally.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Open Clipboard Link";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Long press the Explore tab with a copied username, with or without the @, to open that profile. If no account has that name, search opens instead.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "No Account Found";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Open Clipboard Username";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Hold a person in search to pin or unpin them. Pinned people stay above your recent searches, even after you clear them.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Reorder";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Done";

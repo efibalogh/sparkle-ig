@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ukryj popularne wyszukiwania";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Przytrzymaj kartę Explore, aby otworzyć obsługiwany link Instagrama ze schowka. Jeśli schowek nie zawiera prawidłowego linku, Instagram normalnie otwiera wyszukiwanie.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Otwórz link ze schowka";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Przytrzymaj kartę Explore, mając skopiowaną nazwę użytkownika (z @ lub bez), aby otworzyć ten profil. Jeśli nie ma konta o tej nazwie, zamiast tego otworzy się wyszukiwanie.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Nie znaleziono konta";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Otwórz nazwę użytkownika ze schowka";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Przytrzymaj osobę w wyszukiwaniu, aby ją przypiąć lub odpiąć. Przypięte osoby pozostają nad ostatnimi wyszukiwaniami, nawet po ich wyczyszczeniu.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Zmień kolejność";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Gotowe";

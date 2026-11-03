@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Masquer les recherches tendance";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Appuyez longuement sur l'onglet Explorer pour ouvrir un lien Instagram pris en charge depuis le presse-papiers. Sans lien valide, Instagram ouvre normalement la recherche.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Ouvrir le lien du presse-papiers";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Appuyez longuement sur l'onglet Explorer avec un nom d'utilisateur copié, avec ou sans @, pour ouvrir ce profil. Si aucun compte ne porte ce nom, la recherche s'ouvre à la place.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Aucun compte trouvé";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Ouvrir le nom d'utilisateur du presse-papiers";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Maintenez une personne dans la recherche pour l'épingler ou la désépingler. Les personnes épinglées restent au-dessus de vos recherches récentes, même après les avoir effacées.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Réorganiser";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "OK";

@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Sembunyikan Pencarian Populer";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Tekan lama tab Explore untuk membuka tautan Instagram yang didukung dari clipboard-mu. Jika clipboard tidak berisi tautan yang valid, Instagram akan membuka pencarian seperti biasa.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Buka Tautan dari Clipboard";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Tekan lama tab Explore dengan nama pengguna yang disalin, dengan atau tanpa @, untuk membuka profil tersebut. Jika tidak ada akun dengan nama itu, pencarian akan dibuka.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Akun Tidak Ditemukan";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Buka Nama Pengguna dari Clipboard";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Tahan seseorang di pencarian untuk menyematkan atau melepas sematannya. Orang yang disematkan tetap di atas pencarian terbaru Anda, bahkan setelah Anda menghapusnya.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Urutkan Ulang";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Selesai";

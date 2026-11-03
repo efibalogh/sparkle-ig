@@ -81,10 +81,24 @@
                                                           icon:SPKSettingsIcon(@"grid_square")
                                                    defaultsKey:@"interface_explore_square_grid"],
                                SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE")
-                                                          icon:SPKSettingsIcon(@"link")
-                                                   defaultsKey:@"interface_open_clipboard_link"],
-                               SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP"))
+            ({
+                SPKSetting *clipboardLink = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE")
+                                                                                          icon:SPKSettingsIcon(@"link")
+                                                                                   defaultsKey:@"interface_open_clipboard_link"],
+                                                               SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP"));
+                clipboardLink.reloadsTableOnSwitchChange = YES;
+                clipboardLink;
+            }),
+            ({
+                SPKSetting *clipboardUsername = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE")
+                                                                                              icon:SPKSettingsIcon(@"mention")
+                                                                                       defaultsKey:@"interface_open_clipboard_username"],
+                                                                   SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP"));
+                clipboardUsername.hiddenProvider = ^BOOL {
+                    return ![SPKUtils getBoolPref:@"interface_open_clipboard_link"];
+                };
+                clipboardUsername;
+            }),
         ],
                         nil),
 

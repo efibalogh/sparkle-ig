@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Απόκρυψη Αναζητήσεων Τάσης";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Πατήστε παρατεταμένα την καρτέλα Εξερεύνηση για να ανοίξετε έναν υποστηριζόμενο σύνδεσμο Instagram από το πρόχειρο. Αν το πρόχειρο δεν περιέχει έγκυρο σύνδεσμο, το Instagram ανοίγει κανονικά την αναζήτηση.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Άνοιγμα Συνδέσμου Clipboard";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Πατήστε παρατεταμένα την καρτέλα Εξερεύνηση με ένα αντιγραμμένο όνομα χρήστη, με ή χωρίς @, για να ανοίξετε αυτό το προφίλ. Αν δεν υπάρχει λογαριασμός με αυτό το όνομα, ανοίγει η αναζήτηση.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Δεν Βρέθηκε Λογαριασμός";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Άνοιγμα Ονόματος Χρήστη από Πρόχειρο";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Πατήστε παρατεταμένα ένα άτομο στην αναζήτηση για να το καρφιτσώσετε ή να το ξεκαρφιτσώσετε. Τα καρφιτσωμένα άτομα μένουν πάνω από τις πρόσφατες αναζητήσεις, ακόμη και αφού τις διαγράψετε.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Αναδιάταξη";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Τέλος";

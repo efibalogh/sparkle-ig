@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "إخفاء عمليات البحث الرائجة";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "اضغط مطولاً على علامة Explore لفتح رابط Instagram مدعوم من الحافظة. إذا لم تحتوِ الحافظة على رابط صالح، يفتح Instagram البحث كالمعتاد.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "فتح رابط من الحافظة";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "اضغط مطولاً على علامة Explore مع اسم مستخدم منسوخ، مع @ أو بدونها، لفتح ذلك الملف الشخصي. إذا لم يوجد حساب بهذا الاسم، يُفتح البحث بدلاً من ذلك.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "لم يتم العثور على حساب";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "فتح اسم المستخدم من الحافظة";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "اضغط مطولًا على شخص في البحث لتثبيته أو إلغاء تثبيته. يبقى الأشخاص المثبتون فوق عمليات البحث الأخيرة، حتى بعد مسحها.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "إعادة الترتيب";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "تم";

@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trend Aramaları Gizle";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Desteklenen bir Instagram bağlantısını panodan açmak için Explore sekmesine uzun basın. Pano geçerli bir bağlantı içermiyorsa Instagram normal şekilde aramayı açar.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Pano Bağlantısını Aç";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Kopyalanmış bir kullanıcı adıyla, @ olsun ya da olmasın, o profili açmak için Explore sekmesine uzun basın. Bu adda bir hesap yoksa bunun yerine arama açılır.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Hesap Bulunamadı";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Panodaki Kullanıcı Adını Aç";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Sabitlemek veya sabitlemeyi kaldırmak için aramada bir kişiye basılı tutun. Sabitlenen kişiler, son aramalarınızı temizledikten sonra bile onların üstünde kalır.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Yeniden sırala";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Bitti";

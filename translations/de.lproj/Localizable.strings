@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trendingsuchen ausblenden";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Bietet an, einen Instagram-Link aus der Zwischenablage zu öffnen, sobald du die Suche öffnest.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Link aus Zwischenablage öffnen";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "Halte den Explore-Tab mit einem kopierten Benutzernamen, mit oder ohne @, gedrückt, um dieses Profil zu öffnen. Gibt es kein Konto mit diesem Namen, öffnet sich stattdessen die Suche.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "Kein Konto gefunden";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "Benutzernamen aus Zwischenablage öffnen";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "Halte eine Person in der Suche gedrückt, um sie anzuheften oder zu lösen. Angeheftete Personen bleiben über deinen letzten Suchen, auch wenn du sie löschst.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "Neu anordnen";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "Fertig";

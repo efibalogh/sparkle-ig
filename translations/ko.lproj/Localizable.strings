@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "인기 검색 숨기기";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Explore 탭을 길게 눌러 클립보드의 지원되는 Instagram 링크를 엽니다. 클립보드에 유효한 링크가 없으면 Instagram이 평소처럼 검색을 엽니다.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "클립보드 링크 열기";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "사용자 이름을 복사한 상태에서(@ 유무 상관없음) Explore 탭을 길게 눌러 해당 프로필을 엽니다. 그 이름의 계정이 없으면 대신 검색이 열립니다.";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "계정을 찾을 수 없음";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "클립보드 사용자 이름 열기";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "검색에서 사람을 길게 눌러 고정하거나 고정 해제하세요. 고정한 사람은 최근 검색을 지워도 그 위에 계속 표시됩니다.";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "순서 변경";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "완료";

@@ -1117,6 +1117,9 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "ซ่อนคำค้นหายอดนิยม";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "กดแท็บสำรวจค้างไว้เพื่อเปิดลิงก์ Instagram ที่รองรับจากคลิปบอร์ดของคุณ หากคลิปบอร์ดไม่มีลิงก์ที่ถูกต้อง Instagram จะเปิดหน้าค้นหาตามปกติ";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "เปิดลิงก์จากคลิปบอร์ด";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP" = "กดแท็บสำรวจค้างไว้เมื่อคัดลอกชื่อผู้ใช้ไว้ จะมี @ หรือไม่ก็ได้ เพื่อเปิดโปรไฟล์นั้น หากไม่มีบัญชีชื่อนี้ ระบบจะเปิดหน้าค้นหาแทน";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST" = "ไม่พบบัญชี";
+"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE" = "เปิดชื่อผู้ใช้จากคลิปบอร์ด";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP" = "กดค้างที่บุคคลในการค้นหาเพื่อปักหมุดหรือเลิกปักหมุด บุคคลที่ปักหมุดจะอยู่เหนือการค้นหาล่าสุดของคุณ แม้หลังจากล้างแล้ว";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_BUTTON" = "จัดลำดับใหม่";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_REORDER_DONE_BUTTON" = "เสร็จ";
