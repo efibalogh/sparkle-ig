@@ -418,6 +418,42 @@ BOOL SPKStoryMarkContextAsSeen(SPKStoryContext *context) {
     return YES;
 }
 
+/// Advancing only queues the next story's video: it loads on the first play
+/// call. A tap gets that call from the release of its own press, which a button
+/// never starts, so the next video would sit on its cover. Resume with the reason
+/// the press release uses once the new item is bound, and again if it has not
+/// started by the time a normal load would have.
+static void SPKStoryResumeAfterAdvance(id sectionController) {
+    SEL resumeSelector = NSSelectorFromString(@"tryResumePlaybackWithReason:");
+    if (![sectionController respondsToSelector:resumeSelector])
+        return;
+    __weak id weakSectionController = sectionController;
+    void (^resume)(BOOL) = ^(BOOL onlyIfStalled) {
+        id strongSectionController = weakSectionController;
+        if (!strongSectionController || UIApplication.sharedApplication.applicationState != UIApplicationStateActive)
+            return;
+        // Past the reel's last story the next reel takes over through its own
+        // display path; resuming the old controller would play it off screen.
+        SPKStoryContext *activeContext = SPKStoryContextFromOverlay(SPKStoryActiveOverlay());
+        if (activeContext.sectionController != strongSectionController)
+            return;
+        if (onlyIfStalled && [strongSectionController respondsToSelector:@selector(isPlaying)] &&
+            ((BOOL (*)(id, SEL))objc_msgSend)(strongSectionController, @selector(isPlaying)))
+            return;
+        @try {
+            ((void (*)(id, SEL, long long))objc_msgSend)(strongSectionController, resumeSelector, 0);
+        } @catch (NSException *exception) {
+            SPKLog(@"Stories", @"[Sparkle StorySeen] Resuming after advance failed: %@", exception.reason);
+        }
+    };
+    dispatch_async(dispatch_get_main_queue(), ^{
+        resume(NO);
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        resume(YES);
+    });
+}
+
 void SPKStoryAdvanceContextIfNeeded(SPKStoryContext *context, NSString *advancePrefKey) {
     if (!context || advancePrefKey.length == 0 || ![SPKUtils getBoolPref:advancePrefKey])
         return;
@@ -438,6 +474,7 @@ void SPKStoryAdvanceContextIfNeeded(SPKStoryContext *context, NSString *advanceP
     dispatch_async(dispatch_get_main_queue(), ^{
         SPKForceStoryAutoAdvance = NO;
     });
+    SPKStoryResumeAfterAdvance(sectionController);
 }
 
 NSString *SPKStoryUsernameForContext(SPKStoryContext *context) {
