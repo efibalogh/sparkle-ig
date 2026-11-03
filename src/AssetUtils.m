@@ -97,8 +97,8 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
     dispatch_once(&onceToken, ^{
         overrides = @{
             @"action" : @{@"candidates" : @[ @"ig_icon_stars_pano_outline_24", @"ig_icon_stars_outline_24", @"ig_icon_flash_outline_24", @"ig_icon_flash_outline_20" ]},
-            @"activity" : @{@"candidates" : @[ @"ig_icon_channels_broadcast_outline_24"]},
-            @"activity_filled" : @{@"candidates" : @[ @"ig_icon_channels_broadcast_filled_24"]},
+            @"activity" : @{@"candidates" : @[ @"ig_icon_channels_broadcast_outline_24" ]},
+            @"activity_filled" : @{@"candidates" : @[ @"ig_icon_channels_broadcast_filled_24" ]},
             @"add" : @{@"candidates" : @[ @"ig_icon_add_outline_24" ]},
             @"ads" : @{@"candidates" : @[ @"ig_icon_ads_prism_outline_24", @"ig_icon_ads_outline_24", @"ig_icon_ad_outline_24" ]},
             @"app" : @{@"candidates" : @[ @"ig_icon_app_instagram_pano_outline_24", @"ig_icon_app_instagram_outline_24" ]},
@@ -129,6 +129,7 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"check" : @{@"candidates" : @[ @"ig_icon_check_outline_24" ]},
             @"chevron_left" : @{@"candidates" : @[ @"ig_icon_chevron_left_outline_24" ]},
             @"chevron_right" : @{@"candidates" : @[ @"ig_icon_chevron_right_filled_16", @"ig_icon_chevron_right_outline_16", @"ig_icon_chevron_right_filled_12", @"ig_icon_chevron_right_outline_12", @"ig_icon_chevron_right_filled_24", @"ig_icon_chevron_right_outline_24", @"ig_icon_chevron_right_filled_8", @"ig_icon_chevron_right_outline_8", @"ig_icon_chevron_right_filled_6", @"ig_icon_chevron_right_outline_6", @"ig_icon_chevron_right_filled_2", @"ig_icon_chevron_right_outline_2", @"ig_icon_chevron_right_filled_44", @"ig_icon_chevron_right_outline_44" ]},
+            @"chevron_up" : @{@"candidates" : @[ @"ig_icon_chevron_up_outline_24", @"ig_icon_chevron_up_filled_24", @"ig_icon_chevron_up_outline_16", @"ig_icon_chevron_up_filled_16", @"ig_icon_chevron_up_filled_12" ]},
             @"chest" : @{@"candidates" : @[ @"ig_icon_chest_outline_24" ]},
             @"circle" : @{@"candidates" : @[ @"ig_icon_circle_outline_24" ]},
             @"circle_off" : @{@"candidates" : @[ @"ig_icon_circle_block_pano_outline_24", @"ig_icon_circle_block_outline_24" ]},
