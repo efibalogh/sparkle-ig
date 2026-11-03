@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Подтвердить запросы подписки";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Запрашивает подтверждение перед отправкой реакции.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Подтвердить реакции";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Запрашивает подтверждение, прежде чем кнопка отправки в чат или группу в просмотре пересланного рилса отправит рилс.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Подтверждать отправку рилса в чат";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Запрашивает подтверждение перед включением исчезающего режима.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Подтверждение режима исчезания";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Запрашивает подтверждение перед видеозвонком.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Убирает панель заметок сверху входящих.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Скрыть поддон заметок";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Заметки и местоположение";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Вы уверены, что хотите отправить этот рилс в «%@»?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Вы уверены, что хотите отправить этот рилс в чат?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Отправить рилс";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Вы уверены, что хотите отправить этот рилс %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Сообщения помечены как просмотренные";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Не удалось отметить как просмотренное";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Вы уверены, что хотите изменить исчезающие сообщения для этого чата?";

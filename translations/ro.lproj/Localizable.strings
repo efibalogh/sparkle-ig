@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Confirmă cereri de urmărire";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Cere confirmare înainte de trimiterea unei reacții.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Confirmă reacții";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Cere confirmare înainte ca butonul de trimitere în chat sau grup din vizualizatorul unui reel distribuit să trimită reelul.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Confirmă trimiterea reelului în chat";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Cere confirmare înainte de activarea modului dispariție.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Confirmă modul dispariție";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Cere confirmare înainte de inițierea unui apel video.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Elimină bara de note din partea de sus a căsuței de mesaje.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Ascunde tava de note";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Note și locație";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Sigur doriți să trimiteți acest reel către „%@”?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Sigur doriți să trimiteți acest reel în chat?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Trimite reelul";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Sigur doriți să trimiteți acest reel către %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Mesajele marcate ca vizualizate";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nu pot marca ca vizionat";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Sigur doriți să schimbați setările pentru mesajele care dispar pentru această conversație?";

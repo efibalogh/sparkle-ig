@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Folge-Anfragen bestätigen";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Fragt nach einer Bestätigung, bevor eine Reaktion gesendet wird.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Reaktionen bestätigen";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Fragt nach einer Bestätigung, bevor die Schaltfläche zum Senden an Chat oder Gruppe im Viewer eines geteilten Reels das Reel sendet.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Reel-Senden an Chat bestätigen";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Fragt nach einer Bestätigung, bevor der Vanish-Modus aktiviert wird.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Vanish-Modus bestätigen";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Fragt nach einer Bestätigung, bevor ein Videoanruf gestartet wird.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Entfernt die Notizenleiste am oberen Rand des Postfachs.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Notizen-Ablage ausblenden";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Notizen & Standort";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Möchtest du dieses Reel wirklich an „%@“ senden?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Möchtest du dieses Reel wirklich an den Chat senden?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Reel senden";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Möchtest du dieses Reel wirklich an %@ senden?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Nachrichten als gesehen markiert";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Konnte nicht als gesehen markiert werden";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Möchtest du die Einstellung für sich selbst löschende Nachrichten in diesem Chat wirklich ändern?";

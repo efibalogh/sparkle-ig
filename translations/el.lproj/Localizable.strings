@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Επιβεβαίωση Αιτημάτων Παρακολούθησης";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Ζητά επιβεβαίωση πριν σταλεί μια αντίδραση.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Επιβεβαίωση Αντιδράσεων";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Ζητά επιβεβαίωση πριν το κουμπί αποστολής σε συνομιλία ή ομάδα στην προβολή κοινοποιημένου reel στείλει το reel.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Επιβεβαίωση Αποστολής Reel σε Συνομιλία";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Ζητά επιβεβαίωση πριν ενεργοποιηθεί η λειτουργία εξαφάνισης.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Επιβεβαίωση λειτουργίας Vanish";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Ζητά επιβεβαίωση πριν γίνει βιντεοκλήση.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Αφαιρεί τη γραμμή σημειώσεων από την κορυφή των εισερχομένων.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Απόκρυψη Ταινίας Σημειώσεων";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Σημειώσεις & τοποθεσία";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Είστε σίγουρος ότι θέλετε να στείλετε αυτό το reel στο «%@»;";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Είστε σίγουρος ότι θέλετε να στείλετε αυτό το reel στη συνομιλία;";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Αποστολή Reel";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Είστε σίγουρος ότι θέλετε να στείλετε αυτό το reel στον/στην %@;";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Σημειώθηκαν τα μηνύματα ως διαβασμένα";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Δεν ήταν δυνατή η σήμανση ως αναγνωρισμένη";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Είστε σίγουρος ότι θέλετε να αλλάξετε τα εξαφανιζόμενα μηνύματα για αυτήν τη συνομιλία;";

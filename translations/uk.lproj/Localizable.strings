@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Підтвердити запити на підписку";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Запитує підтвердження перед надсиланням реакції.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Підтвердити реакції";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Запитує підтвердження, перш ніж кнопка надсилання в чат або групу в переглядачі пересланого рілсу надішле рілс.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Підтверджувати надсилання рілсу в чат";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Запитує підтвердження перед увімкненням зникомого режиму.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Підтвердити режим Vanish";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Запитує підтвердження перед відеодзвінком.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Прибирає панель нотаток угорі вхідних.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Приховати піддон примітків";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Примітки й місцезнаходження";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Ви впевнені, що хочете надіслати цей рілс у «%@»?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Ви впевнені, що хочете надіслати цей рілс у чат?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Надіслати рілс";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Ви впевнені, що хочете надіслати цей рілс %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Повідомлення позначені як прочитані";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Не вдалося позначити як переглянуте";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Ви впевнені, що хочете змінити зникаючі повідомлення для цього чату?";

@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Xác nhận yêu cầu theo dõi";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Hỏi xác nhận trước khi thả cảm xúc (reaction).";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Xác nhận cảm xúc";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Yêu cầu xác nhận trước khi nút gửi đến đoạn chat hoặc nhóm trong trình xem reel được chia sẻ gửi reel đi.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Xác nhận gửi reel đến đoạn chat";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Yêu cầu xác nhận trước khi bật chế độ tạm thời.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Xác nhận Chế độ tạm thời";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Yêu cầu xác nhận trước khi thực hiện cuộc gọi video.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Ẩn khay Ghi chú khỏi phần trên cùng của hộp thư đến.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Ẩn khay ghi chú";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Ghi chú & vị trí";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Bạn có chắc chắn muốn gửi reel này đến “%@” không?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Bạn có chắc chắn muốn gửi reel này đến đoạn chat không?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Gửi reel";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bạn có chắc chắn muốn gửi reel này đến %@ không?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Đã đánh dấu tin nhắn là đã xem";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Không thể đánh dấu tin nhắn là đã xem";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Bạn có chắc chắn muốn thay đổi cài đặt tin nhắn tự xóa cho đoạn chat này không?";

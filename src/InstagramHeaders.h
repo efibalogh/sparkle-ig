@@ -428,6 +428,13 @@
 - (void)scrollViewDidEndDecelerating:(id)scrollView;
 @end
 
+// Reels viewer opened from a shared reel in a DM thread. Hosts the quick
+// "Send to Chat/Group" button (_shareToThreadButton) that sends with one tap.
+@interface IGDirectReplySundialFeedViewController : UIViewController
+- (void)_handleShareButtonTap;
+- (void)directReplySundialButtonTrayDidTapShareToThreadButton;
+@end
+
 @interface IGDirectVisualMessageViewerViewModeAwareDataSource : NSObject
 @end
 

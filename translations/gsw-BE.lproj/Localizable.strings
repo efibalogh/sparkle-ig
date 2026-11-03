@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Follow-Aafroge bestätige";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Frogt nache Bestätigung, bevor e Reaction gsändet wird.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Reactions bestätige";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Fragt nach ere Bestätigung, bevor dä Chnopf zum Sände an Chat oder Gruppe im Viewer vomene teilte Reel s Reel schickt.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Reel-Sände an Chat bestätige";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Frogt nache Bestätigung, bevor dr Vanish-Modus yygschaltet wird.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Vanish-Modus bestätige";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Frogt nache Bestätigung, bevor en Videoaaruef gmacht wird.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Entfernt d'Notiz-Läiste vo obe im Postfach.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Notiz-Läiste verstecke";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Notize & Standort";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Bisch sicher, dass du das Reel an «%@» wottsch schicke?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Bisch sicher, dass du das Reel an dä Chat wottsch schicke?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Reel schicke";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bisch sicher, dass du das Reel an %@ wottsch schicke?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Nachrichte als gseh markiert";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Cha Nachrichte nid als gseh markiere";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Bisch sicher, dass du d'Verschwindendi-Nachrichte für dä Chat wottsch ändere?";

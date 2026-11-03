@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "تأیید درخواست‌های دنبال کردن";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "پیش از ارسال ری‌اکشن، تأیید می‌خواهد.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "تأیید ری‌اکشن‌ها";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "پیش از اینکه دکمه ارسال به گفتگو یا گروه در نمایشگر ریل اشتراک‌گذاشته‌شده ریل را ارسال کند، تأیید می‌خواهد.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "تأیید ارسال ریل به گفتگو";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "پیش از روشن کردن حالت ناپدید شدن، تأیید می‌خواهد.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "تأیید حالت ناپدید شدن";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "پیش از برقراری تماس ویدیویی، تأیید می‌خواهد.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "سینی نوت‌ها را از بالای صندوق ورودی حذف می‌کند.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "پنهان کردن سینی نوت‌ها";
 "MESSAGES_NOTES_LOCATION_HEADER" = "نوت‌ها و مکان";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "آیا مطمئن هستید که می‌خواهید این ریل را به «%@» ارسال کنید؟";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "آیا مطمئن هستید که می‌خواهید این ریل را به گفتگو ارسال کنید؟";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "ارسال ریل";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "آیا مطمئن هستید که می‌خواهید این ریل را به %@ ارسال کنید؟";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "پیام‌ها به‌عنوان دیده‌شده علامت خوردند";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "علامت‌گذاری پیام‌ها به‌عنوان دیده‌شده ممکن نیست";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "آیا مطمئن هستید که می‌خواهید حالت پیام‌های ناپدیدشونده را برای این چت تغییر دهید؟";

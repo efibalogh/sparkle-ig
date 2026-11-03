@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Kumpirmahin ang Mga Follow Request";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Humihingi ng kumpirmasyon bago magpadala ng reaction.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Kumpirmahin ang Mga Reaction";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Humihingi ng kumpirmasyon bago ipadala ng button na magpadala sa chat o grupo sa viewer ng ibinahaging reel ang reel.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Kumpirmahin ang Pagpapadala ng Reel sa Chat";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Humihingi ng kumpirmasyon bago i-on ang vanish mode.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Kumpirmahin ang Vanish Mode";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Humihingi ng kumpirmasyon bago tumawag ng video call.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Inaalis ang notes tray mula sa itaas ng inbox.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Itago ang Notes Tray";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Mga Tala at Lokasyon";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Sigurado ka bang gusto mong ipadala ang reel na ito sa “%@”?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Sigurado ka bang gusto mong ipadala ang reel na ito sa chat?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Ipadala ang Reel";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Sigurado ka bang gusto mong ipadala ang reel na ito kay %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Na-mark ang mga mensahe bilang seen";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Hindi ma-mark ang mga mensahe bilang seen";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Sigurado ka bang gusto mong palitan ang disappearing messages para sa chat na ito?";

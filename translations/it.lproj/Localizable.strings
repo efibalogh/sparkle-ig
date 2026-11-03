@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Conferma Richieste Seguiti";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Chiede conferma prima di inviare una reazione.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Conferma Reazioni";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Chiede conferma prima che il pulsante di invio alla chat o al gruppo nel visualizzatore di un reel condiviso invii il reel.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Conferma Invio Reel alla Chat";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Chiede conferma prima di attivare la modalità a scomparsa.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Conferma Modalità Scomparsa";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Chiede conferma prima di avviare una videochiamata.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Rimuove la barra delle note in cima alla posta in arrivo.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Nascondi Vassoio Note";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Note e posizione";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Sei sicuro di voler inviare questo reel a «%@»?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Sei sicuro di voler inviare questo reel alla chat?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Invia reel";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Sei sicuro di voler inviare questo reel a %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Messaggi segnati come letti";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Impossibile contrassegnare come visualizzato";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Sei sicuro di voler modificare i messaggi temporanei per questa chat?";

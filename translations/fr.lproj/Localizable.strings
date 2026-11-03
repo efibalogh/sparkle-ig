@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Confirmer les demandes d'abonnement";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Demande confirmation avant l'envoi d'une réaction.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Confirmer les réactions";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Demande une confirmation avant que le bouton d’envoi à la discussion ou au groupe dans le lecteur d’un reel partagé n’envoie le reel.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Confirmer l’envoi de reel à la discussion";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Demande confirmation avant d'activer le mode éphémère.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Confirmer le mode disparition";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Demande confirmation avant de passer un appel vidéo.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Retire la barre de notes en haut de la boîte de réception.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Masquer le plateau de notes";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Notes et position";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Êtes-vous sûr de vouloir envoyer ce reel à « %@ » ?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Êtes-vous sûr de vouloir envoyer ce reel à la discussion ?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Envoyer le reel";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Êtes-vous sûr de vouloir envoyer ce reel à %@ ?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Messages marqués comme vus";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Impossible de marquer comme vu";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Êtes-vous sûr de vouloir modifier les messages éphémères pour cette discussion ?";

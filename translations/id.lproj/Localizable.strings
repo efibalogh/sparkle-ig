@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Konfirmasi Permintaan Mengikuti";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Meminta konfirmasi sebelum reaksi dikirim.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Konfirmasi Reaksi";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Meminta konfirmasi sebelum tombol kirim ke obrolan atau grup di penampil reel yang dibagikan mengirim reel.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Konfirmasi Kirim Reel ke Obrolan";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Meminta konfirmasi sebelum mode vanish diaktifkan.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Konfirmasi Mode Vanish";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Meminta konfirmasi sebelum panggilan video dilakukan.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Menghapus tray catatan dari bagian atas kotak masuk.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Sembunyikan Tray Catatan";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Catatan & Lokasi";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Apakah Anda yakin ingin mengirim reel ini ke “%@”?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Apakah Anda yakin ingin mengirim reel ini ke obrolan?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Kirim Reel";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Apakah Anda yakin ingin mengirim reel ini ke %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Pesan ditandai sebagai dilihat";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Tidak dapat menandai pesan sebagai dilihat";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Apakah Anda yakin ingin mengubah pesan menghilang untuk obrolan ini?";

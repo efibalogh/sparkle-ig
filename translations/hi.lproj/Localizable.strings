@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "फॉलो अनुरोध की पुष्टि करें";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "रिएक्शन भेजने से पहले पुष्टि मांगता है।";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "प्रतिक्रिया की पुष्टि करें";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "साझा की गई रील के व्यूअर में चैट या ग्रुप को भेजने वाला बटन रील भेजने से पहले पुष्टि मांगता है।";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "चैट को रील भेजने की पुष्टि करें";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Vanish मोड चालू करने से पहले पुष्टि मांगता है।";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "गायब मोड की पुष्टि करें";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "वीडियो कॉल करने से पहले पुष्टि मांगता है।";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "इनबॉक्स के ऊपर से नोट्स ट्रे हटाता है।";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "नोट्स ट्रे छिपाएं";
 "MESSAGES_NOTES_LOCATION_HEADER" = "नोट्स और स्थान";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "क्या आप निश्चित रूप से यह रील “%@” को भेजना चाहते हैं?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "क्या आप निश्चित रूप से यह रील चैट में भेजना चाहते हैं?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "रील भेजें";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "क्या आप निश्चित रूप से यह रील %@ को भेजना चाहते हैं?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "संदेशों को पढ़ा हुआ चिह्नित किया";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "देखे जाने के रूप में चिह्नित करने में विफल";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "क्या आप निश्चित रूप से इस चैट के लिए गायब होने वाले संदेशों को बदलना चाहते हैं?";

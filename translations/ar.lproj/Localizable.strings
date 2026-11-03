@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "تأكيد طلبات المتابعة";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "يطلب تأكيداً قبل إرسال أي تفاعل.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "تأكيد التفاعلات";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "يطلب التأكيد قبل أن يرسل زر الإرسال إلى الدردشة أو المجموعة في عارض الريلز المشتركة الريل.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "تأكيد إرسال الريل إلى الدردشة";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "يطلب تأكيداً قبل تفعيل وضع الاختفاء.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "تأكيد الوضع الزائل";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "يطلب تأكيداً قبل إجراء أي مكالمة فيديو.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "يزيل شريط الملاحظات من أعلى صندوق الوارد.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "إخفاء مقصورة الملاحظات";
 "MESSAGES_NOTES_LOCATION_HEADER" = "الملاحظات والموقع";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "هل أنت متأكد من أنك تريد إرسال هذا الريل إلى «%@»؟";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "هل أنت متأكد من أنك تريد إرسال هذا الريل إلى الدردشة؟";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "إرسال الريل";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "هل أنت متأكد من أنك تريد إرسال هذا الريل إلى %@؟";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "تم وضع علامة على الرسائل كمشاهدة";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "تعذر تحديد كمشاهد";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "هل أنت متأكد من أنك تريد تغيير الرسائل المختفية لهذه المحادثة؟";

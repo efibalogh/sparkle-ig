@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Patvirtinti prašymus stebėti";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Prašo patvirtinimo prieš išsiunčiant reakciją.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Patvirtinti reakcijas";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Paprašo patvirtinimo, prieš bendrinamo „Reel“ peržiūros lango mygtukas siųsti į pokalbį ar grupę išsiunčia įrašą.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Patvirtinti „Reel“ siuntimą į pokalbį";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Prašo patvirtinimo prieš įjungiant išnykimo režimą.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Patvirtinti išnykimo režimą";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Prašo patvirtinimo prieš pradedant vaizdo skambutį.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Pašalina užrašų juostą iš gautųjų viršaus.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Slėpti užrašų juostą";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Užrašai ir vieta";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Ar tikrai norite išsiųsti šį „Reel“ į „%@“?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Ar tikrai norite išsiųsti šį „Reel“ į pokalbį?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Siųsti „Reel“";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Ar tikrai norite išsiųsti šį „Reel“ %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Žinutės pažymėtos kaip matytos";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nepavyko pažymėti žinučių kaip matytų";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Ar tikrai norite pakeisti išnykstančias žinutes šiame pokalbyje?";

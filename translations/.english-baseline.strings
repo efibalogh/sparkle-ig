@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Confirm Follow Requests";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Asks for confirmation before a reaction is sent.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Confirm Reactions";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Asks for confirmation before the Send to Chat or Send to Group button in a shared reel viewer sends the reel.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Confirm Reel Send to Chat";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Asks for confirmation before vanish mode is turned on.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Confirm Vanish Mode";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Asks for confirmation before a video call is placed.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Removes the notes tray from the top of the inbox.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Hide Notes Tray";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Notes & Location";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Are you sure you want to send this reel to “%@”?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Are you sure you want to send this reel to the chat?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Send Reel";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Are you sure you want to send this reel to %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Marked messages as seen";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Unable to mark messages as seen";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Are you sure you want to change disappearing messages for this chat?";

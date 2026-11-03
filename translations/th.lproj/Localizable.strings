@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "ยืนยันคำขอติดตาม";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "ขอการยืนยันก่อนส่งรีแอกชัน";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "ยืนยันรีแอกชัน";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "ขอการยืนยันก่อนที่ปุ่มส่งไปยังแชทหรือกลุ่มในตัวดูรีลที่แชร์จะส่งรีล";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "ยืนยันการส่งรีลไปยังแชท";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "ขอการยืนยันก่อนเปิดโหมดข้อความหาย";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "ยืนยันโหมดข้อความหาย";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "ขอการยืนยันก่อนเริ่มการโทรวิดีโอ";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "ลบแถบบันทึกออกจากด้านบนของกล่องข้อความ";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "ซ่อนแถบบันทึก";
 "MESSAGES_NOTES_LOCATION_HEADER" = "บันทึกและตำแหน่ง";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "คุณแน่ใจหรือไม่ว่าต้องการส่งรีลนี้ไปยัง “%@”?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการส่งรีลนี้ไปยังแชท?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "ส่งรีล";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "คุณแน่ใจหรือไม่ว่าต้องการส่งรีลนี้ไปยัง %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "ทำเครื่องหมายข้อความว่าเห็นแล้ว";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "ไม่สามารถทำเครื่องหมายข้อความว่าเห็นแล้วได้";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนข้อความหายไปสำหรับแชทนี้?";

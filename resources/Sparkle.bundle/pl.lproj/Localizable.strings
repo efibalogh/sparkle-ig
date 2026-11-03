@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Potwierdź prośby o obserwowanie";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Prosi o potwierdzenie przed wysłaniem reakcji.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Potwierdź reakcje";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Prosi o potwierdzenie, zanim przycisk wysyłania do czatu lub grupy w przeglądarce udostępnionej rolki wyśle rolkę.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Potwierdź wysłanie rolki do czatu";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Prosi o potwierdzenie przed włączeniem trybu znikania.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Potwierdź tryb znikania";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Prosi o potwierdzenie przed nawiązaniem rozmowy wideo.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Usuwa zasobnik notatek ze skrótu skrzynki.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Ukryj pasek notatek";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Notatki i lokalizacja";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Czy na pewno chcesz wysłać tę rolkę do „%@”?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Czy na pewno chcesz wysłać tę rolkę do czatu?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Wyślij rolkę";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Czy na pewno chcesz wysłać tę rolkę do %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Oznaczono wiadomości jako odczytane";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nie można oznaczyć wiadomości jako wyświetlonych";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Czy na pewno chcesz zmienić znikające wiadomości w tym czacie?";

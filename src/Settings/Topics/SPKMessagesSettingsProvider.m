@@ -656,6 +656,10 @@ static NSArray *SPKMessagesSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"reactions")
                                     defaultsKey:@"msgs_confirm_reaction"],
                                SPKL(@"MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE")
+                                           icon:SPKSettingsIcon(@"messages")
+                                    defaultsKey:@"msgs_confirm_reel_send_to_thread"],
+                               SPKL(@"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_CONFIRMATION_CONFIRM_VOICE_MESSAGES_TITLE")
                                            icon:SPKSettingsIcon(@"voice")
                                     defaultsKey:@"msgs_confirm_voice_msg"],

@@ -86,6 +86,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_comments_confirm_like" : @(NO),
         @"msgs_confirm_double_tap" : @(NO),
         @"msgs_confirm_reaction" : @(NO),
+        @"msgs_confirm_reel_send_to_thread" : @(NO),
         @"stories_confirm_like" : @(NO),
         @"stories_confirm_mark_seen" : @(NO),
         @"stories_manual_seen_mode" : @"off",

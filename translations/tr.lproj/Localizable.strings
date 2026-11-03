@@ -1523,6 +1523,8 @@
 "MESSAGES_CONFIRMATION_CONFIRM_FOLLOW_REQUESTS_TITLE" = "Takip İsteklerini Onayla";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_HELP" = "Bir tepki gönderilmeden önce onay ister.";
 "MESSAGES_CONFIRMATION_CONFIRM_REACTIONS_TITLE" = "Tepkileri Onayla";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_HELP" = "Paylaşılan bir reels görüntüleyicisindeki sohbete veya gruba gönder düğmesi reelsi göndermeden önce onay ister.";
+"MESSAGES_CONFIRMATION_CONFIRM_REEL_SEND_TO_THREAD_TITLE" = "Reelsi Sohbete Göndermeyi Onayla";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_HELP" = "Kaybolma modu açılmadan önce onay ister.";
 "MESSAGES_CONFIRMATION_CONFIRM_VANISH_MODE_TITLE" = "Kaybolan Modu Onayla";
 "MESSAGES_CONFIRMATION_CONFIRM_VIDEO_CALL_HELP" = "Görüntülü arama başlatılmadan önce onay ister.";
@@ -1813,6 +1815,10 @@
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP" = "Gelen kutusunun üstündeki not çubuğunu kaldırır.";
 "MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE" = "Notlar Tepsisini Gizle";
 "MESSAGES_NOTES_LOCATION_HEADER" = "Notlar ve Konum";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_GROUP_FORMAT" = "Bu reelsi “%@” grubuna göndermek istediğinden emin misin?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Bu reelsi sohbete göndermek istediğinden emin misin?";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Reelsi Gönder";
+"MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bu reelsi %@ kullanıcısına göndermek istediğinden emin misin?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Mesajlar görüldü olarak işaretlendi";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Görüldü olarak işaretlenemedi";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Bu sohbet için kaybolan iletileri değiştirmek istediğinden emin misin?";
