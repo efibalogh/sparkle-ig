@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Скрыть рекомендации Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Скрыть рекомендации ленты";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Скрыть рекомендации списка подписок";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Рекомендуемые аккаунты в профилях остаются свёрнутыми, пока вы не нажмёте кнопку рекомендаций. Если Показывать кнопку рекомендаций выключено, кнопка тоже удаляется.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Скрыть рекомендации профиля";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Скрыть рекомендации Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Скрыть рекомендации поиска";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Точное число подписчиков";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Показывает под статистикой профиля, подписан ли он на вас в ответ, текстом, значком или и тем, и другим.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Индикатор подписки";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Добавляет кнопку рекомендуемых аккаунтов в каждый профиль, даже там, где Instagram её не показывает. Если включено Скрыть рекомендации профиля, выключение этой опции убирает кнопку из всех профилей.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Показывать кнопку рекомендаций";
 "PROFILE_INDICATORS_HEADER" = "Индикаторы";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Убирает облачко заметки с фото профиля.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Скрыть пузырь заметок";

@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Ẩn gợi ý trong Tin nhắn";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Ẩn đề xuất trên Bảng tin";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Ẩn đề xuất trong danh sách theo dõi";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Giữ các tài khoản gợi ý đóng trên trang cá nhân cho đến khi bạn chạm vào nút gợi ý. Khi tắt Hiện nút gợi ý, nút cũng bị gỡ bỏ.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Ẩn gợi ý trang cá nhân";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ẩn gợi ý Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ẩn gợi ý tìm kiếm";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Số người theo dõi chính xác";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Hiển thị xem trang cá nhân có theo dõi lại bạn không (nằm dưới mục thông số) dưới dạng văn bản, biểu tượng hoặc cả hai.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Chỉ báo theo dõi";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Thêm nút tài khoản gợi ý vào mọi trang cá nhân, kể cả nơi Instagram không hiển thị. Khi bật Ẩn gợi ý trang cá nhân, tắt tùy chọn này sẽ gỡ nút khỏi mọi trang cá nhân.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Hiện nút gợi ý";
 "PROFILE_INDICATORS_HEADER" = "Thẻ chỉ báo";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Xóa bong bóng ghi chú khỏi ảnh đại diện.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Ẩn bong bóng Ghi chú";

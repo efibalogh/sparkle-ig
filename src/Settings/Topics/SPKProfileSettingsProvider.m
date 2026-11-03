@@ -221,7 +221,11 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_HIDE_THREADS_BUTTON_TITLE")
                                            icon:SPKSettingsIcon(@"threads")
                                     defaultsKey:@"profile_hide_threads_btn"],
-                               SPKL(@"PROFILE_INDICATORS_HIDE_THREADS_BUTTON_HELP"))
+                               SPKL(@"PROFILE_INDICATORS_HIDE_THREADS_BUTTON_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE")
+                                           icon:SPKSettingsIcon(@"user_follow")
+                                    defaultsKey:@"profile_force_suggestions_button"],
+                               SPKL(@"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"FEED_CONFIRMATION_HEADER"), @[

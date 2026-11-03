@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Απόκρυψη Προτάσεων Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Απόκρυψη Προτάσεων Ροής";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Απόκρυψη Προτάσεων Λίστας Παρακολούθησης";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Κρατά τους προτεινόμενους λογαριασμούς κλειστούς στα προφίλ μέχρι να πατήσεις το κουμπί προτάσεων. Με την Εμφάνιση Κουμπιού Προτάσεων απενεργοποιημένη, αφαιρείται και το κουμπί.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Απόκρυψη Προτάσεων Προφίλ";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Απόκρυψη Προτάσεων Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Απόκρυψη Προτάσεων Αναζήτησης";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Ακριβής αριθμός ακολούθων";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Δείχνει κάτω από τα στατιστικά αν ένα προφίλ σε ακολουθεί κι εκείνο, ως κείμενο, εικονίδιο ή και τα δύο.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Δείκτης Αμοιβαίας Παρακολούθησης";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Προσθέτει το κουμπί προτεινόμενων λογαριασμών σε κάθε προφίλ, ακόμα κι όπου το Instagram το παραλείπει. Με την Απόκρυψη Προτάσεων Προφίλ ενεργή, η απενεργοποίηση αφαιρεί το κουμπί από όλα τα προφίλ.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Εμφάνιση Κουμπιού Προτάσεων";
 "PROFILE_INDICATORS_HEADER" = "Δείκτες";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Αφαιρεί τη φούσκα σημείωσης από τις φωτογραφίες προφίλ.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Απόκρυψη Φυσαλίδας Σημειώσεων";

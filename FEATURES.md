@@ -48,6 +48,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 - **Ads**: Per-surface ad hiding: Feed, Stories, Reels, Explore, plus Reels shopping CTA. Ad filtering preserves native feed loading indicators, including on short or initially empty lists.
 - **Meta AI**: Hide Meta AI in Direct, Explore & Search, Comments, Creation Tools, and global AI chrome. Creation Tools also removes the Meta AI effects button from the story camera's tools menu and the Restyle button from the editor shown after a capture. Hiding it in Explore & Search also restores the plain search glyph in the search bar (replacing the gen-AI search icon). Global AI chrome also removes the Meta AI destination from the share sheet's external share row.
 - **Suggested Users**: Hide suggested-user surfaces: Feed, Reels, Direct, Search, Profile, Activity, follow lists, and subscriptions.
+  - **Hide Profile Suggestions**: Keeps suggested accounts closed on profiles, including after you follow someone, until you tap the suggestions button. With **Show Suggestions Button** (Profile) off, the button is removed as well.
 
 ### Comments
 - **Swipe to Close Comments** + **Swipe Direction**: Adds a horizontal swipe-to-dismiss gesture to comment sheets. The swipe drives Instagram's own sheet dismissal, so it follows your finger, dims the background and snaps back or closes exactly like a vertical drag.
@@ -400,6 +401,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Colorful Indicator**: Turn on to use the colored green/red instead of the native gray.
 - **Hide Notes Bubble**: Removes the notes thought-bubble over the profile picture.
 - **Hide Threads Button**: Removes the Threads switch button from the profile header.
+- **Show Suggestions Button**: Adds the suggested accounts button to every profile, your own included, even where Instagram leaves it out. On by default. Off keeps Instagram's default, unless **Hide Profile Suggestions** is on, in which case the button is removed from every profile.
 
 ### Confirmation
 - **Confirm Follow**, **Confirm Unfollow**.

@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Direct-Vorschläge ausblenden";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Feed-Vorschläge ausblenden";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Abonnements-Listen-Vorschläge ausblenden";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Hält vorgeschlagene Konten auf Profilen geschlossen, bis du auf die Vorschläge-Taste tippst. Ist Vorschläge-Taste anzeigen aus, wird auch die Taste entfernt.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Profil-Vorschläge ausblenden";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels-Vorschläge ausblenden";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Such-Vorschläge ausblenden";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Exakte Followerzahl";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Zeigt unter den Statistiken, ob ein Profil dir zurückfolgt, als Text, Symbol oder beides.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Folge-Indikator";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Fügt jedem Profil die Taste für vorgeschlagene Konten hinzu, auch wo Instagram sie weglässt. Ist Profil-Vorschläge ausblenden an, entfernt das Ausschalten die Taste von allen Profilen.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Vorschläge-Taste anzeigen";
 "PROFILE_INDICATORS_HEADER" = "Indikatoren";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Entfernt die Notizblase von Profilbildern.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Notizen-Blase ausblenden";

@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Ukryj sugestie w Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Ukryj sugestie w kanale";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Ukryj sugestie na liście obserwowanych";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Sugerowane konta na profilach pozostają zwinięte, dopóki nie stukniesz przycisku sugestii. Gdy opcja Pokaż przycisk sugestii jest wyłączona, usuwa również przycisk.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Ukryj sugestie na profilu";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ukryj sugestie w rolkach";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ukryj sugestie wyszukiwania";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Dokładna liczba obserwujących";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Pokazuje, czy profil obserwuje Cię z powrotem, pod jego statystykami, jako tekst, ikonę lub jedno i drugie.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Wskaźnik obserwowania";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Dodaje przycisk sugerowanych kont do każdego profilu, także tam, gdzie Instagram go pomija. Gdy opcja Ukryj sugestie na profilu jest włączona, wyłączenie tej opcji usuwa przycisk ze wszystkich profili.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Pokaż przycisk sugestii";
 "PROFILE_INDICATORS_HEADER" = "Wskaźniki";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Usuwa dymek notatki ze zdjęć profilowych.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Ukryj bąbel notatek";

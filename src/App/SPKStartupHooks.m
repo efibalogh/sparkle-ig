@@ -23,6 +23,7 @@ FOUNDATION_EXPORT void SPKInstallMessagesActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAggregatedMediaActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfileActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfilePhotoZoomHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallProfileSuggestionsButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSquareGridHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallBackgroundRefreshHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSeenButtonHooksIfNeeded(void);
@@ -337,6 +338,7 @@ void SPKInstallProfileSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallProfilePhotoZoomHooksIfEnabled);
     SPK_INSTALL(SPKInstallFollowConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
+    SPK_INSTALL(SPKInstallProfileSuggestionsButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallFollowIndicatorHooksIfEnabled);
     SPK_INSTALL(SPKInstallProfileHeaderControlsHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileSavedTabHooksIfNeeded);

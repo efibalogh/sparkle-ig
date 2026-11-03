@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Ascunde sugestii Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Ascunde sugestii feed";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Ascunde sugestii listă urmărire";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Păstrează conturile sugerate închise pe profiluri până atingi butonul de sugestii. Cu Afișează butonul de sugestii dezactivat, elimină și butonul.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Ascunde sugestii profil";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ascunde sugestii Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ascunde sugestii căutare";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Număr exact de urmăritori";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Arată sub statistici dacă un profil te urmărește la rândul lui, ca text, pictogramă sau ambele.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Indicator urmărire reciprocă";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Adaugă butonul de conturi sugerate pe fiecare profil, chiar și acolo unde Instagram îl omite. Cu Ascunde sugestii profil activat, dezactivarea acestei opțiuni elimină butonul de pe toate profilurile.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Afișează butonul de sugestii";
 "PROFILE_INDICATORS_HEADER" = "Indicatori";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Elimină bula de notă de pe pozele de profil.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Ascunde balon note";

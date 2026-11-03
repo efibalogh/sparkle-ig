@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Direkt Önerilerini Gizle";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Akış Önerilerini Gizle";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Takip Listesi Önerilerini Gizle";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Profillerdeki önerilen hesapları, öneriler düğmesine dokunana kadar kapalı tutar. Öneriler Düğmesini Göster kapalıysa düğmeyi de kaldırır.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Profil Önerilerini Gizle";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels Önerilerini Gizle";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Arama Önerilerini Gizle";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Tam Takipçi Sayısı";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Bir profilin seni geri takip edip etmediğini istatistiklerinin altında metin, simge ya da ikisiyle birlikte gösterir.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Takip Göstergesi";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Önerilen hesaplar düğmesini, Instagram'ın göstermediği yerler dahil her profile ekler. Profil Önerilerini Gizle açıkken bunu kapatmak düğmeyi tüm profillerden kaldırır.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Öneriler Düğmesini Göster";
 "PROFILE_INDICATORS_HEADER" = "Göstergeler";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Profil fotoğraflarından not baloncuğunu kaldırır.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Notlar Kabarcığını Gizle";

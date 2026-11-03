@@ -243,6 +243,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_hide_suggested_users_msgs" : @(NO),
         @"general_hide_suggested_users_search" : @(NO),
         @"general_hide_suggested_users_profile" : @(NO),
+        @"profile_force_suggestions_button" : @(YES),
         @"general_hide_suggested_users_activity" : @(NO),
         @"general_hide_suggested_users_follow_lists" : @(NO),
         @"general_hide_suggested_users_subscriptions" : @(NO),

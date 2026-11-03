@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای دایرکت";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای فید";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای فهرست فالووینگ";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "حساب‌های پیشنهادی را در پروفایل‌ها بسته نگه می‌دارد تا وقتی روی دکمه پیشنهادها بزنید. اگر نمایش دکمه پیشنهادها خاموش باشد، دکمه هم حذف می‌شود.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای پروفایل";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای ریلز";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای جستجو";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "تعداد دقیق دنبال‌کنندگان";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "نشان می‌دهد که آیا یک پروفایل شما را فالو کرده یا نه، زیر آمار آن، به‌صورت متن، آیکون یا هر دو.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "نشانگر فالو متقابل";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "دکمه حساب‌های پیشنهادی را به همه پروفایل‌ها اضافه می‌کند، حتی جایی که Instagram آن را نشان نمی‌دهد. وقتی پنهان‌سازی پیشنهادهای پروفایل روشن است، خاموش کردن این گزینه دکمه را از همه پروفایل‌ها حذف می‌کند.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "نمایش دکمه پیشنهادها";
 "PROFILE_INDICATORS_HEADER" = "نشانگرها";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "حبابک نوت را از عکس‌های پروفایل حذف می‌کند.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "پنهان کردن حبابک نوت";

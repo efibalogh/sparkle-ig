@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Direct-Vorschläg Verstecke";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Feed-Vorschläg Verstecke";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Follow-Lischte-Vorschläg Verstecke";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Haltet vorgschlageni Konte uf Profil zue, bis du uf de Vorschläg-Chnopf tippsch. Wenn Vorschläg-Chnopf Aazeige us isch, wird au de Chnopf entfernt.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Profil-Vorschläg Verstecke";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels-Vorschläg Verstecke";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Suech-Vorschläg Verstecke";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Exakti Follower-Zahl";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Zeigt, öb es Profil dir zrügg folgt, under sine Stats, als Text, Icon oder beides.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Folgt-zrügg-Yzeiger";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Füegt de Chnopf für vorgschlageni Konte jedem Profil hinzue, au wo Instagram ihn weglaht. Wenn Profil-Vorschläg Verstecke aa isch, entfernt s Usschalte de Chnopf vo allne Profil.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Vorschläg-Chnopf Aazeige";
 "PROFILE_INDICATORS_HEADER" = "Yzeiger";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Entfernt d'Notiz-Blase vo Profilbilder.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Notiz-Blase verstecke";

@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Hide Direct Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Hide Feed Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Hide Follow-List Suggestions";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Keeps suggested accounts closed on profiles until you tap the suggestions button. With Show Suggestions Button off, removes the button too.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Hide Profile Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Hide Reels Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Hide Search Suggestions";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Exact Follower Count";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Shows whether a profile follows you back, under their stats, as text, an icon, or both.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Following Indicator";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Adds the suggested accounts button to every profile, even where Instagram leaves it out. With Hide Profile Suggestions on, turning this off removes the button from every profile.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Show Suggestions Button";
 "PROFILE_INDICATORS_HEADER" = "Indicators";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Removes the note bubble from profile pictures.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Hide Notes Bubble";

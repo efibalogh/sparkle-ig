@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "إخفاء اقتراحات Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "إخفاء اقتراحات التغذية";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "إخفاء اقتراحات قائمة المتابعة";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "يُبقي الحسابات المقترحة مغلقة في الملفات الشخصية حتى تضغط على زر الاقتراحات. عند إيقاف إظهار زر الاقتراحات، يُزال الزر أيضًا.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "إخفاء اقتراحات الملف الشخصي";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "إخفاء اقتراحات Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "إخفاء اقتراحات البحث";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "العدد الدقيق للمتابعين";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "يعرض ما إذا كان الحساب يتابعك، أسفل إحصاءاته، كنص أو أيقونة أو كليهما.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "مؤشر المتابعة";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "يضيف زر الحسابات المقترحة إلى كل ملف شخصي، حتى حيث لا يعرضه Instagram. عند تشغيل إخفاء اقتراحات الملف الشخصي، يؤدي إيقاف هذا الخيار إلى إزالة الزر من كل الملفات الشخصية.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "إظهار زر الاقتراحات";
 "PROFILE_INDICATORS_HEADER" = "المؤشرات";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "يزيل فقاعة الملاحظة من الصور الشخصية.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "إخفاء فقاعة الملاحظات";

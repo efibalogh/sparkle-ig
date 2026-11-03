@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Приховати пропозиції Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Приховати пропозиції стрічки";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Приховати пропозиції списку підписок";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Запропоновані акаунти в профілях залишаються згорнутими, доки ви не торкнетеся кнопки пропозицій. Якщо Показувати кнопку пропозицій вимкнено, кнопку теж буде прибрано.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Приховати пропозиції профілю";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Приховати пропозиції Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Приховати пропозиції пошуку";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Точна кількість підписників";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Показує під статистикою профілю, чи підписаний він на вас у відповідь, текстом, значком або обома.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Індикатор підписок";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Додає кнопку запропонованих акаунтів до кожного профілю, навіть там, де Instagram її не показує. Якщо ввімкнено Приховати пропозиції профілю, вимкнення цієї опції прибирає кнопку з усіх профілів.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Показувати кнопку пропозицій";
 "PROFILE_INDICATORS_HEADER" = "Індикатори";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Прибирає бульбашку нотатки з фото профілю.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Приховати бульбашку примітків";

@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Feed";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Follow-List";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Pinananatiling sarado ang mga iminumungkahing account sa mga profile hanggang i-tap mo ang button ng suhestiyon. Kapag naka-off ang Ipakita ang Button ng Suhestiyon, aalisin din ang button.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Profile";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Search";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Eksaktong Bilang ng Followers";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Ipinapakita kung sumusunod din sa iyo ang isang profile, sa ilalim ng stats nila, bilang text, icon, o pareho.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Palatandaan ng Sinusundan";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Idinadagdag ang button ng mga iminumungkahing account sa bawat profile, kahit saan ito hindi ipinapakita ng Instagram. Kapag naka-on ang Itago ang mga Suhestiyon sa Profile, aalisin ang button sa bawat profile kapag in-off ito.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Ipakita ang Button ng Suhestiyon";
 "PROFILE_INDICATORS_HEADER" = "Mga Indicator";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Inaalis ang note bubble mula sa mga profile picture.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Itago ang Notes Bubble";

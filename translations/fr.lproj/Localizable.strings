@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Masquer les suggestions Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Masquer les suggestions du fil";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Masquer les suggestions de liste d'abonnement";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Garde les comptes suggérés fermés sur les profils jusqu'à ce que vous touchiez le bouton de suggestions. Si Afficher le bouton de suggestions est désactivé, le bouton est aussi retiré.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Masquer les suggestions de profil";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Masquer les suggestions Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Masquer les suggestions de recherche";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Nombre exact d'abonnés";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Indique sous les statistiques si un profil vous suit en retour, sous forme de texte, d'icône ou des deux.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Indicateur d'abonnement";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Ajoute le bouton des comptes suggérés à tous les profils, même là où Instagram l'omet. Avec Masquer les suggestions de profil activé, désactiver cette option retire le bouton de tous les profils.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Afficher le bouton de suggestions";
 "PROFILE_INDICATORS_HEADER" = "Indicateurs";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Retire la bulle de note des photos de profil.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Masquer la bulle de notes";

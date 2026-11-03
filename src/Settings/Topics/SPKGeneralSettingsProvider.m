@@ -245,8 +245,9 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                                                    defaultsKey:@"general_hide_suggested_users_msgs"],
                                                                [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE")
                                                                                    defaultsKey:@"general_hide_suggested_users_search"],
-                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE")
-                                                                                   defaultsKey:@"general_hide_suggested_users_profile"],
+                                                               SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE")
+                                                                                                      defaultsKey:@"general_hide_suggested_users_profile"],
+                                                                                  SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP")),
                                                                [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_ACTIVITY_SUGGESTIONS_TITLE")
                                                                                    defaultsKey:@"general_hide_suggested_users_activity"],
                                                                [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE")

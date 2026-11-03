@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Direct सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "फीड सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "फॉलो-लिस्ट सुझाव छिपाएं";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "प्रोफाइल पर सुझाए गए अकाउंट तब तक बंद रखता है जब तक आप सुझाव बटन पर टैप न करें। सुझाव बटन दिखाएं बंद होने पर बटन भी हटा देता है।";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "प्रोफाइल सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "सर्च सुझाव छिपाएं";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "फ़ॉलोअर की सटीक संख्या";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "प्रोफ़ाइल के आँकड़ों के नीचे दिखाता है कि वह आपको वापस फ़ॉलो करती है या नहीं, टेक्स्ट, आइकन या दोनों के रूप में।";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Following संकेतक";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "हर प्रोफाइल में सुझाए गए अकाउंट का बटन जोड़ता है, वहां भी जहां Instagram इसे नहीं दिखाता। प्रोफाइल सुझाव छिपाएं चालू होने पर, इसे बंद करने से बटन हर प्रोफाइल से हट जाता है।";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "सुझाव बटन दिखाएं";
 "PROFILE_INDICATORS_HEADER" = "संकेतक";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "प्रोफ़ाइल तस्वीरों से नोट बबल हटाता है।";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "नोट्स बुलबुला छिपाएं";

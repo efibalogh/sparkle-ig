@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "ซ่อนคำแนะนำใน Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "ซ่อนคำแนะนำในฟีด";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "ซ่อนคำแนะนำในรายการติดตาม";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "ปิดบัญชีที่แนะนำในโปรไฟล์ไว้จนกว่าคุณจะแตะปุ่มคำแนะนำ เมื่อปิดแสดงปุ่มคำแนะนำ ปุ่มจะถูกนำออกด้วย";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "ซ่อนคำแนะนำในโปรไฟล์";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "ซ่อนคำแนะนำในรีล";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "ซ่อนคำแนะนำในการค้นหา";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "จำนวนผู้ติดตามที่แน่นอน";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "แสดงว่าโปรไฟล์นั้นติดตามคุณกลับหรือไม่ ใต้สถิติของพวกเขา ในรูปแบบข้อความ ไอคอน หรือทั้งสองอย่าง";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "ตัวบ่งชี้การติดตาม";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "เพิ่มปุ่มบัญชีที่แนะนำในทุกโปรไฟล์ แม้ในที่ที่ Instagram ไม่แสดง เมื่อเปิดซ่อนคำแนะนำในโปรไฟล์ไว้ การปิดตัวเลือกนี้จะนำปุ่มออกจากทุกโปรไฟล์";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "แสดงปุ่มคำแนะนำ";
 "PROFILE_INDICATORS_HEADER" = "ตัวบ่งชี้";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "ลบบับเบิลบันทึกออกจากรูปโปรไฟล์";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "ซ่อนบับเบิลบันทึก";

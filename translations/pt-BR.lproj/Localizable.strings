@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Direto";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Ocultar Sugestões do Feed";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Lista de Seguimento";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Mantém as contas sugeridas fechadas nos perfis até você tocar no botão de sugestões. Com Mostrar Botão de Sugestões desativado, o botão também é removido.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Perfil";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ocultar Sugestões de Pesquisa";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Número exato de seguidores";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Mostra abaixo das estatísticas se um perfil segue você de volta, como texto, ícone ou ambos.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Indicador de Seguimento";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Adiciona o botão de contas sugeridas a todos os perfis, mesmo onde o Instagram não o mostra. Com Ocultar Sugestões de Perfil ativado, desativar esta opção remove o botão de todos os perfis.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Mostrar Botão de Sugestões";
 "PROFILE_INDICATORS_HEADER" = "Indicadores";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Remove o balão de nota das fotos de perfil.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Ocultar Bolha de Notas";

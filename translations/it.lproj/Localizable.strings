@@ -964,6 +964,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_DIRECT_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Direct";
 "GENERAL_SUGGESTED_USERS_HIDE_FEED_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Feed";
 "GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Lista Seguiti";
+"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP" = "Tiene chiusi gli account suggeriti sui profili finché non tocchi il pulsante dei suggerimenti. Con Mostra Pulsante Suggerimenti disattivato, rimuove anche il pulsante.";
 "GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Profilo";
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Ricerca";
@@ -1885,6 +1886,8 @@
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE" = "Numero esatto di follower";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_HELP" = "Mostra sotto le statistiche se un profilo ti segue a sua volta, come testo, icona o entrambi.";
 "PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE" = "Indicatore Seguiti";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP" = "Aggiunge il pulsante degli account suggeriti a ogni profilo, anche dove Instagram lo omette. Con Nascondi Suggerimenti Profilo attivo, disattivare questa opzione rimuove il pulsante da tutti i profili.";
+"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE" = "Mostra Pulsante Suggerimenti";
 "PROFILE_INDICATORS_HEADER" = "Indicatori";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_HELP" = "Rimuove la bolla della nota dalle immagini del profilo.";
 "PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE" = "Nascondi Bolla Note";
