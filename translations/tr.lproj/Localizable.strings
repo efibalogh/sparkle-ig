@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Trende Katılmayı Gizle";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Başkalarının kısa süre önce öne çıkanlarına eklediği hikayeleri hem çubuktan hem de son hikayeden sonraki oynatmadan kaldırır. Bir öne çıkanı kendin açman yine çalışır.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Son Öne Çıkanları Gizle";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Instagram'ın takip etmeni önerdiği hesapları hem çubuktan hem de son hikayeden sonraki oynatmadan kaldırır.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Önerilen Hesapları Gizle";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Hikaye bahsetmeler düğmesinde benzersiz bahsedilen hesap sayısını gösterir. “Hikaye Bahsetmelerini Göster” gerektirir.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Bahsetme Sayısı Rozeti";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Hikayenin görüntüleyen listesine, ada göre aramak, takip ilişkisinin her iki yönüne göre süzmek ve görüntüleyenleri yıldızlamak için bir arama düğmesi ekler.";

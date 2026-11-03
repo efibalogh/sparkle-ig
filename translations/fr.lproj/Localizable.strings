@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Masquer Rejoindre une tendance";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Retire les stories récemment ajoutées aux stories à la une par d'autres, de la barre et de la lecture après la dernière story. Ouvrir une story à la une vous-même fonctionne toujours.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Masquer les ajouts récents à la une";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Retire les comptes qu'Instagram vous suggère de suivre, de la barre et de la lecture après la dernière story.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Masquer les comptes suggérés";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Affiche le nombre de comptes mentionnés uniques sur le bouton des mentions de la story. Nécessite « Afficher les mentions de la Story ».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Badge du nombre de mentions";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Ajoute un bouton de recherche à la liste des vues de votre story pour chercher par nom, filtrer selon chaque sens de la relation d'abonnement et mettre des spectateurs en favori.";

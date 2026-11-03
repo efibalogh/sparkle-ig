@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Ukryj „Dołącz do popularnych”";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Usuwa relacje, które ludzie niedawno dodali do swoich wyróżnień — z zasobnika i z odtwarzania po ostatniej relacji. Samodzielne otwarcie wyróżnienia nadal działa.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ukryj ostatnie wyróżnione relacje";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Usuwa konta, które Instagram proponuje obserwować, z zasobnika i z odtwarzania po ostatniej relacji.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ukryj proponowane konta";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Pokazuje liczbę unikalnych wspomnianych kont na przycisku wzmianek w relacjach. Wymaga opcji Pokazuj wzmianki w relacjach.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Odznaka liczby wzmianek";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Dodaje przycisk wyszukiwania do listy wyświetlających Twoją relację, aby szukać po nazwie, filtrować według relacji obserwowania i oznaczać gwiazdką.";

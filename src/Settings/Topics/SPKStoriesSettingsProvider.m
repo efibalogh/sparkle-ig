@@ -159,6 +159,10 @@ static NSArray *SPKStoriesSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"highlights")
                                     defaultsKey:@"stories_hide_recent_highlights"],
                                SPKL(@"STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE")
+                                           icon:SPKSettingsIcon(@"user_follow")
+                                    defaultsKey:@"stories_hide_suggested_accounts"],
+                               SPKL(@"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP")),
         ],
                         nil),
 

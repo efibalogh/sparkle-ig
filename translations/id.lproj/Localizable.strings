@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Sembunyikan Join Trending";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Menghapus story yang baru saja ditambahkan orang ke sorotan mereka, dari tray dan dari pemutaran setelah story terakhir. Membuka sorotan secara manual tetap berfungsi.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Sembunyikan Sorotan Terbaru";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Menghapus akun yang disarankan Instagram untuk Anda ikuti, dari tray dan dari pemutaran setelah story terakhir.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Sembunyikan Akun yang Disarankan";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Menampilkan jumlah akun unik yang disebut pada tombol sebutan story. Membutuhkan Tampilkan Sebutan Story.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Lencana Jumlah Sebutan";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Menambahkan tombol cari di daftar penonton storymu untuk mencari berdasarkan nama, menyaring berdasarkan salah satu sisi hubungan follow, dan menandai bintang penonton.";

@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Nascondi Unisciti a Trending";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Rimuove le storie che altri hanno aggiunto di recente alle loro in evidenza, sia dalla barra sia dalla riproduzione dopo l'ultima storia. Aprire tu una storia in evidenza continua a funzionare.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Nascondi In Evidenza Recenti";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Rimuove gli account che Instagram ti suggerisce di seguire, sia dalla barra sia dalla riproduzione dopo l'ultima storia.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Nascondi Account Suggeriti";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Mostra il numero di account menzionati univoci sul pulsante delle menzioni della storia. Richiede «Mostra Menzioni Storia».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Badge conteggio menzioni";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Aggiunge un pulsante di ricerca all'elenco di chi ha visto la tua storia per cercare per nome, filtrare per entrambi i lati della relazione di follow e mettere una stella agli spettatori.";

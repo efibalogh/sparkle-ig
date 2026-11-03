@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "ट्रेंडिंग में शामिल हों छिपाएं";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "लोगों ने हाल ही में अपनी हाइलाइट्स में जो स्टोरी जोड़ी हैं, उन्हें ट्रे से और आख़िरी स्टोरी के बाद चलने से हटाता है। हाइलाइट को ख़ुद खोलना फिर भी काम करता है।";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "हाल के हाइलाइट्स छिपाएं";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Instagram जिन अकाउंट को फ़ॉलो करने का सुझाव देता है, उन्हें ट्रे से और आख़िरी स्टोरी के बाद चलने से हटाता है।";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "सुझाए गए अकाउंट छिपाएं";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "स्टोरी मेंशन बटन पर उल्लिखित अलग-अलग खातों की संख्या दिखाता है। इसके लिए “Story उल्लेख दिखाएं” चालू होना ज़रूरी है।";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "मेंशन गिनती बैज";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "आपकी स्टोरी की व्यूअर सूची में एक खोज बटन जोड़ता है, जिससे नाम से खोजा जा सके, फ़ॉलो संबंध के किसी भी पक्ष से छाना जा सके, और व्यूअर को स्टार किया जा सके।";

@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Ẩn 'Tham gia xu hướng'";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Ẩn các story mới được thêm vào mục nổi bật khỏi khay và khỏi danh sách tự động phát. Việc tự mở xem mục nổi bật vẫn hoạt động bình thường.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ẩn Tin nổi bật gần đây";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Ẩn các tài khoản Instagram gợi ý bạn theo dõi khỏi khay và khỏi danh sách tự động phát sau story cuối cùng.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ẩn tài khoản được đề xuất";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Hiển thị số lượng tài khoản duy nhất được nhắc đến trên nút lượt nhắc trong Tin. Yêu cầu bật Hiển thị lượt nhắc trong Tin.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Huy hiệu đếm lượt nhắc";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Thêm nút tìm kiếm vào danh sách người xem tin của bạn để tìm theo tên, lọc theo mối quan hệ theo dõi và gắn sao cho người xem.";

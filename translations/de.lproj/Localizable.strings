@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Trending beitreten ausblenden";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Entfernt Storys, die andere kürzlich zu ihren Highlights hinzugefügt haben, aus der Leiste und aus der Wiedergabe nach der letzten Story. Ein Highlight selbst zu öffnen funktioniert weiterhin.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Kürzlich hinzugefügte Highlights ausblenden";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Entfernt Konten, die Instagram dir zum Folgen vorschlägt, aus der Leiste und aus der Wiedergabe nach der letzten Story.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Vorgeschlagene Konten ausblenden";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Zeigt die Anzahl der eindeutig erwähnten Konten auf der Story-Erwähnungsschaltfläche an. Erfordert „Story-Erwähnungen anzeigen“.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Erwähnungszähler";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Fügt der Zuschauerliste deiner Story einen Suchbutton hinzu, um nach Namen zu suchen, nach beiden Seiten der Folgebeziehung zu filtern und Zuschauer mit einem Stern zu markieren.";

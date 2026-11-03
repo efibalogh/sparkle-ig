@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "隐藏加入热门";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "从快拍栏中移除他人最近添加到精选的快拍，也不会在最后一条快拍之后继续播放。你自己打开精选仍然正常。";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "隐藏最近精选";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "从快拍栏中移除 Instagram 推荐你关注的账户，也不会在最后一条快拍之后播放它们。";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "隐藏推荐账户";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "在快拍提及按钮上显示去重后的被提及账号数量。 需要开启“显示快拍提及”。";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "提及数量角标";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "在你快拍的浏览者列表中加入搜索按钮，可按名称搜索、按关注关系的任一方向筛选，并给浏览者加星标。";

@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "پنهان کردن پیوستن به ترند";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "استوری‌هایی که افراد اخیراً به هایلایت‌های خود اضافه کرده‌اند را از سینی و از پخش پس از آخرین استوری حذف می‌کند. باز کردن دستی یک هایلایت همچنان کار می‌کند.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "پنهان کردن هایلایت‌های اخیر";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "حساب‌هایی را که اینستاگرام برای دنبال کردن پیشنهاد می‌کند از سینی و از پخش پس از آخرین استوری حذف می‌کند.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "پنهان کردن حساب‌های پیشنهادی";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "تعداد حساب‌های منحصربه‌فرد اشاره‌شده را روی دکمه اشاره‌های استوری نشان می‌دهد. نیازمند فعال بودن نمایش اشاره‌های استوری است.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "نشان تعداد اشاره‌ها";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "یک دکمه جستجو به فهرست بینندگان استوری شما اضافه می‌کند تا بتوانید بر اساس نام جستجو کنید، بر اساس هر طرف رابطه دنبال کردن فیلتر کنید و بینندگان را ستاره‌دار کنید.";

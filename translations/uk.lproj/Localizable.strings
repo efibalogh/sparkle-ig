@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Приховати присутність в трендах";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Прибирає історії, які люди нещодавно додали до актуального, з панелі та з відтворення після останньої історії. Відкрити актуальне самому досі можна.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Приховати нещодавні хайлайти";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Прибирає акаунти, на які Instagram пропонує підписатися, з панелі та з відтворення після останньої історії.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Приховати рекомендовані акаунти";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Показує кількість унікальних згаданих облікових записів на кнопці згадок в історії. Потребує «Показати упомянення в історії».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Лічильник згадок";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Додає кнопку пошуку до списку тих, хто переглянув вашу історію, щоб шукати за іменем, фільтрувати за обома сторонами підписки та позначати глядачів зірочкою.";

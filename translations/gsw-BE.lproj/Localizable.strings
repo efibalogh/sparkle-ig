@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Join Trending verstecke";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Entfernt Stories, wo Lüt vor churzem zu ihre Highlights dezuegfüegt hei, us dr Läiste und vom Abspiele nach dr letschte Story. S sälber Ufmache vomene Highlight funktioniert wyterhin.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Neui Highlights verstecke";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Entfernt Konten, wo Instagram dir zum Folge vorschlaht, us dr Läiste und vom Abspiele nach dr letschte Story.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Vorgschlageni Konten verstecke";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Zeigt d'Aazahl vo eizigartige erwähnte Accounts uf em Story-Erwähnige-Chnopf. Bruucht Story-Erwähnige zeige.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Erwähnigs-Zähler-Badge";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Fügt e Sueche-Chnopf zu dyner Story-Viewer-Lischte dezue, zum nach Name z'sueche, nach beidne Syte vor Follow-Beziehig z'filtere, und Viewer z'markiere.";

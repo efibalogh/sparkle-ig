@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Itago ang Join Trending";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Inaalis ang mga story na kararagdag lang ng mga tao sa kanilang highlights, mula sa tray at sa pag-play pagkatapos ng huling story. Gumagana pa rin ang pagbukas mismo ng highlight.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Itago ang Mga Kamakailang Highlight";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Inaalis ang mga account na iminumungkahi ng Instagram na i-follow mo, mula sa tray at sa pag-play pagkatapos ng huling story.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Itago ang Mga Iminumungkahing Account";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Ipinapakita ang bilang ng natatanging na-mention na account sa story mentions button. Kailangan ang Show Story Mentions.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Badge ng Bilang ng Mention";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Nagdaragdag ng search button sa listahan ng viewer ng iyong story para maghanap ayon sa pangalan, mag-filter ayon sa alinmang panig ng follow relationship, at markahan ng bituin ang mga viewer.";

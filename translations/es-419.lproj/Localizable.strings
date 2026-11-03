@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Ocultar unirse a tendencias";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Quita las historias que otras personas han añadido recientemente a sus destacadas, tanto de la barra como de la reproducción después de la última historia. Abrir una destacada tú sigue funcionando.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ocultar destacadas recientes";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Quita las cuentas que Instagram te sugiere seguir, tanto de la barra como de la reproducción después de la última historia.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ocultar cuentas sugeridas";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Muestra el número de cuentas mencionadas únicas en el botón de menciones de la historia. Requiere «Mostrar menciones de historia».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Insignia de recuento de menciones";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Añade un botón de búsqueda a la lista de espectadores de tu historia para buscar por nombre, filtrar por cada lado de la relación de seguimiento y destacar espectadores.";

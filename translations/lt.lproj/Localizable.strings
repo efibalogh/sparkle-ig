@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Slėpti „Join Trending“";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Pašalina neseniai prie akimirkų pridėtus Stories įrašus iš juostos ir automatinio leidimo. Patys akimirkas atidaryti vis tiek galite.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Slėpti naujausias akimirkas";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Pašalina paskyras, kurias Instagram siūlo sekti, iš juostos ir automatinio leidimo po paskutinio Stories įrašo.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Slėpti siūlomas paskyras";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Rodo unikalių paminėtų paskyrų skaičių ant Stories paminėjimų mygtuko. Reikia įjungti Stories paminėjimų rodymą.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Paminėjimų skaičiaus ženklelis";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Prideda paieškos mygtuką į jūsų Stories peržiūrėjusiųjų sąrašą su paieška pagal vardą, filtravimu pagal sekimo ryšį ir žymėjimu.";

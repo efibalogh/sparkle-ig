@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "إخفاء الانضمام إلى رائج";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "يزيل القصص التي أضافها الناس مؤخراً إلى أبرز الأحداث، من الشريط ومن التشغيل بعد آخر قصة. فتح أبرز الأحداث بنفسك يبقى متاحاً.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "إخفاء الأبرز المضافة مؤخراً";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "يزيل الحسابات التي يقترح Instagram متابعتها من الشريط ومن التشغيل بعد آخر قصة.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "إخفاء الحسابات المقترحة";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "تعرض عدد الحسابات المذكورة الفريدة على زر إشارات القصة. يتطلب «عرض إشارات القصة».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "شارة عدد الإشارات";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "يضيف زر بحث إلى قائمة مشاهدي قصتك للبحث بالاسم والتصفية حسب أي من طرفي علاقة المتابعة وتمييز المشاهدين بنجمة.";

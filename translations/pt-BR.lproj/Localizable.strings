@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Ocultar Junte-se a Tendência";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Remove os stories que outras pessoas adicionaram recentemente aos destaques, tanto da barra quanto da reprodução após o último story. Abrir um destaque por conta própria continua funcionando.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ocultar Destaques Recentes";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Remove as contas que o Instagram sugere que você siga, tanto da barra quanto da reprodução após o último story.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ocultar Contas Sugeridas";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Mostra o número de contas mencionadas únicas no botão de menções do story. Requer “Mostrar Menções de Story”.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Selo de contagem de menções";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Adiciona um botão de busca à lista de quem viu seu story para procurar por nome, filtrar por cada lado da relação de seguir e marcar pessoas com estrela.";

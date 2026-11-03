@@ -195,6 +195,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Hide Audio Unavailable Toast**: Hides Instagram's message when a Story's audio cannot be played in your region. The unavailable audio remains muted.
 - **Hide Story Midcards**: Removes the "Join a trending" / "Add Yours" promo cards from the stories tray.
 - **Hide Recent Highlights**: Removes resurfaced highlights, the stories Instagram serves once you have watched every unseen story. They are dropped in three places, because the story tray, tapping forward and swiping sideways each read a different list: from the tray, so they no longer appear as rings; from the viewer's own reel list, so tapping forward past the last story no longer walks into them; and from the viewer's data store, so swiping to the next person does not reach them either. Opening a highlight yourself from a profile is unaffected.
+- **Hide Suggested Accounts**: Removes the accounts Instagram suggests you follow, which it adds to the story tray as rings with a follow badge when there are few stories to show. They are dropped from the same three places as resurfaced highlights, so tapping forward or swiping past the last story does not reach them either.
 
 ### Story Navigation
 - **Stop Auto Advance**: Prevents auto-advancing to the next story.

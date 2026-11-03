@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "트렌딩 참여 숨기기";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "사람들이 최근 하이라이트에 추가한 스토리를 트레이와 마지막 스토리 이후 자동 재생에서 제거합니다. 직접 하이라이트를 여는 것은 그대로 작동합니다.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "최근 하이라이트 숨기기";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Instagram이 팔로우를 추천하는 계정을 트레이와 마지막 스토리 이후 자동 재생에서 제거합니다.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "추천 계정 숨기기";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "스토리 멘션 버튼에 중복을 제외한 멘션된 계정 수를 표시합니다. “스토리 멘션 표시”가 필요합니다.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "멘션 개수 배지";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "내 스토리의 뷰어 목록에 검색 버튼을 추가해 이름으로 검색하고, 팔로우 관계의 양쪽으로 필터링하고, 뷰어에 별표를 지정합니다.";

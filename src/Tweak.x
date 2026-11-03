@@ -687,18 +687,9 @@ BOOL showSearchSectionLabelForTag(NSInteger tag) {
     for (IGStoryTrayViewModel *obj in originalObjs) {
         BOOL shouldHide = NO;
 
-        if ([SPKUtils getBoolPref:@"general_hide_suggested_users_feed"]) {
-            if ([obj isKindOfClass:%c(IGStoryTrayViewModel)]) {
-                NSNumber *type = [((IGStoryTrayViewModel *)obj) valueForKey:@"type"];
-
-                // 8/9 looks to be the types for recommended stories
-                if ([type isEqual:@(8)] || [type isEqual:@(9)]) {
-                    SPKLog(@"General", @"[Sparkle] Hiding suggested users: story tray");
-
-                    shouldHide = YES;
-                }
-            }
-        }
+        // Suggested-account rings have their own Stories toggle
+        // (stories_hide_suggested_accounts), handled by the shared story tray
+        // filter in Features/Stories/HideRecentHighlights.x.
 
         if ([SPKUtils getBoolPref:@"general_hide_ads_feed"]) {
             // "New!" account id is 3538572169

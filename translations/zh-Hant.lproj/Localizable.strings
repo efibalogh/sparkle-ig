@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "隱藏熱門話題邀請";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "從限時動態列與播放完最後一則後的自動延續中，移除他人近期新增到精選動態的內容。手動開啟精選動態仍照常運作。";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "隱藏近期精選動態";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "從限時動態列與播放完最後一則後的自動延續中，移除 Instagram 建議你追蹤的帳號。";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "隱藏建議帳號";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "在限時動態提及按鈕上顯示不重複被提及帳號的數量。需先開啟「顯示限時動態提及」。";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "提及數量徽章";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "在你的限時動態觀看者清單中新增搜尋按鈕，可依名稱搜尋、依追蹤關係篩選，並為觀看者加上星號。";

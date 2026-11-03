@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Hide Join Trending";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Removes stories people recently added to their highlights, from the tray and from playing past the last story. Opening a highlight yourself still works.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Hide Recent Highlights";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Removes accounts Instagram suggests you follow from the tray, and from playing past the last story.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Hide Suggested Accounts";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Shows the number of unique mentioned accounts on the story mentions button. Requires Show Story Mentions.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Mention Count Badge";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Adds a search button to your story's viewer list to search by name, filter by either side of the follow relationship, and star viewers.";

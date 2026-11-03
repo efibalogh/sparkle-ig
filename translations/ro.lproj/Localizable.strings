@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "Ascunde alăturați-vă unui trending";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "Elimină poveștile adăugate recent de alții la evidențieri, atât din bară, cât și din redarea de după ultima poveste. Deschiderea unei evidențieri de către tine funcționează în continuare.";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ascunde highlights recente";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Elimină conturile pe care Instagram îți sugerează să le urmărești, atât din bară, cât și din redarea de după ultima poveste.";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ascunde conturile sugerate";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Afișează numărul de conturi menționate unice pe butonul de mențiuni al poveștii. Necesită „Arată mențiuni poveste”.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Insignă cu numărul de mențiuni";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Adaugă un buton de căutare în lista celor care ți-au văzut povestea, pentru a căuta după nume, a filtra după fiecare parte a relației de urmărire și a marca vizitatori cu stea.";

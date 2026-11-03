@@ -2260,6 +2260,8 @@
 "STORIES_OTHER_HIDE_JOIN_TRENDING_TITLE" = "ซ่อนร่วมเทรนด์";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_HELP" = "ลบสตอรี่ที่ผู้อื่นเพิ่งเพิ่มลงในไฮไลต์ออกจากแถบและจากการเล่นต่อหลังสตอรี่สุดท้าย การเปิดไฮไลต์ด้วยตัวเองยังคงใช้งานได้ตามปกติ";
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "ซ่อนไฮไลต์ล่าสุด";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "ลบบัญชีที่ Instagram แนะนำให้คุณติดตามออกจากแถบและจากการเล่นต่อหลังสตอรี่สุดท้าย";
+"STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "ซ่อนบัญชีที่แนะนำ";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "แสดงจำนวนบัญชีที่ถูกกล่าวถึงแบบไม่ซ้ำกันบนปุ่มการกล่าวถึงในสตอรี่ ต้องเปิดใช้งานแสดงการกล่าวถึงในสตอรี่";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "ป้ายจำนวนการกล่าวถึง";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "เพิ่มปุ่มค้นหาในรายชื่อผู้ชมสตอรี่ของคุณ เพื่อค้นหาตามชื่อ กรองตามความสัมพันธ์การติดตามทั้งสองฝั่ง และติดดาวผู้ชม";

@@ -157,6 +157,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"stories_search_viewer_list" : @(NO),
         @"stories_starred_viewers" : @[],
         @"stories_hide_recent_highlights" : @(NO),
+        @"stories_hide_suggested_accounts" : @(NO),
         @"stories_auto_save" : @(NO),
         @"stories_auto_save_filter_mode" : @"all",
         @"msgs_auto_save" : @(NO),
