@@ -2141,8 +2141,9 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 // Cleanup of `fileURL` is deliberately not ours, even when the caller just staged it: the
-// submission is asynchronous (a duplicate prompt can hold it up indefinitely), and the
-// download scheduler consumes a job's local source file and clears it with the job.
+// submission is asynchronous (a duplicate prompt can hold it up indefinitely). The download
+// scheduler consumes sources in tmp and clears them with the job; anything else, such as a
+// Gallery original, is copied into the job's staging directory and left untouched.
 - (void)saveLocalFileURLToPhotos:(NSURL *)fileURL {
     if (!fileURL)
         return;
