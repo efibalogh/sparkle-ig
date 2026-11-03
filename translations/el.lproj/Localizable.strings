@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Το πιο αργό δείχνει πιο καθαρό στο ίδιο μέγεθος αρχείου.\nΥπερταχύ: το πιο γρήγορο, με εμφανή μπλοκ.\nΤαχύτερο: γρήγορο, ελαφρώς πιο θολό.\nΜεσαίο: ισορροπημένο, προτείνεται.\nΠιο αργό: το πιο καθαρό, παίρνει περίπου διπλάσιο χρόνο.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "Σε kbps. Χρησιμοποιείται όταν το CRF είναι κενό. Άφησέ το κενό για να ταιριάζει με το πρωτότυπο.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Λογισμικό (libx264): καλύτερη ποιότητα για το μέγεθος, χρησιμοποιεί κάθε επιλογή.\nΥλικό (VideoToolbox): πολύ πιο γρήγορο, αλλά χρειάζεται περίπου διπλάσιο ρυθμό bit.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Το αρχείο δεν βρέθηκε";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Αντιγραφή όλων";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Αποτυχία φόρτωσης εικόνας";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Δεν υπάρχει URL εικόνας";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Επιλογή Μέσων • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Δεν είναι δυνατό να ανοιχθεί η αρχική ανάρτηση";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld από %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Αυτό το στοιχείο βρίσκεται ακόμα στη Γκαλερί σας, αλλά το αρχείο του δεν υπάρχει πλέον σε αυτήν τη συσκευή. Διαγράψτε το για να αφαιρέσετε την καταχώριση.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Αυτό το αρχείο δεν υπάρχει πλέον σε αυτήν τη συσκευή.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Αποτυχία αποκωδικοποίησης εικόνας";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Ακατάλληλη διεύθυνση URL απομακρυσμένων πολυμέσων";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Λείπει URL πολυμέσων";

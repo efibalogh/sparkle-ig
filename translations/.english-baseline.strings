@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Slower looks sharper at the same file size.\nUltrafast: fastest, visibly blocky.\nFaster: quick, slightly softer.\nMedium: balanced, recommended.\nSlower: sharpest, takes about twice as long.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "In kbps. Used when CRF is empty. Leave empty to match the original.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Software (libx264): best quality for the file size, uses every option.\nHardware (VideoToolbox): much faster, but needs about twice the bitrate.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "File not found";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Copy All";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Failed to load image";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "No image URL";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Select Media • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Unable to open original post";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld of %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "This item is still in your Gallery, but its file is no longer on this device. Delete it to remove the entry.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "This file is no longer on this device.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Failed to decode image";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Invalid remote media URL";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Missing remote media URL";

@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Wolniejszy wygląda ostrzej przy tym samym rozmiarze pliku.\nUltrafast: najszybszy, wyraźnie blokowy.\nFaster: szybki, nieco bardziej miękki.\nMedium: zrównoważony, zalecany.\nSlower: najostrzejszy, trwa około dwa razy dłużej.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "W kbps. Używane, gdy CRF jest puste. Zostaw puste, aby dopasować oryginał.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Programowo (libx264): najlepsza jakość przy danym rozmiarze pliku, wykorzystuje wszystkie opcje.\nSprzętowo (VideoToolbox): znacznie szybsze, ale wymaga około dwukrotnie wyższej przepływności.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Nie znaleziono pliku";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Kopiuj wszystko";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Nie udało się wczytać obrazu";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Brak URL obrazu";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Wybierz media • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Nie można otworzyć oryginalnego wpisu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld z %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Ten element nadal jest w Galerii, ale jego pliku nie ma już na tym urządzeniu. Usuń go, aby usunąć wpis.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Tego pliku nie ma już na tym urządzeniu.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Nie udało się zdekodować obrazu";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Nieprawidłowy zdalny URL mediów";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Brakujący zdalny URL mediów";

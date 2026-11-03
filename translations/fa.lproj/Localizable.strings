@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "کندتر در همان حجم فایل واضح‌تر است.\nفوق‌العاده سریع: سریع‌ترین، با شطرنجی شدن آشکار.\nسریع‌تر: سریع، کمی نرم‌تر.\nمتوسط: متعادل، پیشنهادی.\nکندتر: واضح‌ترین، حدود دو برابر زمان می‌برد.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "بر حسب kbps. وقتی CRF خالی است استفاده می‌شود. برای مطابقت با نسخه اصلی خالی بگذارید.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "نرم‌افزاری (libx264): بهترین کیفیت نسبت به حجم، از همه گزینه‌ها استفاده می‌کند.\nسخت‌افزاری (VideoToolbox): بسیار سریع‌تر، اما حدود دو برابر نرخ بیت لازم دارد.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "فایل پیدا نشد";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "کپی همه";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "بارگذاری تصویر ناموفق بود";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "آدرس تصویر موجود نیست";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "انتخاب رسانه • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "امکان باز کردن پست اصلی وجود ندارد";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld از %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "این مورد هنوز در گالری شما است، اما فایل آن دیگر در این دستگاه نیست. برای حذف ورودی، آن را پاک کنید.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "این فایل دیگر در این دستگاه نیست.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "رمزگشایی تصویر ناموفق بود";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "آدرس رسانه راه دور نامعتبر است";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "آدرس رسانه راه دور موجود نیست";

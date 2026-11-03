@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Lebih lambat terlihat lebih tajam dengan ukuran file yang sama.\nUltra Cepat: tercepat, kotak-kotak terlihat jelas.\nLebih Cepat: cepat, sedikit lebih lembut.\nSedang: seimbang, disarankan.\nLebih Lambat: paling tajam, sekitar dua kali lebih lama.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "Dalam kbps. Dipakai saat CRF kosong. Biarkan kosong agar sama dengan aslinya.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Perangkat Lunak (libx264): kualitas terbaik untuk ukurannya, memakai semua opsi.\nPerangkat Keras (VideoToolbox): jauh lebih cepat, tetapi butuh sekitar dua kali bitrate.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "File tidak ditemukan";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Salin Semua";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Gagal memuat gambar";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Tidak ada URL gambar";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Pilih Media • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Tidak dapat membuka postingan asli";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld dari %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Item ini masih ada di Galeri Anda, tetapi filenya sudah tidak ada di perangkat ini. Hapus untuk menghilangkan entri.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "File ini sudah tidak ada di perangkat ini.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Gagal mendekode gambar";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "URL media jarak jauh tidak valid";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "URL media jarak jauh tidak ada";

@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Plus lent donne une image plus nette pour la même taille de fichier.\nUltra rapide : le plus rapide, pixelisation visible.\nPlus rapide : rapide, image un peu plus douce.\nMoyen : équilibré, recommandé.\nPlus lent : le plus net, environ deux fois plus long.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "En kbps. Utilisé quand le CRF est vide. Laissez vide pour correspondre à l'original.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Logiciel (libx264) : meilleure qualité pour la taille, utilise toutes les options.\nMatériel (VideoToolbox) : bien plus rapide, mais demande environ deux fois plus de débit.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Fichier introuvable";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Tout copier";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Échec du chargement de l'image";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Pas d'URL d'image";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Sélectionner le média • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Impossible d'ouvrir la publication originale";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld sur %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Cet élément est toujours dans votre Galerie, mais son fichier n’est plus sur cet appareil. Supprimez-le pour retirer l’entrée.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Ce fichier n’est plus sur cet appareil.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Échec du décodage de l'image";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "URL du média distant invalide";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "URL du média distant manquante";

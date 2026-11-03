@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Mas malinaw ang mas mabagal sa parehong laki ng file.\nPinakamabilis: pinakamabilis, kitang-kita ang mga kahon.\nMas Mabilis: mabilis, medyo mas malabo.\nKatamtaman: balanse, inirerekomenda.\nMas Mabagal: pinakamalinaw, halos doble ang tagal.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "Sa kbps. Ginagamit kapag blangko ang CRF. Iwanang blangko para tumugma sa orihinal.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Software (libx264): pinakamagandang kalidad para sa laki, ginagamit ang bawat opsyon.\nHardware (VideoToolbox): mas mabilis, pero kailangan ng halos dobleng bitrate.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Hindi nahanap ang file";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Kopyahin Lahat";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Nabigong i-load ang larawan";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Walang URL ng larawan";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Pumili ng Media • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Hindi mabuksan ang orihinal na post";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld ng %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Nasa iyong Galerya pa ang item na ito, pero wala na ang file nito sa device na ito. I-delete ito para alisin ang entry.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Wala na ang file na ito sa device na ito.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Nabigong i-decode ang larawan";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Invalid na remote media URL";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Walang remote media URL";

@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Langsamer gseht bi glicher Dateigrössi schärfer us.\nUltraschnäu: am schnällschte, sichtbar blockig.\nSchnäller: schnäll, chli weicher.\nMittel: uusgwoge, empfohle.\nLangsamer: am schärfschte, duuret öppe doppelt so lang.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "I kbps. Wird brucht, wenn CRF läär isch. Läär lah, zum em Original entspräche.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Software (libx264): beschti Qualität für d Grössi, nutzt jedi Option.\nHardware (VideoToolbox): vill schnäller, bruucht aber öppe di doppleti Bitrate.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Datei nöd gfunde";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Aues kopiere";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "S Biud het nid chönne glade wärde";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Kei Biud-URL";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Medie uswähle • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Original-Post het nid chönne ufgmacht wärde";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld vo %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Das Element isch no i dinere Galerie, aber sini Datei isch nüme uf däm Grät. Lösch es, zum de Iitrag entferne.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Die Datei isch nüme uf däm Grät.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Biud het nid chönne decodiert wärde";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Ungültigi Remote-Medie-URL";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Remote-Medie-URL fählt";

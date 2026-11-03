@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Медленнее даёт более чёткую картинку при том же размере файла.\nСверхбыстро: быстрее всего, заметные квадраты.\nБыстрее: быстро, чуть мягче.\nСредне: баланс, рекомендуется.\nМедленнее: чётче всего, примерно вдвое дольше.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "В kbps. Используется, когда CRF пуст. Оставьте пустым, чтобы соответствовать оригиналу.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Программный (libx264): лучшее качество для размера, использует все параметры.\nАппаратный (VideoToolbox): намного быстрее, но нужен примерно вдвое больший битрейт.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Файл не найден";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Скопировать все";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Ошибка загрузки изображения";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Нет URL изображения";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Выбрать медиа · %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Не удалось открыть оригинальную публикацию";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld из %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Этот элемент всё ещё в вашей Галерее, но его файла больше нет на этом устройстве. Удалите его, чтобы убрать запись.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Этого файла больше нет на этом устройстве.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Не удалось декодировать изображение";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Неправильный URL удаленного медиа";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Отсутствует URL удаленного медиа";

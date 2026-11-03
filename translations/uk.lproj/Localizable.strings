@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Повільніше дає чіткішу картинку за того ж розміру файлу.\nНадшвидко: найшвидше, помітні квадрати.\nШвидше: швидко, трохи м'якше.\nСередньо: баланс, рекомендовано.\nПовільніше: найчіткіше, приблизно вдвічі довше.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "У kbps. Використовується, коли CRF порожній. Залиште порожнім, щоб відповідати оригіналу.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Програмний (libx264): найкраща якість для розміру, використовує всі параметри.\nАпаратний (VideoToolbox): набагато швидше, але потрібен приблизно вдвічі більший бітрейт.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Файл не знайдено";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Копіювати все";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Не вдалося завантажити зображення";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Немає URL зображення";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Вибрати медіа • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Не можна відкрити оригінальну публікацію";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld з %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Цей елемент усе ще у вашій Галереї, але його файлу більше немає на цьому пристрої. Видаліть його, щоб прибрати запис.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Цього файлу більше немає на цьому пристрої.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Помилка розшифрування зображення";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Недійсний віддалений URL медіа";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Відсутній віддалений URL медіа";

@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "느릴수록 같은 파일 크기에서 더 선명합니다.\n초고속: 가장 빠름, 블록이 눈에 띔.\n더 빠름: 빠름, 약간 흐림.\n중간: 균형, 권장.\n더 느림: 가장 선명, 약 두 배 소요.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "단위는 kbps. CRF가 비어 있을 때 사용됩니다. 비워 두면 원본에 맞춥니다.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "소프트웨어 (libx264): 크기 대비 최고 화질, 모든 옵션 사용.\n하드웨어 (VideoToolbox): 훨씬 빠르지만 약 두 배의 비트레이트 필요.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "파일을 찾을 수 없음";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "전체 복사";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "이미지 로드 실패";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "이미지 URL 없음";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "미디어 선택 • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "원본 게시물을 열 수 없음";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld개 중 %lu개";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "이 항목은 아직 갤러리에 있지만 파일이 더 이상 이 기기에 없습니다. 항목을 없애려면 삭제하세요.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "이 파일은 더 이상 이 기기에 없습니다.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "이미지 디코드 실패";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "유효하지 않은 원격 미디어 URL";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "원격 미디어 URL 누락";

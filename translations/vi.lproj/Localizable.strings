@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Chậm hơn cho hình sắc nét hơn với cùng kích thước tệp.\nSiêu nhanh: nhanh nhất, vỡ khối rõ.\nNhanh hơn: nhanh, mềm hơn một chút.\nTrung bình: cân bằng, khuyên dùng.\nChậm hơn: sắc nét nhất, lâu khoảng gấp đôi.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "Tính bằng kbps. Dùng khi CRF để trống. Để trống để khớp với bản gốc.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Phần mềm (libx264): chất lượng tốt nhất so với kích thước, dùng mọi tùy chọn.\nPhần cứng (VideoToolbox): nhanh hơn nhiều, nhưng cần khoảng gấp đôi tốc độ bit.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Không tìm thấy tệp";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Sao chép tất cả";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Không thể tải hình ảnh";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Không có URL hình ảnh";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Chọn phương tiện • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Không thể mở bài viết gốc";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld / %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Mục này vẫn còn trong Thư viện của bạn, nhưng tệp của nó không còn trên thiết bị này. Hãy xóa để gỡ mục này.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Tệp này không còn trên thiết bị này.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Giải mã hình ảnh thất bại";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "URL phương tiện từ xa không hợp lệ";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Thiếu URL phương tiện từ xa";

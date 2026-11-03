@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Daha yavaş, aynı dosya boyutunda daha keskin görünür.\nUltra Hızlı: en hızlı, belirgin bloklar.\nDaha Hızlı: hızlı, biraz daha yumuşak.\nOrta: dengeli, önerilir.\nDaha Yavaş: en keskin, yaklaşık iki kat uzun sürer.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "kbps cinsinden. CRF boşken kullanılır. Orijinalle eşleşmesi için boş bırakın.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Yazılım (libx264): boyuta göre en iyi kalite, tüm seçenekleri kullanır.\nDonanım (VideoToolbox): çok daha hızlı, ama yaklaşık iki kat bit hızı gerekir.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Dosya bulunamadı";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Tümünü kopyala";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Resim yüklenemedi";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Resim URL'si yok";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Medya Seç • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Orijinal gönderi açılamıyor";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld / %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Bu öğe hâlâ Galerinizde, ancak dosyası artık bu cihazda değil. Kaydı kaldırmak için silin.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Bu dosya artık bu cihazda değil.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Resim çözülemedi";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "Geçersiz uzak medya URL'si";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "Eksik uzak medya URL'si";

@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "ยิ่งช้ายิ่งคมชัดขึ้นที่ขนาดไฟล์เท่าเดิม\nเร็วที่สุด: เร็วที่สุด เห็นเป็นบล็อกชัด\nเร็วขึ้น: เร็ว นุ่มลงเล็กน้อย\nปานกลาง: สมดุล แนะนำ\nช้าลง: คมชัดที่สุด ใช้เวลาประมาณสองเท่า";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "หน่วยเป็น kbps ใช้เมื่อ CRF ว่าง เว้นว่างไว้เพื่อให้ตรงกับต้นฉบับ";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "ซอฟต์แวร์ (libx264): คุณภาพดีที่สุดเทียบกับขนาด ใช้ทุกตัวเลือก\nฮาร์ดแวร์ (VideoToolbox): เร็วกว่ามาก แต่ต้องใช้อัตราบิตประมาณสองเท่า";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "ไม่พบไฟล์";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "คัดลอกทั้งหมด";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "โหลดรูปภาพไม่สำเร็จ";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "ไม่มี URL รูปภาพ";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "เลือกมีเดีย • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "ไม่สามารถเปิดโพสต์ต้นฉบับได้";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld จาก %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "รายการนี้ยังอยู่ในแกลเลอรีของคุณ แต่ไฟล์ไม่อยู่ในอุปกรณ์นี้แล้ว ลบรายการนี้เพื่อนำออก";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "ไฟล์นี้ไม่อยู่ในอุปกรณ์นี้แล้ว";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "ถอดรหัสรูปภาพไม่สำเร็จ";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "URL มีเดียระยะไกลไม่ถูกต้อง";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "ไม่มี URL มีเดียระยะไกล";

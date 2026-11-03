@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "Mais lento fica mais nítido com o mesmo tamanho de arquivo.\nUltrarrápido: o mais rápido, quadriculado visível.\nMais rápido: rápido, um pouco mais suave.\nMédio: equilibrado, recomendado.\nMais lento: o mais nítido, leva cerca do dobro do tempo.";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "Em kbps. Usado quando o CRF está vazio. Deixe vazio para igualar o original.";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "Software (libx264): melhor qualidade para o tamanho, usa todas as opções.\nHardware (VideoToolbox): muito mais rápido, mas precisa de cerca do dobro da taxa de bits.";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "Arquivo não encontrado";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "Copiar tudo";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "Falha ao carregar imagem";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "Sem URL de imagem";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "Selecionar Mídia • %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "Não foi possível abrir o post original";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld de %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "Este item ainda está na sua Galeria, mas o arquivo dele não está mais neste dispositivo. Apague-o para remover a entrada.";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "Este arquivo não está mais neste dispositivo.";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "Falha ao decodificar imagem";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "URL de mídia remota inválida";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "URL de mídia remota faltando";

@@ -1305,6 +1305,7 @@
 "MEDIA_ENCODING_SPEED_HELP" = "धीमा उसी फ़ाइल साइज़ में ज़्यादा साफ़ दिखता है।\nअल्ट्राफास्ट: सबसे तेज़, साफ़ दिखने वाले ब्लॉक।\nतेज़तर: तेज़, थोड़ा धुंधला।\nमध्यम: संतुलित, सुझाया गया।\nधीमा: सबसे साफ़, लगभग दोगुना समय।";
 "MEDIA_ENCODING_VIDEO_BITRATE_HELP" = "kbps में। CRF खाली होने पर इस्तेमाल होता है। मूल से मेल खाने के लिए खाली छोड़ें।";
 "MEDIA_ENCODING_VIDEO_CODEC_HELP" = "सॉफ़्टवेयर (libx264): साइज़ के हिसाब से सबसे अच्छी क्वालिटी, हर विकल्प इस्तेमाल करता है।\nहार्डवेयर (VideoToolbox): बहुत तेज़, पर लगभग दोगुना बिटरेट चाहिए।";
+"MEDIA_PREVIEW_FILE_MISSING_TITLE" = "फ़ाइल नहीं मिली";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_COPY_ALL_BUTTON_TITLE" = "सभी कॉपी करें";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT" = "छवि लोड करने में विफल";
 "MEDIA_PREVIEW_FULL_SCREEN_IMAGE_NO_IMAGE_URL_TEXT" = "कोई छवि URL नहीं";
@@ -1324,6 +1325,8 @@
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_SELECT_MEDIA_VALUE_FORMAT" = "मीडिया चुनें · %lu";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT" = "मूल पोस्ट खोलने में सक्षम नहीं";
 "MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT" = "%ld में से %lu";
+"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE" = "यह आइटम अभी भी आपकी गैलरी में है, लेकिन इसकी फ़ाइल अब इस डिवाइस पर नहीं है। एंट्री हटाने के लिए इसे डिलीट करें।";
+"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE" = "यह फ़ाइल अब इस डिवाइस पर नहीं है।";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_FAILED_DECODE_IMAGE_TEXT" = "इमेज को डिकोड करने में विफल";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_INVALID_REMOTE_MEDIA_URL_TEXT" = "अमान्य रिमोट मीडिया URL";
 "MEDIA_PREVIEW_MEDIA_CACHE_MANAGER_MISSING_REMOTE_MEDIA_URL_TEXT" = "रिमोट मीडिया URL गायब है";

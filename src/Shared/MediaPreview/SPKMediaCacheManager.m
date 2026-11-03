@@ -50,6 +50,12 @@ static NSString *SPKFileKeyForURL(NSURL *url) {
 
 @end
 
+NSErrorDomain const SPKMediaCacheErrorDomain = @"SPKMediaCacheManager";
+
+BOOL SPKMediaCacheErrorIsLocalFileMissing(NSError *error) {
+    return [error.domain isEqualToString:SPKMediaCacheErrorDomain] && error.code == SPKMediaCacheErrorLocalFileMissing;
+}
+
 @implementation SPKMediaCacheManager
 
 + (instancetype)sharedManager {
@@ -189,7 +195,17 @@ static NSString *SPKFileKeyForURL(NSURL *url) {
     }
 
     NSURL *remoteURL = item.fileURL;
-    if (!remoteURL || remoteURL.isFileURL) {
+    if (remoteURL.isFileURL) {
+        // bestAvailableFileURLForItem: already looked for it on disk.
+        NSString *message = item.galleryFile ? SPKL(@"MEDIA_PREVIEW_GALLERY_FILE_MISSING_MESSAGE")
+                                             : SPKL(@"MEDIA_PREVIEW_LOCAL_FILE_MISSING_MESSAGE");
+        if (completion)
+            completion(nil, [NSError errorWithDomain:SPKMediaCacheErrorDomain
+                                                code:SPKMediaCacheErrorLocalFileMissing
+                                            userInfo:@{NSLocalizedDescriptionKey : message}]);
+        return;
+    }
+    if (!remoteURL) {
         if (completion)
             completion(nil, [NSError errorWithDomain:@"SPKMediaCacheManager"
                                                 code:-2
