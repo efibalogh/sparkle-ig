@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "चौकोर ग्रिड";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass और Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "गोली के आकार का टैब बार";
-"INTERFACE_LIQUID_GLASS_HELP" = "Instagram का मूल Liquid Glass इंटरफ़ेस जबरन चालू करता है। रीस्टार्ट आवश्यक है।";
+"INTERFACE_LIQUID_GLASS_HELP" = "Instagram का मूल Liquid Glass इंटरफ़ेस जबरन चालू या बंद करता है। जब तक आप इसे नहीं बदलते, Instagram तय करता है और स्विच दिखाता है कि इस खाते को क्या मिलता है। रीस्टार्ट आवश्यक है।";
 "INTERFACE_NOTIFICATIONS_HEADER" = "सूचनाएं";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle की अपनी नोटिफिकेशन पिल कैसी दिखती हैं और कहां दिखती हैं।";
-"INTERFACE_PILL_TAB_BAR_HELP" = "टैब बार को iOS 26 वाली तैरती पिल में बदल देता है। ग्लास मटीरियल के लिए iOS 26 चाहिए। रीस्टार्ट आवश्यक है।";
+"INTERFACE_PILL_TAB_BAR_HELP" = "iOS 26 वाला तैरता पिल टैब बार जबरन चालू या बंद करता है। जब तक आप इसे नहीं बदलते, Instagram तय करता है। ग्लास मटीरियल के लिए iOS 26 चाहिए। रीस्टार्ट आवश्यक है।";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "स्क्रॉल करते समय सामग्री ऊपरी बार से कैसे मिलती है। डिफ़ॉल्ट iOS का पालन करता है, सॉफ़्ट सामग्री को क्रमिक धुंधलेपन के साथ फीका करता है, और हार्ड उसे विभाजक रेखा वाले ठोस किनारे पर समाप्त करता है। बंद Instagram को यह प्रभाव अक्षम करने देता है, जैसा वह डिफ़ॉल्ट रूप से करता है, और रीस्टार्ट आवश्यक है।";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "स्क्रॉल किनारा प्रभाव";
 "INTERFACE_TABS_HEADER" = "टैब";

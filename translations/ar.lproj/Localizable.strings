@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "شبكة مربعة";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "الزجاج السائل والتمويه";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "شريط علامات تبويب بشكل حبة";
-"INTERFACE_LIQUID_GLASS_HELP" = "يفرض تفعيل واجهة Liquid Glass الأصلية في Instagram. يتطلب إعادة تشغيل.";
+"INTERFACE_LIQUID_GLASS_HELP" = "يفرض تشغيل واجهة Liquid Glass الأصلية في Instagram أو إيقافها. إلى أن تغيّر ذلك، يقرر Instagram ويعرض المفتاح ما يحصل عليه هذا الحساب. يتطلب إعادة تشغيل.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "الإخطارات";
 "INTERFACE_NOTIFICATIONS_HELP" = "شكل إشعارات Sparkle الخاصة ومكان ظهورها.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "يعيد تشكيل شريط التبويبات ليصبح كبسولة عائمة بأسلوب iOS 26. مادة الزجاج نفسها تحتاج iOS 26. يتطلب إعادة تشغيل.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "يفرض تشغيل شريط التبويبات بشكل الكبسولة العائمة بأسلوب iOS 26 أو إيقافه. إلى أن تغيّر ذلك، يقرر Instagram. مادة الزجاج نفسها تحتاج iOS 26. يتطلب إعادة تشغيل.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "طريقة التقاء المحتوى بالشريط العلوي أثناء التمرير. الافتراضي يتبع iOS، والناعم يُخفي المحتوى تدريجيًا بتمويه متدرج، والحاد ينهيه عند حافة صلبة بخط فاصل. معطل يترك Instagram يعطّل التأثير كما يفعل افتراضيًا ويتطلب إعادة التشغيل.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "تأثير حافة التمرير";
 "INTERFACE_TABS_HEADER" = "علامات التبويب";

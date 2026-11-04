@@ -182,10 +182,9 @@ void SPKInstallLaunchCriticalHooks(void) {
     // Liquid Glass surface hooks install on any iOS: the tab bar experiment
     // gates reshape the bar into the floating pill even pre-26 (only the glass
     // material is unavailable). The ObjC button hooks inside self-skip when
-    // their classes are absent, so this is safe on older systems.
-    if ([SPKUtils spk_isLiquidGlassEffectivelyEnabled]) {
-        SPK_INSTALL(SPKInstallLiquidGlassHooksIfEnabled);
-    }
+    // their classes are absent, so this is safe on older systems. They install
+    // in every mode: Follow still needs the tab bar behavior hooks.
+    SPK_INSTALL(SPKInstallLiquidGlassHooksIfEnabled);
     SPK_INSTALL(SPKInstallTweakLaunchCriticalHooks);
     SPK_INSTALL(SPKInstallFollowingFeedHooksIfEnabled);
     SPK_INSTALL(SPKInstallAdBlockingEarlyHooksIfEnabled);

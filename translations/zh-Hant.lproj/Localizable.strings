@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "方形網格";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 與模糊效果";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "藥丸形分頁列";
-"INTERFACE_LIQUID_GLASS_HELP" = "強制啟用 Instagram 原生的 Liquid Glass 介面。需要重新啟動。";
+"INTERFACE_LIQUID_GLASS_HELP" = "強制開啟或關閉 Instagram 原生的 Liquid Glass 介面。在你變更之前由 Instagram 決定，開關會顯示此帳號目前獲得的狀態。需要重新啟動。";
 "INTERFACE_NOTIFICATIONS_HEADER" = "通知";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle 自身通知膠囊的外觀，以及顯示的位置。";
-"INTERFACE_PILL_TAB_BAR_HELP" = "將分頁列重新設計成 iOS 26 的浮動藥丸形狀。玻璃材質效果本身需要 iOS 26。需要重新啟動。";
+"INTERFACE_PILL_TAB_BAR_HELP" = "強制開啟或關閉 iOS 26 的浮動藥丸形狀分頁列。在你變更之前由 Instagram 決定。玻璃材質效果本身需要 iOS 26。需要重新啟動。";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "捲動時內容與頂端列相接的方式。預設會依照 iOS 的行為，柔和會以漸進模糊淡出內容，強烈則以實邊搭配分隔線結束。關閉會讓 Instagram 停用此效果（其預設行為即是如此），且需要重新啟動。";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "捲動邊緣效果";
 "INTERFACE_TABS_HEADER" = "分頁";

@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Cuadrícula cuadrada";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass y desenfoque";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra de pestañas en forma de píldora";
-"INTERFACE_LIQUID_GLASS_HELP" = "Fuerza la interfaz nativa Liquid Glass de Instagram. Requiere reiniciar.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Fuerza la interfaz nativa Liquid Glass de Instagram activada o desactivada. Hasta que lo cambies, Instagram decide y el interruptor muestra lo que recibe esta cuenta. Requiere reiniciar.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notificaciones";
 "INTERFACE_NOTIFICATIONS_HELP" = "Qué aspecto tienen los avisos propios de Sparkle y dónde aparecen.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Convierte la barra de pestañas en la cápsula flotante de iOS 26. El material de cristal en sí necesita iOS 26. Requiere reiniciar.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Fuerza la barra de pestañas en cápsula flotante de iOS 26 activada o desactivada. Hasta que lo cambies, Instagram decide. El material de cristal en sí necesita iOS 26. Requiere reiniciar.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Cómo se une el contenido con la barra superior al desplazarte. Predeterminado sigue a iOS, Suave desvanece el contenido con un desenfoque progresivo y Duro lo corta en un borde sólido con una línea divisoria. Desactivado deja que Instagram desactive el efecto, como hace por defecto, y requiere reiniciar.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Efecto de borde de desplazamiento";
 "INTERFACE_TABS_HEADER" = "Pestañas";

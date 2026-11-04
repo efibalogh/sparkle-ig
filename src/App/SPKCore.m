@@ -14,7 +14,8 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"tools_flex_app_start" : @(NO),
         @"tools_flex_instagram" : @(NO),
         @"tools_debug_button" : @(NO),
-        @"interface_liquid_glass" : @(NO),
+        // follow (Instagram decides), on or off.
+        @"interface_liquid_glass_mode" : @"follow",
         @"interface_liquid_glass_tabbar_mode" : @"default",
         // off, default (follow iOS), soft or hard.
         @"interface_scroll_edge_style" : @"soft",

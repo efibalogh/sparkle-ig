@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grade quadrada";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass e Desfoque";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra de Abas em Formato de Pílula";
-"INTERFACE_LIQUID_GLASS_HELP" = "Força a interface nativa Liquid Glass do Instagram. Requer reiniciar.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Força a interface nativa Liquid Glass do Instagram ativada ou desativada. Até você mudar, o Instagram decide e a chave mostra o que esta conta recebe. Requer reiniciar.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notificações";
 "INTERFACE_NOTIFICATIONS_HELP" = "Como os avisos do próprio Sparkle aparecem e onde eles surgem.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Transforma a barra de abas na cápsula flutuante do iOS 26. O material de vidro em si exige iOS 26. Requer reiniciar.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Força a barra de abas em cápsula flutuante do iOS 26 ativada ou desativada. Até você mudar, o Instagram decide. O material de vidro em si exige iOS 26. Requer reiniciar.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Como o conteúdo encontra a barra superior ao rolar. Padrão segue o iOS, Suave esmaece o conteúdo com um desfoque progressivo e Rígido o encerra em uma borda sólida com uma linha divisória. Desativado deixa o Instagram desativar o efeito, como faz por padrão, e requer reinício.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Efeito de borda de rolagem";
 "INTERFACE_TABS_HEADER" = "Abas";

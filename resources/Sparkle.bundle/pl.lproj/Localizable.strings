@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Kwadratowa siatka";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass i rozmycie";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Zaokrąglony pasek zakładek";
-"INTERFACE_LIQUID_GLASS_HELP" = "Wymusza włączenie natywnego interfejsu Liquid Glass Instagrama. Wymaga ponownego uruchomienia.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Wymusza włączenie lub wyłączenie natywnego interfejsu Liquid Glass Instagrama. Dopóki tego nie zmienisz, decyduje Instagram, a przełącznik pokazuje, co otrzymuje to konto. Wymaga ponownego uruchomienia.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Powiadomienia";
 "INTERFACE_NOTIFICATIONS_HELP" = "Jak wyglądają własne pigułki powiadomień Sparkle i gdzie się pojawiają.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Przekształca pasek zakładek w unoszącą się pigułkę z iOS 26. Sam materiał szkła wymaga iOS 26. Wymaga restartu.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Wymusza włączenie lub wyłączenie unoszącego się paska zakładek w kształcie pigułki z iOS 26. Dopóki tego nie zmienisz, decyduje Instagram. Sam materiał szkła wymaga iOS 26. Wymaga restartu.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Jak treść spotyka górny pasek podczas przewijania. Domyślne stosuje zachowanie iOS, Miękkie wygasza treść progresywnym rozmyciem, a Twarde kończy ją twardą krawędzią z linią podziału. Wyłączone pozwala Instagramowi wyłączyć efekt, tak jak domyślnie, i wymaga restartu.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Efekt krawędzi przewijania";
 "INTERFACE_TABS_HEADER" = "Karty";

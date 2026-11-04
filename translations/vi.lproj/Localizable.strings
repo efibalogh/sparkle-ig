@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Lưới vuông";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Làm mờ";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Thanh thẻ dạng viên thuốc";
-"INTERFACE_LIQUID_GLASS_HELP" = "Bắt buộc bật giao diện Liquid Glass gốc của Instagram. Cần khởi động lại ứng dụng.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Bắt buộc bật hoặc tắt giao diện Liquid Glass gốc của Instagram. Cho đến khi bạn thay đổi, Instagram sẽ quyết định và công tắc hiển thị những gì tài khoản này nhận được. Cần khởi động lại ứng dụng.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Thông báo";
 "INTERFACE_NOTIFICATIONS_HELP" = "Cách hiển thị và vị trí xuất hiện của thẻ thông báo Sparkle.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Định hình lại thanh thẻ thành dạng viên thuốc nổi của iOS 26. Chất liệu kính cần có iOS 26. Yêu cầu khởi động lại ứng dụng.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Bắt buộc bật hoặc tắt thanh thẻ dạng viên thuốc nổi của iOS 26. Cho đến khi bạn thay đổi, Instagram sẽ quyết định. Chất liệu kính cần có iOS 26. Yêu cầu khởi động lại ứng dụng.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Cách nội dung gặp thanh trên cùng khi cuộn. Mặc định theo iOS, Mềm làm mờ dần nội dung bằng hiệu ứng mờ lũy tiến, còn Cứng kết thúc nội dung tại một mép đặc có đường phân cách. Tắt để Instagram vô hiệu hóa hiệu ứng như mặc định và cần khởi động lại.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Hiệu ứng mép cuộn";
 "INTERFACE_TABS_HEADER" = "Thẻ điều hướng";

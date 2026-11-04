@@ -17,7 +17,7 @@ BOOL SPKPrefIsAvailable(NSString *key) {
     // The Liquid Glass pref and its tab bar mode also back the pre-iOS 26
     // "Pill-Shaped Tab Bar" toggle — the tab bar experiment gates reshape the
     // bar into the floating pill on any iOS, only the glass material is 26+.
-    if ([key isEqualToString:kSPKPrefInterfaceLiquidGlass] ||
+    if ([key isEqualToString:kSPKPrefInterfaceLiquidGlassMode] ||
         [key isEqualToString:kSPKPrefInterfaceLiquidGlassTabBarMode]) {
         return YES;
     }

@@ -1109,7 +1109,7 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"language_pack_last_update_check",
             @"language_pack_last_update_attempt",
             @"langpack_catalog_url",
-            @"interface_liquid_glass",
+            @"interface_liquid_glass_mode",
             @"interface_liquid_glass_tabbar_mode",
             @"interface_scroll_edge_style",
             @"interface_hide_ui_on_capture",
@@ -1288,13 +1288,34 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 };
 
-+ (_Bool)spk_liquidGlassLauncherPrefKey:(NSString *)key orig:(_Bool)fallback {
-    return [SPKUtils spk_isLiquidGlassEffectivelyEnabled] ? YES : fallback;
+// Resolved once per launch: the mode is restart-required, every gate must agree
+// for the whole session, and some gates are read on every frame.
++ (SPKLiquidGlassMode)spk_liquidGlassMode {
+    static SPKLiquidGlassMode resolved;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        resolved = SPKLiquidGlassModeFollow;
+        if (SPKStabilityGuardIsSafeStartupMode())
+            return;
+        NSString *mode = [SPKUtils getStringPref:kSPKPrefInterfaceLiquidGlassMode];
+        if ([mode isEqualToString:@"on"])
+            resolved = SPKLiquidGlassModeOn;
+        else if ([mode isEqualToString:@"off"])
+            resolved = SPKLiquidGlassModeOff;
+    });
+    return resolved;
 }
 
-+ (BOOL)spk_isLiquidGlassEffectivelyEnabled {
-    return [SPKUtils getBoolPref:kSPKPrefInterfaceLiquidGlass] &&
-           !SPKStabilityGuardIsSafeStartupMode();
++ (BOOL)spk_liquidGlassGateValueWithOrig:(BOOL)fallback {
+    switch ([SPKUtils spk_liquidGlassMode]) {
+    case SPKLiquidGlassModeOn:
+        return YES;
+    case SPKLiquidGlassModeOff:
+        return NO;
+    case SPKLiquidGlassModeFollow:
+        return fallback;
+    }
+    return fallback;
 }
 
 // MARK: Session / user

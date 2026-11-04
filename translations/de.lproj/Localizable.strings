@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Quadratisches Raster";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Unschärfe";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pillenförmige Tab-Leiste";
-"INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt die native Liquid-Glass-Oberfläche von Instagram. Erfordert einen Neustart.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt die native Liquid-Glass-Oberfläche von Instagram an oder aus. Bis du es änderst, entscheidet Instagram, und der Schalter zeigt, was dieses Konto erhält. Erfordert einen Neustart.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Benachrichtigungen";
 "INTERFACE_NOTIFICATIONS_HELP" = "Wie die eigenen Hinweisfelder von Sparkle aussehen und wo sie erscheinen.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Formt die Tab-Leiste zur schwebenden Pille aus iOS 26 um. Das Glasmaterial selbst benötigt iOS 26. Erfordert einen Neustart.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Erzwingt die schwebende Pillen-Tab-Leiste aus iOS 26 an oder aus. Bis du es änderst, entscheidet Instagram. Das Glasmaterial selbst benötigt iOS 26. Erfordert einen Neustart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Wie Inhalte beim Scrollen auf die obere Leiste treffen. Standard folgt iOS, Weich blendet Inhalte mit einer progressiven Unschärfe aus und Hart endet an einer festen Kante mit Trennlinie. Aus lässt Instagram den Effekt wie standardmäßig deaktivieren und erfordert einen Neustart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Scrollkanten-Effekt";
 "INTERFACE_TABS_HEADER" = "Tabs";

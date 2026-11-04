@@ -101,9 +101,17 @@ static NSArray<SPKPreferenceMigration *> *SPKPreferenceMigrationList(void) {
         SPKPreferenceMigration *searchPinsListTypes = SPKMigration(@"interface_search_pins_list_types", @"general_search_pins_list_types",
                                                                    @"interface_search_pins_list_types", nil);
 
+        // The Liquid Glass switch only ever forced the interface on; off left it to
+        // Instagram. It now also forces it off, so off carries over as follow.
+        SPKPreferenceMigration *liquidGlassMode = SPKMigration(@"interface_liquid_glass_mode", @"interface_liquid_glass", @"interface_liquid_glass_mode", ^id(id value) {
+            if (![value respondsToSelector:@selector(boolValue)])
+                return nil;
+            return [value boolValue] ? @"on" : @"follow";
+        });
+
         list = @[
             instantsCameraButton, hideRecentSearches, scrollEdgeStyle, storyManualSeenMode, reelsStartMutedGlobal, feedMetaPromotions, searchPinsEnabled,
-            searchPinned, searchPinsListTypes
+            searchPinned, searchPinsListTypes, liquidGlassMode
         ];
     });
     return list;

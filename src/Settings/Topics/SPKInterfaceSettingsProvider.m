@@ -11,6 +11,28 @@
 #import "../SPKTabEditorViewController.h"
 #import "SPKNotificationSettingsProvider.h"
 
+FOUNDATION_EXPORT BOOL SPKLiquidGlassInstagramEnabled(void);
+
+// The switch shows the forced state once the user picked one, and until then
+// what Instagram itself gives this account.
+static BOOL SPKLiquidGlassSwitchIsOn(void) {
+    NSString *mode = [SPKUtils getStringPref:kSPKPrefInterfaceLiquidGlassMode];
+    if ([mode isEqualToString:@"on"])
+        return YES;
+    if ([mode isEqualToString:@"off"])
+        return NO;
+    return SPKLiquidGlassInstagramEnabled();
+}
+
+// Any flip forces the chosen state from then on, so a later rollout change on
+// Instagram's side never overrides it.
+static void SPKSetLiquidGlassForced(BOOL isOn) {
+    SPKPreferenceSetObject(isOn ? @"on" : @"off", kSPKPrefInterfaceLiquidGlassMode);
+    // The restart action may terminate the process before defaults flush.
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [SPKUtils showRestartConfirmation];
+}
+
 @implementation SPKInterfaceSettingsProvider
 
 + (SPKSetting *)rootSetting {
@@ -145,7 +167,7 @@
                                                                   menu:SPKLiquidGlassTabBarStateMenu()];
             tabBarBehavior.defaultsKey = kSPKPrefInterfaceLiquidGlassTabBarMode;
             tabBarBehavior.enabledProvider = ^BOOL {
-                return [SPKUtils getBoolPref:kSPKPrefInterfaceLiquidGlass];
+                return SPKLiquidGlassSwitchIsOn();
             };
             tabBarBehavior.helpText = SPKL(@"INTERFACE_TAB_BAR_BEHAVIOR_HELP");
             return tabBarBehavior;
@@ -154,16 +176,16 @@
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0")) {
             // Full Liquid Glass: real glass material, progressive blur, tab bar.
             SPKSetting *liquidGlass = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_CAPTURE_LIQUID_GLASS_TITLE")
-                                                          defaultsKey:kSPKPrefInterfaceLiquidGlass
+                                                          defaultsKey:kSPKPrefInterfaceLiquidGlassMode
                                                       requiresRestart:YES];
             liquidGlass.switchValueProvider = ^BOOL {
-                return [SPKUtils getBoolPref:kSPKPrefInterfaceLiquidGlass];
+                return SPKLiquidGlassSwitchIsOn();
             };
             liquidGlass.helpText = SPKL(@"INTERFACE_LIQUID_GLASS_HELP");
             liquidGlass.switchChangeHandler = ^(BOOL isOn) {
-                [[NSUserDefaults standardUserDefaults] setBool:isOn forKey:kSPKPrefInterfaceLiquidGlass];
-                [SPKUtils showRestartConfirmation];
+                SPKSetLiquidGlassForced(isOn);
             };
+            liquidGlass.reloadsTableOnSwitchChange = YES;
             SPKSetting *scrollEdgeStyle = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_TITLE")
                                                                    icon:nil
                                                                    menu:SPKScrollEdgeStyleMenu()];
@@ -181,16 +203,16 @@
             // experiment gates still reshape the bar into the floating pill.
             // Expose that as a focused toggle sharing the Liquid Glass pref.
             SPKSetting *pillTabBar = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE")
-                                                        defaultsKey:kSPKPrefInterfaceLiquidGlass
+                                                        defaultsKey:kSPKPrefInterfaceLiquidGlassMode
                                                     requiresRestart:YES];
             pillTabBar.switchValueProvider = ^BOOL {
-                return [SPKUtils getBoolPref:kSPKPrefInterfaceLiquidGlass];
+                return SPKLiquidGlassSwitchIsOn();
             };
             pillTabBar.helpText = SPKL(@"INTERFACE_PILL_TAB_BAR_HELP");
             pillTabBar.switchChangeHandler = ^(BOOL isOn) {
-                [[NSUserDefaults standardUserDefaults] setBool:isOn forKey:kSPKPrefInterfaceLiquidGlass];
-                [SPKUtils showRestartConfirmation];
+                SPKSetLiquidGlassForced(isOn);
             };
+            pillTabBar.reloadsTableOnSwitchChange = YES;
 
             [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_TAB_BAR_HEADER"), @[
                           pillTabBar,

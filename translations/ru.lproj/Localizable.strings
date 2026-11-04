@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Квадратная сетка";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass и размытие";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Панель вкладок в виде пилюли";
-"INTERFACE_LIQUID_GLASS_HELP" = "Принудительно включает встроенный интерфейс Liquid Glass в Instagram. Требуется перезапуск.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Принудительно включает или выключает встроенный интерфейс Liquid Glass в Instagram. Пока вы это не измените, решает Instagram, а переключатель показывает, что получает этот аккаунт. Требуется перезапуск.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Уведомления";
 "INTERFACE_NOTIFICATIONS_HELP" = "Как выглядят собственные уведомления Sparkle и где они появляются.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Превращает панель вкладок в плавающую капсулу из iOS 26. Самому стеклянному материалу нужна iOS 26. Требуется перезапуск.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Принудительно включает или выключает плавающую панель вкладок в форме капсулы из iOS 26. Пока вы это не измените, решает Instagram. Самому стеклянному материалу нужна iOS 26. Требуется перезапуск.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Как контент встречается с верхней панелью при прокрутке. По умолчанию следует iOS, Мягкий растворяет контент прогрессивным размытием, а Жёсткий обрывает его у сплошного края с разделительной линией. Отключено позволяет Instagram отключать эффект, как он делает по умолчанию, и требует перезапуска.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Эффект края прокрутки";
 "INTERFACE_TABS_HEADER" = "Вкладки";

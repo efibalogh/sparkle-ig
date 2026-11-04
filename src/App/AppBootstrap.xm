@@ -117,8 +117,13 @@ static void SPKScheduleStagedFeatureHooks(void) {
     SPKStabilityGuardBeginLaunch();
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setBool:[SPKUtils spk_isLiquidGlassEffectivelyEnabled]
-               forKey:@"instagram.override.project.lucent.navigation"];
+    SPKLiquidGlassMode liquidGlassMode = [SPKUtils spk_liquidGlassMode];
+    if (liquidGlassMode == SPKLiquidGlassModeFollow) {
+        [defaults removeObjectForKey:@"instagram.override.project.lucent.navigation"];
+    } else {
+        [defaults setBool:liquidGlassMode == SPKLiquidGlassModeOn
+                   forKey:@"instagram.override.project.lucent.navigation"];
+    }
     [defaults removeObjectForKey:@"liquid_glass_override_enabled"];
     [defaults removeObjectForKey:@"IGLiquidGlassOverrideEnabled"];
     SPKCoreInstallLaunchCriticalHooks();

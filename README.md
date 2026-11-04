@@ -90,7 +90,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Open links from bios, captions, stories, messages, and ads in an in-app Safari view or the Safari app instead of Instagram's browser, with Instagram's redirect and tracking parameters stripped first.
   - Instagram leaves web addresses in captions and comments as plain text. Sparkle can find them, color them, and make them tappable, opening them in an in-app Safari view, in the Safari app, or after asking each time. Off by default, and nothing is requested from a link until you tap it.
 - **Liquid Glass (iOS 26+)**:
-  - Native Liquid Glass integration across Sparkle's own UI, plus an option to force-enable Instagram's.
+  - Native Liquid Glass integration across Sparkle's own UI, plus an option to force Instagram's on or off.
   - **Scroll Edge Effect** picks how content meets the top bar as you scroll: off (Instagram disables the effect), the iOS default, the soft progressive blur, or a hard edge with a dividing line (iOS 27 defaults to hard). Changes apply live.
   - On iOS 18 and lower, a **Pill-Shaped Tab Bar** toggle brings the floating pill tab bar (shape only; the glass material stays iOS 26+).
 

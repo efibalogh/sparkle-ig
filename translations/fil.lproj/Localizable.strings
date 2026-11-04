@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Square na Grid";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass at Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Tab Bar na Hugis-Pildoras";
-"INTERFACE_LIQUID_GLASS_HELP" = "Sapilitang ina-enable ang native na Liquid Glass interface ng Instagram. Kailangan ng restart.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Sapilitang ino-on o ino-off ang native na Liquid Glass interface ng Instagram. Hangga't hindi mo ito binabago, ang Instagram ang nagpapasya at ipinapakita ng switch kung ano ang nakukuha ng account na ito. Kailangan ng restart.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Mga Notification";
 "INTERFACE_NOTIFICATIONS_HELP" = "Kung ano ang hitsura ng sariling notification pills ng Sparkle at saan ito lumalabas.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Binabago ang hugis ng tab bar patungong iOS 26 floating pill. Kailangan ng iOS 26 ang glass material mismo. Kailangan ng restart.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Sapilitang ino-on o ino-off ang lumulutang na hugis-pill na tab bar ng iOS 26. Hangga't hindi mo ito binabago, ang Instagram ang nagpapasya. Kailangan ng iOS 26 ang glass material mismo. Kailangan ng restart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Kung paano nakakasalubong ng content ang top bar habang nagsa-scroll ka. Sinusunod ng Default ang iOS, unti-unting nagpapakupas ang content ang Soft gamit ang progressive blur, at tinatapos ito ng Hard sa isang matigas na gilid na may divider line. Pinapahintulutan ng Off na i-disable ito ng Instagram, tulad ng default nito, at kailangan ng restart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Epekto ng Scroll sa Gilid";
 "INTERFACE_TABS_HEADER" = "Mga Tab";

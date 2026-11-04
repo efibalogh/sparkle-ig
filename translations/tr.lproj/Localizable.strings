@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Kare Izgara";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ve Bulanıklık";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Hap Şeklindeki Sekme Çubuğu";
-"INTERFACE_LIQUID_GLASS_HELP" = "Instagram'ın yerel Liquid Glass arayüzünü zorunlu kılar. Yeniden başlatma gerektirir.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Instagram'ın yerel Liquid Glass arayüzünü zorla açar veya kapatır. Siz değiştirene kadar Instagram karar verir ve anahtar bu hesabın ne aldığını gösterir. Yeniden başlatma gerektirir.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Bildirimler";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle'ın kendi bildirim baloncuklarının görünümü ve nerede çıkacakları.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Sekme çubuğunu iOS 26'nın yüzen hap biçimine dönüştürür. Cam malzemesinin kendisi iOS 26 gerektirir. Yeniden başlatma gerektirir.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "iOS 26'nın yüzen hap biçimli sekme çubuğunu zorla açar veya kapatır. Siz değiştirene kadar Instagram karar verir. Cam malzemesinin kendisi iOS 26 gerektirir. Yeniden başlatma gerektirir.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Kaydırırken içeriğin üst çubukla nasıl buluştuğu. Varsayılan iOS'u izler, Yumuşak içeriği kademeli bulanıklıkla soldurur, Sert ise ayırıcı çizgili düz bir kenarda bitirir. Kapalı, Instagram'ın efekti varsayılan olarak yaptığı gibi devre dışı bırakmasına izin verir ve yeniden başlatma gerektirir.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Kaydırma Kenarı Efekti";
 "INTERFACE_TABS_HEADER" = "Sekmeler";

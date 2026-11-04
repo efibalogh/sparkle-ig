@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Quadratischs Raster";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass u Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pillenförmige Tab-Balke";
-"INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt s'native Liquid-Glass-Interface vo Instagram. Bruucht en Neustart.";
+"INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt s'native Liquid-Glass-Interface vo Instagram aa oder us. Bis du's änderisch, entscheidet Instagram, und dr Schalter zeigt, was das Konto überchunnt. Bruucht en Neustart.";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Benachrichtigige";
 "INTERFACE_NOTIFICATIONS_HELP" = "Wie d'eigete Benachrichtigigs-Pille vo Sparkle uusgseh u wo si erschyne.";
-"INTERFACE_PILL_TAB_BAR_HELP" = "Formt dr Tab-Balke i d'schwebendi iOS-26-Pille um. S'Glasmaterial sälber bruucht iOS 26. Bruucht e Neustart.";
+"INTERFACE_PILL_TAB_BAR_HELP" = "Erzwingt dr schwebendi Pille-Tab-Balke vo iOS 26 aa oder us. Bis du's änderisch, entscheidet Instagram. S'Glasmaterial sälber bruucht iOS 26. Bruucht e Neustart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Wie dr Inhaut d'Top-Bar bruucht, wenn du scrollisch. Standard follget iOS, Weich laht dr Inhaut mit emene progressive Blur usblasse, u Hart hört mit emene fixe Rand mit ere Trennlinie uf. Us laht Instagram dr Effekt usschaute, wie's das standardmässig macht, u bruucht en Neustart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Scroll-Edge-Effekt";
 "INTERFACE_TABS_HEADER" = "Tabs";

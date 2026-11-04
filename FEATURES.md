@@ -126,13 +126,13 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
 - **Hide UI on Capture**: Redacts Sparkle overlay buttons and labels (action button, seen/mentions buttons, poll vote-count badges, etc.) from screenshots, screen recordings, and mirroring.
 
 ### Liquid Glass *(iOS 26+)*
-- **Liquid Glass**: Force-enables Instagram's native Liquid Glass UI for accounts/devices that don't already have it. **(restart)** Only ever forces it *on*; turning it off never suppresses Liquid Glass that Instagram already renders natively (server-rollout accounts) or that Sparkle's own screens (Gallery, Settings, etc.) pick up automatically from iOS 26: so Sparkle's UI never looks inconsistent with Instagram's regardless of this switch.
+- **Liquid Glass**: Forces Instagram's native Liquid Glass UI on or off, whatever Instagram's own rollout gives the account. **(restart)** Until you flip it, Instagram decides and the switch shows what the account currently gets; after that your choice sticks even if Instagram later changes the rollout. Forcing it pins every part of Instagram's rollout to the same state, so the look no longer varies between launches: on gives glass navigation buttons, glass profile tabs and the blurred header background; off turns all of that off, along with the floating tab bar and the glass on navigation buttons on Sparkle's own screens.
 - **Scroll Edge Effect**: How content meets the top bar as you scroll. **Off** lets Instagram disable UIKit's edge effect, as it does by default, **Default** follows iOS (soft on iOS 26, hard on iOS 27), **Soft** forces the progressive blur, and **Hard** forces the solid edge with a dividing line, shown only while content is scrolled under the bar. Bottom toolbars and the tab bar keep the iOS effect. While the edge is soft or off, the media preview's "x of n" counter sits in a glass bubble so it stays readable over bright media. Styles apply live; switching to Off needs a restart. Replaces the Progressive Blur toggle (on becomes Soft). Requires iOS 26 (relies on `UIScrollEdgeEffect`).
 - **Tab Bar Behavior**: Controls how the floating Liquid Glass tab bar behaves while scrolling.
 
 ### Tab Bar *(iOS 18 and lower)*
 On systems without Liquid Glass, the tab bar section is replaced by a focused toggle. The glass *material* is iOS 26+ only, but the floating pill *shape* comes from Instagram's tab bar experiment gates, which work on any iOS.
-- **Pill-Shaped Tab Bar**: Reshapes the tab bar into the iOS 26-style floating pill. **(restart)** Shape only — no glass material on this device.
+- **Pill-Shaped Tab Bar**: Forces the iOS 26-style floating pill tab bar on or off. **(restart)** Until you flip it, Instagram decides. Shape only, no glass material on this device.
 - **Tab Bar Behavior**: Controls how the pill tab bar behaves while scrolling (Default / Fixed / Hide on scroll).
 
 ---

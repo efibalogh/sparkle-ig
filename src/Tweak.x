@@ -202,22 +202,22 @@ static const void *kSPKFlexThreeFingerGestureKey = &kSPKFlexThreeFingerGestureKe
 
 %hook IGDSLauncherConfig
 - (_Bool)isLiquidGlassInAppNotificationEnabled {
-    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+    return [SPKUtils spk_liquidGlassGateValueWithOrig:%orig];
 }
 - (_Bool)isLiquidGlassContextMenuEnabled {
-    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+    return [SPKUtils spk_liquidGlassGateValueWithOrig:%orig];
 }
 - (_Bool)isLiquidGlassToastEnabled {
-    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+    return [SPKUtils spk_liquidGlassGateValueWithOrig:%orig];
 }
 - (_Bool)isLiquidGlassToastPeekEnabled {
-    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+    return [SPKUtils spk_liquidGlassGateValueWithOrig:%orig];
 }
 - (_Bool)isLiquidGlassAlertDialogEnabled {
-    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+    return [SPKUtils spk_liquidGlassGateValueWithOrig:%orig];
 }
 - (_Bool)isLiquidGlassIconBarButtonEnabled {
-    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+    return [SPKUtils spk_liquidGlassGateValueWithOrig:%orig];
 }
 %end
 
@@ -225,7 +225,7 @@ static const void *kSPKFlexThreeFingerGestureKey = &kSPKFlexThreeFingerGestureKe
 // The launcher-config toast hooks above still cover older versions.
 %hook _TtC20IGDSToastLiquidGlass20IGDSToastLiquidGlass
 + (_Bool)isEnabled {
-    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+    return [SPKUtils spk_liquidGlassGateValueWithOrig:%orig];
 }
 %end
 

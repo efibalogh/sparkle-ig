@@ -13,6 +13,14 @@ FOUNDATION_EXPORT void SPKLogMessage(NSString *category,
                                      os_log_type_t type,
                                      NSString *format, ...) NS_FORMAT_FUNCTION(3, 4);
 
+/// How Sparkle treats Instagram's Liquid Glass gates (interface_liquid_glass_mode).
+typedef NS_ENUM(NSInteger, SPKLiquidGlassMode) {
+    /// Instagram's own rollout decides.
+    SPKLiquidGlassModeFollow = 0,
+    SPKLiquidGlassModeOn,
+    SPKLiquidGlassModeOff,
+};
+
 /// Master toggle for per-account preferences (global, default off).
 FOUNDATION_EXPORT NSString *const kSPKPrefPerAccountSettings;
 FOUNDATION_EXPORT NSNotificationName const SPKHideExploreGridPreferenceDidChangeNotification;
@@ -101,11 +109,13 @@ FOUNDATION_EXPORT Class _Nullable SPKDirectObjCInboxClass(void);
 // only present when resolvable; useful for painting identity before any network fetch.
 + (nullable NSDictionary<NSString *, NSString *> *)currentUserIdentity;
 
-/// IGDSLauncherConfig hooks: when Liquid Glass is on, returns YES; otherwise returns `fallback` (stock).
-+ (_Bool)spk_liquidGlassLauncherPrefKey:(NSString *)key orig:(_Bool)fallback;
+/// The Liquid Glass mode in effect this launch. Safe startup mode and the master
+/// kill switch fall back to Follow, so Instagram decides.
++ (SPKLiquidGlassMode)spk_liquidGlassMode;
 
-/// True when Liquid Glass is enabled and runtime suppression is inactive.
-+ (BOOL)spk_isLiquidGlassEffectivelyEnabled;
+/// A Liquid Glass gate's value: forced by the mode, or Instagram's own `fallback`
+/// when the mode is Follow.
++ (BOOL)spk_liquidGlassGateValueWithOrig:(BOOL)fallback;
 
 + (void)cleanCache;
 + (unsigned long long)cacheSizeBytes;

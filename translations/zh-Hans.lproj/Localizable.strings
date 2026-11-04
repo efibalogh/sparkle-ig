@@ -1134,10 +1134,10 @@
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "方形网格";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "液态玻璃和模糊";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "药丸形标签栏";
-"INTERFACE_LIQUID_GLASS_HELP" = "强制启用 Instagram 原生的 Liquid Glass 界面。需要重启。";
+"INTERFACE_LIQUID_GLASS_HELP" = "强制开启或关闭 Instagram 原生的 Liquid Glass 界面。在你更改之前由 Instagram 决定，开关会显示此账户当前获得的状态。需要重启。";
 "INTERFACE_NOTIFICATIONS_HEADER" = "通知";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle 自有通知气泡的外观和显示位置。";
-"INTERFACE_PILL_TAB_BAR_HELP" = "将标签栏变成 iOS 26 的悬浮胶囊形状。玻璃材质本身需要 iOS 26。需要重启。";
+"INTERFACE_PILL_TAB_BAR_HELP" = "强制开启或关闭 iOS 26 的悬浮胶囊标签栏。在你更改之前由 Instagram 决定。玻璃材质本身需要 iOS 26。需要重启。";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "滚动时内容与顶部栏的衔接方式。默认跟随 iOS，柔和以渐进模糊淡出内容，硬朗则以带分隔线的实色边缘截断内容。关闭则让 Instagram 像默认那样禁用此效果，且需要重启。";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "滚动边缘效果";
 "INTERFACE_TABS_HEADER" = "标签";
