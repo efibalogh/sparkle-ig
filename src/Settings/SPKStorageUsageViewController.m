@@ -6,6 +6,7 @@
 #import "../Shared/UI/SPKIGAlertPresenter.h"
 #import "../Utils.h"
 #import "SPKTopicSettingsSupport.h"
+#import "../Shared/UI/SPKNotificationCenter.h"
 
 @interface SPKStorageUsageViewController ()
 @property (nonatomic, strong) NSDictionary<NSString *, NSNumber *> *breakdown;
@@ -100,6 +101,7 @@
                                                                               handler:^{
                                                                                   [[SPKAvatarCache shared] purge];
                                                                                   [self reloadStatsAndRebuild];
+                                                                                  SPKNotify(kSPKNotificationSettingsClearCache, SPKL(@"SETTINGS_STORAGE_USAGE_PROFILE_PICTURES_CLEARED_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }

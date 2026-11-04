@@ -11,6 +11,7 @@
 #import "../UI/SPKIGAlertPresenter.h"
 #import "../UI/SPKMediaChrome.h"
 #import "../UI/SPKUserListViewController.h"
+#import "../UI/SPKNotificationCenter.h"
 
 // Instagram keeps a story's seen state in three places, all behind the session's
 // story seen state store: a per-media seen date, the reel's set of seen media ids,
@@ -342,6 +343,7 @@ static void SPKStoryLocalSeenResetRecordKeys(NSArray<NSString *> *keys) {
                                                                               handler:^{
                                                                                   SPKStoryLocalSeenResetRecordKeys(SPKStoryLocalSeenRecordKeysForAccount(SPKStoryLocalSeenRecords(), SPKStoryLocalSeenAccountPK()));
                                                                                   [weakSelf reloadItems];
+                                                                                  SPKNotify(kSPKNotificationLocalSeenReset, SPKL(@"STORIES_SEEN_RECEIPTS_LOCAL_SEEN_RESET_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }

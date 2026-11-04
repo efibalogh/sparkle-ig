@@ -1,5 +1,7 @@
 #import "SPKPreferenceMigrations.h"
 
+#import "../Settings/SPKPreferences.h"
+#import "../Shared/UI/SPKNotificationCenter.h"
 #import "../Utils.h"
 
 NSString *const SPKPreferenceMigrationsCompletedKey = @"app_preference_migrations";
@@ -9,6 +11,10 @@ typedef id _Nullable (^SPKPreferenceMigrationTransform)(id legacyValue);
 /// Folds every stored copy of a key (global first when present) into one global
 /// value. Returning nil leaves the global key unset.
 typedef id _Nullable (^SPKPreferenceMigrationMerge)(NSArray *values);
+/// Folds several legacy keys into `replacementKey`, once per namespace. Receives the
+/// namespace's legacy values keyed by legacy base key (per-account namespaces see
+/// the global value for keys they never stored). Returning nil leaves it unset.
+typedef id _Nullable (^SPKPreferenceMigrationFold)(NSDictionary<NSString *, id> *values);
 
 @interface SPKPreferenceMigration : NSObject
 /// Stable identifier recorded once the migration has run. Never reuse or rename one.
@@ -27,6 +33,10 @@ typedef id _Nullable (^SPKPreferenceMigrationMerge)(NSArray *values);
 /// `legacyKey` is merged into the global key and removed. `replacementKey` and
 /// `transform` are unused.
 @property (nonatomic, copy, nullable) SPKPreferenceMigrationMerge globalMerge;
+/// Set when several keys become one: every stored copy of each key is folded into
+/// `replacementKey` through `fold` and removed. `legacyKey` and `transform` are unused.
+@property (nonatomic, copy, nullable) NSArray<NSString *> *foldLegacyKeys;
+@property (nonatomic, copy, nullable) SPKPreferenceMigrationFold fold;
 @end
 
 @implementation SPKPreferenceMigration
@@ -109,10 +119,53 @@ static NSArray<SPKPreferenceMigration *> *SPKPreferenceMigrationList(void) {
             return [value boolValue] ? @"on" : @"follow";
         });
 
-        list = @[
+        NSMutableArray<SPKPreferenceMigration *> *migrations = [@[
             instantsCameraButton, hideRecentSearches, scrollEdgeStyle, storyManualSeenMode, reelsStartMutedGlobal, feedMetaPromotions, searchPinsEnabled,
             searchPinned, searchPinsListTypes, liquidGlassMode
-        ];
+        ] mutableCopy];
+
+        // Every notification had its own banner and haptic switch. They became one
+        // mode per group. A group stays on unless every one of its switches was off,
+        // so turning off one noisy item never silences the rest.
+        [SPKNotificationGroupMembership() enumerateKeysAndObjectsUsingBlock:^(NSString *group, NSArray<NSString *> *identifiers, __unused BOOL *stop) {
+            NSMutableArray<NSString *> *legacyKeys = [NSMutableArray array];
+            for (NSString *identifier in identifiers) {
+                [legacyKeys addObject:SPKPrefNotificationKey(identifier)];
+                [legacyKeys addObject:SPKPrefNotificationHapticKey(identifier)];
+            }
+            SPKPreferenceMigration *groupMode = SPKMigration([@"notifs_group_mode_" stringByAppendingString:group], legacyKeys.firstObject,
+                                                             SPKNotificationGroupModeKey(group), nil);
+            groupMode.foldLegacyKeys = legacyKeys;
+            groupMode.fold = ^id(NSDictionary<NSString *, id> *values) {
+                BOOL banner = NO;
+                BOOL haptic = NO;
+                for (NSString *identifier in identifiers) {
+                    id bannerValue = values[SPKPrefNotificationKey(identifier)];
+                    id hapticValue = values[SPKPrefNotificationHapticKey(identifier)];
+                    // Unset meant the registered default, which was on.
+                    if (![bannerValue respondsToSelector:@selector(boolValue)] || [bannerValue boolValue])
+                        banner = YES;
+                    if (![hapticValue respondsToSelector:@selector(boolValue)] || [hapticValue boolValue])
+                        haptic = YES;
+                }
+                if (banner && haptic)
+                    return kSPKNotificationModeValueAll;
+                if (banner)
+                    return kSPKNotificationModeValueBanner;
+                if (haptic)
+                    return kSPKNotificationModeValueHaptic;
+                return kSPKNotificationModeValueOff;
+            };
+            [migrations addObject:groupMode];
+        }];
+        // Switches whose notification is gone: opening Gallery media no longer
+        // announces itself, and the blocked Instant capture notice was dropped.
+        for (NSString *identifier in @[ @"media_preview_open_gallery", @"instants_capture_blocked" ]) {
+            [migrations addObject:SPKMigration([@"notifs_drop_" stringByAppendingString:identifier], SPKPrefNotificationKey(identifier), nil, nil)];
+            [migrations addObject:SPKMigration([NSString stringWithFormat:@"notifs_drop_%@_haptic", identifier], SPKPrefNotificationHapticKey(identifier), nil, nil)];
+        }
+
+        list = [migrations copy];
     });
     return list;
 }
@@ -158,9 +211,67 @@ static void SPKApplyGlobalPromotion(SPKPreferenceMigration *migration, NSMutable
     }
 }
 
+static void SPKApplyFold(SPKPreferenceMigration *migration, NSMutableDictionary<NSString *, id> *state, void (^_Nullable write)(NSString *key, id _Nullable value)) {
+    NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, id> *> *valuesByPrefix = [NSMutableDictionary dictionary];
+    NSMutableArray<NSString *> *foldedKeys = [NSMutableArray array];
+    // Set lookups rather than testing every key against every legacy key: this runs
+    // once per group at launch, over the whole defaults domain.
+    NSSet<NSString *> *legacyKeys = [NSSet setWithArray:migration.foldLegacyKeys];
+    for (NSString *key in state.allKeys) {
+        NSString *legacyKey = nil;
+        NSString *prefix = nil;
+        if ([legacyKeys containsObject:key]) {
+            legacyKey = key;
+            prefix = @"";
+        } else if ([key hasPrefix:@"u_"]) {
+            NSRange separator = [key rangeOfString:@"_" options:0 range:NSMakeRange(2, key.length - 2)];
+            if (separator.location == NSNotFound)
+                continue;
+            NSString *base = [key substringFromIndex:separator.location + 1];
+            if (![legacyKeys containsObject:base])
+                continue;
+            prefix = SPKPreferenceNamespacePrefix(key, base);
+            legacyKey = base;
+        }
+        if (!prefix || !legacyKey)
+            continue;
+        NSMutableDictionary<NSString *, id> *values = valuesByPrefix[prefix];
+        if (!values) {
+            values = [NSMutableDictionary dictionary];
+            valuesByPrefix[prefix] = values;
+        }
+        values[legacyKey] = state[key];
+        [foldedKeys addObject:key];
+    }
+    if (foldedKeys.count == 0)
+        return;
+
+    NSDictionary<NSString *, id> *globalValues = valuesByPrefix[@""] ?: @{};
+    [valuesByPrefix enumerateKeysAndObjectsUsingBlock:^(NSString *prefix, NSMutableDictionary<NSString *, id> *values, __unused BOOL *stop) {
+        NSMutableDictionary<NSString *, id> *resolved = [globalValues mutableCopy];
+        [resolved addEntriesFromDictionary:values];
+        id folded = migration.fold(resolved);
+        NSString *target = [prefix stringByAppendingString:migration.replacementKey];
+        if (folded && !state[target]) {
+            state[target] = folded;
+            if (write)
+                write(target, folded);
+        }
+    }];
+    for (NSString *key in foldedKeys) {
+        [state removeObjectForKey:key];
+        if (write)
+            write(key, nil);
+    }
+}
+
 static void SPKApplyPreferenceMigration(SPKPreferenceMigration *migration, NSMutableDictionary<NSString *, id> *state, void (^_Nullable write)(NSString *key, id _Nullable value)) {
     if (migration.globalMerge) {
         SPKApplyGlobalPromotion(migration, state, write);
+        return;
+    }
+    if (migration.fold) {
+        SPKApplyFold(migration, state, write);
         return;
     }
     for (NSString *key in state.allKeys) {

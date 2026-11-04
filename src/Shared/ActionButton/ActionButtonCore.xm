@@ -2985,7 +2985,8 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
         NSInteger previewIndex = SPKPreviewIndexForEntry(currentEntry, previewEntries,
                                                          SPKResolveCurrentIndexForContext(context));
         NSInteger clampedIndex = SPKClampedIndex(previewIndex, (NSInteger)playerItems.count);
-        SPKNotify(identifier, SPKL(@"FEED_FEED_ACTION_BUTTON_EXPANDED_MEDIA_TEXT"), nil, @"expand", SPKNotificationToneForIconResource(@"expand"));
+        // What opens is the confirmation; only the tap is felt.
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         [SPKFullScreenMediaPlayer showMediaItems:playerItems
                                  startingAtIndex:clampedIndex
                                         metadata:meta
@@ -3032,7 +3033,7 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
         } else {
             SPKShowExtractedVideoCover(currentEntry.videoURL, thumbnailMeta, context);
         }
-        SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_OPENED_THUMBNAIL_TEXT"), nil, @"photo_gallery", SPKNotificationToneForIconResource(@"photo_gallery"));
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         return YES;
     }
 
@@ -3055,7 +3056,7 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
             return YES;
         }
 
-        SPKNotify(identifier, SPKL(@"COMMON_OPENED_SETTINGS_TOAST"), nil, @"settings", SPKNotificationToneForIconResource(@"settings"));
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         [SPKUtils showSettingsForTopicTitle:settingsTitle];
         return YES;
     }
@@ -3420,7 +3421,7 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
             SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_SETTINGS_UNAVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
             return YES;
         }
-        SPKNotify(identifier, SPKL(@"COMMON_OPENED_SETTINGS_TOAST"), nil, @"settings", SPKNotificationToneForIconResource(@"settings"));
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         [SPKUtils showSettingsForTopicTitle:settingsTitle];
         return YES;
     }

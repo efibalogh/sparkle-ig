@@ -80,7 +80,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 ## Interface
 
 ### Notifications
-Per-feature control of the Sparkle notification pill and its haptics. See **Notifications** below.
+How Sparkle's notifications look, and one banner and haptic setting per group of notifications. See **Notifications** below.
 
 ### Tabs
 - **Tab Editor**: A single screen for the whole tab bar, with a live preview of the bar you are building. Every change is staged and committed together with one Apply action and restart prompt. **(restart)**
@@ -365,7 +365,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Excluded / Included Users**: Two lists, chosen by the Manually Mark Seen switch, the same way Stories works. With the switch on, *Excluded Users* keep Instagram's normal seen behavior. With it off, only *Included Users* have their Instants held unseen. While only some users are held, Instagram's seen sync still runs and the held Instants are filtered out of it, so everyone else's Instants are marked seen normally.
 
 ### Creation
-- **Disable Instants Creation**: Hard-blocks the Instant shutter (photo and video); the shutter is darkened and capture is blocked, with an optional notification + haptic. Received Instants still work.
+- **Disable Instants Creation**: Hard-blocks the Instant shutter (photo and video); the shutter is darkened and capture is blocked. Received Instants still work.
 - **Skip Camera After Instants**: Skips the camera page Instagram opens after viewing the last Instant.
 - **Disable Camera Control**: Stops the hardware Camera Control button (iPhone 16/17) from taking an Instant. Only available on devices that have Camera Control.
 - **Camera View Button**: Adds one Sparkle button to the Instants camera view, in the slot the action button uses in the viewer, wearing the glyph set by **Open Menu Icon** in General settings. Its menu has three groups: upload a photo or video from **Photos / Gallery / Files** (see below); **Browse Saved Instants**; and **Instants Settings**.
@@ -486,7 +486,7 @@ Every surface has the same **Filter Mode**: `All` saves everything except what y
 - **Save To**: `Sparkle Gallery` keeps auto-saved media inside the tweak; `Photos App` saves it to your system photo library (iOS asks for photo library permission the first time). The skip-if-already-saved check follows the destination you pick, so switching destinations re-saves items the new one doesn't have yet — and deleting an item from its destination lets it be saved again next time you view it.
 - **Photo Quality** / **Video Quality**: Quality tier for auto-saved media. `Default` takes Instagram's ready-to-play file — fastest, no re-encode per item; `High` merges DASH video + audio for best quality at the cost of an FFmpeg pass per item (**requires FFmpegKit**). Auto-save never prompts, so there is no `Always Ask`.
 - **Keep in Download History**: Auto-saves are pruned from the download history once saved. Enable to keep them listed.
-- **Notifications**: Feedback is per viewing session, not per item — tapping through twenty stories costs two toasts, not forty. All of it is configured under *Notifications › Auto-Save*, where each toast can be a pill, haptic-only, or silent:
+- **Notifications**: Feedback is per viewing session, not per item — tapping through twenty stories costs two toasts, not forty. All of it follows the **Auto-Save** row under *Notifications › Events*:
   - *Story / DM / Instants Auto-Save Started*: posted once, on the session's first save.
   - *Auto-Save Summary*: posted at the end with the number of items saved; tap it to open the Gallery (or the Photos app, following the destination). It waits for every download and DASH merge to finish, so the count is final.
   - *Auto-Save Still Working*: only when you leave the viewer while items are mid-flight (typically `High` video quality muxing DASH audio), explaining why the summary hasn't arrived yet.
@@ -560,7 +560,7 @@ can't be analyzed because a single scan would hit Instagram's rate limits.
 - **Refresh Profile Pictures**: Avatars self-heal: when a stored CDN URL has expired, Sparkle silently re-resolves a fresh one from Instagram, so simply reopening a list restores missing pictures. A list's **More** menu force-refreshes them all, and individual placeholders can be tapped to retry. Profile pictures are a shared cache managed under **Data & Settings › Storage**.
 
 ### Notifications
-- **Profile Analyzer Complete**: Pill + haptic when an analysis finishes (toggleable under Notifications).
+- **Profile Analyzer**: A progress pill while an analysis runs and a pill + haptic when it finishes, set by the **Profile Analyzer** row under *Notifications › Events*. A failed analysis is always reported.
 
 ---
 
@@ -569,8 +569,8 @@ can't be analyzed because a single scan would hit Instagram's rate limits.
 The Sparkle notification pill is configurable.
 
 ### Style
-- **Style**: **Sparkle Pill** (default) or **Instagram**, which draws every Sparkle notification with Instagram's own toast view, the one it uses for confirmations like "Removed from Saved". The toast follows the app's light or dark appearance, uses Instagram's outline icons, shows download progress as a ring in place of the icon with a **Cancel** button and the progress line in fixed-width digits so the toast holds still while it counts, and appears everywhere the pill does, including over Settings, the Gallery and the full-screen preview. Position, duration, tap, and swipe to dismiss work as with the pill.
-- **Test Notification**: Cycles success / error / info previews in the chosen style.
+- **Style**: **Sparkle Pill** (default) or **Instagram**, which draws every Sparkle notification with Instagram's own toast view, the one it uses for confirmations like "Removed from Saved". The toast follows the app's light or dark appearance, uses Instagram's outline icons, shows download progress as a ring in place of the icon with a **Cancel** button and the progress line in fixed-width digits so the toast holds still while it counts, and appears everywhere the pill does, including over Settings, the Gallery and the full-screen preview. It also moves like Instagram's toast: it slides in from the screen edge on Instagram's own spring and slides back out the same way, with no fade or scale. At the bottom it rests where Instagram rests its own: just above the tab bar, a toolbar, the bottom search bar or the keyboard, and right on top of the Direct composer. Position, duration, tap, and swipe to dismiss work as with the pill.
+- **Live preview**: The top of the page shows a sample notification in the chosen style. It changes in place as you adjust glow or tint or switch between light and dark, and is replaced only when the style or Liquid Glass changes. Tapping it steps through success, error and info, a download that runs from 0 to 100% and starts again, and the spinning pill shown while Sparkle looks something up. Changing **Download Progress** switches it to the download so the new line is visible.
 
 ### Appearance
 Rows follow the chosen style.
@@ -579,15 +579,22 @@ Rows follow the chosen style.
 - **Tint by Result** (Instagram): Tints the toast in the result's color. Same setting as Glow.
 
 ### Behavior
-- **Position**: Top or bottom. Notifications enter and leave on that edge. Bottom notifications rise above the keyboard while it is open.
+- **Position**: Top or bottom. Notifications enter and leave on that edge. At the bottom they rest just above whatever is there when they appear: the tab bar, a toolbar, the bottom search bar or the keyboard, and right on top of the Direct composer. On a screen with none of those they sit lower, just above the bottom edge.
 - **Duration**: Auto-dismiss delay (0.5–5.0s).
-- **Download Progress**: What the line under a running download shows: percent, size, both, or off.
+- **Download Progress**: What the line under a running download shows: percent, size, both, or off. Off hides only those figures: other notifications keep their subtitles, and when several downloads run the queue position (2 of 3) still shows.
 
-### Notify Me About / Haptics
-Every notification category has an independent **visibility** toggle (under
-Notify Me About) and a matching **haptic** toggle (under Haptics), covering
-downloads, copies, story/message seen actions, gallery actions, settings
-export/import, cache clearing, and more.
+### Confirmations / Events
+Notifications are grouped by what they tell you rather than by the screen that sent them. Each group has one setting: **Banner and Haptic** (default), **Banner Only**, **Haptic Only**, or **Off**.
+
+- **Confirmations** echo something you just did: **Downloads & Saves** (saving, sharing, reposting, playing audio, and the progress pill of a running download), **Copies**, **Mark as Seen**, **Lists & Pins** (seen, auto-save and activity lists, hidden chats, search and share sheet pins), **Data & Backups** (Gallery deletes and imports, settings export and import, clearing the cache, Download History, Deleted Messages, cached profile pictures or Seen Locally, and clearing or resetting Profile Analyzer), and **Other Actions** (fake location changes and saved places, passcode changes, encoding logs).
+- **Events** report something that happened without you: **Activity**, **Unsent Messages**, **Removed Reactions**, **Auto-Save**, **Profile Analyzer**, and **Language Packs**. Which activity events notify you at all is still chosen under *Messages › Activity Notifications*.
+- Opening something (a profile, the original post, story mentions, a thumbnail, settings, the share sheet) no longer shows a banner, since what opened is the confirmation; the tap still plays its haptic. A loading pill still shows while Sparkle looks something up before opening it.
+
+### Errors
+- Errors always show a banner, whatever a group is set to, so a failed action never looks like it did nothing. That includes downloads whose group is set to Haptic Only or Off: they run without a progress pill but still report a failure, and a batch share or copy still completes.
+- **Haptic on Errors**: Whether errors also vibrate. On by default.
+
+Settings from before this change carry over: a group stays on unless every notification in it was switched off, and a group whose banners were all off but whose haptics were not becomes Haptic Only.
 
 ---
 

@@ -33,16 +33,24 @@ static void SPKSetLiquidGlassForced(BOOL isOn) {
     [SPKUtils showRestartConfirmation];
 }
 
+// Opens the Notifications page with its live preview; search still indexes its rows.
+static SPKSetting *SPKNotificationsNavigationSetting(void) {
+    SPKSetting *setting = [SPKSetting navigationCellWithTitle:SPKL(@"INTERFACE_NOTIFICATIONS_HEADER")
+                                                     subtitle:nil
+                                                         icon:SPKSettingsIcon(@"notification")
+                                               viewController:[SPKNotificationSettingsProvider settingsViewController]];
+    setting.searchSectionsProvider = ^NSArray * {
+        return [SPKNotificationSettingsProvider sections];
+    };
+    return setting;
+}
+
 @implementation SPKInterfaceSettingsProvider
 
 + (SPKSetting *)rootSetting {
     NSMutableArray *sections = [NSMutableArray arrayWithArray:@[
         SPKTopicSection(SPKL(@"INTERFACE_NOTIFICATIONS_HEADER"), @[
-            SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"INTERFACE_NOTIFICATIONS_HEADER")
-                                                          subtitle:nil
-                                                              icon:SPKSettingsIcon(@"notification")
-                                                       navSections:[SPKNotificationSettingsProvider sections]],
-                               SPKL(@"INTERFACE_NOTIFICATIONS_HELP"))
+            SPKSettingWithHelp(SPKNotificationsNavigationSetting(), SPKL(@"INTERFACE_NOTIFICATIONS_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_TABS_HEADER"), @[

@@ -4,6 +4,7 @@
 #import "../../Utils.h"
 #import "SPKGalleryManager.h"
 #import <LocalAuthentication/LocalAuthentication.h>
+#import "../UI/SPKNotificationCenter.h"
 
 static NSInteger const kPasscodeLength = 4;
 
@@ -486,6 +487,8 @@ static NSInteger const kPasscodeLength = 4;
             if ([mgr setPasscode:entered]) {
                 [self.presentingViewController dismissViewControllerAnimated:YES
                                                                   completion:^{
+                                                                      // The sheet closing looks the same as a cancel, so say it worked.
+                                                                      SPKNotify(kSPKNotificationPasscodeChanged, SPKL(@"GALLERY_GALLERY_LOCK_PASSCODE_CHANGED_TOAST"), nil, @"key", SPKNotificationToneSuccess);
                                                                       if (self.completion)
                                                                           self.completion(YES);
                                                                   }];

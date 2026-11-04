@@ -1136,11 +1136,7 @@ static NSString *SPKTransferArchiveFilename(BOOL includeSettings, BOOL includeGa
             self.activeDocumentPicker = nil;
             return;
         }
-        [presenter presentViewController:picker
-                                animated:YES
-                              completion:^{
-                                  SPKNotify(kSPKNotificationSettingsImport, SPKL(@"SETTINGS_TRANSFER_CHOOSE_EXPORT_BUNDLE_TOAST"), nil, @"arrow_down", SPKNotificationToneForIconResource(@"arrow_down"));
-                              }];
+        [presenter presentViewController:picker animated:YES completion:nil];
     });
 }
 

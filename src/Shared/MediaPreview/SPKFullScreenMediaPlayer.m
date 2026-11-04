@@ -326,8 +326,6 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     // rare and its page already shows the load-failure state, so let the page that
     // actually gets displayed discover it.
     NSInteger adjustedIndex = MAX(0, MIN(index, (NSInteger)files.count - 1));
-    SPKNotify(kSPKNotificationMediaPreviewOpenGallery, SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_OPENED_GALLERY_MEDIA_TEXT"),
-              nil, @"media", SPKNotificationToneInfo);
 
     SPKFullScreenMediaPlayer *player = [[SPKFullScreenMediaPlayer alloc] init];
     player.isFromGallery = YES;
@@ -1585,19 +1583,15 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     SPKGalleryFile *file = self.currentItem.galleryFile;
     __weak __typeof(self) weakSelf = self;
     // Named for what the item is, as the Gallery list does.
-    NSString *openedTitle = nil;
     NSString *failureTitle = nil;
     switch ((SPKGallerySource)file.source) {
     case SPKGallerySourceStories:
-        openedTitle = SPKL(@"GALLERY_OPENED_ORIGINAL_STORY_TOAST");
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST");
         break;
     case SPKGallerySourceReels:
-        openedTitle = SPKL(@"GALLERY_OPENED_ORIGINAL_REEL_TOAST");
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST");
         break;
     default:
-        openedTitle = SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_OPENED_ORIGINAL_POST_TEXT");
         failureTitle = SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT");
         break;
     }
@@ -1609,10 +1603,10 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     if ([SPKGalleryOriginController openOriginalPostForGalleryFile:file
                                                fromViewController:self
                                                    legacyFallback:^{
+                                                       // The post is what shows next, so there is nothing to announce;
+                                                       // the tap is still felt.
                                                        [weakSelf dismissGalleryFlowForOriginOpenWithCompletion:^{
-                                                           SPKNotify(kSPKNotificationGalleryOpenOriginal, openedTitle,
-                                                                     nil, @"external_link",
-                                                                     SPKNotificationToneForIconResource(@"external_link"));
+                                                           SPKNotificationTriggerHaptic(kSPKNotificationGalleryOpenOriginal, SPKNotificationToneInfo);
                                                        }];
                                                    }
                                                         onDismiss:^{
@@ -1635,12 +1629,11 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     [SPKGalleryOriginController openProfileForGalleryFile:file
                                       fromViewController:self
                                               completion:^(BOOL success, BOOL didLink) {
+                                                  // The profile on screen is the confirmation, so only the tap is
+                                                  // felt; a link just made already posted its own notification.
                                                   if (success) {
-                                                      // Quiet when a link was just made: that toast already said it.
                                                       if (!didLink)
-                                                          SPKNotify(kSPKNotificationGalleryOpenProfile, SPKL(@"COMMON_OPENED_PROFILE_TOAST"), nil,
-                                                                    @"user_circle",
-                                                                    SPKNotificationToneForIconResource(@"user_circle"));
+                                                          SPKNotificationTriggerHaptic(kSPKNotificationGalleryOpenProfile, SPKNotificationToneInfo);
                                                   } else {
                                                       [weakSelf showGalleryOpenFailureMessage:SPKL(@"COMMON_UNABLE_OPEN_PROFILE_TOAST")
                                                                              actionIdentifier:kSPKNotificationGalleryOpenProfile];
@@ -2864,8 +2857,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
                 activityItem = item.image;
             }
         }
-        SPKNotify(kSPKNotificationMediaPreviewShare, SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_OPENED_SHARE_SHEET_TEXT"), nil,
-                  @"share", SPKNotificationToneInfo);
+        SPKNotificationTriggerHaptic(kSPKNotificationMediaPreviewShare, SPKNotificationToneInfo);
         UIActivityViewController *acVC = [[UIActivityViewController alloc]
             initWithActivityItems:@[ activityItem ]
             applicationActivities:nil];

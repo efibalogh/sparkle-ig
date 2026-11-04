@@ -468,6 +468,6 @@ void SPKPresentStoryMentionsSheet(UIView *overlayView) {
     sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = YES;
     sheet.prefersGrabberVisible = YES;
 
-    SPKNotify(kSPKNotificationStoryMentionsSheet, SPKL(@"STORIES_MENTIONS_OPENED_TOAST"), nil, @"mention", SPKNotificationToneForIconResource(@"mention"));
+    SPKNotificationTriggerHaptic(kSPKNotificationStoryMentionsSheet, SPKNotificationToneInfo);
     [presenter presentViewController:nav animated:YES completion:nil];
 }

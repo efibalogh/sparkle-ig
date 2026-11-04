@@ -112,14 +112,6 @@ static BOOL SPKQuickSnapSkipCameraAfterViewingEnabled(void) {
     return [SPKUtils getBoolPref:kSPKQuickSnapSkipCameraAfterViewingPref];
 }
 
-static void SPKQuickSnapNotifyBlocked(void) {
-    SPKNotify(kSPKNotificationInstantsCaptureBlocked,
-              SPKL(@"MESSAGES_DISABLE_INSTANTS_CREATION_INSTANT_CAPTURE_BLOCKED_TEXT"),
-              nil,
-              @"lock_filled",
-              SPKNotificationToneInfo);
-}
-
 // MARK: - Capture confirmation
 
 static UIView *SPKQuickSnapFindCaptureButton(UIView *root);
@@ -324,51 +316,49 @@ static void replaced_assetWriterFinishWriting(id self, SEL _cmd, void (^completi
 
 // MARK: - Capture button delegate gate
 
-static BOOL SPKQuickSnapShouldBlockCapture(SEL selector, BOOL notify) {
+static BOOL SPKQuickSnapShouldBlockCapture(SEL selector) {
     if (SPKQuickSnapCreationDisabled()) {
         SPKLog(@"General", @"[Sparkle] Blocking Instant capture (%@)", NSStringFromSelector(selector));
-        if (notify)
-            SPKQuickSnapNotifyBlocked();
         return YES;
     }
     return NO;
 }
 
 static void replaced_captureButtonDidTouchDown(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidTouchDown)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidTouchDown)
         orig_captureButtonDidTouchDown(self, _cmd);
 }
 
 static void replaced_captureButtonDidBeginExpanding(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidBeginExpanding)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidBeginExpanding)
         orig_captureButtonDidBeginExpanding(self, _cmd);
 }
 
 static void replaced_captureButtonDidEndExpanding(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidEndExpanding)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidEndExpanding)
         orig_captureButtonDidEndExpanding(self, _cmd);
 }
 
 static void replaced_captureButtonDidReleaseBeforeExpandingFinished(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, YES) && orig_captureButtonDidReleaseBeforeExpandingFinished)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidReleaseBeforeExpandingFinished)
         orig_captureButtonDidReleaseBeforeExpandingFinished(self, _cmd);
 }
 
 static void replaced_captureButtonDidReleaseAfterExpandingFinished(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, YES) && orig_captureButtonDidReleaseAfterExpandingFinished)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidReleaseAfterExpandingFinished)
         orig_captureButtonDidReleaseAfterExpandingFinished(self, _cmd);
 }
 
 static void replaced_captureButtonDidReleaseFromInterruption(id self, SEL _cmd) {
     SPKQuickSnapInvalidateConfirmation();
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidReleaseFromInterruption)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidReleaseFromInterruption)
         orig_captureButtonDidReleaseFromInterruption(self, _cmd);
 }
 
 static void replaced_captureButtonDidConfirm(id self, SEL _cmd) {
     if (sSPKQuickSnapSendConfirmVisible)
         return;
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, YES) && orig_captureButtonDidConfirm)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidConfirm)
         orig_captureButtonDidConfirm(self, _cmd);
 }
 
@@ -380,7 +370,7 @@ static void replaced_nativeShutterPress(id self, SEL _cmd, id gesture) {
     UIGestureRecognizerState state = [gesture isKindOfClass:UIGestureRecognizer.class]
                                          ? [(UIGestureRecognizer *)gesture state]
                                          : UIGestureRecognizerStatePossible;
-    if (SPKQuickSnapShouldBlockCapture(_cmd, state == UIGestureRecognizerStateEnded))
+    if (SPKQuickSnapShouldBlockCapture(_cmd))
         return;
     if (state == UIGestureRecognizerStateCancelled || state == UIGestureRecognizerStateFailed)
         SPKQuickSnapSetVideoCaptureArmed(NO);

@@ -395,6 +395,15 @@ UIMenu *SPKNotificationStyleMenu(void) {
     ]];
 }
 
+UIMenu *SPKNotificationModeMenu(NSString *defaultsKey) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_MODE_ALL"), nil, nil, defaultsKey, kSPKNotificationModeValueAll, NO),
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_MODE_BANNER"), nil, nil, defaultsKey, kSPKNotificationModeValueBanner, NO),
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_MODE_HAPTIC"), nil, nil, defaultsKey, kSPKNotificationModeValueHaptic, NO),
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, defaultsKey, kSPKNotificationModeValueOff, NO)
+    ]];
+}
+
 UIMenu *SPKNotificationPillPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), nil, nil, kSPKNotificationPillPositionKey, @"top", NO),

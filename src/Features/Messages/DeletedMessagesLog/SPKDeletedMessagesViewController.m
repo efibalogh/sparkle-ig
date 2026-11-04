@@ -15,6 +15,7 @@
 #import "SPKDeletedMessagesUserDetailViewController.h"
 
 #import <objc/runtime.h>
+#import "../../../Shared/UI/SPKNotificationCenter.h"
 
 static NSString *SPKDMCurrentUserPK(void) {
     @try {
@@ -493,6 +494,7 @@ static SPKDeletedMessageKind SPKDMChipKindForIndex(NSInteger index) {
                                                                                 style:SPKIGAlertActionStyleDestructive
                                                                               handler:^{
                                                                                   [SPKDeletedMessagesStorage resetForOwnerPK:self.ownerPK];
+                                                                                  SPKNotify(kSPKNotificationDeletedMessagesClear, SPKL(@"MESSAGES_DELETED_MESSAGES_CLEARED_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }
@@ -517,6 +519,7 @@ static SPKDeletedMessageKind SPKDMChipKindForIndex(NSInteger index) {
                                                                                       [SPKDeletedMessagesStorage deleteMessagesForThreadId:group.threadId ownerPK:self.ownerPK];
                                                                                   else
                                                                                       [SPKDeletedMessagesStorage deleteMessagesForSenderPK:group.senderPk ownerPK:self.ownerPK];
+                                                                                  SPKNotify(kSPKNotificationDeletedMessagesClear, SPKL(@"MESSAGES_DELETED_MESSAGES_LOG_DELETED_TOAST"), who, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }

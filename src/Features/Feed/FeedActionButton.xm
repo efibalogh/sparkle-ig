@@ -733,7 +733,8 @@ static void SPKHandleFeedExpandLongPress(UIView *view, UILongPressGestureRecogni
             NSInteger index = SPKFeedCarouselPageIndexFromView(view);
             if (index < 0 || index >= (NSInteger)items.count)
                 index = 0;
-            SPKNotify(kSPKActionExpand, SPKL(@"FEED_FEED_ACTION_BUTTON_EXPANDED_MEDIA_TEXT"), nil, @"expand", SPKNotificationToneForIconResource(@"expand"));
+            // The long press is felt, not announced: the viewer opening is the confirmation.
+            SPKNotificationTriggerHaptic(kSPKActionExpand, SPKNotificationToneInfo);
             [SPKFullScreenMediaPlayer showMediaItems:items
                                      startingAtIndex:index
                                             metadata:metadata
@@ -759,7 +760,7 @@ static void SPKHandleFeedExpandLongPress(UIView *view, UILongPressGestureRecogni
     if (username.length > 0)
         item.title = username;
 
-    SPKNotify(kSPKActionExpand, SPKL(@"FEED_FEED_ACTION_BUTTON_EXPANDED_MEDIA_TEXT"), nil, @"expand", SPKNotificationToneForIconResource(@"expand"));
+    SPKNotificationTriggerHaptic(kSPKActionExpand, SPKNotificationToneInfo);
     [SPKFullScreenMediaPlayer showMediaItems:@[ item ]
                              startingAtIndex:0
                                     metadata:metadata

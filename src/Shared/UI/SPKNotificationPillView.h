@@ -52,6 +52,17 @@ typedef NS_ENUM(NSUInteger, SPKNotificationTone) {
                  subtitle:(nullable NSString *)subtitle
                      icon:(nullable UIImage *)icon;
 
+/// Re-reads the look settings (glow or tint, colors, light or dark) and applies them
+/// in place. The style and Liquid Glass are fixed when a pill is made; changing
+/// those needs a new pill.
+- (void)refreshVisualStyleAnimated:(BOOL)animated;
+
+/// Changes a toast pill's text, icon and tone in place, animating the difference.
+- (void)updateToastWithTitle:(nullable NSString *)title
+                    subtitle:(nullable NSString *)subtitle
+                        icon:(nullable UIImage *)icon
+                        tone:(SPKNotificationTone)tone;
+
 /// Dismisses the pill immediately.
 - (void)dismiss;
 

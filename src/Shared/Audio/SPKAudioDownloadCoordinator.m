@@ -1152,9 +1152,8 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
         request.anchorView = sourceView;
         request.sourceSurface = SPKDownloadSourceSurfaceAudioPage;
         request.titleOverride = item.title.length > 0 ? item.title : nil;
-        request.presentationMode = SPKNotificationIsEnabled(identifier)
-                                       ? SPKDownloadPresentationModeQueuePill
-                                       : SPKDownloadPresentationModeQuiet;
+        request.presentationMode = SPKNotificationIsEnabled(identifier) ? SPKDownloadPresentationModeQueuePill
+                                                               : SPKDownloadPresentationModeErrorsOnly;
         [[SPKDownloadService shared] submitRequest:request completion:nil];
         return;
     }
@@ -1176,9 +1175,8 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
     request.anchorView = sourceView;
     request.sourceSurface = SPKDownloadSourceSurfaceAudioPage;
     request.titleOverride = item.title.length > 0 ? item.title : nil;
-    request.presentationMode = SPKNotificationIsEnabled(identifier)
-                                   ? SPKDownloadPresentationModeQueuePill
-                                   : SPKDownloadPresentationModeQuiet;
+    request.presentationMode = SPKNotificationIsEnabled(identifier) ? SPKDownloadPresentationModeQueuePill
+                                                               : SPKDownloadPresentationModeErrorsOnly;
     [[SPKDownloadService shared] submitRequest:request completion:nil];
 }
 

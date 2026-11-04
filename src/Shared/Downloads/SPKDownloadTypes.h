@@ -64,6 +64,9 @@ typedef NS_ENUM(NSInteger, SPKDownloadPresentationMode) {
     SPKDownloadPresentationModeQueuePill = 0,
     SPKDownloadPresentationModeQuiet,
     SPKDownloadPresentationModeImmediateShare,
+    // No progress pill, but a failure still posts an error and a success plays the
+    // group's haptic: the mode for a download whose group shows no banner.
+    SPKDownloadPresentationModeErrorsOnly,
 };
 
 typedef NS_ENUM(NSInteger, SPKDownloadDuplicatePolicyMode) {

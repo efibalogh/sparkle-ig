@@ -8,6 +8,7 @@
 #import "../../../Shared/UI/SPKMediaChrome.h"
 #import "../../../Utils.h"
 #import "../../../Shared/Avatars/SPKAvatarView.h"
+#import "../../../Shared/UI/SPKNotificationCenter.h"
 
 // IG throttles /friendships/ — batch follow-state lookups (50/request) with a
 // short cushion stays inside the limit.
@@ -447,6 +448,7 @@ typedef NS_ENUM(NSInteger, SPKPASortMode) {
                                                                                       strongSelf.onClearHistory();
                                                                                   strongSelf.allVisits = @[];
                                                                                   [strongSelf applyFilterAndSort];
+                                                                                  SPKNotify(kSPKNotificationProfileAnalyzerClear, SPKL(@"PROFILE_PROFILE_ANALYZER_VISITED_HISTORY_CLEARED_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }

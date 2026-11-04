@@ -13,6 +13,7 @@
 #import "SPKDeletedMessagesDate.h"
 #import "SPKDeletedMessagesFilter.h"
 #import "SPKDeletedMessagesStorage.h"
+#import "../../../Shared/UI/SPKNotificationCenter.h"
 
 @interface SPKDeletedMessagesUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, SPKDeletedMessagesChipBarDelegate, SPKDeletedMessageBubbleCellDelegate>
 @property (nonatomic, strong) SPKDeletedMessageGroup *group;
@@ -430,6 +431,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
                                                                                                                                      [SPKDeletedMessagesStorage deleteMessagesForThreadId:weakSelf.group.threadId ownerPK:weakSelf.ownerPK];
                                                                                                                                  else
                                                                                                                                      [SPKDeletedMessagesStorage deleteMessagesForSenderPK:weakSelf.group.senderPk ownerPK:weakSelf.ownerPK];
+                                                                                                                                 SPKNotify(kSPKNotificationDeletedMessagesClear, SPKL(@"MESSAGES_DELETED_MESSAGES_LOG_DELETED_TOAST"), who, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                                                                                  [weakSelf.navigationController popViewControllerAnimated:YES];
                                                                                                                              }],
                                                                                                ]];

@@ -16,6 +16,7 @@
 #import "SPKDownloadTypes.h"
 #import "SPKDownloadsSettingsViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "../UI/SPKNotificationCenter.h"
 
 #pragma mark - Helpers
 
@@ -641,6 +642,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
                                                                               handler:^{
                                                                                   [[SPKDownloadService shared] clearFinishedHistory];
                                                                                   [self reload];
+                                                                                  SPKNotify(kSPKNotificationDownloadHistoryClear, SPKL(@"DOWNLOADS_HISTORY_CLEARED_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }

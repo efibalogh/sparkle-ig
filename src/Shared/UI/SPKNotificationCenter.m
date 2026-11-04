@@ -41,8 +41,6 @@ SPK_NOTIF_CONST(kSPKNotificationDownloadAllShare, "download_all_share");
 SPK_NOTIF_CONST(kSPKNotificationDownloadAllGallery, "download_all_gallery");
 SPK_NOTIF_CONST(kSPKNotificationDownloadAllClipboard, "download_all_clipboard");
 SPK_NOTIF_CONST(kSPKNotificationDownloadAllLinks, "download_all_links");
-SPK_NOTIF_CONST(kSPKNotificationDownloadQueueFinished, "download_queue_finished");
-SPK_NOTIF_CONST(kSPKNotificationQueuedDownloadFailed, "queued_download_failed");
 SPK_NOTIF_CONST(kSPKNotificationExpand, "expand");
 SPK_NOTIF_CONST(kSPKNotificationViewThumbnail, "view_thumbnail");
 SPK_NOTIF_CONST(kSPKNotificationCopyCaption, "copy_caption");
@@ -78,7 +76,6 @@ SPK_NOTIF_CONST(kSPKNotificationPresenceTyping, "presence_typing");
 SPK_NOTIF_CONST(kSPKNotificationPresenceRead, "presence_read");
 SPK_NOTIF_CONST(kSPKNotificationPresenceUserRule, "presence_user_rule");
 SPK_NOTIF_CONST(kSPKNotificationUnsentReaction, "unsent_reaction");
-SPK_NOTIF_CONST(kSPKNotificationInstantsCaptureBlocked, "instants_capture_blocked");
 SPK_NOTIF_CONST(kSPKNotificationInstantsUpload, "instants_upload");
 SPK_NOTIF_CONST(kSPKNotificationInstantsAutoSave, "instants_auto_save");
 SPK_NOTIF_CONST(kSPKNotificationInstantsAutoSaveUserRule, "toggle_instants_auto_save_user_rule");
@@ -94,7 +91,6 @@ SPK_NOTIF_CONST(kSPKNotificationMediaPreviewSaveGallery, "media_preview_save_gal
 SPK_NOTIF_CONST(kSPKNotificationMediaPreviewShare, "media_preview_share");
 SPK_NOTIF_CONST(kSPKNotificationMediaPreviewCopy, "media_preview_copy");
 SPK_NOTIF_CONST(kSPKNotificationMediaPreviewDeleteGallery, "media_preview_delete_gallery");
-SPK_NOTIF_CONST(kSPKNotificationMediaPreviewOpenGallery, "media_preview_open_gallery");
 
 SPK_NOTIF_CONST(kSPKNotificationGalleryOpenOriginal, "gallery_open_original");
 SPK_NOTIF_CONST(kSPKNotificationGalleryOpenProfile, "gallery_open_profile");
@@ -106,6 +102,11 @@ SPK_NOTIF_CONST(kSPKNotificationGalleryImport, "gallery_import");
 SPK_NOTIF_CONST(kSPKNotificationSettingsExport, "settings_export");
 SPK_NOTIF_CONST(kSPKNotificationSettingsImport, "settings_import");
 SPK_NOTIF_CONST(kSPKNotificationSettingsClearCache, "settings_clear_cache");
+SPK_NOTIF_CONST(kSPKNotificationDownloadHistoryClear, "download_history_clear");
+SPK_NOTIF_CONST(kSPKNotificationDeletedMessagesClear, "deleted_messages_clear");
+SPK_NOTIF_CONST(kSPKNotificationProfileAnalyzerClear, "profile_analyzer_clear");
+SPK_NOTIF_CONST(kSPKNotificationLocalSeenReset, "story_local_seen_reset");
+SPK_NOTIF_CONST(kSPKNotificationPasscodeChanged, "passcode_changed");
 SPK_NOTIF_CONST(kSPKNotificationLanguagePackUpdate, "language_pack_update");
 SPK_NOTIF_CONST(kSPKNotificationCopyDescription, "copy_description");
 SPK_NOTIF_CONST(kSPKNotificationCopyNoteText, "copy_note_text");
@@ -127,22 +128,17 @@ NSString *const kSPKNotificationStyleKey = @"notifs_style";
 
 static CGFloat const kSPKNotificationStackSpacing = 8.0;
 static CGFloat const kSPKNotificationTopMargin = 8.0;
-// Bottom pills clear the safe-area bottom, but IG stacks a tab bar / composer /
-// toolbar above it that the safe area doesn't cover. Lift bottom pills further so
-// they float clear of that chrome instead of overlapping it.
-static CGFloat const kSPKNotificationBottomMargin = 60.0;
-// Where Instagram presents its own toast: bottom edge 57pt above the safe area
-// (measured on 448 over the feed, 91pt from the bottom of an 874pt screen).
-static CGFloat const kSPKNotificationInstagramBottomMargin = 57.0;
+// Bottom notifications rest just above whatever is at the bottom of the screen: the
+// tab bar, a toolbar, the bottom search bar, the keyboard, or the bottom safe area
+// when there is nothing, and flush on the Direct composer. The Instagram style uses
+// Instagram's own spacing (measured on 453); the pill keeps a little more room.
+static CGFloat const kSPKNotificationInstagramChromeGap = 8.0;
+static CGFloat const kSPKNotificationPillChromeGap = 12.0;
 static NSTimeInterval const kSPKNotificationInsertDuration = 0.55;
-static NSTimeInterval const kSPKNotificationInstagramFadeInDuration = 0.15;
 static NSTimeInterval const kSPKNotificationDefaultPillDuration = 1.5;
 static NSTimeInterval const kSPKNotificationMinPillDuration = 0.5;
 static NSTimeInterval const kSPKNotificationMaxPillDuration = 5.0;
 static NSUInteger const kSPKNotificationMaxQueuedToasts = 3;
-// Gap between the keyboard top and the bottom stack. The keyboard covers the tab
-// bar the usual bottom margin clears, so the stack only needs a small gap here.
-static CGFloat const kSPKNotificationKeyboardMargin = 12.0;
 
 // Last keyboard end frame in screen coordinates, CGRectNull while hidden. Tracked
 // from load because the center is created lazily, often after the keyboard is up.
@@ -189,150 +185,177 @@ static CGRect sSPKNotificationKeyboardScreenFrame = {{INFINITY, INFINITY}, {0, 0
 }
 @end
 
-static NSDictionary *SPKNotificationItem(NSString *identifier, NSString *title, NSString *iconName) {
-    return @{@"identifier" : identifier ?: @"", @"title" : title ?: @"", @"iconName" : iconName ?: @"info"};
+NSString *const kSPKNotificationModeValueAll = @"all";
+NSString *const kSPKNotificationModeValueBanner = @"banner";
+NSString *const kSPKNotificationModeValueHaptic = @"haptic";
+NSString *const kSPKNotificationModeValueOff = @"off";
+NSString *const kSPKNotificationErrorHapticKey = @"notifs_error_haptic";
+
+// Which identifiers each group covers. Kept apart from the titles so the
+// preference migration, which runs before localization is ready, can read it.
+NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(void) {
+    static NSDictionary<NSString *, NSArray<NSString *> *> *membership;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        membership = @{
+            @"downloads" : @[
+                kSPKNotificationDownloadLibrary,
+                kSPKNotificationDownloadShare,
+                kSPKNotificationDownloadGallery,
+                kSPKNotificationDownloadAllLibrary,
+                kSPKNotificationDownloadAllShare,
+                kSPKNotificationDownloadAllGallery,
+                kSPKNotificationDownloadAudio,
+                kSPKNotificationDownloadAudioShare,
+                kSPKNotificationDownloadAudioGallery,
+                kSPKNotificationPlayAudio,
+                kSPKNotificationRepost,
+                kSPKNotificationExpand,
+                kSPKNotificationViewThumbnail,
+                kSPKNotificationMediaPreviewSavePhotos,
+                kSPKNotificationMediaPreviewSaveGallery,
+                kSPKNotificationMediaPreviewShare,
+                kSPKNotificationInstantsUpload,
+            ],
+            @"copies" : @[
+                kSPKNotificationCopyDownloadLink,
+                kSPKNotificationCopyMedia,
+                kSPKNotificationDownloadAllClipboard,
+                kSPKNotificationDownloadAllLinks,
+                kSPKNotificationCopyCaption,
+                kSPKNotificationCopyAudioURL,
+                kSPKNotificationMediaPreviewCopy,
+                kSPKNotificationProfileCopyInfo,
+                kSPKNotificationCopyComment,
+                kSPKNotificationCopyGIFLink,
+                kSPKNotificationCopyGIFTitle,
+                kSPKNotificationCopyDescription,
+                kSPKNotificationCopyNoteText,
+                kSPKNotificationShareLongPressCopyLink,
+            ],
+            @"seen" : @[
+                kSPKNotificationStoryMarkSeen,
+                kSPKNotificationDirectVisualMarkSeen,
+                kSPKNotificationThreadMessagesMarkSeen,
+                kSPKNotificationInstantsMarkSeen,
+            ],
+            @"lists" : @[
+                kSPKNotificationStorySeenUserRule,
+                kSPKNotificationProfileStorySeenUserRule,
+                kSPKNotificationDirectThreadSeenRule,
+                kSPKNotificationProfileMessagesSeenUserRule,
+                kSPKNotificationDirectHiddenChat,
+                kSPKNotificationStoryAutoSaveUserRule,
+                kSPKNotificationDirectAutoSaveThreadRule,
+                kSPKNotificationInstantsAutoSaveUserRule,
+                kSPKNotificationPresenceUserRule,
+                kSPKNotificationShareSheetPin,
+                kSPKNotificationSearchPin,
+            ],
+            @"gallery" : @[
+                kSPKNotificationGalleryOpenOriginal,
+                kSPKNotificationGalleryOpenProfile,
+                kSPKNotificationGalleryDeleteFile,
+                kSPKNotificationGalleryDeleteSelected,
+                kSPKNotificationGalleryBulkDelete,
+                kSPKNotificationGalleryImport,
+                kSPKNotificationMediaPreviewDeleteGallery,
+                kSPKNotificationSettingsExport,
+                kSPKNotificationSettingsImport,
+                kSPKNotificationSettingsClearCache,
+                kSPKNotificationDownloadHistoryClear,
+                kSPKNotificationDeletedMessagesClear,
+                kSPKNotificationProfileAnalyzerClear,
+                kSPKNotificationLocalSeenReset,
+            ],
+            @"other" : @[
+                kSPKNotificationStoryMentionsSheet,
+                kSPKNotificationOpenTopicSettings,
+                kSPKNotificationClipboardUsername,
+                kSPKNotificationFakeLocation,
+                kSPKNotificationMediaEncodingLogs,
+                kSPKNotificationFlexUnavailable,
+                kSPKNotificationPasscodeChanged,
+            ],
+            @"activity" : @[
+                kSPKNotificationPresenceOnline,
+                kSPKNotificationPresenceOffline,
+                kSPKNotificationPresenceTyping,
+                kSPKNotificationPresenceRead,
+            ],
+            @"unsent_messages" : @[
+                kSPKNotificationUnsentMessage,
+            ],
+            @"unsent_reactions" : @[
+                kSPKNotificationUnsentReaction,
+            ],
+            @"auto_save" : @[
+                kSPKNotificationStoryAutoSave,
+                kSPKNotificationDirectAutoSave,
+                kSPKNotificationInstantsAutoSave,
+                kSPKNotificationAutoSavePending,
+                kSPKNotificationAutoSaveSummary,
+            ],
+            @"profile_analyzer" : @[
+                kSPKNotificationProfileAnalyzerComplete,
+            ],
+            @"language_packs" : @[
+                kSPKNotificationLanguagePackUpdate,
+            ],
+        };
+    });
+    return membership;
 }
 
-NSString *SPKNotificationDefaultsKey(NSString *identifier) {
-    return SPKPrefNotificationKey(identifier);
+static NSDictionary *SPKNotificationGroup(NSString *group, NSString *kind, NSString *title, NSString *iconName, NSString *footer) {
+    return @{
+        @"group" : group,
+        @"kind" : kind,
+        @"title" : title ?: @"",
+        @"iconName" : iconName ?: @"info",
+        @"footer" : footer ?: @"",
+        @"identifiers" : SPKNotificationGroupMembership()[group] ?: @[],
+    };
 }
 
-NSString *SPKNotificationHapticDefaultsKey(NSString *identifier) {
-    return SPKPrefNotificationHapticKey(identifier);
-}
-
-NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
+// Groups follow what a notification tells you, not which screen sent it: the same
+// "Saved to Photos" posted from the action button, the full-screen preview and an
+// audio menu is one thing to the user, so it is one setting. Confirmations echo
+// something you just did; events report something that happened without you.
+// Built per call because the titles follow the interface language.
+NSArray<NSDictionary *> *SPKNotificationGroups(void) {
     return @[
-        @{@"title" : SPKL(@"UI_NOTIFICATION_CENTER_ACTION_BUTTONS_ACTION"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationDownloadLibrary, SPKL(@"FEED_COMMENT_ACTIONS_SAVE_PHOTOS_TEXT"), @"download"),
-              SPKNotificationItem(kSPKNotificationDownloadShare, SPKL(@"ALERT_ACTION_SHARE"), @"share"),
-              SPKNotificationItem(kSPKNotificationCopyDownloadLink, SPKL(@"FEED_COMMENT_ACTIONS_COPY_DOWNLOAD_URL_TEXT"), @"link"),
-              SPKNotificationItem(kSPKNotificationCopyMedia, SPKL(@"ACTION_BUTTON_COPY_MEDIA_TITLE"), @"copy"),
-              SPKNotificationItem(kSPKNotificationDownloadGallery, SPKL(@"FEED_COMMENT_ACTIONS_SAVE_GALLERY_TEXT"), @"sparkle_gallery"),
-              SPKNotificationItem(kSPKNotificationDownloadAllLibrary, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_SAVE_PHOTOS_TEXT"), @"download"),
-              SPKNotificationItem(kSPKNotificationDownloadAllShare, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_SHARE_TEXT"), @"share"),
-              SPKNotificationItem(kSPKNotificationDownloadAllGallery, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_SAVE_GALLERY_TEXT"), @"sparkle_gallery"),
-              SPKNotificationItem(kSPKNotificationDownloadAllClipboard, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_MEDIA_TEXT"), @"copy"),
-              SPKNotificationItem(kSPKNotificationDownloadAllLinks, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_DOWNLOAD_URLS_TEXT"), @"link"),
-              SPKNotificationItem(kSPKNotificationExpand, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_EXPAND_TEXT"), @"expand"),
-              SPKNotificationItem(kSPKNotificationViewThumbnail, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_VIEW_THUMBNAIL_TEXT"), @"photo_gallery"),
-              SPKNotificationItem(kSPKNotificationCopyCaption, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_CAPTION_TEXT"), @"caption"),
-              SPKNotificationItem(kSPKNotificationOpenTopicSettings, SPKL(@"UI_NOTIFICATION_CENTER_OPEN_TOPIC_SETTINGS_TEXT"), @"settings"),
-              SPKNotificationItem(kSPKNotificationRepost, SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_REPOST_TEXT"), @"repost"),
-              SPKNotificationItem(kSPKNotificationDownloadAudio, SPKL(@"ALERT_ACTION_SAVE_AUDIO_FILES"), @"audio_download"),
-              SPKNotificationItem(kSPKNotificationDownloadAudioShare, SPKL(@"ALERT_ACTION_SHARE_AUDIO"), @"share"),
-              SPKNotificationItem(kSPKNotificationDownloadAudioGallery, SPKL(@"ALERT_ACTION_SAVE_AUDIO_GALLERY"), @"sparkle_gallery"),
-              SPKNotificationItem(kSPKNotificationPlayAudio, SPKL(@"ALERT_ACTION_PLAY_AUDIO"), @"play"),
-              SPKNotificationItem(kSPKNotificationCopyAudioURL, SPKL(@"ALERT_ACTION_COPY_AUDIO_DOWNLOAD_URL"), @"link"),
-          ]},
-        // Every auto-save toast lives here rather than under its surface: they're
-        // configured together, and the summary/pending pair isn't per-surface at all.
-        @{@"title" : SPKL(@"UI_NOTIFICATION_CENTER_AUTO_SAVE_TITLE"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationStoryAutoSave, SPKL(@"UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_STARTED_TEXT"), @"story"),
-              SPKNotificationItem(kSPKNotificationDirectAutoSave, SPKL(@"UI_NOTIFICATION_CENTER_DM_AUTO_SAVE_STARTED_TEXT"), @"messages"),
-              SPKNotificationItem(kSPKNotificationInstantsAutoSave, SPKL(@"UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT"), @"instants"),
-              SPKNotificationItem(kSPKNotificationAutoSavePending, SPKL(@"UI_NOTIFICATION_CENTER_AUTO_SAVE_STILL_WORKING_TEXT"), @"history"),
-              SPKNotificationItem(kSPKNotificationAutoSaveSummary, SPKL(@"UI_NOTIFICATION_CENTER_AUTO_SAVE_SUMMARY_TEXT"), @"download"),
-              SPKNotificationItem(kSPKNotificationStoryAutoSaveUserRule, SPKL(@"UI_NOTIFICATION_CENTER_STORY_AUTO_SAVE_LIST_CHANGES_TEXT"), @"story"),
-              SPKNotificationItem(kSPKNotificationDirectAutoSaveThreadRule, SPKL(@"UI_NOTIFICATION_CENTER_DM_AUTO_SAVE_LIST_CHANGES_TEXT"), @"messages"),
-              SPKNotificationItem(kSPKNotificationInstantsAutoSaveUserRule, SPKL(@"UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT"), @"instants"),
-          ]},
-        @{@"title" : SPKL(@"STORIES_OTHER_STORIES_TITLE"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationStoryMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_STORY_SEEN_TEXT"), @"story"),
-              SPKNotificationItem(kSPKNotificationStorySeenUserRule, SPKL(@"UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT"), @"eye"),
-              SPKNotificationItem(kSPKNotificationStoryMentionsSheet, SPKL(@"UI_NOTIFICATION_CENTER_OPEN_STORY_MENTIONS_TEXT"), @"mention"),
-          ]},
-        @{@"title" : SPKL(@"MESSAGES_CONFIRMATION_MESSAGES_TITLE"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationDirectVisualMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_VISUAL_MESSAGE_SEEN_MESSAGE"), @"view_twice"),
-              SPKNotificationItem(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE"), @"messages"),
-              SPKNotificationItem(kSPKNotificationDirectThreadSeenRule, SPKL(@"UI_NOTIFICATION_CENTER_CHAT_SEEN_LIST_CHANGES_TEXT"), @"eye"),
-              SPKNotificationItem(kSPKNotificationDirectHiddenChat, SPKL(@"UI_NOTIFICATION_CENTER_HIDDEN_CHAT_CHANGES_TEXT"), @"messages_off"),
-              SPKNotificationItem(kSPKNotificationUnsentMessage, SPKL(@"UI_NOTIFICATION_CENTER_UNSENT_MESSAGE"), @"undo"),
-              SPKNotificationItem(kSPKNotificationUnsentReaction, SPKL(@"UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION"), @"reactions"),
-              SPKNotificationItem(kSPKNotificationPresenceOnline, SPKL(@"MESSAGES_ACTIVITY_USER_ONLINE_TITLE"), @"circle_check_filled"),
-              SPKNotificationItem(kSPKNotificationPresenceOffline, SPKL(@"MESSAGES_ACTIVITY_USER_OFFLINE_TITLE"), @"circle_xmark_filled"),
-              SPKNotificationItem(kSPKNotificationPresenceTyping, SPKL(@"MESSAGES_ACTIVITY_USER_TYPING_TITLE"), @"keyboard"),
-              SPKNotificationItem(kSPKNotificationPresenceRead, SPKL(@"MESSAGES_ACTIVITY_MESSAGE_READ_TITLE"), @"eye"),
-              SPKNotificationItem(kSPKNotificationPresenceUserRule, SPKL(@"MESSAGES_ACTIVITY_LIST_CHANGES_TITLE"), @"activity"),
-              SPKNotificationItem(kSPKNotificationFakeLocation, SPKL(@"UI_NOTIFICATION_CENTER_FAKE_LOCATION_TEXT"), @"location"),
-          ]},
-        @{@"title" : SPKL(@"INSTANTS_CONFIRMATION_INSTANTS_TITLE"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationInstantsCaptureBlocked, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT"), @"lock"),
-              SPKNotificationItem(kSPKNotificationInstantsUpload, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT"), @"warning"),
-              SPKNotificationItem(kSPKNotificationInstantsMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT"), @"eye"),
-          ]},
-        @{@"title" : SPKL(@"PROFILE_TITLE"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationProfileCopyInfo, SPKL(@"UI_NOTIFICATION_CENTER_COPY_PROFILE_INFO_TEXT"), @"copy"),
-              SPKNotificationItem(kSPKNotificationProfileAnalyzerComplete, SPKL(@"UI_NOTIFICATION_CENTER_PROFILE_ANALYZER_COMPLETE_TEXT"), @"profile_analyzer"),
-              SPKNotificationItem(kSPKNotificationProfileStorySeenUserRule, SPKL(@"UI_NOTIFICATION_CENTER_STORY_SEEN_LIST_CHANGES_TEXT"), @"eye"),
-              SPKNotificationItem(kSPKNotificationProfileMessagesSeenUserRule, SPKL(@"UI_NOTIFICATION_CENTER_CHAT_SEEN_LIST_CHANGES_TEXT"), @"eye"),
-          ]},
-        @{@"title" : SPKL(@"GENERAL_COMMENTS_HEADER"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationCopyComment, SPKL(@"GENERAL_COMMENTS_COPY_COMMENT_TITLE"), @"copy"),
-              SPKNotificationItem(kSPKNotificationCopyGIFLink, SPKL(@"UI_NOTIFICATION_CENTER_COPY_MEDIA_LINK_TEXT"), @"link"),
-              SPKNotificationItem(kSPKNotificationCopyGIFTitle, SPKL(@"UI_NOTIFICATION_CENTER_COPY_GIF_TITLE"), @"gif"),
-          ]},
-        @{@"title" : SPKL(@"FEED_MEDIA_HEADER"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationMediaPreviewSavePhotos, SPKL(@"FEED_COMMENT_ACTIONS_SAVE_PHOTOS_TEXT"), @"download"),
-              SPKNotificationItem(kSPKNotificationMediaPreviewSaveGallery, SPKL(@"FEED_COMMENT_ACTIONS_SAVE_GALLERY_TEXT"), @"sparkle_gallery"),
-              SPKNotificationItem(kSPKNotificationMediaPreviewShare, SPKL(@"ALERT_ACTION_SHARE"), @"share"),
-              SPKNotificationItem(kSPKNotificationMediaPreviewCopy, SPKL(@"ACTION_BUTTON_COPY_MEDIA_TITLE"), @"copy"),
-              SPKNotificationItem(kSPKNotificationMediaPreviewDeleteGallery, SPKL(@"UI_NOTIFICATION_CENTER_DELETE_MEDIA_TEXT"), @"trash"),
-              SPKNotificationItem(kSPKNotificationMediaPreviewOpenGallery, SPKL(@"UI_NOTIFICATION_CENTER_OPEN_MEDIA_TEXT"), @"media"),
-              SPKNotificationItem(kSPKNotificationMediaEncodingLogs, SPKL(@"MEDIA_DOWNLOAD_MEDIA_FFMPEG_ENCODING_LOGS_TEXT"), @"logs"),
-          ]},
-        @{@"title" : SPKL(@"GALLERY_TITLE"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationGalleryOpenOriginal, SPKL(@"ALERT_ACTION_OPEN_ORIGINAL_POST"), @"external_link"),
-              SPKNotificationItem(kSPKNotificationGalleryOpenProfile, SPKL(@"ALERT_ACTION_OPEN_PROFILE"), @"user_circle"),
-              SPKNotificationItem(kSPKNotificationGalleryDeleteFile, SPKL(@"UI_NOTIFICATION_CENTER_DELETE_FILE_TEXT"), @"media"),
-              SPKNotificationItem(kSPKNotificationGalleryDeleteSelected, SPKL(@"UI_NOTIFICATION_CENTER_DELETE_SELECTED_FILES_TEXT"), @"circle_check"),
-              SPKNotificationItem(kSPKNotificationGalleryBulkDelete, SPKL(@"UI_NOTIFICATION_CENTER_BULK_DELETE_TEXT"), @"trash"),
-              SPKNotificationItem(kSPKNotificationGalleryImport, SPKL(@"GALLERY_GALLERY_SETTINGS_IMPORT_MEDIA_TITLE"), @"media"),
-          ]},
-        @{@"title" : SPKL(@"UI_NOTIFICATION_CENTER_SETTINGS_TOOLS_TEXT"),
-          @"items" : @[
-              SPKNotificationItem(kSPKNotificationSettingsExport, SPKL(@"UI_NOTIFICATION_CENTER_EXPORT_SETTINGS_TEXT"), @"arrow_up"),
-              SPKNotificationItem(kSPKNotificationSettingsImport, SPKL(@"UI_NOTIFICATION_CENTER_IMPORT_SETTINGS_TEXT"), @"arrow_down"),
-              SPKNotificationItem(kSPKNotificationSettingsClearCache, SPKL(@"GENERAL_GENERAL_CLEAR_CACHE_TITLE"), @"trash"),
-              SPKNotificationItem(kSPKNotificationLanguagePackUpdate, SPKL(@"UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT"), @"translate"),
-              SPKNotificationItem(kSPKNotificationCopyDescription, SPKL(@"UI_NOTIFICATION_CENTER_COPY_DESCRIPTION_TEXT"), @"copy"),
-              SPKNotificationItem(kSPKNotificationCopyNoteText, SPKL(@"MESSAGES_NOTES_COPY_NOTE_TEXT_TITLE"), @"copy"),
-              SPKNotificationItem(kSPKNotificationShareLongPressCopyLink, SPKL(@"GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE"), @"link"),
-              SPKNotificationItem(kSPKNotificationShareSheetPin, SPKL(@"UI_NOTIFICATION_CENTER_SHARE_SHEET_PIN_TEXT"), @"pin"),
-              SPKNotificationItem(kSPKNotificationSearchPin, SPKL(@"UI_NOTIFICATION_CENTER_SEARCH_PIN_TEXT"), @"pin"),
-              SPKNotificationItem(kSPKNotificationClipboardUsername, SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE"), @"user_circle"),
-              SPKNotificationItem(kSPKNotificationFlexUnavailable, SPKL(@"UI_NOTIFICATION_CENTER_FLEX_UNAVAILABLE_TEXT"), @"warning"),
-          ]},
+        SPKNotificationGroup(@"downloads", @"confirmation", SPKL(@"NOTIFICATION_GROUP_DOWNLOADS_TITLE"), @"download", SPKL(@"NOTIFICATION_GROUP_DOWNLOADS_HELP")),
+        SPKNotificationGroup(@"copies", @"confirmation", SPKL(@"NOTIFICATION_GROUP_COPIES_TITLE"), @"copy", SPKL(@"NOTIFICATION_GROUP_COPIES_HELP")),
+        SPKNotificationGroup(@"seen", @"confirmation", SPKL(@"NOTIFICATION_GROUP_SEEN_TITLE"), @"eye", SPKL(@"NOTIFICATION_GROUP_SEEN_HELP")),
+        SPKNotificationGroup(@"lists", @"confirmation", SPKL(@"NOTIFICATION_GROUP_LISTS_TITLE"), @"pin", SPKL(@"NOTIFICATION_GROUP_LISTS_HELP")),
+        SPKNotificationGroup(@"gallery", @"confirmation", SPKL(@"NOTIFICATION_GROUP_DATA_TITLE"), @"cloud", SPKL(@"NOTIFICATION_GROUP_DATA_HELP")),
+        SPKNotificationGroup(@"other", @"confirmation", SPKL(@"NOTIFICATION_GROUP_OTHER_TITLE"), @"settings", SPKL(@"NOTIFICATION_GROUP_OTHER_HELP")),
+        SPKNotificationGroup(@"activity", @"event", SPKL(@"NOTIFICATION_EVENT_ACTIVITY_TITLE"), @"activity", SPKL(@"NOTIFICATION_EVENT_ACTIVITY_HELP")),
+        SPKNotificationGroup(@"unsent_messages", @"event", SPKL(@"NOTIFICATION_EVENT_UNSENT_MESSAGES_TITLE"), @"undo", SPKL(@"NOTIFICATION_EVENT_UNSENT_MESSAGES_HELP")),
+        SPKNotificationGroup(@"unsent_reactions", @"event", SPKL(@"NOTIFICATION_EVENT_REMOVED_REACTIONS_TITLE"), @"reactions", SPKL(@"NOTIFICATION_EVENT_REMOVED_REACTIONS_HELP")),
+        SPKNotificationGroup(@"auto_save", @"event", SPKL(@"UI_NOTIFICATION_CENTER_AUTO_SAVE_TITLE"), @"download", SPKL(@"NOTIFICATION_EVENT_AUTO_SAVE_HELP")),
+        SPKNotificationGroup(@"profile_analyzer", @"event", SPKL(@"NOTIFICATION_EVENT_PROFILE_ANALYZER_TITLE"), @"profile_analyzer", SPKL(@"NOTIFICATION_EVENT_PROFILE_ANALYZER_HELP")),
+        SPKNotificationGroup(@"language_packs", @"event", SPKL(@"SETTINGS_STORAGE_USAGE_LANGUAGE_PACKS_TITLE"), @"translate", SPKL(@"NOTIFICATION_EVENT_LANGUAGE_PACKS_HELP")),
     ];
 }
 
-static BOOL SPKNotificationIdentifierIsRegistered(NSString *identifier) {
-    if (identifier.length == 0)
-        return NO;
-    static NSSet<NSString *> *registeredIdentifiers;
+NSString *SPKNotificationGroupModeKey(NSString *group) {
+    return [NSString stringWithFormat:@"notifs_group_%@", group ?: @""];
+}
+
+static NSDictionary<NSString *, NSString *> *SPKNotificationGroupByIdentifier(void) {
+    static NSDictionary<NSString *, NSString *> *map;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSMutableSet<NSString *> *identifiers = [NSMutableSet set];
-        for (NSDictionary *section in SPKNotificationPreferenceSections()) {
-            for (NSDictionary *item in section[@"items"] ?: @[]) {
-                NSString *itemIdentifier = item[@"identifier"];
-                if (itemIdentifier.length > 0) {
-                    [identifiers addObject:itemIdentifier];
-                }
-            }
-        }
-        registeredIdentifiers = [identifiers copy];
+        NSMutableDictionary<NSString *, NSString *> *m = [NSMutableDictionary dictionary];
+        [SPKNotificationGroupMembership() enumerateKeysAndObjectsUsingBlock:^(NSString *group, NSArray<NSString *> *identifiers, __unused BOOL *stop) {
+            for (NSString *identifier in identifiers)
+                m[identifier] = group;
+        }];
+        map = [m copy];
     });
-    return [registeredIdentifiers containsObject:identifier];
+    return map;
 }
 
 NSDictionary<NSString *, id> *SPKNotificationDefaultPreferences(void) {
@@ -343,21 +366,45 @@ NSDictionary<NSString *, id> *SPKNotificationDefaultPreferences(void) {
         kSPKNotificationProgressSubtitleStyleKey : @"both",
         kSPKNotificationPillPositionKey : @"top",
         kSPKNotificationStyleKey : @"pill",
+        kSPKNotificationErrorHapticKey : @YES,
     } mutableCopy];
-    for (NSDictionary *section in SPKNotificationPreferenceSections()) {
-        for (NSDictionary *item in section[@"items"] ?: @[]) {
-            defaults[SPKNotificationDefaultsKey(item[@"identifier"])] = @YES;
-            defaults[SPKNotificationHapticDefaultsKey(item[@"identifier"])] = @YES;
-        }
-    }
+    for (NSString *group in SPKNotificationGroupMembership())
+        defaults[SPKNotificationGroupModeKey(group)] = kSPKNotificationModeValueAll;
     return defaults;
 }
 
+SPKNotificationMode SPKNotificationModeForIdentifier(NSString *identifier) {
+    NSString *group = identifier.length > 0 ? SPKNotificationGroupByIdentifier()[identifier] : nil;
+    if (group.length == 0)
+        return SPKNotificationModeOff;
+    // Via SPKUtils so per-account values resolve (see SPKNotificationPillDuration).
+    NSString *value = [SPKUtils getStringPref:SPKNotificationGroupModeKey(group)];
+    if ([value isEqualToString:kSPKNotificationModeValueOff])
+        return SPKNotificationModeOff;
+    if ([value isEqualToString:kSPKNotificationModeValueHaptic])
+        return SPKNotificationModeHapticOnly;
+    if ([value isEqualToString:kSPKNotificationModeValueBanner])
+        return SPKNotificationModeBannerOnly;
+    return SPKNotificationModeBannerAndHaptic;
+}
+
 BOOL SPKNotificationIsEnabled(NSString *identifier) {
-    if (!SPKNotificationIdentifierIsRegistered(identifier))
-        return NO;
-    // Via SPKUtils so per-account toggles resolve (see SPKNotificationPillDuration).
-    return [SPKUtils getBoolPref:SPKNotificationDefaultsKey(identifier)];
+    SPKNotificationMode mode = SPKNotificationModeForIdentifier(identifier);
+    return mode == SPKNotificationModeBannerAndHaptic || mode == SPKNotificationModeBannerOnly;
+}
+
+BOOL SPKNotificationIsActive(NSString *identifier) {
+    return SPKNotificationModeForIdentifier(identifier) != SPKNotificationModeOff;
+}
+
+BOOL SPKNotificationIdentifierIsEvent(NSString *identifier) {
+    static NSSet<NSString *> *eventGroups;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        eventGroups = [NSSet setWithArray:@[ @"activity", @"unsent_messages", @"unsent_reactions", @"auto_save", @"profile_analyzer", @"language_packs" ]];
+    });
+    NSString *group = identifier.length > 0 ? SPKNotificationGroupByIdentifier()[identifier] : nil;
+    return group.length > 0 && [eventGroups containsObject:group];
 }
 
 NSTimeInterval SPKNotificationPillDuration(void) {
@@ -392,12 +439,18 @@ UIImage *SPKNotificationIconNamed(NSString *iconResource, BOOL instagramStyle) {
 }
 
 void SPKNotificationTriggerHaptic(NSString *identifier, SPKNotificationTone tone) {
-    if (!SPKNotificationIdentifierIsRegistered(identifier))
-        return;
     if ([SPKUtils getBoolPref:@"general_disable_haptics"])
         return;
-    if (![SPKUtils getBoolPref:SPKNotificationHapticDefaultsKey(identifier)])
-        return;
+    if (tone == SPKNotificationToneError) {
+        // Errors have their own switch: they show whatever the group says, so the
+        // group cannot be what silences their haptic.
+        if (!SPKNotificationGroupByIdentifier()[identifier ?: @""] || ![SPKUtils getBoolPref:kSPKNotificationErrorHapticKey])
+            return;
+    } else {
+        SPKNotificationMode mode = SPKNotificationModeForIdentifier(identifier);
+        if (mode != SPKNotificationModeBannerAndHaptic && mode != SPKNotificationModeHapticOnly)
+            return;
+    }
 
     dispatch_block_t trigger = ^{
         switch (tone) {
@@ -449,6 +502,18 @@ static NSString *SPKNotificationIconResourceForTone(NSString *iconResource, SPKN
     }
 }
 
+// Builds a pill about to be presented. In the Instagram style it is built with
+// animations off: setting a pill up runs layout passes and an icon pulse, and those
+// would still be playing inside Instagram's toast while it slides in, where
+// Instagram's own toast arrives settled and only slides.
+static void SPKNotificationBuildPill(dispatch_block_t build) {
+    if (!SPKNotificationUsesInstagramStyle()) {
+        build();
+        return;
+    }
+    [UIView performWithoutAnimation:build];
+}
+
 @interface SPKNotificationCenter ()
 @property (nonatomic, strong) NSMutableArray<SPKNotificationSlot *> *visible;
 @property (nonatomic, strong) NSMutableArray<NSDictionary *> *queue;
@@ -458,6 +523,8 @@ static NSString *SPKNotificationIconResourceForTone(NSString *iconResource, SPKN
 // the 4K candidate fetch). Weak: it's owned by its slot, and whoever adopts it as a
 // real progress pill clears this so it's no longer dismissed out from under them.
 @property (nonatomic, weak) SPKNotificationPillView *transientProgressPill;
+// Identifier of the flow that last claimed the shared progress pill.
+@property (nonatomic, copy) NSString *progressIdentifier;
 // The transient pill last told to go away, while it is still animating out.
 @property (nonatomic, weak) SPKNotificationPillView *departingTransientPill;
 - (void)notifyIdentifier:(NSString *)identifier
@@ -647,14 +714,172 @@ static SPKNotificationCenter *sSPKNotificationSharedCenter;
     return MAX(0.0, safeBottom - CGRectGetMinY(keyboard));
 }
 
-- (CGFloat)baseBottomMargin {
-    return SPKNotificationUsesInstagramStyle() ? kSPKNotificationInstagramBottomMargin : kSPKNotificationBottomMargin;
+// The app's own window: the key window that is not Sparkle's overlay.
+- (UIWindow *)spk_appWindow {
+    UIWindowScene *scene = self.overlayWindow.windowScene;
+    NSMutableArray<UIWindowScene *> *scenes = [NSMutableArray array];
+    if (scene)
+        [scenes addObject:scene];
+    for (UIScene *candidate in UIApplication.sharedApplication.connectedScenes) {
+        if ([candidate isKindOfClass:UIWindowScene.class] && candidate != scene)
+            [scenes addObject:(UIWindowScene *)candidate];
+    }
+    UIWindow *fallback = nil;
+    for (UIWindowScene *windowScene in scenes) {
+        for (UIWindow *window in windowScene.windows) {
+            if (window == self.overlayWindow || window.hidden || [window isKindOfClass:SPKNotificationPassthroughWindow.class])
+                continue;
+            if (window.isKeyWindow)
+                return window;
+            if (!fallback && window.windowLevel == UIWindowLevelNormal)
+                fallback = window;
+        }
+    }
+    return fallback;
 }
 
-// How much the keyboard raised the bottom stack above its usual base.
+static BOOL SPKNotificationViewIsOnScreen(UIView *view, UIWindow *window) {
+    if (!view || view.window != window)
+        return NO;
+    for (UIView *current = view; current && current != window; current = current.superview) {
+        if (current.hidden || current.alpha < 0.01)
+            return NO;
+    }
+    CGRect frame = [view convertRect:view.bounds toView:nil];
+    return CGRectGetHeight(frame) > 1.0 && CGRectGetMinY(frame) < CGRectGetHeight(window.bounds) - 1.0;
+}
+
+static UIViewController *SPKNotificationNextController(UIViewController *controller) {
+    UIViewController *presented = controller.presentedViewController;
+    if (presented && !presented.isBeingDismissed)
+        return presented;
+    if ([controller isKindOfClass:UINavigationController.class])
+        return ((UINavigationController *)controller).topViewController;
+    if ([controller isKindOfClass:UITabBarController.class])
+        return ((UITabBarController *)controller).selectedViewController;
+    // Instagram's containers are custom: follow the visible child covering the most.
+    UIViewController *best = nil;
+    CGFloat bestArea = 0.0;
+    for (UIViewController *child in controller.childViewControllers) {
+        if (!child.isViewLoaded || !child.view.window || child.view.hidden || child.view.alpha < 0.01)
+            continue;
+        CGRect frame = [child.view convertRect:child.view.bounds toView:nil];
+        CGFloat area = CGRectGetWidth(frame) * CGRectGetHeight(frame);
+        if (area > bestArea) {
+            bestArea = area;
+            best = child;
+        }
+    }
+    return best;
+}
+
+// The Direct composer under `root`, if one is showing. Bounded: it is only looked for
+// inside a Direct thread.
+static UIView *SPKNotificationDirectComposer(UIView *root) {
+    static NSArray<Class> *composerClasses;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSMutableArray<Class> *classes = [NSMutableArray array];
+        for (NSString *name in @[ @"IGDirectComposer.IGDirectComposer", @"IGDirectComposer" ]) {
+            Class cls = NSClassFromString(name);
+            if (cls)
+                [classes addObject:cls];
+        }
+        composerClasses = [classes copy];
+    });
+    if (!root || composerClasses.count == 0)
+        return nil;
+    NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:root];
+    NSUInteger visited = 0;
+    while (queue.count > 0 && visited < 800) {
+        UIView *view = queue.firstObject;
+        [queue removeObjectAtIndex:0];
+        visited++;
+        if (view.hidden)
+            continue;
+        for (Class cls in composerClasses) {
+            if ([view isKindOfClass:cls])
+                return view;
+        }
+        [queue addObjectsFromArray:view.subviews];
+    }
+    return nil;
+}
+
+// How far above the screen's bottom edge a bottom notification should end, keyboard
+// aside, by what is on screen: Instagram's tab bar and Direct composer do not report through the
+// safe area, so they are found as views; UIKit chrome (toolbars, the bottom search bar)
+// raises the top controllers' safe area, so that covers the rest.
+- (CGFloat)spk_bottomChromeGapWithSpacing:(CGFloat)spacing {
+    UIWindow *window = [self spk_appWindow];
+    CGFloat screenHeight = window ? CGRectGetHeight(window.bounds) : CGRectGetHeight(UIScreen.mainScreen.bounds);
+    CGFloat gap = (window ? window.safeAreaInsets.bottom : 34.0) + spacing;
+    if (!window)
+        return gap;
+
+    Class tabBarControllerClass = NSClassFromString(@"IGTabBarController");
+    UIViewController *threadController = nil;
+    UIViewController *controller = window.rootViewController;
+    for (int depth = 0; controller && depth < 16; depth++) {
+        if (controller.isViewLoaded && controller.view.window == window) {
+            UIView *view = controller.view;
+            // A scroll view's bounds follow its content, so its safe area edge is not a
+            // screen position.
+            if (![view isKindOfClass:UIScrollView.class]) {
+                CGFloat edge = [view convertPoint:CGPointMake(0.0, CGRectGetHeight(view.bounds) - view.safeAreaInsets.bottom) toView:nil].y;
+                CGFloat chrome = screenHeight - edge;
+                if (chrome >= 0.0 && chrome < screenHeight / 2.0)
+                    gap = MAX(gap, chrome + spacing);
+            }
+            if (tabBarControllerClass && [controller isKindOfClass:tabBarControllerClass] && [controller respondsToSelector:@selector(tabBar)]) {
+                UIView *tabBar = ((UITabBarController *)controller).tabBar;
+                if ([tabBar isKindOfClass:UIView.class] && SPKNotificationViewIsOnScreen(tabBar, window)) {
+                    CGFloat top = CGRectGetMinY([tabBar convertRect:tabBar.bounds toView:nil]);
+                    gap = MAX(gap, screenHeight - top + spacing);
+                }
+            }
+            if ([NSStringFromClass(controller.class) containsString:@"DirectThread"])
+                threadController = controller;
+        }
+        controller = SPKNotificationNextController(controller);
+    }
+
+    UIView *composer = threadController ? SPKNotificationDirectComposer(threadController.view) : nil;
+    if (composer && SPKNotificationViewIsOnScreen(composer, window)) {
+        CGFloat top = CGRectGetMinY([composer convertRect:composer.bounds toView:nil]);
+        gap = MAX(gap, screenHeight - top);
+    }
+    return gap;
+}
+
+- (CGFloat)spk_chromeSpacing {
+    return SPKNotificationUsesInstagramStyle() ? kSPKNotificationInstagramChromeGap : kSPKNotificationPillChromeGap;
+}
+
+// Where the bottom stack rests with no keyboard, above the overlay's safe area (the
+// stack is anchored to it).
+- (CGFloat)baseBottomMargin {
+    // One relayout asks once per toast; the screen cannot change in between, and the
+    // lookup walks the controller chain, so it is reused for a moment.
+    static CFTimeInterval cachedAt = 0.0;
+    static CGFloat cachedGap = 0.0;
+    static CGFloat cachedSpacing = -1.0;
+    CGFloat spacing = [self spk_chromeSpacing];
+    CFTimeInterval now = CACurrentMediaTime();
+    if (now - cachedAt > 0.05 || cachedSpacing != spacing) {
+        cachedGap = [self spk_bottomChromeGapWithSpacing:spacing];
+        cachedSpacing = spacing;
+        cachedAt = now;
+    }
+    return MAX(0.0, cachedGap - self.overlayRoot.view.safeAreaInsets.bottom);
+}
+
+// How much the keyboard raises the bottom stack above its resting spot. Kept apart
+// from the base so the pill can leave from the keyboard edge instead of sliding
+// behind the keyboard.
 - (CGFloat)bottomStackLift {
     CGFloat lift = [self keyboardLift];
-    return lift > 0.0 ? MAX(0.0, lift + kSPKNotificationKeyboardMargin - [self baseBottomMargin]) : 0.0;
+    return lift > 0.0 ? MAX(0.0, lift + [self spk_chromeSpacing] - [self baseBottomMargin]) : 0.0;
 }
 
 - (CGFloat)offsetForIndex:(NSUInteger)index {
@@ -735,36 +960,11 @@ static SPKNotificationCenter *sSPKNotificationSharedCenter;
         [self cleanupIfEmpty];
     };
 
-    [host layoutIfNeeded];
-    pill.alpha = 0.0;
-    CGFloat entranceY = isBottom ? 24.0 : -24.0;
-    pill.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(0.0, entranceY), CGAffineTransformMakeScale(0.88, 0.88));
-    anchor.constant = isBottom ? -[self offsetForIndex:self.visible.count - 1] : [self offsetForIndex:self.visible.count - 1];
-    // Instagram's toast is glass, and glass doesn't show a tint change while its fade
-    // runs: a download that finishes inside the entrance only turned green once the
-    // spring had settled. Its fade is kept short so the result shows almost at once;
-    // the slide and scale keep the spring.
     if (pill.instagramSkin) {
-        [UIView animateWithDuration:kSPKNotificationInstagramFadeInDuration
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseOut
-                         animations:^{
-                             pill.alpha = 1.0;
-                         }
-                         completion:nil];
+        [self spk_presentInstagramToast:pill anchor:anchor bottom:isBottom host:host];
+    } else {
+        [self spk_presentSparklePill:pill anchor:anchor bottom:isBottom host:host];
     }
-    [UIView animateWithDuration:kSPKNotificationInsertDuration
-                          delay:0
-         usingSpringWithDamping:0.78
-          initialSpringVelocity:0.85
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         if (!pill.instagramSkin)
-                             pill.alpha = 1.0;
-                         pill.transform = CGAffineTransformIdentity;
-                         [self relayoutAnimated:NO];
-                     }
-                     completion:nil];
 
     if (!progress) {
         slot.timer = [NSTimer scheduledTimerWithTimeInterval:SPKNotificationPillDuration()
@@ -775,6 +975,73 @@ static SPKNotificationCenter *sSPKNotificationSharedCenter;
                                                                [strongSlot.pill dismiss];
                                                        }];
     }
+}
+
+// Instagram's own toast (measured on 453): no fade and no scale, only an additive
+// position spring from just past the screen edge to its place. Mass 1, stiffness
+// 977.163, damping 46.889: a 0.2s perceptual spring with 0.25 bounce.
+- (void)spk_presentInstagramToast:(SPKNotificationPillView *)pill
+                           anchor:(NSLayoutConstraint *)anchor
+                           bottom:(BOOL)isBottom
+                             host:(UIView *)host {
+    pill.alpha = 1.0;
+    pill.transform = CGAffineTransformIdentity;
+    anchor.constant = isBottom ? -[self offsetForIndex:self.visible.count - 1] : [self offsetForIndex:self.visible.count - 1];
+    [UIView performWithoutAnimation:^{
+        [host layoutIfNeeded];
+    }];
+    CGFloat distance = isBottom ? CGRectGetHeight(host.bounds) - CGRectGetMinY(pill.frame) : -CGRectGetMaxY(pill.frame);
+    // Through UIKit, as Instagram does, rather than a spring added to the layer by
+    // hand: UIKit's animation asks for the display's high frame rate (30-120Hz) and a
+    // hand-built one asks for nothing, which is what made Sparkle's entrance less
+    // smooth with otherwise identical numbers. A property animator also makes the same
+    // additive position spring Instagram's does.
+    CGPoint restingCenter = pill.center;
+    [UIView performWithoutAnimation:^{
+        pill.center = CGPointMake(restingCenter.x, restingCenter.y + distance);
+    }];
+    UISpringTimingParameters *spring = [[UISpringTimingParameters alloc] initWithMass:1.0
+                                                                            stiffness:977.163
+                                                                              damping:46.889
+                                                                      initialVelocity:CGVectorMake(0.0, 0.0)];
+    UIViewPropertyAnimator *entrance = [[UIViewPropertyAnimator alloc] initWithDuration:0.3 timingParameters:spring];
+    [entrance addAnimations:^{
+        pill.center = restingCenter;
+    }];
+    [entrance startAnimation];
+
+    // Pills already on screen make room with the usual motion.
+    [UIView animateWithDuration:kSPKNotificationInsertDuration
+                          delay:0
+         usingSpringWithDamping:0.78
+          initialSpringVelocity:0.85
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         [self relayoutAnimated:NO];
+                     }
+                     completion:nil];
+}
+
+- (void)spk_presentSparklePill:(SPKNotificationPillView *)pill
+                        anchor:(NSLayoutConstraint *)anchor
+                        bottom:(BOOL)isBottom
+                          host:(UIView *)host {
+    [host layoutIfNeeded];
+    pill.alpha = 0.0;
+    CGFloat entranceY = isBottom ? 24.0 : -24.0;
+    pill.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(0.0, entranceY), CGAffineTransformMakeScale(0.88, 0.88));
+    anchor.constant = isBottom ? -[self offsetForIndex:self.visible.count - 1] : [self offsetForIndex:self.visible.count - 1];
+    [UIView animateWithDuration:kSPKNotificationInsertDuration
+                          delay:0
+         usingSpringWithDamping:0.78
+          initialSpringVelocity:0.85
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         pill.alpha = 1.0;
+                         pill.transform = CGAffineTransformIdentity;
+                         [self relayoutAnimated:NO];
+                     }
+                     completion:nil];
 }
 
 - (void)drainQueue {
@@ -816,7 +1083,11 @@ static SPKNotificationCenter *sSPKNotificationSharedCenter;
     if (triggerHaptic) {
         SPKNotificationTriggerHaptic(identifier, tone);
     }
-    if (!SPKNotificationIsEnabled(identifier))
+    // A failure always shows: silencing a group is about the confirmations, and a
+    // hidden error looks exactly like an action that did nothing.
+    BOOL showsBanner = tone == SPKNotificationToneError ? SPKNotificationGroupByIdentifier()[identifier ?: @""] != nil
+                                                        : SPKNotificationIsEnabled(identifier);
+    if (!showsBanner)
         return;
     [self onMain:^{
         NSUInteger visibleToasts = 0;
@@ -872,7 +1143,10 @@ static SPKNotificationCenter *sSPKNotificationSharedCenter;
 
         NSString *resolvedIconResource = SPKNotificationIconResourceForTone(iconResource, tone);
         UIImage *icon = SPKNotificationIconNamed(resolvedIconResource, SPKNotificationUsesInstagramStyle());
-        SPKNotificationPillView *pill = [SPKNotificationPillView toastPillWithTitle:title subtitle:resolvedSubtitle icon:icon tone:tone];
+        __block SPKNotificationPillView *pill = nil;
+        SPKNotificationBuildPill(^{
+            pill = [SPKNotificationPillView toastPillWithTitle:title subtitle:resolvedSubtitle icon:icon tone:tone];
+        });
 
         if (offersListTap) {
             if ([identifier isEqualToString:kSPKNotificationStorySeenUserRule] ||
@@ -912,6 +1186,7 @@ static SPKNotificationCenter *sSPKNotificationSharedCenter;
                                                onCancel:(void (^)(void))onCancel {
     if (!SPKNotificationIsEnabled(identifier))
         return nil;
+    self.progressIdentifier = identifier;
     return [self beginUnmanagedProgressWithTitle:title onCancel:onCancel];
 }
 
@@ -967,12 +1242,25 @@ static SPKNotificationCenter *sSPKNotificationSharedCenter;
                 return;
             }
         }
-        pill = [SPKNotificationPillView progressPill];
-        [pill updateProgressTitle:title ?: SPKL(@"MEDIA_TRIM_TRIM_ENTRY_DOWNLOADING_TEXT") subtitle:nil];
+        SPKNotificationBuildPill(^{
+            pill = [SPKNotificationPillView progressPill];
+            [pill updateProgressTitle:title ?: SPKL(@"MEDIA_TRIM_TRIM_ENTRY_DOWNLOADING_TEXT") subtitle:nil];
+        });
         pill.onCancel = onCancel;
         __weak SPKNotificationPillView *weakPillRef = pill;
         pill.onTonePresented = ^(SPKNotificationTone tone) {
-            if (![SPKUtils getBoolPref:@"general_disable_haptics"]) {
+            // The shared progress pill belongs to whichever group claimed it last, so
+            // its finishing haptic follows that group (Banner Only stays silent).
+            // Pills started without an identifier keep the old behaviour.
+            NSString *progressIdentifier = self.progressIdentifier;
+            BOOL hapticAllowed = YES;
+            if (progressIdentifier.length > 0) {
+                if (tone == SPKNotificationToneError)
+                    hapticAllowed = [SPKUtils getBoolPref:kSPKNotificationErrorHapticKey];
+                else
+                    hapticAllowed = SPKNotificationModeForIdentifier(progressIdentifier) == SPKNotificationModeBannerAndHaptic;
+            }
+            if (hapticAllowed && ![SPKUtils getBoolPref:@"general_disable_haptics"]) {
                 UINotificationFeedbackGenerator *haptic = [[UINotificationFeedbackGenerator alloc] init];
                 if (tone == SPKNotificationToneError)
                     [haptic notificationOccurred:UINotificationFeedbackTypeError];

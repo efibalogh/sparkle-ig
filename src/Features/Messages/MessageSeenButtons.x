@@ -465,7 +465,7 @@ static NSArray<UIMenuElement *> *SPKDirectSeenButtonMenuChildren(id source) {
                                                    image:settingsImage
                                               identifier:nil
                                                  handler:^(__unused UIAction *action) {
-                                                     SPKNotify(kSPKNotificationOpenTopicSettings, SPKL(@"COMMON_OPENED_SETTINGS_TOAST"), nil, @"settings", SPKNotificationToneForIconResource(@"settings"));
+                                                     SPKNotificationTriggerHaptic(kSPKNotificationOpenTopicSettings, SPKNotificationToneInfo);
                                                      [SPKUtils showSettingsForTopicTitle:@"Messages"];
                                                  }];
     [children addObject:settingsAction];

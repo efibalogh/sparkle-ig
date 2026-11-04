@@ -14,8 +14,6 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationDownloadAllShare;
 FOUNDATION_EXPORT NSString *const kSPKNotificationDownloadAllGallery;
 FOUNDATION_EXPORT NSString *const kSPKNotificationDownloadAllClipboard;
 FOUNDATION_EXPORT NSString *const kSPKNotificationDownloadAllLinks;
-FOUNDATION_EXPORT NSString *const kSPKNotificationDownloadQueueFinished;
-FOUNDATION_EXPORT NSString *const kSPKNotificationQueuedDownloadFailed;
 FOUNDATION_EXPORT NSString *const kSPKNotificationExpand;
 FOUNDATION_EXPORT NSString *const kSPKNotificationViewThumbnail;
 FOUNDATION_EXPORT NSString *const kSPKNotificationCopyCaption;
@@ -51,7 +49,6 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationPresenceOffline;
 FOUNDATION_EXPORT NSString *const kSPKNotificationPresenceTyping;
 FOUNDATION_EXPORT NSString *const kSPKNotificationPresenceRead;
 FOUNDATION_EXPORT NSString *const kSPKNotificationPresenceUserRule;
-FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsCaptureBlocked;
 FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsUpload;
 FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsAutoSave;
 FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsAutoSaveUserRule;
@@ -67,7 +64,6 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationMediaPreviewSaveGallery;
 FOUNDATION_EXPORT NSString *const kSPKNotificationMediaPreviewShare;
 FOUNDATION_EXPORT NSString *const kSPKNotificationMediaPreviewCopy;
 FOUNDATION_EXPORT NSString *const kSPKNotificationMediaPreviewDeleteGallery;
-FOUNDATION_EXPORT NSString *const kSPKNotificationMediaPreviewOpenGallery;
 
 FOUNDATION_EXPORT NSString *const kSPKNotificationGalleryOpenOriginal;
 FOUNDATION_EXPORT NSString *const kSPKNotificationGalleryOpenProfile;
@@ -79,6 +75,11 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationGalleryImport;
 FOUNDATION_EXPORT NSString *const kSPKNotificationSettingsExport;
 FOUNDATION_EXPORT NSString *const kSPKNotificationSettingsImport;
 FOUNDATION_EXPORT NSString *const kSPKNotificationSettingsClearCache;
+FOUNDATION_EXPORT NSString *const kSPKNotificationDownloadHistoryClear;
+FOUNDATION_EXPORT NSString *const kSPKNotificationDeletedMessagesClear;
+FOUNDATION_EXPORT NSString *const kSPKNotificationProfileAnalyzerClear;
+FOUNDATION_EXPORT NSString *const kSPKNotificationLocalSeenReset;
+FOUNDATION_EXPORT NSString *const kSPKNotificationPasscodeChanged;
 FOUNDATION_EXPORT NSString *const kSPKNotificationLanguagePackUpdate;
 FOUNDATION_EXPORT NSString *const kSPKNotificationCopyDescription;
 FOUNDATION_EXPORT NSString *const kSPKNotificationCopyNoteText;
@@ -100,11 +101,41 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationStyleKey;
 extern "C" {
 #endif
 
-NSString *SPKNotificationDefaultsKey(NSString *identifier);
-NSString *SPKNotificationHapticDefaultsKey(NSString *identifier);
-NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void);
+// How a notification group reports: a banner with a haptic, a banner alone, a haptic
+// alone, or nothing. Errors ignore the mode and always show a banner; their haptic
+// follows kSPKNotificationErrorHapticKey.
+typedef NS_ENUM(NSInteger, SPKNotificationMode) {
+    SPKNotificationModeBannerAndHaptic = 0,
+    SPKNotificationModeBannerOnly,
+    SPKNotificationModeHapticOnly,
+    SPKNotificationModeOff,
+};
+
+// Stored values of a group's mode preference.
+FOUNDATION_EXPORT NSString *const kSPKNotificationModeValueAll;
+FOUNDATION_EXPORT NSString *const kSPKNotificationModeValueBanner;
+FOUNDATION_EXPORT NSString *const kSPKNotificationModeValueHaptic;
+FOUNDATION_EXPORT NSString *const kSPKNotificationModeValueOff;
+FOUNDATION_EXPORT NSString *const kSPKNotificationErrorHapticKey;
+
+// Every group, in display order. Each entry: @"group" (stable id), @"title",
+// @"iconName", @"kind" (@"confirmation" or @"event"), @"footer" (help text) and
+// @"identifiers" (the notification identifiers it covers).
+NSArray<NSDictionary *> *SPKNotificationGroups(void);
+// Group id -> identifiers it covers. Safe to call before localization is ready.
+NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(void);
+// Preference key holding a group's mode (`notifs_group_<group>`).
+NSString *SPKNotificationGroupModeKey(NSString *group);
 NSDictionary<NSString *, id> *SPKNotificationDefaultPreferences(void);
+SPKNotificationMode SPKNotificationModeForIdentifier(NSString *identifier);
+// A non-error banner shows for this identifier. Gates progress pills too.
 BOOL SPKNotificationIsEnabled(NSString *identifier);
+// Any feedback at all (banner or haptic). Use it to decide whether work that only
+// exists to produce a notification is worth doing.
+BOOL SPKNotificationIsActive(NSString *identifier);
+// The identifier belongs to an event group (activity, unsent, auto-save, ...) rather
+// than a confirmation of something the user just did.
+BOOL SPKNotificationIdentifierIsEvent(NSString *identifier);
 NSTimeInterval SPKNotificationPillDuration(void);
 // Notifications render as Instagram's own toast view instead of Sparkle's pill. Read
 // when a notification is created, so the setting applies to the next one.

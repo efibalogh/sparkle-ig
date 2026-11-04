@@ -44,6 +44,8 @@ UIMenu *SPKCacheAutoClearMenu(void);
 UIMenu *SPKNotificationProgressSubtitleStyleMenu(void);
 UIMenu *SPKNotificationStyleMenu(void);
 UIMenu *SPKNotificationPillPositionMenu(void);
+/// Banner and Haptic / Banner Only / Haptic Only / Off for a notification group's mode key.
+UIMenu *SPKNotificationModeMenu(NSString *defaultsKey);
 UIMenu *SPKMediaVideoQualityMenu(void);
 UIMenu *SPKMediaPhotoQualityMenu(void);
 UIMenu *SPKAutoSaveDestinationMenu(void);

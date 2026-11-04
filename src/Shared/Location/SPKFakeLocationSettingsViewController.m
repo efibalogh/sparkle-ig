@@ -5,6 +5,7 @@
 #import "../UI/SPKIGAlertPresenter.h"
 #import "../i18n/SPKStrings.h"
 #import "SPKFakeLocationPickerViewController.h"
+#import "../UI/SPKNotificationCenter.h"
 
 static NSString *const kSPKFakeLocationRowPlaceIDKey = @"spkFakeLocationPlaceID";
 
@@ -32,6 +33,7 @@ void SPKFakeLocationPromptToSavePlace(UIViewController *presenter, SPKFakeLocati
                                                                                                                    address:place.address
                                                                                                                 coordinate:place.coordinate];
                                                         [SPKFakeLocation addSavedPlace:saved];
+                                                        SPKNotify(kSPKNotificationFakeLocation, SPKL(@"MESSAGES_FAKE_LOCATION_PLACE_SAVED_TOAST"), saved.name, @"location_filled", SPKNotificationToneSuccess);
                                                     }
                                                      cancelBlock:nil];
 }

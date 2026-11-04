@@ -17,6 +17,22 @@
 @interface SPKGalleryHiddenSourcesViewController : SPKSettingsViewController
 @end
 
+static SPKSetting *SPKGallerySearchChangePasscodeSetting(void) {
+    SPKSetting *setting = [SPKSetting buttonCellWithTitle:SPKL(@"GALLERY_GALLERY_SETTINGS_CHANGE_PASSCODE_TITLE")
+                                                 subtitle:nil
+                                                     icon:SPKSettingsIcon(@"key")
+                                                   action:^{
+                                                       [SPKGalleryLockViewController presentMode:SPKGalleryLockModeChangePasscode
+                                                                              fromViewController:SPKSettingsTopPresenter()
+                                                                                      completion:^(__unused BOOL success){
+                                                                                      }];
+                                                   }];
+    setting.enabledProvider = ^BOOL {
+        return [SPKGalleryManager sharedManager].isLockEnabled;
+    };
+    return setting;
+}
+
 @implementation SPKGalleryHiddenSourcesViewController
 
 - (instancetype)init {
@@ -135,11 +151,8 @@ static NSString *const kGalleryQuickAccessDisabledValue = @"none";
                                            icon:SPKSettingsIcon(@"lock")
                                     defaultsKey:@""],
                                SPKL(@"GALLERY_LOCK_PASSCODE_HELP")),
-            [SPKSetting buttonCellWithTitle:SPKL(@"GALLERY_GALLERY_SETTINGS_CHANGE_PASSCODE_TITLE")
-                                       subtitle:nil
-                                           icon:SPKSettingsIcon(@"key")
-                                         action:^{
-                                         }]
+            // Settings search runs this row's action on tap, so it has to do the real thing.
+            SPKGallerySearchChangePasscodeSetting()
         ],
                         nil),
         SPKTopicSection(SPKL(@"DATA_BACKUP_TRANSFER_IMPORT_TITLE"), @[
