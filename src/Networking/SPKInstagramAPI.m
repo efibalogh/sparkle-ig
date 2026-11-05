@@ -479,11 +479,9 @@ static NSString *spkNormalizePK(NSString *pk) {
             }
 
 #ifdef SPK_DEV
-            SPKLog(@"Downloads", @"[4K Debug] Cookies merged count: %lu", (unsigned long)cookieDict.count);
-            for (NSString *name in cookieDict) {
-                SPKLog(@"Downloads", @"[4K Debug] Merged Cookie: %@ = %@", name, cookieDict[name]);
-            }
-            SPKLog(@"Downloads", @"[4K Debug] Request headers: %@", request.allHTTPHeaderFields);
+            // Names only: cookie values and the request headers carry the session token.
+            SPKLog(@"Downloads", @"[4K Debug] Merged cookies (%lu): %@", (unsigned long)cookieDict.count,
+                   [[cookieDict.allKeys sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@", "]);
 #else
             SPKLog(@"Downloads", @"[4K] Merged cookies count: %lu", (unsigned long)cookieDict.count);
 #endif
