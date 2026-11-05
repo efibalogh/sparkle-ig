@@ -238,6 +238,9 @@ static NSArray<NSURL *> *SPKDownloadSucceededFileURLsForJob(SPKDownloadJob *job)
             self.lastProgressUpdate = now;
 
         if (!self.activePill && !self.pillDismissedByUser) {
+            // A fresh pill has shown no outcome yet, whatever an earlier pill for
+            // the same job did.
+            self.terminalShownForActiveJob = NO;
             __weak typeof(self) weakSelf = self;
             NSString *identifier = focusedJob.request.notificationIdentifier ?: kSPKNotificationDownloadLibrary;
             self.activePill = SPKNotifyProgress(identifier, [self progressTitleForJob:focusedJob], ^{
@@ -293,6 +296,12 @@ static NSArray<NSURL *> *SPKDownloadSucceededFileURLsForJob(SPKDownloadJob *job)
             }
         }
     } else {
+        // Activity is read from the live jobs, but this snapshot may predate their
+        // current state: a job that fails within moments of starting has its running
+        // snapshot delivered after it already ended. Only the terminal snapshot that
+        // follows carries the outcome and its error, so the pill waits for it.
+        if (!SPKDownloadStateIsTerminal(job.state) && job.state != SPKDownloadStatePartial)
+            return;
         if ([job.jobID isEqualToString:self.activeJobID] && self.activePill && !self.terminalShownForActiveJob) {
             [self showTerminalOnActivePillForJob:job];
             self.terminalShownForActiveJob = YES;
@@ -348,7 +357,9 @@ static NSArray<NSURL *> *SPKDownloadSucceededFileURLsForJob(SPKDownloadJob *job)
         [self copyBatchToClipboardForJob:job];
     }
 
-    if (job.state == SPKDownloadStateFailed || job.state == SPKDownloadStatePartial) {
+    // Anything but a real success or a cancellation is reported as a failure, so a
+    // job that ends without a saved file never claims to have saved one.
+    if (job.state != SPKDownloadStateSucceeded && job.state != SPKDownloadStateCancelled) {
         NSString *message = SPKDownloadErrorDisplayDescription(job.items.firstObject.error) ?: SPKL(@"DOWNLOADS_DOWNLOAD_PRESENTER_DOWNLOAD_FAILED_TEXT");
         [self.activePill showErrorWithTitle:job.state == SPKDownloadStatePartial ? SPKL(@"DOWNLOADS_DOWNLOAD_PRESENTER_SOME_DOWNLOADS_FAILED_TEXT") : SPKL(@"DOWNLOADS_DOWNLOAD_PRESENTER_DOWNLOAD_FAILED_TEXT")
                                    subtitle:message

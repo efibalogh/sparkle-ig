@@ -152,10 +152,14 @@
 - (void)cancelItemID:(NSString *)itemID inJobID:(NSString *)jobID {
     [self.scheduler cancelItemID:itemID inJobID:jobID];
 }
+// A retry keeps its job ID, so the presenter must treat it as a new run: otherwise the
+// terminal it already showed for the first attempt suppresses this attempt's outcome.
 - (void)retryJobID:(NSString *)jobID {
+    [self.presenter prepareForNewJobSubmission];
     [self.scheduler retryJobID:jobID];
 }
 - (void)retryItemID:(NSString *)itemID inJobID:(NSString *)jobID {
+    [self.presenter prepareForNewJobSubmission];
     [self.scheduler retryItemID:itemID inJobID:jobID];
 }
 - (void)clearFinishedHistory {
@@ -189,9 +193,19 @@
 }
 
 - (void)confirmCancelForJobID:(NSString *)jobID {
-    if (!jobID)
-        return;
     dispatch_async(dispatch_get_main_queue(), ^{
+        // The pill can outlive its job (it ended while the tap was on its way): there
+        // is nothing left to cancel, so the tap just clears the pill.
+        SPKDownloadJob *target = nil;
+        for (SPKDownloadJob *job in [self.scheduler allJobs]) {
+            if ([job.jobID isEqualToString:jobID])
+                target = job;
+        }
+        if (!target || ![self.presenter jobIsActive:target]) {
+            [self.presenter dismissProgress];
+            return;
+        }
+
         UIViewController *presenterHost = topMostController();
         if (!presenterHost)
             return;
