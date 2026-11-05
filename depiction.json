@@ -17,7 +17,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Version",
-          "text": "1.5.1"
+          "text": "1.6.0"
         },
         {
           "class": "DepictionTableTextView",
@@ -32,7 +32,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Released",
-          "text": "2026-10-13"
+          "text": "2026-11-05"
         },
         {
           "class": "DepictionSeparatorView"
@@ -67,6 +67,24 @@
       "class": "DepictionStackView",
       "tabname": "Changelog",
       "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "v1.6.0",
+          "useBoldText": true
+        },
+        {
+          "class": "DepictionLabelView",
+          "text": "2026-11-05",
+          "textColor": "#8E8E93",
+          "fontSize": 12
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "## ✨ What's new?\n\n- Support for Instagram version 454.1.0\n\n**Updates**\n- **Update checker**: when a new Sparkle version is out, a sheet shows the new and installed versions with the full changelog a swipe away. **Update** opens your package manager on jailbroken installs and the Telegram channel on sideloaded ones. **Skip** silences that version, and **Not Now** asks again on the next launch\n- **Changelog** in About lists every release, with the one you have installed labeled\n\n**Interface**\n- **OLED Dark Mode**: Instagram's dark theme in pure black, with raised surfaces a shade lighter so they stay visible. On iOS 26 and later, the Liquid Glass tab bar turns a neutral gray, or stays black with **Black Glass**\n- **Liquid Glass** is now Follow / On / Off: leave it to Instagram's rollout, or force it on or off\n- **Pin People in Search**: hold a person in search to pin them to their own section above recent searches. Pins are saved per account, you can reorder them, and you can collapse the section\n- **Open Clipboard Username**: with a username copied, a long press on the Explore tab opens that profile directly\n\n**Profile**\n- **Account Privacy**: hide your followers and following lists, or hide yourself from other people's lists, from Profile > Privacy\n- **Exact Follower Count** on profiles\n- **Show Suggestions Button** on every profile, including your own. **Hide Profile Suggestions** now keeps the panel closed until you tap it\n\n**Stories & Gallery**\n- Saved stories and highlights open directly from the Gallery and from links, even after the 24 hours are up, by finding the story in the account's highlights\n- Stories that live in a highlight are labeled and badged in the Gallery\n- **Edit Details** shows an item's original Instagram link, and tapping it copies the link\n- **Hide Suggested Accounts** in the story tray and viewer\n\n**Messages, Feed & Instants**\n- **Confirm Feed Refresh** for pull to refresh, Home tab re-taps and status bar taps\n- **Confirm Reel Send to Chat** in the reels viewer opened from a shared reel\n- **Manually Mark Seen** for Instants now supports Excluded / Included Users lists, like Stories and Messages\n- Meta AI is hidden from the share sheet and from DM search, along with the other AI bots\n\n**Notifications**\n- Notification settings are grouped into 12 categories, each set to banner and haptic, banner only, haptic only or off. Your existing choices carry over. Errors always show a banner\n- A live preview at the top of the Notifications page\n- New confirmations for clearing download history, deleted messages, cached profile pictures, Profile Analyzer history and Seen Locally. The \"opened\" confirmations (profile, post, settings and similar) are gone, but their haptics stay\n- Instagram-style toasts now use Instagram's own motion, and both styles stay above the tab bar, composer or keyboard\n- Long subtitles wrap onto a second line instead of being cut off\n\n## 🛠 Fixes & Improvements\n\n- Saving a Gallery item from the preview no longer renames or deletes its original file. Originals already moved by an earlier version are put back\n- A Gallery item whose file is missing explains that the file is gone, instead of showing a remote URL error with a Retry button that could never work\n- Edit & Save and the preview editor respect your photo quality setting, including Always Ask\n- Feed videos with doubled audio are trimmed to the video length, and silent feed videos are offered as video only\n- Copying the link of a story viewed in a highlight copies the highlight link, so it no longer opens as expired\n- Every progress notification's cancel button now stops the work behind it\n- Reels action button, downloads, playback speed, panel pause and Stop Looping Reels work again on Instagram 452\n- Hidden chats, message flags, the vanish mode swipe, Message Preview and Chat Peek work again on Instagram 452 and 453\n- Seen receipts stay blocked and the following story tray resolves on Instagram 454\n- Stop auto-advance works on Instagram's newer story viewer, and switching it on mid-session takes effect right away\n- Stories keep playing after you mark them seen, like or reply with auto-advance on\n- Search pins show on every version of Instagram's search screen, and **Hide Recent Searches** moves next to them under Interface > Explore & Search\n- The expanded Gallery preview names its open action for the item (Open Story, Open Reel or Open Post)\n- On Instagram 410, opening a post from clipboard no longer scrolls the feed back to the top and refreshes it\n- Instants video upload and confirm work with Instagram's newer camera shutter\n- Share sheet confirm send and the create group button work again on Instagram 451 and later\n- The launch tab is picked correctly when it comes after a hidden tab, and its hooks are installed first for a faster start\n- Launches you leave before they finish no longer count towards Sparkle's crash protection\n- **Disable Safe Mode** has been removed\n"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
         {
           "class": "DepictionSubheaderView",
           "title": "v1.5.1",

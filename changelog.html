@@ -20,9 +20,83 @@
 
   <section class="rel">
     <div class="rel-head">
+      <h2>v1.6.0</h2>
+      <span class="date">2026-11-05</span>
+      <span class="pill">Latest</span>
+    </div>
+    <div class="notes">
+<h2>✨ What's new?</h2>
+<ul>
+<li>Support for Instagram version 454.1.0</li>
+</ul>
+<p><strong>Updates</strong></p>
+<ul>
+<li><strong>Update checker</strong>: when a new Sparkle version is out, a sheet shows the new and installed versions with the full changelog a swipe away. <strong>Update</strong> opens your package manager on jailbroken installs and the Telegram channel on sideloaded ones. <strong>Skip</strong> silences that version, and <strong>Not Now</strong> asks again on the next launch</li>
+<li><strong>Changelog</strong> in About lists every release, with the one you have installed labeled</li>
+</ul>
+<p><strong>Interface</strong></p>
+<ul>
+<li><strong>OLED Dark Mode</strong>: Instagram's dark theme in pure black, with raised surfaces a shade lighter so they stay visible. On iOS 26 and later, the Liquid Glass tab bar turns a neutral gray, or stays black with <strong>Black Glass</strong></li>
+<li><strong>Liquid Glass</strong> is now Follow / On / Off: leave it to Instagram's rollout, or force it on or off</li>
+<li><strong>Pin People in Search</strong>: hold a person in search to pin them to their own section above recent searches. Pins are saved per account, you can reorder them, and you can collapse the section</li>
+<li><strong>Open Clipboard Username</strong>: with a username copied, a long press on the Explore tab opens that profile directly</li>
+</ul>
+<p><strong>Profile</strong></p>
+<ul>
+<li><strong>Account Privacy</strong>: hide your followers and following lists, or hide yourself from other people's lists, from Profile &gt; Privacy</li>
+<li><strong>Exact Follower Count</strong> on profiles</li>
+<li><strong>Show Suggestions Button</strong> on every profile, including your own. <strong>Hide Profile Suggestions</strong> now keeps the panel closed until you tap it</li>
+</ul>
+<p><strong>Stories &amp; Gallery</strong></p>
+<ul>
+<li>Saved stories and highlights open directly from the Gallery and from links, even after the 24 hours are up, by finding the story in the account's highlights</li>
+<li>Stories that live in a highlight are labeled and badged in the Gallery</li>
+<li><strong>Edit Details</strong> shows an item's original Instagram link, and tapping it copies the link</li>
+<li><strong>Hide Suggested Accounts</strong> in the story tray and viewer</li>
+</ul>
+<p><strong>Messages, Feed &amp; Instants</strong></p>
+<ul>
+<li><strong>Confirm Feed Refresh</strong> for pull to refresh, Home tab re-taps and status bar taps</li>
+<li><strong>Confirm Reel Send to Chat</strong> in the reels viewer opened from a shared reel</li>
+<li><strong>Manually Mark Seen</strong> for Instants now supports Excluded / Included Users lists, like Stories and Messages</li>
+<li>Meta AI is hidden from the share sheet and from DM search, along with the other AI bots</li>
+</ul>
+<p><strong>Notifications</strong></p>
+<ul>
+<li>Notification settings are grouped into 12 categories, each set to banner and haptic, banner only, haptic only or off. Your existing choices carry over. Errors always show a banner</li>
+<li>A live preview at the top of the Notifications page</li>
+<li>New confirmations for clearing download history, deleted messages, cached profile pictures, Profile Analyzer history and Seen Locally. The "opened" confirmations (profile, post, settings and similar) are gone, but their haptics stay</li>
+<li>Instagram-style toasts now use Instagram's own motion, and both styles stay above the tab bar, composer or keyboard</li>
+<li>Long subtitles wrap onto a second line instead of being cut off</li>
+</ul>
+<h2>🛠 Fixes &amp; Improvements</h2>
+<ul>
+<li>Saving a Gallery item from the preview no longer renames or deletes its original file. Originals already moved by an earlier version are put back</li>
+<li>A Gallery item whose file is missing explains that the file is gone, instead of showing a remote URL error with a Retry button that could never work</li>
+<li>Edit &amp; Save and the preview editor respect your photo quality setting, including Always Ask</li>
+<li>Feed videos with doubled audio are trimmed to the video length, and silent feed videos are offered as video only</li>
+<li>Copying the link of a story viewed in a highlight copies the highlight link, so it no longer opens as expired</li>
+<li>Every progress notification's cancel button now stops the work behind it</li>
+<li>Reels action button, downloads, playback speed, panel pause and Stop Looping Reels work again on Instagram 452</li>
+<li>Hidden chats, message flags, the vanish mode swipe, Message Preview and Chat Peek work again on Instagram 452 and 453</li>
+<li>Seen receipts stay blocked and the following story tray resolves on Instagram 454</li>
+<li>Stop auto-advance works on Instagram's newer story viewer, and switching it on mid-session takes effect right away</li>
+<li>Stories keep playing after you mark them seen, like or reply with auto-advance on</li>
+<li>Search pins show on every version of Instagram's search screen, and <strong>Hide Recent Searches</strong> moves next to them under Interface &gt; Explore &amp; Search</li>
+<li>The expanded Gallery preview names its open action for the item (Open Story, Open Reel or Open Post)</li>
+<li>On Instagram 410, opening a post from clipboard no longer scrolls the feed back to the top and refreshes it</li>
+<li>Instants video upload and confirm work with Instagram's newer camera shutter</li>
+<li>Share sheet confirm send and the create group button work again on Instagram 451 and later</li>
+<li>The launch tab is picked correctly when it comes after a hidden tab, and its hooks are installed first for a faster start</li>
+<li>Launches you leave before they finish no longer count towards Sparkle's crash protection</li>
+<li><strong>Disable Safe Mode</strong> has been removed</li>
+</ul>
+    </div>
+  </section>
+  <section class="rel">
+    <div class="rel-head">
       <h2>v1.5.1</h2>
       <span class="date">2026-10-13</span>
-      <span class="pill">Current</span>
     </div>
     <div class="notes">
 <h2>🛠 Fixes &amp; Improvements</h2>
