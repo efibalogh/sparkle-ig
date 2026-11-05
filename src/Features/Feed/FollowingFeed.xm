@@ -44,9 +44,18 @@ static BOOL SPKFollowingFeedEnabled(void) {
 
 - (id)selectedMainFeedViewModel {
     if (SPKFollowingFeedEnabled()) {
-        id following = ((id (*)(id, SEL))objc_msgSend)(self, @selector(_followingMainFeedViewModel));
-        if (following)
-            return following;
+        // 453 renamed _followingMainFeedViewModel to followingLaneMainFeedViewModel.
+        // Probe both and fall back to %orig, so a future rename degrades instead of
+        // throwing an unrecognized selector during launch.
+        SEL selectors[] = {@selector(followingLaneMainFeedViewModel), @selector(_followingMainFeedViewModel)};
+        for (size_t i = 0; i < sizeof(selectors) / sizeof(selectors[0]); i++) {
+            if (![self respondsToSelector:selectors[i]])
+                continue;
+            id following = ((id (*)(id, SEL))objc_msgSend)(self, selectors[i]);
+            if (following)
+                return following;
+            break;
+        }
     }
     return %orig;
 }
@@ -162,7 +171,7 @@ static BOOL SPKFollowingFeedEnabled(void) {
 %hook IGStoryTrayCellViewModel
 
 - (double)avatarSizeAdjustment {
-    if (SPKFollowingFeedEnabled()) {
+    if (SPKFollowingFeedEnabled() && [self respondsToSelector:@selector(module)]) {
         NSString *module = ((NSString * (*)(id, SEL)) objc_msgSend)(self, @selector(module));
         if ([module isKindOfClass:[NSString class]] && [module hasPrefix:@"feed_timeline"]) {
             return 28.5;
