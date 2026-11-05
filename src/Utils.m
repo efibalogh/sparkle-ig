@@ -1954,6 +1954,54 @@ static NSDate *SPKScanObjectForPostedDate(id target, NSInteger depth) {
     });
 }
 
+static const void *kSPKRevealKeyAssociation = &kSPKRevealKeyAssociation;
+
++ (void)setRevealKey:(NSString *)key forViewController:(UIViewController *)viewController {
+    if (viewController)
+        objc_setAssociatedObject(viewController, kSPKRevealKeyAssociation, key, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
++ (BOOL)revealViewControllerWithKey:(NSString *)key {
+    if (key.length == 0)
+        return NO;
+    return [self revealViewControllerMatching:^BOOL(UIViewController *viewController) {
+        return [objc_getAssociatedObject(viewController, kSPKRevealKeyAssociation) isEqualToString:key];
+    }];
+}
+
++ (BOOL)revealViewControllerMatching:(BOOL (^)(UIViewController *))match {
+    if (!match)
+        return NO;
+    UIViewController *host = UIApplication.sharedApplication.keyWindow.rootViewController;
+    for (; host; host = host.presentedViewController) {
+        // A screen on its way out can't be revealed; a fresh one is presented instead.
+        if (host.isBeingDismissed)
+            return NO;
+        UINavigationController *nav = [host isKindOfClass:UINavigationController.class] ? (UINavigationController *)host : nil;
+        UIViewController *found = match(host) ? host : nil;
+        for (UIViewController *child in nav.viewControllers) {
+            if (!found && match(child))
+                found = child;
+        }
+        if (!found)
+            continue;
+        BOOL covered = host.presentedViewController != nil;
+        if (nav && found != nav && nav.topViewController != found)
+            [nav popToViewController:found animated:!covered];
+        if (covered)
+            [host dismissViewControllerAnimated:YES completion:nil];
+        return YES;
+    }
+    return NO;
+}
+
++ (void)presentViewControllerInSheet:(UIViewController *)vc revealKey:(NSString *)revealKey {
+    if (!vc || [self revealViewControllerWithKey:revealKey])
+        return;
+    [self setRevealKey:revealKey forViewController:vc];
+    [self presentViewControllerInSheet:vc];
+}
+
 + (void)presentViewControllerInSheet:(UIViewController *)vc {
     if (!vc)
         return;

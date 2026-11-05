@@ -48,11 +48,11 @@
 
 + (void)presentDownloadsHistorySheet {
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *presenter = topMostController();
-        if ([presenter isKindOfClass:UINavigationController.class] &&
-            [((UINavigationController *)presenter).topViewController isKindOfClass:SPKDownloadsHistoryViewController.class]) {
+        if ([SPKUtils revealViewControllerMatching:^BOOL(UIViewController *viewController) {
+                return [viewController isKindOfClass:SPKDownloadsHistoryViewController.class];
+            }])
             return;
-        }
+        UIViewController *presenter = topMostController();
         SPKDownloadsHistoryViewController *vc = [SPKDownloadsHistoryViewController new];
         UINavigationController *nav = [[SPKChromeNavigationController alloc] initWithRootViewController:vc];
         nav.modalPresentationStyle = UIModalPresentationPageSheet;

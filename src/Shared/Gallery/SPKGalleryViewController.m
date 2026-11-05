@@ -181,11 +181,18 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 }
 
 + (void)presentGallery {
+    // Only the full Gallery opened here is reused; filtered browsers are separate screens.
+    static NSString *const kRevealKey = @"gallery.full";
+    if ([SPKUtils revealViewControllerWithKey:kRevealKey])
+        return;
     UIViewController *presenter = topMostController();
     SPKGalleryManager *mgr = [SPKGalleryManager sharedManager];
 
     void (^presentGalleryNav)(void) = ^{
+        if ([SPKUtils revealViewControllerWithKey:kRevealKey])
+            return;
         SPKGalleryViewController *vc = [[SPKGalleryViewController alloc] init];
+        [SPKUtils setRevealKey:kRevealKey forViewController:vc];
         UINavigationController *nav = [[SPKChromeNavigationController alloc] initWithRootViewController:vc];
         nav.modalPresentationStyle = UIModalPresentationFullScreen;
         [presenter presentViewController:nav animated:YES completion:nil];

@@ -1152,16 +1152,16 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
             if ([identifier isEqualToString:kSPKNotificationStorySeenUserRule] ||
                 [identifier isEqualToString:kSPKNotificationProfileStorySeenUserRule]) {
                 pill.onTapWhenCompleted = ^{
-                    [SPKUtils presentViewControllerInSheet:SPKStoryManualSeenListViewController()];
+                    [SPKUtils presentViewControllerInSheet:SPKStoryManualSeenListViewController() revealKey:@"list.story_manual_seen"];
                 };
             } else if ([identifier isEqualToString:kSPKNotificationDirectThreadSeenRule] ||
                        [identifier isEqualToString:kSPKNotificationProfileMessagesSeenUserRule]) {
                 pill.onTapWhenCompleted = ^{
-                    [SPKUtils presentViewControllerInSheet:SPKDirectManualSeenListViewController()];
+                    [SPKUtils presentViewControllerInSheet:SPKDirectManualSeenListViewController() revealKey:@"list.direct_manual_seen"];
                 };
             } else if ([identifier isEqualToString:kSPKNotificationDirectHiddenChat]) {
                 pill.onTapWhenCompleted = ^{
-                    [SPKUtils presentViewControllerInSheet:SPKDirectHiddenChatsListViewController()];
+                    [SPKUtils presentViewControllerInSheet:SPKDirectHiddenChatsListViewController() revealKey:@"list.direct_hidden_chats"];
                 };
             } else if (SPKAutoSaveListViewControllerForRuleIdentifier(identifier)) {
                 pill.onTapWhenCompleted = ^{
@@ -1169,7 +1169,7 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
                     // switched Filter Mode, and the list screen reads its mode at init.
                     UIViewController *list = SPKAutoSaveListViewControllerForRuleIdentifier(identifier);
                     if (list)
-                        [SPKUtils presentViewControllerInSheet:list];
+                        [SPKUtils presentViewControllerInSheet:list revealKey:[@"list." stringByAppendingString:identifier]];
                 };
             }
         }
