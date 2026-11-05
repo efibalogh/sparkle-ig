@@ -15,6 +15,29 @@ static BOOL SPKFollowingFeedEnabled(void) {
     return [[SPKUtils getStringPref:@"feed_mode"] isEqualToString:@"following"];
 }
 
+// IGUserSession's Following feed model accessor was renamed between versions:
+// `_followingMainFeedViewModel` (≤436) → `followingLaneMainFeedViewModel` (454).
+// Messaging the missing one raises an unrecognized-selector crash, so probe first.
+static id SPKFollowingMainFeedViewModel(id session) {
+    static SEL const candidates[] = {
+        @selector(followingLaneMainFeedViewModel),
+        @selector(_followingMainFeedViewModel),
+    };
+    for (size_t i = 0; i < sizeof(candidates) / sizeof(candidates[0]); i++) {
+        if ([session respondsToSelector:candidates[i]])
+            return ((id (*)(id, SEL))objc_msgSend)(session, candidates[i]);
+    }
+    return nil;
+}
+
+static void SPKForceFollowingPagination(NSString **paginationSource, BOOL *isInFollowingTab) {
+    if (!SPKFollowingFeedEnabled())
+        return;
+    *paginationSource = @"following";
+    if (isInFollowingTab)
+        *isInFollowingTab = YES;
+}
+
 %group SPKFollowingFeedHooks
 
 #pragma mark - Picker dropdown order
@@ -44,7 +67,7 @@ static BOOL SPKFollowingFeedEnabled(void) {
 
 - (id)selectedMainFeedViewModel {
     if (SPKFollowingFeedEnabled()) {
-        id following = ((id (*)(id, SEL))objc_msgSend)(self, @selector(_followingMainFeedViewModel));
+        id following = SPKFollowingMainFeedViewModel(self);
         if (following)
             return following;
     }
@@ -95,10 +118,39 @@ static BOOL SPKFollowingFeedEnabled(void) {
                             isInFollowingTab:(BOOL)isInFollowingTab
           useShimmerLoadingWhenNoStoriesTray:(BOOL)useShimmer
                          mainFeedDataFetcher:(id)dataFetcher {
-    if (SPKFollowingFeedEnabled()) {
-        paginationSource = @"following";
-        isInFollowingTab = YES;
-    }
+    SPKForceFollowingPagination(&paginationSource, &isInFollowingTab);
+    return %orig;
+}
+
+// 454 appended backgroundPrefetchStore:; the selector above no longer exists there.
+- (id)initWithDeps:(id)deps
+                                       posts:(id)posts
+                                   nextMaxID:(id)nextMaxID
+                     initialPaginationSource:(NSString *)paginationSource
+                          contentCoordinator:(id)coordinator
+        dataSourceSupplementaryItemsProvider:(id)supplementaryProvider
+                     disableAutomaticRefresh:(BOOL)disableRefresh
+                        disableSerialization:(BOOL)disableSerialization
+                                   sessionId:(id)sessionId
+                             analyticsModule:(id)analyticsModule
+                         disableFlashFeedTLI:(BOOL)disableFlashFeedTLI
+                 disableFlashFeedOnColdStart:(BOOL)disableColdStart
+                     disableResponseDeferral:(BOOL)disableResponseDeferral
+                            hidesStoriesTray:(BOOL)hidesStoriesTray
+           shouldRegisterAsStoryDataListener:(BOOL)shouldRegisterAsStoryDataListener
+                             isSecondaryFeed:(BOOL)isSecondaryFeed
+       collectionViewBackgroundColorOverride:(id)backgroundColor
+                   minWarmStartFetchInterval:(double)minWarmStart
+               peakMinWarmStartFetchInterval:(double)peakMinWarmStart
+        minimumWarmStartBackgroundedInterval:(double)backgroundedMinWarmStart
+    peakMinimumWarmStartBackgroundedInterval:(double)peakBackgroundedMinWarmStart
+              supplementalFeedHoistedMediaID:(id)hoistedMediaId
+                         headerTitleOverride:(id)headerTitle
+                            isInFollowingTab:(BOOL)isInFollowingTab
+          useShimmerLoadingWhenNoStoriesTray:(BOOL)useShimmer
+                         mainFeedDataFetcher:(id)dataFetcher
+                     backgroundPrefetchStore:(id)prefetchStore {
+    SPKForceFollowingPagination(&paginationSource, &isInFollowingTab);
     return %orig;
 }
 
@@ -117,12 +169,33 @@ static BOOL SPKFollowingFeedEnabled(void) {
                       sessionTracker:(id)sessionTracker
                      analyticsModule:(id)analyticsModule
                        useNewUIGraph:(BOOL)useNewGraph {
-    if (SPKFollowingFeedEnabled())
-        paginationSource = @"following";
+    SPKForceFollowingPagination(&paginationSource, NULL);
+    return %orig;
+}
+
+// 454 form: extra trailing BOOL.
+- (id)initWithPosts:(id)posts
+                               nextMaxID:(id)nextMaxID
+                 initialPaginationSource:(NSString *)paginationSource
+                               fetchPath:(id)fetchPath
+                          responseParser:(id)responseParser
+        mainFeedNetworkSourceSessionDeps:(id)deps
+                          sessionTracker:(id)sessionTracker
+                         analyticsModule:(id)analyticsModule
+                           useNewUIGraph:(BOOL)useNewGraph
+    isDeclarativeMediaConsumptionEnabled:(BOOL)declarativeMediaConsumption {
+    SPKForceFollowingPagination(&paginationSource, NULL);
     return %orig;
 }
 
 - (void)updatePaginationSource:(id)paginationSource nextMaxID:(id)nextMaxID {
+    if (SPKFollowingFeedEnabled())
+        return %orig(@"following", nextMaxID);
+    %orig;
+}
+
+// 454 renamed the updater to a private underscore form.
+- (void)_updatePaginationSource:(id)paginationSource nextMaxID:(id)nextMaxID {
     if (SPKFollowingFeedEnabled())
         return %orig(@"following", nextMaxID);
     %orig;
