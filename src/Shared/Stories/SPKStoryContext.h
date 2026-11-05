@@ -31,6 +31,12 @@ void SPKStoryAdvanceContextIfNeeded(SPKStoryContext *_Nullable context, NSString
 NSString *_Nullable SPKStoryUsernameForContext(SPKStoryContext *_Nullable context);
 NSString *_Nullable SPKStoryFullNameForContext(SPKStoryContext *_Nullable context);
 NSURL *_Nullable SPKStoryURLForContext(SPKStoryContext *_Nullable context);
+/// The reel the viewer is showing: a user PK for a live story, "highlight:<id>"
+/// for a highlight, "archiveDay:<id>" for the archive.
+NSString *_Nullable SPKStoryReelPKForContext(SPKStoryContext *_Nullable context);
+BOOL SPKStoryReelPKIsHighlight(NSString *_Nullable reelPK);
+/// Instagram's own share link for a highlight, optionally pinned to one story.
+NSURL *_Nullable SPKStoryHighlightURLForReelPK(NSString *_Nullable reelPK, NSString *_Nullable mediaPK);
 NSString *_Nullable SPKStoryMediaIdentifierForContext(SPKStoryContext *_Nullable context);
 
 BOOL SPKStoryManualSeenAppliesToContext(SPKStoryContext *_Nullable context);

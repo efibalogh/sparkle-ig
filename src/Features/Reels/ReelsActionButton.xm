@@ -140,26 +140,15 @@ static UICollectionViewCell *SPKReelsCurrentCellFromPagingView(UICollectionView 
     return bestCell;
 }
 
-/// Read the media ivar (_mediaPassthrough) from a known cell type.
+/// Read the cell's media passthrough ivar (VideoCell and CarouselCell).
 /// Falls back to scanning all object-typed ivars for IGMedia.
 static id SPKReelsMediaFromCell(UICollectionViewCell *cell) {
     if (!cell)
         return nil;
 
-    // Fast path: read _mediaPassthrough directly (present on both VideoCell and CarouselCell)
-    Ivar mediaPTIvar = class_getInstanceVariable([cell class], "_mediaPassthrough");
-    if (mediaPTIvar) {
-        const char *type = ivar_getTypeEncoding(mediaPTIvar);
-        if (type && type[0] == '@') {
-            @try {
-                id media = object_getIvar(cell, mediaPTIvar);
-                if (media) {
-                    return media;
-                }
-            } @catch (__unused NSException *exception) {
-            }
-        }
-    }
+    id passthrough = SPKSundialCellMedia(cell);
+    if (passthrough)
+        return passthrough;
 
     // Fallback: scan ivars for IGMedia
     Class mediaClass = NSClassFromString(@"IGMedia");

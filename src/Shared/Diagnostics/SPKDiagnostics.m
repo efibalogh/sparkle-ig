@@ -12,6 +12,13 @@
 
 NSString *const kSPKPrefToolsDebugButton = @"tools_debug_button";
 
+#if SPK_DEV
+static uint32_t SPKDiagnosticsRGBA(UIColor *color, UIUserInterfaceStyle style);
+static NSString *SPKDiagnosticsColorSource(UIColor *color);
+// Defined by OLED Dark Mode.
+NSString *SPKOLEDCensusReport(void);
+#endif
+
 // MARK: - Helpers
 
 static NSString *SPKDiagnosticsRect(CGRect r) {
@@ -332,6 +339,13 @@ NSString *SPKDiagnosticsInspectReport(CGPoint point, BOOL includeText, UIView **
     UIViewController *owner = [SPKUtils nearestViewControllerForView:selected];
     [out appendFormat:@"controller=%@ %p\nfilters=%@\nbackground=%@\ngestures=", owner ? NSStringFromClass(owner.class) : @"-", owner,
                       SPKDiagnosticsLayerFilters(selected.layer), selected.backgroundColor ?: @"-"];
+#if SPK_DEV
+    if (selected.backgroundColor) {
+        UIUserInterfaceStyle style = selected.traitCollection.userInterfaceStyle;
+        [out appendFormat:@"backgroundResolved=#%08X %@\n", SPKDiagnosticsRGBA(selected.backgroundColor, style),
+                          SPKDiagnosticsColorSource(selected.backgroundColor)];
+    }
+#endif
     NSMutableArray<NSString *> *gestures = [NSMutableArray array];
     for (UIGestureRecognizer *recognizer in selected.gestureRecognizers)
         [gestures addObject:NSStringFromClass(recognizer.class)];
@@ -363,3 +377,179 @@ NSString *SPKDiagnosticsInspectReport(CGPoint point, BOOL includeText, UIView **
         [out appendString:@"-\n"];
     return out;
 }
+
+// MARK: - Color report
+
+#if SPK_DEV
+
+// 0xRRGGBBAA for a color resolved under the given style.
+static uint32_t SPKDiagnosticsRGBA(UIColor *color, UIUserInterfaceStyle style) {
+    UIColor *resolved = [color resolvedColorWithTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:style]];
+    CGFloat r = 0, g = 0, b = 0, a = 0;
+    if (![resolved getRed:&r green:&g blue:&b alpha:&a]) {
+        CGFloat white = 0;
+        if (![resolved getWhite:&white alpha:&a])
+            return 0;
+        r = g = b = white;
+    }
+    uint32_t (^channel)(CGFloat) = ^uint32_t(CGFloat value) {
+        return (uint32_t)lround(MIN(MAX(value, 0.0), 1.0) * 255.0);
+    };
+    return channel(r) << 24 | channel(g) << 16 | channel(b) << 8 | channel(a);
+}
+
+// The color's kind: its name for system and asset colors, otherwise its class
+// (a dynamic provider color, or a fixed one built from components).
+static NSString *SPKDiagnosticsColorSource(UIColor *color) {
+    NSString *description = color.description;
+    NSRange name = [description rangeOfString:@"name = "];
+    if (name.location != NSNotFound) {
+        NSString *rest = [description substringFromIndex:NSMaxRange(name)];
+        NSRange end = [rest rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@";>"]];
+        return [NSString stringWithFormat:@"%@(%@)", NSStringFromClass(color.class), end.location == NSNotFound ? rest : [rest substringToIndex:end.location]];
+    }
+    return NSStringFromClass(color.class);
+}
+
+// OLED Dark Mode tags each color it remaps with the palette value it replaced.
+static NSString *SPKDiagnosticsOLEDOrigin(UIColor *color, UIUserInterfaceStyle style) {
+    UIColor *resolved = [color resolvedColorWithTraitCollection:[UITraitCollection traitCollectionWithUserInterfaceStyle:style]];
+    NSNumber *source = objc_getAssociatedObject(resolved, @selector(spk_oledSourceRGB));
+    return source ? [NSString stringWithFormat:@" from #%06X", source.unsignedIntValue] : @"";
+}
+
+// A plain UIView says nothing on its own, so it is named after the closest
+// ancestor of a more specific class (the sheet or cell it belongs to).
+static NSString *SPKDiagnosticsViewName(UIView *view) {
+    if (view.class != UIView.class && view.class != UIImageView.class)
+        return NSStringFromClass(view.class);
+    for (UIView *ancestor = view.superview; ancestor; ancestor = ancestor.superview) {
+        if (ancestor.class != UIView.class && ancestor.class != UIImageView.class)
+            return [NSString stringWithFormat:@"%@ in %@", NSStringFromClass(view.class), NSStringFromClass(ancestor.class)];
+    }
+    return NSStringFromClass(view.class);
+}
+
+static BOOL SPKDiagnosticsIsNearBlack(uint32_t rgba) {
+    uint32_t r = rgba >> 24, g = (rgba >> 16) & 0xFF, b = (rgba >> 8) & 0xFF, a = rgba & 0xFF;
+    return a >= 0xF0 && MAX(r, MAX(g, b)) <= 0x30 && (r | g | b) != 0;
+}
+
+static BOOL SPKDiagnosticsIsKeyboardWindow(UIWindow *window) {
+    NSString *name = NSStringFromClass(window.class);
+    return [name containsString:@"Keyboard"] || [name containsString:@"TextEffects"];
+}
+
+NSString *SPKDiagnosticsColorReport(void) {
+    NSMutableString *out = [NSMutableString stringWithString:SPKDiagnosticsHeader(@"Color report")];
+    UIUserInterfaceStyle screenStyle = UIScreen.mainScreen.traitCollection.userInterfaceStyle;
+    [out appendFormat:@"style=%@ oled=%d\n", screenStyle == UIUserInterfaceStyleDark ? @"dark" : @"light",
+                      [NSUserDefaults.standardUserDefaults boolForKey:@"interface_oled_dark_mode"]];
+
+    // Backgrounds on screen, grouped by resolved value and source, weighted by
+    // the area they cover so the colors that dominate the screen come first.
+    NSMutableDictionary<NSString *, NSMutableDictionary *> *groups = [NSMutableDictionary dictionary];
+    NSMutableArray<NSString *> *materials = [NSMutableArray array];
+    NSMutableString *keyboard = [NSMutableString string];
+    NSMutableString *responders = [NSMutableString string];
+    for (UIWindow *window in SPKDiagnosticsInspectableWindows()) {
+        BOOL keyboardWindow = SPKDiagnosticsIsKeyboardWindow(window);
+        CGRect screenBounds = window.bounds;
+        if (keyboardWindow)
+            [keyboard appendFormat:@"window %@ %p level=%.0f\n", NSStringFromClass(window.class), window, window.windowLevel];
+        SPKDiagnosticsWalk(window, ^(UIView *view, NSUInteger depth) {
+            if (view.isFirstResponder && [view conformsToProtocol:@protocol(UITextInputTraits)]) {
+                UIKeyboardAppearance appearance = [(id<UITextInputTraits>)view respondsToSelector:@selector(keyboardAppearance)]
+                                                      ? ((id<UITextInputTraits>)view).keyboardAppearance
+                                                      : UIKeyboardAppearanceDefault;
+                [responders appendFormat:@"%@ %p keyboardAppearance=%ld\n", NSStringFromClass(view.class), view, (long)appearance];
+            }
+            UIUserInterfaceStyle style = view.traitCollection.userInterfaceStyle;
+            UIColor *color = view.backgroundColor;
+            CGColorRef layerColor = color ? NULL : view.layer.backgroundColor;
+            if ([view isKindOfClass:UIVisualEffectView.class]) {
+                UIVisualEffect *effect = ((UIVisualEffectView *)view).effect;
+                [materials addObject:[NSString stringWithFormat:@"%@ effect=%@ %@", NSStringFromClass(view.class),
+                                                                effect ? NSStringFromClass(effect.class) : @"-",
+                                                                SPKDiagnosticsRect([view convertRect:view.bounds toView:nil])]];
+            }
+            if (keyboardWindow) {
+                NSString *indent = [@"" stringByPaddingToLength:MIN(depth, (NSUInteger)40) withString:@" " startingAtIndex:0];
+                NSString *background = color ? [NSString stringWithFormat:@" bg=#%08X", SPKDiagnosticsRGBA(color, style)]
+                                             : (layerColor ? [NSString stringWithFormat:@" layerBg=#%08X", SPKDiagnosticsRGBA([UIColor colorWithCGColor:layerColor], style)] : @"");
+                [keyboard appendFormat:@"%@%@ %p %@%@ filters=%@\n", indent, NSStringFromClass(view.class), view,
+                                       SPKDiagnosticsRect([view convertRect:view.bounds toView:nil]), background, SPKDiagnosticsLayerFilters(view.layer)];
+            }
+            if (!color && layerColor)
+                color = [UIColor colorWithCGColor:layerColor];
+            if (!color)
+                return;
+            uint32_t rgba = SPKDiagnosticsRGBA(color, style);
+            if ((rgba & 0xFF) < 0x03)
+                return;
+            CGRect frame = CGRectIntersection([view convertRect:view.bounds toView:nil], screenBounds);
+            CGFloat area = CGRectIsNull(frame) ? 0 : frame.size.width * frame.size.height;
+            NSString *source = layerColor ? @"CALayer" : [SPKDiagnosticsColorSource(color) stringByAppendingString:SPKDiagnosticsOLEDOrigin(color, style)];
+            NSString *key = [NSString stringWithFormat:@"#%08X %@%@", rgba, source, keyboardWindow ? @" [keyboard]" : @""];
+            NSMutableDictionary *group = groups[key];
+            if (!group) {
+                group = [@{ @"rgba" : @(rgba), @"area" : @0, @"count" : @0, @"classes" : [NSCountedSet set] } mutableCopy];
+                groups[key] = group;
+            }
+            group[@"area"] = @([group[@"area"] doubleValue] + area);
+            group[@"count"] = @([group[@"count"] unsignedIntegerValue] + 1);
+            [group[@"classes"] addObject:SPKDiagnosticsViewName(view)];
+        });
+    }
+
+    NSArray<NSString *> *keys = [groups.allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString *a, NSString *b) {
+        double areaA = [groups[a][@"area"] doubleValue], areaB = [groups[b][@"area"] doubleValue];
+        if (areaA != areaB)
+            return areaA > areaB ? NSOrderedAscending : NSOrderedDescending;
+        return [a compare:b];
+    }];
+    NSString * (^describe)(NSString *) = ^NSString *(NSString *key) {
+        NSDictionary *group = groups[key];
+        NSCountedSet *classes = group[@"classes"];
+        NSArray *sorted = [classes.allObjects sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSUInteger countA = [classes countForObject:a], countB = [classes countForObject:b];
+            return countA == countB ? NSOrderedSame : (countA > countB ? NSOrderedAscending : NSOrderedDescending);
+        }];
+        NSMutableArray<NSString *> *names = [NSMutableArray array];
+        for (NSString *name in sorted) {
+            if (names.count == 5)
+                break;
+            [names addObject:[NSString stringWithFormat:@"%@x%lu", name, (unsigned long)[classes countForObject:name]]];
+        }
+        return [NSString stringWithFormat:@"%8.0fpt2 %4lu views  %@  <- %@\n", [group[@"area"] doubleValue], (unsigned long)[group[@"count"] unsignedIntegerValue],
+                                          key, [names componentsJoinedByString:@", "]];
+    };
+
+    [out appendString:@"\n## Near-black backgrounds (OLED candidates)\n"];
+    NSUInteger nearBlack = 0;
+    for (NSString *key in keys) {
+        if (!SPKDiagnosticsIsNearBlack([groups[key][@"rgba"] unsignedIntValue]))
+            continue;
+        [out appendString:describe(key)];
+        nearBlack++;
+    }
+    if (!nearBlack)
+        [out appendString:@"-\n"];
+
+    [out appendString:@"\n## All backgrounds on screen, by area\n"];
+    for (NSString *key in keys)
+        [out appendString:describe(key)];
+
+    [out appendString:@"\n## Materials\n"];
+    [out appendString:materials.count ? [[materials componentsJoinedByString:@"\n"] stringByAppendingString:@"\n"] : @"-\n"];
+
+    [out appendString:@"\n## Palette census since launch (dark values, darkest first)\n"];
+    [out appendString:SPKOLEDCensusReport()];
+
+    [out appendString:@"\n## Keyboard\n"];
+    [out appendString:responders.length ? responders : @"first responder: -\n"];
+    [out appendString:keyboard.length ? keyboard : @"no keyboard window on screen\n"];
+    return out;
+}
+
+#endif

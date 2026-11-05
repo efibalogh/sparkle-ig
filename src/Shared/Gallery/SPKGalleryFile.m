@@ -919,8 +919,23 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
     return rel;
 }
 
+- (BOOL)isFromHighlight {
+    if (self.source != SPKGallerySourceStories || self.sourceMediaURLString.length == 0)
+        return NO;
+    // A highlight's share link is /s/<token>/; a live story's is /stories/<user>/<pk>/.
+    return [[NSURL URLWithString:self.sourceMediaURLString].path.lowercaseString hasPrefix:@"/s/"];
+}
+
 - (NSString *)sourceLabel {
+    if ([self isFromHighlight])
+        return SPKL(@"GALLERY_GALLERY_FILE_SOURCE_HIGHLIGHTS_TEXT");
     return [SPKGalleryFile labelForSource:(SPKGallerySource)self.source];
+}
+
+- (NSString *)sourceSymbolName {
+    if ([self isFromHighlight])
+        return @"highlights";
+    return [SPKGalleryFile symbolNameForSource:(SPKGallerySource)self.source];
 }
 
 - (NSString *)listPrimaryTitle {
@@ -1122,6 +1137,24 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
 
     SPKLog(@"General", @"[Sparkle Gallery] Open original unavailable source=%d relativePath=%@", self.source, self.relativePath);
     return nil;
+}
+
+- (NSURL *)originalWebURL {
+    SPKGallerySource source = (SPKGallerySource)self.source;
+    if (source == SPKGallerySourceStories) {
+        NSURL *url = [self preferredOriginalMediaURL];
+        return [url.scheme.lowercaseString hasPrefix:@"http"] ? url : nil;
+    }
+    if (source != SPKGallerySourceFeed && source != SPKGallerySourceReels)
+        return nil;
+
+    NSString *pathComponent = SPKGalleryPostPathComponentForSource(source);
+    NSString *code = self.sourceMediaCode.length > 0 ? self.sourceMediaCode : [SPKUtils instagramShortcodeForMediaPK:self.sourceMediaPK];
+    if (pathComponent.length > 0 && code.length > 0)
+        return [NSURL URLWithString:[NSString stringWithFormat:@"https://www.instagram.com/%@/%@/", pathComponent, code]];
+
+    NSURL *stored = self.sourceMediaURLString.length > 0 ? [NSURL URLWithString:self.sourceMediaURLString] : nil;
+    return [stored.scheme.lowercaseString hasPrefix:@"http"] ? stored : nil;
 }
 
 - (BOOL)hasOpenableProfile {

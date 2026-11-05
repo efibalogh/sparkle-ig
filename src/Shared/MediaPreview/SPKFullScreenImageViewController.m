@@ -3,6 +3,7 @@
 #import "SPKImageFormat.h"
 #import "SPKMediaCacheManager.h"
 #import "SPKMediaItem.h"
+#import "SPKMediaUnavailableView.h"
 #import "../../AssetUtils.h"
 #import "../UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
@@ -116,6 +117,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
 @property (nonatomic, strong) UIView *errorView;
 @property (nonatomic, strong) UILabel *errorLabel;
 @property (nonatomic, strong) UIButton *retryButton;
+@property (nonatomic, strong, nullable) SPKMediaUnavailableView *unavailableView;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTapGesture;
 @property (nonatomic, assign) BOOL isLoadingImage;
 @property (nonatomic, assign) BOOL lastReportedZoomState;
@@ -574,6 +576,10 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
                                                         return;
                                                     }
 
+                                                    if (strongSelf.isViewLoaded && SPKMediaCacheErrorIsLocalFileMissing(error)) {
+                                                        [strongSelf showUnavailableWithMessage:error.localizedDescription];
+                                                        return;
+                                                    }
                                                     if (strongSelf.isViewLoaded) {
                                                         [strongSelf showError:error.localizedDescription.length > 0 ? error.localizedDescription : SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_IMAGE_FAILED_LOAD_IMAGE_TEXT")];
                                                     }
@@ -591,6 +597,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
     [self configureLiveTextForImage:image];
     _scrollView.hidden = NO;
     _errorView.hidden = YES;
+    _unavailableView.hidden = YES;
     [_scrollView setZoomScale:kMinZoom animated:NO];
     [self updateImageViewFrame];
 }
@@ -686,6 +693,25 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
     SEL play = NSSelectorFromString(@"play");
     if ([_imageView respondsToSelector:play])
         ((void (*)(id, SEL))objc_msgSend)(_imageView, play);
+}
+
+// A missing local file will not come back on retry, so this replaces the error
+// view and its Retry button with an explanation.
+- (void)showUnavailableWithMessage:(NSString *)message {
+    if (!_unavailableView) {
+        _unavailableView = [[SPKMediaUnavailableView alloc] initWithFrame:CGRectZero];
+        _unavailableView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addSubview:_unavailableView];
+        [NSLayoutConstraint activateConstraints:@[
+            [_unavailableView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [_unavailableView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+            [_unavailableView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:40],
+        ]];
+    }
+    [_unavailableView setTitle:SPKL(@"MEDIA_PREVIEW_FILE_MISSING_TITLE") message:message];
+    _unavailableView.hidden = NO;
+    _errorView.hidden = YES;
+    _scrollView.hidden = YES;
 }
 
 - (void)showError:(NSString *)message {

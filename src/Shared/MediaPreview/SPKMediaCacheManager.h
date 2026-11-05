@@ -5,6 +5,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+FOUNDATION_EXPORT NSErrorDomain const SPKMediaCacheErrorDomain;
+
+/// The item points at a local file that is no longer on disk (for a Gallery item:
+/// its row survived, its media file did not). Retrying cannot help.
+static const NSInteger SPKMediaCacheErrorLocalFileMissing = -6;
+
+/// YES for SPKMediaCacheErrorLocalFileMissing.
+FOUNDATION_EXPORT BOOL SPKMediaCacheErrorIsLocalFileMissing(NSError *_Nullable error);
+
 @interface SPKMediaCacheManager : NSObject
 
 + (instancetype)sharedManager;

@@ -106,6 +106,15 @@ NS_ASSUME_NONNULL_BEGIN
                                sourceView:(nullable UIView *)sourceView
                                completion:(void (^)(NSURL *_Nullable url))completion;
 
+/// Picks the photo an "Edit & Save" opens, by `downloads_photo_quality`. When that is
+/// Always Ask and the media has more than one candidate, presents the quality sheet.
+/// `completion` runs on the main queue with the chosen URL, or nil if the sheet is
+/// dismissed without a choice.
++ (void)resolveEditPhotoURLForMediaObject:(nullable id)mediaObject
+                                 photoURL:(nullable NSURL *)photoURL
+                                presenter:(nullable UIViewController *)presenter
+                               completion:(void (^)(NSURL *_Nullable url))completion;
+
 + (UIViewController *)encodingSettingsViewController;
 + (NSArray *)encodingSettingsSearchSections;
 

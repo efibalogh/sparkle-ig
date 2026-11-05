@@ -27,9 +27,8 @@ marked **(restart)** and prompt for a relaunch when changed.
 
 ### Behavior
 - **Copy Text**: Long-press text fields across the app to copy them.
-- **Hide Recent Searches** *(restart)*: Hides existing recent searches and stops search bars from saving new queries.
 - **Copy Links Without Tracking**: Strips the username path and tracking parameters from copied links.
-- **Hold Send to Copy Link**: Long-press the send/share button to copy the post link.
+- **Hold Send to Copy Link**: Long-press the send/share button to copy the post link. A story viewed inside a highlight copies the highlight's own link, which keeps working after the story expires.
 - **Detect Links in Text** *(restart)*: Finds explicit `http://` and `https://` links in comments, post captions, and reel captions, colors them in Instagram's blue and makes them tappable. Nothing is requested from a link until you tap it. Off by default. Tapped links open per Open Links In below.
 - **Open Links In**: Opens links that Instagram would load in its own browser (bios, captions, stories, messages, ads) in an in-app Safari view, the Safari app, or after asking each time, so Instagram's tracking scripts never load on the page. Instagram's `l.instagram.com` redirect and click-tracking parameters (`fbclid`, `igsh`, `utm_*`, ...) are removed before the link is contacted. Meta's own pages, sign-in flows, lead forms, and Instant Experience ads stay in Instagram's browser. Always Ask also offers Instagram's browser. Default keeps Instagram's browser; links tapped in post text open in the in-app Safari view under Default.
 
@@ -47,8 +46,9 @@ marked **(restart)** and prompt for a relaunch when changed.
 
 ### Recommendations
 - **Ads**: Per-surface ad hiding: Feed, Stories, Reels, Explore, plus Reels shopping CTA. Ad filtering preserves native feed loading indicators, including on short or initially empty lists.
-- **Meta AI**: Hide Meta AI in Direct, Explore & Search, Comments, Creation Tools, and global AI chrome. Creation Tools also removes the Meta AI effects button from the story camera's tools menu and the Restyle button from the editor shown after a capture. Hiding it in Explore & Search also restores the plain search glyph in the search bar (replacing the gen-AI search icon).
+- **Meta AI**: Hide Meta AI in Direct, Explore & Search, Comments, Creation Tools, and global AI chrome. Creation Tools also removes the Meta AI effects button from the story camera's tools menu and the Restyle button from the editor shown after a capture. Hiding it in Explore & Search also restores the plain search glyph in the search bar (replacing the gen-AI search icon). Global AI chrome also removes the Meta AI destination from the share sheet's external share row.
 - **Suggested Users**: Hide suggested-user surfaces: Feed, Reels, Direct, Search, Profile, Activity, follow lists, and subscriptions.
+  - **Hide Profile Suggestions**: Keeps suggested accounts closed on profiles, including after you follow someone, until you tap the suggestions button. With **Show Suggestions Button** (Profile) off, the button is removed as well.
 
 ### Comments
 - **Swipe to Close Comments** + **Swipe Direction**: Adds a horizontal swipe-to-dismiss gesture to comment sheets. The swipe drives Instagram's own sheet dismissal, so it follows your finger, dims the background and snaps back or closes exactly like a vertical drag.
@@ -80,7 +80,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 ## Interface
 
 ### Notifications
-Per-feature control of the Sparkle notification pill and its haptics. See **Notifications** below.
+How Sparkle's notifications look, and one banner and haptic setting per group of notifications. See **Notifications** below.
 
 ### Tabs
 - **Tab Editor**: A single screen for the whole tab bar, with a live preview of the bar you are building. Every change is staged and committed together with one Apply action and restart prompt. **(restart)**
@@ -105,24 +105,34 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
   - A font family is matched per weight, so bold text stays bold if the family ships a bold face, and falls back to the nearest weight it does ship. Italic requests fall back to the upright face when there is no italic.
   - Restart to apply everywhere: text already on screen keeps the font it was built with. Deleting the last file of the font in use falls back to the default.
   - Shared by every account on the device, since fonts are resolved before Instagram knows which account is signed in.
+- **OLED Dark Mode**: Makes Instagram's dark mode pure black. **(restart)**
+  - Backgrounds and sheets (comments, sharing, the map) become pure black. A few elements, such as message bubbles, search fields, and image placeholders, stay a neutral dark gray a shade lighter than the background, so they remain visible.
+  - Only applies while Instagram is in dark mode; light mode is untouched.
+  - On iOS 26 and later, Liquid Glass (the tab bar, glass buttons) gets a dark gray tint so it stays visible against the black background.
+  - The keyboard keeps the system's look: iOS draws it outside Instagram, so it can't be recolored.
+  - Shared by every account on the device, since colors are created before Instagram knows which account is signed in.
+- **Black Glass**: Keeps Liquid Glass pure black like the background instead. Shown only while OLED Dark Mode is on, on iOS 26 and later. **(restart)**
 
 ### Explore & Search
 - **Hide Explore Posts Grid**: Hides the suggested-post grid on Explore. This follows the active account when **Per-Account Settings** is enabled.
 - **Square Grid**: Shows Explore grid tiles as squares instead of the taller 3:4 layout. Reopen Explore to apply.
 - **Hide Trending Searches** *(restart)*: Hides trending searches under the Explore search bar.
-- **Open Clipboard Link**: Long-press the Explore tab to open an Instagram URL from the clipboard. Post and reel links open on their own page with the same native single-post push as the Gallery, instead of landing in the main feed, and never disturb the tab destination when Saved borrows a tab slot.
+- **Hide Recent Searches** *(restart)*: Hides existing recent searches and stops search bars from saving new queries.
+- **Pin People in Search**: Hold a person in search to pin or unpin them. Pinned people get their own **Pinned** section above your recent searches, with no limit and a pin count in its title, and are left out of Recent so nobody appears twice. Pins are kept by Sparkle, so they survive Instagram trimming, syncing or clearing its history. Tap **Reorder** on the section, then hold and drag to change the order. Tap the **Pinned** header to fold the section away and tap again to open it; the choice is remembered. Per account.
+- **Open Clipboard Link**: Long-press the Explore tab to open an Instagram URL from the clipboard. Post and reel links open on their own page with the same native single-post push as the Gallery, instead of landing in the main feed, and never disturb the tab destination when Saved borrows a tab slot. Story and highlight links (`instagram.com/stories/...`, `instagram.com/s/...`) open the story viewer directly, on the linked story when the link names one. A link to a story older than 24 hours opens the account's profile and looks for the story in its highlights instead.
+  - **Open Clipboard Username** (off by default): a copied username, with or without the `@`, opens that profile directly. If no account has that name, a notification says so and Instagram's search opens as usual.
 
 ### Capture
 - **Hide UI on Capture**: Redacts Sparkle overlay buttons and labels (action button, seen/mentions buttons, poll vote-count badges, etc.) from screenshots, screen recordings, and mirroring.
 
 ### Liquid Glass *(iOS 26+)*
-- **Liquid Glass**: Force-enables Instagram's native Liquid Glass UI for accounts/devices that don't already have it. **(restart)** Only ever forces it *on*; turning it off never suppresses Liquid Glass that Instagram already renders natively (server-rollout accounts) or that Sparkle's own screens (Gallery, Settings, etc.) pick up automatically from iOS 26: so Sparkle's UI never looks inconsistent with Instagram's regardless of this switch.
+- **Liquid Glass**: Forces Instagram's native Liquid Glass UI on or off, whatever Instagram's own rollout gives the account. **(restart)** Until you flip it, Instagram decides and the switch shows what the account currently gets; after that your choice sticks even if Instagram later changes the rollout. Forcing it pins every part of Instagram's rollout to the same state, so the look no longer varies between launches: on gives glass navigation buttons, glass profile tabs and the blurred header background; off turns all of that off, along with the floating tab bar and the glass on navigation buttons on Sparkle's own screens.
 - **Scroll Edge Effect**: How content meets the top bar as you scroll. **Off** lets Instagram disable UIKit's edge effect, as it does by default, **Default** follows iOS (soft on iOS 26, hard on iOS 27), **Soft** forces the progressive blur, and **Hard** forces the solid edge with a dividing line, shown only while content is scrolled under the bar. Bottom toolbars and the tab bar keep the iOS effect. While the edge is soft or off, the media preview's "x of n" counter sits in a glass bubble so it stays readable over bright media. Styles apply live; switching to Off needs a restart. Replaces the Progressive Blur toggle (on becomes Soft). Requires iOS 26 (relies on `UIScrollEdgeEffect`).
 - **Tab Bar Behavior**: Controls how the floating Liquid Glass tab bar behaves while scrolling.
 
 ### Tab Bar *(iOS 18 and lower)*
 On systems without Liquid Glass, the tab bar section is replaced by a focused toggle. The glass *material* is iOS 26+ only, but the floating pill *shape* comes from Instagram's tab bar experiment gates, which work on any iOS.
-- **Pill-Shaped Tab Bar**: Reshapes the tab bar into the iOS 26-style floating pill. **(restart)** Shape only — no glass material on this device.
+- **Pill-Shaped Tab Bar**: Forces the iOS 26-style floating pill tab bar on or off. **(restart)** Until you flip it, Instagram decides. Shape only, no glass material on this device.
 - **Tab Bar Behavior**: Controls how the pill tab bar behaves while scrolling (Default / Fixed / Hide on scroll).
 
 ---
@@ -162,6 +172,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Confirmation
 - **Confirm Like**, **Confirm Double Tap**, **Confirm Repost**, **Confirm Posting Comment**.
+- **Confirm Feed Refresh**: Asks before the feed refreshes from a pull down, a Home tab re-tap or a status bar tap. A tap scrolls up first and shows the refresh spinner while it asks, like a pull; cancelling stops the spinner and leaves the feed at the top. With **Disable Home Tab Refresh** on, taps only scroll up and never refresh, so only pulls ask.
 
 ---
 
@@ -186,6 +197,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Hide Audio Unavailable Toast**: Hides Instagram's message when a Story's audio cannot be played in your region. The unavailable audio remains muted.
 - **Hide Story Midcards**: Removes the "Join a trending" / "Add Yours" promo cards from the stories tray.
 - **Hide Recent Highlights**: Removes resurfaced highlights, the stories Instagram serves once you have watched every unseen story. They are dropped in three places, because the story tray, tapping forward and swiping sideways each read a different list: from the tray, so they no longer appear as rings; from the viewer's own reel list, so tapping forward past the last story no longer walks into them; and from the viewer's data store, so swiping to the next person does not reach them either. Opening a highlight yourself from a profile is unaffected.
+- **Hide Suggested Accounts**: Removes the accounts Instagram suggests you follow, which it adds to the story tray as rings with a follow badge when there are few stories to show. They are dropped from the same three places as resurfaced highlights, so tapping forward or swiping past the last story does not reach them either.
 
 ### Story Navigation
 - **Stop Auto Advance**: Prevents auto-advancing to the next story.
@@ -330,7 +342,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Show GIF Title**: Long-press a GIF or sticker message for its name and the channel that uploaded it, then tap to copy the name. Direct stores no name for a GIF, so the row reads "Looking up GIF title" for a moment and fills itself in when Giphy answers; afterwards that GIF resolves instantly for the rest of the session. Off by default, and nothing is requested until you open a GIF's menu. **(restart)**
 
 ### Confirmation
-- **Confirm Audio Call**, **Confirm Video Call**, **Confirm Double Tap**, **Confirm Reactions**, **Confirm Voice Messages**, **Confirm Follow Requests**, **Confirm Vanish Mode**, **Confirm Changing Theme**.
+- **Confirm Audio Call**, **Confirm Video Call**, **Confirm Double Tap**, **Confirm Reactions**, **Confirm Reel Send to Chat** (the quick Send to Chat/Group button in a shared reel viewer), **Confirm Voice Messages**, **Confirm Follow Requests**, **Confirm Vanish Mode**, **Confirm Changing Theme**.
 
 ---
 
@@ -342,16 +354,18 @@ Its own page, reached from a single row on the Messages topic that shows how man
 ### Action Button
 - **Instants Action Button**, **Default Tap Action**, **Configure Actions**: Actions resolve the currently visible Instant with its author, posted date, and full-resolution media. Bulk actions retain every Instant encountered during the current viewer session until it closes, including ones already tapped past.
 - **Toggle Instant Auto-Save**: Adds or removes the author of the Instant on screen from the Instants auto-save list, mirroring the equivalent story and chat actions. Shown only while *Auto-Save Instants* is on and the author can be read. See *Downloads › Auto-Save › Instants*.
+- **Toggle Instant Seen Marking**: *Start / Stop Marking Instants Seen* for the author of the Instant on screen, by adding or removing them from the Manually Mark Seen users list (Excluded Users with the switch on, Included Users with it off). Shown whenever the author can be read, including while Manually Mark Seen is off, so it can be used to add the first Included User. The eye button updates for the Instant on screen straight away.
 
 ### Privacy
 - **Allow Screenshots**: Bypasses screenshot/screen-recording detection in the Instants viewer.
 
 ### Seen Receipts
-- **Manually Mark Seen**: Stops Instants from being marked seen as you watch them, so they stay in your tray, and adds an eye button to the viewer that marks the Instant on screen as seen. Each one is held out of Instagram's local seen state as it is consumed, the tray is refreshed when the viewer closes, and the seen state is never synced to the server, so a refresh does not clear them either. Instants still expire on Instagram's own schedule.
-- **Advance on Eye Button**: Moves to the next Instant after the eye button marks one as seen, the same as tapping it. Disabled while Manually Mark Seen is off.
+- **Manually Mark Seen**: Stops Instants from being marked seen as you watch them, so they stay in your tray, and adds an eye button to the viewer that marks the Instant on screen as seen. Each one is held out of Instagram's local seen state as it is consumed, the tray is refreshed when the viewer closes, and held Instants are never synced to the server as seen, so a refresh does not clear them either. Instants still expire on Instagram's own schedule.
+- **Advance on Eye Button**: Moves to the next Instant after the eye button marks one as seen, the same as tapping it. Disabled while Manually Mark Seen is off and no users are selected.
+- **Excluded / Included Users**: Two lists, chosen by the Manually Mark Seen switch, the same way Stories works. With the switch on, *Excluded Users* keep Instagram's normal seen behavior. With it off, only *Included Users* have their Instants held unseen. While only some users are held, Instagram's seen sync still runs and the held Instants are filtered out of it, so everyone else's Instants are marked seen normally.
 
 ### Creation
-- **Disable Instants Creation**: Hard-blocks the Instant shutter (photo and video); the shutter is darkened and capture is blocked, with an optional notification + haptic. Received Instants still work.
+- **Disable Instants Creation**: Hard-blocks the Instant shutter (photo and video); the shutter is darkened and capture is blocked. Received Instants still work.
 - **Skip Camera After Instants**: Skips the camera page Instagram opens after viewing the last Instant.
 - **Disable Camera Control**: Stops the hardware Camera Control button (iPhone 16/17) from taking an Instant. Only available on devices that have Camera Control.
 - **Camera View Button**: Adds one Sparkle button to the Instants camera view, in the slot the action button uses in the viewer, wearing the glyph set by **Open Menu Icon** in General settings. Its menu has three groups: upload a photo or video from **Photos / Gallery / Files** (see below); **Browse Saved Instants**; and **Instants Settings**.
@@ -367,6 +381,12 @@ Its own page, reached from a single row on the Messages topic that shows how man
 
 ## Profile
 
+### Privacy
+- **Account Privacy**: Opens a sheet with two of Instagram's own account settings. They are saved to your Instagram account rather than to Sparkle, so they apply on every device, and they follow whichever account is active. The switches open on the last values Instagram reported for that account and update quietly if they changed. The first time, or if loading takes a moment, a Loading notification shows. A save that takes a moment shows a Saving notification that ends in a check; if a save fails, the switch goes back and a notification shows the reason, and tapping it tries again. A failed first load also shows a notification you can tap to retry. Hidden on Instagram builds without these settings.
+  - **Hide Followers and Following**: Hides both of your lists from other people (`hide_followers_following_list`).
+  - **Hide Me From Others' Lists**: Keeps your account out of the follower and following lists other people browse (`hide_self_from_others_lists`).
+  - Instagram decides who can use them, so an account outside its rollout gets an error. Works on the latest Instagram and on 410.1.0.
+
 ### Action Button
 - **Profile Action Button** + **Default Tap Action**: `None`, `Copy Info`, `View Picture`, `Share Picture`, `Save to Gallery`, or `Profile Settings`. Sits in the profile nav bar just left of Instagram's own buttons (More/Follow/notify), tracking them as they morph and collapse on scroll; on your own profile it is omitted. On iOS 26 it grows a matching Liquid Glass bubble that fades in with scroll, and long usernames truncate so they never run under it.
 - **Copy Info Default**: What Copy Info copies: `ID`, `Username`, `Name`, `Bio`, or `Profile Link`.
@@ -379,10 +399,12 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Square Grid**: Shows thumbnails on the posts and tagged grids as squares instead of the taller 3:4 layout, and uses a square icon for the grid tab. Reopen a profile to apply.
 
 ### Indicators
+- **Exact Follower Count**: Shows the full follower count in the profile header, using your device's number format.
 - **Following Indicator**: Shows whether the profile follows you back, under their stats. Choose **Off**, **Icon**, **Text**, or **Icon & Text**.
 - **Colorful Indicator**: Turn on to use the colored green/red instead of the native gray.
 - **Hide Notes Bubble**: Removes the notes thought-bubble over the profile picture.
 - **Hide Threads Button**: Removes the Threads switch button from the profile header.
+- **Show Suggestions Button**: Adds the suggested accounts button to every profile, your own included, even where Instagram leaves it out. On by default. Off keeps Instagram's default, unless **Hide Profile Suggestions** is on, in which case the button is removed from every profile.
 
 ### Confirmation
 - **Confirm Follow**, **Confirm Unfollow**.
@@ -409,7 +431,7 @@ logs, and Profile Analyzer data live locally under `Documents/Sparkle/`.
 - **Grid / list view** and **sort / filter** controls in the bottom toolbar.
 - **Two-finger selection drag**: In list view, drag down (or up) with two fingers to start selecting and sweep across rows, the same gesture the Files app uses. Starting the drag on an item that is already selected unselects everything it passes over instead. Selection mode opens on the first row the drag touches, and a drag that ends up selecting nothing leaves it again.
 - **Picker sheets**: Anywhere Sparkle asks you to choose saved media — Direct uploads, the comment composer, Instants, story stickers — you get the same browser as the Gallery itself: folder chips with item counts, grid/list toggle, pinch density, sort, filter, and search with a **This Folder** / **All Folders** scope. Folders open in place with a back button rather than stacking sheets, and your scroll position is restored when you come back out. An empty sheet explains itself rather than showing a bare grid. Picking an item whose file has since gone missing reports it instead of failing silently. Multi-select pickers show the running count on the **Add** button.
-- **Item actions**: Each item's menu can **Open Story / Reel / Post** (the label and link match the saved source: posts and reels open on their own page over the Gallery, so you return straight to where you were when done, and the `instagram.com/p/...` or `instagram.com/reel/...` permalink is kept as a fallback; stories open `instagram.com/stories/...`) and **Open Profile** (opens the real profile over the Gallery the same way; older items saved without an account attached are looked up once and remembered, so every later open is instant), plus favorite, rename, move, share, **Trim** (videos and audio), **Edit** (photos: see Editing), and delete.
+- **Item actions**: Each item's menu can **Open Story / Reel / Post** (the label and link match the saved source: posts and reels open on their own page over the Gallery, so you return straight to where you were when done, and the `instagram.com/p/...` or `instagram.com/reel/...` permalink is kept as a fallback; stories and highlights open the account's profile over the Gallery and then the story viewer on top of it, starting on the saved story; a story saved from a highlight remembers the highlight, so it still opens after the story itself has expired, and a story posted more than a day ago is looked up in the account's highlights and relinked to the one that holds it; one found in no highlight is not searched for again for a week) and **Open Profile** (opens the real profile over the Gallery the same way; older items saved without an account attached are looked up once and remembered, so every later open is instant), plus favorite, rename, move, share, **Trim** (videos and audio), **Edit** (photos: see Editing), and delete. **Edit Details** also lists the item's original link (post, reel, story or highlight) when there is one; tapping it copies the link. A story known to be in a highlight (saved from one, or relinked to one) is labelled **Highlights** and carries the highlight icon in the grid; it still filters as a story.
 - **Select Text in Photos**: Static image previews get the same text recognition and floating controls as the media preview (see Media Preview & Menu), following the same toggle. Animated GIF/WebP previews and unsupported iOS versions skip analysis.
 
 ### Trimming
@@ -419,9 +441,9 @@ logs, and Profile Analyzer data live locally under `Documents/Sparkle/`.
 - **Ask to Replace Original**: When trimming or editing a Gallery item, ask whether to replace the original in place or save a copy. Off always saves a copy and keeps the original.
 
 ### Editing
-- **Photo editor**: Crop, pan/zoom, rotate (±90°), and horizontal flip for photos, with a selectable crop aspect. Reachable from: the **media preview** bottom toolbar's **Edit** button (Gallery photos *and* any expanded Instagram photo); a Gallery photo's **Edit** menu action; and the **Edit & Save** action button (see below). For a Gallery photo, saving honors **Ask to Replace Original** (replace in place or save a copy); for an expanded Instagram photo it offers a Done menu of destinations (**Photos / Gallery / Share / Copy**). The same editor powers Instants photo-upload positioning in a locked-square mode. *(Note: editing an animated GIF flattens it to a still image.)*
+- **Photo editor**: Crop, pan/zoom, rotate (±90°), and horizontal flip for photos, with a selectable crop aspect. Reachable from: the **media preview** bottom toolbar's **Edit** button (Gallery photos *and* any expanded Instagram photo); a Gallery photo's **Edit** menu action; and the **Edit & Save** action button (see below). For a Gallery photo, saving honors **Ask to Replace Original** (replace in place or save a copy); for an expanded Instagram photo it follows **Photo Quality** like Edit & Save, then offers a Done menu of destinations (**Photos / Gallery / Share / Copy**). The same editor powers Instants photo-upload positioning in a locked-square mode. *(Note: editing an animated GIF flattens it to a still image.)*
 - **Trim & Save (action button)**: An opt-in, video-only action you can add to any action-button menu via the customizer (works on feed-inline reels too). It sources the video at your configured **download video quality** (progressive "ready-to-play" or merged DASH; prompts when set to "always ask"), opens the trim editor, then offers a Done menu of destinations (**Photos / Gallery / Share / Copy**; when the output is audio, **Save to Files** replaces Photos). DASH-quality trims download the streams and merge + cut in one pass, encoding only the selected window.
-- **Edit & Save (action button)**: The photo counterpart to Trim & Save: an opt-in, image-only action for any action-button menu. It fetches the photo, opens the editor, then offers a Done menu of destinations (**Photos / Gallery / Share / Copy**).
+- **Edit & Save (action button)**: The photo counterpart to Trim & Save: an opt-in, image-only action for any action-button menu. It fetches the photo at your **Photo Quality** setting (asking first when that is **Always Ask**), opens the editor, then offers a Done menu of destinations (**Photos / Gallery / Share / Copy**).
 
 ### Importing
 - **Import Media**: Bring media into the Gallery from the Files app — images, GIFs, videos, and audio — with full editable metadata. Picked files land in a queue you can review before committing: each row previews the file (tap the thumbnail for a full-screen preview) and opens a details form to set its **display name**, **username**, **source**, **date**, and, under **Advanced**, the user/media IDs, shortcode, permalink, pixel size, and duration. **Paste link to autofill** fills the form from a copied Instagram link. A **Shared details** row applies the same values to every queued file that you haven't edited individually, so a batch from one account only needs filling in once. Files are imported into the Gallery folder you opened Settings from.
@@ -464,7 +486,7 @@ Every surface has the same **Filter Mode**: `All` saves everything except what y
 - **Save To**: `Sparkle Gallery` keeps auto-saved media inside the tweak; `Photos App` saves it to your system photo library (iOS asks for photo library permission the first time). The skip-if-already-saved check follows the destination you pick, so switching destinations re-saves items the new one doesn't have yet — and deleting an item from its destination lets it be saved again next time you view it.
 - **Photo Quality** / **Video Quality**: Quality tier for auto-saved media. `Default` takes Instagram's ready-to-play file — fastest, no re-encode per item; `High` merges DASH video + audio for best quality at the cost of an FFmpeg pass per item (**requires FFmpegKit**). Auto-save never prompts, so there is no `Always Ask`.
 - **Keep in Download History**: Auto-saves are pruned from the download history once saved. Enable to keep them listed.
-- **Notifications**: Feedback is per viewing session, not per item — tapping through twenty stories costs two toasts, not forty. All of it is configured under *Notifications › Auto-Save*, where each toast can be a pill, haptic-only, or silent:
+- **Notifications**: Feedback is per viewing session, not per item — tapping through twenty stories costs two toasts, not forty. All of it follows the **Auto-Save** row under *Notifications › Events*:
   - *Story / DM / Instants Auto-Save Started*: posted once, on the session's first save.
   - *Auto-Save Summary*: posted at the end with the number of items saved; tap it to open the Gallery (or the Photos app, following the destination). It waits for every download and DASH merge to finish, so the count is final.
   - *Auto-Save Still Working*: only when you leave the viewer while items are mid-flight (typically `High` video quality muxing DASH audio), explaining why the summary hasn't arrived yet.
@@ -538,7 +560,7 @@ can't be analyzed because a single scan would hit Instagram's rate limits.
 - **Refresh Profile Pictures**: Avatars self-heal: when a stored CDN URL has expired, Sparkle silently re-resolves a fresh one from Instagram, so simply reopening a list restores missing pictures. A list's **More** menu force-refreshes them all, and individual placeholders can be tapped to retry. Profile pictures are a shared cache managed under **Data & Settings › Storage**.
 
 ### Notifications
-- **Profile Analyzer Complete**: Pill + haptic when an analysis finishes (toggleable under Notifications).
+- **Profile Analyzer**: A progress pill while an analysis runs and a pill + haptic when it finishes, set by the **Profile Analyzer** row under *Notifications › Events*. A failed analysis is always reported.
 
 ---
 
@@ -547,8 +569,8 @@ can't be analyzed because a single scan would hit Instagram's rate limits.
 The Sparkle notification pill is configurable.
 
 ### Style
-- **Style**: **Sparkle Pill** (default) or **Instagram**, which draws every Sparkle notification with Instagram's own toast view, the one it uses for confirmations like "Removed from Saved". The toast follows the app's light or dark appearance, uses Instagram's outline icons, shows download progress as a ring in place of the icon with a **Cancel** button and the progress line in fixed-width digits so the toast holds still while it counts, and appears everywhere the pill does, including over Settings, the Gallery and the full-screen preview. Position, duration, tap, and swipe to dismiss work as with the pill.
-- **Test Notification**: Cycles success / error / info previews in the chosen style.
+- **Style**: **Sparkle Pill** (default) or **Instagram**, which draws every Sparkle notification with Instagram's own toast view, the one it uses for confirmations like "Removed from Saved". The toast follows the app's light or dark appearance, uses Instagram's outline icons, shows download progress as a ring in place of the icon with a **Cancel** button and the progress line in fixed-width digits so the toast holds still while it counts, and appears everywhere the pill does, including over Settings, the Gallery and the full-screen preview. It also moves like Instagram's toast: it slides in from the screen edge on Instagram's own spring and slides back out the same way, with no fade or scale. At the bottom it rests where Instagram rests its own: just above the tab bar, a toolbar, the bottom search bar or the keyboard, and right on top of the Direct composer. Position, duration, tap, and swipe to dismiss work as with the pill.
+- **Live preview**: The top of the page shows a sample notification in the chosen style. It changes in place as you adjust glow or tint or switch between light and dark, and is replaced only when the style or Liquid Glass changes. Tapping it steps through success, error and info, a download that runs from 0 to 100% and starts again, and the spinning pill shown while Sparkle looks something up. Changing **Download Progress** switches it to the download so the new line is visible.
 
 ### Appearance
 Rows follow the chosen style.
@@ -557,15 +579,22 @@ Rows follow the chosen style.
 - **Tint by Result** (Instagram): Tints the toast in the result's color. Same setting as Glow.
 
 ### Behavior
-- **Position**: Top or bottom. Notifications enter and leave on that edge.
+- **Position**: Top or bottom. Notifications enter and leave on that edge. At the bottom they rest just above whatever is there when they appear: the tab bar, a toolbar, the bottom search bar or the keyboard, and right on top of the Direct composer. On a screen with none of those they sit lower, just above the bottom edge.
 - **Duration**: Auto-dismiss delay (0.5–5.0s).
-- **Download Progress**: What the line under a running download shows: percent, size, both, or off.
+- **Download Progress**: What the line under a running download shows: percent, size, both, or off. Off hides only those figures: other notifications keep their subtitles, and when several downloads run the queue position (2 of 3) still shows.
 
-### Notify Me About / Haptics
-Every notification category has an independent **visibility** toggle (under
-Notify Me About) and a matching **haptic** toggle (under Haptics), covering
-downloads, copies, story/message seen actions, gallery actions, settings
-export/import, cache clearing, and more.
+### Confirmations / Events
+Notifications are grouped by what they tell you rather than by the screen that sent them. Each group has one setting: **Banner and Haptic** (default), **Banner Only**, **Haptic Only**, or **Off**.
+
+- **Confirmations** echo something you just did: **Downloads & Saves** (saving, sharing, reposting, playing audio, and the progress pill of a running download), **Copies**, **Mark as Seen**, **Lists & Pins** (seen, auto-save and activity lists, hidden chats, search and share sheet pins), **Data & Backups** (Gallery deletes and imports, settings export and import, clearing the cache, Download History, Deleted Messages, cached profile pictures or Seen Locally, and clearing or resetting Profile Analyzer), and **Other Actions** (fake location changes and saved places, passcode changes, encoding logs).
+- **Events** report something that happened without you: **Activity**, **Unsent Messages**, **Removed Reactions**, **Auto-Save**, **Profile Analyzer**, and **Language Packs**. Which activity events notify you at all is still chosen under *Messages › Activity Notifications*.
+- Opening something (a profile, the original post, story mentions, a thumbnail, settings, the share sheet) no longer shows a banner, since what opened is the confirmation; the tap still plays its haptic. A loading pill still shows while Sparkle looks something up before opening it.
+
+### Errors
+- Errors always show a banner, whatever a group is set to, so a failed action never looks like it did nothing. That includes downloads whose group is set to Haptic Only or Off: they run without a progress pill but still report a failure, and a batch share or copy still completes.
+- **Haptic on Errors**: Whether errors also vibrate. On by default.
+
+Settings from before this change carry over: a group stays on unless every notification in it was switched off, and a group whose banners were all off but whose haptics were not becomes Haptic Only.
 
 ---
 
@@ -597,7 +626,6 @@ export/import, cache clearing, and more.
 ### Instagram
 - **Hide TestFlight Popup**: Suppresses the Instagram Beta update popup. This is always active on release builds to support sideloading (and is configurable on developer builds).
 - **Fix Duplicate Notifications**: Drops the local copy Instagram re-adds for a push its notification extension is already delivering. Instagram normally handles this itself, so leave it off unless duplicates actually reach you.
-- **Disable Safe Mode**: Prevents Instagram from resetting settings after repeated crashes (use with care).
 
 ---
 
@@ -612,3 +640,10 @@ export/import, cache clearing, and more.
 ### Reset
 - **Reset All Settings**: Restore every preference to its default value. When **per-account settings** is on, a prompt first asks whether to reset **All Accounts** or **This Account Only** (like Export) — a per-account reset clears only the active account's overrides and leaves other accounts untouched.
 - Individual **configurable** settings can also be reset in place, without wiping everything: **Reset Encoding Settings** on the Advanced Encoding page, and **Reset to Default** at the bottom of each surface's **Configure Actions** editor (resets that surface's menu sections, default action, and bulk menus only).
+
+## About
+
+### Updates
+- **Update prompt**: A little after launch, when a newer Sparkle is out, a compact sheet shows the new version against yours. Dragging the sheet up (the hint under the version says so; tapping it works too) grows it to full height with the changelog, which is already loaded by then and lists only the versions you do not have yet (**Show Earlier Versions** brings back the rest), with **Update**, **Not Now** and **Skip** still at the bottom; swiping down returns to the compact sheet. If the changelog cannot load, **Retry** or **Open in Safari**. It comes back on every launch until you update or tap **Skip vX.Y.Z**, which silences that version only; **Not Now** waits for the next launch; the sheet cannot be swiped or tapped away, so it is never dismissed unread. The main button opens the package in Sileo, Zebra or Cydia on jailbroken devices and the Telegram channel on sideloaded installs. Sparkle never downloads or installs anything itself. It waits for whatever else is on screen to close rather than covering it.
+- **Sparkle version row**: Shows what the last check found: **Up to Date**, or an **Update** badge. Tapping it opens the update sheet, even for a skipped version, or checks again right away.
+- **Changelog**: Every release's notes inside the app, with the version you have labeled **Installed**. Needs a connection; if it cannot load, **Retry** or **Open in Safari**.

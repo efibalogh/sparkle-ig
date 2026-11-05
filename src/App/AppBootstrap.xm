@@ -50,46 +50,63 @@ static void SPKScheduleHookPhase(NSTimeInterval delay, NSString *name, dispatch_
     });
 }
 
-static BOOL SPKIsMessagesOnlyMode(void) {
-    return [SPKSingleVisibleTabIdentifierFromPreferences() isEqualToString:SPKTabIdentifierDirect];
+// The surface Instagram opens on is built within a few hundred milliseconds of
+// didFinishLaunching. Any of its hooks still waiting in the stagger by then miss
+// the first render and any one-time setup, so that surface is installed ahead of
+// the rest. Feed already sits at the front of the normal order. Search has no
+// surface of its own (its hooks live in general UI) and Saved has no surface at
+// all, so neither moves anything.
+static BOOL SPKLaunchSurfaceForTab(NSString *identifier, SPKSurface *surface) {
+    if ([identifier isEqualToString:SPKTabIdentifierDirect])
+        *surface = SPKSurfaceMessages;
+    else if ([identifier isEqualToString:SPKTabIdentifierClips])
+        *surface = SPKSurfaceReels;
+    else if ([identifier isEqualToString:SPKTabIdentifierProfile])
+        *surface = SPKSurfaceProfile;
+    else
+        return NO;
+    return YES;
+}
+
+static NSString *SPKHookPhaseName(SPKSurface surface) {
+    switch (surface) {
+    case SPKSurfaceGeneralUI: return @"general UI";
+    case SPKSurfaceFeed: return @"feed";
+    case SPKSurfaceStories: return @"stories";
+    case SPKSurfaceReels: return @"reels";
+    case SPKSurfaceMessages: return @"messages";
+    case SPKSurfaceProfile: return @"profile";
+    }
+    return @"unknown";
 }
 
 static void SPKScheduleStagedFeatureHooks(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        BOOL msgOnly = SPKIsMessagesOnlyMode();
-        
-        NSTimeInterval generalDelay = 0.25;
-        NSTimeInterval feedDelay = msgOnly ? 0.65 : 0.35;
-        NSTimeInterval storiesDelay = msgOnly ? 0.75 : 0.45;
-        NSTimeInterval reelsDelay = msgOnly ? 0.85 : 0.55;
-        NSTimeInterval messagesDelay = msgOnly ? 0.10 : 0.65;
-        NSTimeInterval profileDelay = msgOnly ? 0.95 : 0.75;
+        NSMutableArray<NSNumber *> *order = [@[
+            @(SPKSurfaceGeneralUI), @(SPKSurfaceFeed), @(SPKSurfaceStories),
+            @(SPKSurfaceReels), @(SPKSurfaceMessages), @(SPKSurfaceProfile)
+        ] mutableCopy];
+        NSTimeInterval delay = 0.25;
 
-        SPKScheduleHookPhase(generalDelay, @"general UI", ^{
-            SPKCoreInstallSurfaceHooks(SPKSurfaceGeneralUI);
-        },
-                             NO);
-        SPKScheduleHookPhase(feedDelay, @"feed", ^{
-            SPKCoreInstallSurfaceHooks(SPKSurfaceFeed);
-        },
-                             NO);
-        SPKScheduleHookPhase(storiesDelay, @"stories", ^{
-            SPKCoreInstallSurfaceHooks(SPKSurfaceStories);
-        },
-                             NO);
-        SPKScheduleHookPhase(reelsDelay, @"reels", ^{
-            SPKCoreInstallSurfaceHooks(SPKSurfaceReels);
-        },
-                             NO);
-        SPKScheduleHookPhase(messagesDelay, @"messages", ^{
-            SPKCoreInstallSurfaceHooks(SPKSurfaceMessages);
-        },
-                             NO);
-        SPKScheduleHookPhase(profileDelay, @"profile", ^{
-            SPKCoreInstallSurfaceHooks(SPKSurfaceProfile);
-        },
-                             YES);
+        SPKSurface launchSurface;
+        NSString *launchTab = SPKEffectiveLaunchTabIdentifierFromPreferences();
+        if (SPKLaunchSurfaceForTab(launchTab, &launchSurface)) {
+            [order removeObject:@(launchSurface)];
+            SPKScheduleHookPhase(0.10, SPKHookPhaseName(launchSurface), ^{
+                SPKCoreInstallSurfaceHooks(launchSurface);
+            },
+                                 NO);
+        }
+
+        for (NSUInteger i = 0; i < order.count; i++) {
+            SPKSurface surface = (SPKSurface)order[i].unsignedIntegerValue;
+            SPKScheduleHookPhase(delay, SPKHookPhaseName(surface), ^{
+                SPKCoreInstallSurfaceHooks(surface);
+            },
+                                 i == order.count - 1);
+            delay += 0.10;
+        }
     });
 }
 
@@ -100,8 +117,13 @@ static void SPKScheduleStagedFeatureHooks(void) {
     SPKStabilityGuardBeginLaunch();
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setBool:[SPKUtils spk_isLiquidGlassEffectivelyEnabled]
-               forKey:@"instagram.override.project.lucent.navigation"];
+    SPKLiquidGlassMode liquidGlassMode = [SPKUtils spk_liquidGlassMode];
+    if (liquidGlassMode == SPKLiquidGlassModeFollow) {
+        [defaults removeObjectForKey:@"instagram.override.project.lucent.navigation"];
+    } else {
+        [defaults setBool:liquidGlassMode == SPKLiquidGlassModeOn
+                   forKey:@"instagram.override.project.lucent.navigation"];
+    }
     [defaults removeObjectForKey:@"liquid_glass_override_enabled"];
     [defaults removeObjectForKey:@"IGLiquidGlassOverrideEnabled"];
     SPKCoreInstallLaunchCriticalHooks();

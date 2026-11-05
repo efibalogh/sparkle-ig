@@ -6,6 +6,8 @@
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
+#import "../../Shared/Account/SPKAccountPrivacyService.h"
+#import "SPKAccountPrivacySettingsProvider.h"
 
 static NSString *const kSPKProfileActionNone = @"none";
 static NSString *const kSPKProfileActionCopyInfo = @"copy_info";
@@ -121,7 +123,16 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
 @implementation SPKProfileSettingsProvider
 
 + (SPKSetting *)rootSetting {
-    return SPKTopicNavigationSetting(SPKL(@"PROFILE_TITLE"), @"user_circle", 24.0, @[
+    NSMutableArray *sections = [NSMutableArray array];
+    // Only offered when this Instagram build has the settings builders; an
+    // entry that can only fail is worse than none.
+    if ([SPKAccountPrivacyService isSupported]) {
+        [sections addObject:SPKTopicSection(SPKL(@"PROFILE_PRIVACY_HEADER"), @[
+                                                [SPKAccountPrivacySettingsProvider rootSetting]
+                                            ],
+                                            nil)];
+    }
+    [sections addObjectsFromArray:@[
         // Two short explanations, each about one control: they read better as
         // footers under their own rows than behind a shared info button.
         SPKTopicSectionWithInfoSheet(SPKTopicSection(SPKL(@"FEED_ACTION_BUTTON_HEADER"), @[
@@ -158,6 +169,10 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
         ],
                         nil),
         SPKTopicSection(SPKL(@"PROFILE_INDICATORS_HEADER"), @[
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_TITLE")
+                                           icon:SPKSettingsIcon(@"hashtag")
+                                    defaultsKey:@"profile_exact_follower_count"],
+                               SPKL(@"PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP")),
             ({
                 SPKSetting *mode = [SPKSetting menuCellWithTitle:SPKL(@"PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE")
                                                             icon:SPKSettingsIcon(@"user_check")
@@ -195,7 +210,10 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                 };
                 colorful.helpText = SPKL(@"PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP");
                 colorful;
-            }),
+            })
+        ],
+                        nil),
+        SPKTopicSection(@"", @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_HIDE_NOTES_BUBBLE_TITLE")
                                            icon:SPKSettingsIcon(@"notes")
                                     defaultsKey:@"profile_hide_notes_bubble"],
@@ -203,7 +221,11 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_HIDE_THREADS_BUTTON_TITLE")
                                            icon:SPKSettingsIcon(@"threads")
                                     defaultsKey:@"profile_hide_threads_btn"],
-                               SPKL(@"PROFILE_INDICATORS_HIDE_THREADS_BUTTON_HELP"))
+                               SPKL(@"PROFILE_INDICATORS_HIDE_THREADS_BUTTON_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_TITLE")
+                                           icon:SPKSettingsIcon(@"user_follow")
+                                    defaultsKey:@"profile_force_suggestions_button"],
+                               SPKL(@"PROFILE_INDICATORS_FORCE_SUGGESTIONS_BUTTON_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"FEED_CONFIRMATION_HEADER"), @[
@@ -217,7 +239,8 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                                SPKL(@"PROFILE_CONFIRMATION_CONFIRM_UNFOLLOW_HELP"))
         ],
                         nil)
-    ]);
+    ]];
+    return SPKTopicNavigationSetting(SPKL(@"PROFILE_TITLE"), @"user_circle", 24.0, sections);
 }
 
 @end

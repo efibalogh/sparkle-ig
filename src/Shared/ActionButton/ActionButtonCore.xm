@@ -20,6 +20,7 @@
 #import "../MediaPreview/SPKMediaItem.h"
 #import "../../Features/Instants/InstantsResolver.h"
 #import "../Instants/SPKInstantsAutoSave.h"
+#import "../Instants/SPKInstantsManualSeenUsers.h"
 #import "../MediaTrim/SPKTrimEntry.h"
 #import "../Messages/SPKDirectAutoSave.h"
 #import "../Messages/SPKDirectSeenContext.h"
@@ -68,6 +69,7 @@ NSString *const kSPKActionToggleStoryAutoSaveUserRule = @"toggle_story_auto_save
 NSString *const kSPKActionToggleDirectAutoSaveThreadRule = @"toggle_direct_auto_save_thread_rule";
 NSString *const kSPKActionToggleInstantsAutoSaveUserRule = @"toggle_instants_auto_save_user_rule";
 NSString *const kSPKActionInstantsMarkSeen = @"instants_mark_seen";
+NSString *const kSPKActionToggleInstantsManualSeenUserRule = @"toggle_instants_manual_seen_user_rule";
 
 /// Defined further down, next to the other Instants executors, but needed by the
 /// action-availability switch above it.
@@ -1016,6 +1018,10 @@ static NSString *SPKActionButtonDisplayTitleForContext(NSString *identifier,
         NSString *title = SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context));
         return title ?: SPKActionDescriptorDisplayTitle(identifier, context.settingsTitle);
     }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        NSString *title = SPKInstantsManualSeenActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context));
+        return title ?: SPKActionDescriptorDisplayTitle(identifier, context.settingsTitle);
+    }
     if ([identifier isEqualToString:kSPKActionToggleProfileStorySeenUserRule]) {
         id user = SPKResolveMediaForContext(context);
         NSString *pk = user ? [SPKUtils pkFromIGUser:user] : nil;
@@ -1106,6 +1112,12 @@ static UIImage *SPKIconForActionIdentifier(NSString *identifier, SPKActionButton
         NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
         BOOL applies = username.length > 0 ? SPKInstantsAutoSaveAppliesToUsername(username) : NO;
         return [SPKAssetUtils instagramIconNamed:applies ? @"download_off" : @"download" pointSize:size];
+    }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        // Same mapping as the profile seen toggles: held reads as eye_off.
+        NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
+        BOOL held = username.length > 0 ? SPKInstantsManualSeenAppliesToUsername(username) : NO;
+        return [SPKAssetUtils instagramIconNamed:held ? @"eye_off" : @"eye" pointSize:size];
     }
     if ([identifier isEqualToString:kSPKActionToggleProfileStorySeenUserRule]) {
         id user = context ? SPKResolveMediaForContext(context) : nil;
@@ -2307,6 +2319,12 @@ static BOOL SPKIsActionVisible(SPKActionButtonContext *context,
                [SPKUtils getBoolPref:@"instants_auto_save"] &&
                SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context)).length > 0;
     }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        // Offered even while Manually Mark Seen is off: adding an Included User from here is
+        // how per-user holding starts.
+        return context.source == SPKActionButtonSourceInstants &&
+               SPKInstantsManualSeenActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context)).length > 0;
+    }
     if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
         // Not a menu action. It backs the viewer's own eye button, which has no need of a
         // menu row beside it, and the Instants menu is built once per button lifecycle so a
@@ -2491,6 +2509,10 @@ static NSString *SPKActionButtonMenuSignature(SPKActionButtonContext *context,
     NSString *dynamicInstantsAutoSaveTitle = [visibleActions containsObject:kSPKActionToggleInstantsAutoSaveUserRule]
                                                  ? SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context))
                                                  : @"";
+    if ([visibleActions containsObject:kSPKActionToggleInstantsManualSeenUserRule]) {
+        NSString *manualSeenTitle = SPKInstantsManualSeenActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context));
+        dynamicInstantsAutoSaveTitle = [NSString stringWithFormat:@"%@/%@", dynamicInstantsAutoSaveTitle ?: @"", manualSeenTitle ?: @""];
+    }
     NSString *dynamicProfileStoryRuleTitle = [visibleActions containsObject:kSPKActionToggleProfileStorySeenUserRule]
                                                  ? SPKActionButtonDisplayTitleForContext(kSPKActionToggleProfileStorySeenUserRule, context, nil)
                                                  : @"";
@@ -2639,8 +2661,15 @@ static void SPKPerformBatchDownloadWithQualityPrompt(NSArray<SPKResolvedMediaEnt
         if ([effectiveQuality isEqualToString:@"max"] && [SPKUtils getBoolPref:@"downloads_fetch_4k_images"]) {
             NSString *topPK = SPKMediaPKForMediaObject(media);
             if (topPK.length > 0 && ![SPKMediaQualityManager hasWebPhotoCandidatesFetchedForPK:topPK]) {
+                // Cancelling drops the download that was waiting on the fetch;
+                // the candidates are still cached for the next attempt.
+                __block BOOL cancelled = NO;
                 if (SPKNotificationIsEnabled(identifier)) {
-                    [[SPKNotificationCenter shared] beginTransientProgressWithTitle:SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_FETCHING_4K_CANDIDATES_TEXT") onCancel:nil];
+                    [[SPKNotificationCenter shared] beginTransientProgressWithTitle:SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_FETCHING_4K_CANDIDATES_TEXT")
+                                                                           onCancel:^{
+                                                                               cancelled = YES;
+                                                                               [[SPKNotificationCenter shared] dismissTransientProgressPill];
+                                                                           }];
                 }
                 [SPKInstagramAPI fetchWebMediaInfoForPK:topPK completion:^(NSDictionary *response, NSError *error) {
                     [SPKMediaQualityManager markWebPhotoCandidatesFetchedForPK:topPK];
@@ -2648,7 +2677,8 @@ static void SPKPerformBatchDownloadWithQualityPrompt(NSArray<SPKResolvedMediaEnt
                         [SPKMediaQualityManager cacheWebCandidatesFromResponse:response];
                     }
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        startDownload();
+                        if (!cancelled)
+                            startDownload();
                     });
                 }];
                 return;
@@ -2955,7 +2985,8 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
         NSInteger previewIndex = SPKPreviewIndexForEntry(currentEntry, previewEntries,
                                                          SPKResolveCurrentIndexForContext(context));
         NSInteger clampedIndex = SPKClampedIndex(previewIndex, (NSInteger)playerItems.count);
-        SPKNotify(identifier, SPKL(@"FEED_FEED_ACTION_BUTTON_EXPANDED_MEDIA_TEXT"), nil, @"expand", SPKNotificationToneForIconResource(@"expand"));
+        // What opens is the confirmation; only the tap is felt.
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         [SPKFullScreenMediaPlayer showMediaItems:playerItems
                                  startingAtIndex:clampedIndex
                                         metadata:meta
@@ -3002,7 +3033,7 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
         } else {
             SPKShowExtractedVideoCover(currentEntry.videoURL, thumbnailMeta, context);
         }
-        SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_OPENED_THUMBNAIL_TEXT"), nil, @"photo_gallery", SPKNotificationToneForIconResource(@"photo_gallery"));
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         return YES;
     }
 
@@ -3025,7 +3056,7 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
             return YES;
         }
 
-        SPKNotify(identifier, SPKL(@"COMMON_OPENED_SETTINGS_TOAST"), nil, @"settings", SPKNotificationToneForIconResource(@"settings"));
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         [SPKUtils showSettingsForTopicTitle:settingsTitle];
         return YES;
     }
@@ -3143,6 +3174,41 @@ static BOOL SPKExecuteToggleInstantsAutoSaveUserRuleAction(SPKActionButtonContex
             // action executes, so this cannot fight the iOS 26 menu morph.
             if ([view isKindOfClass:[UIButton class]])
                 SPKConfigureActionButton((UIButton *)view, context);
+        }
+                   title:title
+                 message:message];
+    return YES;
+}
+
+static BOOL SPKExecuteToggleInstantsManualSeenUserRuleAction(SPKActionButtonContext *context) {
+    NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
+    NSString *title = SPKInstantsManualSeenActionTitleForUsername(username);
+    NSString *message = SPKInstantsManualSeenConfirmationMessageForUsername(username);
+    if (title.length == 0 || message.length == 0) {
+        SPKNotify(kSPKNotificationInstantsMarkSeen, SPKL(@"INSTANTS_AUTO_SAVE_AUTHOR_NOT_FOUND_TOAST"), nil, @"error_filled", SPKNotificationToneError);
+        return YES;
+    }
+
+    __weak UIView *weakView = context.view;
+    [SPKUtils
+        showConfirmation:^{
+            SPKInstantsToggleManualSeenForUsername(username, ^(BOOL ok, NSString *notificationTitle, NSString *notificationSubtitle) {
+                if (!ok) {
+                    SPKNotify(kSPKNotificationInstantsMarkSeen, SPKL(@"INSTANTS_AUTO_SAVE_AUTHOR_NOT_FOUND_TOAST"), nil, @"error_filled", SPKNotificationToneError);
+                    return;
+                }
+                SPKNotify(kSPKNotificationInstantsMarkSeen, notificationTitle, notificationSubtitle, @"circle_check_filled", SPKNotificationToneSuccess);
+                UIView *view = weakView;
+                if (!view)
+                    return;
+                // The eye button follows the on-screen author, so re-decide it now rather
+                // than on the next tap.
+                SPKInstantsManualSeenDisplayedSnapMayHaveChanged(view, NO);
+                // Same reason as the auto-save toggle: the Instants menu is built once per
+                // button lifecycle, so its title only updates if rebuilt here.
+                if ([view isKindOfClass:[UIButton class]])
+                    SPKConfigureActionButton((UIButton *)view, context);
+            });
         }
                    title:title
                  message:message];
@@ -3296,8 +3362,15 @@ static BOOL SPKExecuteStoryMentionsSheetAction(SPKActionButtonContext *context) 
     return YES;
 }
 
-static BOOL SPKIsDownloadOrCopyAction(NSString *identifier) {
+BOOL SPKActionShowsCandidateFetchPill(NSString *identifier) {
+    return [identifier isEqualToString:kSPKActionEditSave] || SPKNotificationIsEnabled(identifier);
+}
+
+// Actions whose photo source is chosen by the photo quality preference, so they
+// wait on the 4K candidate fetch before resolving.
+static BOOL SPKActionUsesPhotoQuality(NSString *identifier) {
     return [identifier isEqualToString:kSPKActionDownloadLibrary] ||
+           [identifier isEqualToString:kSPKActionEditSave] ||
            [identifier isEqualToString:kSPKActionDownloadShare] ||
            [identifier isEqualToString:kSPKActionDownloadGallery] ||
            [identifier isEqualToString:kSPKActionCopyDownloadLink] ||
@@ -3324,6 +3397,9 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
     if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
         return SPKExecuteInstantsMarkSeenAction(context);
     }
+    if ([identifier isEqualToString:kSPKActionToggleInstantsManualSeenUserRule]) {
+        return SPKExecuteToggleInstantsManualSeenUserRuleAction(context);
+    }
     if ([identifier isEqualToString:kSPKActionToggleStoryAutoSaveUserRule]) {
         return SPKExecuteToggleStoryAutoSaveUserRuleAction(context);
     }
@@ -3345,7 +3421,7 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
             SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_SETTINGS_UNAVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
             return YES;
         }
-        SPKNotify(identifier, SPKL(@"COMMON_OPENED_SETTINGS_TOAST"), nil, @"settings", SPKNotificationToneForIconResource(@"settings"));
+        SPKNotificationTriggerHaptic(identifier, SPKNotificationToneInfo);
         [SPKUtils showSettingsForTopicTitle:settingsTitle];
         return YES;
     }
@@ -3366,14 +3442,24 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
                          !isVideo && 
                          ([photoQuality isEqualToString:@"max"] || ([photoQuality isEqualToString:@"always_ask"] && !isBulkAction));
 
-    if (SPKIsDownloadOrCopyAction(identifier) && shouldFetch4K) {
+    if (SPKActionUsesPhotoQuality(identifier) && shouldFetch4K) {
         NSString *topPK = SPKMediaPKForMediaObject(media);
         if (topPK.length > 0 && ![SPKMediaQualityManager hasWebPhotoCandidatesFetchedForPK:topPK]) {
-            if (isDefaultTap && !SPKActionIdentifierOpensPreview(identifier)) {
+            BOOL pausedPlayback = isDefaultTap && !SPKActionIdentifierOpensPreview(identifier);
+            if (pausedPlayback) {
                 SPKPausePlaybackForPreviewContext(context);
             }
-            if (SPKNotificationIsEnabled(identifier)) {
-                [[SPKNotificationCenter shared] beginTransientProgressWithTitle:SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_FETCHING_4K_CANDIDATES_TEXT") onCancel:nil];
+            // Cancelling drops the action that was waiting on the fetch; the
+            // candidates are still cached for the next attempt.
+            __block BOOL cancelled = NO;
+            if (SPKActionShowsCandidateFetchPill(identifier)) {
+                [[SPKNotificationCenter shared] beginTransientProgressWithTitle:SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_FETCHING_4K_CANDIDATES_TEXT")
+                                                                       onCancel:^{
+                                                                           cancelled = YES;
+                                                                           [[SPKNotificationCenter shared] dismissTransientProgressPill];
+                                                                           if (pausedPlayback)
+                                                                               SPKResumePlaybackForPreviewContext(context);
+                                                                       }];
             }
             [SPKInstagramAPI fetchWebMediaInfoForPK:topPK completion:^(NSDictionary *response, NSError *error) {
                 [SPKMediaQualityManager markWebPhotoCandidatesFetchedForPK:topPK];
@@ -3381,7 +3467,8 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
                     [SPKMediaQualityManager cacheWebCandidatesFromResponse:response];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    SPKExecuteActionIdentifier(identifier, context, isDefaultTap);
+                    if (!cancelled)
+                        SPKExecuteActionIdentifier(identifier, context, isDefaultTap);
                 });
             }];
             return YES;

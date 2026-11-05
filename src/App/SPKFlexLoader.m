@@ -198,7 +198,7 @@ static void SPKFlexShowMissingPill(NSString *trigger) {
         }
 
         SPKLog(@"FLEX", @"FLEX show requested by %@ but unavailable: %@", trigger, subtitle);
-        SPKNotify(kSPKNotificationFlexUnavailable, SPKL(@"APP_FLEX_LOADER_FLEX_UNAVAILABLE_TEXT"), subtitle, @"info_filled", SPKNotificationToneInfo);
+        SPKNotify(kSPKNotificationFlexUnavailable, SPKL(@"APP_FLEX_LOADER_FLEX_UNAVAILABLE_TEXT"), subtitle, @"warning_filled", SPKNotificationToneInfo);
     });
 }
 

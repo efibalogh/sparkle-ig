@@ -294,8 +294,13 @@ static void SPKInstantsPlaceMarkSeenButton(UIView *header) {
         return;
 
     UIButton *existing = (UIButton *)[header viewWithTag:kSPKInstantsMarkSeenButtonTag];
-    if (!SPKInstantsManualSeenIsEnabled() || !SPKInstantsHeaderIsVisible(header) ||
-        !SPKInstantsHeaderIsConsumption(header)) {
+    if (!SPKInstantsHeaderIsVisible(header) || !SPKInstantsHeaderIsConsumption(header)) {
+        [existing removeFromSuperview];
+        return;
+    }
+    SPKInstantsManualSeenRegisterEyeButtonHost(header);
+    // Cached per displayed Instant, so only authors being held get the button.
+    if (!SPKInstantsManualSeenShouldShowEyeButton()) {
         [existing removeFromSuperview];
         return;
     }

@@ -4,6 +4,7 @@
 
 #import "../../Shared/ActionButton/ActionButtonCore.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
+#import "../../Shared/Instants/SPKInstantsManualSeenUsers.h"
 #import "../../Utils.h"
 #import "../SPKPreferenceAvailability.h"
 #import "../SPKSettingsViewController.h"
@@ -24,6 +25,15 @@ static NSArray *SPKInstantsSettingsSections(void);
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self replaceSections:SPKInstantsSettingsSections()];
+}
+
+- (void)switchChanged:(UISwitch *)sender {
+    SPKSetting *row = [self settingForSender:sender];
+    [super switchChanged:sender];
+    // The switch flips the users list between Excluded and Included, so its title and
+    // help have to be rebuilt.
+    if ([row.defaultsKey isEqualToString:@"instants_manual_seen"])
+        [self replaceSections:SPKInstantsSettingsSections()];
 }
 @end
 
@@ -93,9 +103,23 @@ static NSArray *SPKInstantsSettingsSections(void) {
                                                                               icon:SPKSettingsIcon(@"autoscroll")
                                                                        defaultsKey:@"instants_advance_on_manual_seen"],
                                                    SPKL(@"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP"));
-                // The eye button only exists while Manually Mark Seen is on.
+                // The eye button only exists while Manually Mark Seen applies to someone.
                 s.enabledProvider = ^BOOL {
-                    return [SPKUtils getBoolPref:@"instants_manual_seen"];
+                    return SPKInstantsManualSeenAllUsersMode() || SPKInstantsManualSeenUserCount() > 0;
+                };
+                s;
+            }),
+            ({
+                BOOL allUsers = SPKInstantsManualSeenAllUsersMode();
+                SPKSetting *s = [SPKSetting navigationCellWithTitle:SPKInstantsManualSeenListTitle()
+                                                           subtitle:@""
+                                                               icon:SPKSettingsIcon(@"users")
+                                                     viewController:SPKInstantsManualSeenListViewController()];
+                // Flips between an exclude and an include list with the switch above.
+                s.helpText = allUsers ? SPKL(@"INSTANTS_SEEN_RECEIPTS_EXCLUDED_USERS_HELP")
+                                      : SPKL(@"INSTANTS_SEEN_RECEIPTS_INCLUDED_USERS_HELP");
+                s.accessoryTextProvider = ^NSString * {
+                    return [NSString stringWithFormat:@"%lu", (unsigned long)SPKInstantsManualSeenUserCount()];
                 };
                 s;
             }),

@@ -257,6 +257,19 @@ static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
     [reports addObject:SPKDebugReportAction(SPKL(@"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY"), @"duplicate", @"Hierarchy", ^NSString *(BOOL includeText) {
                  return SPKDiagnosticsHierarchyReport(includeText);
              })];
+#if SPK_DEV
+    // Captured after a delay so the keyboard, a sheet or a menu can be brought
+    // up first: opening this menu dismisses whatever was presented.
+    [reports addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT")
+                                           image:[SPKAssetUtils menuIconNamed:@"palette"]
+                                      identifier:nil
+                                         handler:^(__unused UIAction *action) {
+                                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                 [[UIImpactFeedbackGenerator new] impactOccurred];
+                                                 SPKDebugShareReport(@"Colors", SPKDiagnosticsColorReport());
+                                             });
+                                         }]];
+#endif
 
     UIAction *includeText = [UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT")
                                                 image:[SPKAssetUtils menuIconNamed:@"text"]

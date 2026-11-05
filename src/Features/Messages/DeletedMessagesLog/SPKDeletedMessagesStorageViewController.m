@@ -6,6 +6,7 @@
 #import "../../../Utils.h"
 #import "SPKDeletedMessagesModels.h"
 #import "SPKDeletedMessagesStorage.h"
+#import "../../../Shared/UI/SPKNotificationCenter.h"
 
 @interface SPKDeletedMessagesStorageViewController ()
 @property (nonatomic, copy) NSString *ownerPK;
@@ -213,6 +214,7 @@ static NSString *SPKDMStorageOwnerPK(void) {
                                                                                       [SPKDeletedMessagesStorage saveMessage:message forOwnerPK:self.ownerPK];
                                                                                   }
                                                                                   [self reloadStatsAndRebuild];
+                                                                                  SPKNotify(kSPKNotificationDeletedMessagesClear, SPKL(@"MESSAGES_DELETED_MESSAGES_STORAGE_MEDIA_CLEARED_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }
@@ -230,6 +232,7 @@ static NSString *SPKDMStorageOwnerPK(void) {
                                                                               handler:^{
                                                                                   [SPKDeletedMessagesStorage resetForOwnerPK:self.ownerPK];
                                                                                   [self reloadStatsAndRebuild];
+                                                                                  SPKNotify(kSPKNotificationDeletedMessagesClear, SPKL(@"MESSAGES_DELETED_MESSAGES_STORAGE_LOG_CLEARED_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }
@@ -247,6 +250,7 @@ static NSString *SPKDMStorageOwnerPK(void) {
                                                                               handler:^{
                                                                                   [SPKDeletedMessagesStorage clearStagedMediaForOwnerPK:self.ownerPK];
                                                                                   [self reloadStatsAndRebuild];
+                                                                                  SPKNotify(kSPKNotificationDeletedMessagesClear, SPKL(@"MESSAGES_DELETED_MESSAGES_STORAGE_RECOVERY_CACHE_CLEARED_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }

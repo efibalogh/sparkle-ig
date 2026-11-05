@@ -763,6 +763,32 @@ static void SPKApplyCustomTabButtonOrder(IGTabBarController *controller) {
     [controller.tabBar setNeedsLayout];
 }
 
+// Instagram rewrites _tabBarSurfaces with its own unfiltered list whenever it
+// repopulates the bar, and derives the selected button index from that ivar. A
+// selection made in that window lands on the index the surface has in the full
+// list, so with Feed hidden, picking Reels lights up the button after it.
+static void SPKFilterTabBarSurfacesIvar(IGTabBarController *controller) {
+    NSArray *surfaces = [SPKUtils getIvarForObj:controller name:"_tabBarSurfaces"];
+    if ([surfaces isKindOfClass:[NSArray class]])
+        [SPKUtils setIvarForObj:controller name:"_tabBarSurfaces" value:filterSurfacesArray(surfaces)];
+}
+
+static void SPKSyncTabBarSelectionIndex(IGTabBarController *controller) {
+    if (SPKStabilityGuardIsSafeStartupMode())
+        return;
+    id<SPKTabBarViewRepresentable> bar = (id<SPKTabBarViewRepresentable>)controller.tabBar;
+    if (![bar respondsToSelector:@selector(setSelectedTabBarItemIndex:)] ||
+        ![controller respondsToSelector:@selector(selectedTabBarSurface)])
+        return;
+    id selectedSurface = [controller selectedTabBarSurface];
+    NSArray *surfaces = [SPKUtils getIvarForObj:controller name:"_tabBarSurfaces"];
+    if (!selectedSurface || ![surfaces isKindOfClass:[NSArray class]])
+        return;
+    NSUInteger index = [surfaces indexOfObject:selectedSurface];
+    if (index != NSNotFound)
+        [bar setSelectedTabBarItemIndex:(NSInteger)index];
+}
+
 // Should the tab bar be taken away entirely? Only when the configuration leaves
 // exactly one tab, and only for a tab that keeps a way back into Sparkle
 // Settings without the tab bar long-press.
@@ -866,6 +892,7 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
                          animated:(BOOL)animated
                  navigationAction:(NSUInteger)navigationAction
                 skipMainFeedFetch:(BOOL)skipMainFeedFetch {
+    SPKFilterTabBarSurfacesIvar(self);
     SPKSavedTabSelection selection = SPKBeginSavedTabSelection(surface);
     %orig;
     SPKFinishSavedTabSelection(self, selection);
@@ -880,6 +907,7 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
                  navigationAction:(NSUInteger)navigationAction
                 skipMainFeedFetch:(BOOL)skipMainFeedFetch
                   animateIndicator:(BOOL)animateIndicator {
+    SPKFilterTabBarSurfacesIvar(self);
     SPKSavedTabSelection selection = SPKBeginSavedTabSelection(surface);
     %orig;
     SPKFinishSavedTabSelection(self, selection);
@@ -962,6 +990,8 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
     SEL selector = selectorName.length > 0 ? NSSelectorFromString(selectorName) : nil;
     if (selector && [self respondsToSelector:selector]) {
         ((void (*)(id, SEL))objc_msgSend)(self, selector);
+        SPKFilterTabBarSurfacesIvar(self);
+        SPKSyncTabBarSelectionIndex(self);
     }
 
     if (!SPKStabilityGuardIsSafeStartupMode()) {

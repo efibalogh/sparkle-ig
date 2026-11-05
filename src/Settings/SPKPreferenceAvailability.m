@@ -17,13 +17,18 @@ BOOL SPKPrefIsAvailable(NSString *key) {
     // The Liquid Glass pref and its tab bar mode also back the pre-iOS 26
     // "Pill-Shaped Tab Bar" toggle — the tab bar experiment gates reshape the
     // bar into the floating pill on any iOS, only the glass material is 26+.
-    if ([key isEqualToString:kSPKPrefInterfaceLiquidGlass] ||
+    if ([key isEqualToString:kSPKPrefInterfaceLiquidGlassMode] ||
         [key isEqualToString:kSPKPrefInterfaceLiquidGlassTabBarMode]) {
         return YES;
     }
 
     // The scroll edge style relies on UIScrollEdgeEffect, which only exists on iOS 26+.
     if ([key isEqualToString:kSPKPrefInterfaceScrollEdgeStyle]) {
+        return SPKIsIOSVersionAtLeast(@"26.0");
+    }
+
+    // Liquid Glass, and so its OLED tint choice, only exists on iOS 26+.
+    if ([key isEqualToString:@"interface_oled_black_glass"]) {
         return SPKIsIOSVersionAtLeast(@"26.0");
     }
 

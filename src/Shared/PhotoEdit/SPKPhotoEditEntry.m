@@ -2,6 +2,7 @@
 #import "SPKPhotoEditEntry.h"
 #import "../../Utils.h"
 #import "../Gallery/SPKGallerySaveMetadata.h"
+#import "../MediaDownload/SPKMediaQualityManager.h"
 #import "../MediaTrim/SPKTrimSaveCoordinator.h"
 #import "../UI/SPKNotificationCenter.h"
 #import "SPKPhotoEditorViewController.h"
@@ -23,6 +24,20 @@
                               photoURL:(NSURL *)photoURL
                               metadata:(SPKGallerySaveMetadata *)metadata
                              presenter:(UIViewController *)presenter {
+    [self beginEditAndSaveForMediaObject:mediaObject
+                                photoURL:photoURL
+                          displayedImage:nil
+                                metadata:metadata
+                               presenter:presenter];
+}
+
++ (void)beginEditAndSaveForMediaObject:(id)mediaObject
+                              photoURL:(NSURL *)photoURL
+                        displayedImage:(UIImage *)displayedImage
+                              metadata:(SPKGallerySaveMetadata *)metadata
+                             presenter:(UIViewController *)presenter {
+    // A "Fetching 4K candidates" pill that ran ahead of this has done its job.
+    [[SPKNotificationCenter shared] dismissTransientProgressPill];
     if (!presenter)
         return;
     if (!photoURL) {
@@ -38,7 +53,7 @@
 
     // A local file (e.g. gallery / already-downloaded) needs no fetch.
     if (photoURL.isFileURL) {
-        UIImage *image = [UIImage imageWithContentsOfFile:photoURL.path];
+        UIImage *image = displayedImage ?: [UIImage imageWithContentsOfFile:photoURL.path];
         if (!image) {
             SPKNotify(@"spk.photoedit.entry", SPKL(@"GALLERY_GALLERY_CANNOT_EDIT_TEXT"),
                       SPKL(@"PHOTO_EDIT_PHOTO_EDIT_ENTRY_IMAGE_UNAVAILABLE_TEXT"), @"error_filled", SPKNotificationToneError);
@@ -49,7 +64,21 @@
         return;
     }
 
-    [entry downloadPhotoURL:photoURL];
+    [SPKMediaQualityManager resolveEditPhotoURLForMediaObject:mediaObject
+                                                     photoURL:photoURL
+                                                    presenter:presenter
+                                                   completion:^(NSURL *url) {
+                                                       if (!url) {
+                                                           [entry finish];
+                                                           return;
+                                                       } // dismissed
+                                                       // The bitmap already on screen is this exact file; skip the refetch.
+                                                       if (displayedImage && [url isEqual:photoURL]) {
+                                                           [entry presentEditorWithImage:displayedImage];
+                                                           return;
+                                                       }
+                                                       [entry downloadPhotoURL:url];
+                                                   }];
 }
 
 #pragma mark - Download

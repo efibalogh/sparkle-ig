@@ -155,6 +155,7 @@ NSArray<NSString *> *SPKActionButtonSupportedActionsForSource(SPKActionButtonSou
             kSPKActionExpand,
             kSPKActionViewThumbnail,
             kSPKActionToggleInstantsAutoSaveUserRule,
+            kSPKActionToggleInstantsManualSeenUserRule,
             kSPKActionOpenTopicSettings
         ];
     case SPKActionButtonSourceProfile:
@@ -295,7 +296,7 @@ NSArray<SPKActionMenuSection *> *SPKActionButtonDefaultSectionsForSource(SPKActi
     } else if (source == SPKActionButtonSourceProfile) {
         moreActions = @[ kSPKActionToggleProfileStorySeenUserRule, kSPKActionToggleProfileMessagesSeenUserRule, kSPKActionOpenTopicSettings ];
     } else if (source == SPKActionButtonSourceInstants) {
-        moreActions = @[ kSPKActionToggleInstantsAutoSaveUserRule, kSPKActionOpenTopicSettings ];
+        moreActions = @[ kSPKActionToggleInstantsAutoSaveUserRule, kSPKActionToggleInstantsManualSeenUserRule, kSPKActionOpenTopicSettings ];
     } else {
         moreActions = @[ kSPKActionOpenTopicSettings ];
     }
@@ -402,6 +403,7 @@ NSArray<SPKActionMenuSection *> *SPKActionButtonDefaultSectionsForSource(SPKActi
     // a deliberate unassign or disable is recorded and respected from then on.
     if (stored && source == SPKActionButtonSourceInstants) {
         [configuration adoptAction:kSPKActionToggleInstantsAutoSaveUserRule intoSectionWithIdentifier:@"more"];
+        [configuration adoptAction:kSPKActionToggleInstantsManualSeenUserRule intoSectionWithIdentifier:@"more"];
     }
 
     [configuration normalize];

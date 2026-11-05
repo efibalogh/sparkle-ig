@@ -159,6 +159,9 @@ static NSSet<NSString *> *SPKTransferExcludedKeys(void) {
         excluded = [NSSet setWithArray:@[
             @"app_safe_startup",
             @"app_startup_profiling",
+            // Cached server state and a dev-only switch, not user settings.
+            @"profile_account_privacy_cache",
+            @"dev_account_privacy_simulate",
             SPKPreferenceMigrationsCompletedKey
         ]];
     });
@@ -993,6 +996,7 @@ static NSString *SPKTransferArchiveFilename(BOOL includeSettings, BOOL includeGa
     [fm createDirectoryAtPath:bundleRoot withIntermediateDirectories:YES attributes:nil error:nil];
 
     SPKNotificationPillView *pill = SPKNotifyProgress(kSPKNotificationSettingsExport, SPKL(@"SETTINGS_TRANSFER_EXPORT_PROGRESS_TITLE"), nil);
+    pill.cancellable = NO;
     void (^setProgress)(float, NSString *) = ^(float fraction, NSString *subtitle) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [pill setProgress:fraction animated:YES];
@@ -1132,11 +1136,7 @@ static NSString *SPKTransferArchiveFilename(BOOL includeSettings, BOOL includeGa
             self.activeDocumentPicker = nil;
             return;
         }
-        [presenter presentViewController:picker
-                                animated:YES
-                              completion:^{
-                                  SPKNotify(kSPKNotificationSettingsImport, SPKL(@"SETTINGS_TRANSFER_CHOOSE_EXPORT_BUNDLE_TOAST"), nil, @"arrow_down", SPKNotificationToneForIconResource(@"arrow_down"));
-                              }];
+        [presenter presentViewController:picker animated:YES completion:nil];
     });
 }
 
@@ -1164,8 +1164,10 @@ static NSString *SPKTransferArchiveFilename(BOOL includeSettings, BOOL includeGa
 
     BOOL scoped = [url startAccessingSecurityScopedResource];
 
-    // Progress pill so unzip + the heavy merges never block the UI.
+    // Progress pill so unzip + the heavy merges never block the UI. Stopping
+    // partway would leave settings half merged, so it offers no cancel.
     SPKNotificationPillView *pill = SPKNotifyProgress(kSPKNotificationSettingsImport, SPKL(@"GALLERY_IMPORT_IMPORTING_PROGRESS"), nil);
+    pill.cancellable = NO;
     void (^setProgress)(float, NSString *) = ^(float fraction, NSString *sub) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [pill setProgress:fraction animated:YES];

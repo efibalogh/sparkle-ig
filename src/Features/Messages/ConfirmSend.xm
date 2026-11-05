@@ -3,7 +3,6 @@
 #import <objc/runtime.h>
 
 static NSString *const kSPKConfirmSendPref = @"general_confirm_send";
-static NSString *const kSPKBottomButtonsViewRuntimeClassName = @"IGShareSheet.IGSharesheetBottomButtonsView";
 
 @interface IGTextButton : UIButton
 @property (copy, nonatomic) NSString *text;
@@ -143,7 +142,7 @@ static NSString *SPKGetShareTypeFromController(UIViewController *vc) {
     }
 
     // This hook is bound only to the share sheet's bottom-buttons view
-    // (IGShareSheet.IGSharesheetBottomButtonsView), whose primary button IS the
+    // (IGSharesheetBottomButtonsView), whose primary button IS the
     // Send button — so confirm on any primary tap. (The old send/share title sniff
     // was both redundant and localized, silently disabling confirm on non-English.)
 
@@ -174,7 +173,8 @@ static NSString *SPKGetShareTypeFromController(UIViewController *vc) {
 extern "C" void SPKInstallConfirmSendHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class bottomButtonsViewClass = objc_getClass(kSPKBottomButtonsViewRuntimeClassName.UTF8String);
+        // IG 451 moved the share sheet's Swift module from IGShareSheet to IGDirectShareSheetUI.
+        Class bottomButtonsViewClass = SPKResolveIGClass(@"IGDirectShareSheetUI.IGSharesheetBottomButtonsView", @"IGShareSheet.IGSharesheetBottomButtonsView");
         if (bottomButtonsViewClass) {
             %init(SPKConfirmSendHooks, SPKBottomButtonsViewClass = bottomButtonsViewClass);
         }

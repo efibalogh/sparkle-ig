@@ -1120,8 +1120,10 @@ extern "C" void SPKInstallHiddenChatsHooksIfEnabled(void) {
 
         %init(SPKHiddenChatsInboxHooks,
               IGDirectInboxListAdapterDataSource = SPKResolveIGClass(@"IGDirectInboxListAdapterDataSource.IGDirectInboxListAdapterDataSource", @"IGDirectInboxListAdapterDataSource"));
-        %init(SPKHiddenChatsRevealHooks);
-        Class swiftInbox = SPKResolveIGClass(@"IGDirectInboxSwiftViewController.IGDirectInboxSwiftViewController", nil);
+        Class objcInbox = SPKDirectObjCInboxClass();
+        if (objcInbox)
+            %init(SPKHiddenChatsRevealHooks, IGDirectInboxViewController = objcInbox);
+        Class swiftInbox = SPKDirectSwiftInboxClass();
         if (swiftInbox)
             %init(SPKHiddenChatsRevealSwiftHooks, IGDirectInboxSwiftViewController = swiftInbox);
         if (NSClassFromString(@"IGSearchBarNewGroupFacepileButton"))

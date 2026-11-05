@@ -123,7 +123,7 @@ static NSURL *SPKInstagramStoryURLForMedia(id media) {
 
 static BOOL SPKShareURLIsStoryURL(NSURL *url) {
     NSString *path = url.path.lowercaseString ?: @"";
-    return [path containsString:@"/stories/"];
+    return [path containsString:@"/stories/"] || [path hasPrefix:@"/s/"];
 }
 
 static BOOL SPKShareURLIsPostOrReelURL(NSURL *url) {
@@ -432,7 +432,7 @@ static NSURL *SPKShareURLFromView(UIView *view) {
 
 static NSString *SPKCopiedShareLinkTitleForURL(NSURL *url) {
     NSString *path = url.path.lowercaseString ?: @"";
-    if ([path containsString:@"/stories/"])
+    if (SPKShareURLIsStoryURL(url))
         return SPKL(@"GENERAL_SHARE_LONG_PRESS_COPY_COPIED_STORY_LINK_TEXT");
     if ([path containsString:@"/reel/"] || [path containsString:@"/reels/"])
         return SPKL(@"GENERAL_SHARE_LONG_PRESS_COPY_COPIED_REEL_LINK_TEXT");

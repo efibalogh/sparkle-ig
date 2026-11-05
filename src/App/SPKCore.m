@@ -10,12 +10,12 @@
 
 static NSDictionary *SPKBootstrapDefaults(void) {
     return @{
-        @"tools_disable_safe_mode" : @(NO),
         @"tools_flex_app_launch" : @(NO),
         @"tools_flex_app_start" : @(NO),
         @"tools_flex_instagram" : @(NO),
         @"tools_debug_button" : @(NO),
-        @"interface_liquid_glass" : @(NO),
+        // follow (Instagram decides), on or off.
+        @"interface_liquid_glass_mode" : @"follow",
         @"interface_liquid_glass_tabbar_mode" : @"default",
         // off, default (follow iOS), soft or hard.
         @"interface_scroll_edge_style" : @"soft",
@@ -34,9 +34,13 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"interface_hide_tab_bar_in_messages_only" : @(NO),
         @"interface_show_header_button_in_messages_only" : @(YES),
         @"interface_open_clipboard_link" : @(YES),
+        @"interface_open_clipboard_username" : @(NO),
         // Family name of the imported app-wide font; empty means the default face.
         // Bootstrap rather than feature defaults: the font hooks install in %ctor.
         @"interface_custom_font" : @"",
+        @"interface_oled_dark_mode" : @(NO),
+        // Off = Liquid Glass gets a gray tint over OLED black; read in %ctor too.
+        @"interface_oled_black_glass" : @(NO),
         // Device-global Sparkle language. "auto" follows Instagram, then iOS.
         @"interface_language" : @"auto",
         // Keeps installed language packs level with the release they came from. Device-global for
@@ -84,6 +88,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_comments_confirm_like" : @(NO),
         @"msgs_confirm_double_tap" : @(NO),
         @"msgs_confirm_reaction" : @(NO),
+        @"msgs_confirm_reel_send_to_thread" : @(NO),
         @"stories_confirm_like" : @(NO),
         @"stories_confirm_mark_seen" : @(NO),
         @"stories_manual_seen_mode" : @"off",
@@ -94,6 +99,10 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_confirm_send" : @(NO),
         @"general_share_sheet_pins" : @(NO),
         @"general_share_sheet_pinned" : @[],
+        @"interface_search_pins" : @(NO),
+        @"interface_search_pinned" : @[],
+        @"interface_search_pins_list_types" : @[],
+        @"interface_search_pins_collapsed" : @(NO),
         @"msgs_keep_deleted" : @(NO),
         @"msgs_deleted_log" : @(NO),
         @"msgs_deleted_log_reactions" : @(NO),
@@ -101,6 +110,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"profile_photo_zoom" : @(NO),
         @"profile_saved_tab" : @(NO),
         @"profile_square_grid" : @(NO),
+        @"profile_exact_follower_count" : @(NO),
         @"profile_follow_indicator" : @(NO),
         // The mode (`profile_follow_indicator_mode`) and colorful
         // (`profile_follow_indicator_colorful`) keys are intentionally left
@@ -149,6 +159,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"stories_search_viewer_list" : @(NO),
         @"stories_starred_viewers" : @[],
         @"stories_hide_recent_highlights" : @(NO),
+        @"stories_hide_suggested_accounts" : @(NO),
         @"stories_auto_save" : @(NO),
         @"stories_auto_save_filter_mode" : @"all",
         @"msgs_auto_save" : @(NO),
@@ -236,6 +247,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_hide_suggested_users_msgs" : @(NO),
         @"general_hide_suggested_users_search" : @(NO),
         @"general_hide_suggested_users_profile" : @(NO),
+        @"profile_force_suggestions_button" : @(YES),
         @"general_hide_suggested_users_activity" : @(NO),
         @"general_hide_suggested_users_follow_lists" : @(NO),
         @"general_hide_suggested_users_subscriptions" : @(NO),
@@ -281,6 +293,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"msgs_seen_button_position" : @"top",
         @"msgs_last_active_format" : @"off",
         @"feed_confirm_repost" : @(NO),
+        @"feed_confirm_refresh" : @(NO),
         @"reels_confirm_repost" : @(NO),
         @"feed_hide_repost_btn" : @(NO),
         @"reels_hide_repost_btn" : @(NO),

@@ -169,33 +169,27 @@ static void SPKInstallRefreshUtilityHooks(void) {
 
 %end
 
-// MARK: - Tab retap handling (newer IG)
+// Implemented in FeedRefreshConfirm.x.
+BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController);
 
-%hook IGTabBarController
-
-- (void)_timelineButtonPressed {
-    if (!spkDisableHomeRefresh()) {
-        %orig;
-        return;
-    }
-
+// The feed controller when the Home tab is re-tapped on the feed itself, nil
+// when the tap switches tabs or pops a pushed screen.
+static UIViewController *spkHomeTabFeedController(id tabBarController) {
     UIViewController *selected = nil;
-    if ([self respondsToSelector:@selector(selectedViewController)]) {
-        selected = [self valueForKey:@"selectedViewController"];
+    if ([tabBarController respondsToSelector:@selector(selectedViewController)]) {
+        selected = [tabBarController valueForKey:@"selectedViewController"];
     }
 
     UIViewController *top = [selected isKindOfClass:[UINavigationController class]]
                                 ? [(UINavigationController *)selected topViewController]
                                 : selected;
-    BOOL onFeedTab = top && [NSStringFromClass([top class]) containsString:@"MainFeed"];
-    if (!onFeedTab) {
-        %orig;
-        return;
-    }
+    return top && [NSStringFromClass([top class]) containsString:@"MainFeed"] ? top : nil;
+}
 
+static void spkScrollFeedToTop(UIViewController *feedController) {
     NSMutableArray *queue = [NSMutableArray array];
-    if (top.view)
-        [queue addObject:top.view];
+    if (feedController.view)
+        [queue addObject:feedController.view];
     NSInteger scanned = 0;
     while (queue.count > 0 && scanned < 40) {
         UIView *current = queue.firstObject;
@@ -211,6 +205,29 @@ static void SPKInstallRefreshUtilityHooks(void) {
 
         [queue addObjectsFromArray:current.subviews];
     }
+}
+
+// MARK: - Tab retap handling (newer IG)
+
+%hook IGTabBarController
+
+- (void)_timelineButtonPressed {
+    BOOL disableRefresh = spkDisableHomeRefresh();
+    if (!disableRefresh && ![SPKUtils getBoolPref:@"feed_confirm_refresh"]) {
+        %orig;
+        return;
+    }
+
+    UIViewController *top = spkHomeTabFeedController(self);
+    if (!top) {
+        %orig;
+        return;
+    }
+
+    // Confirm Feed Refresh scrolls up, shows the spinner and asks. Without a
+    // refresh control to drive it only scrolls up, so nothing refreshes unasked.
+    if (disableRefresh || !SPKFeedConfirmHomeTabRefresh(top))
+        spkScrollFeedToTop(top);
 }
 
 - (void)_discoverVideoButtonPressed {

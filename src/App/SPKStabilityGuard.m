@@ -9,7 +9,13 @@
 // (only Settings access remains) and Liquid Glass is disabled, so a hook that
 // crashes Instagram on launch can't lock the user out permanently. The user can
 // clear this from Tools > "Reset Safe Startup Mode" (SPKStabilityGuardReset).
+//
+// A launch the user leaves before it is marked stable (app switcher, home
+// gesture, swiping it away) is not counted: a launch crash never gets far enough
+// to resign active, so only launches that end without the user leaving count.
 #import "SPKStabilityGuard.h"
+
+#import <UIKit/UIKit.h>
 
 #import "../Shared/UI/SPKIGAlertPresenter.h"
 #import "../Utils.h"
@@ -17,6 +23,7 @@
 static NSString *const kSPKStabilityLaunchStartedAtKey = @"app_launch_started_at";
 static NSString *const kSPKStabilityLaunchCompletedAtKey = @"app_launch_completed_at";
 static NSString *const kSPKStabilityFailedLaunchCountKey = @"app_failed_launch_count";
+static NSString *const kSPKStabilityLaunchLeftByUserKey = @"app_launch_left_by_user";
 static NSString *const kSPKSafeStartupModeKey = @"app_safe_startup";
 static NSString *const kSPKSafeStartupReasonKey = @"app_safe_startup_reason";
 
@@ -32,8 +39,12 @@ void SPKStabilityGuardBeginLaunch(void) {
     NSTimeInterval now = SPKNow();
     NSTimeInterval previousStart = [defaults doubleForKey:kSPKStabilityLaunchStartedAtKey];
     NSInteger failedLaunches = [defaults integerForKey:kSPKStabilityFailedLaunchCountKey];
+    BOOL previousLaunchLeftByUser = [defaults boolForKey:kSPKStabilityLaunchLeftByUserKey];
+    [defaults removeObjectForKey:kSPKStabilityLaunchLeftByUserKey];
 
-    if (previousStart > 0.0) {
+    if (previousStart > 0.0 && previousLaunchLeftByUser) {
+        SPKLog(@"Stability", @"Previous launch was left by the user before it finished; not counted");
+    } else if (previousStart > 0.0) {
         BOOL recentIncompleteLaunch = (now - previousStart) <= kSPKStabilityRecentLaunchWindow;
         failedLaunches = recentIncompleteLaunch ? failedLaunches + 1 : 0;
         [defaults setInteger:failedLaunches forKey:kSPKStabilityFailedLaunchCountKey];
@@ -56,11 +67,29 @@ void SPKStabilityGuardBeginLaunch(void) {
         SPKLog(@"Stability", @"Launch guard armed");
     }
     [defaults synchronize];
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification
+                                                          object:nil
+                                                           queue:nil
+                                                      usingBlock:^(__unused NSNotification *note) {
+                                                          NSUserDefaults *launchDefaults = [NSUserDefaults standardUserDefaults];
+                                                          if ([launchDefaults doubleForKey:kSPKStabilityLaunchStartedAtKey] <= 0.0 ||
+                                                              [launchDefaults boolForKey:kSPKStabilityLaunchLeftByUserKey]) {
+                                                              return;
+                                                          }
+                                                          // The process can be killed straight from the app switcher, so persist now.
+                                                          [launchDefaults setBool:YES forKey:kSPKStabilityLaunchLeftByUserKey];
+                                                          [launchDefaults synchronize];
+                                                      }];
+    });
 }
 
 void SPKStabilityGuardMarkHooksFinished(void) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kSPKStabilityLaunchStartedAtKey];
+    [defaults removeObjectForKey:kSPKStabilityLaunchLeftByUserKey];
     [defaults setInteger:0 forKey:kSPKStabilityFailedLaunchCountKey];
     [defaults setDouble:SPKNow() forKey:kSPKStabilityLaunchCompletedAtKey];
     [defaults synchronize];
@@ -104,6 +133,7 @@ void SPKStabilityGuardReset(void) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kSPKStabilityLaunchStartedAtKey];
     [defaults removeObjectForKey:kSPKStabilityFailedLaunchCountKey];
+    [defaults removeObjectForKey:kSPKStabilityLaunchLeftByUserKey];
     [defaults removeObjectForKey:kSPKSafeStartupModeKey];
     [defaults removeObjectForKey:kSPKSafeStartupReasonKey];
     [defaults removeObjectForKey:kSPKStabilityLaunchCompletedAtKey];

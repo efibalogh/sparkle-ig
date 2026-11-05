@@ -1515,19 +1515,15 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 }
 
 - (void)openOriginalPostForFile:(SPKGalleryFile *)file {
-    NSString *openedTitle = nil;
     NSString *failureTitle = nil;
     switch ((SPKGallerySource)file.source) {
     case SPKGallerySourceStories:
-        openedTitle = SPKL(@"GALLERY_OPENED_ORIGINAL_STORY_TOAST");
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST");
         break;
     case SPKGallerySourceReels:
-        openedTitle = SPKL(@"GALLERY_OPENED_ORIGINAL_REEL_TOAST");
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST");
         break;
     default:
-        openedTitle = SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_OPENED_ORIGINAL_POST_TEXT");
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST");
         break;
     }
@@ -1538,8 +1534,10 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     if ([SPKGalleryOriginController openOriginalPostForGalleryFile:file
                                                fromViewController:self
                                                    legacyFallback:^{
+                                                       // The post is what shows next, so there is nothing to announce;
+                                                       // the tap is still felt.
                                                        [weakSelf dismissGalleryForOriginOpenWithCompletion:^{
-                                                           SPKNotify(kSPKNotificationGalleryOpenOriginal, openedTitle, nil, @"external_link", SPKNotificationToneInfo);
+                                                           SPKNotificationTriggerHaptic(kSPKNotificationGalleryOpenOriginal, SPKNotificationToneInfo);
                                                        }];
                                                    }
                                                         onDismiss:nil]) {
@@ -1550,17 +1548,17 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 }
 
 - (void)openProfileForFile:(SPKGalleryFile *)file {
-    // Via the completion so the toast lands when the profile actually opens: an
-    // item with no stored pk looks one up first, and announcing "Opened profile"
-    // at call time put this on screen next to the still-spinning progress pill.
+    // Via the completion: an item with no stored pk looks one up first, so only
+    // the outcome says whether it opened. The profile on screen is the
+    // confirmation, so a success is only felt; a failure is said.
     __weak __typeof(self) weakSelf = self;
     [SPKGalleryOriginController openProfileForGalleryFile:file
                                       fromViewController:self
                                               completion:^(BOOL success, BOOL didLink) {
                                                   if (success) {
-                                                      // Quiet when a link was just made: that toast already said it.
+                                                      // A link just made already posted its own notification.
                                                       if (!didLink)
-                                                          SPKNotify(kSPKNotificationGalleryOpenProfile, SPKL(@"COMMON_OPENED_PROFILE_TOAST"), nil, @"user_circle", SPKNotificationToneForIconResource(@"user_circle"));
+                                                          SPKNotificationTriggerHaptic(kSPKNotificationGalleryOpenProfile, SPKNotificationToneInfo);
                                                   } else {
                                                       [weakSelf showGalleryOpenFailureMessage:SPKL(@"COMMON_UNABLE_OPEN_PROFILE_TOAST") actionIdentifier:kSPKNotificationGalleryOpenProfile];
                                                   }

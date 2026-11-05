@@ -525,9 +525,13 @@ static NSString *SPKPACompact(NSInteger n) {
             if (error) {
                 if (error.code == SPKProfileAnalyzerErrorCancelled) {
                     [pill dismiss];
-                } else {
+                } else if (pill) {
                     [pill showErrorWithTitle:SPKL(@"PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT") subtitle:error.localizedDescription icon:nil];
                     SPKNotificationTriggerHaptic(kSPKNotificationProfileAnalyzerComplete, SPKNotificationToneError);
+                } else {
+                    // No progress pill to turn red, but a failure still has to be said.
+                    SPKNotify(kSPKNotificationProfileAnalyzerComplete, SPKL(@"PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT"), error.localizedDescription,
+                              @"error_filled", SPKNotificationToneError);
                 }
                 return;
             }
@@ -819,6 +823,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
                                                                                   [SPKProfileAnalyzerStorage resetAll];
                                                                                   [self loadCachedData];
                                                                                   [self paintHeaderIdentity];
+                                                                                  SPKNotify(kSPKNotificationProfileAnalyzerClear, SPKL(@"PROFILE_PROFILE_ANALYZER_RESET_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
                                                                               }],
                                                 ]];
 }

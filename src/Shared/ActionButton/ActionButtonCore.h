@@ -45,6 +45,7 @@ FOUNDATION_EXPORT NSString *const kSPKActionToggleStoryAutoSaveUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleDirectAutoSaveThreadRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleInstantsAutoSaveUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionInstantsMarkSeen;
+FOUNDATION_EXPORT NSString *const kSPKActionToggleInstantsManualSeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleProfileStorySeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleProfileMessagesSeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionStoryMentionsSheet;
@@ -98,6 +99,9 @@ UIImage *SPKActionButtonMenuIconForIdentifier(NSString *identifier, CGFloat size
 // Menu" (kSPKActionNone). User-configurable; defaults to "action".
 NSString *SPKActionButtonOpenMenuIconName(void);
 BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *context, BOOL isDefaultTap);
+/// Whether the "Fetching 4K candidates" pill shows ahead of `identifier`. Edit & Save
+/// has no notification toggle and its own progress pills always show, so this one does too.
+BOOL SPKActionShowsCandidateFetchPill(NSString *identifier);
 /// Resolves `media` down to the photo/video URLs and gallery metadata a manual save
 /// would produce. Lets non-action-button callers (auto-save) reuse the action button's
 /// own resolution instead of duplicating it, so their files carry identical metadata

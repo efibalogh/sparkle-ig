@@ -868,12 +868,22 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
                                            UIView *sourceView,
                                            NSString *identifier) {
     BOOL showProgress = SPKNotificationIsEnabled(identifier);
+    // Cancelling stops the download; a conversion already running finishes on
+    // its own, but nothing is presented once the pill was cancelled.
+    __block BOOL cancelled = NO;
+    __block NSURLSessionDownloadTask *task = nil;
     __block SPKNotificationPillView *pill =
-        showProgress ? SPKNotifyProgress(identifier, SPKL(@"AUDIO_AUDIO_DOWNLOAD_COORDINATOR_DOWNLOADING_AUDIO_TEXT"), nil)
+        showProgress ? SPKNotifyProgress(identifier, SPKL(@"AUDIO_AUDIO_DOWNLOAD_COORDINATOR_DOWNLOADING_AUDIO_TEXT"), ^{
+            cancelled = YES;
+            [task cancel];
+            [pill dismiss];
+        })
                      : nil;
 
     void (^finishWithError)(NSString *, NSString *) =
         ^(NSString *title, NSString *subtitle) {
+            if (cancelled)
+                return;
             if (pill) {
                 [pill showErrorWithTitle:title subtitle:subtitle icon:nil];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
@@ -889,12 +899,16 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
         };
 
     void (^presentFile)(NSURL *) = ^(NSURL *fileURL) {
+        if (cancelled)
+            return;
         if (pill)
             [pill dismiss];
         SPKAudioPresentSaveToFiles(fileURL, presenter, sourceView, identifier);
     };
 
     void (^processDownloadedFile)(NSURL *) = ^(NSURL *sourceURL) {
+        if (cancelled)
+            return;
         if (SPKAudioShouldConvertURL(sourceURL, convert)) {
             if (pill)
                 [pill updateProgressTitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_CONVERTING_AUDIO_TEXT") subtitle:nil];
@@ -926,7 +940,7 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
     NSURLSessionConfiguration *configuration =
         [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    NSURLSessionDownloadTask *task = [session
+    task = [session
         downloadTaskWithURL:item.url
           completionHandler:^(NSURL *location, NSURLResponse *response,
                               NSError *error) {
@@ -1138,9 +1152,8 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
         request.anchorView = sourceView;
         request.sourceSurface = SPKDownloadSourceSurfaceAudioPage;
         request.titleOverride = item.title.length > 0 ? item.title : nil;
-        request.presentationMode = SPKNotificationIsEnabled(identifier)
-                                       ? SPKDownloadPresentationModeQueuePill
-                                       : SPKDownloadPresentationModeQuiet;
+        request.presentationMode = SPKNotificationIsEnabled(identifier) ? SPKDownloadPresentationModeQueuePill
+                                                               : SPKDownloadPresentationModeErrorsOnly;
         [[SPKDownloadService shared] submitRequest:request completion:nil];
         return;
     }
@@ -1162,9 +1175,8 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
     request.anchorView = sourceView;
     request.sourceSurface = SPKDownloadSourceSurfaceAudioPage;
     request.titleOverride = item.title.length > 0 ? item.title : nil;
-    request.presentationMode = SPKNotificationIsEnabled(identifier)
-                                   ? SPKDownloadPresentationModeQueuePill
-                                   : SPKDownloadPresentationModeQuiet;
+    request.presentationMode = SPKNotificationIsEnabled(identifier) ? SPKDownloadPresentationModeQueuePill
+                                                               : SPKDownloadPresentationModeErrorsOnly;
     [[SPKDownloadService shared] submitRequest:request completion:nil];
 }
 

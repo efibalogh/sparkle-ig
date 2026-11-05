@@ -5,6 +5,7 @@
 #import "../Gallery/SPKGalleryFile.h"
 #import "SPKMediaCacheManager.h"
 #import "SPKMediaItem.h"
+#import "SPKMediaUnavailableView.h"
 #import <AVFoundation/AVFoundation.h>
 
 // Tag on the audio artwork overlay so we never install it twice.
@@ -28,6 +29,7 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 @property (nonatomic, strong) AVPlayerViewController *playerViewController;
 @property (nonatomic, strong) SPKTransformZoomController *zoomController;
 @property (nonatomic, strong) UIImageView *thumbnailView;
+@property (nonatomic, strong, nullable) SPKMediaUnavailableView *unavailableView;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapGesture;
 @property (nonatomic, strong) NSURL *preparedPlaybackURL;
@@ -556,6 +558,9 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 
                                                             if (!localURL || error) {
                                                                 [strongSelf.loadingIndicator stopAnimating];
+                                                                if (SPKMediaCacheErrorIsLocalFileMissing(error)) {
+                                                                    [strongSelf showUnavailableWithMessage:error.localizedDescription];
+                                                                }
                                                                 if ([strongSelf.delegate respondsToSelector:@selector(mediaContent:didFailWithError:)]) {
                                                                     NSError *resolvedError = error ?: [NSError errorWithDomain:@"SPKFullScreenVideoViewController"
                                                                                                                           code:-2
@@ -632,6 +637,29 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
         completion:^(__unused BOOL finished) {
             self->_thumbnailView.hidden = YES;
         }];
+}
+
+#pragma mark - Unavailable
+
+// Without this a video whose file is gone sits on its thumbnail looking like it
+// is about to play. Shown over the page, the cached thumbnail hidden behind it.
+- (void)showUnavailableWithMessage:(NSString *)message {
+    if (!self.isViewLoaded)
+        return;
+    if (!self.unavailableView) {
+        self.unavailableView = [[SPKMediaUnavailableView alloc] initWithFrame:CGRectZero];
+        self.unavailableView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addSubview:self.unavailableView];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.unavailableView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [self.unavailableView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+            [self.unavailableView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:40],
+        ]];
+    }
+    [self.unavailableView setTitle:SPKL(@"MEDIA_PREVIEW_FILE_MISSING_TITLE") message:message];
+    [self.view bringSubviewToFront:self.unavailableView];
+    self.unavailableView.hidden = NO;
+    self.thumbnailView.hidden = YES;
 }
 
 #pragma mark - KVO

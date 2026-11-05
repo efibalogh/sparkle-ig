@@ -143,11 +143,11 @@ extern "C" void SPKInstallInstantsHideInInboxHooksIfEnabled(void) {
     dispatch_once(&onceToken, ^{
         // Builds without the modern inbox peek (410.1.0 has no Instants) get
         // nothing, so no hook lands on a missing selector.
-        Class objcInbox = objc_getClass("IGDirectInboxViewController");
+        Class objcInbox = SPKDirectObjCInboxClass();
         if (SPKInstantsInboxClassHasPeek(objcInbox))
-            %init(SPKInstantsHideInInboxObjCHooks);
+            %init(SPKInstantsHideInInboxObjCHooks, IGDirectInboxViewController = objcInbox);
 
-        Class swiftInbox = SPKResolveIGClass(@"IGDirectInboxSwiftViewController.IGDirectInboxSwiftViewController", nil);
+        Class swiftInbox = SPKDirectSwiftInboxClass();
         if (SPKInstantsInboxClassHasPeek(swiftInbox))
             %init(SPKInstantsHideInInboxSwiftHooks, IGDirectInboxSwiftViewController = swiftInbox);
 

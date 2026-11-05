@@ -440,6 +440,16 @@ Class SPKResolveIGClass(NSString *qualified, NSString *legacy) {
     return c;
 }
 
+Class SPKDirectSwiftInboxClass(void) {
+    return SPKResolveIGClass(@"IGDirectInboxViewController.IGDirectInboxViewController", nil)
+               ?: SPKResolveIGClass(@"IGDirectInboxSwiftViewController.IGDirectInboxSwiftViewController", nil);
+}
+
+Class SPKDirectObjCInboxClass(void) {
+    Class objcInbox = objc_getClass("IGDirectInboxViewController");
+    return objcInbox == SPKDirectSwiftInboxClass() ? Nil : objcInbox;
+}
+
 static NSString *SPKTrimmedLogBody(NSString *body) {
     return [body stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
@@ -1086,6 +1096,9 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             // hooks installed in %ctor -- long before any account session exists. A
             // per-account key would read the global default on every cold launch.
             @"interface_custom_font",
+            // Read in %ctor, before any account session exists, like the font.
+            @"interface_oled_dark_mode",
+            @"interface_oled_black_glass",
             @"interface_language",
             // Language packs live in one shared directory, so a pack installed or
             // refreshed under one account is the file every other account reads.
@@ -1096,7 +1109,7 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"language_pack_last_update_check",
             @"language_pack_last_update_attempt",
             @"langpack_catalog_url",
-            @"interface_liquid_glass",
+            @"interface_liquid_glass_mode",
             @"interface_liquid_glass_tabbar_mode",
             @"interface_scroll_edge_style",
             @"interface_hide_ui_on_capture",
@@ -1155,6 +1168,10 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
     if ([globalExact containsObject:key])
         return YES;
     if ([key hasPrefix:@"downloads_encoding_"])
+        return YES;
+    // The update check compares the one installed Sparkle with the release feed, so what it found
+    // and the version it was told to skip belong to the install, not to whichever account is live.
+    if ([key hasPrefix:@"app_update_"])
         return YES;
 #if SPK_DEV
     // Hook-bisect skip flags: read during hook installation (before the session
@@ -1271,13 +1288,34 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 };
 
-+ (_Bool)spk_liquidGlassLauncherPrefKey:(NSString *)key orig:(_Bool)fallback {
-    return [SPKUtils spk_isLiquidGlassEffectivelyEnabled] ? YES : fallback;
+// Resolved once per launch: the mode is restart-required, every gate must agree
+// for the whole session, and some gates are read on every frame.
++ (SPKLiquidGlassMode)spk_liquidGlassMode {
+    static SPKLiquidGlassMode resolved;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        resolved = SPKLiquidGlassModeFollow;
+        if (SPKStabilityGuardIsSafeStartupMode())
+            return;
+        NSString *mode = [SPKUtils getStringPref:kSPKPrefInterfaceLiquidGlassMode];
+        if ([mode isEqualToString:@"on"])
+            resolved = SPKLiquidGlassModeOn;
+        else if ([mode isEqualToString:@"off"])
+            resolved = SPKLiquidGlassModeOff;
+    });
+    return resolved;
 }
 
-+ (BOOL)spk_isLiquidGlassEffectivelyEnabled {
-    return [SPKUtils getBoolPref:kSPKPrefInterfaceLiquidGlass] &&
-           !SPKStabilityGuardIsSafeStartupMode();
++ (BOOL)spk_liquidGlassGateValueWithOrig:(BOOL)fallback {
+    switch ([SPKUtils spk_liquidGlassMode]) {
+    case SPKLiquidGlassModeOn:
+        return YES;
+    case SPKLiquidGlassModeOff:
+        return NO;
+    case SPKLiquidGlassModeFollow:
+        return fallback;
+    }
+    return fallback;
 }
 
 // MARK: Session / user
@@ -2360,6 +2398,12 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
 
 + (void)resolvePKForUsername:(NSString *)username
                   completion:(void (^)(NSString *_Nullable pk, NSString *_Nullable fullName))completion {
+    [self resolvePKForUsername:username progressTitle:SPKL(@"GENERAL_UTILS_OPENING_PROFILE_TEXT") completion:completion];
+}
+
++ (void)resolvePKForUsername:(NSString *)username
+               progressTitle:(NSString *)progressTitle
+                  completion:(void (^)(NSString *_Nullable pk, NSString *_Nullable fullName))completion {
     NSString *clean = [self sanitizedInstagramUsername:username] ?: username;
     if (clean.length == 0) {
         if (completion)
@@ -2376,16 +2420,24 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
 
     // Nothing changes on screen until this lands, so say that something is
     // happening. Transient, like the 4K candidate fetch: preparatory work before
-    // the real flow, cleared on both outcomes.
-    [[SPKNotificationCenter shared] beginTransientProgressWithTitle:SPKL(@"GENERAL_UTILS_OPENING_PROFILE_TEXT") onCancel:nil];
+    // the real flow, cleared on both outcomes. Cancelling drops the completion,
+    // so nothing opens once the answer lands; the answer is still memoised.
+    __block BOOL cancelled = NO;
+    [[SPKNotificationCenter shared] beginTransientProgressWithTitle:progressTitle
+                                                           onCancel:^{
+                                                               cancelled = YES;
+                                                               [[SPKNotificationCenter shared] dismissTransientProgressPill];
+                                                           }];
     [SPKInstagramAPI resolveUserForUsername:clean
                                  completion:^(NSDictionary *userDict, NSError *error) {
                                      NSString *resolvedPK = [userDict[@"pk"] description];
                                      NSString *resolvedName = [userDict[@"full_name"] description];
                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                         [[SPKNotificationCenter shared] dismissTransientProgressPill];
                                          if (resolvedPK.length > 0)
                                              SPKSetResolvedPKForUsername(clean, resolvedPK);
+                                         if (cancelled)
+                                             return;
+                                         [[SPKNotificationCenter shared] dismissTransientProgressPill];
                                          if (completion)
                                              completion(resolvedPK.length > 0 ? resolvedPK : nil,
                                                         resolvedName.length > 0 ? resolvedName : nil);

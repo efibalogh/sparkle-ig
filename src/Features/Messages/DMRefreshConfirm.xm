@@ -421,10 +421,14 @@ extern "C" void SPKInstallDMRefreshConfirmHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSMutableArray<Class> *classes = [NSMutableArray array];
-        for (NSString *className in @[ @"IGDirectInboxViewController",
-                                       // IG 439+ rolls out a Swift rewrite of the inbox VC.
-                                       @"_TtC32IGDirectInboxSwiftViewController32IGDirectInboxSwiftViewController",
-                                       @"IGDirectInboxContainerViewController",
+        Class objcInbox = SPKDirectObjCInboxClass();
+        if (objcInbox)
+            [classes addObject:objcInbox];
+        // IG 439+ rolls out a Swift rewrite of the inbox VC, the only one left on 452.
+        Class swiftInbox = SPKDirectSwiftInboxClass();
+        if (swiftInbox)
+            [classes addObject:swiftInbox];
+        for (NSString *className in @[ @"IGDirectInboxContainerViewController",
                                        @"IGDirectInboxListViewController",
                                        @"IGDirectInboxViewControllerImpl" ]) {
             Class cls = NSClassFromString(className);

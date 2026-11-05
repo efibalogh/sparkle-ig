@@ -222,6 +222,19 @@ static NSURL *SPKStoryURLForMedia(id media) {
 // associated object on the overlay does not create a retain cycle.
 static const void *kSPKStoryContextCacheKey = &kSPKStoryContextCacheKey;
 
+// 454+ reports seen items through a reporter object instead of the viewer. The
+// ObjC section controller holds it directly; the Swift twin is reached through
+// the viewer's context, which hands out the same scoped instance.
+static id SPKStoryItemSeenReporter(id sectionController, id viewerController) {
+    SEL reportSelector = NSSelectorFromString(@"reportSeenItem:sectionController:");
+    id reporter = sectionController ? [SPKUtils getIvarForObj:sectionController name:"_itemSeenReporter"] : nil;
+    if ([reporter respondsToSelector:reportSelector])
+        return reporter;
+    id viewerContext = viewerController ? [SPKUtils getIvarForObj:viewerController name:"_viewerContext"] : nil;
+    reporter = SPKObjectForSelector(viewerContext, @"itemSeenReporter");
+    return [reporter respondsToSelector:reportSelector] ? reporter : nil;
+}
+
 SPKStoryContext *SPKStoryContextFromOverlay(UIView *overlayView) {
     if (!overlayView)
         return nil;
@@ -241,6 +254,8 @@ SPKStoryContext *SPKStoryContextFromOverlay(UIView *overlayView) {
         if ([ancestor respondsToSelector:markSelector])
             context.markSeenTarget = ancestor;
     }
+    if (!context.markSeenTarget)
+        context.markSeenTarget = SPKStoryItemSeenReporter(context.sectionController, context.viewerController);
 
     if (!context.sectionController && context.markSeenTarget) {
         context.sectionController = SPKStoryFirstObjectForSelectors(context.markSeenTarget, @[ @"currentlyDisplayedSectionController", @"currentSectionController" ]) ?: [SPKUtils getIvarForObj:context.markSeenTarget name:"_currentSectionController"];
@@ -341,6 +356,12 @@ SPKStoryContext *SPKStoryContextFromMedia(id media) {
 
 BOOL SPKStoryMarkContextAsSeen(SPKStoryContext *context) {
     SEL markSelector = NSSelectorFromString(@"fullscreenSectionController:didMarkItemAsSeen:");
+    // 454+ reporter: same call with the arguments in the other order.
+    BOOL usesReporter = NO;
+    if (context.markSeenTarget && ![context.markSeenTarget respondsToSelector:markSelector]) {
+        markSelector = NSSelectorFromString(@"reportSeenItem:sectionController:");
+        usesReporter = YES;
+    }
     if (!context.markSeenTarget || !context.sectionController || !context.media || ![context.markSeenTarget respondsToSelector:markSelector]) {
         SPKLog(@"Stories",
                @"[Sparkle StorySeen] Unable to mark seen viewer=%@ section=%@ target=%@ media=%@ targetResponds=%d",
@@ -382,7 +403,10 @@ BOOL SPKStoryMarkContextAsSeen(SPKStoryContext *context) {
         SPKForcedStorySeenMediaPK = [SPKStoryMediaIdentifier(item) copy];
         SPKForceMarkStoryAsSeen = YES;
         @try {
-            ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, context.sectionController, item);
+            if (usesReporter)
+                ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, item, context.sectionController);
+            else
+                ((void (*)(id, SEL, id, id))objc_msgSend)(context.markSeenTarget, markSelector, context.sectionController, item);
         } @catch (NSException *exception) {
             SPKLog(@"Stories", @"[Sparkle StorySeen] Marking an earlier story failed: %@", exception.reason);
         } @finally {
@@ -392,6 +416,42 @@ BOOL SPKStoryMarkContextAsSeen(SPKStoryContext *context) {
     }
     SPKLog(@"Stories", @"[Sparkle StorySeen] Marked %lu stories up to index %ld", (unsigned long)itemsToMark.count, (long)currentIndex);
     return YES;
+}
+
+/// Advancing only queues the next story's video: it loads on the first play
+/// call. A tap gets that call from the release of its own press, which a button
+/// never starts, so the next video would sit on its cover. Resume with the reason
+/// the press release uses once the new item is bound, and again if it has not
+/// started by the time a normal load would have.
+static void SPKStoryResumeAfterAdvance(id sectionController) {
+    SEL resumeSelector = NSSelectorFromString(@"tryResumePlaybackWithReason:");
+    if (![sectionController respondsToSelector:resumeSelector])
+        return;
+    __weak id weakSectionController = sectionController;
+    void (^resume)(BOOL) = ^(BOOL onlyIfStalled) {
+        id strongSectionController = weakSectionController;
+        if (!strongSectionController || UIApplication.sharedApplication.applicationState != UIApplicationStateActive)
+            return;
+        // Past the reel's last story the next reel takes over through its own
+        // display path; resuming the old controller would play it off screen.
+        SPKStoryContext *activeContext = SPKStoryContextFromOverlay(SPKStoryActiveOverlay());
+        if (activeContext.sectionController != strongSectionController)
+            return;
+        if (onlyIfStalled && [strongSectionController respondsToSelector:@selector(isPlaying)] &&
+            ((BOOL (*)(id, SEL))objc_msgSend)(strongSectionController, @selector(isPlaying)))
+            return;
+        @try {
+            ((void (*)(id, SEL, long long))objc_msgSend)(strongSectionController, resumeSelector, 0);
+        } @catch (NSException *exception) {
+            SPKLog(@"Stories", @"[Sparkle StorySeen] Resuming after advance failed: %@", exception.reason);
+        }
+    };
+    dispatch_async(dispatch_get_main_queue(), ^{
+        resume(NO);
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        resume(YES);
+    });
 }
 
 void SPKStoryAdvanceContextIfNeeded(SPKStoryContext *context, NSString *advancePrefKey) {
@@ -414,6 +474,7 @@ void SPKStoryAdvanceContextIfNeeded(SPKStoryContext *context, NSString *advanceP
     dispatch_async(dispatch_get_main_queue(), ^{
         SPKForceStoryAutoAdvance = NO;
     });
+    SPKStoryResumeAfterAdvance(sectionController);
 }
 
 NSString *SPKStoryUsernameForContext(SPKStoryContext *context) {
@@ -424,7 +485,45 @@ NSString *SPKStoryFullNameForContext(SPKStoryContext *context) {
     return context.fullName ?: SPKStoryFullNameFromMediaObject(context.media);
 }
 
+NSString *SPKStoryReelPKForContext(SPKStoryContext *context) {
+    id viewModel = SPKStoryFirstObjectForSelectors(context.sectionController, @[ @"viewModel" ]);
+    NSString *reelPK = SPKStringFromValue(SPKObjectForSelector(viewModel, @"reelPK"));
+    if (reelPK.length == 0) {
+        viewModel = SPKStoryFirstObjectForSelectors(context.viewerController, @[ @"currentViewModel" ]);
+        reelPK = SPKStringFromValue(SPKObjectForSelector(viewModel, @"reelPK"));
+    }
+    return reelPK.length > 0 ? reelPK : nil;
+}
+
+BOOL SPKStoryReelPKIsHighlight(NSString *reelPK) {
+    return [reelPK hasPrefix:@"highlight:"];
+}
+
+// A highlight's share link is /s/<token>/, where the token is the reel PK
+// ("highlight:<id>") in base64, and story_media_id selects one story inside it.
+// The /stories/<username>/<mediaPK>/ form addresses the account's live reel, so
+// for a story that only survives in a highlight it resolves to "expired".
+NSURL *SPKStoryHighlightURLForReelPK(NSString *reelPK, NSString *mediaPK) {
+    if (!SPKStoryReelPKIsHighlight(reelPK))
+        return nil;
+    NSString *token = [[reelPK dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+    if (token.length == 0)
+        return nil;
+    NSURLComponents *components = [NSURLComponents componentsWithString:@"https://www.instagram.com"];
+    components.path = [NSString stringWithFormat:@"/s/%@/", token];
+    NSString *bareMediaPK = [mediaPK componentsSeparatedByString:@"_"].firstObject;
+    if (bareMediaPK.length > 0)
+        components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"story_media_id" value:bareMediaPK] ];
+    return components.URL;
+}
+
 NSURL *SPKStoryURLForContext(SPKStoryContext *context) {
+    // Resolved here and not into the cached storyURL: the cache is keyed by the
+    // media object alone, and the same media can be reached through the live
+    // reel or through a highlight.
+    NSURL *highlightURL = SPKStoryHighlightURLForReelPK(SPKStoryReelPKForContext(context), SPKStoryMediaID(context.media));
+    if (highlightURL)
+        return highlightURL;
     return context.storyURL ?: SPKStoryURLForMedia(context.media);
 }
 

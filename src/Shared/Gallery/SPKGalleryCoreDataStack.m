@@ -375,6 +375,56 @@ static NSString *const kSPKGalleryStoreName = @"gallery.sqlite";
     }];
 
     self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = YES;
+    [self repairCollectionDescriptionFields];
+}
+
+// "(\n    123\n)" -> "123". Older builds stored a collection's description when
+// KVC on an array answered an array of values. One element is recoverable as
+// the value that was meant; anything else becomes nil so the field is re-derived
+// (the profile open resolves a missing pk from the username and writes it back).
+static NSString *SPKGalleryScalarFromCollectionDescription(NSString *stored) {
+    NSString *trimmed = [stored stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    if (![trimmed hasPrefix:@"("] || ![trimmed hasSuffix:@")"] || trimmed.length < 2)
+        return stored;
+    NSString *inner = [trimmed substringWithRange:NSMakeRange(1, trimmed.length - 2)];
+    NSArray<NSString *> *parts = [inner componentsSeparatedByString:@","];
+    if (parts.count != 1)
+        return nil;
+    NSMutableCharacterSet *strip = [NSMutableCharacterSet whitespaceAndNewlineCharacterSet];
+    [strip addCharactersInString:@"\""];
+    NSString *value = [parts.firstObject stringByTrimmingCharactersInSet:strip];
+    if (value.length == 0 || [value isEqualToString:@"<null>"])
+        return nil;
+    return value;
+}
+
+// Runs every load; the predicate matches nothing once the store is clean, so the
+// steady-state cost is one unindexed fetch that returns zero rows.
+- (void)repairCollectionDescriptionFields {
+    NSArray<NSString *> *keys = @[ @"sourceUserPK", @"sourceMediaPK", @"sourceMediaCode" ];
+    [self.persistentContainer performBackgroundTask:^(NSManagedObjectContext *ctx) {
+        NSMutableArray<NSPredicate *> *clauses = [NSMutableArray array];
+        for (NSString *key in keys)
+            [clauses addObject:[NSPredicate predicateWithFormat:@"%K BEGINSWITH %@", key, @"("]];
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kSPKGalleryEntityName];
+        request.predicate = [NSCompoundPredicate orPredicateWithSubpredicates:clauses];
+        NSError *error = nil;
+        NSArray<NSManagedObject *> *rows = [ctx executeFetchRequest:request error:&error];
+        if (rows.count == 0)
+            return;
+        for (NSManagedObject *row in rows) {
+            for (NSString *key in keys) {
+                NSString *stored = [row valueForKey:key];
+                if (![stored isKindOfClass:NSString.class] || ![stored hasPrefix:@"("])
+                    continue;
+                [row setValue:SPKGalleryScalarFromCollectionDescription(stored) forKey:key];
+            }
+        }
+        if ([ctx save:&error])
+            SPKLog(@"Gallery", @"repaired %lu item(s) holding a collection description in an id field", (unsigned long)rows.count);
+        else
+            SPKLog(@"Gallery", @"collection description repair failed: %@", error);
+    }];
 }
 
 - (NSManagedObjectContext *)viewContext {

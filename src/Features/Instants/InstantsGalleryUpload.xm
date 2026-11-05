@@ -256,12 +256,22 @@ static NSURL *SPKInstantsImportPickedVideo(NSURL *sourceURL) {
 /// The picked file is the untouched original, which for a long 4K clip is large
 /// enough that copying it on the main thread would visibly hang. Copy on a work
 /// queue behind a progress pill and hand back the local URL on the main thread.
+/// Cancelling lets the copy finish, then deletes it and skips `completion`.
 static void SPKInstantsImportPickedVideoAsync(NSURL *sourceURL, void (^completion)(NSURL *_Nullable)) {
-    SPKNotificationPillView *pill = SPKNotifyProgress(kSPKNotificationInstantsUpload, SPKL(@"INSTANTS_INSTANTS_GALLERY_UPLOAD_IMPORTING_VIDEO_TEXT"), nil);
+    __block BOOL cancelled = NO;
+    __block SPKNotificationPillView *pill = SPKNotifyProgress(kSPKNotificationInstantsUpload, SPKL(@"INSTANTS_INSTANTS_GALLERY_UPLOAD_IMPORTING_VIDEO_TEXT"), ^{
+        cancelled = YES;
+        [pill dismiss];
+    });
     [pill setProgressIndeterminate:YES];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSURL *localURL = SPKInstantsImportPickedVideo(sourceURL);
         dispatch_async(dispatch_get_main_queue(), ^{
+            if (cancelled) {
+                if (localURL)
+                    [[NSFileManager defaultManager] removeItemAtURL:localURL error:nil];
+                return;
+            }
             if (localURL) {
                 [pill dismiss];
             } else {
@@ -1124,6 +1134,37 @@ static void replaced_captureButtonLongPress(id self, SEL _cmd, id gesture) {
         orig_captureButtonLongPress(self, _cmd, gesture);
 }
 
+// Since IG 453 the QuickSnap control view can show a Swift shutter
+// (IGQuickSnapCaptureButton) instead of IGCameraCaptureButton, picked per account
+// by a server flag (`nativeShutterIsEnabled`). Its press recognizer begins on
+// touch-down and recording only starts once the hold threshold elapses, so its
+// Began is not a record-start signal. It still marks the end of a take.
+static void (*orig_nativeShutterPress)(id, SEL, id) = NULL;
+static void replaced_nativeShutterPress(id self, SEL _cmd, id gesture) {
+    if ([gesture isKindOfClass:UIGestureRecognizer.class]) {
+        UIGestureRecognizerState state = [(UIGestureRecognizer *)gesture state];
+        if (state == UIGestureRecognizerStateEnded || state == UIGestureRecognizerStateCancelled ||
+            state == UIGestureRecognizerStateFailed) {
+            SPKInstantsHandleRecordingEnd("IGQuickSnapCaptureButton.press");
+        }
+    }
+    if (orig_nativeShutterPress)
+        orig_nativeShutterPress(self, _cmd, gesture);
+}
+
+// The writer opens its session on the first frame of the take, whichever shutter
+// is on screen, so it is the button-independent record-start signal. A session
+// cannot start before frames arrive, so this never fires early. The handler is a
+// no-op unless an injected video is armed, which only happens in the Instants
+// camera.
+static void (*orig_assetWriterStartSession)(id, SEL, CMTime) = NULL;
+static void replaced_assetWriterStartSession(id self, SEL _cmd, CMTime startTime) {
+    if ([SPKInstantsVideoStreamer isArmed])
+        SPKInstantsHandleRecordingStart("AVAssetWriter.startSession");
+    if (orig_assetWriterStartSession)
+        orig_assetWriterStartSession(self, _cmd, startTime);
+}
+
 // AVCaptureMovieFileOutput provides a stable recording signal even though Optic
 // owns the surrounding pipeline. Hooking AVFoundation avoids Instagram class
 // churn while the handler remains gated by an armed injected video.
@@ -1195,6 +1236,14 @@ extern "C" void SPKInstallInstantsGalleryUploadHooksIfEnabled(void) {
                               @selector(_longPress:),
                               (IMP)replaced_captureButtonLongPress,
                               (IMP *)&orig_captureButtonLongPress);
+        SPKHookInstanceMethod("_TtC24IGQuickSnapCaptureButton24IGQuickSnapCaptureButton",
+                              @selector(handlePressGesture:),
+                              (IMP)replaced_nativeShutterPress,
+                              (IMP *)&orig_nativeShutterPress);
+        SPKHookInstanceMethod("AVAssetWriter",
+                              @selector(startSessionAtSourceTime:),
+                              (IMP)replaced_assetWriterStartSession,
+                              (IMP *)&orig_assetWriterStartSession);
         SPKHookInstanceMethod("AVCaptureMovieFileOutput",
                               @selector(startRecordingToOutputFileURL:recordingDelegate:),
                               (IMP)replaced_startRecordingToOutputFileURL,

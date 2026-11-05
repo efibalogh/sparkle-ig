@@ -117,7 +117,16 @@ typedef NS_ENUM(int16_t, SPKGallerySource) {
 - (NSString *)displayName;
 
 /// Human-readable label for the source type.
+/// YES for a story known to live in a highlight: saved from one, or found in one
+/// and relinked on a later open. Read from the stored origin link, so a story
+/// added to a highlight since it was saved is not known until it is opened.
+- (BOOL)isFromHighlight;
+/// The source's name for display. A highlight story says so, while it still
+/// counts as a story for filtering.
 - (NSString *)sourceLabel;
+/// The icon name for this item's source, as +symbolNameForSource: but aware of
+/// highlight stories.
+- (NSString *)sourceSymbolName;
 
 /// Primary line in list mode: username when known, else `displayName`.
 - (NSString *)listPrimaryTitle;
@@ -129,6 +138,10 @@ typedef NS_ENUM(int16_t, SPKGallerySource) {
 - (NSString *)listDownloadDateString;
 - (nullable NSURL *)preferredProfileURL;
 - (nullable NSURL *)preferredOriginalMediaURL;
+/// The link a person would share for this item's original post, reel, story or
+/// highlight: always an https instagram.com address, never the in-app router URL
+/// that preferredOriginalMediaURL prefers for opening.
+- (nullable NSURL *)originalWebURL;
 - (BOOL)hasOpenableProfile;
 - (BOOL)hasOpenableOriginalMedia;
 

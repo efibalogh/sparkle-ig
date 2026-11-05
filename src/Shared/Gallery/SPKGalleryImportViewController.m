@@ -1,5 +1,6 @@
 #import "SPKGalleryImportViewController.h"
 #import "SPKStrings.h"
+#import <stdatomic.h>
 
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
@@ -1191,12 +1192,20 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
 // Folders and zips are read off the main thread (unzip + SQLite + copying many files). A Regram
 // Media Vault becomes queued items with its DB metadata pre-filled; anything else is ignored.
 - (void)ingestContainerURLs:(NSArray<NSURL *> *)urls {
-    SPKNotificationPillView *pill = SPKNotifyProgress(kSPKNotificationGalleryImport, SPKL(@"GALLERY_IMPORT_READING_EXPORT_PROGRESS"), nil);
+    // Cancelling stops reading at the next row and queues nothing; the files
+    // already copied for the rows read so far are removed.
+    __block atomic_bool cancelled = false;
+    __block SPKNotificationPillView *pill = SPKNotifyProgress(kSPKNotificationGalleryImport, SPKL(@"GALLERY_IMPORT_READING_EXPORT_PROGRESS"), ^{
+        atomic_store(&cancelled, true);
+        [pill dismiss];
+    });
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSMutableArray<SPKGalleryImportQueuedFile *> *newItems = [NSMutableArray array];
         NSUInteger vaults = 0;
         for (NSURL *url in urls) {
+            if (atomic_load(&cancelled))
+                break;
             NSArray<NSDictionary *> *rows = [SPKRegramImporter vaultRowsFromPickedURL:url];
             if (rows.count == 0) {
                 continue;  // not a Regram vault, skip (folders of loose media aren't supported here)
@@ -1204,6 +1213,8 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
             vaults++;
             NSUInteger total = rows.count, done = 0;
             for (NSDictionary *row in rows) {
+                if (atomic_load(&cancelled))
+                    break;
                 SPKGalleryImportQueuedFile *item = [weakSelf queuedItemFromRegramRow:row];
                 if (item) {
                     [newItems addObject:item];
@@ -1217,8 +1228,23 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
             }
         }
 
+        void (^discardItems)(void) = ^{
+            for (SPKGalleryImportQueuedFile *item in newItems) {
+                if (item.tempFileURL)
+                    [[NSFileManager defaultManager] removeItemAtURL:item.tempFileURL error:nil];
+            }
+        };
+        if (atomic_load(&cancelled)) {
+            discardItems();
+            return;
+        }
+
         dispatch_async(dispatch_get_main_queue(), ^{
             __strong typeof(weakSelf) self = weakSelf;
+            if (atomic_load(&cancelled)) {
+                discardItems();
+                return;
+            }
             if (!self) {
                 return;
             }

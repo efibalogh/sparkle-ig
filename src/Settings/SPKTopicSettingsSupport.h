@@ -35,12 +35,17 @@ UIMenu *SPKLastActiveFormatMenu(void);
 UIMenu *SPKLiquidGlassTabBarStateMenu(void);
 UIMenu *SPKScrollEdgeStyleMenu(void);
 UIMenu *SPKStoryManualSeenModeMenu(void);
+#if SPK_DEV
+UIMenu *SPKAccountPrivacySimulationMenu(void);
+#endif
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
 UIMenu *SPKLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);
 UIMenu *SPKNotificationProgressSubtitleStyleMenu(void);
 UIMenu *SPKNotificationStyleMenu(void);
 UIMenu *SPKNotificationPillPositionMenu(void);
+/// Banner and Haptic / Banner Only / Haptic Only / Off for a notification group's mode key.
+UIMenu *SPKNotificationModeMenu(NSString *defaultsKey);
 UIMenu *SPKMediaVideoQualityMenu(void);
 UIMenu *SPKMediaPhotoQualityMenu(void);
 UIMenu *SPKAutoSaveDestinationMenu(void);

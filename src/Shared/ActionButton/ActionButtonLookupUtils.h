@@ -18,6 +18,8 @@ NSArray *SPKArrayFromCollection(id collection);
 NSURL *SPKURLFromValue(id value);
 NSString *SPKStringFromValue(id value);
 NSString *SPKClassName(id object);
+/// The IGMedia a reels viewer cell (video or carousel) is showing, or nil.
+id SPKSundialCellMedia(id cell);
 
 NSString *SPKUsernameFromMediaObject(id media);
 NSString *SPKCaptionFromMediaObject(id media);

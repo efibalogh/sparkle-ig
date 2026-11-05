@@ -212,6 +212,38 @@ static BOOL SPKOpenPostPresentsPendingPresenter(UIViewController *presented) {
 
 %end
 
+// On IG 410 the media route first takes you "home": it focuses the tab bar, which
+// scrolls the feed to the top when Home is the current tab, then re-selects Home
+// as a tab bar action, which reaches this handler with every argument nil and
+// clears injected posts, scrolls again and runs a Home-button refresh. The post
+// then opens over a feed that was reset behind it, which only shows once you go
+// back. Inside the armed window both are ours, not the user's, so both are
+// dropped. Newer builds route media links without either call, and a real tap is
+// never inside the window.
+%group SPKOpenPostHomeTapGuard
+
+%hook IGMainFeedViewController
+
+- (void)handleTapOnHomeTabWithHoistedMediaID:(id)mediaID hoistedMediaShortcode:(id)shortcode deeplinkURL:(id)url {
+    if (SPKOpenPostWindowIsArmed()) {
+        SPKLog(@"OpenPost", @"dropping the router's home tab tap while a post push is pending");
+        return;
+    }
+    %orig;
+}
+
+- (void)scrollToTopAnimated:(BOOL)animated {
+    if (SPKOpenPostWindowIsArmed()) {
+        SPKLog(@"OpenPost", @"dropping the router's feed scroll to top while a post push is pending");
+        return;
+    }
+    %orig;
+}
+
+%end
+
+%end
+
 void SPKInstallOpenPostNativePushHooksIfNeeded(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -220,6 +252,12 @@ void SPKInstallOpenPostNativePushHooksIfNeeded(void) {
             spk_openPostHooksInstalled = YES;
         } else {
             SPKLog(@"OpenPost", @"IGNavigationController missing, open post keeps the legacy route");
+        }
+        Class legacyFeed = objc_getClass("IGMainFeedViewController");
+        if (spk_openPostHooksInstalled && legacyFeed &&
+            class_getInstanceMethod(legacyFeed, @selector(handleTapOnHomeTabWithHoistedMediaID:hoistedMediaShortcode:deeplinkURL:)) &&
+            class_getInstanceMethod(legacyFeed, @selector(scrollToTopAnimated:))) {
+            %init(SPKOpenPostHomeTapGuard);
         }
     });
 }

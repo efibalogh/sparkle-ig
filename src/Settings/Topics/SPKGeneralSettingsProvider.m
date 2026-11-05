@@ -135,6 +135,7 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                                  // The clear walks every cached file, so it can take a few seconds:
                                                                  // show it as unmeasurable work until the completion lands.
                                                                  pill = SPKNotifyProgress(kSPKNotificationSettingsClearCache, SPKL(@"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS"), nil);
+                                                                 pill.cancellable = NO;
                                                                  [pill setProgressIndeterminate:YES];
                                                              }];
     clearCacheSetting.tintColor = [SPKUtils SPKColor_InstagramDestructive];
@@ -155,11 +156,6 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                           icon:SPKSettingsIcon(@"text")
                                                    defaultsKey:@"general_copy_text"],
                                SPKL(@"GENERAL_BEHAVIOR_COPY_TEXT_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE")
-                                                          icon:SPKSettingsIcon(@"search")
-                                                   defaultsKey:@"general_hide_recent_searches"
-                                               requiresRestart:YES],
-                               SPKL(@"GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_BEHAVIOR_COPY_LINKS_WITHOUT_TRACKING_TITLE")
                                                           icon:SPKSettingsIcon(@"user_unfollow")
                                                    defaultsKey:@"general_strip_share_link_tracking"],
@@ -249,8 +245,9 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                                                    defaultsKey:@"general_hide_suggested_users_msgs"],
                                                                [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE")
                                                                                    defaultsKey:@"general_hide_suggested_users_search"],
-                                                               [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE")
-                                                                                   defaultsKey:@"general_hide_suggested_users_profile"],
+                                                               SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_TITLE")
+                                                                                                      defaultsKey:@"general_hide_suggested_users_profile"],
+                                                                                  SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_PROFILE_SUGGESTIONS_HELP")),
                                                                [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_ACTIVITY_SUGGESTIONS_TITLE")
                                                                                    defaultsKey:@"general_hide_suggested_users_activity"],
                                                                [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_SUGGESTED_USERS_HIDE_FOLLOW_LIST_SUGGESTIONS_TITLE")

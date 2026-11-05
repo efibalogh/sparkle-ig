@@ -4,7 +4,12 @@
 #import <objc/runtime.h>
 #import <substrate.h>
 
-// Hide resurfaced highlights.
+// Hide resurfaced highlights and suggested-account stories.
+//
+// Both are injected into the story tray by Instagram and reached from the
+// viewer the same way, so they share one filter, each behind its own toggle.
+// The rest of this note describes the highlights case; the same three paths
+// apply to both.
 //
 // Once every unseen story has been watched, Instagram refills the story tray
 // with stories that accounts you follow have recently added to a highlight.
@@ -33,8 +38,7 @@
 //
 //   - the view model's "type" value is 11. IGStoryTrayViewModel is an
 //     IGDevirtualizedValueObject, so "type" is not a real property and has to be
-//     read through KVC (the same way the existing suggested-story filter reads
-//     types 8 and 9).
+//     read through KVC.
 //   - the diffIdentifier is prefixed with "highlightRewind:", which is the
 //     identifier namespace Instagram uses for these entries.
 //
@@ -45,20 +49,36 @@
 static NSString *const kSPKHighlightRewindPrefix = @"highlightRewind:";
 static NSInteger const kSPKHighlightTrayViewModelType = 11;
 
-static BOOL SPKIsResurfacedHighlightTrayItem(id obj) {
-    Class trayViewModelClass = objc_getClass("IGStoryTrayViewModel");
-    if (trayViewModelClass == nil || ![obj isKindOfClass:trayViewModelClass])
-        return NO;
+static BOOL SPKHideRecentHighlightsEnabled(void) {
+    return [SPKUtils getBoolPref:@"stories_hide_recent_highlights"];
+}
 
+static BOOL SPKHideSuggestedStoriesEnabled(void) {
+    return [SPKUtils getBoolPref:@"stories_hide_suggested_accounts"];
+}
+
+static NSNumber *SPKTrayItemType(id obj) {
     @try {
         NSNumber *type = [obj valueForKey:@"type"];
-        if ([type isKindOfClass:[NSNumber class]] &&
-            [type isEqual:@(kSPKHighlightTrayViewModelType)])
-            return YES;
+        return [type isKindOfClass:[NSNumber class]] ? type : nil;
     } @catch (__unused NSException *exception) {
         // "type" is resolved dynamically, so an Instagram-side rename throws
-        // rather than returning nil. Fall through to the identifier check.
+        // rather than returning nil.
+        return nil;
     }
+}
+
+static BOOL SPKIsTrayViewModel(id obj) {
+    Class trayViewModelClass = objc_getClass("IGStoryTrayViewModel");
+    return trayViewModelClass != nil && [obj isKindOfClass:trayViewModelClass];
+}
+
+static BOOL SPKIsResurfacedHighlightTrayItem(id obj) {
+    if (!SPKIsTrayViewModel(obj))
+        return NO;
+
+    if ([SPKTrayItemType(obj) isEqual:@(kSPKHighlightTrayViewModelType)])
+        return YES;
 
     @try {
         if (![obj respondsToSelector:@selector(diffIdentifier)])
@@ -74,33 +94,127 @@ static BOOL SPKIsResurfacedHighlightTrayItem(id obj) {
     return NO;
 }
 
-// The tray rebuilds often and most rebuilds contain no highlights at all, so
-// scan before allocating and hand back the original array unchanged when there
-// is nothing to strip.
-static id SPKTrayItemsWithoutHighlights(id items) {
-    if (![SPKUtils getBoolPref:@"stories_hide_recent_highlights"] ||
-        ![items isKindOfClass:[NSArray class]])
+// Suggested accounts to follow ride in the same tray when there are few real
+// stories, each with a follow badge on the ring. Instagram's own tray builder
+// (-[IGStoryTrayModelsListBuilder _moveSuggestedUsersBetweenUnseenAndSeenInTray:])
+// picks them out by type 8, 9 or 13, so the same set is used here.
+static BOOL SPKIsSuggestedUserTrayItem(id obj) {
+    if (!SPKIsTrayViewModel(obj))
+        return NO;
+
+    NSNumber *type = SPKTrayItemType(obj);
+    return [type isEqual:@8] || [type isEqual:@9] || [type isEqual:@13];
+}
+
+#pragma mark - Suggested reel memory
+
+// The story viewer carries no suggested-user marker of its own: its view models
+// use a different type enum. A viewer reel is matched instead against the reel
+// keys of the suggested rings the tray filter has already seen. Keys of rings
+// that come back as ordinary stories (the account was followed) are dropped
+// again, so a followed account is never filtered from the viewer.
+
+static NSMutableSet<NSString *> *SPKSuggestedReelKeys(void) {
+    static NSMutableSet<NSString *> *keys;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        keys = [NSMutableSet set];
+    });
+    return keys;
+}
+
+static void SPKCollectTrayReelKeys(id obj, NSMutableSet<NSString *> *keys) {
+    @try {
+        id pk = [obj valueForKey:@"pk"];
+        if ([pk isKindOfClass:[NSString class]] && [(NSString *)pk length] > 0)
+            [keys addObject:pk];
+        else if ([pk isKindOfClass:[NSNumber class]])
+            [keys addObject:[pk stringValue]];
+    } @catch (__unused NSException *exception) {
+    }
+
+    @try {
+        if ([obj respondsToSelector:@selector(diffIdentifier)]) {
+            NSString *identifier = [[obj diffIdentifier] description];
+            if ([identifier isKindOfClass:[NSString class]] && identifier.length > 0)
+                [keys addObject:identifier];
+        }
+    } @catch (__unused NSException *exception) {
+    }
+}
+
+static void SPKRememberSuggestedTrayItems(NSArray *objects) {
+    NSMutableSet<NSString *> *suggested = [NSMutableSet set];
+    NSMutableSet<NSString *> *ordinary = [NSMutableSet set];
+    for (id obj in objects) {
+        if (!SPKIsTrayViewModel(obj))
+            continue;
+        SPKCollectTrayReelKeys(obj, SPKIsSuggestedUserTrayItem(obj) ? suggested : ordinary);
+    }
+
+    NSMutableSet<NSString *> *keys = SPKSuggestedReelKeys();
+    @synchronized(keys) {
+        [keys minusSet:ordinary];
+        [keys unionSet:suggested];
+    }
+}
+
+static BOOL SPKIsRememberedSuggestedReelKey(id value) {
+    if (![value isKindOfClass:[NSString class]])
+        return NO;
+
+    NSMutableSet<NSString *> *keys = SPKSuggestedReelKeys();
+    @synchronized(keys) {
+        return [keys containsObject:value];
+    }
+}
+
+static BOOL SPKHasRememberedSuggestedReels(void) {
+    NSMutableSet<NSString *> *keys = SPKSuggestedReelKeys();
+    @synchronized(keys) {
+        return keys.count > 0;
+    }
+}
+
+#pragma mark - Tray filtering
+
+static BOOL SPKShouldDropTrayItem(id obj, BOOL hideHighlights, BOOL hideSuggested) {
+    return (hideHighlights && SPKIsResurfacedHighlightTrayItem(obj)) ||
+           (hideSuggested && SPKIsSuggestedUserTrayItem(obj));
+}
+
+// The tray rebuilds often and most rebuilds contain nothing to strip, so scan
+// before allocating and hand back the original array unchanged in that case.
+static id SPKFilteredTrayItems(id items) {
+    if (![items isKindOfClass:[NSArray class]])
+        return items;
+
+    BOOL hideHighlights = SPKHideRecentHighlightsEnabled();
+    BOOL hideSuggested = SPKHideSuggestedStoriesEnabled();
+    if (!hideHighlights && !hideSuggested)
         return items;
 
     NSArray *objects = (NSArray *)items;
+    if (hideSuggested)
+        SPKRememberSuggestedTrayItems(objects);
 
-    BOOL hasHighlight = NO;
+    BOOL hasMatch = NO;
     for (id obj in objects) {
-        if (SPKIsResurfacedHighlightTrayItem(obj)) {
-            hasHighlight = YES;
+        if (SPKShouldDropTrayItem(obj, hideHighlights, hideSuggested)) {
+            hasMatch = YES;
             break;
         }
     }
-    if (!hasHighlight)
+    if (!hasMatch)
         return objects;
 
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:objects.count];
     for (id obj in objects) {
-        if (!SPKIsResurfacedHighlightTrayItem(obj))
+        if (!SPKShouldDropTrayItem(obj, hideHighlights, hideSuggested))
             [filtered addObject:obj];
     }
 
-    SPKLog(@"Stories", @"[Sparkle] Removed %lu resurfaced highlights from the story tray",
+    SPKLog(@"Stories", @"[Sparkle] Removed %lu resurfaced highlights or suggested accounts from the story tray",
            (unsigned long)(objects.count - filtered.count));
 
     return [filtered copy];
@@ -111,7 +225,7 @@ static id SPKTrayItemsWithoutHighlights(id items) {
 %hook IGInFeedStoryTrayDataSource
 
 - (id)allItemsForTrayUsingCachedValue:(BOOL)cached {
-    return SPKTrayItemsWithoutHighlights(%orig(cached));
+    return SPKFilteredTrayItems(%orig(cached));
 }
 
 %end
@@ -124,7 +238,7 @@ static id SPKTrayItemsWithoutHighlights(id items) {
 %hook _TtC25IGMainStoryTrayDataSource25IGMainStoryTrayDataSource
 
 - (id)allItemsForTrayUsingCachedValue:(BOOL)cached {
-    return SPKTrayItemsWithoutHighlights(%orig(cached));
+    return SPKFilteredTrayItems(%orig(cached));
 }
 
 %end
@@ -137,7 +251,7 @@ static id SPKTrayItemsWithoutHighlights(id items) {
 %hook IGMainStoryTrayDataSource
 
 - (id)allItemsForTrayUsingCachedValue:(BOOL)cached {
-    return SPKTrayItemsWithoutHighlights(%orig(cached));
+    return SPKFilteredTrayItems(%orig(cached));
 }
 
 %end
@@ -149,7 +263,7 @@ static id SPKTrayItemsWithoutHighlights(id items) {
 %hook IGFollowingStoryTrayDataSource
 
 - (id)allItemsForTrayUsingCachedValue:(BOOL)cached {
-    return SPKTrayItemsWithoutHighlights(%orig(cached));
+    return SPKFilteredTrayItems(%orig(cached));
 }
 
 %end
@@ -194,43 +308,63 @@ static BOOL SPKIsResurfacedHighlightViewModel(id model) {
     return NO;
 }
 
+static BOOL SPKIsSuggestedUserViewModel(id model) {
+    @try {
+        if ([model respondsToSelector:@selector(reelPK)] &&
+            SPKIsRememberedSuggestedReelKey([model reelPK]))
+            return YES;
+    } @catch (__unused NSException *exception) {
+    }
+
+    return NO;
+}
+
+static BOOL SPKShouldDropViewerModel(id model, BOOL hideHighlights, BOOL hideSuggested) {
+    return (hideHighlights && SPKIsResurfacedHighlightViewModel(model)) ||
+           (hideSuggested && SPKIsSuggestedUserViewModel(model));
+}
+
 // `logging` is off for the getter: it is read constantly, and one line per read
 // would bury everything else in the log.
 static id SPKViewerItemsWithoutHighlightsLogging(id items, BOOL logging) {
-    if (![SPKUtils getBoolPref:@"stories_hide_recent_highlights"] ||
-        ![items isKindOfClass:[NSArray class]])
+    if (![items isKindOfClass:[NSArray class]])
+        return items;
+
+    BOOL hideHighlights = SPKHideRecentHighlightsEnabled();
+    BOOL hideSuggested = SPKHideSuggestedStoriesEnabled() && SPKHasRememberedSuggestedReels();
+    if (!hideHighlights && !hideSuggested)
         return items;
 
     NSArray *models = (NSArray *)items;
 
-    BOOL hasHighlight = NO;
+    BOOL hasMatch = NO;
     for (id model in models) {
-        if (SPKIsResurfacedHighlightViewModel(model)) {
-            hasHighlight = YES;
+        if (SPKShouldDropViewerModel(model, hideHighlights, hideSuggested)) {
+            hasMatch = YES;
             break;
         }
     }
-    if (!hasHighlight)
+    if (!hasMatch)
         return models;
 
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:models.count];
     for (id model in models) {
-        if (!SPKIsResurfacedHighlightViewModel(model))
+        if (!SPKShouldDropViewerModel(model, hideHighlights, hideSuggested))
             [filtered addObject:model];
     }
 
     // Never hand the viewer an empty list. If every reel matched, this is a
-    // session that opened on the highlights themselves, so leave it alone
-    // rather than presenting an empty viewer.
+    // session that was opened on one of them deliberately (a profile ring, for
+    // example), so leave it alone rather than presenting an empty viewer.
     if (filtered.count == 0) {
         if (logging)
             SPKLog(@"Stories",
-                   @"[Sparkle] All reels are resurfaced highlights, leaving viewer intact");
+                   @"[Sparkle] All reels are filtered reels, leaving viewer intact");
         return models;
     }
 
     if (logging)
-        SPKLog(@"Stories", @"[Sparkle] Removed %lu resurfaced highlights from the story viewer",
+        SPKLog(@"Stories", @"[Sparkle] Removed %lu resurfaced highlights or suggested accounts from the story viewer",
                (unsigned long)(models.count - filtered.count));
 
     return [filtered copy];
@@ -449,8 +583,10 @@ void SPKInstallHideRecentHighlightsHooksIfEnabled(void) {
             %init(SPKHideRecentHighlightsLegacyMainHooks);
             installedAny = YES;
         }
-        if (objc_getClass("IGFollowingStoryTrayDataSource") != nil) {
-            %init(SPKHideRecentHighlightsFollowingHooks);
+        // Swift from 454, where only the mangled name is guaranteed.
+        Class followingDataSource = objc_getClass("IGFollowingStoryTrayDataSource") ?: objc_getClass("_TtC30IGFollowingStoryTrayDataSource30IGFollowingStoryTrayDataSource");
+        if (followingDataSource != nil) {
+            %init(SPKHideRecentHighlightsFollowingHooks, IGFollowingStoryTrayDataSource = followingDataSource);
             installedAny = YES;
         }
 

@@ -3,7 +3,9 @@
 
 #import "../../Utils.h"
 #import "../Audio/SPKAudioDownloadCoordinator.h"
+#import "../Gallery/SPKGalleryCoreDataStack.h"
 #import "../Gallery/SPKGalleryFile.h"
+#import "../Gallery/SPKGalleryPaths.h"
 #import "../Gallery/SPKGallerySaveMetadata.h"
 #import "../MediaDownload/SPKMediaQualityManager.h"
 #import "SPKDownloadDestinationWriter.h"
@@ -58,6 +60,34 @@ static BOOL SPKDownloadJobHasInFlightItems(SPKDownloadJob *job) {
     return NO;
 }
 
+// /private/var and /var name the same container; compare without the prefix so a
+// path built from NSTemporaryDirectory() matches one built from the documents dir.
+static NSString *SPKComparablePath(NSString *path) {
+    NSString *standardized = path.stringByStandardizingPath;
+    if ([standardized hasPrefix:@"/private/"])
+        standardized = [standardized substringFromIndex:@"/private".length];
+    return standardized;
+}
+
+static BOOL SPKPathIsInsideDirectory(NSString *path, NSString *directory) {
+    if (path.length == 0 || directory.length == 0)
+        return NO;
+    NSString *child = SPKComparablePath(path);
+    NSString *parent = SPKComparablePath(directory);
+    if (![parent hasSuffix:@"/"])
+        parent = [parent stringByAppendingString:@"/"];
+    return [child hasPrefix:parent];
+}
+
+// Files the scheduler owns and may rename or delete: its own download tree and the
+// process tmp directory, where callers stage one-off inputs and hand them over.
+// Every other local source (Gallery originals, preview cache entries) belongs to
+// someone else, so it is copied into the job's staging directory and only read.
+static BOOL SPKDownloadPathIsScratch(NSString *path) {
+    return SPKPathIsInsideDirectory(path, [SPKDownloadStore v2RootDirectory]) ||
+           SPKPathIsInsideDirectory(path, NSTemporaryDirectory());
+}
+
 // Delete a job's on-disk scratch (its staging directory + any staged source
 // input files). Called when a job leaves history: the staged file backs the
 // history entry's tap-to-preview, so it must live exactly as long as the entry.
@@ -70,7 +100,9 @@ static void SPKDeleteJobScratch(SPKDownloadJob *job) {
         [fm removeItemAtPath:staging error:nil];
     for (SPKDownloadItem *item in job.mutableItems) {
         NSString *source = item.request.localSourcePath;
-        if (source.length)
+        // History written by older builds can point a source at a Gallery
+        // original; only ever delete inputs the scheduler owns.
+        if (source.length && SPKDownloadPathIsScratch(source))
             [fm removeItemAtPath:source error:nil];
     }
 }
@@ -115,7 +147,9 @@ static NSString *SPKPreferredExtensionForDownloadItem(NSString *stagedPath, NSUR
 }
 
 static NSString *SPKRenameStagedPath(NSString *stagedPath, SPKDownloadItem *item, SPKDownloadJob *job) {
-    if (!stagedPath.length)
+    // The rename replaces whatever already sits at the destination, so it must
+    // never run beside files the scheduler does not own.
+    if (!stagedPath.length || !SPKDownloadPathIsScratch(stagedPath))
         return stagedPath;
     SPKGallerySaveMetadata *metadata = item.request.metadata ?: job.request.metadata;
     NSURL *sourceURL = item.request.remoteURLString.length ? [NSURL URLWithString:item.request.remoteURLString] : [NSURL fileURLWithPath:stagedPath];
@@ -162,12 +196,88 @@ static int64_t SPKFileSizeAtPath(NSString *path) {
     _destinationWriter = [SPKDownloadDestinationWriter new];
     [self refreshConcurrencyLimit];
     [self sweepOrphanedScratch];
+    [self restoreGalleryOriginalsRenamedBySaves];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(defaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil];
     return self;
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+// Builds before the scratch guard renamed a Gallery original in place when it was
+// saved from the preview (to Photos, Share, ...), leaving its Gallery row pointing
+// at a name that no longer exists. History still records both names: the request's
+// local source is the Gallery path, the item's staged path is where the file went.
+// Move each one back. If another Gallery row owns the renamed name, the rename
+// overwrote that row's file, so restore a copy and leave that file in place.
+- (void)restoreGalleryOriginalsRenamedBySaves {
+    NSString *galleryMedia = [SPKGalleryPaths galleryMediaDirectory];
+    NSFileManager *fm = NSFileManager.defaultManager;
+    NSMutableArray<SPKDownloadItem *> *candidates = [NSMutableArray array];
+    @synchronized(self) {
+        for (SPKDownloadJob *job in self.jobs) {
+            for (SPKDownloadItem *item in job.mutableItems) {
+                NSString *original = item.request.localSourcePath;
+                NSString *renamed = item.stagedPath;
+                if (!SPKPathIsInsideDirectory(original, galleryMedia) || !SPKPathIsInsideDirectory(renamed, galleryMedia))
+                    continue;
+                if ([SPKComparablePath(original) isEqualToString:SPKComparablePath(renamed)])
+                    continue;
+                if ([fm fileExistsAtPath:original] || ![fm fileExistsAtPath:renamed])
+                    continue;
+                [candidates addObject:item];
+            }
+        }
+    }
+    if (candidates.count == 0)
+        return;
+
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf)
+            return;
+        NSMutableArray<NSString *> *renamedNames = [NSMutableArray array];
+        for (SPKDownloadItem *item in candidates)
+            [renamedNames addObject:item.stagedPath.lastPathComponent];
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"SPKGalleryFile"];
+        request.predicate = [NSPredicate predicateWithFormat:@"relativePath IN %@", renamedNames];
+        request.resultType = NSDictionaryResultType;
+        request.propertiesToFetch = @[ @"relativePath" ];
+        NSArray<NSDictionary *> *rows = [[SPKGalleryCoreDataStack shared].viewContext executeFetchRequest:request error:nil] ?: @[];
+        NSMutableSet<NSString *> *ownedNames = [NSMutableSet set];
+        for (NSDictionary *row in rows) {
+            NSString *name = row[@"relativePath"];
+            if ([name isKindOfClass:NSString.class])
+                [ownedNames addObject:name];
+        }
+
+        NSUInteger restored = 0;
+        @synchronized(strongSelf) {
+            for (SPKDownloadItem *item in candidates) {
+                NSString *original = item.request.localSourcePath;
+                NSString *renamed = item.stagedPath;
+                // Two saves can claim the same renamed file; the first one wins.
+                if ([fm fileExistsAtPath:original] || ![fm fileExistsAtPath:renamed])
+                    continue;
+                BOOL ownedByAnotherRow = [ownedNames containsObject:renamed.lastPathComponent];
+                NSError *error = nil;
+                BOOL ok = ownedByAnotherRow ? [fm copyItemAtPath:renamed toPath:original error:&error]
+                                            : [fm moveItemAtPath:renamed toPath:original error:&error];
+                if (!ok) {
+                    SPKLog(@"Downloads", @"Failed to restore Gallery file %@: %@", original.lastPathComponent, error);
+                    continue;
+                }
+                item.stagedPath = original;
+                restored++;
+            }
+        }
+        if (restored == 0)
+            return;
+        SPKLog(@"Downloads", @"Restored %lu Gallery file(s) renamed by earlier saves", (unsigned long)restored);
+        [strongSelf.store persistJobs:[strongSelf allJobs] immediately:YES];
+    });
 }
 
 // Reclaim staged scratch that no longer belongs to a history entry — interrupted
@@ -482,7 +592,32 @@ static int64_t SPKFileSizeAtPath(NSString *path) {
                             snap.detail = SPKL(@"DOWNLOADS_DOWNLOAD_SCHEDULER_PREPARING_LOCAL_FILE_TEXT");
                             snap.progress = 0.5;
                         }];
-        NSString *renamed = SPKRenameStagedPath(req.localSourcePath, item, job);
+        NSString *source = req.localSourcePath;
+        if (!SPKDownloadPathIsScratch(source)) {
+            // Work on a copy (an APFS clone, so near free) so the rename and the
+            // history cleanup below never touch the caller's file.
+            NSFileManager *fm = NSFileManager.defaultManager;
+            NSString *staging = [SPKDownloadStore stagingDirectoryForJobID:job.jobID];
+            [fm createDirectoryAtPath:staging withIntermediateDirectories:YES attributes:nil error:nil];
+            NSString *copy = [staging stringByAppendingPathComponent:source.lastPathComponent];
+            [fm removeItemAtPath:copy error:nil];
+            NSError *copyError = nil;
+            if (![fm copyItemAtPath:source toPath:copy error:&copyError]) {
+                SPKLog(@"Downloads", @"Failed to stage local source %@: %@", source.lastPathComponent, copyError);
+                [self transitionItemID:item.itemID
+                                 jobID:job.jobID
+                                  from:SPKDownloadStateRunning
+                                    to:SPKDownloadStateFailed
+                                update:^(SPKDownloadMutableItemSnapshot *snap) {
+                                    snap.error = SPKDownloadError(SPKDownloadErrorFileMoveFailed, SPKL(@"DOWNLOADS_DOWNLOAD_TRANSFER_COULD_NOT_STORE_DOWNLOADED_FILE_TEXT"), nil);
+                                    snap.progress = 1.0;
+                                }];
+                [self pumpQueue];
+                return;
+            }
+            source = copy;
+        }
+        NSString *renamed = SPKRenameStagedPath(source, item, job);
         [self finalizeItem:item job:job stagedPath:renamed];
         return;
     }

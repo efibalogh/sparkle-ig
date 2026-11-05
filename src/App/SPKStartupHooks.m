@@ -2,6 +2,7 @@
 
 #import "../Utils.h"
 #import "../Shared/i18n/SPKLanguagePackUpdater.h"
+#import "../Shared/Updates/SPKUpdateChecker.h"
 #import "SPKHookBisect.h"
 #import "SPKStabilityGuard.h"
 
@@ -23,6 +24,7 @@ FOUNDATION_EXPORT void SPKInstallMessagesActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAggregatedMediaActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfileActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfilePhotoZoomHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallProfileSuggestionsButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSquareGridHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallBackgroundRefreshHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSeenButtonHooksIfNeeded(void);
@@ -33,6 +35,7 @@ FOUNDATION_EXPORT void SPKInstallSharedLinkCleanupHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallBrowserLinkRoutingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallShareLongPressCopyHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallShareSheetPinsHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallSearchPinsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideMetaAIHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAccountSwitchHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallAdBlockingEarlyHooksIfEnabled(void);
@@ -52,6 +55,7 @@ FOUNDATION_EXPORT void SPKInstallOpenLinkFromClipboardHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideExploreGridHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideTrendingSearchesHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCustomFontHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallOLEDDarkModeHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallNavigationHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallSettingsShortcutsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableHapticsHooksIfEnabled(void);
@@ -63,6 +67,7 @@ FOUNDATION_EXPORT void SPKInstallDetailedColorPickerHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallEnhancedMediaResolutionHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideMetricsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallDisableFeedAutoplayHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallFeedRefreshConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallPostCommentConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSwipeCloseCommentsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCommentActionsHooksIfEnabled(void);
@@ -116,6 +121,7 @@ FOUNDATION_EXPORT void SPKInstallDMRefreshConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCaptureHidingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallProfileHeaderControlsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallProfileSavedTabHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallProfileExactFollowerCountHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallAudioPageDownloadHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDirectMessageMenuHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallNotesActionsHooksIfEnabled(void);
@@ -131,6 +137,7 @@ FOUNDATION_EXPORT void SPKInstallHideViewerPlusButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSearchStoryViewersHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoryVideoStickerHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideRecentHighlightsHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallStoryHighlightTrayTrackingHooksIfNeeded(void);
 
 // Master kill switch: when YES, suppress all feature hook installation, but
 // keep the home long-press shortcut so users can still reach Settings to turn
@@ -175,10 +182,9 @@ void SPKInstallLaunchCriticalHooks(void) {
     // Liquid Glass surface hooks install on any iOS: the tab bar experiment
     // gates reshape the bar into the floating pill even pre-26 (only the glass
     // material is unavailable). The ObjC button hooks inside self-skip when
-    // their classes are absent, so this is safe on older systems.
-    if ([SPKUtils spk_isLiquidGlassEffectivelyEnabled]) {
-        SPK_INSTALL(SPKInstallLiquidGlassHooksIfEnabled);
-    }
+    // their classes are absent, so this is safe on older systems. They install
+    // in every mode: Follow still needs the tab bar behavior hooks.
+    SPK_INSTALL(SPKInstallLiquidGlassHooksIfEnabled);
     SPK_INSTALL(SPKInstallTweakLaunchCriticalHooks);
     SPK_INSTALL(SPKInstallFollowingFeedHooksIfEnabled);
     SPK_INSTALL(SPKInstallAdBlockingEarlyHooksIfEnabled);
@@ -205,6 +211,7 @@ void SPKInstallFeedSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallFeedActionButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallHeaderActionButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallBackgroundRefreshHooksIfEnabled);
+    SPK_INSTALL(SPKInstallFeedRefreshConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallLikeConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallDisableFeedAutoplayHooksIfEnabled);
     SPK_INSTALL(SPKInstallPostCommentConfirmHooksIfEnabled);
@@ -333,10 +340,13 @@ void SPKInstallProfileSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallProfilePhotoZoomHooksIfEnabled);
     SPK_INSTALL(SPKInstallFollowConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
+    SPK_INSTALL(SPKInstallProfileSuggestionsButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallFollowIndicatorHooksIfEnabled);
     SPK_INSTALL(SPKInstallProfileHeaderControlsHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileSavedTabHooksIfNeeded);
+    SPK_INSTALL(SPKInstallProfileExactFollowerCountHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileAnalyzerVisitTrackerHooksIfEnabled);
+    SPK_INSTALL(SPKInstallStoryHighlightTrayTrackingHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
 }
 
@@ -350,6 +360,8 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     // themselves exist. It throttles itself to once a day and delays past launch, so it costs a
     // no-op call here on every other launch.
     [SPKLanguagePackUpdater checkForUpdatesIfDue];
+    // Not a hook either: offers a newer Sparkle once launch settles, refreshing the feed when due.
+    [SPKUpdateChecker scheduleLaunchCheck];
     SPK_INSTALL(SPKInstallAccountSwitchHooksIfNeeded);
     SPK_INSTALL(SPKInstallTweakGeneralUIHooksIfNeeded);
     // Not a hook: shows the floating debug button from Tools > Diagnostics.
@@ -362,6 +374,7 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallBrowserLinkRoutingHooksIfNeeded);
     SPK_INSTALL(SPKInstallShareLongPressCopyHooksIfNeeded);
     SPK_INSTALL(SPKInstallShareSheetPinsHooksIfNeeded);
+    SPK_INSTALL(SPKInstallSearchPinsHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
     SPK_INSTALL(SPKInstallOpenLinkFromClipboardHooksIfEnabled);
@@ -369,6 +382,7 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallSquareGridHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideTrendingSearchesHooksIfEnabled);
     SPK_INSTALL(SPKInstallCustomFontHooksIfEnabled);
+    SPK_INSTALL(SPKInstallOLEDDarkModeHooksIfEnabled);
     SPK_INSTALL(SPKInstallNavigationHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
     SPK_INSTALL(SPKInstallDisableHapticsHooksIfEnabled);

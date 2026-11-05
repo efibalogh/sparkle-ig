@@ -982,6 +982,10 @@ static NSArray<SPKMediaOption *> *
 SPKMediaBuildMergedDashOptions(NSArray<SPKDashRepresentation *> *videoReps,
                                SPKDashRepresentation *bestAudio,
                                NSTimeInterval duration, BOOL ffmpegAvailable) {
+    // A video with no sound of its own (or whose song is a separate music asset)
+    // ships a manifest with no audio rep. Its streams belong in Video Only.
+    if (!bestAudio.url)
+        return @[];
     NSMutableArray<SPKMediaOption *> *options = [NSMutableArray array];
     for (SPKDashRepresentation *videoRep in videoReps) {
         if (!videoRep.url)
@@ -1002,7 +1006,7 @@ SPKMediaBuildMergedDashOptions(NSArray<SPKDashRepresentation *> *videoReps,
         option.subtitle =
             SPKMediaSubtitle(videoRep.width, videoRep.height,
                              videoRep.bandwidth + bestAudio.bandwidth, duration,
-                             nil, bestAudio.url ? SPKL(@"MEDIA_DOWNLOAD_QUALITY_VIDEO_AUDIO_SECTION") : SPKL(@"COMMON_MEDIA_TYPE_VIDEO"));
+                             nil, SPKL(@"MEDIA_DOWNLOAD_QUALITY_VIDEO_AUDIO_SECTION"));
         option.selectable = ffmpegAvailable;
         option.qualityInfo = SPKMediaQualityInfoForOption(option);
         [options addObject:option];
@@ -1284,13 +1288,15 @@ static SPKMediaOption *SPKMediaResolveDefaultOption(SPKMediaAnalysis *analysis,
     }
 
     if ([quality isEqualToString:@"high"]) {
-        return analysis.mergedDashOptions.firstObject ?: analysis.progressiveVideoOptions.firstObject ?
-                                                                                                      : analysis.videoDashOnlyOptions.firstObject;
+        // A silent video has no merged rows; its best DASH stream is in Video Only.
+        return analysis.mergedDashOptions.firstObject ?: analysis.videoDashOnlyOptions.firstObject ?
+                                                                                                   : analysis.progressiveVideoOptions.firstObject;
     }
 
     NSArray<SPKMediaOption *> *preferred = analysis.mergedDashOptions.count > 0
                                                ? analysis.mergedDashOptions
-                                               : analysis.progressiveVideoOptions;
+                                               : (analysis.videoDashOnlyOptions.count > 0 ? analysis.videoDashOnlyOptions
+                                                                                          : analysis.progressiveVideoOptions);
     return SPKMediaTieredOption(preferred, quality)
                ?: analysis.progressiveVideoOptions.firstObject
                   ?
@@ -2588,12 +2594,13 @@ static void SPKMediaPerformOptionDownload(
         chosen = analysis.progressiveVideoOptions.firstObject ?: analysis.mergedDashOptions.firstObject ?
                                                                                                         : analysis.videoDashOnlyOptions.firstObject;
     } else if ([quality isEqualToString:@"high"]) {
-        chosen = analysis.mergedDashOptions.firstObject ?: analysis.progressiveVideoOptions.firstObject ?
-                                                                                                        : analysis.videoDashOnlyOptions.firstObject;
+        chosen = analysis.mergedDashOptions.firstObject ?: analysis.videoDashOnlyOptions.firstObject ?
+                                                                                                     : analysis.progressiveVideoOptions.firstObject;
     } else {
         NSArray<SPKMediaOption *> *preferred =
-            analysis.mergedDashOptions.count > 0 ? analysis.mergedDashOptions
-                                                 : analysis.progressiveVideoOptions;
+            analysis.mergedDashOptions.count > 0   ? analysis.mergedDashOptions
+            : analysis.videoDashOnlyOptions.count > 0 ? analysis.videoDashOnlyOptions
+                                                      : analysis.progressiveVideoOptions;
         chosen = SPKMediaTieredOption(preferred, quality)
                      ?: analysis.progressiveVideoOptions.firstObject
                         ?
@@ -3031,6 +3038,28 @@ static NSURL *SPKMediaDownloadLinkURL(SPKMediaAnalysis *analysis, NSString *phot
                                     completion(option.primaryURL ?: videoURL ?: photoURL);
                                 },
                                 nil);
+}
+
++ (void)resolveEditPhotoURLForMediaObject:(id)mediaObject
+                                 photoURL:(NSURL *)photoURL
+                                presenter:(UIViewController *)presenter
+                               completion:(void (^)(NSURL *url))completion {
+    if (!completion)
+        return;
+    SPKMediaAnalysis *analysis = SPKMediaAnalyze(mediaObject, photoURL, nil, SPKDownloadDestinationGallery, NO);
+    NSString *quality = [SPKUtils getStringPref:@"downloads_photo_quality"];
+    if (![quality isEqualToString:@"always_ask"] || !presenter || analysis.photoOptions.count < 2) {
+        SPKMediaOption *option = SPKMediaResolveDefaultOption(analysis, [quality isEqualToString:@"always_ask"] ? @"max" : nil);
+        completion(option.primaryURL ?: photoURL);
+        return;
+    }
+    SPKMediaPresentOptionsSheet(presenter, nil, analysis, SPKDownloadDestinationGallery,
+                                ^(SPKMediaOption *option) {
+                                    completion(option.primaryURL ?: photoURL);
+                                },
+                                ^{
+                                    completion(nil); // dismissed without choosing
+                                });
 }
 
 + (UIViewController *)encodingSettingsViewController {

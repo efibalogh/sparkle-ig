@@ -165,6 +165,29 @@ NSString *SPKStringFromValue(id value) {
     return nil;
 }
 
+id SPKSundialCellMedia(id cell) {
+    if (!cell)
+        return nil;
+
+    // IG 452 rewrote IGSundialViewerVideoCell in Swift: the stored property's ivar
+    // lost its leading underscore and, like every Swift ivar, has no type encoding.
+    // The carousel cell is still Objective-C and keeps the old name.
+    Class mediaClass = NSClassFromString(@"IGMedia");
+    static const char *const names[] = {"_mediaPassthrough", "mediaPassthrough"};
+    for (size_t i = 0; i < sizeof(names) / sizeof(names[0]); i++) {
+        Ivar ivar = class_getInstanceVariable(object_getClass(cell), names[i]);
+        if (!ivar)
+            continue;
+        const char *type = ivar_getTypeEncoding(ivar);
+        if (type && type[0] != '\0' && type[0] != '@')
+            continue;
+        id media = object_getIvar(cell, ivar);
+        if (media && (!mediaClass || [media isKindOfClass:mediaClass]))
+            return media;
+    }
+    return nil;
+}
+
 NSString *SPKClassName(id object) {
     return object ? NSStringFromClass([object class]) : @"(nil)";
 }

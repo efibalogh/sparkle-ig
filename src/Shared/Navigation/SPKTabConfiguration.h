@@ -87,6 +87,13 @@ NSString *SPKTabIconName(NSString *identifier);
 NSString *SPKTabHidePreferenceKey(NSString *identifier);
 NSString *SPKTabLaunchPreferenceValue(NSString *identifier);
 NSString *_Nullable SPKTabIdentifierForLaunchPreference(NSString *value);
+/// The tab Instagram will be showing once launch finishes, resolved from
+/// preferences alone so it can be asked before the tab bar exists. Follows the
+/// same rules as the launch selection: a chosen tab that is hidden falls back to
+/// the first visible one, and "default" means the first arranged tab in Custom
+/// and Feed elsewhere unless it is hidden. Saved is returned as Saved, not as
+/// its carrier. Nil when no destination is visible.
+NSString *_Nullable SPKEffectiveLaunchTabIdentifierFromPreferences(void);
 
 /// Migrates legacy order presets and the old Reels-only Saved toggle, then
 /// normalizes persisted custom arrays. Safe to call repeatedly.

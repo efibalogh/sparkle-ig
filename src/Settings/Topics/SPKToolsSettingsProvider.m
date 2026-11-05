@@ -190,9 +190,6 @@ static NSDictionary *SPKDiagnosticsSection(void) {
     [instagramCells addObject:SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE")
                                                       defaultsKey:@"tools_fix_duplicate_notifications"],
                                                  SPKL(@"TOOLS_INSTAGRAM_FIX_DUPLICATE_NOTIFICATIONS_HELP"))];
-    [instagramCells addObject:SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE")
-                                                      defaultsKey:@"tools_disable_safe_mode"],
-                                                 SPKL(@"TOOLS_INSTAGRAM_DISABLE_SAFE_MODE_HELP"))];
 
     [sections addObject:SPKTopicSection(SPKL(@"ABOUT_INFORMATION_INSTAGRAM_TITLE"), instagramCells, nil)];
 

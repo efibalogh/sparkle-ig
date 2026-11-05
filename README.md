@@ -4,7 +4,7 @@
 
 # Sparkle for Instagram
 
-`v1.5.1` · Tested on versions **451.0.0** and **410.1.0**
+`v1.6.0` · Tested on versions **454.1.0** and **410.1.0**
 
 [📣 IPA Releases](https://t.me/sparkle_ig) · [💬 Chat & Support](https://t.me/+f-Xo21HnfCY3NmE0) · [📦 Jailbreak Repo](https://efibalogh.github.io/sparkle-ig/) · [📥 DEB Releases](https://github.com/efibalogh/sparkle-ig/releases/latest) · [🐛 Issues](https://github.com/efibalogh/sparkle-ig/issues/new/choose) · [❤️ Support](https://ko-fi.com/sparkle_ig)
 
@@ -75,6 +75,11 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Build a custom tab bar with a live preview: reorder or hide destinations, choose launch and swipe behavior, trade a hidden tab for one-tap access to Saved collections in the custom layout, and drop the bar entirely when a single tab is left.
   - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
   - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
+  - Show exact follower counts on profiles instead of abbreviated ones.
+  - Hide your followers and following lists, and keep your account out of other people's lists, both saved to your Instagram account so they apply everywhere you sign in.
+- **OLED dark mode**:
+  - Turns Instagram's dark mode pure black, sheets included, with message bubbles and search fields kept a shade lighter so they stay visible.
+  - Liquid Glass gets a dark gray tint so the tab bar stays visible over black, or stays pure black with Black Glass.
 - **Custom app font**:
   - Import your own `.otf`/`.ttf` font and use it across Instagram and Sparkle, matched per weight and previewed face by face before you pick it.
 - **Language packs**:
@@ -85,7 +90,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Open links from bios, captions, stories, messages, and ads in an in-app Safari view or the Safari app instead of Instagram's browser, with Instagram's redirect and tracking parameters stripped first.
   - Instagram leaves web addresses in captions and comments as plain text. Sparkle can find them, color them, and make them tappable, opening them in an in-app Safari view, in the Safari app, or after asking each time. Off by default, and nothing is requested from a link until you tap it.
 - **Liquid Glass (iOS 26+)**:
-  - Native Liquid Glass integration across Sparkle's own UI, plus an option to force-enable Instagram's.
+  - Native Liquid Glass integration across Sparkle's own UI, plus an option to force Instagram's on or off.
   - **Scroll Edge Effect** picks how content meets the top bar as you scroll: off (Instagram disables the effect), the iOS default, the soft progressive blur, or a hard edge with a dividing line (iOS 27 defaults to hard). Changes apply live.
   - On iOS 18 and lower, a **Pill-Shaped Tab Bar** toggle brings the floating pill tab bar (shape only; the glass material stays iOS 26+).
 
@@ -138,6 +143,8 @@ You can build from source locally, or fork the repo and run the **Build and Pack
 By default, **long-press the Home tab** or the **Profile settings button** to open Sparkle Settings. You can also enable *Show Settings on App Launch*. If you hide the Home tab, the long-press automatically moves to another visible tab so Settings is always reachable.
 
 Tap the **Translate** button in the top-right of Sparkle Settings for the language sheet. Sparkle ships English, Japanese, and Polish; **Add a Language** opens the published list, where one tap installs a translation; its more menu imports a pack from Files or a link. The share button at the top of the language sheet (**Export Strings**) shares any listed language as a zip: English to start a translation, another language to correct it. A swipe removes an installed pack. Installed packs refresh themselves when a release publishes newer ones, so the screens a release adds arrive translated rather than in English; it checks after each Sparkle update, only for languages you already have, and never replaces a pack you imported from a file. **Check for Updates** runs the same check on demand. Importing only makes a language available; switching to it is a separate tap. A System Default row follows Instagram. A restart applies the choice across every Instagram account. Anything untranslated falls back to English.
+
+When a new version is out, Sparkle offers it in a short sheet after launch, on every launch until you update or skip that version. The Sparkle row in **About** shows whether you are up to date, and tapping it checks again.
 
 ## Screenshots
 

@@ -5,9 +5,6 @@
 
 static NSString *const kSPKConfirmCreateGroupButtonPref = @"general_confirm_create_group";
 static NSString *const kSPKHideCreateGroupButtonPref = @"general_hide_create_group";
-static NSString *const kSPKCreateGroupButtonRuntimeClassName = @"IGShareSheet.IGShareSheetCreateOrSendToGroupFacepileButton";
-static NSString *const kSPKBottomButtonsViewRuntimeClassName = @"IGShareSheet.IGSharesheetBottomButtonsView";
-static NSString *const kSPKBottomButtonsContainerRuntimeClassName = @"IGShareSheet.IGShareSheetBottomButtonsViewContainer";
 
 static const void *kSPKGroupButtonBypassConfirmAssocKey = &kSPKGroupButtonBypassConfirmAssocKey;
 static const void *kSPKGroupButtonPendingActionAssocKey = &kSPKGroupButtonPendingActionAssocKey;
@@ -25,11 +22,36 @@ static BOOL SPKShouldConfirmCreateGroupButton(void) {
     return !SPKShouldHideCreateGroupButton() && [SPKUtils getBoolPref:kSPKConfirmCreateGroupButtonPref];
 }
 
-static BOOL SPKClassMatchesNamedClass(id object, NSString *className) {
-    if (!object || className.length == 0)
-        return NO;
-    Class cls = NSClassFromString(className);
-    return cls ? [object isKindOfClass:cls] : NO;
+// IG 451 moved the share sheet's Swift module from IGShareSheet to IGDirectShareSheetUI.
+static Class SPKResolveCreateGroupButtonClass(void) {
+    static Class cls;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cls = SPKResolveIGClass(@"IGDirectShareSheetUI.IGShareSheetCreateOrSendToGroupFacepileButton", @"IGShareSheet.IGShareSheetCreateOrSendToGroupFacepileButton");
+    });
+    return cls;
+}
+
+static Class SPKResolveBottomButtonsViewClass(void) {
+    static Class cls;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cls = SPKResolveIGClass(@"IGDirectShareSheetUI.IGSharesheetBottomButtonsView", @"IGShareSheet.IGSharesheetBottomButtonsView");
+    });
+    return cls;
+}
+
+static Class SPKResolveBottomButtonsContainerClass(void) {
+    static Class cls;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cls = SPKResolveIGClass(@"IGDirectShareSheetUI.IGShareSheetBottomButtonsViewContainer", @"IGShareSheet.IGShareSheetBottomButtonsViewContainer");
+    });
+    return cls;
+}
+
+static BOOL SPKObjectIsKindOfResolvedClass(id object, Class cls) {
+    return (object && cls) ? [object isKindOfClass:cls] : NO;
 }
 
 static void SPKCollapseConstraintForViewInArray(UIView *view, NSArray<NSLayoutConstraint *> *constraints) {
@@ -51,7 +73,7 @@ static void SPKCollapseConstraintForViewInArray(UIView *view, NSArray<NSLayoutCo
 static UIView *SPKFindCreateGroupButtonSubview(UIView *view) {
     if (!view)
         return nil;
-    if (SPKClassMatchesNamedClass(view, kSPKCreateGroupButtonRuntimeClassName)) {
+    if (SPKObjectIsKindOfResolvedClass(view, SPKResolveCreateGroupButtonClass())) {
         return view;
     }
     for (UIView *subview in view.subviews) {
@@ -264,7 +286,7 @@ static void SPKApplyBottomButtonsCollapse(UIView *view) {
     UIView *bottomButtonsView = SPKFindCreateGroupButtonSubview(self) ? self : nil;
     if (!bottomButtonsView) {
         for (UIView *subview in view.subviews) {
-            if (SPKClassMatchesNamedClass(subview, kSPKBottomButtonsViewRuntimeClassName)) {
+            if (SPKObjectIsKindOfResolvedClass(subview, SPKResolveBottomButtonsViewClass())) {
                 bottomButtonsView = subview;
                 break;
             }
@@ -297,7 +319,7 @@ static void SPKApplyBottomButtonsCollapse(UIView *view) {
     }
     UIView *view = (UIView *)self;
     for (UIView *subview in view.subviews) {
-        if (SPKClassMatchesNamedClass(subview, kSPKBottomButtonsViewRuntimeClassName)) {
+        if (SPKObjectIsKindOfResolvedClass(subview, SPKResolveBottomButtonsViewClass())) {
             CGFloat height = SPKVisibleSubviewMaxY(subview);
             if (height > 0.0) {
                 original.height = ceil(height);
@@ -315,7 +337,7 @@ static void SPKApplyBottomButtonsCollapse(UIView *view) {
     }
     UIView *view = (UIView *)self;
     for (UIView *subview in view.subviews) {
-        if (SPKClassMatchesNamedClass(subview, kSPKBottomButtonsViewRuntimeClassName)) {
+        if (SPKObjectIsKindOfResolvedClass(subview, SPKResolveBottomButtonsViewClass())) {
             CGFloat height = SPKVisibleSubviewMaxY(subview);
             if (height > 0.0) {
                 original.height = ceil(height);
@@ -336,9 +358,9 @@ extern "C" void SPKInstallCreateGroupButtonControlHooksIfEnabled(void) {
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class createGroupButtonClass = objc_getClass(kSPKCreateGroupButtonRuntimeClassName.UTF8String);
-        Class bottomButtonsViewClass = objc_getClass(kSPKBottomButtonsViewRuntimeClassName.UTF8String);
-        Class bottomButtonsContainerClass = objc_getClass(kSPKBottomButtonsContainerRuntimeClassName.UTF8String);
+        Class createGroupButtonClass = SPKResolveCreateGroupButtonClass();
+        Class bottomButtonsViewClass = SPKResolveBottomButtonsViewClass();
+        Class bottomButtonsContainerClass = SPKResolveBottomButtonsContainerClass();
 
         if (createGroupButtonClass && bottomButtonsViewClass && bottomButtonsContainerClass) {
             %init(SPKCreateGroupButtonControls,

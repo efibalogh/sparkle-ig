@@ -20,6 +20,10 @@
 @property (nonatomic, weak) UIViewController *presenter;
 @property (nonatomic, weak) UIView *sourceView;
 @property (nonatomic, strong) SPKNotificationPillView *progressView;
+// Set by the progress pill's cancel. The conversion is stopped, and every later
+// step checks this before going on, so nothing is sent.
+@property (nonatomic) BOOL cancelled;
+@property (nonatomic, strong) AVAssetExportSession *exportSession;
 - (void)sendConvertedURL:(NSURL *)url duration:(NSTimeInterval)duration waveform:(id)waveform;
 @end
 
@@ -420,7 +424,10 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
     if (!SPKNotificationIsEnabled(kSPKNotificationDownloadShare))
         return;
     if (!self.progressView) {
-        self.progressView = SPKNotifyProgress(kSPKNotificationDownloadShare, title ?: SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_PREPARING_AUDIO_TEXT"), nil);
+        __weak typeof(self) weakSelf = self;
+        self.progressView = SPKNotifyProgress(kSPKNotificationDownloadShare, title ?: SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_PREPARING_AUDIO_TEXT"), ^{
+            [weakSelf cancelUpload];
+        });
     }
     [self.progressView updateProgressTitle:title ?: SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_PREPARING_AUDIO_TEXT") subtitle:subtitle];
     [self.progressView setProgress:0.05f animated:NO];
@@ -457,6 +464,14 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
     } else {
         SPKAudioDMNotify(title ?: SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_UPLOAD_FAILED_TEXT"), subtitle, NO);
     }
+}
+
+- (void)cancelUpload {
+    self.cancelled = YES;
+    [self.exportSession cancelExport];
+    [self finishUploadProgressWithCancel];
+    if (sSPKAudioActiveDMUploadCoordinator == self)
+        sSPKAudioActiveDMUploadCoordinator = nil;
 }
 
 - (void)finishUploadProgressWithCancel {
@@ -536,10 +551,14 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
     [[NSFileManager defaultManager] removeItemAtURL:outputURL error:nil];
     session.outputURL = outputURL;
     session.outputFileType = AVFileTypeAppleM4A;
+    self.exportSession = session;
     [self updateUploadProgress:0.15f title:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_CONVERTING_AUDIO_TEXT") subtitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_PREPARING_VOICE_NOTE_COMPATIBLE_FILE_TEXT")];
 
     [session exportAsynchronouslyWithCompletionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.exportSession = nil;
+            if (self.cancelled)
+                return;
             if (session.status != AVAssetExportSessionStatusCompleted || ![[NSFileManager defaultManager] fileExistsAtPath:outputURL.path]) {
                 NSString *message = session.error.localizedDescription ?: SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_INSTAGRAM_MAY_NOT_SUPPORT_MEDIA_FORMAT");
                 [self finishUploadProgressWithErrorTitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_CONVERSION_FAILED_TEXT") subtitle:message];
@@ -636,7 +655,7 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
                                         basename:basename
                                       completion:^(NSURL *outputURL, NSError *error) {
                                           __strong typeof(weakSelf) strongSelf = weakSelf;
-                                          if (!strongSelf)
+                                          if (!strongSelf || strongSelf.cancelled)
                                               return;
                                           if (!outputURL) {
                                               [strongSelf finishUploadProgressWithErrorTitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_TRIM_FAILED_TEXT")
@@ -651,6 +670,8 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
 }
 
 - (void)sendConvertedURL:(NSURL *)url duration:(NSTimeInterval)duration {
+    if (self.cancelled)
+        return;
     if (![SPKAudioDMUploadCoordinator senderTargetSupportsAudioUpload:self.senderTarget]) {
         [self finishUploadProgressWithErrorTitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_UPLOAD_UNAVAILABLE_TEXT") subtitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_DIRECT_AUDIO_SENDER_DISAPPEARED_BEFORE_SENDING_TEXT")];
         if (sSPKAudioActiveDMUploadCoordinator == self)
@@ -662,7 +683,7 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
     __weak typeof(self) weakSelf = self;
     SPKAudioDMSampleWaveform(url, safeDuration, ^(NSArray<NSNumber *> *samples) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf)
+        if (!strongSelf || strongSelf.cancelled)
             return;
         if (samples.count == 0) {
             SPKWarnLog(@"AudioUpload", @"Could not decode waveform samples for %@; using flat fallback", url.lastPathComponent);
@@ -680,6 +701,8 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
 }
 
 - (void)sendConvertedURL:(NSURL *)url duration:(NSTimeInterval)safeDuration waveform:(id)waveform {
+    if (self.cancelled)
+        return;
     if (![SPKAudioDMUploadCoordinator senderTargetSupportsAudioUpload:self.senderTarget]) {
         [self finishUploadProgressWithErrorTitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_UPLOAD_UNAVAILABLE_TEXT") subtitle:SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_DIRECT_AUDIO_SENDER_DISAPPEARED_BEFORE_SENDING_TEXT")];
         if (sSPKAudioActiveDMUploadCoordinator == self)
@@ -698,6 +721,8 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
     SEL voiceLegacySelector = SPKAudioDMVoiceLegacySelector();
     if (voiceController && ([voiceController respondsToSelector:voiceSelector] || [voiceController respondsToSelector:voiceLegacySelector])) {
         SPKDMConfirmVoiceMessageIfNeeded(^{
+            if (self.cancelled)
+                return;
             if ([voiceController respondsToSelector:voiceSelector]) {
                 void (*sendVoice)(id, SEL, id, id, id, double, long long, id, id, long long) = (void (*)(id, SEL, id, id, id, double, long long, id, id, long long))objc_msgSend;
                 sendVoice(voiceController, voiceSelector, nil, url, waveform, safeDuration, 0, nil, nil, 0);
@@ -727,6 +752,8 @@ static void SPKAudioDMNotify(NSString *title, NSString *message, BOOL success) {
     }
 
     SPKDMConfirmVoiceMessageIfNeeded(^{
+        if (self.cancelled)
+            return;
         if ([sender respondsToSelector:SPKAudioDMSendSelector()]) {
             void (*sendAudio)(id, SEL, id, id, double, long long, id, id, id, id) = (void (*)(id, SEL, id, id, double, long long, id, id, id, id))objc_msgSend;
             sendAudio(sender,

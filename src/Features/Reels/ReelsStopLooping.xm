@@ -174,8 +174,12 @@ static void SPKReelsStopLoopingShowPausedState(UIView *cell) {
     SEL singleTap = @selector(gestureController:didObserveSingleTap:);
     if (![cell respondsToSelector:singleTap])
         return;
-    id gestureController = [SPKUtils getIvarForObj:cell name:"_gestureController"];
-    if (!gestureController)
+    // 452 rewrote the cell in Swift, where the controller is a lazy property kept
+    // in a renamed storage ivar. It is created with the cell's gestures, so a cell
+    // that has been tapped or played always has it.
+    id gestureController = [SPKUtils getIvarForObj:cell name:"_gestureController"]
+                               ?: [SPKUtils getIvarForObj:cell name:"$__lazy_storage_$_gestureController"];
+    if (![gestureController isKindOfClass:[NSObject class]])
         return;
     id tap = [SPKUtils getIvarForObj:gestureController name:"singleTapRecognizer"]
                  ?: [SPKUtils getIvarForObj:gestureController name:"_singleTapRecognizer"];

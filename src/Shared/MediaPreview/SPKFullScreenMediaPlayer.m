@@ -326,8 +326,6 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     // rare and its page already shows the load-failure state, so let the page that
     // actually gets displayed discover it.
     NSInteger adjustedIndex = MAX(0, MIN(index, (NSInteger)files.count - 1));
-    SPKNotify(kSPKNotificationMediaPreviewOpenGallery, SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_OPENED_GALLERY_MEDIA_TEXT"),
-              nil, @"media", SPKNotificationToneInfo);
 
     SPKFullScreenMediaPlayer *player = [[SPKFullScreenMediaPlayer alloc] init];
     player.isFromGallery = YES;
@@ -726,7 +724,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
         // subtitle "Posted <date> · Saved <date>".
         SPKGalleryFile *file = item.galleryFile;
         NSString *sourceLabel =
-            [SPKGalleryFile labelForSource:(SPKGallerySource)meta.source];
+            file ? [file sourceLabel] : [SPKGalleryFile labelForSource:(SPKGallerySource)meta.source];
         if (handle.length > 0 && sourceLabel.length > 0) {
             title = [NSString stringWithFormat:@"%@ · %@", handle, sourceLabel];
         } else {
@@ -1584,6 +1582,19 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 - (void)openOriginalPostForCurrentGalleryItem {
     SPKGalleryFile *file = self.currentItem.galleryFile;
     __weak __typeof(self) weakSelf = self;
+    // Named for what the item is, as the Gallery list does.
+    NSString *failureTitle = nil;
+    switch ((SPKGallerySource)file.source) {
+    case SPKGallerySourceStories:
+        failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST");
+        break;
+    case SPKGallerySourceReels:
+        failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST");
+        break;
+    default:
+        failureTitle = SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT");
+        break;
+    }
     // The post is pushed over the player rather than replacing it, so the preview
     // stays alive behind it and would otherwise keep playing audio under the post.
     [self pauseForNavigationAway];
@@ -1592,10 +1603,10 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     if ([SPKGalleryOriginController openOriginalPostForGalleryFile:file
                                                fromViewController:self
                                                    legacyFallback:^{
+                                                       // The post is what shows next, so there is nothing to announce;
+                                                       // the tap is still felt.
                                                        [weakSelf dismissGalleryFlowForOriginOpenWithCompletion:^{
-                                                           SPKNotify(kSPKNotificationGalleryOpenOriginal, SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_OPENED_ORIGINAL_POST_TEXT"),
-                                                                     nil, @"external_link",
-                                                                     SPKNotificationToneForIconResource(@"external_link"));
+                                                           SPKNotificationTriggerHaptic(kSPKNotificationGalleryOpenOriginal, SPKNotificationToneInfo);
                                                        }];
                                                    }
                                                         onDismiss:^{
@@ -1603,7 +1614,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
                                                         }]) {
         // Nothing to announce: the post is on screen.
     } else {
-        [self showGalleryOpenFailureMessage:SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_UNABLE_OPEN_ORIGINAL_POST_TEXT")
+        [self showGalleryOpenFailureMessage:failureTitle
                            actionIdentifier:kSPKNotificationGalleryOpenOriginal];
     }
 }
@@ -1618,12 +1629,11 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     [SPKGalleryOriginController openProfileForGalleryFile:file
                                       fromViewController:self
                                               completion:^(BOOL success, BOOL didLink) {
+                                                  // The profile on screen is the confirmation, so only the tap is
+                                                  // felt; a link just made already posted its own notification.
                                                   if (success) {
-                                                      // Quiet when a link was just made: that toast already said it.
                                                       if (!didLink)
-                                                          SPKNotify(kSPKNotificationGalleryOpenProfile, SPKL(@"COMMON_OPENED_PROFILE_TOAST"), nil,
-                                                                    @"user_circle",
-                                                                    SPKNotificationToneForIconResource(@"user_circle"));
+                                                          SPKNotificationTriggerHaptic(kSPKNotificationGalleryOpenProfile, SPKNotificationToneInfo);
                                                   } else {
                                                       [weakSelf showGalleryOpenFailureMessage:SPKL(@"COMMON_UNABLE_OPEN_PROFILE_TOAST")
                                                                              actionIdentifier:kSPKNotificationGalleryOpenProfile];
@@ -1638,7 +1648,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 
     if (file.hasOpenableOriginalMedia) {
         [actions addObject:[UIAction
-                               actionWithTitle:SPKL(@"ALERT_ACTION_OPEN_ORIGINAL_POST")
+                               actionWithTitle:[file openOriginalActionTitle]
                                          image:SPKGalleryPreviewMenuIcon(
                                                    @"external_link")
                                     identifier:nil
@@ -1795,6 +1805,26 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
             if (url.isFileURL)
                 source = [UIImage imageWithContentsOfFile:url.path];
         }
+    }
+
+    // An expanded Instagram photo goes through the Edit & Save entry, which picks the
+    // source by the photo quality preference (asking when it is Always Ask) and only
+    // reuses the on-screen bitmap when that choice is the file already displayed.
+    if (!fromGallery && item.sourceMediaObject && item.fileURL && !item.fileURL.isFileURL) {
+        __weak typeof(self) weakSelf = self;
+        if ([self beginFetching4KCandidatesForItem:item
+                                        identifier:kSPKActionEditSave
+                                             retry:^{
+                                                 [weakSelf editCurrentItem];
+                                             }]) {
+            return;
+        }
+        [SPKPhotoEditEntry beginEditAndSaveForMediaObject:item.sourceMediaObject
+                                                 photoURL:item.fileURL
+                                           displayedImage:source
+                                                 metadata:item.galleryMetadata
+                                                presenter:self];
+        return;
     }
 
     if (!source) {
@@ -1961,7 +1991,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 
     if (actionCount == 1) {
         NSString *resourceName = hasProfile ? @"user_circle" : @"external_link";
-        NSString *label = hasProfile ? SPKL(@"ALERT_ACTION_OPEN_PROFILE") : SPKL(@"ALERT_ACTION_OPEN_ORIGINAL_POST");
+        NSString *label = hasProfile ? SPKL(@"ALERT_ACTION_OPEN_PROFILE") : [self.currentItem.galleryFile openOriginalActionTitle];
         _galleryOriginItem.image = SPKMediaChromeBottomBarIcon(resourceName);
         _galleryOriginItem.accessibilityLabel = label;
         _galleryOriginItem.menu = nil;
@@ -2104,8 +2134,9 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 // Cleanup of `fileURL` is deliberately not ours, even when the caller just staged it: the
-// submission is asynchronous (a duplicate prompt can hold it up indefinitely), and the
-// download scheduler consumes a job's local source file and clears it with the job.
+// submission is asynchronous (a duplicate prompt can hold it up indefinitely). The download
+// scheduler consumes sources in tmp and clears them with the job; anything else, such as a
+// Gallery original, is copied into the job's staging directory and left untouched.
 - (void)saveLocalFileURLToPhotos:(NSURL *)fileURL {
     if (!fileURL)
         return;
@@ -2614,7 +2645,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     if ([SPKMediaQualityManager hasWebPhotoCandidatesFetchedForPK:mediaPK])
         return NO;
 
-    if (identifier.length > 0 && SPKNotificationIsEnabled(identifier)) {
+    if (identifier.length > 0 && SPKActionShowsCandidateFetchPill(identifier)) {
         [[SPKNotificationCenter shared] beginTransientProgressWithTitle:SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_FETCHING_4K_CANDIDATES_TEXT")
                                                                onCancel:nil];
     }
@@ -2826,8 +2857,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
                 activityItem = item.image;
             }
         }
-        SPKNotify(kSPKNotificationMediaPreviewShare, SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_OPENED_SHARE_SHEET_TEXT"), nil,
-                  @"share", SPKNotificationToneInfo);
+        SPKNotificationTriggerHaptic(kSPKNotificationMediaPreviewShare, SPKNotificationToneInfo);
         UIActivityViewController *acVC = [[UIActivityViewController alloc]
             initWithActivityItems:@[ activityItem ]
             applicationActivities:nil];

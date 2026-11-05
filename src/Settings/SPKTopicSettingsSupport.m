@@ -282,6 +282,20 @@ UIMenu *SPKLinkOpeningModeMenu(void) {
     ]];
 }
 
+#if SPK_DEV
+UIMenu *SPKAccountPrivacySimulationMenu(void) {
+    NSString *key = @"dev_account_privacy_simulate";
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, key, @"off", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_SLOW"), nil, nil, key, @"slow", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS"), nil, nil, key, @"read_failed", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_REFUSED_REASON"), nil, nil, key, @"write_refused", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_REFUSED_SILENT"), nil, nil, key, @"write_refused_silent", NO),
+        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_SAVE_FAILS"), nil, nil, key, @"write_failed", NO)
+    ]];
+}
+#endif
+
 UIMenu *SPKSeenButtonPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), @"arrow_up", nil, @"msgs_seen_button_position", @"top", NO),
@@ -378,6 +392,15 @@ UIMenu *SPKNotificationStyleMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_STYLE_PILL"), nil, nil, kSPKNotificationStyleKey, @"pill", NO),
         SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_STYLE_INSTAGRAM"), nil, nil, kSPKNotificationStyleKey, @"instagram", NO)
+    ]];
+}
+
+UIMenu *SPKNotificationModeMenu(NSString *defaultsKey) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_MODE_ALL"), nil, nil, defaultsKey, kSPKNotificationModeValueAll, NO),
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_MODE_BANNER"), nil, nil, defaultsKey, kSPKNotificationModeValueBanner, NO),
+        SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_MODE_HAPTIC"), nil, nil, defaultsKey, kSPKNotificationModeValueHaptic, NO),
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, defaultsKey, kSPKNotificationModeValueOff, NO)
     ]];
 }
 

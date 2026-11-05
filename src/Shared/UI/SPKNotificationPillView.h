@@ -15,6 +15,9 @@ typedef NS_ENUM(NSUInteger, SPKNotificationTone) {
                               tone:(SPKNotificationTone)tone;
 
 - (void)setPresentationTopConstraint:(NSLayoutConstraint *)constraint;
+/// How far the bottom stack is lifted off the safe-area bottom (the keyboard), so a
+/// bottom pill exits from where it is rather than sliding down across the keyboard.
+@property (nonatomic, assign) CGFloat presentationBottomLift;
 
 /// YES when the pill is drawn as Instagram's own toast (the Instagram notification style).
 @property (nonatomic, readonly) BOOL instagramSkin;
@@ -49,11 +52,26 @@ typedef NS_ENUM(NSUInteger, SPKNotificationTone) {
                  subtitle:(nullable NSString *)subtitle
                      icon:(nullable UIImage *)icon;
 
+/// Re-reads the look settings (glow or tint, colors, light or dark) and applies them
+/// in place. The style and Liquid Glass are fixed when a pill is made; changing
+/// those needs a new pill.
+- (void)refreshVisualStyleAnimated:(BOOL)animated;
+
+/// Changes a toast pill's text, icon and tone in place, animating the difference.
+- (void)updateToastWithTitle:(nullable NSString *)title
+                    subtitle:(nullable NSString *)subtitle
+                        icon:(nullable UIImage *)icon
+                        tone:(SPKNotificationTone)tone;
+
 /// Dismisses the pill immediately.
 - (void)dismiss;
 
 /// Called when user taps the close button while a progress operation is running.
 @property (nonatomic, copy) void (^onCancel)(void);
+
+/// NO for work that cannot stop partway: a running progress pill then shows no
+/// close button. Defaults to YES, and a pill adopted by a new flow is reset to YES.
+@property (nonatomic) BOOL cancellable;
 
 /// Called when user taps the pill body to retry while in error state.
 @property (nonatomic, copy) void (^onRetry)(void);

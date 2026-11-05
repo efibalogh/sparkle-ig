@@ -249,13 +249,12 @@ static id SPKDirectInboxLegacyContextMenu(id self, SEL _cmd, id viewModel) {
     return SPKDirectInboxMenuWrapConfigurationForViewModel(viewModel, SPKDirectOrigInboxLegacyContextMenu(self, _cmd, viewModel));
 }
 
-static BOOL SPKDirectInboxMenuHookClass(NSString *className, SEL selector, IMP replacement, IMP *orig) {
-    Class inboxClass = NSClassFromString(className);
+static BOOL SPKDirectInboxMenuHookClass(Class inboxClass, SEL selector, IMP replacement, IMP *orig) {
     if (!inboxClass || !class_getInstanceMethod(inboxClass, selector))
         return NO;
 
     MSHookMessageEx(inboxClass, selector, replacement, orig);
-    SPKLog(@"Messages", @"[Sparkle InboxMenu] Installed inbox context menu hook class=%@", className);
+    SPKLog(@"Messages", @"[Sparkle InboxMenu] Installed inbox context menu hook class=%@", NSStringFromClass(inboxClass));
     return YES;
 }
 
@@ -263,18 +262,18 @@ void SPKDirectInboxMenuInstallHooksIfNeeded(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         SEL selector = NSSelectorFromString(@"networkingCoordinator_contextMenuConfigurationForThreadCellAtIndexPath:");
-        BOOL installed = SPKDirectInboxMenuHookClass(@"IGDirectInboxViewController",
+        BOOL installed = SPKDirectInboxMenuHookClass(SPKDirectObjCInboxClass(),
                                                      selector,
                                                      (IMP)SPKDirectInboxContextMenu,
                                                      (IMP *)&SPKDirectOrigInboxContextMenu);
-        installed |= SPKDirectInboxMenuHookClass(@"IGDirectInboxSwiftViewController.IGDirectInboxSwiftViewController",
+        installed |= SPKDirectInboxMenuHookClass(SPKDirectSwiftInboxClass(),
                                                  selector,
                                                  (IMP)SPKDirectInboxSwiftContextMenu,
                                                  (IMP *)&SPKDirectOrigInboxSwiftContextMenu);
         if (!installed) {
             // Builds before the networking-coordinator callback existed build the
             // configuration from the view model itself.
-            installed = SPKDirectInboxMenuHookClass(@"IGDirectInboxViewController",
+            installed = SPKDirectInboxMenuHookClass(SPKDirectObjCInboxClass(),
                                                     NSSelectorFromString(@"_contextMenuConfigurationForThreadCellWithViewModel:"),
                                                     (IMP)SPKDirectInboxLegacyContextMenu,
                                                     (IMP *)&SPKDirectOrigInboxLegacyContextMenu);

@@ -1,10 +1,13 @@
 #import <objc/message.h>
 #import <objc/runtime.h>
 #import <substrate.h>
+#import <UIKit/UIKit.h>
 
 #import "../../Shared/ActionButton/ActionButtonLookupUtils.h"
+#import "../../Shared/Instants/SPKInstantsManualSeenUsers.h"
 #import "../../Utils.h"
 #import "InstantsManualSeen.h"
+#import "InstantsResolver.h"
 
 // MARK: - Constants
 
@@ -42,6 +45,12 @@ static NSMutableOrderedSet<NSString *> *sReleasedPKs = nil;
 /// callback, which is where `SPKInstantsManualSeenHoldUnseen` is called from. Without this
 /// guard the feature calls itself forever.
 static BOOL sRefreshing = NO;
+/// Author pk per bare media id, filled from the service announcements. Only consulted when a
+/// seen request carries ids without the `_<userPK>` suffix, so the author can still be told.
+static NSMutableDictionary<NSString *, NSString *> *sAuthorPKByMediaId = nil;
+/// Author pk per lowercased username, from the same announcements. Filled even while the
+/// feature is off, since the action menu is how a first user gets added.
+static NSMutableDictionary<NSString *, NSString *> *sAuthorPKByUsername = nil;
 /// YES while the consumption viewer is on screen. Reloading the seen state under an open
 /// viewer puts the snap that was just consumed back into the live list, so the viewer never
 /// reaches its end and the same Instants cycle forever. While this is YES the feature only keeps
@@ -49,7 +58,41 @@ static BOOL sRefreshing = NO;
 static BOOL sViewerOpen = NO;
 
 BOOL SPKInstantsManualSeenIsEnabled(void) {
-    return [SPKUtils getBoolPref:@"instants_manual_seen"];
+    // Off with Included Users listed still holds those users' Instants, the way the stories
+    // list works, so the switch alone does not decide whether anything runs.
+    return SPKInstantsManualSeenAllUsersMode() || SPKInstantsManualSeenUserCount() > 0;
+}
+
+/// A media PK is `<mediaId>_<userPK>`, so the author is whatever follows the last underscore.
+/// Nil for a bare media id.
+static NSString *SPKInstantsManualSeenAuthorPKFromMediaPK(NSString *pk) {
+    if (![pk isKindOfClass:NSString.class])
+        return nil;
+    NSRange separator = [pk rangeOfString:@"_" options:NSBackwardsSearch];
+    if (separator.location == NSNotFound || NSMaxRange(separator) >= pk.length)
+        return nil;
+    return [pk substringFromIndex:NSMaxRange(separator)];
+}
+
+static NSString *SPKInstantsManualSeenMediaIdFromMediaPK(NSString *pk) {
+    NSRange separator = [pk rangeOfString:@"_" options:NSBackwardsSearch];
+    return separator.location == NSNotFound ? pk : [pk substringToIndex:separator.location];
+}
+
+/// Drops held PKs whose author the list no longer covers, so taking a user off the list (or
+/// flipping the switch) lets their Instants be marked seen on the next pass.
+static void SPKInstantsManualSeenPruneProtected(SPKInstantsManualSeenAuthorTest applies) {
+    if (sProtectedPKs.count == 0 || SPKInstantsManualSeenCoversEveryone())
+        return;
+    NSIndexSet *dropped = [sProtectedPKs indexesOfObjectsPassingTest:^BOOL(NSString *pk, NSUInteger idx, BOOL *stop) {
+        NSString *author = SPKInstantsManualSeenAuthorPKFromMediaPK(pk);
+        return author.length > 0 && !applies(author);
+    }];
+    if (dropped.count == 0)
+        return;
+    [sProtectedPKs removeObjectsAtIndexes:dropped];
+    SPKLog(@"Instants", @"manual seen: stopped holding %lu instant(s) from unlisted authors",
+           (unsigned long)dropped.count);
 }
 
 static void SPKInstantsManualSeenPersistReleased(void) {
@@ -265,17 +308,56 @@ static void SPKInstantsManualSeenRefetchSnaps(id service) {
 
 // MARK: - Public
 
+NSString *SPKInstantsManualSeenAuthorPKForUsername(NSString *username) {
+    NSString *key = username.lowercaseString;
+    return key.length > 0 ? sAuthorPKByUsername[key] : nil;
+}
+
+static void SPKInstantsManualSeenNoteAuthors(NSArray *mediaList) {
+    if (!sAuthorPKByUsername)
+        sAuthorPKByUsername = [NSMutableDictionary dictionary];
+    for (id media in mediaList) {
+        id user = SPKObjectForSelector(media, @"user");
+        NSString *username = SPKStringFromValue(SPKObjectForSelector(user, @"username")).lowercaseString;
+        NSString *pk = SPKStringFromValue(SPKObjectForSelector(user, @"pk"));
+        if (pk.length == 0)
+            pk = SPKInstantsManualSeenAuthorPKFromMediaPK(SPKStringFromValue(SPKObjectForSelector(media, @"pk")));
+        if (username.length > 0 && pk.length > 0)
+            sAuthorPKByUsername[username] = pk;
+    }
+    if (sAuthorPKByUsername.count > 1000)
+        [sAuthorPKByUsername removeAllObjects];
+}
+
 void SPKInstantsManualSeenNoteServiceMedia(NSArray *mediaList) {
-    if (mediaList.count == 0 || !SPKInstantsManualSeenIsEnabled())
+    if (mediaList.count == 0)
+        return;
+    SPKInstantsManualSeenNoteAuthors(mediaList);
+    if (!SPKInstantsManualSeenIsEnabled())
         return;
     SPKInstantsManualSeenEnsureState();
+    if (!sAuthorPKByMediaId)
+        sAuthorPKByMediaId = [NSMutableDictionary dictionary];
 
+    BOOL everyone = SPKInstantsManualSeenCoversEveryone();
+    SPKInstantsManualSeenAuthorTest applies = SPKInstantsManualSeenMakeAuthorTest();
+    NSUInteger skipped = 0;
     for (id media in mediaList) {
         NSString *pk = SPKStringFromValue(SPKObjectForSelector(media, @"pk"));
         if (pk.length == 0)
             pk = SPKStringFromValue(SPKObjectForSelector(media, @"graphQLID"));
         if (pk.length == 0 || [sReleasedPKs containsObject:pk])
             continue;
+        NSString *author = SPKInstantsManualSeenAuthorPKFromMediaPK(pk);
+        if (author.length > 0)
+            sAuthorPKByMediaId[SPKInstantsManualSeenMediaIdFromMediaPK(pk)] = author;
+        // Unlisted authors keep Instagram's own behaviour: never held, so viewing them marks
+        // them seen as usual.
+        if (!everyone && !applies(author)) {
+            [sProtectedPKs removeObject:pk];
+            skipped++;
+            continue;
+        }
         // Re-adding moves it to the end, so the bound below evicts the oldest PKs.
         [sProtectedPKs removeObject:pk];
         [sProtectedPKs addObject:pk];
@@ -283,6 +365,11 @@ void SPKInstantsManualSeenNoteServiceMedia(NSArray *mediaList) {
 
     while (sProtectedPKs.count > kSPKInstantsManualSeenHeldLimit)
         [sProtectedPKs removeObjectAtIndex:0];
+    if (sAuthorPKByMediaId.count > kSPKInstantsManualSeenHeldLimit * 2)
+        [sAuthorPKByMediaId removeAllObjects];
+    if (skipped > 0)
+        SPKLog(@"Instants", @"manual seen: %lu announced instant(s) not held, author not covered",
+               (unsigned long)skipped);
 }
 
 static void SPKInstantsManualSeenReloadStateUnlessViewing(id service);
@@ -291,6 +378,7 @@ void SPKInstantsManualSeenHoldUnseen(id service) {
     if (sRefreshing || !SPKInstantsManualSeenIsEnabled())
         return;
     SPKInstantsManualSeenEnsureState();
+    SPKInstantsManualSeenPruneProtected(SPKInstantsManualSeenMakeAuthorTest());
     // Releases alone are reason enough to run: after a relaunch nothing is held yet, and the
     // releases still have to be put back into a seen list Instagram has refetched without them.
     if (sProtectedPKs.count == 0 && sReleasedPKs.count == 0)
@@ -459,6 +547,126 @@ void SPKInstantsManualSeenMarkMediaPK(NSString *mediaPK) {
     SPKInstantsManualSeenReloadStateUnlessViewing(service);
 }
 
+// MARK: - Eye Button Decision
+
+/// Whether the eye button shows for the Instant on screen. Unknown until the first resolve of
+/// a viewing session lands; a tap keeps the previous answer until the next one lands, so a run
+/// of one author's Instants does not flicker the button.
+typedef NS_ENUM(NSInteger, SPKInstantsEyeDecision) {
+    SPKInstantsEyeDecisionUnknown = 0,
+    SPKInstantsEyeDecisionShow,
+    SPKInstantsEyeDecisionHide,
+};
+
+static SPKInstantsEyeDecision sEyeDecision = SPKInstantsEyeDecisionUnknown;
+/// Media PK of the snap the decision was made for. A tap must resolve a different one, or
+/// the swap has not landed yet.
+static NSString *sDisplayedPK = nil;
+/// Bumped per event and on viewer close, so a retry chasing an older snap bows out.
+static NSUInteger sDisplayedGeneration = 0;
+static __weak UIView *sEyeButtonHost = nil;
+
+/// The resolve needs the swap animation to land and the image to load, the same race the
+/// Instants auto-save pass handles; ~2s covers a slow transition.
+static const NSTimeInterval kSPKInstantsEyeRetryDelay = 0.2;
+static const NSUInteger kSPKInstantsEyeMaxAttempts = 10;
+
+static void SPKInstantsManualSeenSetEyeDecision(SPKInstantsEyeDecision decision) {
+    if (sEyeDecision == decision)
+        return;
+    sEyeDecision = decision;
+    [sEyeButtonHost setNeedsLayout];
+}
+
+BOOL SPKInstantsManualSeenShouldShowEyeButton(void) {
+    switch (sEyeDecision) {
+    case SPKInstantsEyeDecisionShow:
+        return YES;
+    case SPKInstantsEyeDecisionHide:
+        return NO;
+    case SPKInstantsEyeDecisionUnknown:
+        // Nothing resolved yet: only the every-author case can answer without knowing whose
+        // Instant this is.
+        return SPKInstantsManualSeenAllUsersMode() && SPKInstantsManualSeenCoversEveryone();
+    }
+    return NO;
+}
+
+void SPKInstantsManualSeenRegisterEyeButtonHost(UIView *header) {
+    sEyeButtonHost = header;
+}
+
+static void SPKInstantsManualSeenResolveDisplayedSnap(UIView *view, NSUInteger attempt, NSUInteger generation,
+                                                      NSString *previousPK) {
+    if (generation != sDisplayedGeneration || !view.window)
+        return;
+
+    SPKInstantsResolvedSnap *snap = SPKInstantsResolveActiveSnapInView(view);
+    NSString *pk = snap.sourceMediaPK;
+    NSString *author = SPKInstantsManualSeenAuthorPKFromMediaPK(pk);
+    if (author.length == 0 && snap.backingMedia)
+        author = SPKStringFromValue(SPKObjectForSelector(SPKObjectForSelector(snap.backingMedia, @"user"), @"pk"));
+    BOOL stale = previousPK.length > 0 && [pk isEqualToString:previousPK];
+
+    if (author.length > 0 && !stale) {
+        sDisplayedPK = pk;
+        BOOL held = SPKInstantsManualSeenAppliesToAuthorPK(author);
+        SPKInstantsManualSeenSetEyeDecision(held ? SPKInstantsEyeDecisionShow : SPKInstantsEyeDecisionHide);
+        SPKLog(@"Instants", @"manual seen: eye button %@ for author %@ (attempt %lu)",
+               held ? @"shown" : @"hidden", author, (unsigned long)(attempt + 1));
+        return;
+    }
+
+    if (attempt + 1 >= kSPKInstantsEyeMaxAttempts) {
+        // Fail open: a stray eye button costs nothing, a missing one strands a held Instant.
+        sDisplayedPK = nil;
+        SPKInstantsManualSeenSetEyeDecision(SPKInstantsEyeDecisionShow);
+        SPKLog(@"Instants", @"manual seen: eye button shown, author unresolved (%@)",
+               stale ? @"displayed snap never changed" : @"nothing resolved");
+        return;
+    }
+    __weak UIView *weakView = view;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSPKInstantsEyeRetryDelay * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        UIView *strongView = weakView;
+        if (strongView)
+            SPKInstantsManualSeenResolveDisplayedSnap(strongView, attempt + 1, generation, previousPK);
+    });
+}
+
+void SPKInstantsManualSeenDisplayedSnapMayHaveChanged(UIView *viewInHierarchy, BOOL expectsChange) {
+    sDisplayedGeneration++;
+    if (!viewInHierarchy || !SPKInstantsManualSeenIsEnabled()) {
+        SPKInstantsManualSeenSetEyeDecision(SPKInstantsEyeDecisionHide);
+        return;
+    }
+    // Every author held: the answer is the same for every Instant, so skip the resolve.
+    if (SPKInstantsManualSeenCoversEveryone()) {
+        SPKInstantsManualSeenSetEyeDecision(SPKInstantsEyeDecisionShow);
+        return;
+    }
+    if (!expectsChange) {
+        sDisplayedPK = nil;
+        SPKInstantsManualSeenSetEyeDecision(SPKInstantsEyeDecisionUnknown);
+    }
+    NSUInteger generation = sDisplayedGeneration;
+    NSString *previousPK = expectsChange ? sDisplayedPK : nil;
+    __weak UIView *weakView = viewInHierarchy;
+    // Next runloop turn: after a tap the new snap is only frontmost once Instagram's own
+    // handler has advanced the stack.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIView *strongView = weakView;
+        if (strongView)
+            SPKInstantsManualSeenResolveDisplayedSnap(strongView, 0, generation, previousPK);
+    });
+}
+
+void SPKInstantsManualSeenDisplayedSnapSessionEnded(void) {
+    sDisplayedGeneration++;
+    sDisplayedPK = nil;
+    SPKInstantsManualSeenSetEyeDecision(SPKInstantsEyeDecisionUnknown);
+}
+
 // MARK: - Seen Sync Block
 
 /// Instagram pushes its local seen state to the server, and a later tray fetch trusts that
@@ -468,7 +676,14 @@ typedef void (*SPKInstantsSyncSeenIMP)(id, SEL, id, id, id);
 static SPKInstantsSyncSeenIMP orig_instantsSyncSeenSnaps = NULL;
 
 static void replaced_instantsSyncSeenSnaps(id self, SEL _cmd, id sessionId, id onSuccess, id onFailure) {
-    if (SPKInstantsManualSeenIsEnabled()) {
+    // With only some authors held the sync has to run, or nobody else's Instants would ever
+    // be marked seen on the server. The held ones are taken out of the request it builds
+    // instead (seen-request filter below).
+    if (SPKInstantsManualSeenIsEnabled() && !SPKInstantsManualSeenCoversEveryone()) {
+        sCachedService = self;
+        SPKLog(@"Instants", @"manual seen: seen sync allowed (per-user), %lu held",
+               (unsigned long)sProtectedPKs.count);
+    } else if (SPKInstantsManualSeenIsEnabled()) {
         sCachedService = self;
         // Neither completion is invoked. Their argument lists are not declared in the
         // interface, so calling one blind would be a guess; leaving the request pending only
@@ -493,12 +708,62 @@ typedef void (*SPKInstantsSeenRequestSetIMP)(id, SEL, id);
 static SPKInstantsSeenRequestInitIMP orig_seenRequestInitWithMediaIds = NULL;
 static SPKInstantsSeenRequestSetIMP orig_seenRequestSetMediaIds = NULL;
 
+/// Diagnostic: the first few ids exactly as Instagram passed them, so a log shows whether the
+/// request carries `<mediaId>_<userPK>` or bare media ids.
+static NSString *SPKInstantsManualSeenIdSample(NSArray *ids) {
+    NSArray *head = ids.count > 3 ? [ids subarrayWithRange:NSMakeRange(0, 3)] : ids;
+    return [head componentsJoinedByString:@", "];
+}
+
+/// YES when the id belongs to a held Instant: a held PK itself, a bare media id of one, or any
+/// id whose author the list covers. Released PKs pass, since releasing is marking seen.
+static BOOL SPKInstantsManualSeenRequestIdIsHeld(NSString *mediaId, SPKInstantsManualSeenAuthorTest applies) {
+    if (![mediaId isKindOfClass:NSString.class] || mediaId.length == 0)
+        return NO;
+    if ([sReleasedPKs containsObject:mediaId])
+        return NO;
+    if ([sProtectedPKs containsObject:mediaId])
+        return YES;
+    NSString *author = SPKInstantsManualSeenAuthorPKFromMediaPK(mediaId);
+    if (author.length == 0) {
+        // Bare media id: match it to a held PK, else to an author seen in an announcement.
+        NSString *prefix = [mediaId stringByAppendingString:@"_"];
+        for (NSString *pk in sProtectedPKs) {
+            if ([pk hasPrefix:prefix])
+                return YES;
+        }
+        for (NSString *pk in sReleasedPKs) {
+            if ([pk hasPrefix:prefix])
+                return NO;
+        }
+        author = sAuthorPKByMediaId[mediaId];
+        // An author that cannot be told is held, failing closed rather than leaking a view.
+        if (author.length == 0)
+            return YES;
+    }
+    return applies(author);
+}
+
 static id SPKInstantsManualSeenFilteredMediaIds(id ids) {
     if (!SPKInstantsManualSeenIsEnabled() || ![ids isKindOfClass:NSArray.class] || [(NSArray *)ids count] == 0)
         return ids;
-    SPKLog(@"Instants", @"manual seen: stripped %lu id(s) from a seen request",
-           (unsigned long)[(NSArray *)ids count]);
-    return @[];
+    NSArray *list = (NSArray *)ids;
+    if (SPKInstantsManualSeenCoversEveryone()) {
+        SPKLog(@"Instants", @"manual seen: stripped %lu id(s) from a seen request (sample: %@)",
+               (unsigned long)list.count, SPKInstantsManualSeenIdSample(list));
+        return @[];
+    }
+
+    SPKInstantsManualSeenEnsureState();
+    SPKInstantsManualSeenAuthorTest applies = SPKInstantsManualSeenMakeAuthorTest();
+    NSMutableArray *kept = [NSMutableArray arrayWithCapacity:list.count];
+    for (id mediaId in list) {
+        if (!SPKInstantsManualSeenRequestIdIsHeld(mediaId, applies))
+            [kept addObject:mediaId];
+    }
+    SPKLog(@"Instants", @"manual seen: seen request kept %lu of %lu id(s) (sample: %@)",
+           (unsigned long)kept.count, (unsigned long)list.count, SPKInstantsManualSeenIdSample(list));
+    return kept.count == list.count ? ids : kept.copy;
 }
 
 static id replaced_seenRequestInitWithMediaIds(id self, SEL _cmd, id ids) {

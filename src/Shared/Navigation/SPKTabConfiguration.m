@@ -256,6 +256,38 @@ NSString *SPKTabIdentifierForLaunchPreference(NSString *value) {
     return nil;
 }
 
+NSString *SPKEffectiveLaunchTabIdentifierFromPreferences(void) {
+    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    BOOL custom = [layout isEqualToString:SPKTabLayoutCustom];
+    NSString *carrier = SPKEffectiveSavedCarrier();
+    BOOL savedEnabled = ![carrier isEqualToString:SPKTabSavedCarrierNone];
+
+    NSArray<NSString *> *order = custom ? SPKNormalizeTabOrder(SPKPreferenceObjectForKey(SPKPrefCustomTabOrder))
+                                        : SPKCanonicalTabIdentifiers();
+    NSMutableArray<NSString *> *visible = [NSMutableArray array];
+    for (NSString *identifier in order) {
+        if ([identifier isEqualToString:SPKTabIdentifierSaved]) {
+            if (savedEnabled)
+                [visible addObject:identifier];
+            continue;
+        }
+        if (!SPKTabOccupiesBarSlot(identifier, layout))
+            continue;
+        if ([SPKUtils getBoolPref:SPKTabHidePreferenceKey(identifier)])
+            continue;
+        [visible addObject:identifier];
+    }
+    if (visible.count == 0)
+        return nil;
+
+    NSString *chosen = SPKTabIdentifierForLaunchPreference([SPKUtils getStringPref:@"interface_launch_tab"]);
+    if (chosen)
+        return [visible containsObject:chosen] ? chosen : visible.firstObject;
+    if (!custom && [visible containsObject:SPKTabIdentifierFeed])
+        return SPKTabIdentifierFeed;
+    return visible.firstObject;
+}
+
 void SPKMigrateTabConfigurationIfNeeded(void) {
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     id storedLayout = [defaults objectForKey:SPKPrefTabLayout];

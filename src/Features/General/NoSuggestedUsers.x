@@ -1,6 +1,8 @@
 #import "../../InstagramHeaders.h"
 #import "../../Utils.h"
 
+FOUNDATION_EXPORT BOOL SPKProfileSuggestionsShouldDropChainingModel(id header, id model);
+
 static inline BOOL SPKHideFeedSuggestedUsers(void) {
     return [SPKUtils getBoolPref:@"general_hide_suggested_users_feed"];
 }
@@ -57,12 +59,10 @@ static inline BOOL SPKHideSubscriptionSuggestedUsers(void) {
     for (id obj in originalObjs) {
         BOOL shouldHide = NO;
 
-        if (SPKHideProfileSuggestedUsers()) {
-            if ([obj isKindOfClass:%c(IGProfileChainingModel)]) {
-                SPKLog(@"General", @"[Sparkle] Hiding suggested users: profile header");
+        if ([obj isKindOfClass:%c(IGProfileChainingModel)] && SPKProfileSuggestionsShouldDropChainingModel(self, obj)) {
+            SPKLog(@"General", @"[Sparkle] Hiding suggested users: profile header");
 
-                shouldHide = YES;
-            }
+            shouldHide = YES;
         }
 
         // Populate new objs array
@@ -243,41 +243,6 @@ static inline BOOL SPKHideSubscriptionSuggestedUsers(void) {
     }
 
     return [filteredObjs copy];
-}
-%end
-
-%hook IGProfileActionBarViewModel
-- (id)initWithIdentifier:(id)arg1
-                       rows:(id)arg2
-        allActionsToDisplay:(id)arg3
-            overflowActions:(id)arg4
-       actionToBadgeInfoMap:(id)arg5
-         allBusinessActions:(id)arg6
-    overflowBusinessActions:(id)arg7
-        contactSheetActions:(id)arg8
-                       user:(id)arg9
-      sponsoredInfoProvider:(id)arg10
-     profileBackgroundColor:(id)arg11 {
-    NSArray *rows = arg2;
-    NSOrderedSet *allActions = [arg3 copy];
-    NSOrderedSet *overflowActions = [arg4 copy];
-
-    if (SPKHideProfileSuggestedUsers()) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", @[ @(3) ]];
-
-        // Actions sets
-        allActions = [allActions filteredOrderedSetUsingPredicate:predicate];
-        overflowActions = [overflowActions filteredOrderedSetUsingPredicate:predicate];
-
-        // Rows of actions sets
-        NSMutableArray *filteredRows = [NSMutableArray new];
-        for (NSOrderedSet *set in rows) {
-            [filteredRows addObject:[set filteredOrderedSetUsingPredicate:predicate]];
-        }
-        rows = [filteredRows copy];
-    }
-
-    return %orig(arg1, rows, allActions, overflowActions, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
 }
 %end
 

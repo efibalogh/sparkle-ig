@@ -25,6 +25,17 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
     return [trimmed rangeOfCharacterFromSet:invalid].location == NSNotFound ? trimmed : nil;
 }
 
+// `showProgress` NO is a caller asking for silence on purpose (auto-save, which
+// reports through its own summary), so event downloads stay fully quiet. A
+// confirmation whose group shows no banner still reports a failure.
+static SPKDownloadPresentationMode SPKDownloadPresentationModeForNotification(NSString *identifier, BOOL showProgress) {
+    if (showProgress && SPKNotificationIsEnabled(identifier))
+        return SPKDownloadPresentationModeQueuePill;
+    if (!showProgress && SPKNotificationIdentifierIsEvent(identifier))
+        return SPKDownloadPresentationModeQuiet;
+    return identifier.length > 0 ? SPKDownloadPresentationModeErrorsOnly : SPKDownloadPresentationModeQuiet;
+}
+
 @implementation SPKDownloadHelpers
 
 + (SPKDownloadSourceSurface)sourceSurfaceForGallerySource:
@@ -211,8 +222,7 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
     request.anchorView = anchorView;
     request.sourceSurface = [self resolvedSourceSurface:sourceSurface
                                                metadata:metadata];
-    request.presentationMode = showProgress ? SPKDownloadPresentationModeQueuePill
-                                            : SPKDownloadPresentationModeQuiet;
+    request.presentationMode = SPKDownloadPresentationModeForNotification(notificationID, showProgress);
     [[SPKDownloadService shared] submitRequest:request completion:nil];
 }
 
@@ -231,7 +241,7 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
                 presenter:presenter
                anchorView:nil
             sourceSurface:sourceSurface
-             showProgress:SPKNotificationIsEnabled(notificationID)];
+             showProgress:YES];
 }
 
 + (void)performBulkItems:(NSArray<SPKDownloadItemRequest *> *)items
@@ -260,9 +270,7 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
     request.finalizeAsBatchShare = batchShare;
     request.finalizeAsBatchClipboard = batchClipboard;
     request.sourceSurface = sourceSurface;
-    request.presentationMode = SPKNotificationIsEnabled(identifier)
-                                   ? SPKDownloadPresentationModeQueuePill
-                                   : SPKDownloadPresentationModeQuiet;
+    request.presentationMode = SPKDownloadPresentationModeForNotification(identifier, YES);
     [[SPKDownloadService shared] submitRequest:request completion:nil];
 }
 
@@ -344,9 +352,7 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
     request.presenter = presenter;
     request.sourceSurface = [self resolvedSourceSurface:sourceSurface
                                                metadata:metadata];
-    request.presentationMode = (showProgress && SPKNotificationIsEnabled(notificationID))
-                                   ? SPKDownloadPresentationModeQueuePill
-                                   : SPKDownloadPresentationModeQuiet;
+    request.presentationMode = SPKDownloadPresentationModeForNotification(notificationID, showProgress);
     [[SPKDownloadService shared] submitRequest:request completion:nil];
 }
 
@@ -377,9 +383,7 @@ static NSString *SPKDownloadDisplayUsername(NSString *username) {
     request.anchorView = anchorView;
     request.sourceSurface = [self resolvedSourceSurface:sourceSurface
                                                metadata:metadata];
-    request.presentationMode = SPKNotificationIsEnabled(notificationID)
-                                   ? SPKDownloadPresentationModeQueuePill
-                                   : SPKDownloadPresentationModeQuiet;
+    request.presentationMode = SPKDownloadPresentationModeForNotification(notificationID, YES);
     [[SPKDownloadService shared] submitRequest:request completion:nil];
 }
 

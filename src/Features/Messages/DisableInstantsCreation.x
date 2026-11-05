@@ -86,6 +86,11 @@ static NSString *const kSPKQuickSnapCreationPrefChangedNotification = @"SPKQuick
 // live pref change can re-apply the lock state to it immediately.
 static __weak UIView *sSPKQuickSnapVisibleControlView = nil;
 
+// Tracks whether the QuickSnap camera UI is currently on screen, so the global
+// setEnabled: and asset-writer hooks only act in that context (not the main
+// Stories/Reels camera).
+static BOOL sSPKQuickSnapCameraOnScreen = NO;
+
 static BOOL SPKQuickSnapCreationDisabled(void) {
     return [SPKUtils getBoolPref:kSPKQuickSnapDisableCreationPref];
 }
@@ -105,14 +110,6 @@ static BOOL SPKQuickSnapHardwareCaptureShouldBeDisabled(void) {
 
 static BOOL SPKQuickSnapSkipCameraAfterViewingEnabled(void) {
     return [SPKUtils getBoolPref:kSPKQuickSnapSkipCameraAfterViewingPref];
-}
-
-static void SPKQuickSnapNotifyBlocked(void) {
-    SPKNotify(kSPKNotificationInstantsCaptureBlocked,
-              SPKL(@"MESSAGES_DISABLE_INSTANTS_CREATION_INSTANT_CAPTURE_BLOCKED_TEXT"),
-              nil,
-              @"lock_filled",
-              SPKNotificationToneInfo);
 }
 
 // MARK: - Capture confirmation
@@ -186,6 +183,15 @@ static void SPKQuickSnapRearmCaptureControl(UIView *controlView) {
     if (gestureView) {
         gestureView.enabled = NO;
         gestureView.enabled = YES;
+    } else if (!recognizer) {
+        // The Swift shutter keeps its press recognizer in Swift storage, but it is
+        // attached to the button, so cycling it resets an interrupted press.
+        for (UIGestureRecognizer *candidate in captureButton.gestureRecognizers) {
+            if (![candidate isKindOfClass:UILongPressGestureRecognizer.class] || !candidate.enabled)
+                continue;
+            candidate.enabled = NO;
+            candidate.enabled = YES;
+        }
     }
 
     SEL stateSelector = @selector(setButtonState:);
@@ -272,6 +278,23 @@ void SPKInstantsVideoConfirmationHandleLongPress(UIView *captureButton, UIGestur
     }
 }
 
+// The writer opens its session on the first frame of a video take. Arming here
+// covers the Swift shutter (IGQuickSnapCaptureButton, server-gated per account),
+// whose press delegate is a Swift-only protocol and whose recognizer begins on
+// touch-down, so neither tells a photo from a video. Photos never open a writer
+// session, so this arms for videos only.
+static void (*orig_assetWriterStartSession)(id, SEL, CMTime) = NULL;
+static void replaced_assetWriterStartSession(id self, SEL _cmd, CMTime startTime) {
+    if (orig_assetWriterStartSession)
+        orig_assetWriterStartSession(self, _cmd, startTime);
+    if (!sSPKQuickSnapCameraOnScreen || !SPKQuickSnapSendConfirmEnabled() || SPKQuickSnapCreationDisabled())
+        return;
+    NSUInteger generation = SPKQuickSnapArmVideoCapture();
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        SPKQuickSnapExpireVideoCapture(generation);
+    });
+}
+
 static void (*orig_assetWriterFinishWriting)(id, SEL, void (^)(void)) = NULL;
 static void replaced_assetWriterFinishWriting(id self, SEL _cmd, void (^completion)(void)) {
     NSUInteger videoGeneration = 0;
@@ -293,52 +316,66 @@ static void replaced_assetWriterFinishWriting(id self, SEL _cmd, void (^completi
 
 // MARK: - Capture button delegate gate
 
-static BOOL SPKQuickSnapShouldBlockCapture(SEL selector, BOOL notify) {
+static BOOL SPKQuickSnapShouldBlockCapture(SEL selector) {
     if (SPKQuickSnapCreationDisabled()) {
         SPKLog(@"General", @"[Sparkle] Blocking Instant capture (%@)", NSStringFromSelector(selector));
-        if (notify)
-            SPKQuickSnapNotifyBlocked();
         return YES;
     }
     return NO;
 }
 
 static void replaced_captureButtonDidTouchDown(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidTouchDown)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidTouchDown)
         orig_captureButtonDidTouchDown(self, _cmd);
 }
 
 static void replaced_captureButtonDidBeginExpanding(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidBeginExpanding)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidBeginExpanding)
         orig_captureButtonDidBeginExpanding(self, _cmd);
 }
 
 static void replaced_captureButtonDidEndExpanding(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidEndExpanding)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidEndExpanding)
         orig_captureButtonDidEndExpanding(self, _cmd);
 }
 
 static void replaced_captureButtonDidReleaseBeforeExpandingFinished(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, YES) && orig_captureButtonDidReleaseBeforeExpandingFinished)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidReleaseBeforeExpandingFinished)
         orig_captureButtonDidReleaseBeforeExpandingFinished(self, _cmd);
 }
 
 static void replaced_captureButtonDidReleaseAfterExpandingFinished(id self, SEL _cmd) {
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, YES) && orig_captureButtonDidReleaseAfterExpandingFinished)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidReleaseAfterExpandingFinished)
         orig_captureButtonDidReleaseAfterExpandingFinished(self, _cmd);
 }
 
 static void replaced_captureButtonDidReleaseFromInterruption(id self, SEL _cmd) {
     SPKQuickSnapInvalidateConfirmation();
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, NO) && orig_captureButtonDidReleaseFromInterruption)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidReleaseFromInterruption)
         orig_captureButtonDidReleaseFromInterruption(self, _cmd);
 }
 
 static void replaced_captureButtonDidConfirm(id self, SEL _cmd) {
     if (sSPKQuickSnapSendConfirmVisible)
         return;
-    if (!SPKQuickSnapShouldBlockCapture(_cmd, YES) && orig_captureButtonDidConfirm)
+    if (!SPKQuickSnapShouldBlockCapture(_cmd) && orig_captureButtonDidConfirm)
         orig_captureButtonDidConfirm(self, _cmd);
+}
+
+// The Swift shutter reports presses to a Swift-only delegate, so the
+// IGCameraCaptureButtonDelegate gate above never sees them. Its press handler is
+// a gesture target and therefore @objc, which makes it the one hookable point.
+static void (*orig_nativeShutterPress)(id, SEL, id) = NULL;
+static void replaced_nativeShutterPress(id self, SEL _cmd, id gesture) {
+    UIGestureRecognizerState state = [gesture isKindOfClass:UIGestureRecognizer.class]
+                                         ? [(UIGestureRecognizer *)gesture state]
+                                         : UIGestureRecognizerStatePossible;
+    if (SPKQuickSnapShouldBlockCapture(_cmd))
+        return;
+    if (state == UIGestureRecognizerStateCancelled || state == UIGestureRecognizerStateFailed)
+        SPKQuickSnapSetVideoCaptureArmed(NO);
+    if (orig_nativeShutterPress)
+        orig_nativeShutterPress(self, _cmd, gesture);
 }
 
 // MARK: - Hardware Camera Control (iPhone 16/17) — dedicated toggle
@@ -353,10 +390,6 @@ static void replaced_captureButtonDidConfirm(id self, SEL _cmd) {
 // while video confirmation is enabled because that Swift/AVKit path has no
 // verified post-capture continuation and must not silently bypass confirmation.
 
-// Tracks whether the QuickSnap camera UI is currently on screen, so the global
-// setEnabled: hook only clamps the interaction in that context (not the main
-// Stories/Reels camera).
-static BOOL sSPKQuickSnapCameraOnScreen = NO;
 
 static void (*orig_avCaptureEventInteraction_setEnabled)(id, SEL, BOOL) = NULL;
 static void replaced_avCaptureEventInteraction_setEnabled(id self, SEL _cmd, BOOL enabled) {
@@ -403,7 +436,11 @@ static UIView *SPKQuickSnapFindCaptureButton(UIView *root) {
     while (queue.count > 0) {
         UIView *view = queue.firstObject;
         [queue removeObjectAtIndex:0];
-        if ([NSStringFromClass(view.class) containsString:@"IGCameraCaptureButton"]) {
+        if (view.hidden)
+            continue;
+        NSString *className = NSStringFromClass(view.class);
+        if ([className containsString:@"IGCameraCaptureButton"] ||
+            [className containsString:@"IGQuickSnapCaptureButton"]) {
             return view;
         }
         for (UIView *subview in view.subviews) {
@@ -598,11 +635,20 @@ void SPKInstallDisableInstantsCreationHooksIfEnabled(void) {
                               (IMP)replaced_cameraControlViewWillMoveToWindow,
                               (IMP *)&orig_cameraControlViewWillMoveToWindow);
 
+        SPKHookInstanceMethod("_TtC24IGQuickSnapCaptureButton24IGQuickSnapCaptureButton",
+                              @selector(handlePressGesture:),
+                              (IMP)replaced_nativeShutterPress,
+                              (IMP *)&orig_nativeShutterPress);
+
         // Keep the global writer hook out of older Instagram builds where the
         // modern QuickSnap control-view pipeline is absent.
         Class modernControlClass = objc_getClass(cameraControlView);
         if (modernControlClass &&
             class_getInstanceMethod(modernControlClass, @selector(captureButtonDidReleaseBeforeExpandingFinished))) {
+            SPKHookInstanceMethod("AVAssetWriter",
+                                  @selector(startSessionAtSourceTime:),
+                                  (IMP)replaced_assetWriterStartSession,
+                                  (IMP *)&orig_assetWriterStartSession);
             SPKHookInstanceMethod("AVAssetWriter",
                                   @selector(finishWritingWithCompletionHandler:),
                                   (IMP)replaced_assetWriterFinishWriting,

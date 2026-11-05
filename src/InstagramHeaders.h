@@ -26,6 +26,11 @@
 - (void)configureWithViewModel:(id)model;
 @end
 
+@interface IGActionSheetController : UIViewController
+@property (readonly, nonatomic) UIView *contentContainerView;
+@property (readonly, nonatomic) UIView *overlayView;
+@end
+
 @interface IGActionableConfirmationToastPresenter : NSObject
 - (void)_showAlertWithViewModel:(id)model presentationContext:(id)context isAnimated:(_Bool)animated animationDuration:(double)duration presentationPriority:(long long)priority origin:(unsigned long long)origin toastType:(unsigned long long)type tapActionBlock:(id)tap tapToastBlock:(id)tapToast presentedHandler:(id)presented dismissedHandler:(id)dismissed;
 - (void)hideAlert;
@@ -423,6 +428,13 @@
 - (void)scrollViewDidEndDecelerating:(id)scrollView;
 @end
 
+// Reels viewer opened from a shared reel in a DM thread. Hosts the quick
+// "Send to Chat/Group" button (_shareToThreadButton) that sends with one tap.
+@interface IGDirectReplySundialFeedViewController : UIViewController
+- (void)_handleShareButtonTap;
+- (void)directReplySundialButtonTrayDidTapShareToThreadButton;
+@end
+
 @interface IGDirectVisualMessageViewerViewModeAwareDataSource : NSObject
 @end
 
@@ -503,6 +515,11 @@
 @property NSInteger followStatus;
 @property (copy) NSString *username;
 @property BOOL followsCurrentUser;
+@end
+
+// Profile header stat (posts / followers / following). The count arrives pre-formatted.
+@interface IGStatButton : UIControl
+- (void)setCount:(id)count;
 @end
 
 @interface IGFollowController : NSObject
@@ -681,12 +698,51 @@
 - (NSUInteger)itemType;
 @end
 
+// Swift as IGSearchViewModels.IGSearchResultDataModel on newer builds; same initializer.
+@interface IGSearchResultDataModel : NSObject
+- (instancetype)initWithSearchableItem:(id)item sectionType:(NSString *)sectionType subtitle:(NSString *)subtitle;
+@end
+
+// IGSearchViewModels.IGSearchRecentSearchesHorizontalViewModel: recents as a carousel.
+@interface IGSearchRecentSearchesHorizontalViewModel : NSObject
+@property (nonatomic, readonly) NSArray *items;
+@property (nonatomic) double contentOffsetX;
+- (instancetype)initWithItems:(NSArray *)items;
+@end
+
+@protocol IGListCollectionContext <NSObject>
+@property (nonatomic, readonly) CGSize containerSize;
+- (__kindof UICollectionViewCell *)dequeueReusableCellOfClass:(Class)cellClass forSectionController:(id)sectionController atIndex:(NSInteger)index;
+@end
+
+@interface IGListSectionController : NSObject
+@property (nonatomic, weak) id<IGListCollectionContext> collectionContext;
+@property (nonatomic, weak) UIViewController *viewController;
+- (NSInteger)numberOfItems;
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+- (__kindof UICollectionViewCell *)cellForItemAtIndex:(NSInteger)index;
+- (BOOL)shouldSelectItemAtIndex:(NSInteger)index;
+@end
+
+@interface IGListAdapter : NSObject
+@property (nonatomic, readonly) UICollectionView *collectionView;
+- (void)performUpdatesAnimated:(BOOL)animated completion:(void (^)(BOOL finished))completion;
+@end
+
+@class IGSearchBar;
+
+@interface IGSearchBarWithCancel : UIView
+@property (readonly, nonatomic) IGSearchBar *searchBar;
+@end
+
 @interface IGDirectShareRecipient : NSObject
 @property (copy, nonatomic) NSString *threadID;
 @property (readonly, nonatomic) NSArray *users;
 - (NSString *)threadName;
 - (BOOL)isBroadcastChannel;
 - (BOOL)isGroupThread;
+- (BOOL)isMetaAiBot;
+- (BOOL)isConnectedAIBot;
 @end
 
 // The share sheet's recipient grid, and its own IGListAdapter data source.
@@ -787,6 +843,7 @@
 @end
 
 @interface IGSearchBar : UIView
+@property (retain, nonatomic) NSString *text;
 - (NSObject *)sanitizePlaceholderForConfig:(NSObject *)config; // new
 @end
 
@@ -813,10 +870,12 @@
 
 @interface IGDirectInboxFeatureManager : NSObject
 - (BOOL)_isChatPeekEligibleForThreadId:(id)threadId;
+- (BOOL)_isChatPeekEligibleForThreadId:(id)threadId experience:(id)experience;
 @end
 
 @interface _TtC29IGConsumerSubsDirectChatPeeks35IGDirectInboxChatPeekPreviewHandler : NSObject
 - (id)previewViewControllerForThreadId:(id)threadId userSession:(id)session containerWidth:(double)width;
+- (id)previewViewControllerForThreadId:(id)threadId userSession:(id)session containerWidth:(double)width experience:(id)experience;
 @end
 
 @interface _TtC39IGDirectLightweightThreadViewController39IGDirectLightweightThreadViewController : UIViewController
@@ -982,6 +1041,7 @@
 
 @interface IGRefreshControl : UIControl
 @property (readonly, nonatomic) long long refreshState;
+- (void)startLoadingAnimated:(BOOL)animated;
 - (void)finishLoading;
 @end
 
@@ -1027,9 +1087,32 @@
 - (void)removeSeenMediaIds:(id)mediaIds forReelPk:(id)reelPK;
 @end
 
+// Share sheet row of external destinations (Swift, IGExternalShareOptions module).
+// `shareOptions` holds IGExternalShareOptionsType values as NSNumbers.
+@interface _TtC22IGExternalShareOptions26IGExternalShareOptionsView : UIView
+@property (nonatomic, copy) NSArray *shareOptions;
+@end
+
+// 454+: the viewer's `fullscreenSectionController:didMarkItemAsSeen:` moved into
+// this object. Every story section controller (ObjC, Swift twin, live archive)
+// holds one and calls it when a story item counts as seen, which queues the
+// view receipt. Reached from a section controller through `_itemSeenReporter`,
+// or from the viewer through `_viewerContext` → `-itemSeenReporter`.
+@interface IGStoryViewerItemSeenReporter : NSObject
+- (void)reportSeenItem:(id)item sectionController:(id)sectionController;
+@end
+
 // Backing store for the reel list the story viewer pages through. The view
 // controller keeps its own copy for tap-forward navigation, while horizontal
 // swipes are driven by the list adapter reading this store.
+// The highlight list a profile shows. One is created per open profile.
+@interface IGHighlightsStoryTrayDataSource : NSObject
+@property (nonatomic, readonly) BOOL isFetching;
+@property (nonatomic, readonly) BOOL hasInitiatedFetch;
+@property (nonatomic, readonly) NSArray *reels;
+- (id)initWithUserPK:(id)userPK userSession:(id)session diskManager:(id)diskManager isArchive:(BOOL)isArchive;
+@end
+
 @interface IGStoryViewerDataStore : NSObject
 - (id)modelItems;
 - (void)replaceModelItems:(id)items;

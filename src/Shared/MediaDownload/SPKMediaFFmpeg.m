@@ -912,12 +912,42 @@ static NSError *SPKFFmpegErrorWithLog(NSString *description, NSInteger code, NSS
     return [NSError errorWithDomain:@"Sparkle.MediaFFmpeg" code:code userInfo:userInfo];
 }
 
+// Container duration of the video file, read without decoding, so AV1 and VP9
+// reps work too. Zero when it can't be read.
+static NSTimeInterval SPKFFmpegVideoFileDuration(NSURL *videoURL) {
+    if (!videoURL.isFileURL)
+        return 0.0;
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:videoURL
+                                            options:@{AVURLAssetPreferPreciseDurationAndTimingKey : @NO}];
+    AVAssetTrack *track = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject;
+    CMTime duration = track ? track.timeRange.duration : kCMTimeInvalid;
+    if (!CMTIME_IS_NUMERIC(duration))
+        return 0.0;
+    NSTimeInterval seconds = CMTimeGetSeconds(duration);
+    return isfinite(seconds) && seconds > 0.0 ? seconds : 0.0;
+}
+
+// Some feed DASH audio holds the clip's sound twice back to back, so the track
+// runs twice as long as the video. Such a pair can never pass the merge's
+// length check, so keeping only the first copy is always the better outcome.
+static BOOL SPKFFmpegAudioTrackIsDoubled(AVAssetTrack *audioTrack, NSTimeInterval videoDuration) {
+    if (!audioTrack || videoDuration < 1.0)
+        return NO;
+
+    NSTimeInterval audioDuration = CMTimeGetSeconds(audioTrack.timeRange.duration);
+    if (!isfinite(audioDuration) || audioDuration <= 0.0)
+        return NO;
+    double ratio = audioDuration / videoDuration;
+    return ratio >= 1.9 && ratio <= 2.1;
+}
+
 // Pre-convert an arbitrary audio source (including xHE-AAC, which the bundled
 // FFmpegKit cannot decode) to a plain AAC-LC m4a using AVFoundation.
 //  iOS's audio stack natively supports xHE-AAC, so the resulting file is
 // something FFmpeg can `-c:a copy` through without ever decoding the original.
 static void SPKFFmpegConvertAudioToAACLCAsync(NSURL *sourceURL,
                                               NSURL *outputURL,
+                                              NSTimeInterval videoDuration,
                                               void (^completion)(NSURL *_Nullable, NSError *_Nullable)) {
     [[NSFileManager defaultManager] removeItemAtURL:outputURL error:nil];
 
@@ -928,12 +958,22 @@ static void SPKFFmpegConvertAudioToAACLCAsync(NSURL *sourceURL,
         return;
     }
 
+    AVAssetTrack *audioTrack = [asset tracksWithMediaType:AVMediaTypeAudio].firstObject;
+    BOOL doubled = SPKFFmpegAudioTrackIsDoubled(audioTrack, videoDuration);
+    SPKLog(@"FFmpeg", @"[Sparkle] audio prepare: audio=%.3f video=%.3f doubled=%d",
+           audioTrack ? CMTimeGetSeconds(audioTrack.timeRange.duration) : 0.0, videoDuration, doubled);
+
     AVAssetExportSession *export = [[AVAssetExportSession alloc] initWithAsset:asset
                                                                     presetName:AVAssetExportPresetAppleM4A];
     if (!export) {
         if (completion)
             completion(nil, SPKFFmpegError(SPKL(@"MEDIA_DOWNLOAD_MEDIA_FFMPEG_AVASSETEXPORTSESSION_UNAVAILABLE_TEXT"), 11));
         return;
+    }
+    if (doubled) {
+        // Keep only the first copy, which lines up with the video.
+        export.timeRange = CMTimeRangeMake(audioTrack.timeRange.start,
+                                           CMTimeMakeWithSeconds(videoDuration, 44100));
     }
     export.outputURL = outputURL;
     export.outputFileType = AVFileTypeAppleM4A;
@@ -1662,7 +1702,7 @@ static void SPKFFmpegRunMergeAttempts(NSArray<NSDictionary<NSString *, id> *> *a
         NSURL *convertedAudioURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-audio-aaclc.m4a", basename]]];
         if (progress)
             progress(0.0, SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_CONVERTING_AUDIO_TEXT"));
-        SPKFFmpegConvertAudioToAACLCAsync(audioFileURL, convertedAudioURL, ^(NSURL *_Nullable preparedAudioURL, NSError *_Nullable convertError) {
+        SPKFFmpegConvertAudioToAACLCAsync(audioFileURL, convertedAudioURL, SPKFFmpegVideoFileDuration(videoFileURL) ?: estimatedDuration, ^(NSURL *_Nullable preparedAudioURL, NSError *_Nullable convertError) {
             if (preparedAudioURL && !convertError) {
                 [self _mergePreparedVideoFileURL:videoFileURL
                                     audioFileURL:preparedAudioURL
@@ -2102,7 +2142,7 @@ static void SPKFFmpegRunMergeAttempts(NSArray<NSDictionary<NSString *, id> *> *a
     NSURL *convertedAudioURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-audio-aaclc.m4a", basename]]];
     if (progress)
         progress(0.0, SPKL(@"AUDIO_AUDIO_DMUPLOAD_COORDINATOR_CONVERTING_AUDIO_TEXT"));
-    SPKFFmpegConvertAudioToAACLCAsync(audioURL, convertedAudioURL, ^(NSURL *_Nullable preparedAudioURL, NSError *_Nullable convertError) {
+    SPKFFmpegConvertAudioToAACLCAsync(audioURL, convertedAudioURL, SPKFFmpegVideoFileDuration(videoURL), ^(NSURL *_Nullable preparedAudioURL, NSError *_Nullable convertError) {
         if (preparedAudioURL && !convertError) {
             runWithAudioSource(preparedAudioURL.path, ^{
                 [[NSFileManager defaultManager] removeItemAtURL:preparedAudioURL error:nil];

@@ -277,9 +277,19 @@ static void SPKIGPresentUIKitAlert(UIViewController *presenter,
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
                                                             preferredStyle:style];
+    // UIAlertController throws on a second cancel action, while Instagram's dialog stacks any number.
+    // The last one listed stays the cancel, matching the bottom slot it takes in Instagram's dialog.
+    SPKIGAlertAction *cancelAction = nil;
     for (SPKIGAlertAction *action in actions) {
+        if (action.style == SPKIGAlertActionStyleCancel)
+            cancelAction = action;
+    }
+    for (SPKIGAlertAction *action in actions) {
+        UIAlertActionStyle uiStyle = SPKUIKitActionStyle(action.style);
+        if (uiStyle == UIAlertActionStyleCancel && action != cancelAction)
+            uiStyle = UIAlertActionStyleDefault;
         [alert addAction:[UIAlertAction actionWithTitle:action.title
-                                                  style:SPKUIKitActionStyle(action.style)
+                                                  style:uiStyle
                                                 handler:^(__unused UIAlertAction *uiAction) {
                                                     SPKIGCallActionHandler(action);
                                                 }]];

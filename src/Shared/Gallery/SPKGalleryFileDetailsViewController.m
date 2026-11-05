@@ -4,6 +4,7 @@
 #import "../Account/SPKAccountManager.h"
 #import "../UI/SPKIGAlertPresenter.h"
 #import "../UI/SPKMediaChrome.h"
+#import "../UI/SPKNotificationCenter.h"
 #import "SPKGalleryCoreDataStack.h"
 #import "SPKGalleryFile.h"
 
@@ -25,6 +26,8 @@ typedef NS_ENUM(NSInteger, SPKDetailsEditRow) {
 @property (nonatomic, copy, nullable) NSString *selectedOwnerUsername;
 // Read-only (label, value) info pairs.
 @property (nonatomic, copy) NSArray<NSArray<NSString *> *> *infoRows;
+// The item's original link, shown as the last info row and copied on tap.
+@property (nonatomic, strong, nullable) NSURL *originalLink;
 @end
 
 @implementation SPKGalleryFileDetailsViewController
@@ -91,6 +94,17 @@ typedef NS_ENUM(NSInteger, SPKDetailsEditRow) {
     [rows addObject:@[ SPKL(@"GALLERY_GALLERY_FILE_DETAILS_FOLDER_TEXT"), folder ]];
     if (self.file.sourceMediaCode.length > 0) {
         [rows addObject:@[ SPKL(@"GALLERY_GALLERY_FILE_DETAILS_MEDIA_CODE_TEXT"), self.file.sourceMediaCode ]];
+    }
+    self.originalLink = [self.file originalWebURL];
+    if (self.originalLink) {
+        // Without the scheme and "www.", which say nothing and push the part
+        // that identifies the link out of a one-line cell.
+        NSString *shown = self.originalLink.absoluteString;
+        for (NSString *prefix in @[ @"https://", @"http://", @"www." ]) {
+            if ([shown hasPrefix:prefix])
+                shown = [shown substringFromIndex:prefix.length];
+        }
+        [rows addObject:@[ SPKL(@"GALLERY_GALLERY_FILE_DETAILS_LINK_TEXT"), shown ]];
     }
     self.infoRows = rows;
 }
@@ -179,6 +193,17 @@ typedef NS_ENUM(NSInteger, SPKDetailsEditRow) {
         NSArray<NSString *> *row = self.infoRows[indexPath.row];
         cell.textLabel.text = row.firstObject;
         cell.detailTextLabel.text = row.lastObject;
+        if ([self isLinkRowAtIndexPath:indexPath]) {
+            // The one info row that does something: tapping it copies the link.
+            cell.detailTextLabel.textColor = [SPKUtils SPKColor_InstagramBlue];
+            cell.detailTextLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+            UIView *selectedBackground = [[UIView alloc] init];
+            selectedBackground.backgroundColor = [SPKUtils SPKColor_InstagramPressedBackground];
+            cell.selectedBackgroundView = selectedBackground;
+            cell.accessibilityTraits |= UIAccessibilityTraitButton;
+            cell.accessibilityHint = SPKL(@"ALERT_ACTION_COPY_LINK");
+        }
     }
     return cell;
 }
@@ -242,8 +267,18 @@ typedef NS_ENUM(NSInteger, SPKDetailsEditRow) {
                                                       actions:actions];
 }
 
+- (BOOL)isLinkRowAtIndexPath:(NSIndexPath *)indexPath {
+    return self.originalLink && indexPath.section == 1 && indexPath.row == (NSInteger)self.infoRows.count - 1;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([self isLinkRowAtIndexPath:indexPath]) {
+        UIPasteboard.generalPasteboard.string = self.originalLink.absoluteString;
+        SPKNotify(kSPKNotificationGalleryOpenOriginal, SPKL(@"GALLERY_GALLERY_FILE_DETAILS_COPIED_LINK_TEXT"), nil, @"copy_filled",
+                  SPKNotificationToneSuccess);
+        return;
+    }
     if (indexPath.section == 0 && (SPKDetailsEditRow)indexPath.row == SPKDetailsEditRowAccount) {
         [self.view endEditing:YES];
         [self presentAccountPicker];

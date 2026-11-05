@@ -145,6 +145,10 @@ static NSString *const kSPKFeedActionButtonEnabledKey = @"feed_action_btn";
                                            icon:SPKSettingsIcon(@"repost")
                                     defaultsKey:@"feed_confirm_repost"],
                                SPKL(@"FEED_CONFIRMATION_CONFIRM_REPOST_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_TITLE")
+                                           icon:SPKSettingsIcon(@"arrow_cw")
+                                    defaultsKey:@"feed_confirm_refresh"],
+                               SPKL(@"FEED_CONFIRMATION_CONFIRM_FEED_REFRESH_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"FEED_CONFIRMATION_CONFIRM_POSTING_COMMENT_TITLE")
                                            icon:SPKSettingsIcon(@"comment")
                                     defaultsKey:@"feed_confirm_post_comment"],

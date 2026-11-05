@@ -23,12 +23,16 @@ BOOL SPKAutoSaveFilterEnabled(SPKAutoSaveFilterConfig *config) {
 }
 
 BOOL SPKAutoSaveFilterAllMode(SPKAutoSaveFilterConfig *config) {
+    if (config.allModeProvider)
+        return config.allModeProvider();
     NSString *mode = [SPKUtils getStringPref:config.filterModeKey];
     // Default "all": enabling auto-save should just work without curating a list first.
     return mode.length == 0 || [mode isEqualToString:@"all"];
 }
 
 NSString *SPKAutoSaveFilterListTitle(SPKAutoSaveFilterConfig *config) {
+    if (config.listTitleProvider)
+        return config.listTitleProvider();
     return [NSString stringWithFormat:@"%@ %@",
                                       SPKAutoSaveFilterAllMode(config) ? SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_EXCLUDED_TEXT") : SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_SELECTED_TEXT"),
                                       config.subjectPlural];

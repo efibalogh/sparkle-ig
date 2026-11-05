@@ -309,7 +309,7 @@ static NSString *SPKGalleryGridFormatDuration(double seconds) {
 
     // Source-type badge (top-left).
     if (showsSource) {
-        NSString *symbol = [SPKGalleryFile symbolNameForSource:(SPKGallerySource)file.source];
+        NSString *symbol = [file sourceSymbolName];
         NSString *filledSymbol = [symbol stringByAppendingString:@"_filled"];
         UIImage *icon = nil;
         if ([SPKAssetUtils resolvedInstagramIconNameForName:filledSymbol]) {

@@ -499,7 +499,8 @@ static void spkTrackDeleteForYouKeys(NSArray *keys) {
 }
 
 static BOOL spkReactionNotifyEnabled(void) {
-    return SPKNotificationIsEnabled(kSPKNotificationUnsentReaction);
+    // Active, not enabled: Haptic Only still needs the reaction detected.
+    return SPKNotificationIsActive(kSPKNotificationUnsentReaction);
 }
 
 // Resolve the message a reaction targeted, for a preview. Best-effort: the
@@ -935,7 +936,7 @@ static NSString *spkSenderSummary(NSArray<NSString *> *senders) {
     if (n == 1)
         return senders[0];
     if (n == 2)
-        return [NSString stringWithFormat:@"%@ & %@", senders[0], senders[1]];
+        return [NSString stringWithFormat:SPKL(@"SENDER_LIST_TWO_FORMAT"), senders[0], senders[1]];
     NSUInteger others = n - 2;
     return [NSString stringWithFormat:SPKL(@"SENDER_LIST_MANY_FORMAT"),
                                       senders[0], senders[1], SPKLP(@"COMMON_OTHER_COUNT", (NSInteger)others)];
@@ -1047,7 +1048,7 @@ static SPKUnsentToastBatcher *spkUnsentMessageBatcher(void) {
             }
             return @{
                 @"title" : [NSString stringWithFormat:SPKL(@"BATCH_UNSENT_COUNT_FORMAT"), (unsigned long)count],
-                @"subtitle" : [@"from " stringByAppendingString:spkSenderSummary(senders) ?: @""],
+                @"subtitle" : [NSString stringWithFormat:SPKL(@"BATCH_FROM_SENDERS_FORMAT"), spkSenderSummary(senders) ?: @""],
             };
         };
     });
@@ -1067,7 +1068,7 @@ static SPKUnsentToastBatcher *spkUnsentReactionBatcher(void) {
             }
             return @{
                 @"title" : [NSString stringWithFormat:SPKL(@"BATCH_REACTIONS_REMOVED_FORMAT"), (unsigned long)count],
-                @"subtitle" : [@"from " stringByAppendingString:spkSenderSummary(senders) ?: @""],
+                @"subtitle" : [NSString stringWithFormat:SPKL(@"BATCH_FROM_SENDERS_FORMAT"), spkSenderSummary(senders) ?: @""],
             };
         };
     });
@@ -1161,8 +1162,8 @@ static void spkHandleApplyUpdates(id self, id updates, void (^invokeOriginal)(vo
 
     BOOL keepOn = spkKeepDeletedEnabled();
     BOOL logOn = spkDeletedLogEnabled();
-    BOOL toastOn = SPKNotificationIsEnabled(kSPKNotificationUnsentMessage);
-    BOOL reactionOn = spkReactionLogEnabled() || SPKNotificationIsEnabled(kSPKNotificationUnsentReaction);
+    BOOL toastOn = SPKNotificationIsActive(kSPKNotificationUnsentMessage);
+    BOOL reactionOn = spkReactionLogEnabled() || spkReactionNotifyEnabled();
 
     BOOL activityOn = SPKPresenceNotificationsEnabled();
     if (!keepOn && !logOn && !toastOn && !reactionOn && !activityOn) {
