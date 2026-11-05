@@ -430,8 +430,15 @@ static NSUInteger SPKEnglishStringCount(void) {
     return candidates.firstObject;
 }
 
-/// Resolves whatever the user picked to the `.lproj` directory to install.
-+ (nullable NSString *)catalogDirectoryForPickedPath:(NSString *)path error:(NSError **)error {
+// A real pack is two small text files, so these leave generous room while refusing a zip bomb.
+static const unsigned long long kSPKMaxPackExpandedBytes = 32ULL * 1024 * 1024;
+static const NSUInteger kSPKMaxPackArchiveEntries = 256;
+
+/// Resolves whatever the user picked to the `.lproj` directory to install. When the pick is a
+/// zip, `expandedRoot` receives the temporary expansion so the caller can delete it.
++ (nullable NSString *)catalogDirectoryForPickedPath:(NSString *)path
+                                        expandedRoot:(NSString **)expandedRoot
+                                               error:(NSError **)error {
     NSFileManager *fm = NSFileManager.defaultManager;
     BOOL isDirectory = NO;
     if (![fm fileExistsAtPath:path isDirectory:&isDirectory]) {
@@ -450,13 +457,20 @@ static NSUInteger SPKEnglishStringCount(void) {
     if ([path.pathExtension caseInsensitiveCompare:@"zip"] == NSOrderedSame) {
         NSError *expandError = nil;
         NSString *expanded = [SPKSettingsTransferManager expandZipArchiveAtURL:[NSURL fileURLWithPath:path]
+                                                      maximumUncompressedBytes:kSPKMaxPackExpandedBytes
+                                                                maximumEntries:kSPKMaxPackArchiveEntries
                                                                          error:&expandError];
         if (expanded.length == 0) {
-            if (error)
-                *error = expandError ?: SPKLanguagePackMakeError(SPKLanguagePackErrorUnreadable,
-                                                                 SPKL(@"LANGUAGE_PACK_ERROR_UNREADABLE"));
+            if (error) {
+                // The unzip reader's own messages describe settings backups, so they are not shown here.
+                BOOL tooLarge = (expandError.code == SPKZipExpandLimitErrorCode);
+                *error = SPKLanguagePackMakeError(SPKLanguagePackErrorUnreadable,
+                                                  SPKL(tooLarge ? @"LANGUAGE_PACK_TOO_LARGE" : @"LANGUAGE_PACK_ERROR_UNREADABLE"));
+            }
             return nil;
         }
+        if (expandedRoot)
+            *expandedRoot = expanded.stringByDeletingLastPathComponent;  // the per-import temp folder
         return [self firstCatalogDirectoryUnder:expanded];
     }
 
@@ -467,9 +481,10 @@ static NSUInteger SPKEnglishStringCount(void) {
     // The picker hands over a file outside the sandbox, so the security scope
     // has to be held for the whole read.
     BOOL scoped = [url startAccessingSecurityScopedResource];
+    NSString *expandedRoot = nil;
     @try {
         NSError *resolveError = nil;
-        NSString *source = [self catalogDirectoryForPickedPath:url.path error:&resolveError];
+        NSString *source = [self catalogDirectoryForPickedPath:url.path expandedRoot:&expandedRoot error:&resolveError];
         if (source.length == 0) {
             if (error)
                 *error = resolveError ?: SPKLanguagePackMakeError(SPKLanguagePackErrorNoCatalog,
@@ -527,6 +542,8 @@ static NSUInteger SPKEnglishStringCount(void) {
         SPKLog(@"i18n", @"Imported language pack %@ (%lu strings)", code, (unsigned long)pack.stringCount);
         return pack;
     } @finally {
+        if (expandedRoot.length)
+            [NSFileManager.defaultManager removeItemAtPath:expandedRoot error:nil];  // the installed copy is separate
         if (scoped)
             [url stopAccessingSecurityScopedResource];
     }
