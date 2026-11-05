@@ -4,6 +4,19 @@
 #import "../../Utils.h"
 #import "SPKGalleryFile.h"
 
+/// The row's more button. Its menu closes by morphing back into a view, and UIKit
+/// asks for that view only after the chosen action has run. An action that reloads
+/// the list (favorite with favorites at top, a username filter) has by then handed
+/// this button's cell to another row, so morphing into it lands on the wrong item.
+/// The button instead returns to whichever row now shows the file the menu was
+/// opened for, and fades in place when that row is no longer on screen.
+@interface SPKGalleryRowMenuButton : UIButton
+// The file whose row opened the menu, held until the menu has finished closing.
+@property (nonatomic, strong, nullable) SPKGalleryFile *menuFile;
+// Runs once the menu has finished closing.
+@property (nonatomic, copy, nullable) void (^menuDidEnd)(void);
+@end
+
 @interface SPKGalleryListCollectionCell ()
 
 @property (nonatomic, strong) SPKGalleryFile *file;
@@ -20,7 +33,12 @@
 @property (nonatomic, strong) UILabel *folderContextLabel;
 @property (nonatomic, strong) NSLayoutConstraint *folderContextChipLeadingConstraint;
 @property (nonatomic, strong) UIImageView *favoriteIcon;
-@property (nonatomic, strong) UIButton *moreButton;
+@property (nonatomic, strong) SPKGalleryRowMenuButton *moreButton;
+// Fixed slot that carries the more button's layout. The button sits in its own
+// wrapper inside it, so a button whose menu is still closing can be retired
+// (wrapper faded out) and replaced without touching the row's constraints.
+@property (nonatomic, strong) UIView *moreButtonSlot;
+@property (nonatomic, strong) UIView *moreButtonWrapper;
 @property (nonatomic, strong) UIImageView *selectionIndicator;
 @property (nonatomic, strong) UIView *highlightOverlay;
 @property (nonatomic, strong) UIView *separator;
@@ -139,15 +157,10 @@
     self.selectionIndicator.hidden = YES;
     [self.contentView addSubview:self.selectionIndicator];
 
-    UIImage *moreImg = [SPKAssetUtils instagramIconNamed:@"more" pointSize:22.0];
-    self.moreButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.moreButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.moreButton setImage:moreImg forState:UIControlStateNormal];
-    self.moreButton.tintColor = [SPKUtils SPKColor_InstagramSecondaryText];
-    self.moreButton.accessibilityLabel = SPKL(@"MESSAGES_DELETED_MESSAGES_MORE_TEXT");
-    self.moreButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    self.moreButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [self.contentView addSubview:self.moreButton];
+    self.moreButtonSlot = [[UIView alloc] init];
+    self.moreButtonSlot.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:self.moreButtonSlot];
+    [self installMoreButton];
 
     self.thumbnailLeadingConstraint = [self.thumbnailView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:16];
 
@@ -177,11 +190,11 @@
         [self.thumbnailView.widthAnchor constraintEqualToConstant:52],
         [self.thumbnailView.heightAnchor constraintEqualToConstant:52],
 
-        [self.moreButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor
+        [self.moreButtonSlot.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor
                                                        constant:-8],
-        [self.moreButton.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
-        [self.moreButton.widthAnchor constraintEqualToConstant:40],
-        [self.moreButton.heightAnchor constraintEqualToConstant:40],
+        [self.moreButtonSlot.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
+        [self.moreButtonSlot.widthAnchor constraintEqualToConstant:40],
+        [self.moreButtonSlot.heightAnchor constraintEqualToConstant:40],
 
         [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.thumbnailView.trailingAnchor
                                                       constant:12],
@@ -199,7 +212,7 @@
                                                           constant:4],
         [self.technicalLabel.topAnchor constraintEqualToAnchor:self.titleLabel.bottomAnchor
                                                       constant:3],
-        [self.technicalLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.moreButton.leadingAnchor
+        [self.technicalLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.moreButtonSlot.leadingAnchor
                                                                      constant:-8],
 
         [self.pillBackground.leadingAnchor constraintEqualToAnchor:self.titleLabel.leadingAnchor],
@@ -217,12 +230,12 @@
         [self.dateLabel.leadingAnchor constraintEqualToAnchor:self.pillBackground.trailingAnchor
                                                      constant:8],
         [self.dateLabel.centerYAnchor constraintEqualToAnchor:self.pillBackground.centerYAnchor],
-        [self.dateLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.moreButton.leadingAnchor
+        [self.dateLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.moreButtonSlot.leadingAnchor
                                                                 constant:-8],
 
         self.folderContextChipLeadingConstraint,
         [self.folderContextChip.centerYAnchor constraintEqualToAnchor:self.pillBackground.centerYAnchor],
-        [self.folderContextChip.trailingAnchor constraintLessThanOrEqualToAnchor:self.moreButton.leadingAnchor
+        [self.folderContextChip.trailingAnchor constraintLessThanOrEqualToAnchor:self.moreButtonSlot.leadingAnchor
                                                                         constant:-8],
 
         [self.folderContextIcon.leadingAnchor constraintEqualToAnchor:self.folderContextChip.leadingAnchor
@@ -240,7 +253,7 @@
         [self.folderContextLabel.bottomAnchor constraintEqualToAnchor:self.folderContextChip.bottomAnchor
                                                              constant:-3],
 
-        [self.favoriteIcon.trailingAnchor constraintEqualToAnchor:self.moreButton.leadingAnchor
+        [self.favoriteIcon.trailingAnchor constraintEqualToAnchor:self.moreButtonSlot.leadingAnchor
                                                          constant:-6],
         [self.favoriteIcon.centerYAnchor constraintEqualToAnchor:self.titleLabel.centerYAnchor],
         [self.favoriteIcon.widthAnchor constraintEqualToConstant:14],
@@ -270,9 +283,63 @@
     self.file = nil;
     self.thumbnailView.image = nil;
     // The menu is the one thing not every caller sets, and a stale one would
-    // attach the previous row's actions to this cell.
-    self.moreButton.menu = nil;
-    self.moreButton.showsMenuAsPrimaryAction = NO;
+    // attach the previous row's actions to this cell. A menu that is still open
+    // or closing keeps its button as it is; configureWithGalleryFile: retires
+    // that button if the cell now shows a different file.
+    if (!self.moreButton.menuFile) {
+        self.moreButton.menu = nil;
+        self.moreButton.showsMenuAsPrimaryAction = NO;
+    }
+}
+
+- (void)installMoreButton {
+    UIView *wrapper = [[UIView alloc] init];
+    wrapper.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.moreButtonSlot addSubview:wrapper];
+
+    UIImage *moreImg = [SPKAssetUtils instagramIconNamed:@"more" pointSize:22.0];
+    SPKGalleryRowMenuButton *button = [SPKGalleryRowMenuButton buttonWithType:UIButtonTypeSystem];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [button setImage:moreImg forState:UIControlStateNormal];
+    button.tintColor = [SPKUtils SPKColor_InstagramSecondaryText];
+    button.accessibilityLabel = SPKL(@"MESSAGES_DELETED_MESSAGES_MORE_TEXT");
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [wrapper addSubview:button];
+
+    [NSLayoutConstraint activateConstraints:@[
+        [wrapper.leadingAnchor constraintEqualToAnchor:self.moreButtonSlot.leadingAnchor],
+        [wrapper.trailingAnchor constraintEqualToAnchor:self.moreButtonSlot.trailingAnchor],
+        [wrapper.topAnchor constraintEqualToAnchor:self.moreButtonSlot.topAnchor],
+        [wrapper.bottomAnchor constraintEqualToAnchor:self.moreButtonSlot.bottomAnchor],
+        [button.leadingAnchor constraintEqualToAnchor:wrapper.leadingAnchor],
+        [button.trailingAnchor constraintEqualToAnchor:wrapper.trailingAnchor],
+        [button.topAnchor constraintEqualToAnchor:wrapper.topAnchor],
+        [button.bottomAnchor constraintEqualToAnchor:wrapper.bottomAnchor],
+    ]];
+
+    self.moreButtonWrapper = wrapper;
+    self.moreButton = button;
+}
+
+/// UIKit hides the button a menu grew out of and reveals it again once the menu
+/// has closed. If a reload has given this cell another file in the meantime, that
+/// reveal would play on an unrelated row and read as the menu returning there. The
+/// button is therefore kept out of sight in its faded wrapper until its menu is
+/// done, while a fresh button takes its place in the row.
+- (void)retireMoreButtonWhileMenuCloses {
+    SPKGalleryRowMenuButton *retired = self.moreButton;
+    UIView *retiredWrapper = self.moreButtonWrapper;
+    retiredWrapper.alpha = 0.0;
+    retiredWrapper.userInteractionEnabled = NO;
+    retiredWrapper.accessibilityElementsHidden = YES;
+    __weak UIView *weakWrapper = retiredWrapper;
+    retired.menuDidEnd = ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakWrapper removeFromSuperview];
+        });
+    };
+    [self installMoreButton];
 }
 
 - (UIImage *)selectionIndicatorImageSelected:(BOOL)selected {
@@ -298,6 +365,9 @@
 - (void)configureWithGalleryFile:(SPKGalleryFile *)file
                    selectionMode:(BOOL)selectionMode
                         selected:(BOOL)selected {
+    if (self.moreButton.menuFile && self.moreButton.menuFile != file) {
+        [self retireMoreButtonWhileMenuCloses];
+    }
     self.file = file;
     self.titleLabel.text = [file listPrimaryTitle];
     self.technicalLabel.text = [file listTechnicalLine];
@@ -379,6 +449,91 @@
     // button's alpha from a menu that was still nil -- leaving it at 0. Without
     // re-deriving alpha here the button unhides but stays fully transparent.
     self.moreButton.alpha = hidden ? 0.0 : 1.0;
+}
+
+@end
+
+@implementation SPKGalleryRowMenuButton
+
+- (nullable SPKGalleryListCollectionCell *)enclosingListCell {
+    UIView *view = self.superview;
+    while (view && ![view isKindOfClass:[SPKGalleryListCollectionCell class]]) {
+        view = view.superview;
+    }
+    return (SPKGalleryListCollectionCell *)view;
+}
+
+- (void)contextMenuInteraction:(UIContextMenuInteraction *)interaction
+    willDisplayMenuForConfiguration:(UIContextMenuConfiguration *)configuration
+                           animator:(id<UIContextMenuInteractionAnimating>)animator {
+    [super contextMenuInteraction:interaction willDisplayMenuForConfiguration:configuration animator:animator];
+    self.menuFile = [self enclosingListCell].file;
+}
+
+- (void)contextMenuInteraction:(UIContextMenuInteraction *)interaction
+       willEndForConfiguration:(UIContextMenuConfiguration *)configuration
+                      animator:(id<UIContextMenuInteractionAnimating>)animator {
+    [super contextMenuInteraction:interaction willEndForConfiguration:configuration animator:animator];
+    __weak typeof(self) weakSelf = self;
+    void (^clear)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.menuFile = nil;
+        void (^didEnd)(void) = strongSelf.menuDidEnd;
+        strongSelf.menuDidEnd = nil;
+        if (didEnd) {
+            didEnd();
+        }
+    };
+    if (animator) {
+        [animator addCompletion:clear];
+    } else {
+        clear();
+    }
+}
+
+/// Whether `button` sits inside the visible part of `collectionView`, excluding
+/// the area under the navigation bar and toolbar.
+static BOOL SPKGalleryRowMenuButtonIsOnScreen(UIButton *button, UICollectionView *collectionView) {
+    if (!button.window || button.hidden || button.alpha <= 0.01) {
+        return NO;
+    }
+    CGRect visible = UIEdgeInsetsInsetRect(collectionView.bounds, collectionView.adjustedContentInset);
+    CGRect frame = [button convertRect:button.bounds toView:collectionView];
+    return CGRectContainsPoint(visible, CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame)));
+}
+
+- (UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction
+    previewForDismissingMenuWithConfiguration:(UIContextMenuConfiguration *)configuration {
+    SPKGalleryListCollectionCell *cell = [self enclosingListCell];
+    UIView *container = cell.superview;
+    SPKGalleryFile *file = self.menuFile;
+    if (!file || ![container isKindOfClass:[UICollectionView class]]) {
+        return [super contextMenuInteraction:interaction previewForDismissingMenuWithConfiguration:configuration];
+    }
+    UICollectionView *collectionView = (UICollectionView *)container;
+
+    // Resolve any reload the action just issued, so each visible cell already shows
+    // the row it will show once the menu is gone.
+    [collectionView layoutIfNeeded];
+
+    SPKGalleryListCollectionCell *target = nil;
+    for (UICollectionViewCell *visibleCell in collectionView.visibleCells) {
+        if ([visibleCell isKindOfClass:[SPKGalleryListCollectionCell class]] &&
+            ((SPKGalleryListCollectionCell *)visibleCell).file == file) {
+            target = (SPKGalleryListCollectionCell *)visibleCell;
+            break;
+        }
+    }
+    if (!target || !SPKGalleryRowMenuButtonIsOnScreen(target.moreButton, collectionView)) {
+        // nil: the menu animates away without morphing into a view.
+        return nil;
+    }
+    if (target.moreButton == self) {
+        return [super contextMenuInteraction:interaction previewForDismissingMenuWithConfiguration:configuration];
+    }
+    UIPreviewParameters *parameters = [[UIPreviewParameters alloc] init];
+    parameters.backgroundColor = [UIColor clearColor];
+    return [[UITargetedPreview alloc] initWithView:target.moreButton parameters:parameters];
 }
 
 @end
