@@ -150,8 +150,11 @@ NSString *SPKLanguageDisplayName(NSString *code) {
                                                       [weakSelf presentCatalog];
                                                   }];
     // The subtitle answers the only question the row raises once it is on: whether it has actually
-    // run. Before the first check there is nothing to report, so the row stands on its title.
-    NSString *lastChecked = [self lastCheckedSubtitle];
+    // run. Before the first check there is nothing to report, so the row stands on its title. Without a
+    // downloaded pack there is nothing a check could compare either, so the date and the manual check
+    // both stay hidden; the switch remains, since it governs packs added later.
+    BOOL hasTrackedPacks = [SPKLanguagePackUpdater hasTrackedPacks];
+    NSString *lastChecked = hasTrackedPacks ? [self lastCheckedSubtitle] : nil;
     SPKSetting *autoUpdateRow =
         lastChecked ? [SPKSetting switchCellWithTitle:SPKL(@"LANGUAGE_PACK_AUTO_UPDATE_TITLE")
                                              subtitle:lastChecked
@@ -183,7 +186,9 @@ NSString *SPKLanguageDisplayName(NSString *code) {
     [self replaceSections:@[
         SPKTopicSection(@"", languageRows, SPKL(@"LANGUAGE_LIST_FOOTER")),
         SPKTopicSection(SPKL(@"LANGUAGE_PACKS_HEADER"), @[ addRow ], SPKL(@"LANGUAGE_PACK_ADD_FOOTER")),
-        SPKTopicSection(SPKL(@"LANGUAGE_PACK_UPDATES_HEADER"), @[ autoUpdateRow, checkNowRow ], SPKL(@"LANGUAGE_PACK_UPDATES_FOOTER")),
+        SPKTopicSection(SPKL(@"LANGUAGE_PACK_UPDATES_HEADER"),
+                        hasTrackedPacks ? @[ autoUpdateRow, checkNowRow ] : @[ autoUpdateRow ],
+                        SPKL(@"LANGUAGE_PACK_UPDATES_FOOTER")),
         SPKTopicSection(@"", @[ reportRow, contributeRow ], SPKL(@"LANGUAGE_HELP_FOOTER")),
     ]];
 }

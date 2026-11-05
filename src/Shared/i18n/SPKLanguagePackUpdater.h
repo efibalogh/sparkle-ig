@@ -41,6 +41,10 @@ FOUNDATION_EXPORT NSString *const kSPKLanguagePackAutoUpdateKey;
 /// When the last successful check ran, or nil if one never has.
 + (nullable NSDate *)lastCheckDate;
 
+/// YES when an installed pack names a published build, so a check has something to compare.
+/// Bundled languages and packs imported from a file never count.
++ (BOOL)hasTrackedPacks;
+
 @end
 
 NS_ASSUME_NONNULL_END
