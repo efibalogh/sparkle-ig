@@ -150,9 +150,32 @@ static CGRect sSPKNotificationKeyboardScreenFrame = {{INFINITY, INFINITY}, {0, 0
 @property (nonatomic, copy) NSString *identifier;
 @property (nonatomic, assign) BOOL progress;
 @property (nonatomic, strong) NSTimer *timer;
+// What a toast shows (identifier, text and tone), so a repeat can join it.
+@property (nonatomic, copy) NSString *contentKey;
 @end
 
 @implementation SPKNotificationSlot
+
+// One dismiss timer per pill, restarted rather than added to: a pill shown again stays
+// for a full duration from its latest content, and no earlier timer cuts it short or
+// dismisses a pill that has since gone back to showing progress.
+- (void)restartDismissTimer {
+    [self.timer invalidate];
+    __weak typeof(self) weakSelf = self;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:SPKNotificationPillDuration()
+                                                 repeats:NO
+                                                   block:^(__unused NSTimer *timer) {
+                                                       SPKNotificationPillView *pill = weakSelf.pill;
+                                                       if (pill.superview)
+                                                           [pill dismiss];
+                                                   }];
+}
+
+- (void)cancelDismissTimer {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
 @end
 
 @interface SPKNotificationOverlayRootViewController : UIViewController
@@ -966,15 +989,16 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
         [self spk_presentSparklePill:pill anchor:anchor bottom:isBottom host:host];
     }
 
-    if (!progress) {
-        slot.timer = [NSTimer scheduledTimerWithTimeInterval:SPKNotificationPillDuration()
-                                                     repeats:NO
-                                                       block:^(__unused NSTimer *timer) {
-                                                           SPKNotificationSlot *strongSlot = weakSlot;
-                                                           if (strongSlot.pill.superview)
-                                                               [strongSlot.pill dismiss];
-                                                       }];
+    if (!progress)
+        [slot restartDismissTimer];
+}
+
+- (SPKNotificationSlot *)slotForPill:(SPKNotificationPillView *)pill {
+    for (SPKNotificationSlot *slot in self.visible) {
+        if (slot.pill == pill)
+            return slot;
     }
+    return nil;
 }
 
 // Instagram's own toast (measured on 453): no fade and no scale, only an additive
@@ -1090,6 +1114,24 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
     if (!showsBanner)
         return;
     [self onMain:^{
+        // A repeat of a toast already on screen (an action tapped again, a retry that
+        // fails the same way) joins it: its time restarts and its icon pulses, instead
+        // of identical toasts stacking and queueing behind each other.
+        NSString *contentKey = [NSString stringWithFormat:@"%@\x1f%@\x1f%@\x1f%ld", identifier ?: @"", title ?: @"",
+                                                          subtitle ?: @"", (long)tone];
+        for (SPKNotificationSlot *slot in self.visible) {
+            if (slot.progress || ![slot.contentKey isEqualToString:contentKey] || !slot.pill.superview || slot.pill.isDismissing)
+                continue;
+            [slot restartDismissTimer];
+            [slot.pill animateIconPulse];
+            if (onTap)
+                slot.pill.onTapWhenCompleted = onTap;
+            return;
+        }
+        for (NSDictionary *queued in self.queue) {
+            if ([queued[@"contentKey"] isEqualToString:contentKey])
+                return;
+        }
         NSUInteger visibleToasts = 0;
         for (SPKNotificationSlot *slot in self.visible) {
             if (!slot.progress)
@@ -1102,6 +1144,7 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
                 @"subtitle" : subtitle ?: @"",
                 @"icon" : SPKNotificationIconResourceForTone(iconResource, tone) ?: @"",
                 @"tone" : @(tone),
+                @"contentKey" : contentKey,
             } mutableCopy];
             if (onTap)
                 queued[@"onTap"] = [onTap copy];
@@ -1178,6 +1221,7 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
             pill.onTapWhenCompleted = onTap;
 
         [self insertPill:pill identifier:identifier progress:NO];
+        [self slotForPill:pill].contentKey = contentKey;
     }];
 }
 
@@ -1226,8 +1270,10 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
             // one preparatory step ends and the next begins in the same pass.
             if (slot.pill && slot.pill == self.departingTransientPill)
                 continue;
-            if (slot.progress && slot.pill && slot.pill.superview) {
+            if (slot.progress && slot.pill && slot.pill.superview && !slot.pill.isDismissing) {
                 pill = slot.pill;
+                // Back to showing progress: the outcome it showed no longer times it out.
+                [slot cancelDismissTimer];
                 if (title.length > 0) {
                     [pill updateProgressTitle:title subtitle:nil];
                 }
@@ -1270,12 +1316,14 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
                     [haptic notificationOccurred:UINotificationFeedbackTypeWarning];
             }
             // Auto-dismiss progress pills in terminal state after the configured duration.
-            NSTimeInterval duration = SPKNotificationPillDuration();
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                SPKNotificationPillView *p = weakPillRef;
-                if (p && p.superview)
-                    [p dismiss];
-            });
+            SPKNotificationPillView *p = weakPillRef;
+            if (p)
+                [[self slotForPill:p] restartDismissTimer];
+        };
+        pill.onReturnedToProgress = ^{
+            SPKNotificationPillView *p = weakPillRef;
+            if (p)
+                [[self slotForPill:p] cancelDismissTimer];
         };
         self.transientProgressPill = transient ? pill : nil;
         // Prep work is a single request with nothing to report: spin instead of

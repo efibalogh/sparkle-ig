@@ -86,7 +86,16 @@ typedef NS_ENUM(NSUInteger, SPKNotificationTone) {
 /// Called when a progress pill transitions to a visible terminal tone.
 @property (nonatomic, copy) void (^onTonePresented)(SPKNotificationTone tone);
 
+/// Called when a pill showing an outcome goes back to showing progress.
+@property (nonatomic, copy) void (^onReturnedToProgress)(void);
+
 /// Called after the pill has been fully removed from its superview.
 @property (nonatomic, copy) void (^onDidDismiss)(void);
+
+/// YES once a dismissal has started; the pill keeps its superview until it is gone.
+@property (nonatomic, readonly) BOOL isDismissing;
+
+/// Briefly pulses the icon, to acknowledge a repeat of what the pill already shows.
+- (void)animateIconPulse;
 
 @end

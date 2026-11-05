@@ -102,6 +102,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 @property (nonatomic, strong) NSLayoutConstraint *progressHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *progressRowHeightConstraint;
 @property (nonatomic, assign) BOOL isErrorState;
+@property (nonatomic, readwrite) BOOL isDismissing;
 
 // --- Dynamic style properties ---
 @property (nonatomic, strong) CAShapeLayer *progressRingTrackLayer;
@@ -939,6 +940,8 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     self.currentBytesExpected = MAX((int64_t)0, totalBytesExpected);
 
     if (self.isErrorState || self.isCompleted) {
+        if (self.onReturnedToProgress)
+            self.onReturnedToProgress();
         self.isErrorState = NO;
         self.isCompleted = NO;
         self.usesAutomaticProgressSubtitle = YES;
@@ -983,6 +986,8 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     [self spk_stopIndeterminateSpin];
 
+    if ((self.isCompleted || self.isErrorState) && self.onReturnedToProgress)
+        self.onReturnedToProgress();
     self.isCompleted = NO;
     self.isErrorState = NO;
     self.titleLabel.text = title.length > 0 ? title : SPKL(@"MEDIA_TRIM_TRIM_ENTRY_DOWNLOADING_TEXT");
@@ -1156,6 +1161,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
         return;
     }
 
+    self.isDismissing = YES;
     self.isCompleted = NO;
     self.isErrorState = NO;
     self.onTapWhenCompleted = nil;

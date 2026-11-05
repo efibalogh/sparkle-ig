@@ -533,13 +533,6 @@ static NSString *SPKPACompact(NSInteger n) {
                 [SPKProfileAnalyzerViewController presentFromTop];
             };
             SPKNotificationTriggerHaptic(kSPKNotificationProfileAnalyzerComplete, SPKNotificationToneSuccess);
-            // Auto-dismiss after the configured pill duration (progress pills don't
-            // self-dismiss on completion, so schedule it explicitly).
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(SPKNotificationPillDuration() * NSEC_PER_SEC)),
-                           dispatch_get_main_queue(), ^{
-                               if (pill.superview)
-                                   [pill dismiss];
-                           });
             [weakSelf loadCachedData];
             [weakSelf paintHeaderIdentity];
         }];
