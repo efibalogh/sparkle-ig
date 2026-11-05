@@ -147,6 +147,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 - (void)spk_syncInstagramSkin;
 - (void)spk_layoutInstagramProgressRing;
 - (void)spk_applyInstagramToneTint;
+- (void)spk_layoutInstagramToastOwnTint;
 - (BOOL)spk_instagramRightButtonContainsTap;
 @end
 
@@ -399,6 +400,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     }
     // Update ring path when icon badge bounds change
     [self spk_updateRingPath];
+    [self spk_layoutInstagramToastOwnTint];
     [self spk_layoutInstagramProgressRing];
     [self spk_layoutInstagramLiveSubtitle];
 
@@ -1942,21 +1944,58 @@ static UIVisualEffectView *SPKInstagramToastBackgroundEffectView(UIView *toastVi
     return nil;
 }
 
+// The toast's rounding, from the toast or from the full-size view that draws its background.
+static CGFloat SPKInstagramToastCornerRadius(UIView *toastView) {
+    if (toastView.layer.cornerRadius >= 1.0)
+        return toastView.layer.cornerRadius;
+    CGSize size = toastView.bounds.size;
+    for (UIView *subview in toastView.subviews) {
+        if (subview.layer.cornerRadius >= 1.0 && fabs(CGRectGetWidth(subview.frame) - size.width) < 1.0 &&
+            fabs(CGRectGetHeight(subview.frame) - size.height) < 1.0)
+            return subview.layer.cornerRadius;
+    }
+    return MIN(size.height / 2.0, 16.0);
+}
+
+// Puts a tint hosted on the toast itself under its content but above any full-size view
+// the toast draws its background with.
+static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
+    UIView *backdrop = nil;
+    CGSize size = toastView.bounds.size;
+    for (UIView *subview in toastView.subviews) {
+        if (subview == tintView || subview.hidden || subview.subviews.count > 0 || ![subview isMemberOfClass:UIView.class])
+            continue;
+        if (fabs(CGRectGetWidth(subview.frame) - size.width) < 1.0 && fabs(CGRectGetHeight(subview.frame) - size.height) < 1.0)
+            backdrop = subview;
+    }
+    if (tintView.superview != toastView)
+        [tintView removeFromSuperview];
+    if (backdrop)
+        [toastView insertSubview:tintView aboveSubview:backdrop];
+    else
+        [toastView insertSubview:tintView atIndex:0];
+}
+
 // With Glow on, tints Instagram's toast background with the tone colour the pill uses
 // for its icon badge: Glow is the pill's tone colouring, and this is the Instagram
 // style's. Liquid Glass takes the tint on the effect itself; the older material gets a
 // colour layer under the toast's content. Reapplied after every configure, which may
 // rebuild the background.
 - (void)spk_applyInstagramToneTint {
-    UIVisualEffectView *background = SPKInstagramToastBackgroundEffectView(self.instagramToastView);
-    if (!background) {
-        SPKLogMessage(@"Notify", OS_LOG_TYPE_DEFAULT, @"Instagram toast has no background effect view to tint");
+    UIView *toastView = self.instagramToastView;
+    if (!toastView)
         return;
-    }
+    UIVisualEffectView *background = SPKInstagramToastBackgroundEffectView(toastView);
+    // Older builds (410) draw the toast without a live material: the effect view is
+    // missing, hidden or empty, and the visible background is the toast itself. The
+    // tint then goes under the toast's own content instead.
+    if (background && (background.hidden || background.alpha < 0.01 || !background.effect ||
+                       CGRectGetWidth(background.bounds) < 1.0 || CGRectGetHeight(background.bounds) < 1.0))
+        background = nil;
 
     if (![SPKUtils getBoolPref:kSPKNotificationPillGlowEnabledKey]) {
         [self.instagramTintView removeFromSuperview];
-        if (self.instagramUntintedEffect) {
+        if (background && self.instagramUntintedEffect) {
             background.effect = self.instagramUntintedEffect;
             self.instagramUntintedEffect = nil;
         }
@@ -1998,11 +2037,42 @@ static UIVisualEffectView *SPKInstagramToastBackgroundEffectView(UIView *toastVi
         tintView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.instagramTintView = tintView;
     }
-    if (tintView.superview != background.contentView) {
-        tintView.frame = background.contentView.bounds;
-        [background.contentView insertSubview:tintView atIndex:0];
+    UIView *host = background ? background.contentView : toastView;
+    if (tintView.superview != host) {
+        if (!background)
+            SPKLogMessage(@"Notify", OS_LOG_TYPE_DEFAULT, @"Instagram toast has no live material, tinting the toast itself");
+        [tintView removeFromSuperview];
+        tintView.frame = host.bounds;
+        if (background)
+            [host insertSubview:tintView atIndex:0];
+        else
+            SPKInstagramToastPlaceOwnTint(toastView, tintView);
+    }
+    if (background) {
+        tintView.layer.cornerRadius = 0.0;
+        tintView.layer.masksToBounds = NO;
+    } else {
+        // The toast keeps its own corners unclipped for its shadow, so the tint
+        // rounds itself to match.
+        tintView.frame = host.bounds;
+        tintView.layer.cornerRadius = SPKInstagramToastCornerRadius(toastView);
+        tintView.layer.cornerCurve = toastView.layer.cornerCurve;
+        tintView.layer.masksToBounds = YES;
     }
     tintView.backgroundColor = tint;
+}
+
+// A tint hosted on the toast itself follows its size and rounding, which Instagram
+// only settles in its own layout.
+- (void)spk_layoutInstagramToastOwnTint {
+    UIView *toastView = self.instagramToastView;
+    UIView *tintView = self.instagramTintView;
+    if (!toastView || tintView.superview != toastView)
+        return;
+    [toastView layoutIfNeeded];
+    tintView.frame = toastView.bounds;
+    tintView.layer.cornerRadius = SPKInstagramToastCornerRadius(toastView);
+    SPKInstagramToastPlaceOwnTint(toastView, tintView);
 }
 
 - (void)spk_layoutInstagramProgressRing {
