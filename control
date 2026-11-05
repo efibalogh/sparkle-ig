@@ -1,6 +1,6 @@
 Package: com.sparkle.sparkle
 Name: Sparkle for Instagram
-Version: 1.5.1
+Version: 1.6.0
 Architecture: iphoneos-arm
 Description: Bring the spark back to Instagram!
 Homepage: https://github.com/efibalogh/sparkle-ig
