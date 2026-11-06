@@ -17,7 +17,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Version",
-          "text": "1.6.0"
+          "text": "1.6.1"
         },
         {
           "class": "DepictionTableTextView",
@@ -27,12 +27,12 @@
         {
           "class": "DepictionTableTextView",
           "title": "Size",
-          "text": "8.6 MB"
+          "text": "8.7 MB"
         },
         {
           "class": "DepictionTableTextView",
           "title": "Released",
-          "text": "2026-11-05"
+          "text": "2026-11-06"
         },
         {
           "class": "DepictionSeparatorView"
@@ -67,6 +67,24 @@
       "class": "DepictionStackView",
       "tabname": "Changelog",
       "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "v1.6.1",
+          "useBoldText": true
+        },
+        {
+          "class": "DepictionLabelView",
+          "text": "2026-11-06",
+          "textColor": "#8E8E93",
+          "fontSize": 12
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "## 🛠 Fixes & Improvements\n\n- The **Following** main feed mode no longer crashes Instagram 453 and later at launch\n- Language packs download again behind VPNs that use fake IP addresses\n- **Check for Updates** under Language only shows while a downloaded language pack is installed, so it no longer reports an old check date it cannot change\n- Downloads that fail right away now say they failed instead of reporting a save, and retries show their own result\n- Download pills keep one timer, so a later message is no longer cut short, and repeated identical toasts join the one on screen instead of stacking\n- Tapping a notification that opens Downloads, the Gallery, the Profile Analyzer or a rule list brings that screen forward when it is already open, instead of opening a second copy\n- Instagram-style toasts are tinted on Instagram 410\n- Gallery list menus close back onto the row they were opened from\n- On a long What's New or welcome page, the button scrolls to the rest of the page before moving on\n- Imported archives and language packs are size-checked while they unpack\n"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
         {
           "class": "DepictionSubheaderView",
           "title": "v1.6.0",
