@@ -156,6 +156,13 @@ FOUNDATION_EXPORT Class _Nullable SPKDirectObjCInboxClass(void);
 + (void)showSettingsVC:(UIWindow *)window;
 + (void)showSettingsForTopicTitle:(NSString *)title;
 + (void)presentViewControllerInSheet:(UIViewController *)vc;
+// Single-instance screens. A screen tagged with a reveal key is brought back to the
+// front (anything presented over it dismissed, anything pushed on it popped) instead
+// of a second copy being stacked. Returns NO when no tagged screen is on screen.
++ (void)setRevealKey:(nullable NSString *)key forViewController:(UIViewController *)viewController;
++ (BOOL)revealViewControllerWithKey:(NSString *)key;
++ (BOOL)revealViewControllerMatching:(BOOL (^)(UIViewController *viewController))match;
++ (void)presentViewControllerInSheet:(UIViewController *)vc revealKey:(nullable NSString *)revealKey;
 
 // Colours
 + (UIColor *)SPKColor_InstagramBlue;

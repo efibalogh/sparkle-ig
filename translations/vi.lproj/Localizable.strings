@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Xong";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "Số người theo dõi chính xác trên trang cá nhân";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Sửa lỗi & Cải tiến";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Lượt tải lỗi báo lỗi thay vì báo đã lưu";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "Chỉnh sửa & Lưu tuân theo cài đặt chất lượng ảnh";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "Tab khởi động sẵn sàng nhanh hơn";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Video bảng tin có âm thanh bị nhân đôi được lưu đúng";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "Chế độ bảng feed Đang theo dõi không còn văng khi mở";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Tệp bị thiếu trong Thư viện giải thích điều đã xảy ra";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Lưu từ Thư viện giữ nguyên tệp gốc tại chỗ";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Liên kết tin nổi bật đã sao chép không còn mở ra là đã hết hạn";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Tương thích với Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Thông báo kiểu Instagram có màu trên Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Gói ngôn ngữ tải được khi dùng VPN IP giả";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "Thông báo không còn chồng thông báo hay màn hình trùng lặp";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "Hủy trên thông báo tiến trình sẽ dừng tác vụ";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "Thư viện đánh dấu tin được lưu từ tin nổi bật";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Mở tin và tin nổi bật đã lưu ngay từ Thư viện";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...và nhiều hơn nữa!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "Nút gợi ý trên mọi trang cá nhân, đóng cho đến khi bạn chạm";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Nhấn giữ một người trong tìm kiếm để ghim họ lên trên mục gần đây";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "Có gì mới trong %1$@ và %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle báo cho bạn khi có bản cập nhật, kèm nhật ký thay đổi";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "Có gì mới trong %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Cấu hình hành động";

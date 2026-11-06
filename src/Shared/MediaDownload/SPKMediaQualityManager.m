@@ -1422,9 +1422,10 @@ static SPKTrimSourcePlan *SPKMediaTrimPlanFromOption(SPKMediaOption *chosen, SPK
                     task:(NSURLSessionTask *)task
     didCompleteWithError:(NSError *)error {
     (void)session;
-    (void)task;
     if (!error)
         return;
+    SPKLog(@"Downloads", @"DASH part failed: %@ (%@ %ld) host=%@", error.localizedDescription, error.domain, (long)error.code,
+           task.originalRequest.URL.host ?: @"<nil>");
     if (self.completionBlock) {
         self.completionBlock(nil, error);
     }
@@ -2676,6 +2677,7 @@ static void SPKMediaPerformOptionDownload(
         };
     void (^fail)(NSString *, NSString *) =
         ^(NSString *title, NSString *subtitle) {
+            SPKLog(@"Downloads", @"DASH run failed: %@ | %@", title, subtitle);
             if (failure)
                 failure(title, subtitle);
         };

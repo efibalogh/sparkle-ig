@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Bitti";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "Profillerde tam takipçi sayısı";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Düzeltmeler ve İyileştirmeler";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Başarısız indirmeler kaydedildi yerine başarısız olduğunu söylüyor";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "Düzenle ve Kaydet fotoğraf kalitesi ayarına uyar";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "Açılış sekmesi daha çabuk hazır olur";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Çift sesli akış videoları doğru kaydedilir";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "Takip Edilenler akış modu artık açılışta çökmüyor";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Eksik Galeri dosyaları ne olduğunu açıklar";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Galeri'den kaydetmek orijinal dosyayı yerinde bırakır";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Öne çıkanlardan kopyalanan hikaye bağlantıları artık süresi dolmuş olarak açılmaz";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Instagram v454.1.0 ile uyumluluk";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Instagram tarzı bildirimler Instagram 410'da renkli";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Dil paketleri sahte IP kullanan VPN'lerin arkasında da iniyor";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "Bildirimler artık yinelenen mesaj veya ekranları üst üste yığmıyor";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "İlerleme bildirimindeki iptal, işlemi durdurur";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "Galeri, öne çıkanlardan kaydedilen hikayeleri işaretler";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Kaydedilen hikayeleri ve öne çıkanları doğrudan Galeri'den aç";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...ve çok daha fazlası!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "Her profilde bir öneriler düğmesi, dokunana kadar kapalı";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Aramada bir kişiye basılı tutarak onu son aramaların üstüne sabitle";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "%1$@ ve %2$@ içindeki yenilikler";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle yeni bir güncelleme çıktığında değişiklik günlüğüyle birlikte haber verir";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "%@ içindeki yenilikler";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Eylemleri Yapılandır";

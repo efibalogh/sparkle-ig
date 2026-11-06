@@ -185,19 +185,11 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
     UIViewController *root = UIApplication.sharedApplication.keyWindow.rootViewController;
     while (root.presentedViewController)
         root = root.presentedViewController;
-    // Don't stack a second analyzer if one is already on screen.
-    UIViewController *probe = root;
-    while (probe) {
-        if ([probe isKindOfClass:[SPKProfileAnalyzerViewController class]])
-            return;
-        if ([probe isKindOfClass:[UINavigationController class]]) {
-            for (UIViewController *vc in ((UINavigationController *)probe).viewControllers) {
-                if ([vc isKindOfClass:[SPKProfileAnalyzerViewController class]])
-                    return;
-            }
-        }
-        probe = probe.presentingViewController;
-    }
+    // Bring back an analyzer already on screen rather than stacking a second one.
+    if ([SPKUtils revealViewControllerMatching:^BOOL(UIViewController *viewController) {
+            return [viewController isKindOfClass:[SPKProfileAnalyzerViewController class]];
+        }])
+        return;
     SPKProfileAnalyzerViewController *analyzer = [SPKProfileAnalyzerViewController new];
     UINavigationController *nav = [[SPKChromeNavigationController alloc] initWithRootViewController:analyzer];
     nav.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -541,13 +533,6 @@ static NSString *SPKPACompact(NSInteger n) {
                 [SPKProfileAnalyzerViewController presentFromTop];
             };
             SPKNotificationTriggerHaptic(kSPKNotificationProfileAnalyzerComplete, SPKNotificationToneSuccess);
-            // Auto-dismiss after the configured pill duration (progress pills don't
-            // self-dismiss on completion, so schedule it explicitly).
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(SPKNotificationPillDuration() * NSEC_PER_SEC)),
-                           dispatch_get_main_queue(), ^{
-                               if (pill.superview)
-                                   [pill dismiss];
-                           });
             [weakSelf loadCachedData];
             [weakSelf paintHeaderIdentity];
         }];

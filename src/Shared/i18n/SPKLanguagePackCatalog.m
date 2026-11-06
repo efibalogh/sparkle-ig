@@ -1,7 +1,6 @@
 //  SPKLanguagePackCatalog.m
 
 #import "SPKLanguagePackCatalog.h"
-#import "SPKLanguagePackURLImporter.h"   // SPKLanguagePackRemoteURLIsSafe
 #import "SPKLanguagePack.h"
 #import "SPKStrings.h"
 #import "../../Utils.h"
@@ -12,7 +11,7 @@ NSString *const SPKLanguageCatalogErrorDomain = @"SPKLanguageCatalogErrorDomain"
 static NSString *const kSPKCatalogURLPref = @"langpack_catalog_url";
 static const NSUInteger kSPKMaxCatalogBytes = 512 * 1024;  // an index of ~50 langs is a few KB
 // A hard deadline on the whole fetch. The session's own timeouts only start once it has a host to
-// connect to, and getaddrinfo ahead of it can sit for the better part of a minute with no network
+// connect to, and the DNS lookup ahead of it can sit for the better part of a minute with no network
 // before it gives up, which leaves a screen saying "Loading languages" long past the point anyone
 // would call it loading. Whatever happens, the caller hears back within this.
 static const NSTimeInterval kSPKCatalogDeadline = 20.0;
@@ -25,28 +24,15 @@ static const NSTimeInterval kSPKCatalogDeadline = 20.0;
 }
 @end
 
-#pragma mark - Bounded, host-checked JSON fetcher
+#pragma mark - Bounded JSON fetcher
 
 @interface SPKCatalogFetcher : NSObject <NSURLSessionDataDelegate>
 @property (nonatomic, strong) NSMutableData *buffer;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, copy) void (^completion)(NSData *_Nullable, NSError *_Nullable);
 @property (atomic, assign) BOOL finished;
-@property (atomic, assign) BOOL remoteAddrPrivate;   // set from didFinishCollectingMetrics:
-// NO when a proxy is in play: the peer we would be inspecting is then the proxy itself, whose address
-// is legitimately private on a corporate or on-device VPN, and which resolved the real host for us.
-// Inspecting it would reject every proxied user while proving nothing. TLS still authenticates the
-// origin end to end, and every pack the catalog yields is hash-pinned before it can be installed.
-@property (nonatomic, assign) BOOL peerChecksApply;
-// Deliver joins the success + metrics signals — didFinishCollectingMetrics: ordering vs
-// didCompleteWithError: is not guaranteed (see SPKLanguagePackURLImporter). All under @synchronized(self).
-@property (nonatomic, assign) BOOL downloadDone;
-@property (nonatomic, assign) BOOL metricsDone;
-@property (nonatomic, assign) BOOL metricsUnverified;
-@property (nonatomic, assign) BOOL deliverStarted;
 @end
 
-static const double kSPKCatalogMetricsJoinTimeout = 4.0;
 static NSMutableSet<SPKCatalogFetcher *> *sSPKActiveFetchers;
 
 @implementation SPKCatalogFetcher
@@ -78,66 +64,20 @@ static NSMutableSet<SPKCatalogFetcher *> *sSPKActiveFetchers;
         [self finishWithData:nil error:[NSError errorWithDomain:SPKLanguageCatalogErrorDomain code:3 userInfo:nil]];
         return;
     }
-    // Success: wait for the peer-address metrics (join) before delivering, with a fail-safe timeout.
-    @synchronized(self) { self.downloadDone = YES; }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSPKCatalogMetricsJoinTimeout * NSEC_PER_SEC)),
-                   dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        BOOL fire = NO;
-        @synchronized(self) { if (!self.metricsDone) { self.metricsDone = YES; self.metricsUnverified = YES; fire = YES; } }
-        if (fire) [self joinAndDeliverIfReady];
-    });
-    [self joinAndDeliverIfReady];
-}
-
-- (void)joinAndDeliverIfReady {
-    BOOL go = NO;
-    @synchronized(self) {
-        if (self.downloadDone && self.metricsDone && !self.deliverStarted) { self.deliverStarted = YES; go = YES; }
-    }
-    if (!go) return;
-    if (self.peerChecksApply && self.remoteAddrPrivate) {  // DNS rebind: connected to a private IP despite the pre-flight check
-        [self finishWithData:nil error:[NSError errorWithDomain:SPKLanguageCatalogErrorDomain code:5 userInfo:nil]];
-        return;
-    }
-    if (self.peerChecksApply && self.metricsUnverified) {
-        // The catalog is only a list of names and hash-pinned URLs, and TLS already authenticates the
-        // host that served it, so an unconfirmable peer address downgrades to a log rather than a
-        // refusal. Anything it points at still has to match its recorded hash before it installs.
-        SPKLog(@"i18n", @"[LangPackCatalog] peer address unverifiable — proceeding on TLS (packs stay hash-pinned)");
-    }
     [self finishWithData:self.buffer error:nil];
-}
-
-// Re-vet the socket's real peer address (DNS-rebind defence-in-depth; see SPKLanguagePackURLImporter).
-// Ordering vs didCompleteWithError: is not guaranteed, so delivery JOINS on this signal.
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
-    BOOL priv = NO;
-    NSArray<NSURLSessionTaskTransactionMetrics *> *tms = metrics.transactionMetrics;
-    for (NSURLSessionTaskTransactionMetrics *tm in tms) {  // any hop private → block
-        NSString *remote = tm.remoteAddress;
-        if (remote.length && SPKLanguagePackRemoteAddrStringIsPrivate(remote)) { priv = YES; break; }
-    }
-    BOOL sawAddr = (tms.lastObject.remoteAddress.length > 0);  // "verified" hinges on the final hop
-    @synchronized(self) {
-        if (self.metricsDone) return;
-        self.metricsDone = YES;
-        if (priv) self.remoteAddrPrivate = YES;
-        else if (!sawAddr) self.metricsUnverified = YES;  // final hop gave no usable peer address → unverified
-    }
-    if (priv && self.peerChecksApply && !self.finished) {
-        [task cancel];
-        [self finishWithData:nil error:[NSError errorWithDomain:SPKLanguageCatalogErrorDomain code:5 userInfo:nil]];
-        return;
-    }
-    [self joinAndDeliverIfReady];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
     willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request
              completionHandler:(void (^)(NSURLRequest *_Nullable))completionHandler {
-    // Re-apply the DNS guard per redirect hop: a redirect target is a host the pre-flight never saw.
-    if (SPKLanguagePackRemoteURLIsSafe(request.URL)) completionHandler(request);
-    else { completionHandler(nil); [self finishWithData:nil error:[NSError errorWithDomain:SPKLanguageCatalogErrorDomain code:4 userInfo:nil]]; }
+    // A hop only has to stay on https without userinfo.
+    NSURL *next = request.URL;
+    if ([next.scheme.lowercaseString isEqualToString:@"https"] && next.host.length && !next.user.length && !next.password.length) {
+        completionHandler(request);
+    } else {
+        completionHandler(nil);
+        [self finishWithData:nil error:[NSError errorWithDomain:SPKLanguageCatalogErrorDomain code:4 userInfo:nil]];
+    }
 }
 
 @end
@@ -214,16 +154,9 @@ static NSMutableSet<SPKCatalogFetcher *> *sSPKActiveFetchers;
             SPKLog(@"i18n", @"[LangPackCatalog] giving up after %.0fs", kSPKCatalogDeadline);
         done(nil, [self catalogError]);  // no-op if the fetch already answered
     });
-    // Host resolution (getaddrinfo) blocks → do validation + fetch off-main.
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
         NSURL *catalogURL = [self catalogURL];
-        BOOL proxied = SPKLanguagePackURLWouldUseProxy(catalogURL);
-        // A proxy resolves the host itself, so our own resolve describes nothing it will do; skipping
-        // the pre-flight there is what lets the feature work at all on a VPN. TLS remains the guarantee.
-        if (!proxied && !SPKLanguagePackRemoteURLIsSafe(catalogURL)) { done(nil, [self catalogError]); return; }
-
         SPKCatalogFetcher *fetcher = [SPKCatalogFetcher new];
-        fetcher.peerChecksApply = !proxied;
         NSURLSessionConfiguration *cfg = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         cfg.timeoutIntervalForRequest = 12.0;
         cfg.timeoutIntervalForResource = 20.0;

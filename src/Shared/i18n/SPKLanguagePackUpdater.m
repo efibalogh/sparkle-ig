@@ -57,6 +57,10 @@ static const NSTimeInterval kSPKUpdateRetryInterval = 60 * 60;
     return tracked;
 }
 
++ (BOOL)hasTrackedPacks {
+    return [self trackedPacks].count > 0;
+}
+
 + (BOOL)packsAreBehindTheInstalledVersion {
     id synced = [NSUserDefaults.standardUserDefaults objectForKey:kSPKSyncedVersionKey];
     // A missing stamp means packs installed before this became version-driven. Treating that as
@@ -67,8 +71,13 @@ static const NSTimeInterval kSPKUpdateRetryInterval = 60 * 60;
 + (void)checkForUpdatesIfDue {
     if (![self autoUpdateEnabled])
         return;
-    if ([self trackedPacks].count == 0)
-        return;  // nothing installed that tracks a release — no reason to touch the network
+    if ([self trackedPacks].count == 0) {
+        // Nothing installed that tracks a release, so there is no reason to touch the network. A date
+        // left from when one was installed (a pack later retired because its language now ships with
+        // Sparkle) would otherwise describe a check that can no longer run, so it goes too.
+        [NSUserDefaults.standardUserDefaults removeObjectForKey:kSPKLastUpdateCheckKey];
+        return;
+    }
     // Each pack is an asset of a published release, so its contents cannot change between releases.
     // Polling on a timer would spend a request a day to be told that; the version moving is the only
     // event that can make a pack stale, and it is also what keeps a pack and the binary reading it in

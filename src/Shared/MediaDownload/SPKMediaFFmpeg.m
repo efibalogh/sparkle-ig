@@ -297,6 +297,7 @@ static void SPKFFmpegEnsureLoaded(void) {
         [errors addObject:[NSString stringWithFormat:@"Loaded %@ but FFmpegKit classes were unavailable", candidate.lastPathComponent]];
     }
 
+    SPKLog(@"FFmpeg", @"Not available: %@", [errors componentsJoinedByString:@" | "]);
     SPKFFmpegPersistLoaderFailure(errors);
 }
 

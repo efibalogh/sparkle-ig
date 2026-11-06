@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Pronto";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "Número exato de seguidores nos perfis";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Correções e melhorias";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Downloads com falha informam o erro em vez de salvar";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "Editar e salvar segue sua configuração de qualidade de foto";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "A aba de início fica pronta mais rápido";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Vídeos do feed com áudio duplicado são salvos corretamente";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "O modo de feed Seguindo não trava mais ao abrir";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Arquivos ausentes na Galeria explicam o que aconteceu";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Salvar pela Galeria mantém o arquivo original no lugar";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Links copiados de stories em destaques não abrem mais como expirados";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Compatibilidade com o Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Avisos no estilo Instagram ganham cor no Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Pacotes de idioma baixam por trás de VPNs com IP falso";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "As notificações não empilham mais avisos ou telas duplicados";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "Cancelar em uma notificação de progresso interrompe a tarefa";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "A Galeria marca stories salvos de um destaque";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Abra stories e destaques salvos direto da Galeria";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...e muito mais!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "Um botão de sugestões em todo perfil, fechado até você tocar";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Segure uma pessoa na pesquisa para fixá-la acima das recentes";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "Novidades no %1$@ e %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "O Sparkle avisa quando sai uma atualização, com o histórico de mudanças";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "Novidades no %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Configurar ações";

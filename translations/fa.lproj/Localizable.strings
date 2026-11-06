@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "انجام شد";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "تعداد دقیق دنبال‌کنندگان در پروفایل‌ها";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "رفع اشکالات و بهبودها";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "دانلودهای ناموفق به‌جای ذخیره، خطا را نشان می‌دهند";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "ویرایش و ذخیره از تنظیم کیفیت عکس پیروی می‌کند";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "زبانه شروع زودتر آماده می‌شود";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "ویدیوهای فید با صدای دوبرابر درست ذخیره می‌شوند";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "حالت فید دنبال‌شده‌ها دیگر هنگام اجرا از کار نمی‌افتد";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "فایل‌های گم‌شده گالری توضیح می‌دهند چه اتفاقی افتاده";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "ذخیره از گالری فایل اصلی را سر جایش نگه می‌دارد";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "لینک‌های کپی‌شده استوری هایلایت دیگر منقضی‌شده باز نمی‌شوند";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "سازگاری با Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "پیام‌های سبک Instagram در Instagram 410 رنگی می‌شوند";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "بسته‌های زبان پشت VPNهای با IP جعلی دانلود می‌شوند";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "اعلان‌ها دیگر پیام‌ها یا صفحه‌های تکراری را روی هم نمی‌چینند";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "لغو در اعلان پیشرفت کار را متوقف می‌کند";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "گالری استوری‌های ذخیره‌شده از هایلایت را علامت می‌زند";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "استوری‌ها و هایلایت‌های ذخیره‌شده را مستقیم از گالری باز کنید";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...و خیلی چیزهای دیگر!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "دکمه پیشنهادها در هر پروفایل، بسته تا وقتی رویش بزنید";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "در جستجو روی یک نفر نگه دارید تا او را بالای جستجوهای اخیر سنجاق کنید";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "موارد جدید در %1$@ و %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle وقتی به‌روزرسانی جدیدی منتشر شود، همراه با فهرست تغییرات خبرتان می‌کند";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "موارد جدید در %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "پیکربندی اقدامات";

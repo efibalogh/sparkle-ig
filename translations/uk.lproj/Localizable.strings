@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Готово";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "Точна кількість підписників у профілях";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Виправлення та поліпшення";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Невдалі завантаження повідомляють про помилку, а не про збереження";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "«Редагувати та Зберегти» враховує налаштування якості фото";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "Вкладка запуску готова швидше";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Відео зі стрічки з подвоєним звуком зберігаються правильно";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "Режим стрічки «Відстежувані» більше не вилітає під час запуску";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Відсутні файли в Галереї пояснюють, що сталося";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Збереження з Галереї залишає оригінальний файл на місці";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Скопійовані посилання на історії з актуального більше не відкриваються як прострочені";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Сумісність з Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Сповіщення в стилі Instagram мають колір в Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Мовні пакети завантажуються за VPN із підробними IP";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "Сповіщення більше не накладають повторювані повідомлення й екрани";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "Скасування в сповіщенні про прогрес зупиняє завдання";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "Галерея позначає історії, збережені з актуального";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Відкривайте збережені історії та актуальне просто з Галереї";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...і багато іншого!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "Кнопка рекомендацій у кожному профілі, закрита до натискання";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Утримуйте людину в пошуку, щоб закріпити її над нещодавніми";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "Що нового в %1$@ і %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle повідомляє про вихід оновлення та показує список змін";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "Що нового в %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Налаштувати дії";

@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "เสร็จสิ้น";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "จำนวนผู้ติดตามที่แน่นอนบนโปรไฟล์";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "การแก้ไขและปรับปรุง";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "ดาวน์โหลดที่ล้มเหลวแจ้งว่าล้มเหลวแทนที่จะบอกว่าบันทึกแล้ว";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "แก้ไขและบันทึกใช้การตั้งค่าคุณภาพรูปภาพของคุณ";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "แท็บตอนเปิดแอปพร้อมใช้งานเร็วขึ้น";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "วิดีโอในฟีดที่มีเสียงซ้อนสองชั้นบันทึกได้ถูกต้อง";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "โหมดฟีดกำลังติดตามไม่แครชตอนเปิดแอปอีกต่อไป";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "ไฟล์ในแกลเลอรีที่หายไปจะอธิบายว่าเกิดอะไรขึ้น";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "การบันทึกจากแกลเลอรีจะเก็บไฟล์ต้นฉบับไว้ที่เดิม";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "ลิงก์สตอรี่ไฮไลท์ที่คัดลอกไม่เปิดเป็นหมดอายุอีกต่อไป";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "รองรับ Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "ข้อความแบบ Instagram มีสีบน Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "ดาวน์โหลดแพ็กภาษาได้แม้ใช้ VPN แบบ fake-IP";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "การแจ้งเตือนไม่ซ้อนข้อความหรือหน้าจอซ้ำอีกต่อไป";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "การยกเลิกในการแจ้งเตือนความคืบหน้าจะหยุดการทำงาน";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "แกลเลอรีทำเครื่องหมายสตอรี่ที่บันทึกจากไฮไลท์";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "เปิดสตอรี่และไฮไลท์ที่บันทึกไว้ได้จากแกลเลอรีโดยตรง";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...และอีกมากมาย!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "ปุ่มคำแนะนำบนทุกโปรไฟล์ ปิดอยู่จนกว่าคุณจะแตะ";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "กดค้างที่บุคคลในการค้นหาเพื่อปักหมุดไว้เหนือรายการล่าสุด";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "มีอะไรใหม่ใน %1$@ และ %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle จะแจ้งเมื่อมีอัปเดตใหม่ พร้อมบันทึกการเปลี่ยนแปลง";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "มีอะไรใหม่ใน %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "กำหนดค่าการดำเนินการ";

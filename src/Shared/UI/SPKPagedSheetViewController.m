@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) SPKGlassButton *primaryButton;
 @property (nonatomic, strong) UIButton *skipButton;
+@property (nonatomic, strong) NSMutableArray<UIScrollView *> *pageScrollViews;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) BOOL didFinish;
 @end
@@ -161,8 +162,10 @@
         [hStack.heightAnchor constraintEqualToAnchor:self.pager.frameLayoutGuide.heightAnchor],
     ]];
 
+    self.pageScrollViews = [NSMutableArray arrayWithCapacity:self.pages.count];
     for (SPKPagedSheetPage *page in self.pages) {
         UIScrollView *pageView = [self viewForPage:page];
+        [self.pageScrollViews addObject:pageView];
         pageView.translatesAutoresizingMaskIntoConstraints = NO;
         [hStack addArrangedSubview:pageView];
         [pageView.widthAnchor constraintEqualToAnchor:self.pager.frameLayoutGuide.widthAnchor].active = YES;
@@ -335,7 +338,27 @@
     self.skipButton.hidden = isLast;
 }
 
+// Scrolls the current page down by about one screen when part of it is still
+// below the fold, so the CTA walks through every row before it moves on.
+- (BOOL)scrollCurrentPageDownIfNeeded {
+    if (self.currentPage < 0 || self.currentPage >= (NSInteger)self.pageScrollViews.count)
+        return NO;
+    UIScrollView *page = self.pageScrollViews[(NSUInteger)self.currentPage];
+    [page layoutIfNeeded];
+    CGFloat visible = page.bounds.size.height;
+    CGFloat maxOffset = page.contentSize.height + page.adjustedContentInset.bottom - visible;
+    CGFloat offset = page.contentOffset.y;
+    if (visible <= 0.0 || maxOffset - offset <= 1.0)
+        return NO;
+    // Keep a strip of the previous view on screen so the reader keeps their place.
+    CGFloat step = MAX(visible - 64.0, visible * 0.6);
+    [page setContentOffset:CGPointMake(page.contentOffset.x, MIN(offset + step, maxOffset)) animated:YES];
+    return YES;
+}
+
 - (void)primaryTapped {
+    if ([self scrollCurrentPageDownIfNeeded])
+        return;
     if (self.currentPage >= (NSInteger)self.pages.count - 1) {
         [self finish];
         return;

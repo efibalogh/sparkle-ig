@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Ολοκληρώθηκε";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "Ακριβής αριθμός ακολούθων στα προφίλ";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Διορθώσεις & Βελτιώσεις";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Οι αποτυχημένες λήψεις δείχνουν αποτυχία αντί για αποθήκευση";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "Η Επεξεργασία & Αποθήκευση ακολουθεί τη ρύθμιση ποιότητας φωτογραφιών";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "Η καρτέλα εκκίνησης είναι έτοιμη πιο γρήγορα";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Τα βίντεο της ροής με διπλό ήχο αποθηκεύονται σωστά";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "Η λειτουργία ροής «Ακολουθείτε» δεν κρασάρει πλέον κατά την εκκίνηση";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Τα αρχεία που λείπουν από τη Γκαλερί εξηγούν τι συνέβη";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Η αποθήκευση από τη Γκαλερί αφήνει το αρχικό αρχείο στη θέση του";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Οι αντιγραμμένοι σύνδεσμοι ιστοριών από ξεχωριστές στιγμές δεν ανοίγουν πια ως ληγμένοι";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Συμβατότητα με το Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Τα μηνύματα στυλ Instagram έχουν χρώμα στο Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Τα πακέτα γλωσσών κατεβαίνουν και πίσω από VPN με ψεύτικες IP";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "Οι ειδοποιήσεις δεν στοιβάζουν πλέον διπλά μηνύματα ή οθόνες";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "Η ακύρωση σε ειδοποίηση προόδου σταματά την εργασία";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "Η Γκαλερί επισημαίνει ιστορίες που αποθηκεύτηκαν από ξεχωριστές στιγμές";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Άνοιξε αποθηκευμένες ιστορίες και ξεχωριστές στιγμές απευθείας από τη Γκαλερί";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...και πολλά ακόμα!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "Ένα κουμπί προτάσεων σε κάθε προφίλ, κλειστό μέχρι να το πατήσεις";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Πάτα παρατεταμένα ένα άτομο στην αναζήτηση για να το καρφιτσώσεις πάνω από τις πρόσφατες";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "Τι νέο υπάρχει στο %1$@ και στο %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Το Sparkle σε ειδοποιεί όταν βγαίνει ενημέρωση, μαζί με τις αλλαγές της";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "Τι νέο υπάρχει στο %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Διαμόρφωση ενεργειών";

@@ -977,6 +977,8 @@ static int64_t SPKFileSizeAtPath(NSString *path) {
                                             __strong typeof(weakSelf) strongSelf = weakSelf;
                                             if (!strongSelf)
                                                 return;
+                                            if (error)
+                                                SPKLog(@"Downloads", @"Finalize failed: %@", error);
                                             if (error) {
                                                 [strongSelf transitionItemID:item.itemID
                                                                        jobID:job.jobID
