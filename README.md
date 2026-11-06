@@ -4,7 +4,7 @@
 
 # Sparkle for Instagram
 
-`v1.6.0` · Tested on versions **454.1.0** and **410.1.0**
+`v1.6.1` · Tested on versions **454.1.0** and **410.1.0**
 
 [📣 IPA Releases](https://t.me/sparkle_ig) · [💬 Chat & Support](https://t.me/+f-Xo21HnfCY3NmE0) · [📦 Jailbreak Repo](https://efibalogh.github.io/sparkle-ig/) · [📥 DEB Releases](https://github.com/efibalogh/sparkle-ig/releases/latest) · [🐛 Issues](https://github.com/efibalogh/sparkle-ig/issues/new/choose) · [❤️ Support](https://ko-fi.com/sparkle_ig)
 

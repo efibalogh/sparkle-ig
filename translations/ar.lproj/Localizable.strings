@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "تم";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "العدد الدقيق للمتابِعين في الملفات الشخصية";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "التصحيحات والتحسينات";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "التنزيلات الفاشلة تُظهر الفشل بدلاً من الحفظ";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "تحرير وحفظ يتبع إعداد جودة الصور";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "علامة التبويب عند التشغيل تصبح جاهزة أسرع";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "تُحفظ فيديوهات الموجز ذات الصوت المزدوج بشكل صحيح";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "لم يعد وضع موجز المتابَعين يتعطل عند التشغيل";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "الملفات المفقودة في المعرض تشرح ما حدث";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "الحفظ من المعرض يُبقي الملف الأصلي في مكانه";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "روابط القصص المميزة المنسوخة لم تعد تفتح كمنتهية الصلاحية";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "التوافق مع Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "أصبحت إشعارات نمط Instagram ملوّنة على Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "تُنزَّل حزم اللغات عبر شبكات VPN ذات عناوين IP الوهمية";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "لم تعد الإشعارات تكدّس رسائل أو شاشات مكررة";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "الإلغاء في إشعار التقدم يوقف المهمة";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "يُميّز المعرض القصص المحفوظة من القصص المميزة";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "افتح القصص والقصص المميزة المحفوظة مباشرة من المعرض";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...والمزيد!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "زر الاقتراحات في كل ملف شخصي، مغلق حتى تنقر عليه";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "اضغط مطولاً على شخص في البحث لتثبيته فوق عمليات البحث الأخيرة";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "ما الجديد في %1$@ و%2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "يُعلمك Sparkle عند صدور تحديث جديد، مع سجل التغييرات";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "ما الجديد في %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "تكوين الإجراءات";

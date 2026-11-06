@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "पूर्ण";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "प्रोफ़ाइल पर फ़ॉलोअर्स की सटीक संख्या";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "ठीक किए गए और सुधार";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "विफल डाउनलोड अब सेव की जगह विफलता बताते हैं";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "संपादित करें और सेव करें आपकी फ़ोटो गुणवत्ता सेटिंग का पालन करता है";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "लॉन्च वाला टैब जल्दी तैयार होता है";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "दोहरी ऑडियो वाले फ़ीड वीडियो सही ढंग से सेव होते हैं";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "Following फ़ीड मोड अब लॉन्च पर क्रैश नहीं होता";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "गैलरी में ग़ायब फ़ाइलें बताती हैं कि क्या हुआ";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "गैलरी से सेव करने पर मूल फ़ाइल अपनी जगह रहती है";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "कॉपी किए गए हाइलाइट स्टोरी लिंक अब एक्सपायर्ड नहीं खुलते";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Instagram v454.1.0 के साथ संगतता";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Instagram 410 पर Instagram-शैली के टोस्ट रंगीन दिखते हैं";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "fake-IP VPN के पीछे भी भाषा पैक डाउनलोड होते हैं";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "सूचनाएँ अब डुप्लिकेट टोस्ट या स्क्रीन नहीं जमा करतीं";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "प्रोग्रेस नोटिफ़िकेशन पर रद्द करने से काम रुक जाता है";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "गैलरी हाइलाइट से सेव की गई स्टोरीज़ को चिह्नित करती है";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "सेव की गई स्टोरीज़ और हाइलाइट्स सीधे गैलरी से खोलें";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...और भी बहुत कुछ!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "हर प्रोफ़ाइल पर सुझाव बटन, टैप करने तक बंद";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "खोज में किसी व्यक्ति को दबाकर रखें और उन्हें हाल की खोजों के ऊपर पिन करें";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "%1$@ और %2$@ में क्या नया है";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "नया अपडेट आने पर Sparkle आपको बदलावों की सूची के साथ बताता है";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "%@ में क्या नया है";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "क्रियाएँ कॉन्फ़िगर करें";

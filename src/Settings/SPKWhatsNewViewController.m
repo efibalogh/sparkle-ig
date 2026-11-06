@@ -12,10 +12,18 @@
 // Every content row is replaced wholesale each release. The keys name the change
 // rather than its English wording, and the previous release's keys are deleted from
 // every catalog, so a stale translation can never be reused for a different row.
+
+// A patch release that extends the previous release's sheet names both versions.
+// Set to nil when a release gets a sheet of its own.
+static NSString *const SPKWhatsNewPreviousVersion = @"v1.6.0";
+
 - (NSArray<SPKPagedSheetPage *> *)buildPages {
+    NSString *intro = SPKWhatsNewPreviousVersion.length
+        ? [NSString stringWithFormat:SPKL(@"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT"), SPKWhatsNewPreviousVersion, SPKVersionString]
+        : [NSString stringWithFormat:SPKL(@"SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT"), SPKVersionString];
     return @[
         [SPKPagedSheetPage pageWithTitle:SPKL(@"SETTINGS_WHATS_NEW_NEW_FEATURES_TEXT")
-                                    body:[NSString stringWithFormat:SPKL(@"SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT"), SPKVersionString]
+                                    body:intro
                                     rows:@[
                                         @{ @"icon": @"download", @"text": SPKL(@"SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT") },
                                         @{ @"icon": @"moon", @"text": SPKL(@"SETTINGS_WHATS_NEW_OLED_DARK_MODE_TEXT") },
@@ -42,6 +50,11 @@
         [SPKPagedSheetPage pageWithTitle:SPKL(@"SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT")
                                     body:@""
                                     rows:@[
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT") },
                                         @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT") },
                                         @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT") },
                                         @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT") },

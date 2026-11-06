@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Gata";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "Număr exact de urmăritori pe profiluri";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Corecturi și îmbunătățiri";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Descărcările eșuate raportează eroarea în loc de salvare";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "Editează și salvează respectă setarea de calitate a fotografiilor";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "Fila de pornire este gata mai repede";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Videoclipurile din flux cu sunet dublat se salvează corect";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "Modul de feed Urmăriți nu se mai blochează la pornire";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Fișierele lipsă din Galerie explică ce s-a întâmplat";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Salvarea din Galerie lasă fișierul original la locul lui";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Linkurile copiate ale poveștilor din evidențieri nu mai apar expirate";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Compatibilitate cu Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Mesajele în stil Instagram sunt colorate pe Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Pachetele de limbă se descarcă și prin VPN-uri cu IP fals";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "Notificările nu mai suprapun mesaje sau ecrane duplicate";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "Anularea dintr-o notificare de progres oprește operațiunea";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "Galeria marchează poveștile salvate dintr-o evidențiere";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Deschide poveștile și evidențierile salvate direct din Galerie";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...și multe altele!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "Un buton de sugestii pe fiecare profil, închis până când îl atingi";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Ține apăsat pe o persoană în căutare pentru a o fixa deasupra celor recente";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "Ce-i nou în %1$@ și %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle te anunță când apare o actualizare, cu lista de modificări";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "Ce-i nou în %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Configurează acțiuni";

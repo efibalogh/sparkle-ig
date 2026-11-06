@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Terminé";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "Nombre exact d'abonnés sur les profils";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Corrections et améliorations";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Les téléchargements échoués signalent l'échec au lieu d'un enregistrement";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "Modifier et Enregistrer suit votre réglage de qualité photo";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "L'onglet de démarrage est prêt plus vite";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Les vidéos du fil au son doublé s'enregistrent correctement";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "Le mode de fil Abonnements ne plante plus au lancement";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Les fichiers manquants de la Galerie expliquent ce qui s'est passé";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Enregistrer depuis la Galerie laisse le fichier d'origine en place";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Les liens copiés de stories à la une ne s'ouvrent plus comme expirés";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Compatibilité avec Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Les messages au style Instagram sont teintés sur Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Les packs de langue se téléchargent derrière les VPN à fausses IP";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "Les notifications n'empilent plus de messages ni d'écrans en double";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "Annuler une notification de progression arrête la tâche";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "La Galerie signale les stories enregistrées depuis une story à la une";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Ouvrez les stories et les stories à la une enregistrées directement depuis la Galerie";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...et bien plus encore !";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "Un bouton de suggestions sur chaque profil, fermé jusqu'à ce que vous le touchiez";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Maintenez une personne dans la recherche pour l'épingler au-dessus des récents";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "Les nouveautés de %1$@ et %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle vous prévient quand une mise à jour sort, avec son journal des modifications";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "Les nouveautés de %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Configurer les actions";

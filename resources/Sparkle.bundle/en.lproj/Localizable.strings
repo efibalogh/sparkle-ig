@@ -2237,13 +2237,18 @@
 "SETTINGS_WHATS_NEW_DONE_TEXT" = "Done";
 "SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT" = "See exact follower counts on profiles";
 "SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT" = "Fixes & Improvements";
+"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT" = "Failed downloads say they failed instead of saved";
 "SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT" = "Edit & Save follows your photo quality setting";
 "SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT" = "The tab you launch into is ready sooner";
 "SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT" = "Feed videos with doubled audio save correctly";
+"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT" = "The Following feed mode no longer crashes on launch";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT" = "Missing Gallery files explain what happened";
 "SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT" = "Saving from the Gallery keeps the original file in place";
 "SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT" = "Copied highlight story links no longer open as expired";
 "SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT" = "Compatibility with Instagram v454.1.0";
+"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT" = "Instagram-style toasts are tinted on Instagram 410";
+"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT" = "Language packs download behind fake-IP VPNs";
+"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT" = "Notifications no longer stack duplicate toasts or screens";
 "SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT" = "Cancel on a progress notification stops the work";
 "SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT" = "The Gallery marks stories saved from a highlight";
 "SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT" = "Open saved stories and highlights right from the Gallery";
@@ -2259,6 +2264,7 @@
 "SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT" = "...and plenty more!";
 "SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT" = "A suggestions button on every profile, closed until you tap it";
 "SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT" = "Hold a person in search to pin them above your recents";
+"SETTINGS_WHATS_NEW_TWO_VERSIONS_VALUE_FORMAT" = "What's new in %1$@ and %2$@";
 "SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT" = "Sparkle tells you when an update is out, with its changelog";
 "SETTINGS_WHATS_NEW_WHAT_S_NEW_VALUE_FORMAT" = "What's new in %@";
 "SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE" = "Configure Actions";
