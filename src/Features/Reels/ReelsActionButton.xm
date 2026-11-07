@@ -150,10 +150,22 @@ static id SPKReelsMediaFromCell(UICollectionViewCell *cell) {
     if (passthrough)
         return passthrough;
 
-    // Fallback: scan ivars for IGMedia
     Class mediaClass = NSClassFromString(@"IGMedia");
     if (!mediaClass)
         return nil;
+
+    // Photo cells (a single image with music) keep no passthrough. Newer builds
+    // also store a GraphQL fragment in `_media` instead of an IGMedia and add a
+    // Swift twin whose ivars carry no type encoding, so ask the cell's controls
+    // overlay controller and section controller, which both expose the IGMedia.
+    id overlayMedia = SPKObjectForSelector(SPKObjectForSelector(cell, @"overlayController"), @"media");
+    if ([overlayMedia isKindOfClass:mediaClass])
+        return overlayMedia;
+    id delegateMedia = SPKObjectForSelector(SPKObjectForSelector(cell, @"delegate"), @"media");
+    if ([delegateMedia isKindOfClass:mediaClass])
+        return delegateMedia;
+
+    // Fallback: scan ivars for IGMedia
 
     unsigned int count = 0;
     Ivar *ivars = class_copyIvarList([cell class], &count);
@@ -242,11 +254,14 @@ static UICollectionViewCell *SPKReelsOwnEnclosingCell(UIView *view) {
     Class carouselClass = NSClassFromString(@"IGSundialViewerCarouselCell");
     Class videoCellClass = NSClassFromString(@"IGSundialViewerVideoCell");
     Class photoCellClass = NSClassFromString(@"IGSundialViewerPhotoCell");
+    // Server-gated Swift twin of the photo cell; it does not subclass the ObjC one.
+    Class swiftPhotoCellClass = NSClassFromString(@"_TtC24IGSundialViewerPhotoCell29IGSundialViewerPhotoCellSwift");
     UIView *current = view;
     for (NSInteger depth = 0; current && depth < 25; depth++) {
         if ((carouselClass && [current isKindOfClass:carouselClass]) ||
             (videoCellClass && [current isKindOfClass:videoCellClass]) ||
-            (photoCellClass && [current isKindOfClass:photoCellClass])) {
+            (photoCellClass && [current isKindOfClass:photoCellClass]) ||
+            (swiftPhotoCellClass && [current isKindOfClass:swiftPhotoCellClass])) {
             return (UICollectionViewCell *)current;
         }
         current = current.superview;
