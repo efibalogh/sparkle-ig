@@ -319,6 +319,20 @@ UIMenu *SPKLastActiveFormatMenu(void) {
     ]];
 }
 
+UIMenu *SPKLiquidGlassModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, kSPKPrefInterfaceLiquidGlassMode, @"follow", YES),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, kSPKPrefInterfaceLiquidGlassMode, @"on", YES),
+                         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, kSPKPrefInterfaceLiquidGlassMode, @"off", YES)
+                     ]]
+    ]];
+}
+
 UIMenu *SPKLiquidGlassTabBarStateMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, kSPKPrefInterfaceLiquidGlassTabBarMode, @"default", YES),

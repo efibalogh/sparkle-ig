@@ -59,6 +59,10 @@ vault mediavault otf ttf ttc crf explorer hook hooks push instant instants web m
 face touch s
 ryuk ryukgram socuul scinsta instasane zxpluginsinject
 """.split())
+# Keys for dev-build-only tooling (SPK_DEV). They live in the English catalog only:
+# release users never see them, so no other catalog carries or translates them, and
+# lookups fall back to English.
+DEV_ONLY_KEY_PREFIX = "DEV_"
 # English a native reviewer of a shipped catalog chose to keep. Checked per key, so
 # the same words left untranslated anywhere else still count against the catalog.
 REVIEWED_ENGLISH = {
@@ -287,6 +291,7 @@ def check_catalog(locale, values, plurals, english, english_plurals, shipped):
 
     translated = 0
     if locale != "en":
+        english = {key: value for key, value in english.items() if not key.startswith(DEV_ONLY_KEY_PREFIX)}
         # A key left verbatim in English is untranslated even though it parses, so
         # a freshly seeded catalog must not read as complete. Brand names and
         # technical tokens that no language changes do not count against it.
@@ -397,8 +402,9 @@ def main(only_locale: str | None = None, emit_table: bool = False) -> int:
         )
         errors.extend(catalog_errors)
         warnings.extend(catalog_warnings)
-        if english:
-            coverage.append((locale, math.floor(100 * translated / len(english))))
+        translatable = sum(1 for key in english if not key.startswith(DEV_ONLY_KEY_PREFIX))
+        if translatable:
+            coverage.append((locale, math.floor(100 * translated / translatable)))
 
     english = english or {}
     english_plurals = english_plurals or {}

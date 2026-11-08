@@ -3,6 +3,7 @@
 #import <substrate.h>
 
 #include "../../../modules/SPKSideloadFix/fishhook/fishhook.h"
+#import "SPKLiquidGlassGates.h"
 #import "../../Settings/SPKPreferences.h"
 #import "../../Utils.h"
 
@@ -16,15 +17,150 @@ static SPKLiquidGlassMode SPKLiquidGlassCurrentMode(void) {
     return [SPKUtils spk_liquidGlassMode];
 }
 
-// Forced modes answer every gate themselves; Follow asks Instagram. The
-// original is only called in Follow so a forced gate never runs Instagram's
-// own evaluation.
-#define SPK_LIQUID_GLASS_GATE(origCall)                                     \
-    ({                                                                      \
-        SPKLiquidGlassMode spk_mode = SPKLiquidGlassCurrentMode();          \
-        spk_mode == SPKLiquidGlassModeOn    ? (BOOL)YES                     \
-        : spk_mode == SPKLiquidGlassModeOff ? (BOOL)NO                      \
-                                            : (BOOL)(origCall);             \
+// MARK: - Gate registry
+//
+// Every value forced Liquid Glass writes or answers is a named gate. Dev builds
+// can leave single gates to Instagram for the next launch and record, per gate,
+// what Instagram would have answered next to what Sparkle answered, so a
+// regression can be narrowed to one gate (Tools > Diagnostics > Liquid Glass
+// Gates). Release builds keep the original behavior: every gate forced and
+// Instagram's evaluation never run.
+
+#if SPK_DEV
+#define SPK_LG_DEV 1
+#else
+#define SPK_LG_DEV 0
+#endif
+
+typedef NS_ENUM(NSInteger, SPKLGGate) {
+    SPKLGGateGlobalFlagWrite = 0,
+    SPKLGGateToggleSetIsEnabled,
+    SPKLGGateNavOverrideIsEnabled,
+    SPKLGGateNavOverrideRenderingOptimization,
+    SPKLGGateNavOverrideLegibilityBlur,
+    SPKLGGateNavOverrideSegmentedTabsGlassDisabled,
+    SPKLGGateNavOverrideBrowserChromeGlassDisabled,
+    SPKLGGateNavOverrideOtherNavBarHeight,
+    SPKLGGateToggleIsEnabled,
+    SPKLGGateNavIsEnabled,
+    SPKLGGateNavIsHomeFeedHeaderEnabled,
+    SPKLGGateNavRenderingOptimization,
+    SPKLGGateNavLegibilityBlur,
+    SPKLGGateNavBrowserChromeGlass,
+    SPKLGGateNavSegmentedTabsGlassDisabled,
+    SPKLGGateNavOtherNavBarHeight,
+    SPKLGGateLauncherContentStylePinning,
+    SPKLGGateLauncherEaseInOutBlur,
+    SPKLGGateLauncherCGContextBlur,
+    SPKLGGateLauncherSystemDefaultGlass,
+    SPKLGGateGlassIsEnabled,
+    SPKLGGateVideoBackButton,
+    SPKLGGateVideoCameraEntryButton,
+    SPKLGGateAlertDialogGlass,
+    SPKLGGateAlertActionEnableGlass,
+    SPKLGGateFloatingTabBar,
+    SPKLGGateTabBarDynamicSizing,
+    SPKLGGateTabBarEnhancedDynamicSizing,
+    SPKLGGateTabBarViewPointFix,
+    SPKLGGateTabBarStyle,
+    SPKLGGateCount
+};
+
+// Stable identifiers: they name the pref that skips the gate, so never reorder
+// their meaning. Group, then the symbol Instagram exposes.
+static const char *const kSPKLGGateNames[SPKLGGateCount][2] = {
+    {"Writes", "IGLiquidGlass.isEnabled (static)"},
+    {"Writes", "SwizzleToggle setIsEnabled:"},
+    {"Writes", "Nav overrideIsEnabled:"},
+    {"Writes", "Nav overrideIsGlassRenderingOptimizationEnabled:"},
+    {"Writes", "Nav overrideIsLegibilityBlurEnabled:"},
+    {"Writes", "Nav overrideIsProfileSegmentedTabsGlassDisabled:"},
+    {"Writes", "Nav overrideIsBrowserChromeGlassDisabled:"},
+    {"Writes", "Nav overrideIsProfileOtherNavBarHeightMatchSelf:"},
+    {"Navigation", "SwizzleToggle isEnabled"},
+    {"Navigation", "Nav isEnabled"},
+    {"Navigation", "Nav isHomeFeedHeaderEnabled"},
+    {"Navigation", "Nav isGlassRenderingOptimizationEnabled"},
+    {"Navigation", "Nav isLegibilityBlurEnabled"},
+    {"Navigation", "Nav isBrowserChromeGlassEnabled"},
+    {"Navigation", "Nav isProfileSegmentedTabsGlassDisabled"},
+    {"Navigation", "Nav isProfileOtherNavBarHeightMatchSelf"},
+    {"Launcher config", "isLiquidGlassNavigationContentStylePinningEnabled"},
+    {"Launcher config", "isLiquidGlassEaseInOutBlurEnabled"},
+    {"Launcher config", "isLiquidGlassCGContextBlurEnabled"},
+    {"Launcher config", "isSystemDefaultGlassEnabled"},
+    {"Components", "+IGLiquidGlass isEnabled"},
+    {"Components", "IGUnifiedVideoBackButton _isLiquidGlassEnabled"},
+    {"Components", "IGUnifiedVideoCameraEntryPointButton _isLiquidGlassEnabled"},
+    {"Components", "+IGDSAlertDialogLiquidGlass isEnabled"},
+    {"Components", "IGDSAlertDialogActionButton enableLiquidGlass"},
+    {"Tab bar", "IGFloatingTabBarEnabled"},
+    {"Tab bar", "IGTabBarDynamicSizingEnabled"},
+    {"Tab bar", "IGTabBarEnhancedDynamicSizingEnabled"},
+    {"Tab bar", "IGTabBarViewPointFixEnabled"},
+    {"Tab bar", "IGTabBarStyleForLauncherSet"},
+};
+
+static BOOL sSPKLGSkipped[SPKLGGateCount];
+static BOOL sSPKLGInstalled[SPKLGGateCount];
+// -1 until the first read: what Instagram answered, and what the caller got.
+static volatile NSInteger sSPKLGInstagramValue[SPKLGGateCount];
+static volatile NSInteger sSPKLGReturnedValue[SPKLGGateCount];
+static volatile uint64_t sSPKLGReads[SPKLGGateCount];
+// Originals of the block-based getter hooks, by gate.
+static IMP sSPKLGOriginal[SPKLGGateCount];
+
+static NSString *SPKLGGateSkipKey(NSInteger gate) {
+    return [NSString stringWithFormat:@"tools_lg_gate_skip_%s", kSPKLGGateNames[gate][1]];
+}
+
+// Skips are read once: the mode itself is per launch, and some gates are read
+// on every frame.
+static void SPKLGLoadSkips(void) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        for (NSInteger gate = 0; gate < SPKLGGateCount; gate++) {
+            sSPKLGInstagramValue[gate] = -1;
+            sSPKLGReturnedValue[gate] = -1;
+            sSPKLGSkipped[gate] = SPK_LG_DEV && [SPKUtils getBoolPref:SPKLGGateSkipKey(gate)];
+            if (sSPKLGSkipped[gate])
+                SPKLog(@"LiquidGlass", @"Gate left to Instagram: %s", kSPKLGGateNames[gate][1]);
+        }
+    });
+}
+
+static inline BOOL SPKLGIsSkipped(SPKLGGate gate) {
+    if (!SPK_LG_DEV)
+        return NO;
+    SPKLGLoadSkips();
+    return sSPKLGSkipped[gate];
+}
+
+static inline void SPKLGRecord(SPKLGGate gate, NSInteger instagramValue, NSInteger returnedValue) {
+    if (!SPK_LG_DEV)
+        return;
+    if (instagramValue >= 0)
+        sSPKLGInstagramValue[gate] = instagramValue;
+    sSPKLGReturnedValue[gate] = returnedValue;
+    sSPKLGReads[gate]++;
+}
+
+// A gate hook body. Forced modes answer the gate themselves and Follow asks
+// Instagram; release builds only run Instagram's evaluation in Follow. Dev builds
+// also run it beside a forced answer to record it, and answer with it when the
+// gate is left to Instagram.
+#define SPK_LIQUID_GLASS_GATE_ID(gate, origCall)                                         \
+    ({                                                                                    \
+        BOOL spk_value;                                                                   \
+        SPKLiquidGlassMode spk_gate_mode = SPKLiquidGlassCurrentMode();                   \
+        if (spk_gate_mode == SPKLiquidGlassModeFollow || SPKLGIsSkipped(gate)) {          \
+            spk_value = (BOOL)(origCall);                                                 \
+            SPKLGRecord(gate, spk_value, spk_value);                                      \
+        } else {                                                                          \
+            spk_value = spk_gate_mode == SPKLiquidGlassModeOn;                            \
+            SPKLGRecord(gate, SPK_LG_DEV ? (NSInteger)(BOOL)(origCall) : -1, spk_value);  \
+        }                                                                                 \
+        spk_value;                                                                        \
     })
 
 // MARK: - Experiment-helper overrides (IG 433+)
@@ -83,7 +219,24 @@ static void SPKLiquidGlassWriteGlobalFlag(BOOL enabled) {
         SPKLog(@"LiquidGlass", @"IGLiquidGlass.isEnabled storage unavailable");
         return;
     }
+    sSPKLGInstalled[SPKLGGateGlobalFlagWrite] = YES;
+    if (SPKLGIsSkipped(SPKLGGateGlobalFlagWrite)) {
+        SPKLGRecord(SPKLGGateGlobalFlagWrite, *flag, *flag);
+        return;
+    }
+    SPKLGRecord(SPKLGGateGlobalFlagWrite, *flag, enabled);
     *flag = enabled;
+}
+
+// One forced write, unless the gate is left to Instagram.
+static void SPKLiquidGlassApplyOverride(SPKLGGate gate, id target, SEL sel, BOOL value) {
+    if (!target || ![target respondsToSelector:sel])
+        return;
+    sSPKLGInstalled[gate] = YES;
+    if (SPKLGIsSkipped(gate))
+        return;
+    SPKLiquidGlassCallOverrideBool(target, sel, value);
+    SPKLGRecord(gate, -1, value);
 }
 
 // Writes the forced state into every place Instagram keeps it: the global flag,
@@ -102,30 +255,42 @@ extern "C" void SPKApplyLiquidGlassExperimentOverridesIfEnabled(void) {
     }
     BOOL on = mode == SPKLiquidGlassModeOn;
     SPKLiquidGlassWriteGlobalFlag(on);
-    SPKLiquidGlassCallOverrideBool(SPKLiquidGlassSharedSingleton(SPKLiquidGlassSwizzleToggleClass()), @selector(setIsEnabled:), on);
-    SPKLiquidGlassCallOverrideBool(nav, @selector(overrideIsEnabled:), on);
-    SPKLiquidGlassCallOverrideBool(nav, @selector(overrideIsGlassRenderingOptimizationEnabled:), on);
-    SPKLiquidGlassCallOverrideBool(nav, @selector(overrideIsLegibilityBlurEnabled:), on);
-    SPKLiquidGlassCallOverrideBool(nav, @selector(overrideIsProfileSegmentedTabsGlassDisabled:), !on);
-    SPKLiquidGlassCallOverrideBool(nav, @selector(overrideIsBrowserChromeGlassDisabled:), !on);
-    SPKLiquidGlassCallOverrideBool(nav, @selector(overrideIsProfileOtherNavBarHeightMatchSelf:), on);
+    SPKLiquidGlassApplyOverride(SPKLGGateToggleSetIsEnabled, SPKLiquidGlassSharedSingleton(SPKLiquidGlassSwizzleToggleClass()), @selector(setIsEnabled:), on);
+    SPKLiquidGlassApplyOverride(SPKLGGateNavOverrideIsEnabled, nav, @selector(overrideIsEnabled:), on);
+    SPKLiquidGlassApplyOverride(SPKLGGateNavOverrideRenderingOptimization, nav, @selector(overrideIsGlassRenderingOptimizationEnabled:), on);
+    SPKLiquidGlassApplyOverride(SPKLGGateNavOverrideLegibilityBlur, nav, @selector(overrideIsLegibilityBlurEnabled:), on);
+    SPKLiquidGlassApplyOverride(SPKLGGateNavOverrideSegmentedTabsGlassDisabled, nav, @selector(overrideIsProfileSegmentedTabsGlassDisabled:), !on);
+    SPKLiquidGlassApplyOverride(SPKLGGateNavOverrideBrowserChromeGlassDisabled, nav, @selector(overrideIsBrowserChromeGlassDisabled:), !on);
+    SPKLiquidGlassApplyOverride(SPKLGGateNavOverrideOtherNavBarHeight, nav, @selector(overrideIsProfileOtherNavBarHeightMatchSelf:), on);
     SPKLog(@"LiquidGlass", @"Applied forced Liquid Glass state on=%d", on);
 }
 
 // Forces a BOOL getter to a fixed value for the whole launch. Only installed in
 // forced modes, which never change without a restart.
-static void SPKLiquidGlassForceBoolGetter(Class cls, SEL selector, BOOL value) {
+static void SPKLiquidGlassForceBoolGetter(SPKLGGate gate, Class cls, SEL selector, BOOL value) {
     if (!cls || !class_getInstanceMethod(cls, selector))
         return;
-    IMP replacement = imp_implementationWithBlock(^BOOL(__unused id receiver) {
+    IMP replacement = imp_implementationWithBlock(^BOOL(id receiver) {
+        IMP original = sSPKLGOriginal[gate];
+        if (SPKLGIsSkipped(gate)) {
+            BOOL instagramValue = original ? ((BOOL (*)(id, SEL))original)(receiver, selector) : NO;
+            SPKLGRecord(gate, instagramValue, instagramValue);
+            return instagramValue;
+        }
+        if (SPK_LG_DEV)
+            SPKLGRecord(gate, original ? ((BOOL (*)(id, SEL))original)(receiver, selector) : -1, value);
         return value;
     });
-    MSHookMessageEx(cls, selector, replacement, NULL);
+    MSHookMessageEx(cls, selector, replacement, &sSPKLGOriginal[gate]);
+    sSPKLGInstalled[gate] = YES;
 }
 
 static SPK_VOID_MSG orig_alertActionButton_enableLiquidGlass;
 static void hook_alertActionButton_enableLiquidGlass(id self, SEL _cmd) {
-    if (SPKLiquidGlassCurrentMode() == SPKLiquidGlassModeOff)
+    BOOL skipped = SPKLGIsSkipped(SPKLGGateAlertActionEnableGlass);
+    BOOL blocked = !skipped && SPKLiquidGlassCurrentMode() == SPKLiquidGlassModeOff;
+    SPKLGRecord(SPKLGGateAlertActionEnableGlass, 1, !blocked);
+    if (blocked)
         return;
     if (orig_alertActionButton_enableLiquidGlass)
         orig_alertActionButton_enableLiquidGlass(self, _cmd);
@@ -135,35 +300,38 @@ static void hook_alertActionButton_enableLiquidGlass(id self, SEL _cmd) {
 // same state the writes above store.
 static void SPKInstallLiquidGlassForcedGetterHooks(BOOL on) {
     Class nav = SPKLiquidGlassNavHelperClass();
-    SPKLiquidGlassForceBoolGetter(nav, @selector(isGlassRenderingOptimizationEnabled), on);
-    SPKLiquidGlassForceBoolGetter(nav, @selector(isLegibilityBlurEnabled), on);
-    SPKLiquidGlassForceBoolGetter(nav, @selector(isBrowserChromeGlassEnabled), on);
-    SPKLiquidGlassForceBoolGetter(nav, @selector(isProfileSegmentedTabsGlassDisabled), !on);
-    SPKLiquidGlassForceBoolGetter(nav, @selector(isProfileOtherNavBarHeightMatchSelf), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateNavRenderingOptimization, nav, @selector(isGlassRenderingOptimizationEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateNavLegibilityBlur, nav, @selector(isLegibilityBlurEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateNavBrowserChromeGlass, nav, @selector(isBrowserChromeGlassEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateNavSegmentedTabsGlassDisabled, nav, @selector(isProfileSegmentedTabsGlassDisabled), !on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateNavOtherNavBarHeight, nav, @selector(isProfileOtherNavBarHeightMatchSelf), on);
 
     // Rendering and styling gates of the shared component config. Their exact
     // effect is still being verified on device.
     Class launcher = objc_getClass("IGDSLauncherConfig");
-    SPKLiquidGlassForceBoolGetter(launcher, @selector(isLiquidGlassNavigationContentStylePinningEnabled), on);
-    SPKLiquidGlassForceBoolGetter(launcher, @selector(isLiquidGlassEaseInOutBlurEnabled), on);
-    SPKLiquidGlassForceBoolGetter(launcher, @selector(isLiquidGlassCGContextBlurEnabled), on);
-    SPKLiquidGlassForceBoolGetter(launcher, @selector(isSystemDefaultGlassEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateLauncherContentStylePinning, launcher, @selector(isLiquidGlassNavigationContentStylePinningEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateLauncherEaseInOutBlur, launcher, @selector(isLiquidGlassEaseInOutBlurEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateLauncherCGContextBlur, launcher, @selector(isLiquidGlassCGContextBlurEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateLauncherSystemDefaultGlass, launcher, @selector(isSystemDefaultGlassEnabled), on);
 
     Class glass = objc_getClass("_TtC13IGLiquidGlass13IGLiquidGlass");
-    SPKLiquidGlassForceBoolGetter(glass ? object_getClass(glass) : Nil, @selector(isEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateGlassIsEnabled, glass ? object_getClass(glass) : Nil, @selector(isEnabled), on);
 
-    SPKLiquidGlassForceBoolGetter(objc_getClass("IGUnifiedVideoBackButton"), @selector(_isLiquidGlassEnabled), on);
-    SPKLiquidGlassForceBoolGetter(objc_getClass("IGUnifiedVideoCameraEntryPointButton"), @selector(_isLiquidGlassEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateVideoBackButton, objc_getClass("IGUnifiedVideoBackButton"), @selector(_isLiquidGlassEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateVideoCameraEntryButton, objc_getClass("IGUnifiedVideoCameraEntryPointButton"), @selector(_isLiquidGlassEnabled), on);
 
     // The alert dialog's own gate: it picks the glass background and whether
     // each action button gets enableLiquidGlass (a clear background over the
     // glass), so leaving it to the server mixes glass and opaque parts.
     Class alertGlass = objc_getClass("_TtC26IGDSAlertDialogLiquidGlass26IGDSAlertDialogLiquidGlass");
-    SPKLiquidGlassForceBoolGetter(alertGlass ? object_getClass(alertGlass) : Nil, @selector(isEnabled), on);
+    SPKLiquidGlassForceBoolGetter(SPKLGGateAlertDialogGlass, alertGlass ? object_getClass(alertGlass) : Nil, @selector(isEnabled), on);
 
     Class alertAction = objc_getClass("IGDSAlertDialogActionButton");
     if (alertAction && class_getInstanceMethod(alertAction, @selector(enableLiquidGlass)))
+    {
         MSHookMessageEx(alertAction, @selector(enableLiquidGlass), (IMP)hook_alertActionButton_enableLiquidGlass, (IMP *)&orig_alertActionButton_enableLiquidGlass);
+        sSPKLGInstalled[SPKLGGateAlertActionEnableGlass] = YES;
+    }
 }
 
 // MARK: - UIScrollEdgeEffect declaration
@@ -177,17 +345,17 @@ static void SPKInstallLiquidGlassForcedGetterHooks(BOOL on) {
 
 static SPK_BOOL_MSG orig_swizzleToggle_isEnabled;
 static BOOL hook_swizzleToggle_isEnabled(id self, SEL _cmd) {
-    return SPK_LIQUID_GLASS_GATE(orig_swizzleToggle_isEnabled ? orig_swizzleToggle_isEnabled(self, _cmd) : NO);
+    return SPK_LIQUID_GLASS_GATE_ID(SPKLGGateToggleIsEnabled, orig_swizzleToggle_isEnabled ? orig_swizzleToggle_isEnabled(self, _cmd) : NO);
 }
 
 static SPK_BOOL_MSG orig_navigationExperiment_isEnabled;
 static BOOL hook_navigationExperiment_isEnabled(id self, SEL _cmd) {
-    return SPK_LIQUID_GLASS_GATE(orig_navigationExperiment_isEnabled ? orig_navigationExperiment_isEnabled(self, _cmd) : NO);
+    return SPK_LIQUID_GLASS_GATE_ID(SPKLGGateNavIsEnabled, orig_navigationExperiment_isEnabled ? orig_navigationExperiment_isEnabled(self, _cmd) : NO);
 }
 
 static SPK_BOOL_MSG orig_navigationExperiment_isHomeFeedHeaderEnabled;
 static BOOL hook_navigationExperiment_isHomeFeedHeaderEnabled(id self, SEL _cmd) {
-    return SPK_LIQUID_GLASS_GATE(orig_navigationExperiment_isHomeFeedHeaderEnabled ? orig_navigationExperiment_isHomeFeedHeaderEnabled(self, _cmd) : NO);
+    return SPK_LIQUID_GLASS_GATE_ID(SPKLGGateNavIsHomeFeedHeaderEnabled, orig_navigationExperiment_isHomeFeedHeaderEnabled ? orig_navigationExperiment_isHomeFeedHeaderEnabled(self, _cmd) : NO);
 }
 
 // MARK: - Native surface feature symbols
@@ -198,20 +366,18 @@ static BOOL hook_navigationExperiment_isHomeFeedHeaderEnabled(id self, SEL _cmd)
 static BOOL (*orig_IGFloatingTabBarEnabled)(void *config);
 static BOOL (*orig_IGTabBarDynamicSizingEnabled)(void *config);
 static BOOL (*orig_IGTabBarEnhancedDynamicSizingEnabled)(void *config);
-static BOOL (*orig_IGTabBarHomecomingWithFloatingTabEnabled)(void *config);
 static BOOL (*orig_IGTabBarViewPointFixEnabled)(void *config);
 static NSInteger (*orig_IGTabBarStyleForLauncherSet)(void *config);
 
-#define SPK_LIQUID_GLASS_BOOL_FISHHOOK(name)                                    \
-    static BOOL hook_##name(void *config) {                                     \
-        return SPK_LIQUID_GLASS_GATE(orig_##name ? orig_##name(config) : NO);   \
+#define SPK_LIQUID_GLASS_BOOL_FISHHOOK(name, gate)                                        \
+    static BOOL hook_##name(void *config) {                                               \
+        return SPK_LIQUID_GLASS_GATE_ID(gate, orig_##name ? orig_##name(config) : NO);    \
     }
 
-SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGFloatingTabBarEnabled)
-SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGTabBarDynamicSizingEnabled)
-SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGTabBarEnhancedDynamicSizingEnabled)
-SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGTabBarHomecomingWithFloatingTabEnabled)
-SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGTabBarViewPointFixEnabled)
+SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGFloatingTabBarEnabled, SPKLGGateFloatingTabBar)
+SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGTabBarDynamicSizingEnabled, SPKLGGateTabBarDynamicSizing)
+SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGTabBarEnhancedDynamicSizingEnabled, SPKLGGateTabBarEnhancedDynamicSizing)
+SPK_LIQUID_GLASS_BOOL_FISHHOOK(IGTabBarViewPointFixEnabled, SPKLGGateTabBarViewPointFix)
 
 // The last tab bar style Instagram chose on its own, recorded in Follow mode.
 static volatile NSInteger sSPKObservedTabBarStyle = 0;
@@ -219,16 +385,15 @@ static volatile NSInteger sSPKObservedTabBarStyle = 0;
 // 0 is the classic tab bar, the value Instagram returns while the floating tab
 // bar gate is off; 1 is the floating style.
 static NSInteger hook_IGTabBarStyleForLauncherSet(void *config) {
-    switch (SPKLiquidGlassCurrentMode()) {
-    case SPKLiquidGlassModeOn:
-        return 1;
-    case SPKLiquidGlassModeOff:
-        return 0;
-    case SPKLiquidGlassModeFollow:
-        break;
+    SPKLiquidGlassMode mode = SPKLiquidGlassCurrentMode();
+    if (mode != SPKLiquidGlassModeFollow && !SPKLGIsSkipped(SPKLGGateTabBarStyle)) {
+        NSInteger forced = mode == SPKLiquidGlassModeOn ? 1 : 0;
+        SPKLGRecord(SPKLGGateTabBarStyle, SPK_LG_DEV && orig_IGTabBarStyleForLauncherSet ? orig_IGTabBarStyleForLauncherSet(config) : -1, forced);
+        return forced;
     }
     NSInteger style = orig_IGTabBarStyleForLauncherSet ? orig_IGTabBarStyleForLauncherSet(config) : 0;
     sSPKObservedTabBarStyle = style;
+    SPKLGRecord(SPKLGGateTabBarStyle, style, style);
     return style;
 }
 
@@ -351,16 +516,20 @@ extern "C" void SPKInstallLiquidGlassHooksIfEnabled(void) {
         // The tab bar reshape (floating pill) is shape-only and works on any
         // iOS: the tab bar experiment gates just change the bar's layout, not
         // its material. These install whenever the mode is forced.
+        // IGTabBarHomecomingWithFloatingTabEnabled is deliberately left to
+        // Instagram: forcing it drops the Reels bottom legibility blur on the
+        // first reels after launch.
         int result = rebind_symbols((struct rebinding[]){
                                         {"IGFloatingTabBarEnabled", (void *)hook_IGFloatingTabBarEnabled, (void **)&orig_IGFloatingTabBarEnabled},
                                         {"IGTabBarDynamicSizingEnabled", (void *)hook_IGTabBarDynamicSizingEnabled, (void **)&orig_IGTabBarDynamicSizingEnabled},
                                         {"IGTabBarEnhancedDynamicSizingEnabled", (void *)hook_IGTabBarEnhancedDynamicSizingEnabled, (void **)&orig_IGTabBarEnhancedDynamicSizingEnabled},
-                                        {"IGTabBarHomecomingWithFloatingTabEnabled", (void *)hook_IGTabBarHomecomingWithFloatingTabEnabled, (void **)&orig_IGTabBarHomecomingWithFloatingTabEnabled},
                                         {"IGTabBarViewPointFixEnabled", (void *)hook_IGTabBarViewPointFixEnabled, (void **)&orig_IGTabBarViewPointFixEnabled},
                                         {"IGTabBarStyleForLauncherSet", (void *)hook_IGTabBarStyleForLauncherSet, (void **)&orig_IGTabBarStyleForLauncherSet},
                                     },
-                                    6);
+                                    5);
         SPKLog(@"LiquidGlass", @"Surface fishhook result=%d mode=%ld", result, (long)mode);
+        for (NSInteger gate = SPKLGGateFloatingTabBar; gate <= SPKLGGateTabBarStyle; gate++)
+            sSPKLGInstalled[gate] = result == 0;
 
         // The remaining hooks force IG's Liquid Glass *material* onto the nav
         // chrome — back / Follow buttons, profile tab chips, feed header, DM
@@ -375,11 +544,14 @@ extern "C" void SPKInstallLiquidGlassHooksIfEnabled(void) {
 
         Class cls = SPKLiquidGlassSwizzleToggleClass();
         SPKHookInstanceMethodIfPresent(cls, @selector(isEnabled), (IMP)hook_swizzleToggle_isEnabled, (IMP *)&orig_swizzleToggle_isEnabled);
+        sSPKLGInstalled[SPKLGGateToggleIsEnabled] = orig_swizzleToggle_isEnabled != NULL;
 
         cls = objc_getClass("IGLiquidGlassExperimentHelper.IGLiquidGlassNavigationExperimentHelper");
         SPKHookInstanceMethodIfPresent(cls, @selector(isEnabled), (IMP)hook_navigationExperiment_isEnabled, (IMP *)&orig_navigationExperiment_isEnabled);
         SPKHookInstanceMethodIfPresent(cls, @selector(isHomeFeedHeaderEnabled), (IMP)hook_navigationExperiment_isHomeFeedHeaderEnabled,
                                            (IMP *)&orig_navigationExperiment_isHomeFeedHeaderEnabled);
+        sSPKLGInstalled[SPKLGGateNavIsEnabled] = orig_navigationExperiment_isEnabled != NULL;
+        sSPKLGInstalled[SPKLGGateNavIsHomeFeedHeaderEnabled] = orig_navigationExperiment_isHomeFeedHeaderEnabled != NULL;
 
         // 410 has none of these classes, and its glass predates the gates.
         if (SPKLiquidGlassNavHelperClass())
@@ -717,5 +889,87 @@ extern "C" void SPKInstallProgressiveBlurHooksIfEnabled(void) {
         SPKLog(@"LiquidGlass", @"Scroll edge hooks installed, style=%@", preference);
     });
 }
+
+#if SPK_DEV
+// MARK: - Gate diagnostics (dev)
+
+static NSString *SPKLGValueText(NSInteger value) {
+    return value < 0 ? @"-" : [NSString stringWithFormat:@"%ld", (long)value];
+}
+
+NSArray<NSDictionary *> *SPKLiquidGlassGateSnapshot(void) {
+    SPKLGLoadSkips();
+    NSMutableArray<NSDictionary *> *gates = [NSMutableArray arrayWithCapacity:SPKLGGateCount];
+    for (NSInteger gate = 0; gate < SPKLGGateCount; gate++) {
+        [gates addObject:@{
+            SPKLiquidGlassGateGroupKey : @(kSPKLGGateNames[gate][0]),
+            SPKLiquidGlassGateNameKey : @(kSPKLGGateNames[gate][1]),
+            SPKLiquidGlassGateInstalledKey : @(sSPKLGInstalled[gate]),
+            SPKLiquidGlassGateSkippedThisLaunchKey : @(sSPKLGSkipped[gate]),
+            SPKLiquidGlassGateSkippedNextLaunchKey : @([SPKUtils getBoolPref:SPKLGGateSkipKey(gate)]),
+            SPKLiquidGlassGateInstagramValueKey : @(sSPKLGInstagramValue[gate]),
+            SPKLiquidGlassGateReturnedValueKey : @(sSPKLGReturnedValue[gate]),
+            SPKLiquidGlassGateReadsKey : @(sSPKLGReads[gate]),
+        }];
+    }
+    return gates;
+}
+
+void SPKLiquidGlassGateSetSkippedNextLaunch(NSString *name, BOOL skipped) {
+    for (NSInteger gate = 0; gate < SPKLGGateCount; gate++) {
+        if ([name isEqualToString:@(kSPKLGGateNames[gate][1])]) {
+            SPKPreferenceSetObject(@(skipped), SPKLGGateSkipKey(gate));
+            return;
+        }
+    }
+}
+
+void SPKLiquidGlassGateSetAllSkippedNextLaunch(BOOL skipped) {
+    for (NSInteger gate = 0; gate < SPKLGGateCount; gate++)
+        SPKPreferenceSetObject(@(skipped), SPKLGGateSkipKey(gate));
+}
+
+// Plain English on purpose: this is a log for the maintainer, not UI.
+NSString *SPKLiquidGlassGateReport(void) {
+    static NSString *const modes[] = {@"Default (Instagram decides)", @"forced On", @"forced Off"};
+    SPKLiquidGlassMode mode = SPKLiquidGlassCurrentMode();
+    NSMutableString *report = [NSMutableString stringWithFormat:@"Sparkle Liquid Glass gates\nLiquid Glass: %@\niOS %@\n",
+                                                                modes[MAX(0, MIN(2, (NSInteger)mode))], UIDevice.currentDevice.systemVersion];
+    NSMutableArray<NSString *> *changed = [NSMutableArray array];
+    NSMutableString *all = [NSMutableString string];
+    NSString *group = nil;
+    for (NSDictionary *gate in SPKLiquidGlassGateSnapshot()) {
+        if (![gate[SPKLiquidGlassGateGroupKey] isEqualToString:group]) {
+            group = gate[SPKLiquidGlassGateGroupKey];
+            [all appendFormat:@"\n[%@]\n", group];
+        }
+        NSString *name = gate[SPKLiquidGlassGateNameKey];
+        NSInteger instagramValue = [gate[SPKLiquidGlassGateInstagramValueKey] integerValue];
+        NSInteger returnedValue = [gate[SPKLiquidGlassGateReturnedValueKey] integerValue];
+        NSString *line;
+        if (![gate[SPKLiquidGlassGateInstalledKey] boolValue])
+            line = @"not hooked";
+        else if (returnedValue < 0)
+            line = @"not read yet";
+        else if ([gate[SPKLiquidGlassGateSkippedThisLaunchKey] boolValue])
+            line = [NSString stringWithFormat:@"left to Instagram: %@", SPKLGValueText(returnedValue)];
+        else if (instagramValue < 0)
+            line = [NSString stringWithFormat:@"Sparkle sets %@", SPKLGValueText(returnedValue)];
+        else if (instagramValue != returnedValue)
+            line = [NSString stringWithFormat:@"CHANGED Instagram %@ -> Sparkle %@", SPKLGValueText(instagramValue), SPKLGValueText(returnedValue)];
+        else
+            line = [NSString stringWithFormat:@"same as Instagram: %@", SPKLGValueText(returnedValue)];
+        if ([gate[SPKLiquidGlassGateSkippedNextLaunchKey] boolValue] != [gate[SPKLiquidGlassGateSkippedThisLaunchKey] boolValue])
+            line = [line stringByAppendingString:@" (changes after relaunch)"];
+        [all appendFormat:@"  %@: %@, %@ reads\n", name, line, gate[SPKLiquidGlassGateReadsKey]];
+        if ([line hasPrefix:@"CHANGED"])
+            [changed addObject:[NSString stringWithFormat:@"  %@: Instagram %@ -> Sparkle %@", name, SPKLGValueText(instagramValue), SPKLGValueText(returnedValue)]];
+    }
+    [report appendFormat:@"\nChanged by Sparkle (%lu):\n%@\n", (unsigned long)changed.count,
+                         changed.count ? [changed componentsJoinedByString:@"\n"] : @"  (none)"];
+    [report appendFormat:@"\nAll gates (1 = on, 0 = off):%@", all];
+    return report;
+}
+#endif
 
 #pragma clang diagnostic pop

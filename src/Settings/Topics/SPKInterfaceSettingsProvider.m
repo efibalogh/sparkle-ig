@@ -13,8 +13,8 @@
 
 FOUNDATION_EXPORT BOOL SPKLiquidGlassInstagramEnabled(void);
 
-// The switch shows the forced state once the user picked one, and until then
-// what Instagram itself gives this account.
+// Whether the glass interface is active this launch: the forced mode when one
+// is picked, otherwise what Instagram itself gives this account.
 static BOOL SPKLiquidGlassSwitchIsOn(void) {
     NSString *mode = [SPKUtils getStringPref:kSPKPrefInterfaceLiquidGlassMode];
     if ([mode isEqualToString:@"on"])
@@ -22,15 +22,6 @@ static BOOL SPKLiquidGlassSwitchIsOn(void) {
     if ([mode isEqualToString:@"off"])
         return NO;
     return SPKLiquidGlassInstagramEnabled();
-}
-
-// Any flip forces the chosen state from then on, so a later rollout change on
-// Instagram's side never overrides it.
-static void SPKSetLiquidGlassForced(BOOL isOn) {
-    SPKPreferenceSetObject(isOn ? @"on" : @"off", kSPKPrefInterfaceLiquidGlassMode);
-    // The restart action may terminate the process before defaults flush.
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [SPKUtils showRestartConfirmation];
 }
 
 // Opens the Notifications page with its live preview; search still indexes its rows.
@@ -183,17 +174,11 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
 
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0")) {
             // Full Liquid Glass: real glass material, progressive blur, tab bar.
-            SPKSetting *liquidGlass = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_CAPTURE_LIQUID_GLASS_TITLE")
-                                                          defaultsKey:kSPKPrefInterfaceLiquidGlassMode
-                                                      requiresRestart:YES];
-            liquidGlass.switchValueProvider = ^BOOL {
-                return SPKLiquidGlassSwitchIsOn();
-            };
+            SPKSetting *liquidGlass = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_CAPTURE_LIQUID_GLASS_TITLE")
+                                                               icon:nil
+                                                               menu:SPKLiquidGlassModeMenu()];
+            liquidGlass.defaultsKey = kSPKPrefInterfaceLiquidGlassMode;
             liquidGlass.helpText = SPKL(@"INTERFACE_LIQUID_GLASS_HELP");
-            liquidGlass.switchChangeHandler = ^(BOOL isOn) {
-                SPKSetLiquidGlassForced(isOn);
-            };
-            liquidGlass.reloadsTableOnSwitchChange = YES;
             SPKSetting *scrollEdgeStyle = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_TITLE")
                                                                    icon:nil
                                                                    menu:SPKScrollEdgeStyleMenu()];
@@ -210,17 +195,11 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
             // Pre-iOS 26 can't render the glass material, but the same tab bar
             // experiment gates still reshape the bar into the floating pill.
             // Expose that as a focused toggle sharing the Liquid Glass pref.
-            SPKSetting *pillTabBar = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE")
-                                                        defaultsKey:kSPKPrefInterfaceLiquidGlassMode
-                                                    requiresRestart:YES];
-            pillTabBar.switchValueProvider = ^BOOL {
-                return SPKLiquidGlassSwitchIsOn();
-            };
+            SPKSetting *pillTabBar = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE")
+                                                              icon:nil
+                                                              menu:SPKLiquidGlassModeMenu()];
+            pillTabBar.defaultsKey = kSPKPrefInterfaceLiquidGlassMode;
             pillTabBar.helpText = SPKL(@"INTERFACE_PILL_TAB_BAR_HELP");
-            pillTabBar.switchChangeHandler = ^(BOOL isOn) {
-                SPKSetLiquidGlassForced(isOn);
-            };
-            pillTabBar.reloadsTableOnSwitchChange = YES;
 
             [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_TAB_BAR_HEADER"), @[
                           pillTabBar,

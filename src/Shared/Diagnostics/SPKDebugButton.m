@@ -5,6 +5,10 @@
 #import "../../Utils.h"
 #import "../i18n/SPKStrings.h"
 #import "../UI/SPKChipGlass.h"
+#if SPK_DEV
+#import "../../Features/Interface/SPKLiquidGlassBisect.h"
+#import "../../Features/Interface/SPKLiquidGlassGatesViewController.h"
+#endif
 
 // Floating debug button, shown from Tools > Diagnostics. It lives in its own
 // window so it stays above stories, sheets and full-screen viewers without
@@ -258,6 +262,12 @@ static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
                  return SPKDiagnosticsHierarchyReport(includeText);
              })];
 #if SPK_DEV
+    [reports addObject:[UIAction actionWithTitle:SPKL(@"DEV_LG_GATES_TITLE")
+                                           image:[SPKAssetUtils menuIconNamed:@"interface"]
+                                      identifier:nil
+                                         handler:^(__unused UIAction *action) {
+                                             [SPKLiquidGlassGatesViewController present];
+                                         }]];
     // Captured after a delay so the keyboard, a sheet or a menu can be brought
     // up first: opening this menu dismisses whatever was presented.
     [reports addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT")
@@ -299,6 +309,13 @@ static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
     [tools addObject:hide];
 
     NSMutableArray<UIMenuElement *> *elements = [NSMutableArray array];
+#if SPK_DEV
+    // A running Liquid Glass test asks its question first.
+    if (SPKLiquidGlassBisectIsActive())
+        [elements addObjectsFromArray:SPKLiquidGlassBisectMenuElements()];
+    else
+        [reports insertObjects:SPKLiquidGlassBisectMenuElements() atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 1)]];
+#endif
     [elements addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:reports]];
     [elements addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:tools]];
     return elements;
@@ -442,6 +459,10 @@ void SPKDebugButtonRefresh(void) {
     });
 
     BOOL wanted = [SPKUtils getBoolPref:kSPKPrefToolsDebugButton];
+#if SPK_DEV
+    // The test is answered from the button, so it shows while one runs.
+    wanted = wanted || SPKLiquidGlassBisectIsActive();
+#endif
     if (!wanted) {
         sSPKDebugInspectWindow.hidden = YES;
         sSPKDebugInspectWindow = nil;

@@ -16,6 +16,7 @@
 #import "../SPKTopicSettingsSupport.h"
 #if SPK_DEV
 #import "SPKHookBisectSettingsProvider.h"
+#import "../../Features/Interface/SPKLiquidGlassGatesViewController.h"
 #endif
 #import "SPKInterfaceSettingsProvider.h"
 
@@ -87,6 +88,13 @@ static NSDictionary *SPKDiagnosticsSection(void) {
     NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObject:debugButton];
 #if SPK_DEV
     [rows addObject:SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP"))];
+    SPKSetting *liquidGlassGates = [SPKSetting buttonCellWithTitle:SPKL(@"DEV_LG_GATES_TITLE")
+                                                          subtitle:@""
+                                                              icon:SPKSettingsIcon(@"interface")
+                                                            action:^{
+                                                                [SPKLiquidGlassGatesViewController present];
+                                                            }];
+    [rows addObject:SPKSettingWithHelp(liquidGlassGates, SPKL(@"DEV_LG_GATES_HELP"))];
 #endif
     return SPKTopicSection(SPKL(@"TOOLS_DIAGNOSTICS_HEADER"), rows, nil);
 }
