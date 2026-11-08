@@ -613,12 +613,15 @@ Settings from before this change carry over: a group stays on unless every notif
 - **Reset Safe Startup Mode**: Clears Sparkle's failed-launch counters and re-enables feature hooks after the launch failsafe kicked in.
 
 ### Diagnostics
-- **Debug Button**: A floating button that stays above every Instagram screen, including stories and sheets. Drag it to either side of the screen. Its menu builds reports to attach to a bug report, shared as a `.txt` file or copied as text:
+- **Debug Button**: A floating button that stays above every Instagram screen, including stories and sheets. Drag it to either side of the screen. Its menu:
   - **Inspect Element**: Tap anything on screen to report the element under your finger (skipping the empty layout containers stacked above it), what receives the touch there, and every view drawn over it.
-  - **Screen Report**: Sparkle, Instagram, SDK and iOS versions, the install path, the view controller tree, and the settings changed from their defaults.
-  - **View Hierarchy**: Every visible view on screen.
-  - **Include Text**: Reports leave out on-screen text (usernames, captions, messages) unless this is on. It turns itself off again at the next launch.
+  - **Reports**: Built to attach to a bug report, shared as a `.txt` file or copied as text.
+    - **Screen Report**: Sparkle, Instagram, SDK and iOS versions, the install path, the view controller tree, and the settings changed from their defaults.
+    - **View Hierarchy**: Every visible view on screen.
+    - **Include Text**: Reports leave out on-screen text (usernames, captions, messages) unless this is on. It turns itself off again at the next launch.
+  - **Network**: Records only the moment you care about: **Clear and Record**, reproduce it, then **Stop and Show Requests**. Also **Resume Recording**, **Show Requests** and **Clear**.
   - **Open FLEX** (when bundled) and **Hide Button**.
+- **Network Interceptor**: Records Instagram's own requests and responses, including GraphQL queries (by name, with decoded variables) and media, which FLEX's network log cannot see. Filter by All, API, GraphQL, Media or Errors and search by URL, query or surface. Each request shows its headers, body and response, and can be copied as cURL or exported as JSON. Nothing is hooked until recording is first turned on. Recordings stay in memory until Instagram closes and contain your session token, so share them with care. Realtime traffic (Direct messages, typing, presence) is not included.
 
 ### Settings Lock
 - **Enable Settings Passcode Lock** + **Change Settings Passcode**: Uses an independent keychain-backed passcode and Face ID / Touch ID unlock. Protects full Settings and topic sheets opened from action buttons; Settings remains unlocked until its modal is dismissed.

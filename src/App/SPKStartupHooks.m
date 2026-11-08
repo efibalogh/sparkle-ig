@@ -5,6 +5,7 @@
 #import "../Shared/Updates/SPKUpdateChecker.h"
 #import "SPKHookBisect.h"
 #import "SPKStabilityGuard.h"
+#import "../Features/Tools/SPKNetworkInterceptor.h"
 
 FOUNDATION_EXPORT void SPKInstallLiquidGlassHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProgressiveBlurHooksIfEnabled(void);
@@ -169,6 +170,9 @@ void SPKInstallLaunchCriticalHooks(void) {
         return;
     }
     SPKHookBisectSetCurrentSurface(@"Launch");
+    // Installed first so requests made during startup are recorded. A no-op
+    // unless recording is on.
+    SPK_INSTALL(SPKNetworkInterceptorInstallIfEnabled);
     // The presence scheduler is constructed while Instagram builds the user
     // session. Installing this with the delayed Messages surface misses that
     // one-time initializer, leaving the configured refresh interval inert.

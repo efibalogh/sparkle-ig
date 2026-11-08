@@ -5,6 +5,8 @@
 #import "../../Utils.h"
 #import "../i18n/SPKStrings.h"
 #import "../UI/SPKChipGlass.h"
+#import "../../Features/Tools/SPKNetworkInterceptor.h"
+#import "../../Features/Tools/SPKNetworkInterceptorViewController.h"
 #if SPK_DEV
 #import "../../Features/Interface/SPKLiquidGlassBisect.h"
 #import "../../Features/Interface/SPKLiquidGlassGatesViewController.h"
@@ -247,14 +249,85 @@ static UIAction *SPKDebugReportAction(NSString *title, NSString *icon, NSString 
                              }];
 }
 
+// Record only the moment being investigated: start fresh, reproduce, stop and
+// look, instead of digging through everything since launch.
+static UIMenu *SPKDebugNetworkMenu(void) {
+    BOOL recording = SPKNetworkInterceptorIsRecording();
+    BOOL hasEntries = SPKNetworkInterceptorEntries().count > 0;
+    NSMutableArray<UIMenuElement *> *children = [NSMutableArray array];
+    if (recording) {
+        [children addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_NETWORK_STOP_AND_SHOW")
+                                                image:[SPKAssetUtils menuIconNamed:@"stop_filled"]
+                                           identifier:nil
+                                              handler:^(__unused UIAction *action) {
+                                                  [SPKNetworkInterceptorViewController setRecording:NO clearFirst:NO];
+                                                  [SPKNetworkInterceptorViewController present];
+                                              }]];
+        [children addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_NETWORK_INTERCEPTOR_STOP_RECORDING")
+                                                image:[SPKAssetUtils menuIconNamed:@"pause"]
+                                           identifier:nil
+                                              handler:^(__unused UIAction *action) {
+                                                  [SPKNetworkInterceptorViewController setRecording:NO clearFirst:NO];
+                                              }]];
+    } else {
+        [children addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_NETWORK_CLEAR_AND_RECORD")
+                                                image:[SPKAssetUtils menuIconNamed:@"backspace"]
+                                           identifier:nil
+                                              handler:^(__unused UIAction *action) {
+                                                  [SPKNetworkInterceptorViewController setRecording:YES clearFirst:YES];
+                                              }]];
+        if (hasEntries)
+            [children addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_NETWORK_RESUME_RECORDING")
+                                                    image:[SPKAssetUtils menuIconNamed:@"play"]
+                                               identifier:nil
+                                                  handler:^(__unused UIAction *action) {
+                                                      [SPKNetworkInterceptorViewController setRecording:YES clearFirst:NO];
+                                                  }]];
+    }
+    [children addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_NETWORK_SHOW")
+                                            image:[SPKAssetUtils menuIconNamed:@"list"]
+                                       identifier:nil
+                                          handler:^(__unused UIAction *action) {
+                                              [SPKNetworkInterceptorViewController present];
+                                          }]];
+    if (hasEntries) {
+        UIAction *clear = [UIAction actionWithTitle:SPKL(@"ALERT_ACTION_CLEAR")
+                                              image:[SPKAssetUtils menuIconNamed:@"trash"]
+                                         identifier:nil
+                                            handler:^(__unused UIAction *action) {
+                                                SPKNetworkInterceptorClear();
+                                            }];
+        clear.attributes = UIMenuElementAttributesDestructive;
+        [children addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:@[ clear ]]];
+    }
+    UIMenu *menu = [UIMenu menuWithTitle:SPKL(@"TOOLS_NETWORK_INTERCEPTOR_TITLE")
+                                   image:[SPKAssetUtils menuIconNamed:@"web"]
+                              identifier:nil
+                                 options:0
+                                children:children];
+    if (@available(iOS 15.0, *))
+        menu.subtitle = recording ? SPKL(@"TOOLS_DEBUG_BUTTON_MENU_NETWORK_RECORDING") : nil;
+    return menu;
+}
+
+static UIMenu *SPKDebugInlineSection(NSArray<UIMenuElement *> *children) {
+    return [UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:children];
+}
+
+static UIMenu *SPKDebugSubmenu(NSString *title, NSString *icon, NSArray<UIMenuElement *> *children) {
+    return [UIMenu menuWithTitle:title image:[SPKAssetUtils menuIconNamed:icon] identifier:nil options:0 children:children];
+}
+
+// Top level: quick actions, then one submenu per tool, then button chrome.
 static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
+    UIAction *inspect = [UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_INSPECT")
+                                            image:[SPKAssetUtils menuIconNamed:@"search"]
+                                       identifier:nil
+                                          handler:^(__unused UIAction *action) {
+                                              SPKDebugBeginInspect();
+                                          }];
+
     NSMutableArray<UIMenuElement *> *reports = [NSMutableArray array];
-    [reports addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_INSPECT")
-                                           image:[SPKAssetUtils menuIconNamed:@"search"]
-                                      identifier:nil
-                                         handler:^(__unused UIAction *action) {
-                                             SPKDebugBeginInspect();
-                                         }]];
     [reports addObject:SPKDebugReportAction(SPKL(@"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT"), @"interface", @"Screen", ^NSString *(BOOL includeText) {
                  return SPKDiagnosticsScreenReport(includeText);
              })];
@@ -262,12 +335,6 @@ static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
                  return SPKDiagnosticsHierarchyReport(includeText);
              })];
 #if SPK_DEV
-    [reports addObject:[UIAction actionWithTitle:SPKL(@"DEV_LG_GATES_TITLE")
-                                           image:[SPKAssetUtils menuIconNamed:@"interface"]
-                                      identifier:nil
-                                         handler:^(__unused UIAction *action) {
-                                             [SPKLiquidGlassGatesViewController present];
-                                         }]];
     // Captured after a delay so the keyboard, a sheet or a menu can be brought
     // up first: opening this menu dismisses whatever was presented.
     [reports addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_COLOR_REPORT")
@@ -280,7 +347,6 @@ static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
                                              });
                                          }]];
 #endif
-
     UIAction *includeText = [UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT")
                                                 image:[SPKAssetUtils menuIconNamed:@"text"]
                                            identifier:nil
@@ -288,36 +354,50 @@ static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
                                                   sSPKDebugIncludeText = !sSPKDebugIncludeText;
                                               }];
     includeText.state = sSPKDebugIncludeText ? UIMenuElementStateOn : UIMenuElementStateOff;
+    // The text toggle only affects reports, so it lives beside them.
+    [reports addObject:SPKDebugInlineSection(@[ includeText ])];
 
-    NSMutableArray<UIMenuElement *> *tools = [NSMutableArray arrayWithObject:includeText];
+    NSMutableArray<UIMenuElement *> *tools = [NSMutableArray arrayWithObjects:inspect, SPKDebugSubmenu(SPKL(@"TOOLS_DEBUG_BUTTON_MENU_REPORTS"), @"logs", reports), nil];
+
+    NSMutableArray<UIMenuElement *> *elements = [NSMutableArray array];
+    [tools addObject:SPKDebugNetworkMenu()];
+#if SPK_DEV
+    NSMutableArray<UIMenuElement *> *liquidGlass = [NSMutableArray arrayWithObject:[UIAction actionWithTitle:SPKL(@"DEV_LG_GATES_TITLE")
+                                                                                                         image:[SPKAssetUtils menuIconNamed:@"slider"]
+                                                                                                    identifier:nil
+                                                                                                       handler:^(__unused UIAction *action) {
+                                                                                                           [SPKLiquidGlassGatesViewController present];
+                                                                                                       }]];
+    // A running Liquid Glass test asks its question first, at the top level.
+    if (SPKLiquidGlassBisectIsActive())
+        [elements addObjectsFromArray:SPKLiquidGlassBisectMenuElements()];
+    else
+        [liquidGlass addObjectsFromArray:SPKLiquidGlassBisectMenuElements()];
+    [tools addObject:SPKDebugSubmenu(SPKL(@"DEV_DEBUG_BUTTON_MENU_LIQUID_GLASS"), @"interface", liquidGlass)];
+#endif
+
+    NSMutableArray<UIMenuElement *> *chrome = [NSMutableArray array];
     if (SPKFlexIsBundled() || SPKFlexIsLoaded()) {
-        [tools addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX")
-                                             image:[SPKAssetUtils menuIconNamed:@"beaker"]
-                                        identifier:nil
-                                           handler:^(__unused UIAction *action) {
-                                               SPKFlexShowExplorer(@"debug_button");
-                                           }]];
+        [chrome addObject:[UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX")
+                                              image:[SPKAssetUtils menuIconNamed:@"beaker"]
+                                         identifier:nil
+                                            handler:^(__unused UIAction *action) {
+                                                SPKFlexShowExplorer(@"debug_button");
+                                            }]];
     }
     UIAction *hide = [UIAction actionWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_MENU_HIDE")
                                          image:[SPKAssetUtils menuIconNamed:@"eye_off"]
                                     identifier:nil
                                        handler:^(__unused UIAction *action) {
+                                           SPKLog(@"Diagnostics", @"Debug button hidden from its menu");
                                            SPKPreferenceSetObject(@NO, kSPKPrefToolsDebugButton);
                                            SPKDebugButtonRefresh();
                                        }];
     hide.attributes = UIMenuElementAttributesDestructive;
-    [tools addObject:hide];
+    [chrome addObject:hide];
 
-    NSMutableArray<UIMenuElement *> *elements = [NSMutableArray array];
-#if SPK_DEV
-    // A running Liquid Glass test asks its question first.
-    if (SPKLiquidGlassBisectIsActive())
-        [elements addObjectsFromArray:SPKLiquidGlassBisectMenuElements()];
-    else
-        [reports insertObjects:SPKLiquidGlassBisectMenuElements() atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 1)]];
-#endif
-    [elements addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:reports]];
-    [elements addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:tools]];
+    [elements addObject:SPKDebugInlineSection(tools)];
+    [elements addObject:SPKDebugInlineSection(chrome)];
     return elements;
 }
 
@@ -456,6 +536,18 @@ void SPKDebugButtonRefresh(void) {
                                                     usingBlock:^(__unused NSNotification *note) {
                                                         SPKDebugButtonRefresh();
                                                     }];
+        // Something outside Sparkle hiding the button's window brings it back
+        // on the next turn, unless the preference was what turned it off.
+        [NSNotificationCenter.defaultCenter addObserverForName:UIWindowDidBecomeHiddenNotification
+                                                        object:nil
+                                                         queue:NSOperationQueue.mainQueue
+                                                    usingBlock:^(NSNotification *note) {
+                                                        if (note.object != sSPKDebugButtonWindow)
+                                                            return;
+                                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                                            SPKDebugButtonRefresh();
+                                                        });
+                                                    }];
     });
 
     BOOL wanted = [SPKUtils getBoolPref:kSPKPrefToolsDebugButton];
@@ -464,6 +556,8 @@ void SPKDebugButtonRefresh(void) {
     wanted = wanted || SPKLiquidGlassBisectIsActive();
 #endif
     if (!wanted) {
+        if (sSPKDebugButtonWindow)
+            SPKLog(@"Diagnostics", @"Debug button removed: preference is off");
         sSPKDebugInspectWindow.hidden = YES;
         sSPKDebugInspectWindow = nil;
         sSPKDebugButtonWindow.hidden = YES;
@@ -471,8 +565,16 @@ void SPKDebugButtonRefresh(void) {
         sSPKDebugMenuVisible = NO;
         return;
     }
-    if (sSPKDebugButtonWindow)
+    // Rebuild a window that something else hid or whose scene went away; keeping
+    // the stale one would leave the button gone until a relaunch.
+    SPKDebugPassthroughWindow *existing = sSPKDebugButtonWindow;
+    if (existing && !existing.hidden && existing.windowScene && existing.windowScene.activationState != UISceneActivationStateUnattached)
         return;
+    if (existing) {
+        SPKLog(@"Diagnostics", @"Debug button rebuilt: window hidden=%d scene=%@", existing.hidden, existing.windowScene);
+        existing.hidden = YES;
+        sSPKDebugButtonWindow = nil;
+    }
     UIWindowScene *scene = SPKDebugActiveScene();
     if (scene)
         SPKDebugButtonShow(scene);

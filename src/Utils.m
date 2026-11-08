@@ -1097,6 +1097,11 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             kSPKPrefPerAccountSettings,
             @"general_app_icon_identifier",
             @"tools_disable_all",
+            // A developer overlay for the whole install. Read whenever a scene
+            // activates, including before the account session resolves, so a
+            // per-account key could read as off and remove the button.
+            @"tools_debug_button",
+            @"tools_debug_button_position",
             // Notification delivery is install-wide, not per-account.
             @"tools_fix_duplicate_notifications",
             @"app_first_run",
@@ -1193,6 +1198,10 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
     if ([key hasPrefix:@"tools_perf_"])
         return YES;
 #endif
+    // Network interceptor: read in the launch-critical stage, and a recording
+    // must not stop when the account switches.
+    if ([key hasPrefix:@"tools_netlog_"])
+        return YES;
     if ([key hasPrefix:@"gallery_"])
         return YES;
     return NO;

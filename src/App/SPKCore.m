@@ -55,6 +55,7 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"tools_perf_meter" : @(NO),
         @"tools_perf_hud" : @(NO),
 #endif
+        @"tools_netlog_recording" : @(NO),
         @"app_safe_startup" : @(NO),
         @"general_hide_ads_stories" : @(YES),
         @"feed_mode" : @"default",

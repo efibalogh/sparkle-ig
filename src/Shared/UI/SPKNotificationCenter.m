@@ -116,6 +116,7 @@ SPK_NOTIF_CONST(kSPKNotificationCopyComment, "copy_comment");
 SPK_NOTIF_CONST(kSPKNotificationCopyGIFLink, "copy_gif_link");
 SPK_NOTIF_CONST(kSPKNotificationCopyGIFTitle, "copy_gif_title");
 SPK_NOTIF_CONST(kSPKNotificationMediaEncodingLogs, "media_encoding_logs");
+SPK_NOTIF_CONST(kSPKNotificationNetworkInterceptor, "network_interceptor");
 SPK_NOTIF_CONST(kSPKNotificationFlexUnavailable, "flex_unavailable");
 #undef SPK_NOTIF_CONST
 
@@ -297,6 +298,7 @@ NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(
                 kSPKNotificationClipboardUsername,
                 kSPKNotificationFakeLocation,
                 kSPKNotificationMediaEncodingLogs,
+                kSPKNotificationNetworkInterceptor,
                 kSPKNotificationFlexUnavailable,
                 kSPKNotificationPasscodeChanged,
             ],

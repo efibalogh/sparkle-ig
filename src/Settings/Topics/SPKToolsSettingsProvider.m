@@ -14,6 +14,7 @@
 #import "../SPKWhatsNewViewController.h"
 #import "../SPKSettingsViewController.h"
 #import "../SPKTopicSettingsSupport.h"
+#import "../../Features/Tools/SPKNetworkInterceptorViewController.h"
 #if SPK_DEV
 #import "SPKHookBisectSettingsProvider.h"
 #import "../../Features/Interface/SPKLiquidGlassGatesViewController.h"
@@ -85,7 +86,11 @@ static NSDictionary *SPKDiagnosticsSection(void) {
         SPKPreferenceSetObject(@(isOn), kSPKPrefToolsDebugButton);
         SPKDebugButtonRefresh();
     };
-    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObject:debugButton];
+    SPKSetting *networkInterceptor = [SPKSetting navigationCellWithTitle:SPKL(@"TOOLS_DIAGNOSTICS_NETWORK_INTERCEPTOR_TITLE")
+                                                                subtitle:@""
+                                                                    icon:SPKSettingsIcon(@"web")
+                                                          viewController:[SPKNetworkInterceptorViewController new]];
+    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObjects:debugButton, SPKSettingWithHelp(networkInterceptor, SPKL(@"TOOLS_DIAGNOSTICS_NETWORK_INTERCEPTOR_HELP")), nil];
 #if SPK_DEV
     [rows addObject:SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP"))];
     SPKSetting *liquidGlassGates = [SPKSetting buttonCellWithTitle:SPKL(@"DEV_LG_GATES_TITLE")
