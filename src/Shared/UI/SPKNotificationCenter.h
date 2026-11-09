@@ -83,6 +83,7 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationPasscodeChanged;
 FOUNDATION_EXPORT NSString *const kSPKNotificationLanguagePackUpdate;
 FOUNDATION_EXPORT NSString *const kSPKNotificationCopyDescription;
 FOUNDATION_EXPORT NSString *const kSPKNotificationCopyNoteText;
+FOUNDATION_EXPORT NSString *const kSPKNotificationStoryMentionsCopyUsername;
 FOUNDATION_EXPORT NSString *const kSPKNotificationFakeLocation;
 FOUNDATION_EXPORT NSString *const kSPKNotificationShareLongPressCopyLink;
 FOUNDATION_EXPORT NSString *const kSPKNotificationCopyComment;

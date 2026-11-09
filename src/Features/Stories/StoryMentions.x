@@ -169,6 +169,10 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
     self.tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.tableView];
 
+    // Long-press a row to copy that account's username without leaving the story.
+    UILongPressGestureRecognizer *copyPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(spk_rowLongPressed:)];
+    [self.tableView addGestureRecognizer:copyPress];
+
     [NSLayoutConstraint activateConstraints:@[
         [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
         [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
@@ -403,6 +407,33 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
     } else {
         doIt();
     }
+}
+
+#pragma mark - Long-press → copy username
+
+- (void)spk_rowLongPressed:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state != UIGestureRecognizerStateBegan)
+        return;
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+    if (!indexPath || indexPath.row < 0 || indexPath.row >= (NSInteger)self.mentions.count)
+        return;
+
+    // Ignore presses that land on the follow button so it keeps its own touch handling.
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[SPKMentionCell class]]) {
+        UIControl *followBtn = ((SPKMentionCell *)cell).followBtn;
+        if (!followBtn.hidden && CGRectContainsPoint(followBtn.bounds, [gesture locationInView:followBtn]))
+            return;
+    }
+
+    NSString *username = self.mentions[indexPath.row].username;
+    if (username.length == 0) {
+        SPKNotify(kSPKNotificationStoryMentionsCopyUsername, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NOTHING_COPY_TEXT"), nil, @"error_filled", SPKNotificationToneError);
+        return;
+    }
+
+    UIPasteboard.generalPasteboard.string = username;
+    SPKNotify(kSPKNotificationStoryMentionsCopyUsername, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_USERNAME_COPIED_TEXT"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
 }
 
 #pragma mark - UITableViewDelegate (row tap → profile)

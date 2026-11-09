@@ -110,6 +110,7 @@ SPK_NOTIF_CONST(kSPKNotificationPasscodeChanged, "passcode_changed");
 SPK_NOTIF_CONST(kSPKNotificationLanguagePackUpdate, "language_pack_update");
 SPK_NOTIF_CONST(kSPKNotificationCopyDescription, "copy_description");
 SPK_NOTIF_CONST(kSPKNotificationCopyNoteText, "copy_note_text");
+SPK_NOTIF_CONST(kSPKNotificationStoryMentionsCopyUsername, "story_mentions_copy_username");
 SPK_NOTIF_CONST(kSPKNotificationFakeLocation, "fake_location");
 SPK_NOTIF_CONST(kSPKNotificationShareLongPressCopyLink, "share_long_press_copy_link");
 SPK_NOTIF_CONST(kSPKNotificationCopyComment, "copy_comment");
@@ -255,6 +256,7 @@ NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(
                 kSPKNotificationCopyGIFTitle,
                 kSPKNotificationCopyDescription,
                 kSPKNotificationCopyNoteText,
+                kSPKNotificationStoryMentionsCopyUsername,
                 kSPKNotificationShareLongPressCopyLink,
             ],
             @"seen" : @[
