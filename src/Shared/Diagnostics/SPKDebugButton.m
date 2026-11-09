@@ -421,7 +421,7 @@ static NSArray<UIMenuElement *> *SPKDebugMenuElements(void) {
     button.tintColor = UIColor.labelColor;
     button.accessibilityLabel = SPKL(@"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL");
     [button setImage:[SPKAssetUtils menuIconNamed:@"beaker" pointSize:22] forState:UIControlStateNormal];
-    if (!SPKChipApplyGlass(button, NO, kSPKDebugButtonSize / 2.0, nil)) {
+    if (!SPKChipApplyStaticGlass(button, kSPKDebugButtonSize / 2.0)) {
         UIVisualEffectView *material = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleSystemMaterial]];
         material.frame = button.bounds;
         material.userInteractionEnabled = NO;

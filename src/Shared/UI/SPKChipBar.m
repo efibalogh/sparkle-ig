@@ -211,12 +211,6 @@
         } else {
             selected = (i == self.selectedIndex);
         }
-        if (!SPKChipApplyGlass(chip, selected, chip.layer.cornerRadius, [SPKUtils SPKColor_InstagramPrimaryText])) {
-            chip.backgroundColor = selected ? [SPKUtils SPKColor_InstagramPrimaryText] : [SPKUtils SPKColor_InstagramSecondaryBackground];
-        }
-        chip.tintColor = selected ? [SPKUtils SPKColor_InstagramBackground] : [SPKUtils SPKColor_InstagramPrimaryText];
-        [chip setTitleColor:(selected ? [SPKUtils SPKColor_InstagramBackground] : [SPKUtils SPKColor_InstagramPrimaryText]) forState:UIControlStateNormal];
-
         // Swap to the filled glyph when selected (when a selected variant exists).
         NSString *baseSym = (i < (NSInteger)self.symbols.count) ? self.symbols[i] : nil;
         NSString *selSym = (selected && i < (NSInteger)self.selectedSymbols.count) ? self.selectedSymbols[i] : nil;
@@ -224,6 +218,12 @@
         if (sym.length) {
             UIImage *image = [SPKAssetUtils instagramIconNamed:sym pointSize:[self chipIconPointSize] renderingMode:UIImageRenderingModeAlwaysTemplate];
             [chip setImage:image forState:UIControlStateNormal];
+        }
+        // After the glyph swap: the glass reads the chip's current image.
+        if (!SPKChipApplyGlass(chip, selected, chip.layer.cornerRadius, [SPKUtils SPKColor_InstagramPrimaryText])) {
+            chip.backgroundColor = selected ? [SPKUtils SPKColor_InstagramPrimaryText] : [SPKUtils SPKColor_InstagramSecondaryBackground];
+            chip.tintColor = selected ? [SPKUtils SPKColor_InstagramBackground] : [SPKUtils SPKColor_InstagramPrimaryText];
+            [chip setTitleColor:(selected ? [SPKUtils SPKColor_InstagramBackground] : [SPKUtils SPKColor_InstagramPrimaryText]) forState:UIControlStateNormal];
         }
     }
 }

@@ -111,7 +111,7 @@ static CGFloat const kChipHorizontalInset = 14.0;
     chip.layer.cornerCurve = kCACornerCurveContinuous;
     // Folder chips aren't a selection — clear glass capsules on iOS 26, solid
     // fill otherwise.
-    if (!SPKChipApplyGlass(chip, NO, kChipHeight / 2.0, nil)) {
+    if (!SPKChipApplyStaticGlass(chip, kChipHeight / 2.0)) {
         chip.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
     }
 
