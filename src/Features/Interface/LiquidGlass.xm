@@ -335,7 +335,13 @@ static void SPKInstallLiquidGlassForcedGetterHooks(BOOL on) {
 }
 
 // MARK: - UIScrollEdgeEffect declaration
-@interface UIScrollEdgeEffect : NSObject
+// iOS 26+ SDKs declare the class publicly; older ones need the full declaration.
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 260000
+#define SPK_SCROLL_EDGE_EFFECT_DECL UIScrollEdgeEffect (SPKPrivate)
+#else
+#define SPK_SCROLL_EDGE_EFFECT_DECL UIScrollEdgeEffect : NSObject
+#endif
+@interface SPK_SCROLL_EDGE_EFFECT_DECL
 + (void)hide;
 - (BOOL)ig_isHidden;
 - (void)ig_setIsHidden:(BOOL)hidden;
