@@ -978,6 +978,6 @@ void SPKInstallStoryAudioToggleHooksIfEnabled(void) {
                                                                 SPKStoryAudioEndScopedSession(nil);
                                                             SPKStoryAudioRefreshAllOverlays();
                                                         }];
-        %init(SPKStoryAudioToggleHooks);
+        %init(SPKStoryAudioToggleHooks, IGStoryFullscreenSectionController = SPKStoryFullscreenSectionControllerClass());
     });
 }

@@ -267,7 +267,7 @@ static NSURL *SPKShareURLFromObjectAtDepth(id object, NSInteger depth) {
 
 static id SPKShareStorySectionControllerFromOverlay(UIView *overlayView) {
     NSArray<NSString *> *delegateSelectors = @[ @"mediaOverlayDelegate", @"retryDelegate", @"tappableOverlayDelegate", @"buttonDelegate" ];
-    Class sectionControllerClass = NSClassFromString(@"IGStoryFullscreenSectionController");
+    Class sectionControllerClass = SPKStoryFullscreenSectionControllerClass();
     for (NSString *selectorName in delegateSelectors) {
         id delegate = SPKObjectForSelector(overlayView, selectorName);
         if (!delegate)

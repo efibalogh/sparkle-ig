@@ -53,6 +53,17 @@ FOUNDATION_EXPORT BOOL SPKPreferenceKeyIsGlobal(NSString *key);
 /// to the result via `%init(Group, IGSundialViewerVerticalUFI = SPKReelsVerticalUFIClass())`.
 FOUNDATION_EXPORT Class _Nullable SPKReelsVerticalUFIClass(void);
 
+/// The story viewer's per-reel section controller. Objective-C under its plain
+/// name through IG 454; IG 455 rewrote it in Swift and folded the 450-454 Swift
+/// twin (`IGStoryFullscreenSectionControllerSwift`) into it, so the plain name no
+/// longer resolves. Hook groups bind to it via
+/// `%init(Group, IGStoryFullscreenSectionController = SPKStoryFullscreenSectionControllerClass())`.
+FOUNDATION_EXPORT Class _Nullable SPKStoryFullscreenSectionControllerClass(void);
+
+/// The story seen reporter (IG 454+). Objective-C on 454, Swift from 455; nil on
+/// builds that report seen items through the viewer controller instead.
+FOUNDATION_EXPORT Class _Nullable SPKStoryViewerItemSeenReporterClass(void);
+
 /// Resolves an IG class whose ObjC runtime name changed between versions. Many
 /// classes that were plain ObjC on IG <=435 became Swift classes on IG 436+, so
 /// their runtime name is now the mangled `_TtC<len><Module><len><Class>` form and a

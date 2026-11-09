@@ -16,7 +16,7 @@ static id SPKStorySectionControllerFromOverlay(UIView *overlayView) {
     if (sharedContext.sectionController)
         return sharedContext.sectionController;
     NSArray<NSString *> *delegateSelectors = @[ @"mediaOverlayDelegate", @"retryDelegate", @"tappableOverlayDelegate", @"buttonDelegate" ];
-    Class sectionControllerClass = NSClassFromString(@"IGStoryFullscreenSectionController");
+    Class sectionControllerClass = SPKStoryFullscreenSectionControllerClass();
 
     for (NSString *selectorName in delegateSelectors) {
         id delegate = SPKObjectForSelector(overlayView, selectorName);

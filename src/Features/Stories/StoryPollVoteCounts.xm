@@ -431,6 +431,6 @@ extern "C" void SPKInstallStoryPollVoteCountsHooksIfEnabled(void) {
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        %init(SPKStoryPollVoteCountsHooks);
+        %init(SPKStoryPollVoteCountsHooks, IGStoryFullscreenSectionController = SPKStoryFullscreenSectionControllerClass());
     });
 }

@@ -418,6 +418,16 @@ Class SPKReelsVerticalUFIClass(void) {
     return cls;
 }
 
+Class SPKStoryFullscreenSectionControllerClass(void) {
+    return SPKResolveIGClass(@"IGStoryFullscreenSectionController.IGStoryFullscreenSectionController",
+                             @"IGStoryFullscreenSectionController");
+}
+
+Class SPKStoryViewerItemSeenReporterClass(void) {
+    return SPKResolveIGClass(@"IGStoryViewerItemSeenReporter.IGStoryViewerItemSeenReporter",
+                             @"IGStoryViewerItemSeenReporter");
+}
+
 Class SPKResolveIGClass(NSString *qualified, NSString *legacy) {
     Class c = Nil;
     if (qualified.length) {

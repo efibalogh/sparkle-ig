@@ -611,6 +611,6 @@ extern "C" void SPKInstallStoryPlaybackControlsHooksIfEnabled(void) {
         if (NSClassFromString(@"IGStoryModernVideoView")) {
             %init(SPKStoryModernVideoViewSpeedHooks);
         }
-        %init(SPKStoryPlaybackControlsHooks);
+        %init(SPKStoryPlaybackControlsHooks, IGStoryFullscreenSectionController = SPKStoryFullscreenSectionControllerClass());
     });
 }

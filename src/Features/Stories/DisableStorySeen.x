@@ -52,7 +52,13 @@ static void SPKHandleStorySeenReport(id viewer, id sectionController, id item, v
 
 %hook IGStoryViewerItemSeenReporter
 - (void)reportSeenItem:(id)item sectionController:(id)sectionController {
+    // IG 455 rewrote the reporter in Swift: the ivar lost its underscore.
     id viewerContext = [SPKUtils getIvarForObj:self name:"_viewerContext"];
+    if (!viewerContext)
+        viewerContext = [SPKUtils getIvarForObj:self name:"viewerContext"];
+    Class viewerContextClass = NSClassFromString(@"IGStoryViewerContext");
+    if (viewerContextClass && viewerContext && ![viewerContext isKindOfClass:viewerContextClass])
+        viewerContext = nil;
     SPKHandleStorySeenReport(viewerContext, sectionController, item, ^{
         %orig;
     });
@@ -108,7 +114,11 @@ static void SPKHandleStorySeenReport(id viewer, id sectionController, id item, v
 void SPKInstallDisableStorySeenHooksIfNeeded(void) {
     static dispatch_once_t advanceOnceToken;
     dispatch_once(&advanceOnceToken, ^{
-        %init(SPKStoryAutoAdvanceHooks);
+        // IG 455 folded the Swift twin into a Swift IGStoryFullscreenSectionController,
+        // so the plain name no longer resolves and the twin class is gone.
+        Class sectionController = SPKStoryFullscreenSectionControllerClass();
+        if (sectionController)
+            %init(SPKStoryAutoAdvanceHooks, IGStoryFullscreenSectionController = sectionController);
         Class swiftSectionController = objc_getClass("_TtC39IGStoryFullscreenSectionControllerSwift39IGStoryFullscreenSectionControllerSwift");
         if (swiftSectionController)
             %init(SPKStoryAutoAdvanceSwiftHooks, SPKStoryFullscreenSectionControllerSwift = swiftSectionController);
@@ -125,8 +135,8 @@ void SPKInstallDisableStorySeenHooksIfNeeded(void) {
         Class viewerClass = objc_getClass("IGStoryViewerViewController");
         if (viewerClass && class_getInstanceMethod(viewerClass, NSSelectorFromString(@"fullscreenSectionController:didMarkItemAsSeen:")))
             %init(SPKDisableStorySeenLegacyHooks);
-        Class reporterClass = objc_getClass("IGStoryViewerItemSeenReporter");
+        Class reporterClass = SPKStoryViewerItemSeenReporterClass();
         if (reporterClass && class_getInstanceMethod(reporterClass, @selector(reportSeenItem:sectionController:)))
-            %init(SPKDisableStorySeenReporterHooks);
+            %init(SPKDisableStorySeenReporterHooks, IGStoryViewerItemSeenReporter = reporterClass);
     });
 }

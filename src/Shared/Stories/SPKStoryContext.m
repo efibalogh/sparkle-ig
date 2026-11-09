@@ -92,7 +92,7 @@ static id SPKStorySectionControllerFromOverlay(UIView *overlayView, UIViewContro
     if (!overlayView)
         return nil;
     NSArray<NSString *> *delegateSelectors = @[ @"mediaOverlayDelegate", @"retryDelegate", @"tappableOverlayDelegate", @"buttonDelegate" ];
-    Class sectionControllerClass = NSClassFromString(@"IGStoryFullscreenSectionController");
+    Class sectionControllerClass = SPKStoryFullscreenSectionControllerClass();
     for (NSString *selectorName in delegateSelectors) {
         id delegate = SPKObjectForSelector(overlayView, selectorName);
         if (!delegate)
@@ -227,7 +227,10 @@ static const void *kSPKStoryContextCacheKey = &kSPKStoryContextCacheKey;
 // the viewer's context, which hands out the same scoped instance.
 static id SPKStoryItemSeenReporter(id sectionController, id viewerController) {
     SEL reportSelector = NSSelectorFromString(@"reportSeenItem:sectionController:");
+    // IG 455's Swift section controller stores it without the underscore.
     id reporter = sectionController ? [SPKUtils getIvarForObj:sectionController name:"_itemSeenReporter"] : nil;
+    if (!reporter && sectionController)
+        reporter = [SPKUtils getIvarForObj:sectionController name:"itemSeenReporter"];
     if ([reporter respondsToSelector:reportSelector])
         return reporter;
     id viewerContext = viewerController ? [SPKUtils getIvarForObj:viewerController name:"_viewerContext"] : nil;
