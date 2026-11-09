@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Wyłącz odświeżanie karty Rolki";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Ponowne dotknięcie zakładki Rolki zachowuje bieżącą rolkę zamiast ładować nowy zestaw.";
 "REELS_BEHAVIOR_HEADER" = "Zachowanie";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Przytrzymanie rolki wstrzymuje ją, jak dawniej, zamiast otwierać menu odtwarzania, które wprowadza Instagram. Przytrzymanie boków odtwarza z prędkością 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Przytrzymaj, aby wstrzymać";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Przytrzymaj przycisk więcej na rolce, aby uzyskać prędkość odtwarzania, przewijanie i pauzę. Gdy rolka odtwarzana jest z inną prędkością, odznaka obok przycisku to pokazuje.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Sterowanie odtwarzaniem";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Rolki startują bez dźwięku, dopóki ich nie wyciszysz. Wymaga restartu.";

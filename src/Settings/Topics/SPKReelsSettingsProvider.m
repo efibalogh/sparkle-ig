@@ -27,6 +27,10 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                          icon:SPKSettingsIcon(@"play")
                                          menu:SPKReelsTapControlMenu()],
                                SPKL(@"REELS_BEHAVIOR_TAP_CONTROLS_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE")
+                                           icon:SPKSettingsIcon(@"pause")
+                                    defaultsKey:@"reels_hold_to_pause"],
+                               SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP")),
             ({
                 SPKSetting *playbackControls = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE")
                                                                                              icon:SPKSettingsPlaybackIcon()

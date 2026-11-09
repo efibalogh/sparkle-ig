@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "リールタブの更新を無効化";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "リールタブを再度タップしても新しいセットを読み込まず、現在のリールを維持します。";
 "REELS_BEHAVIOR_HEADER" = "動作";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "リールを長押しすると、Instagramが導入中の再生メニューを開く代わりに、従来どおり一時停止します。左右の端を長押しすると2xの速度で再生されます。";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "長押しで一時停止";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "リールのその他ボタンを長押しすると、再生速度、シーク、一時停止を操作できます。リールが別の速度で再生中は、ボタンの横にバッジで表示されます。";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "再生コントロール";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "ミュートを解除するまでリールは音声なしで始まります。再起動が必要です。";

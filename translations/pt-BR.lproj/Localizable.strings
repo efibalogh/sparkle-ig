@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Desativar Atualização da Aba de Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Tocar de novo na aba Reels mantém o reel atual em vez de carregar um novo conjunto.";
 "REELS_BEHAVIOR_HEADER" = "Comportamento";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Manter o toque em um reel o pausa, como antes, em vez de abrir o menu de reprodução que o Instagram está lançando. Manter o toque nas laterais reproduz em 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Manter pressionado para pausar";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Mantenha pressionado o botão Mais de um reel para controlar velocidade, avanço e pausa. Quando um reel toca em outra velocidade, um selo ao lado do botão a mostra.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Controles de reprodução";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Os reels começam sem som até você ativá-lo. Requer reiniciar.";

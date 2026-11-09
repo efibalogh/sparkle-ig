@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "停用 Reels 分頁重新整理";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "再次點按 Reels 分頁會保留目前的影片,而不會載入新的一批。";
 "REELS_BEHAVIOR_HEADER" = "行為";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "長按 Reels 會像以前一樣暫停，而不是開啟 Instagram 正在推出的播放選單。長按兩側則以 2x 速度播放。";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "長按暫停";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "長按 Reels 上的更多按鈕，即可使用播放速度、拖曳進度和暫停控制項。Reels 以其他速度播放時，按鈕旁的角標會顯示目前速度。";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制項";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 開始播放時會保持靜音，直到你取消靜音。需要重新啟動。";

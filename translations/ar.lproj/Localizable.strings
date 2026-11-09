@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "تعطيل تحديث علامة تبويب Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "إعادة الضغط على تبويب Reels تبقي المقطع الحالي بدل تحميل مجموعة جديدة.";
 "REELS_BEHAVIOR_HEADER" = "السلوك";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "الضغط المطوّل على الريل يوقفه مؤقتًا كما كان من قبل، بدلًا من فتح قائمة التشغيل التي يطرحها Instagram. الضغط المطوّل على جانبي الشاشة يشغّله بسرعة 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "الضغط المطوّل للإيقاف المؤقت";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "اضغط مطولًا على زر المزيد في الريل للتحكم في سرعة التشغيل والتقديم والإيقاف المؤقت. عند تشغيل الريل بسرعة أخرى، تظهر شارة بجانب الزر توضحها.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "عناصر التحكم في التشغيل";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "تبدأ Reels بدون صوت حتى تشغّل الصوت. يتطلب إعادة تشغيل.";

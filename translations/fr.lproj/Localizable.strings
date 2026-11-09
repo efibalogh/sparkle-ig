@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Désactiver l'actualisation de l'onglet Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Réappuyer sur l'onglet Reels garde le reel actuel au lieu de charger une nouvelle série.";
 "REELS_BEHAVIOR_HEADER" = "Comportement";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Maintenir le doigt sur un reel le met en pause, comme avant, au lieu d'ouvrir le menu de lecture qu'Instagram déploie. Maintenir les bords lance la lecture à 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Maintenir pour mettre en pause";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Appuyez longuement sur le bouton Plus d'un reel pour régler la vitesse, avancer et mettre en pause. Lorsqu'un reel est lu à une autre vitesse, un badge à côté du bouton l'indique.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Commandes de lecture";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Les reels démarrent sans son jusqu'à ce que vous l'activiez. Nécessite un redémarrage.";

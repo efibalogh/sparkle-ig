@@ -193,6 +193,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"downloads_autosave_keep_history" : @(NO),
         @"feed_disable_appicon_gesture" : @(NO),
         @"reels_tap_control" : @"default",
+        @"reels_hold_to_pause" : @(NO),
         @"reels_playback_controls" : @(NO),
         @"reels_playback_speed_scope" : @"session",
         @"reels_playback_saved_speed" : @(1.0),

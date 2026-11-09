@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Disable Reels Tab Refresh";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Re-tapping the Reels tab keeps the current reel instead of loading a new set.";
 "REELS_BEHAVIOR_HEADER" = "Behavior";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Holding a reel pauses it, as it used to, instead of opening the playback menu Instagram is rolling out. Holding the sides still plays at 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Hold to Pause";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Long press the more button on a reel for playback speed, seeking and pause controls. While a reel plays at another speed, a badge next to the button shows it.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Playback Controls";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels start without sound until you unmute them. Requires a restart.";

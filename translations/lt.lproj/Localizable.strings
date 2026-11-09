@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Išjungti Reels skirtuko atnaujinimą";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Pakartotinai palietus Reels skirtuką išlaikomas dabartinis įrašas, o ne įkeliamas naujas rinkinys.";
 "REELS_BEHAVIOR_HEADER" = "Elgsena";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Palaikius pirštą ant Reels, jis bus pristabdytas, kaip anksčiau, o ne bus atidarytas atkūrimo meniu, kurį Instagram diegia. Palaikius kraštus, grojama 2x greičiu.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Laikyti, kad pristabdyti";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Ilgai paspauskite Reels mygtuką „Daugiau“, kad valdytumėte atkūrimo greitį, peršokimą ir pristabdymą. Kai įrašas leidžiamas kitu greičiu, šalia mygtuko jį rodo ženklelis.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Atkūrimo valdikliai";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels prasideda be garso, kol jo neįjungiate. Reikia paleisti iš naujo.";

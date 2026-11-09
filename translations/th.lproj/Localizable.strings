@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "ปิดการรีเฟรชแท็บ Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "การแตะแท็บ Reels ซ้ำจะคงรีลปัจจุบันไว้แทนการโหลดชุดใหม่";
 "REELS_BEHAVIOR_HEADER" = "พฤติกรรม";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "การกดค้างที่รีลจะหยุดรีลชั่วคราวเหมือนเดิม แทนการเปิดเมนูการเล่นที่ Instagram กำลังเปิดตัว การกดค้างที่ขอบทั้งสองข้างจะเล่นที่ความเร็ว 2x";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "กดค้างเพื่อหยุดชั่วคราว";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "กดปุ่มเพิ่มเติมบนรีลค้างไว้เพื่อเปิดตัวควบคุมความเร็วการเล่น การเลื่อนตำแหน่ง และการหยุดชั่วคราว ขณะที่รีลเล่นด้วยความเร็วอื่น แบดจ์ข้างปุ่มจะแสดงไว้";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "ตัวควบคุมการเล่น";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels จะเริ่มโดยไม่มีเสียงจนกว่าคุณจะเปิดเสียง ต้องรีสตาร์ทแอป";

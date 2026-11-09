@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "غیرفعال کردن تازه‌سازی تب ریلز";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "ضربهٔ دوباره روی تب ریلز، ریل فعلی را نگه می‌دارد به‌جای بارگذاری مجموعهٔ جدید.";
 "REELS_BEHAVIOR_HEADER" = "رفتار";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "نگه داشتن انگشت روی ریلز آن را مثل قبل متوقف می‌کند، به‌جای باز کردن منوی پخشی که اینستاگرام در حال عرضه‌اش است. نگه داشتن کناره‌ها پخش را با سرعت 2x انجام می‌دهد.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "نگه‌دارید برای توقف";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "روی دکمه بیشتر یک ریلز فشار طولانی دهید تا کنترل‌های سرعت پخش، پیشروی و توقف نمایان شوند. تا وقتی ریلز با سرعتی دیگر پخش می‌شود، نشانی کنار دکمه آن را نشان می‌دهد.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "کنترل‌های پخش";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "ریلزها تا زمانی که صدا را فعال نکنید بی‌صدا شروع می‌شوند. نیاز به راه‌اندازی مجدد دارد.";

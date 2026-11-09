@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Disabilita Aggiornamento Scheda Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Toccare di nuovo la scheda Reel mantiene il reel corrente invece di caricarne di nuovi.";
 "REELS_BEHAVIOR_HEADER" = "Comportamento";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Tenere premuto un reel lo mette in pausa, come prima, invece di aprire il menu di riproduzione che Instagram sta introducendo. Tenere premuti i lati lo riproduce a 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Tieni premuto per mettere in pausa";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Tieni premuto il pulsante Altro di un reel per velocità, avanzamento e pausa. Quando un reel viene riprodotto a un'altra velocità, un badge accanto al pulsante la mostra.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Controlli di riproduzione";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "I reel partono senza audio finché non lo attivi. Richiede un riavvio.";

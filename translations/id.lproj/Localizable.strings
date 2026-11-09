@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Nonaktifkan Penyegaran Tab Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Mengetuk ulang tab Reels akan mempertahankan reel saat ini alih-alih memuat set baru.";
 "REELS_BEHAVIOR_HEADER" = "Perilaku";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Menahan jari pada reel akan menjedanya seperti dulu, alih-alih membuka menu pemutaran yang sedang diluncurkan Instagram. Menahan sisi-sisinya memutar dengan 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Tahan untuk Jeda";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Tekan lama tombol lainnya pada sebuah reel untuk kontrol kecepatan pemutaran, pencarian posisi, dan jeda. Selagi sebuah reel diputar dengan kecepatan lain, lencana di sebelah tombol menampilkannya.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Kontrol Pemutaran";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels dimulai tanpa suara sampai Anda membunyikannya. Memerlukan restart.";

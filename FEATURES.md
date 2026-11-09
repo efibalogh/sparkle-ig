@@ -231,6 +231,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Behavior
 - **Tap Controls**: `Default`, `Pause/Play`, or `Mute/Unmute`.
+- **Hold to Pause**: Holding a reel pauses it, as it used to, instead of opening the playback menu Instagram is rolling out to some accounts. Holding the sides still plays at 2x.
 - **Playback Controls**: Long press a reel's more button for the same floating playback panel as Stories: speed from 0.5x to 2x, scrubbing, 5 second skips, and pause/play. While a reel plays at another speed, the speed is shown above the action button; tap it to reopen the panel. After pausing from the panel, tapping the reel resumes it. Video reels only.
 - **Keep Speed For**: `This Video`, `This Session` (until you leave Reels), or `Always`.
 - **Auto Scroll**: `Default`, `On`, or `Off`. Starts Instagram's reels auto scroll in that state every launch; the toggle in Reels still works for the rest of the session. **Disable Scrolling Reels** forces it off. `On` pauses **Stop Looping Reels**. Rows that are overridden are greyed out, and their saved values are kept. Only works on accounts where Instagram has rolled out auto scroll; Instagram decides this per account on its servers.

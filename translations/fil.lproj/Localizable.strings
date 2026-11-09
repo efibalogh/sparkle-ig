@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "I-disable ang Reels Tab Refresh";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Ang pag-tap ulit sa Reels tab ay pinapanatili ang kasalukuyang reel sa halip na mag-load ng bagong set.";
 "REELS_BEHAVIOR_HEADER" = "Kilos";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Ang pag-hold sa isang reel ay pinapause ito, gaya ng dati, sa halip na buksan ang playback menu na ipinapakilala ng Instagram. Ang pag-hold sa mga gilid ay nagpapatakbo nito nang 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "I-hold para i-pause";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "I-long press ang more button sa isang reel para sa bilis ng playback, pag-seek, at mga kontrol sa pag-pause. Habang naglalaro ang isang reel sa ibang bilis, may badge sa tabi ng button na nagpapakita nito.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Mga Kontrol sa Playback";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Nagsisimula ang mga Reel nang walang tunog hanggang i-unmute mo ito. Kailangan ng restart.";

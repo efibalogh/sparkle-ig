@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Tắt làm mới thẻ Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Nhấn lại vào thẻ Reels giữ nguyên Reel hiện tại thay vì tải danh sách mới.";
 "REELS_BEHAVIOR_HEADER" = "Hành vi";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Nhấn giữ một reel sẽ tạm dừng reel như trước, thay vì mở menu phát mà Instagram đang triển khai. Nhấn giữ hai bên cạnh sẽ phát với tốc độ 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Nhấn giữ để tạm dừng";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Nhấn giữ nút Thêm trên reel để điều khiển tốc độ, tua và tạm dừng. Khi reel phát ở tốc độ khác, huy hiệu cạnh nút sẽ hiển thị tốc độ đó.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Điều khiển phát";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels bắt đầu không có tiếng cho đến khi bạn bật tiếng. Cần khởi động lại.";

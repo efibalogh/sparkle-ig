@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Desactivar actualización de pestaña de Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Volver a tocar la pestaña Reels mantiene el reel actual en lugar de cargar un conjunto nuevo.";
 "REELS_BEHAVIOR_HEADER" = "Comportamiento";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Mantener presionado un reel lo pausa, como antes, en lugar de abrir el menú de reproducción que Instagram está implementando. Mantener presionados los lados lo reproduce a 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Mantén presionado para pausar";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Mantén presionado el botón Más de un reel para controlar la velocidad, el avance y la pausa. Cuando un reel se reproduce a otra velocidad, una insignia junto al botón la muestra.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Controles de reproducción";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Los reels empiezan sin sonido hasta que lo activas. Requiere reiniciar.";

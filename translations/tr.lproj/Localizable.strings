@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Reels Sekmesi Yenilemesini Devre Dışı Bırak";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Reels sekmesine tekrar dokunmak yeni bir set yüklemek yerine mevcut reel'i korur.";
 "REELS_BEHAVIOR_HEADER" = "Davranış";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Bir reel'e basılı tutmak, Instagram'ın yayma aşamasında olduğu oynatma menüsünü açmak yerine onu eskisi gibi duraklatır. Kenarlara basılı tutmak 2x hızda oynatır.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Duraklatmak için basılı tut";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Oynatma hızı, sarma ve duraklatma kontrolleri için bir reel'deki daha fazla düğmesine uzun bas. Bir reel farklı hızda oynatılırken düğmenin yanındaki rozet hızı gösterir.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Oynatma Kontrolleri";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels, sesi açana kadar sessiz başlar. Yeniden başlatma gerektirir.";

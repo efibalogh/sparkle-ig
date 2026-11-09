@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Reels-Tab-Aktualisierung deaktivieren";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Erneutes Tippen auf den Reels-Tab behält das aktuelle Reel, statt einen neuen Satz zu laden.";
 "REELS_BEHAVIOR_HEADER" = "Verhalten";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Wenn du einen Reel gedrückt hältst, wird er wie früher pausiert, statt das Wiedergabemenü zu öffnen, das Instagram gerade einführt. Wenn du die Seiten gedrückt hältst, wird mit 2x abgespielt.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Zum Pausieren gedrückt halten";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Halte die Mehr-Taste eines Reels gedrückt, um Geschwindigkeit, Spulen und Pause zu steuern. Läuft ein Reel mit anderer Geschwindigkeit, zeigt ein Badge neben der Taste sie an.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Wiedergabesteuerung";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels starten ohne Ton, bis du den Ton einschaltest. Erfordert einen Neustart.";

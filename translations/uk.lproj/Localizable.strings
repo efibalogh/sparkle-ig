@@ -2019,6 +2019,8 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Відключити оновлення вкладки Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Повторний дотик до вкладки Reels зберігає поточний ролик замість завантаження нової добірки.";
 "REELS_BEHAVIOR_HEADER" = "Поведінка";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP" = "Утримання Reels ставить відео на паузу, як раніше, замість відкриття меню відтворення, яке Instagram зараз впроваджує. Утримання країв відтворює з швидкістю 2x.";
+"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE" = "Утримуйте для паузи";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Утримуйте кнопку «Більше» в Reels, щоб керувати швидкістю, перемотуванням і паузою. Поки Reels відтворюється з іншою швидкістю, її показує значок біля кнопки.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Керування відтворенням";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels починаються без звуку, доки ви не ввімкнете його. Потрібен перезапуск.";
