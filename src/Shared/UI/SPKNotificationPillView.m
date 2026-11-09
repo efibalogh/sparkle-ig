@@ -1805,15 +1805,18 @@ static BOOL SPKInstagramTextHasDigits(NSString *text) {
     return text.length > 0 && [text rangeOfCharacterFromSet:NSCharacterSet.decimalDigitCharacterSet].location != NSNotFound;
 }
 
-// Every number becomes the same wide stand-in, so the text Instagram measures only
-// changes when the wording does (a unit switch), never on a tick.
+// Every digit becomes the widest one, so the text Instagram measures keeps the live
+// text's shape and only changes when a number gains a digit or the wording changes,
+// never on a tick. A fixed wide stand-in per number would overstate a line like
+// "74% • 1.4 MB of 1.4 MB • 1 of 2" enough to wrap it beside the Cancel button,
+// and the toast would then be sized for two lines while showing one.
 static NSString *SPKInstagramStableLayoutText(NSString *text) {
-    static NSRegularExpression *numbers;
+    static NSRegularExpression *digits;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        numbers = [NSRegularExpression regularExpressionWithPattern:@"\\d+(?:[.,]\\d+)?" options:0 error:NULL];
+        digits = [NSRegularExpression regularExpressionWithPattern:@"\\d" options:0 error:NULL];
     });
-    return [numbers stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, text.length) withTemplate:@"000.0"];
+    return [digits stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, text.length) withTemplate:@"0"];
 }
 
 // Draws the live progress line exactly where Instagram placed its stand-in, in the
