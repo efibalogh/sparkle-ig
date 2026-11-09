@@ -171,9 +171,11 @@ id SPKSundialCellMedia(id cell) {
 
     // IG 452 rewrote IGSundialViewerVideoCell in Swift: the stored property's ivar
     // lost its leading underscore and, like every Swift ivar, has no type encoding.
-    // The carousel cell is still Objective-C and keeps the old name.
+    // The carousel cell is still Objective-C and keeps the old name. IG 455
+    // dropped the typed passthrough from the video cell; the media now arrives
+    // only as `videoAccess`, a fragment-typed property that holds the IGMedia.
     Class mediaClass = NSClassFromString(@"IGMedia");
-    static const char *const names[] = {"_mediaPassthrough", "mediaPassthrough"};
+    static const char *const names[] = {"_mediaPassthrough", "mediaPassthrough", "videoAccess"};
     for (size_t i = 0; i < sizeof(names) / sizeof(names[0]); i++) {
         Ivar ivar = class_getInstanceVariable(object_getClass(cell), names[i]);
         if (!ivar)
