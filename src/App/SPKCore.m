@@ -17,6 +17,7 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         // follow (Instagram decides), on or off.
         @"interface_liquid_glass_mode" : @"follow",
         @"interface_liquid_glass_tabbar_mode" : @"default",
+        @"interface_native_tab_bar" : @NO,
         // off, default (follow iOS), soft or hard.
         @"interface_scroll_edge_style" : @"soft",
         @"interface_nav_order" : @"default",

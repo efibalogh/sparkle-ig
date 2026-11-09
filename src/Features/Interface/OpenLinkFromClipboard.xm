@@ -6,6 +6,7 @@
 #import "../../Networking/SPKInstagramAPI.h"
 #import "../../Shared/Stories/SPKStoryOpener.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
+#import "../../Shared/UI/SPKReplayedLongPressGesture.h"
 #import "../../Utils.h"
 
 extern "C" void SPKBeginSavedTabRoutingBypass(void);
@@ -201,24 +202,9 @@ static NSString *SPKClipboardUsername(NSString *raw) {
 }
 
 // The real recognizer has ended by the time a username lookup comes back, so a
-// miss replays a whole press to IG's handler: on some builds Began only arms a
-// flag on the tab bar controller and Ended is what opens search.
-@interface SPKReplayedLongPressGesture : UILongPressGestureRecognizer
-@property (nonatomic, weak) UIGestureRecognizer *spk_original;
-@property (nonatomic) UIGestureRecognizerState spk_state;
-@end
-
-@implementation SPKReplayedLongPressGesture
-- (UIGestureRecognizerState)state {
-    return self.spk_state;
-}
-- (UIView *)view {
-    return self.spk_original.view;
-}
-- (CGPoint)locationInView:(UIView *)view {
-    return self.spk_original ? [self.spk_original locationInView:view] : CGPointZero;
-}
-@end
+// miss replays a whole press to IG's handler (SPKReplayedLongPressGesture): on
+// some builds Began only arms a flag on the tab bar controller and Ended is
+// what opens search.
 
 // Intercept the clipboard link at the moment IG's own long-press handler fires.
 // Returns YES if we consumed the gesture (opened a link), NO to let IG open search.

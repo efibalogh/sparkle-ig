@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass и размытие";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Панель вкладок в виде пилюли";
 "INTERFACE_LIQUID_GLASS_HELP" = "Принудительно включает или отключает нативный интерфейс Liquid Glass в Instagram. В режиме «По умолчанию» решает Instagram для этого аккаунта, а его развёртывание не затрагивается. Требуется перезапуск.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Открыть поиск";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Заменяет собственную панель вкладок Instagram системной панелью вкладок, которую Instagram использует на складных iPhone. Свайп между вкладками и Поведение панели вкладок к ней не применяются. Требуется перезапуск.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "Системная панель вкладок";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Уведомления";
 "INTERFACE_NOTIFICATIONS_HELP" = "Как выглядят собственные уведомления Sparkle и где они появляются.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Принудительно включает или отключает плавающую панель вкладок в форме пилюли из iOS 26. В режиме «По умолчанию» решает Instagram. Самому стеклянному материалу нужна iOS 26. Требуется перезапуск.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Сохранённое занимает место скрытой вкладки, поэтому одна из пяти вкладок Instagram должна быть отключена, прежде чем её можно включить. Настройка всей панели вкладок общая для всех аккаунтов на этом устройстве.";
 "TAB_EDITOR_HELP_TAP" = "Нажми на вкладку, чтобы показать или скрыть её. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Эти параметры применяются, когда на панели остается одна вкладка. Скройте остальные выше, чтобы их использовать.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Свайп между вкладками недоступен, пока включена Системная панель вкладок.";
 "TAB_EXPLORE" = "Исследование";
 "TAB_LAYOUT_CUSTOM" = "Пользовательское";
 "TAB_SAVED" = "Сохранённое";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "Открыть FLEX сейчас";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Защищает настройки Sparkle собственным кодом-паролем и биометрией, включая каждый экран раздела.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Удержание тремя пальцами";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Открыть галерею";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Открыть настройки Sparkle";
 "TOOLS_TITLE" = "Инструменты";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Сбросить состояние введения";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Отключает все функции Sparkle, кроме ярлыка к настройкам. Используйте это, чтобы определить, вызывает ли Sparkle сбой. Требуется перезапуск.";

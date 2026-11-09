@@ -92,6 +92,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
 - **Liquid Glass (iOS 26+)**:
   - Native Liquid Glass integration across Sparkle's own UI, plus an option to force Instagram's on or off.
   - **Scroll Edge Effect** picks how content meets the top bar as you scroll: off (Instagram disables the effect), the iOS default, the soft progressive blur, or a hard edge with a dividing line (iOS 27 defaults to hard). Changes apply live.
+  - **System Tab Bar** swaps Instagram's tab bar for the real iOS tab bar Instagram builds for foldable iPhones, keeping the Tab Editor layout and the tab hold shortcuts.
   - On iOS 18 and lower, a **Pill-Shaped Tab Bar** toggle brings the floating pill tab bar (shape only; the glass material stays iOS 26+).
 
 ## Installation

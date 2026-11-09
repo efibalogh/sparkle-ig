@@ -166,6 +166,10 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
                                                                   menu:SPKLiquidGlassTabBarStateMenu()];
             tabBarBehavior.defaultsKey = kSPKPrefInterfaceLiquidGlassTabBarMode;
             tabBarBehavior.enabledProvider = ^BOOL {
+                // The system tab bar is not Instagram's floating bar, so the
+                // scroll behavior it configures does not reach it.
+                if (SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar) && [SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar])
+                    return NO;
                 return SPKLiquidGlassSwitchIsOn();
             };
             tabBarBehavior.helpText = SPKL(@"INTERFACE_TAB_BAR_BEHAVIOR_HELP");
@@ -184,10 +188,20 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
                                                                    menu:SPKScrollEdgeStyleMenu()];
             scrollEdgeStyle.defaultsKey = kSPKPrefInterfaceScrollEdgeStyle;
             scrollEdgeStyle.helpText = SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_HELP");
+            SPKSetting *nativeTabBar = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_NATIVE_TAB_BAR_TITLE")
+                                                                                     icon:nil
+                                                                              defaultsKey:kSPKPrefInterfaceNativeTabBar
+                                                                          requiresRestart:YES],
+                                                          SPKL(@"INTERFACE_NATIVE_TAB_BAR_HELP"));
+            nativeTabBar.hiddenProvider = ^BOOL {
+                return !SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar);
+            };
+            nativeTabBar.reloadsTableOnSwitchChange = YES;
 
             [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_HEADER"), @[
                           liquidGlass,
                           scrollEdgeStyle,
+                          nativeTabBar,
                           tabBarBehaviorCell(),
                       ],
                                                 nil)];

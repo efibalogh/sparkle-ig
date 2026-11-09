@@ -195,6 +195,14 @@
 - (void)setSelectedTabBarSurface:(IGMainAppSurfaceIntent *)surface animated:(BOOL)animated;
 - (void)_exploreButtonLongPressed:(id)gesture;
 - (void)_updateTabBarVisibilityForController:(id)controller;
+// Native UITabBarController path (451+), driven by IGNativeTabBarControllerCoordinator.
+- (NSArray *)_nativeOrderedSurfacesForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass;
+- (BOOL)_nativeTopologyIsSupportedWithExpandedSurfaces:(NSArray *)expandedSurfaces compactSurfaces:(NSArray *)compactSurfaces;
+- (BOOL)_installOrUpdateNativeTabBarController;
+- (id)_surfaceForNativeIdentifier:(id)identifier;
+- (NSString *)_nativeLongPressAccessibilityActionNameForSurface:(id)surface;
+- (BOOL)nativeTabBarControllerCoordinator:(id)coordinator canLongPressIdentifier:(id)identifier;
+- (void)nativeTabBarControllerCoordinator:(id)coordinator didUpdateLongPressIdentifier:(id)identifier phase:(NSInteger)phase;
 @end
 
 @interface IGTabBarViewControllerManager : NSObject

@@ -3,6 +3,7 @@
 
 NSString *const kSPKPrefInterfaceLiquidGlassMode = @"interface_liquid_glass_mode";
 NSString *const kSPKPrefInterfaceLiquidGlassTabBarMode = @"interface_liquid_glass_tabbar_mode";
+NSString *const kSPKPrefInterfaceNativeTabBar = @"interface_native_tab_bar";
 NSString *const kSPKPrefInterfaceScrollEdgeStyle = @"interface_scroll_edge_style";
 NSNotificationName const SPKScrollEdgeStyleDidChangeNotification = @"SPKScrollEdgeStyleDidChangeNotification";
 NSString *const kSPKPrefInstantsDisableCameraControl = @"instants_disable_camera_control";

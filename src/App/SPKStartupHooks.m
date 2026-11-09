@@ -8,6 +8,7 @@
 #import "../Features/Tools/SPKNetworkInterceptor.h"
 
 FOUNDATION_EXPORT void SPKInstallLiquidGlassHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallNativeTabBarHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProgressiveBlurHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallDebugButtonIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFeedActionButtonHooksIfEnabled(void);
@@ -190,6 +191,9 @@ void SPKInstallLaunchCriticalHooks(void) {
     // their classes are absent, so this is safe on older systems. They install
     // in every mode: Follow still needs the tab bar behavior hooks.
     SPK_INSTALL(SPKInstallLiquidGlassHooksIfEnabled);
+    // Instagram picks its tab bar implementation inside IGTabBarController's
+    // init, which runs before any surface timer fires.
+    SPK_INSTALL(SPKInstallNativeTabBarHooksIfEnabled);
     SPK_INSTALL(SPKInstallTweakLaunchCriticalHooks);
     SPK_INSTALL(SPKInstallFollowingFeedHooksIfEnabled);
     SPK_INSTALL(SPKInstallAdBlockingEarlyHooksIfEnabled);

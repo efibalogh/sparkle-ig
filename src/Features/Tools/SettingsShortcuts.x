@@ -7,6 +7,7 @@
 #import "../../Utils.h"
 #import "../../App/SPKPerfMeter.h"
 #import "../../Shared/Navigation/SPKTabConfiguration.h"
+#import "../../Shared/i18n/SPKStrings.h"
 
 static const void *kSPKHomeTabSettingsLongPressAssocKey = &kSPKHomeTabSettingsLongPressAssocKey;
 static const void *kSPKGalleryTabLongPressAssocKey = &kSPKGalleryTabLongPressAssocKey;
@@ -458,12 +459,103 @@ SPKFireShortcutHaptic();
 
 %end
 
+// The native UITabBarController tab bar (folded iPhone Duo, or Native Tab Bar)
+// draws system tabs, so the IGTabBarButton gestures above never see a touch.
+// Instagram instead routes a held tab through its coordinator delegate. The tab
+// is identified through the same IGTabBarButton the native descriptor is built
+// from, so the host resolves exactly as it does on the custom bar.
+typedef NS_ENUM(NSInteger, SPKNativeTabShortcut) {
+    SPKNativeTabShortcutNone = 0,
+    SPKNativeTabShortcutSettings,
+    SPKNativeTabShortcutGallery,
+};
+
+// Phase 0 is the press being recognized, where Instagram fires its own hold
+// actions. Later phases (changed, ended, cancelled) belong to the same press.
+static NSInteger const kSPKNativeLongPressPhaseBegan = 0;
+
+static SPKNativeTabShortcut SPKNativeTabShortcutForSurface(IGTabBarController *controller, id surface) {
+    if (!surface || ![controller respondsToSelector:@selector(_buttonForTabBarSurface:)])
+        return SPKNativeTabShortcutNone;
+    UIView *button = [controller _buttonForTabBarSurface:surface];
+    if (![button isKindOfClass:[UIView class]])
+        return SPKNativeTabShortcutNone;
+
+    NSString *buttonIdentifier = button.accessibilityIdentifier ?: @"";
+    NSString *label = button.accessibilityLabel ?: @"";
+    NSString *settingsHost = SPKResolvedSettingsShortcutTabIdentifier();
+    if (settingsHost && SPKTabButtonMatchesTarget(buttonIdentifier, label, settingsHost))
+        return SPKNativeTabShortcutSettings;
+    if (SPKTabIdentifierMatchesGalleryShortcut(buttonIdentifier, label))
+        return SPKNativeTabShortcutGallery;
+    return SPKNativeTabShortcutNone;
+}
+
+static SPKNativeTabShortcut SPKNativeTabShortcutForIdentifier(IGTabBarController *controller, id identifier) {
+    if (!identifier || ![controller respondsToSelector:@selector(_surfaceForNativeIdentifier:)])
+        return SPKNativeTabShortcutNone;
+    return SPKNativeTabShortcutForSurface(controller, [controller _surfaceForNativeIdentifier:identifier]);
+}
+
+%group SPKNativeTabBarShortcutHooks
+
+%hook IGTabBarController
+- (BOOL)nativeTabBarControllerCoordinator:(id)coordinator canLongPressIdentifier:(id)identifier {
+    if (SPKNativeTabShortcutForIdentifier(self, identifier) != SPKNativeTabShortcutNone)
+        return YES;
+    return %orig;
+}
+
+// The coordinator only attaches a hold to tabs whose descriptor carries a
+// long-press accessibility action, and only Home and Profile have one of their
+// own. Naming an action for the shortcut hosts gives them the hold, and gives
+// VoiceOver a named action that does the same thing.
+- (NSString *)_nativeLongPressAccessibilityActionNameForSurface:(id)surface {
+    switch (SPKNativeTabShortcutForSurface(self, surface)) {
+    case SPKNativeTabShortcutSettings:
+        return SPKL(@"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION");
+    case SPKNativeTabShortcutGallery:
+        return SPKL(@"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION");
+    case SPKNativeTabShortcutNone:
+        break;
+    }
+    return %orig;
+}
+
+- (void)nativeTabBarControllerCoordinator:(id)coordinator didUpdateLongPressIdentifier:(id)identifier phase:(NSInteger)phase {
+    SPKNativeTabShortcut shortcut = SPKNativeTabShortcutForIdentifier(self, identifier);
+    if (shortcut == SPKNativeTabShortcutNone) {
+        %orig;
+        return;
+    }
+    // The press belongs to Sparkle, so the tab's own hold action (the account
+    // switcher on Profile) never sees any of its phases.
+    if (phase != kSPKNativeLongPressPhaseBegan)
+        return;
+
+    SPKFireShortcutHaptic();
+    if (shortcut == SPKNativeTabShortcutSettings)
+        [SPKUtils showSettingsVC:self.view.window];
+    else
+        [SPKGalleryViewController presentGallery];
+}
+%end
+
+%end
+
 void SPKInstallSettingsShortcutsHooksIfNeeded(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         %init(SPKSettingsShortcutsHooks,
               IGDirectInboxNavigationHeaderView = SPKResolveIGClass(@"IGDirectInboxNavigationHeaderView.IGDirectInboxNavigationHeaderView",
                                                                     @"IGDirectInboxNavigationHeaderView"));
+        Class tabBarControllerClass = objc_getClass("IGTabBarController");
+        if ([tabBarControllerClass instancesRespondToSelector:@selector(nativeTabBarControllerCoordinator:canLongPressIdentifier:)] &&
+            [tabBarControllerClass instancesRespondToSelector:@selector(nativeTabBarControllerCoordinator:didUpdateLongPressIdentifier:phase:)] &&
+            [tabBarControllerClass instancesRespondToSelector:@selector(_surfaceForNativeIdentifier:)] &&
+            [tabBarControllerClass instancesRespondToSelector:@selector(_nativeLongPressAccessibilityActionNameForSurface:)]) {
+            %init(SPKNativeTabBarShortcutHooks);
+        }
         SPKInstallProfileMoreShortcutHooks();
     });
 }

@@ -1195,6 +1195,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pill-Shaped Tab Bar";
 "INTERFACE_LIQUID_GLASS_HELP" = "Forces Instagram's native Liquid Glass interface on or off. Default lets Instagram decide for this account and leaves its rollout untouched. Requires a restart.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Open Search";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Replaces Instagram's own tab bar with the system tab bar Instagram uses on foldable iPhones. Swipe Between Tabs and Tab Bar Behavior do not apply to it. Requires a restart.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "System Tab Bar";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notifications";
 "INTERFACE_NOTIFICATIONS_HELP" = "How Sparkle's own notification pills look and where they appear.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Forces the iOS 26 floating pill tab bar on or off. Default lets Instagram decide. The glass material itself needs iOS 26. Requires a restart.";
@@ -2479,6 +2482,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Saved borrows the slot of a hidden tab, so one of the five Instagram tabs has to be off before it can be turned on. The whole tab bar setup is shared by every account on this device.";
 "TAB_EDITOR_HELP_TAP" = "Tap a tab to show or hide it. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "These apply once the bar is down to a single tab. Hide the others above to use them.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Swipe Between Tabs is not available while System Tab Bar is on.";
 "TAB_EXPLORE" = "Explore";
 "TAB_LAYOUT_CUSTOM" = "Custom";
 "TAB_SAVED" = "Saved";
@@ -2566,6 +2570,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "Open FLEX Now";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Protects Sparkle Settings with its own passcode and biometrics, including every topic screen.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Three-finger Hold";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Open Gallery";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Open Sparkle Settings";
 "TOOLS_TITLE" = "Tools";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Reset Intro State";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Disables every Sparkle feature except the shortcut to Settings. Use this to determine whether Sparkle is causing a crash. Requires a restart.";

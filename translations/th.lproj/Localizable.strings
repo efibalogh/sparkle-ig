@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass และเบลอ";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "แถบแท็บทรงแคปซูล";
 "INTERFACE_LIQUID_GLASS_HELP" = "บังคับเปิดหรือปิดอินเทอร์เฟซ Liquid Glass ดั้งเดิมของ Instagram ค่าเริ่มต้นให้ Instagram เป็นผู้ตัดสินใจสำหรับบัญชีนี้และไม่เปลี่ยนแปลงการทยอยเปิดใช้งาน ต้องรีสตาร์ท";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "เปิดการค้นหา";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "แทนที่แถบแท็บของ Instagram ด้วยแถบแท็บของระบบที่ Instagram ใช้บน iPhone แบบพับได้ ปัดสลับระหว่างแท็บและพฤติกรรมแถบแท็บจะไม่มีผลกับแถบนี้ ต้องเริ่มแอปใหม่";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "แถบแท็บของระบบ";
 "INTERFACE_NOTIFICATIONS_HEADER" = "การแจ้งเตือน";
 "INTERFACE_NOTIFICATIONS_HELP" = "รูปลักษณ์และตำแหน่งที่แสดงของแคปซูลการแจ้งเตือนของ Sparkle เอง";
 "INTERFACE_PILL_TAB_BAR_HELP" = "บังคับเปิดหรือปิดแถบแท็บแคปซูลลอยแบบ iOS 26 ค่าเริ่มต้นให้ Instagram เป็นผู้ตัดสินใจ วัสดุกระจกต้องใช้ iOS 26 ต้องรีสตาร์ท";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "บันทึกไว้จะยืมตำแหน่งของแท็บที่ซ่อนอยู่ ดังนั้นต้องปิดหนึ่งในห้าแท็บของ Instagram ก่อนจึงจะเปิดใช้งานได้ การตั้งค่าแถบแท็บทั้งหมดจะใช้ร่วมกันในทุกบัญชีบนอุปกรณ์นี้";
 "TAB_EDITOR_HELP_TAP" = "แตะแท็บเพื่อแสดงหรือซ่อน ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "การตั้งค่านี้จะมีผลเมื่อแถบเหลือแท็บเดียว ซ่อนแท็บอื่น ๆ ด้านบนเพื่อใช้งาน";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "ปัดสลับระหว่างแท็บใช้ไม่ได้ขณะเปิดแถบแท็บของระบบ";
 "TAB_EXPLORE" = "สำรวจ";
 "TAB_LAYOUT_CUSTOM" = "กำหนดเอง";
 "TAB_SAVED" = "บันทึกแล้ว";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "เปิด FLEX ทันที";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "ปกป้องการตั้งค่า Sparkle ด้วยรหัสผ่านและไบโอเมตริกซ์ของตัวเอง รวมถึงทุกหน้าหัวข้อ";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "แตะค้างสามนิ้ว";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "เปิดแกลเลอรี";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "เปิดการตั้งค่า Sparkle";
 "TOOLS_TITLE" = "เครื่องมือ";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] รีเซ็ตสถานะการแนะนำ";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "ปิดใช้งานทุกฟีเจอร์ของ Sparkle ยกเว้นทางลัดไปยังการตั้งค่า ใช้เพื่อตรวจสอบว่า Sparkle เป็นสาเหตุของการขัดข้องหรือไม่ ต้องรีสตาร์ทแอป";

@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "液态玻璃和模糊";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "药丸形标签栏";
 "INTERFACE_LIQUID_GLASS_HELP" = "强制开启或关闭 Instagram 原生的 Liquid Glass 界面。默认时由 Instagram 为此帐户决定，且不影响其推送。需要重启。";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "打开搜索";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "将 Instagram 自带的标签栏替换为 Instagram 在折叠屏 iPhone 上使用的系统标签栏。在标签页之间滑动和标签栏行为对其不适用。需要重启。";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "系统标签栏";
 "INTERFACE_NOTIFICATIONS_HEADER" = "通知";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle 自有通知气泡的外观和显示位置。";
 "INTERFACE_PILL_TAB_BAR_HELP" = "强制开启或关闭 iOS 26 的悬浮胶囊标签栏。默认时由 Instagram 决定。玻璃材质本身需要 iOS 26。需要重启。";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "已保存占用被隐藏选项卡的位置，因此必须先关闭Instagram的五个选项卡之一才能将其打开。整个选项卡栏的设置在此设备上的所有账户中共享。";
 "TAB_EDITOR_HELP_TAP" = "轻点某个选项卡来显示或隐藏它。 ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "这些选项在标签栏缩减为单个标签时适用。隐藏其他标签以使用它们。";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "开启系统标签栏时，无法使用在标签页之间滑动。";
 "TAB_EXPLORE" = "探索";
 "TAB_LAYOUT_CUSTOM" = "自定义";
 "TAB_SAVED" = "已保存";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "立即打开 FLEX";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "使用独立的密码和生物识别保护 Sparkle 设置，包括每个主题页面。";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "三指长按";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "打开相册";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "打开 Sparkle 设置";
 "TOOLS_TITLE" = "工具";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[开发] 重置介绍状态";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "禁用所有 Sparkle 功能，仅保留通往设置的快捷方式。可用来判断 Sparkle 是否导致崩溃。需要重启。";

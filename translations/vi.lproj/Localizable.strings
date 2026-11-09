@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Làm mờ";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Thanh thẻ dạng viên thuốc";
 "INTERFACE_LIQUID_GLASS_HELP" = "Buộc bật hoặc tắt giao diện Liquid Glass gốc của Instagram. Ở Mặc định, Instagram quyết định cho tài khoản này và việc triển khai của họ không bị động đến. Cần khởi động lại.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Mở tìm kiếm";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Thay thanh thẻ riêng của Instagram bằng thanh thẻ hệ thống mà Instagram dùng trên iPhone màn hình gập. Vuốt giữa các thẻ và Hành vi thanh thẻ không áp dụng cho thanh này. Cần khởi động lại.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "Thanh thẻ hệ thống";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Thông báo";
 "INTERFACE_NOTIFICATIONS_HELP" = "Cách hiển thị và vị trí xuất hiện của thẻ thông báo Sparkle.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Buộc bật hoặc tắt thanh tab nổi hình viên thuốc của iOS 26. Ở Mặc định, Instagram quyết định. Bản thân chất liệu kính cần iOS 26. Cần khởi động lại.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Mục 'Đã lưu' chiếm vị trí của một thẻ bị ẩn, vì vậy một trong năm thẻ của Instagram phải được tắt trước khi bật mục này. Toàn bộ thiết lập thanh thẻ được chia sẻ chung cho mọi tài khoản trên thiết bị này.";
 "TAB_EDITOR_HELP_TAP" = "Nhấn vào một thẻ để ẩn hoặc hiện. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Các tùy chọn này áp dụng khi thanh thẻ chỉ còn lại một thẻ duy nhất. Ẩn các thẻ khác ở trên để sử dụng.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Vuốt giữa các thẻ không khả dụng khi Thanh thẻ hệ thống đang bật.";
 "TAB_EXPLORE" = "Khám phá";
 "TAB_LAYOUT_CUSTOM" = "Tùy chỉnh";
 "TAB_SAVED" = "Đã lưu";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "Mở FLEX ngay";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Bảo vệ Cài đặt Sparkle bằng mật mã riêng và sinh trắc học, bao gồm mọi màn hình chuyên mục.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Nhấn giữ bằng ba ngón tay";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Mở Thư viện";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Mở Cài đặt Sparkle";
 "TOOLS_TITLE" = "Công cụ";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Đặt lại trạng thái giới thiệu";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Vô hiệu hóa mọi tính năng của Sparkle ngoại trừ phím tắt vào Cài đặt. Dùng tùy chọn này để kiểm tra xem Sparkle có gây ra sự cố văng ứng dụng hay không. Yêu cầu khởi động lại.";

@@ -1126,6 +1126,8 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"langpack_catalog_url",
             @"interface_liquid_glass_mode",
             @"interface_liquid_glass_tabbar_mode",
+            // Read while Instagram builds the tab bar, before the session resolves.
+            @"interface_native_tab_bar",
             @"interface_scroll_edge_style",
             @"interface_hide_ui_on_capture",
             @"downloads_adv_encoding",

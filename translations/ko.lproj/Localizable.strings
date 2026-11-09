@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 및 흐림";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "알약 모양 탭 바";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram의 네이티브 Liquid Glass 인터페이스를 강제로 켜거나 끕니다. 기본값에서는 이 계정에 대해 Instagram이 결정하며 배포 상태를 건드리지 않습니다. 재시작이 필요합니다.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "검색 열기";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Instagram 자체 탭 바를 Instagram이 폴더블 iPhone에서 사용하는 시스템 탭 바로 바꿉니다. 탭 사이에서 스와이프와 탭 바 동작은 적용되지 않습니다. 재시작이 필요합니다.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "시스템 탭 바";
 "INTERFACE_NOTIFICATIONS_HEADER" = "알림";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle 자체 알림 배너의 모양과 표시 위치입니다.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "iOS 26의 플로팅 알약형 탭 바를 강제로 켜거나 끕니다. 기본값에서는 Instagram이 결정합니다. 유리 소재 자체는 iOS 26이 필요합니다. 재시작이 필요합니다.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "저장됨은 숨겨진 탭의 슬롯을 사용하니까, 인스타그램의 5개 탭 중 하나가 꺼져 있어야 켤 수 있어. 탭 바 설정은 이 기기의 모든 계정이 공유해.";
 "TAB_EDITOR_HELP_TAP" = "탭을 눌러서 표시하거나 숨길 수 있어. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "이러한 옵션은 막대가 단일 탭으로 축소되면 적용됩니다. 다른 탭을 위에 숨겨서 사용하십시오.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "시스템 탭 바가 켜져 있는 동안에는 탭 사이에서 스와이프를 사용할 수 없습니다.";
 "TAB_EXPLORE" = "탐색";
 "TAB_LAYOUT_CUSTOM" = "사용자 정의";
 "TAB_SAVED" = "저장됨";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "지금 FLEX 열기";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "모든 주제 화면을 포함해 Sparkle 설정을 자체 암호와 생체 인증으로 보호합니다.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "세 손가락 누르기";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "갤러리 열기";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Sparkle 설정 열기";
 "TOOLS_TITLE" = "도구";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] 소개 상태 초기화";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "설정으로 가는 바로가기를 제외한 모든 Sparkle 기능을 비활성화합니다. Sparkle이 충돌을 일으키는지 확인하는 데 사용하세요. 다시 시작해야 적용됩니다.";

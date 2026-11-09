@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 與模糊效果";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "藥丸形分頁列";
 "INTERFACE_LIQUID_GLASS_HELP" = "強制開啟或關閉 Instagram 原生的 Liquid Glass 介面。預設時由 Instagram 為此帳號決定，且不影響其推出。需要重新啟動。";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "開啟搜尋";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "將 Instagram 自帶的分頁列替換為 Instagram 在摺疊式 iPhone 上使用的系統分頁列。滑動切換分頁和分頁列行為不適用於它。需要重新啟動。";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "系統分頁列";
 "INTERFACE_NOTIFICATIONS_HEADER" = "通知";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle 自身通知膠囊的外觀，以及顯示的位置。";
 "INTERFACE_PILL_TAB_BAR_HELP" = "強制開啟或關閉 iOS 26 的浮動膠囊標籤列。預設時由 Instagram 決定。玻璃材質本身需要 iOS 26。需要重新啟動。";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "「已儲存」會借用已隱藏分頁的位置，因此必須先關閉五個 Instagram 分頁中的一個，才能開啟它。整個分頁列設定由此裝置上的所有帳號共用。";
 "TAB_EDITOR_HELP_TAP" = "點按分頁即可顯示或隱藏它。 ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "這些選項會在分頁列縮減為單一分頁時生效。請在上方隱藏其他分頁以使用它們。";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "開啟系統分頁列時，無法使用滑動切換分頁。";
 "TAB_EXPLORE" = "探索";
 "TAB_LAYOUT_CUSTOM" = "自訂";
 "TAB_SAVED" = "已儲存";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "立即開啟 FLEX";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "以獨立的密碼與生物辨識保護 Sparkle 設定，涵蓋每一個主題畫面。";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "三指按住";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "開啟圖庫";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "開啟 Sparkle 設定";
 "TOOLS_TITLE" = "工具";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[開發] 重設引導狀態";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "停用除設定捷徑外的所有 Sparkle 功能，用來判斷當機是否由 Sparkle 造成。需要重新啟動。";

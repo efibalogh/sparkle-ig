@@ -1,6 +1,7 @@
 #import "SPKPreferenceAvailability.h"
 
 #import <UIKit/UIKit.h>
+#import <objc/runtime.h>
 
 #import "../App/SPKFlexLoader.h"
 #import "../Shared/MediaPreview/SPKFullScreenImageViewController.h"
@@ -30,6 +31,20 @@ BOOL SPKPrefIsAvailable(NSString *key) {
     // Liquid Glass, and so its OLED tint choice, only exists on iOS 26+.
     if ([key isEqualToString:@"interface_oled_black_glass"]) {
         return SPKIsIOSVersionAtLeast(@"26.0");
+    }
+
+    // Instagram's native UITabBarController tab bar exists from 451 on and is a
+    // Liquid Glass system bar, so it needs iOS 26 and a build that ships it.
+    if ([key isEqualToString:kSPKPrefInterfaceNativeTabBar]) {
+        static BOOL available;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            Class controllerClass = NSClassFromString(@"IGTabBarController");
+            available = SPKIsIOSVersionAtLeast(@"26.0") && controllerClass &&
+                        class_getInstanceVariable(controllerClass, "_usesNativeTabBarController") &&
+                        [controllerClass instancesRespondToSelector:NSSelectorFromString(@"_nativeTopologyIsSupportedWithExpandedSurfaces:compactSurfaces:")];
+        });
+        return available;
     }
 
     if ([key isEqualToString:@"notifs_pill_liquid_glass"]) {

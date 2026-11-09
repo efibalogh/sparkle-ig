@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Θόλωμα";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Γραμμή Καρτέλας Σχήματος Χαπιού";
 "INTERFACE_LIQUID_GLASS_HELP" = "Επιβάλλει την ενεργοποίηση ή απενεργοποίηση της εγγενούς διεπαφής Liquid Glass του Instagram. Στην Προεπιλογή αποφασίζει το Instagram για αυτόν τον λογαριασμό και η διάθεσή του μένει ανέγγιχτη. Απαιτεί επανεκκίνηση.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Άνοιγμα αναζήτησης";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Αντικαθιστά τη γραμμή καρτελών του Instagram με τη γραμμή καρτελών συστήματος που χρησιμοποιεί το Instagram σε αναδιπλούμενα iPhone. Η Σάρωση μεταξύ καρτελών και η Συμπεριφορά Γραμμής Καρτέλας δεν ισχύουν σε αυτήν. Απαιτεί επανεκκίνηση.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "Γραμμή Καρτελών Συστήματος";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Ειδοποιήσεις";
 "INTERFACE_NOTIFICATIONS_HELP" = "Πώς δείχνουν οι ειδοποιήσεις του ίδιου του Sparkle και πού εμφανίζονται.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Επιβάλλει την ενεργοποίηση ή απενεργοποίηση της αιωρούμενης γραμμής καρτελών σε σχήμα χαπιού του iOS 26. Στην Προεπιλογή αποφασίζει το Instagram. Το ίδιο το υλικό γυαλιού χρειάζεται iOS 26. Απαιτεί επανεκκίνηση.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Τα Αποθηκευμένα δανείζονται τη θέση από μια κρυμμένη καρτέλα, οπότε ένα από τα πέντε κύρια tabs του Instagram πρέπει να είναι απενεργοποιημένο για να μπορέσει να ενεργοποιηθεί. Ολόκληρη η ρύθμιση της γραμμής καρτελών μοιράζεται από όλους τους λογαριασμούς σε αυτή τη συσκευή.";
 "TAB_EDITOR_HELP_TAP" = "Πατήστε μια καρτέλα για να την εμφανίσετε ή να την αποκρύψετε. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Αυτές ισχύουν όταν η γραμμή κατεβαίνει σε μία μόνο ενότητα. Αποκρύψτε τις άλλες πάνω για να τις χρησιμοποιήσετε.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Η Σάρωση μεταξύ καρτελών δεν είναι διαθέσιμη όσο είναι ενεργή η Γραμμή Καρτελών Συστήματος.";
 "TAB_EXPLORE" = "Εξερεύνηση";
 "TAB_LAYOUT_CUSTOM" = "Προσαρμοσμένη";
 "TAB_SAVED" = "Αποθηκευμένα";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "Άνοιγμα FLEX Τώρα";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Προστατεύει τις Ρυθμίσεις Sparkle με δικό τους κωδικό και βιομετρικά, συμπεριλαμβανομένης κάθε οθόνης θέματος.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Κράτημα Τριών Δακτύλων";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Άνοιγμα Γκαλερί";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Άνοιγμα Ρυθμίσεων Sparkle";
 "TOOLS_TITLE" = "Εργαλεία";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Επαναφορά Κατάστασης Εισαγωγής";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Απενεργοποιεί κάθε λειτουργία του Sparkle εκτός από τη συντόμευση προς τις Ρυθμίσεις. Χρησιμοποιήστε το για να διαπιστώσετε αν το Sparkle προκαλεί κατάρρευση. Απαιτεί επανεκκίνηση.";

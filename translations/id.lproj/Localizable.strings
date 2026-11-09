@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Buram";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Bilah Tab Berbentuk Pil";
 "INTERFACE_LIQUID_GLASS_HELP" = "Memaksa antarmuka Liquid Glass bawaan Instagram aktif atau nonaktif. Pada Bawaan, Instagram yang memutuskan untuk akun ini dan peluncurannya tidak disentuh. Perlu mulai ulang.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Buka Pencarian";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Mengganti bilah tab milik Instagram dengan bilah tab sistem yang digunakan Instagram di iPhone lipat. Geser Antar Tab dan Perilaku Bilah Tab tidak berlaku untuknya. Perlu memulai ulang.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "Bilah Tab Sistem";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notifikasi";
 "INTERFACE_NOTIFICATIONS_HELP" = "Bagaimana tampilan pil notifikasi milik Sparkle sendiri dan di mana kemunculannya.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Memaksa bilah tab mengambang berbentuk pil dari iOS 26 aktif atau nonaktif. Pada Bawaan, Instagram yang memutuskan. Material kaca itu sendiri memerlukan iOS 26. Perlu mulai ulang.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Tersimpan meminjam slot dari tab yang disembunyikan, jadi salah satu dari lima tab Instagram harus dimatikan dulu sebelum tab ini bisa diaktifkan. Seluruh pengaturan bilah tab ini digunakan bersama oleh semua akun di perangkat ini.";
 "TAB_EDITOR_HELP_TAP" = "Ketuk sebuah tab untuk menampilkan atau menyembunyikannya. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Ini berlaku setelah bilah tab tersisa satu tab saja. Sembunyikan yang lain di atas untuk menggunakannya.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Geser Antar Tab tidak tersedia saat Bilah Tab Sistem aktif.";
 "TAB_EXPLORE" = "Jelajahi";
 "TAB_LAYOUT_CUSTOM" = "Kustom";
 "TAB_SAVED" = "Tersimpan";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "Buka FLEX Sekarang";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Melindungi Pengaturan Sparkle dengan kode sandi dan biometriknya sendiri, termasuk setiap layar topik.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Tahan Tiga Jari";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Buka Galeri";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Buka Pengaturan Sparkle";
 "TOOLS_TITLE" = "Alat";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Reset Status Intro";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Menonaktifkan semua fitur Sparkle kecuali pintasan ke Pengaturan. Gunakan ini untuk menentukan apakah Sparkle penyebab crash. Membutuhkan mulai ulang.";

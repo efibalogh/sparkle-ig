@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & ぼかし";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "ピル型タブバー";
 "INTERFACE_LIQUID_GLASS_HELP" = "InstagramのネイティブLiquid Glassインターフェースを強制的にオンまたはオフにします。デフォルトではこのアカウントについてInstagramが決定し、その展開には手を加えません。再起動が必要です。";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "検索を開く";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Instagram のタブバーを、Instagram が折りたたみ式 iPhone で使うシステムタブバーに置き換えます。タブ間をスワイプとタブバーの動作は適用されません。再起動が必要です。";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "システムタブバー";
 "INTERFACE_NOTIFICATIONS_HEADER" = "通知";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle独自の通知バナーの見た目と表示位置です。";
 "INTERFACE_PILL_TAB_BAR_HELP" = "iOS 26のフローティングピル型タブバーを強制的にオンまたはオフにします。デフォルトではInstagramが決定します。ガラス素材自体にはiOS 26が必要です。再起動が必要です。";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "保存済みは非表示のタブのスロットを使用するため、5つのInstagramタブのいずれかをオフにしてから有効にする必要があります。タブバー全体のセットアップはこのデバイスのすべてのアカウントで共有されます。";
 "TAB_EDITOR_HELP_TAP" = "タブをタップして表示/非表示を切り替えます。 ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "これらはバーが単一タブに下がると適用されます。それらを使用するには、上記の他のタブを非表示にします。";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "システムタブバーがオンの間は、タブ間をスワイプは使用できません。";
 "TAB_EXPLORE" = "検索";
 "TAB_LAYOUT_CUSTOM" = "カスタム";
 "TAB_SAVED" = "保存済み";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "FLEX を今開く";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "独自のパスコードと生体認証でSparkle設定を保護します。すべてのトピック画面が対象です。";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "3 本指で長押し";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "ギャラリーを開く";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Sparkle 設定を開く";
 "TOOLS_TITLE" = "ツール";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] イントロ状態をリセット";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "設定へのショートカットを除くすべてのSparkle機能を無効にします。Sparkleがクラッシュの原因かどうかを判断するために使用してください。再起動が必要です.";

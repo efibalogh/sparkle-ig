@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass et flou";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barre d'onglets en forme de pilule";
 "INTERFACE_LIQUID_GLASS_HELP" = "Force l'interface Liquid Glass native d'Instagram en activé ou désactivé. Par défaut, Instagram décide pour ce compte et son déploiement reste intact. Nécessite un redémarrage.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Ouvrir la recherche";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Remplace la barre d'onglets d'Instagram par la barre d'onglets système qu'Instagram utilise sur les iPhone pliables. Balayer entre les onglets et Comportement de la barre d'onglets ne s'y appliquent pas. Nécessite un redémarrage.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "Barre d'onglets système";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notifications";
 "INTERFACE_NOTIFICATIONS_HELP" = "L'apparence des pastilles de notification de Sparkle et l'endroit où elles s'affichent.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Force la barre d'onglets flottante en forme de pilule d'iOS 26 en activé ou désactivé. Par défaut, Instagram décide. Le matériau verre lui-même nécessite iOS 26. Nécessite un redémarrage.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Enregistré emprunte l'emplacement d'un onglet masqué, donc l'un des cinq onglets Instagram doit être désactivé avant de pouvoir l'activer. La configuration entière de la barre d'onglets est partagée par tous les comptes sur cet appareil.";
 "TAB_EDITOR_HELP_TAP" = "Appuie sur un onglet pour l'afficher ou le masquer. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "S'appliquent une fois que la barre est réduite à un seul onglet. Masquez les autres ci-dessus pour les utiliser.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Balayer entre les onglets n'est pas disponible tant que la Barre d'onglets système est activée.";
 "TAB_EXPLORE" = "Explorer";
 "TAB_LAYOUT_CUSTOM" = "Personnalisé";
 "TAB_SAVED" = "Enregistrées";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "Ouvrir FLEX maintenant";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Protège les réglages Sparkle avec son propre code et la biométrie, y compris chaque écran de rubrique.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Appui avec trois doigts";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Ouvrir la Galerie";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Ouvrir les Paramètres de Sparkle";
 "TOOLS_TITLE" = "Outils";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Réinitialiser l'état d'intro";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Désactive toutes les fonctionnalités Sparkle sauf le raccourci vers les réglages. Utilisez cette option pour déterminer si Sparkle provoque un plantage. Nécessite un redémarrage.";

@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ve Bulanıklık";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Hap Şeklindeki Sekme Çubuğu";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram'ın yerel Liquid Glass arayüzünü zorla açar veya kapatır. Varsayılan'da bu hesap için Instagram karar verir ve dağıtımına dokunulmaz. Yeniden başlatma gerektirir.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Aramayı Aç";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Instagram'ın kendi sekme çubuğunu, Instagram'ın katlanabilir iPhone'larda kullandığı sistem sekme çubuğuyla değiştirir. Sekmeler Arasında Kaydır ve Sekme Çubuğu Davranışı buna uygulanmaz. Yeniden başlatma gerektirir.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "Sistem Sekme Çubuğu";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Bildirimler";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle'ın kendi bildirim baloncuklarının görünümü ve nerede çıkacakları.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "iOS 26'nın yüzen hap şeklindeki sekme çubuğunu zorla açar veya kapatır. Varsayılan'da Instagram karar verir. Cam malzemenin kendisi iOS 26 gerektirir. Yeniden başlatma gerektirir.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Kaydedilenler, gizli bir sekmenin yerini kullanır, bu nedenle beş Instagram sekmesinden biri kapatılmış olmalıdır. Tüm sekme çubuğu ayarları bu cihazda tüm hesaplar tarafından paylaşılır.";
 "TAB_EDITOR_HELP_TAP" = "Bir sekmeyi göstermek veya gizlemek için dokunun. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Bunlar çubuk tek bir sekmeye düştüğünde geçerli olur. Onları kullanmak için yukarıdakileri gizleyin.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Sistem Sekme Çubuğu açıkken Sekmeler Arasında Kaydır kullanılamaz.";
 "TAB_EXPLORE" = "Keşfet";
 "TAB_LAYOUT_CUSTOM" = "Özel";
 "TAB_SAVED" = "Kaydedildi";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "FLEX'i Şimdi Aç";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Her konu ekranı dahil Sparkle Ayarlarını kendi parolası ve biyometrisiyle korur.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Üç Parmak Basılı Tutma";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Galeriyi Aç";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Sparkle Ayarlarını Aç";
 "TOOLS_TITLE" = "Araçlar";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Tanıtım Durumunu Sıfırla";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Ayarlar kısayolu dışındaki tüm Sparkle özelliklerini devre dışı bırakır. Sparkle'ın çökmeye neden olup olmadığını belirlemek için kullanın. Yeniden başlatma gerektirir.";

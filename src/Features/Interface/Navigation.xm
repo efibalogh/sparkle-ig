@@ -789,6 +789,50 @@ static void SPKSyncTabBarSelectionIndex(IGTabBarController *controller) {
         [bar setSelectedTabBarItemIndex:(NSInteger)index];
 }
 
+static BOOL SPKTabBarReadBoolIvar(id object, const char *name) {
+    if (!object)
+        return NO;
+    Ivar ivar = class_getInstanceVariable(object_getClass(object), name);
+    if (!ivar)
+        return NO;
+    const char *type = ivar_getTypeEncoding(ivar);
+    if (type && type[0] != 'B' && type[0] != 'c')
+        return NO;
+    return *((uint8_t *)(__bridge void *)object + ivar_getOffset(ivar)) != 0;
+}
+
+// IG 451+ can drive the bar with a native UITabBarController instead of its own
+// tab bar view; it is what a folded iPhone Duo uses. That path builds its tabs
+// from _tabBarSurfaces and, in compact width, _nativeCompactTabBarSurfaces, and
+// never asks _buttonForTabBarSurface:, so both lists are filtered before it
+// installs or updates. The compact list keeps only surfaces that are still
+// shown, in the configured order, and falls back to the first five shown.
+static void SPKFilterNativeTabBarSurfaces(IGTabBarController *controller) {
+    if (SPKStabilityGuardIsSafeStartupMode() || !SPKTabBarReadBoolIvar(controller, "_usesNativeTabBarController"))
+        return;
+
+    NSArray *surfaces = [SPKUtils getIvarForObj:controller name:"_tabBarSurfaces"];
+    if (![surfaces isKindOfClass:[NSArray class]] || surfaces.count == 0)
+        return;
+    NSArray *filtered = filterSurfacesArray(surfaces);
+    if (filtered.count == 0)
+        return;
+    [SPKUtils setIvarForObj:controller name:"_tabBarSurfaces" value:filtered];
+
+    NSArray *compact = [SPKUtils getIvarForObj:controller name:"_nativeCompactTabBarSurfaces"];
+    NSMutableArray *filteredCompact = [NSMutableArray array];
+    if ([compact isKindOfClass:[NSArray class]] && compact.count > 0) {
+        for (id surface in filtered) {
+            if ([compact containsObject:surface])
+                [filteredCompact addObject:surface];
+        }
+    }
+    if (filteredCompact.count == 0)
+        [filteredCompact addObjectsFromArray:[filtered subarrayWithRange:NSMakeRange(0, MIN((NSUInteger)5, filtered.count))]];
+    if (![compact isKindOfClass:[NSArray class]] || ![compact isEqualToArray:filteredCompact])
+        [SPKUtils setIvarForObj:controller name:"_nativeCompactTabBarSurfaces" value:[filteredCompact copy]];
+}
+
 // Should the tab bar be taken away entirely? Only when the configuration leaves
 // exactly one tab, and only for a tab that keeps a way back into Sparkle
 // Settings without the tab bar long-press.
@@ -817,6 +861,17 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
 - (void)layoutSubviews {
     %orig;
     SPKConfigureSavedTabButtonInstance(self);
+}
+%end
+
+%end
+
+%group SPKNativeTabBarHooks
+
+%hook IGTabBarController
+- (BOOL)_installOrUpdateNativeTabBarController {
+    SPKFilterNativeTabBarSurfaces(self);
+    return %orig;
 }
 %end
 
@@ -1156,6 +1211,9 @@ extern "C" void SPKInstallNavigationHooksIfNeeded(void) {
     dispatch_once(&onceToken, ^{
         %init(SPKNavigationHooks,
                        IGHomeFeedHeaderView = SPKResolveIGClass(@"IGHomeFeedHeader.IGHomeFeedHeaderView", @"IGHomeFeedHeaderView"));
+        if ([NSClassFromString(@"IGTabBarController") instancesRespondToSelector:NSSelectorFromString(@"_installOrUpdateNativeTabBarController")]) {
+            %init(SPKNativeTabBarHooks);
+        }
         if (SPKSavedTabPreferenceMayEnable()) {
             %init(SPKSavedTabButtonHooks);
             [[NSNotificationCenter defaultCenter] addObserverForName:SPKAccountDidChangeNotification

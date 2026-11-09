@@ -1,5 +1,7 @@
 #import "SPKStrings.h"
 #import "SPKTabEditorViewController.h"
+#import "SPKPreferenceAvailability.h"
+#import "SPKPreferences.h"
 
 #import "../AssetUtils.h"
 #import "../Shared/Navigation/SPKTabConfiguration.h"
@@ -702,6 +704,8 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         }
         return text;
     }
+    if (section == SPKTabEditorSectionBehavior && [self systemTabBarDisablesSwipe])
+        return SPKL(@"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER");
     if (section == SPKTabEditorSectionSingleTab) {
         NSString *single = [self singleVisibleTab];
         NSMutableString *text = [NSMutableString string];
@@ -820,6 +824,13 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     return SPKSingleVisibleTabIdentifier(self.layoutMode, self.hidden, self.savedCarrier);
 }
 
+// The system tab bar has no swipe between tabs: Instagram only builds its
+// swipe container for its own bar. Read from the preference rather than the
+// running bar, matching Tab Bar Behavior on the Interface page.
+- (BOOL)systemTabBarDisablesSwipe {
+    return SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar) && [SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar];
+}
+
 - (NSArray<NSString *> *)behaviorRowKeys {
     return @[ @"launch", @"swipe" ];
 }
@@ -856,7 +867,12 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         cell.imageView.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
         NSString *title = [self.swipeMode isEqualToString:@"enabled"] ? @"On"
                         : [self.swipeMode isEqualToString:@"disabled"] ? @"Off" : @"Default";
-        cell.accessoryView = [self menuButtonWithTitle:title menu:[self swipeMenu]];
+        UIButton *button = [self menuButtonWithTitle:title menu:[self swipeMenu]];
+        if ([self systemTabBarDisablesSwipe]) {
+            button.enabled = NO;
+            cell.textLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
+        }
+        cell.accessoryView = button;
     }
     return cell;
 }

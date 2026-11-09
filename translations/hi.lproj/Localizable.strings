@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass और Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "गोली के आकार का टैब बार";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram का मूल Liquid Glass इंटरफ़ेस जबरन चालू या बंद करता है। डिफ़ॉल्ट पर Instagram इस खाते के लिए फ़ैसला करता है और उसका रोलआउट जैसा है वैसा रहता है। रीस्टार्ट आवश्यक है।";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "खोज खोलें";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Instagram के अपने टैब बार को उस सिस्टम टैब बार से बदलता है जिसे Instagram फ़ोल्ड होने वाले iPhone पर इस्तेमाल करता है। टैब के बीच स्वाइप करें और टैब बार व्यवहार इस पर लागू नहीं होते। रीस्टार्ट ज़रूरी है।";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "सिस्टम टैब बार";
 "INTERFACE_NOTIFICATIONS_HEADER" = "सूचनाएं";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle की अपनी नोटिफिकेशन पिल कैसी दिखती हैं और कहां दिखती हैं।";
 "INTERFACE_PILL_TAB_BAR_HELP" = "iOS 26 वाला तैरता पिल टैब बार जबरन चालू या बंद करता है। डिफ़ॉल्ट पर Instagram तय करता है। ग्लास मटीरियल के लिए iOS 26 चाहिए। रीस्टार्ट आवश्यक है।";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Saved एक छिपे हुए टैब की जगह लेता है, इसलिए पांच Instagram टैब में से एक बंद होना चाहिए इससे पहले कि इसे चालू किया जा सके। पूरा टैब बार सेटअप इस डिवाइस के हर खाते द्वारा साझा किया जाता है।";
 "TAB_EDITOR_HELP_TAP" = "किसी टैब को दिखाने या छिपाने के लिए टैप करें। ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "ये एक बार लागू होते हैं जब बार एक एकल टैब तक पहुंच जाता है। उन्हें उपयोग करने के लिए ऊपर अन्य को छिपाएं।";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "सिस्टम टैब बार चालू रहने पर टैब के बीच स्वाइप करें उपलब्ध नहीं है।";
 "TAB_EXPLORE" = "खोज";
 "TAB_LAYOUT_CUSTOM" = "कस्टम";
 "TAB_SAVED" = "सहेजें";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "अभी FLEX खोलें";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Sparkle Settings को उसके अपने पासकोड और बायोमेट्रिक्स से सुरक्षित करता है, हर टॉपिक स्क्रीन सहित।";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "तीन-अंगुली होल्ड";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "गैलरी खोलें";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Sparkle सेटिंग्स खोलें";
 "TOOLS_TITLE" = "उपकरण";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] परिचय स्थिति रीसेट करें";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Settings के शॉर्टकट को छोड़कर हर Sparkle फ़ीचर बंद कर देता है। यह जानने के लिए इसका उपयोग करें कि क्रैश Sparkle की वजह से है या नहीं। रीस्टार्ट आवश्यक है।";

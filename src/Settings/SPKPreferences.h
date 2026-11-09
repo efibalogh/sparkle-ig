@@ -5,6 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// "follow" lets Instagram decide, "on" and "off" force Liquid Glass either way.
 FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceLiquidGlassMode;
 FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceLiquidGlassTabBarMode;
+FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceNativeTabBar;
 FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceScrollEdgeStyle;
 /// Posted after the scroll edge style changes so on-screen views re-apply it.
 FOUNDATION_EXPORT NSNotificationName const SPKScrollEdgeStyleDidChangeNotification;

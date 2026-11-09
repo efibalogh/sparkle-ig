@@ -1132,6 +1132,9 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass e Desfoque";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra de Abas em Formato de Pílula";
 "INTERFACE_LIQUID_GLASS_HELP" = "Força a interface Liquid Glass nativa do Instagram a ficar ativada ou desativada. Em Padrão, o Instagram decide para esta conta e a implantação dele fica intacta. Requer reinício.";
+"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Abrir Busca";
+"INTERFACE_NATIVE_TAB_BAR_HELP" = "Substitui a barra de abas do Instagram pela barra de abas do sistema que o Instagram usa em iPhones dobráveis. Deslizar entre abas e Comportamento da Barra de Abas não se aplicam a ela. Requer reinicialização.";
+"INTERFACE_NATIVE_TAB_BAR_TITLE" = "Barra de Abas do Sistema";
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notificações";
 "INTERFACE_NOTIFICATIONS_HELP" = "Como os avisos do próprio Sparkle aparecem e onde eles surgem.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Força a barra de abas flutuante em formato de pílula do iOS 26 a ficar ativada ou desativada. Em Padrão, o Instagram decide. O material de vidro em si precisa do iOS 26. Requer reinício.";
@@ -2416,6 +2419,7 @@
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Salvos usa o espaço de uma aba oculta, então uma das cinco abas do Instagram deve estar desativada para que ele possa ser ativado. A configuração inteira da barra de abas é compartilhada por todas as contas neste dispositivo.";
 "TAB_EDITOR_HELP_TAP" = "Toque em uma aba para exibir ou ocultar. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Estas se aplicam quando a barra fica com uma única aba. Oculte as outras acima para usá-las.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Deslizar entre abas não está disponível enquanto a Barra de Abas do Sistema estiver ativada.";
 "TAB_EXPLORE" = "Explorar";
 "TAB_LAYOUT_CUSTOM" = "Personalizado";
 "TAB_SAVED" = "Salvos";
@@ -2503,6 +2507,8 @@
 "TOOLS_SETTINGS_LOCK_OPEN_FLEX_NOW_TITLE" = "Abrir FLEX Agora";
 "TOOLS_SETTINGS_LOCK_PASSCODE_HELP" = "Protege as Configurações do Sparkle com seu próprio código e biometria, incluindo todas as telas de tópicos.";
 "TOOLS_SETTINGS_LOCK_THREE_FINGER_HOLD_TITLE" = "Segurar Três Dedos";
+"TOOLS_SHORTCUT_TAB_GALLERY_ACCESSIBILITY_ACTION" = "Abrir Galeria";
+"TOOLS_SHORTCUT_TAB_SETTINGS_ACCESSIBILITY_ACTION" = "Abrir Configurações Sparkle";
 "TOOLS_TITLE" = "Ferramentas";
 "TOOLS_TWEAK_DEV_RESET_INTRO_STATE_TITLE" = "[DEV] Restaurar Estado de Introdução";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Desativa todos os recursos do Sparkle, exceto o atalho para as Configurações. Use isto para determinar se o Sparkle está causando uma falha. Requer reiniciar.";
