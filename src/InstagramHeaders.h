@@ -888,6 +888,7 @@
 
 @interface _TtC39IGDirectLightweightThreadViewController39IGDirectLightweightThreadViewController : UIViewController
 - (id)initWithUserSession:(id)session threadId:(id)threadId onLoadCompletion:(id)completion;
+- (id)initWithUserSession:(id)session threadId:(id)threadId shouldApplyThreadTheme:(BOOL)shouldApplyThreadTheme onLoadCompletion:(id)completion;
 - (void)setShouldHideHeader:(BOOL)shouldHideHeader;
 - (void)setBypassSeenStateUpdate:(BOOL)bypassSeenStateUpdate;
 - (void)setShouldSkipScrollToNewMessagesSeparator:(BOOL)shouldSkip;
