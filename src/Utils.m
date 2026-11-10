@@ -30,6 +30,10 @@ NSNotificationName const SPKHideExploreGridPreferenceDidChangeNotification = @"S
 // logging the CAAnimations UIKit installs (~/dev/frida/nav-push-timing.js).
 // UIKit uses a spring, not a timing curve, which is why an eased version always
 // felt slower and softer no matter how the duration was adjusted.
+// Implemented in OpenPostNativePush.x: keeps the router from resetting the Home
+// feed (scroll to top, injected-post reset, refresh) behind a route Sparkle opens.
+FOUNDATION_EXPORT void SPKOpenPostArmRouterHomeGuard(void);
+
 static const NSTimeInterval kSPKProfilePushDuration = 0.3508;
 static const CGFloat kSPKProfilePushMass = 2.21;
 static const CGFloat kSPKProfilePushStiffness = 1532.0;
@@ -2648,6 +2652,7 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
 + (BOOL)spk_openProfileViaURLHandlerForUsername:(NSString *)username session:(id)session {
     if (username.length == 0)
         return NO;
+    SPKOpenPostArmRouterHomeGuard();
     NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://instagram.com/%@", username]];
     Class urlHandlerClass = objc_getClass("IGURLHandler");
     if (!profileURL || !urlHandlerClass)
@@ -2678,9 +2683,29 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
     return [self openInstagramMediaURL:url dismissingPresentedViewControllers:YES];
 }
 
+// A post, reel or IGTV permalink opened through the web route lands in the Home
+// feed as a hoisted post, which needs the router's home tap and scroll. Every
+// other route opens its own page, so the feed reset behind it is unwanted.
+static BOOL SPKInstagramRouteLandsInHomeFeed(NSURL *url) {
+    NSString *scheme = url.scheme.lowercaseString ?: @"";
+    if (![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"])
+        return NO;
+    NSMutableArray<NSString *> *segments = [NSMutableArray array];
+    for (NSString *segment in [url.path componentsSeparatedByString:@"/"]) {
+        if (segment.length > 0)
+            [segments addObject:segment.lowercaseString];
+    }
+    // instagram.com/<username>/p/<code>/ is the same post link with the author in front.
+    if (segments.count >= 3 && [@[ @"p", @"reel", @"reels", @"tv" ] containsObject:segments[1]])
+        return YES;
+    return segments.count >= 2 && [@[ @"p", @"reel", @"reels", @"tv" ] containsObject:segments[0]];
+}
+
 + (BOOL)openInstagramMediaURL:(NSURL *)url dismissingPresentedViewControllers:(BOOL)dismiss {
     if (!url)
         return NO;
+    if (!SPKInstagramRouteLandsInHomeFeed(url))
+        SPKOpenPostArmRouterHomeGuard();
     NSString *scheme = url.scheme.lowercaseString ?: @"";
     UIApplication *application = [UIApplication sharedApplication];
     id<UIApplicationDelegate> delegate = application.delegate;
