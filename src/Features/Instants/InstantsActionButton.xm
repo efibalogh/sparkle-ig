@@ -4,6 +4,7 @@
 #import "../../Utils.h"
 #import "../../Shared/i18n/SPKStrings.h"
 #import "../../AssetUtils.h"
+#import "InstantsHeaderItems.h"
 #import "InstantsManualSeen.h"
 #import "InstantsModeViews.h"
 #import "InstantsResolver.h"
@@ -74,10 +75,7 @@ static BOOL SPKInstantsHeaderIsVisible(UIView *header) {
 /// on the consumption header, not on the creation/camera header (which hosts the gallery
 /// upload button at the same anchor).
 static BOOL SPKInstantsHeaderIsConsumption(UIView *header) {
-    UIWindow *window = header.window;
-    // Creation wins the slot: when the camera page is up, the gallery-upload button owns
-    // this position, so the action button must stand down even if a snap view lingers.
-    return SPKInstantsWindowShowsSnapView(window) && !SPKInstantsWindowShowsCreationView(window);
+    return SPKInstantsWindowIsConsuming(header.window);
 }
 
 // MARK: - Action Context
@@ -128,6 +126,91 @@ static SPKActionButtonContext *SPKInstantsActionContext(UIView *header, UIButton
         return r ? r.activeIndex : 0;
     };
     return context;
+}
+
+/// Sits one slot left of the action button, in the same header and behind the same
+/// eligibility checks, so it can never outlive the viewer or appear over the creation page.
+/// It is a plain button rather than a menu row because releasing one Instant is a single
+/// deliberate act, and the menu is built once per button lifecycle: a row there could not
+/// track the snap currently on screen.
+@interface SPKInstantsMarkSeenButtonTarget : NSObject
+@end
+
+@implementation SPKInstantsMarkSeenButtonTarget
+
++ (instancetype)shared {
+    static SPKInstantsMarkSeenButtonTarget *sShared = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        sShared = [[SPKInstantsMarkSeenButtonTarget alloc] init];
+    });
+    return sShared;
+}
+
+- (void)buttonTapped:(UIButton *)sender {
+    // Any view in the window works as the anchor: the resolver only needs the window.
+    SPKExecuteActionIdentifier(kSPKActionInstantsMarkSeen,
+                              SPKInstantsActionContext(sender.superview ?: sender, sender), NO);
+}
+
+@end
+
+// MARK: - Shared Builders
+
+BOOL SPKInstantsWindowIsConsuming(UIWindow *window) {
+    // Creation wins the slot: when the camera page is up, the gallery-upload button owns
+    // it, so the action button must stand down even if a snap view lingers.
+    return SPKInstantsWindowShowsSnapView(window) && !SPKInstantsWindowShowsCreationView(window);
+}
+
+UIButton *SPKInstantsNewActionButton(void) {
+    SPKActionMenuButton *button = [[SPKActionMenuButton alloc] initWithSymbol:@"" pointSize:24.0 diameter:44.0];
+    button.tag = kSPKInstantsActionButtonTag;
+    button.adjustsImageWhenHighlighted = YES;
+    button.showsMenuAsPrimaryAction = NO;
+    button.clipsToBounds = NO;
+    SPKApplyButtonStyle(button, SPKActionButtonSourceInstants);
+    return button;
+}
+
+void SPKInstantsConfigureActionButtonIfNeeded(UIButton *button, UIView *anchor) {
+    // Configure the menu only once per button lifecycle (when created or when the menu is
+    // still nil from a prior failed resolve). Do NOT reconfigure on count changes.
+    if (!button || button.menu != nil)
+        return;
+    SPKConfigureActionButton(button, SPKInstantsActionContext(anchor, button));
+    if (button.menu)
+        return;
+
+    // No menu yet (the resolver returned nil because the stack view isn't populated
+    // yet): retry once after a short delay.
+    __weak UIView *weakAnchor = anchor;
+    __weak UIButton *weakButton = button;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIView *strongAnchor = weakAnchor;
+        UIButton *retryButton = weakButton;
+        if (!strongAnchor.window || !retryButton || retryButton.menu)
+            return;
+        SPKConfigureActionButton(retryButton, SPKInstantsActionContext(strongAnchor, retryButton));
+        retryButton.alpha = 1.0;
+    });
+}
+
+UIButton *SPKInstantsNewMarkSeenButton(void) {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.tag = kSPKInstantsMarkSeenButtonTag;
+    button.tintColor = UIColor.whiteColor;
+    button.adjustsImageWhenHighlighted = YES;
+    button.accessibilityLabel = SPKL(@"INSTANTS_MARK_SEEN_TITLE");
+    [button setImage:[SPKAssetUtils instagramIconNamed:@"eye"
+                                            pointSize:24.0
+                                        renderingMode:UIImageRenderingModeAlwaysTemplate]
+            forState:UIControlStateNormal];
+    [button addTarget:[SPKInstantsMarkSeenButtonTarget shared]
+                  action:@selector(buttonTapped:)
+        forControlEvents:UIControlEventTouchUpInside];
+    SPKApplyButtonStyle(button, SPKActionButtonSourceInstants);
+    return button;
 }
 
 // MARK: - Button Placement
@@ -211,28 +294,7 @@ static void SPKInstantsPlaceButton(UIView *header) {
         SPKApplyButtonStyle(button, SPKActionButtonSourceInstants);
     }
 
-    // Configure the menu only once per button lifecycle (when created or when the menu is
-    // still nil from a prior failed resolve). Do NOT reconfigure on count changes.
-    if (button.menu == nil) {
-        SPKConfigureActionButton(button, SPKInstantsActionContext(header, button));
-
-        // If configure resulted in no menu (resolver returned nil because the stack view
-        // isn't populated yet), schedule a single retry after a short delay.
-        if (!button.menu) {
-            __weak UIView *weakHeader = header;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                UIView *strongHeader = weakHeader;
-                if (!strongHeader || !strongHeader.window)
-                    return;
-                UIButton *retryButton = (UIButton *)[strongHeader viewWithTag:kSPKInstantsActionButtonTag];
-                if (retryButton && !retryButton.menu) {
-                    SPKConfigureActionButton(retryButton, SPKInstantsActionContext(strongHeader, retryButton));
-                    retryButton.hidden = NO;
-                    retryButton.alpha = 1.0;
-                }
-            });
-        }
-    }
+    SPKInstantsConfigureActionButtonIfNeeded(button, header);
 
     CGRect expectedFrame = SPKInstantsButtonFrame(header, button);
     if (!SPKInstantsActionFrameMatches(button, expectedFrame))
@@ -244,34 +306,6 @@ static void SPKInstantsPlaceButton(UIView *header) {
 
 // MARK: - Mark as Seen Button
 
-/// Sits one slot left of the action button, in the same header and behind the same
-/// eligibility checks, so it can never outlive the viewer or appear over the creation page.
-/// It is a plain button rather than a menu row because releasing one Instant is a single
-/// deliberate act, and the menu is built once per button lifecycle: a row there could not
-/// track the snap currently on screen.
-@interface SPKInstantsMarkSeenButtonTarget : NSObject
-@end
-
-@implementation SPKInstantsMarkSeenButtonTarget
-
-+ (instancetype)shared {
-    static SPKInstantsMarkSeenButtonTarget *sShared = nil;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        sShared = [[SPKInstantsMarkSeenButtonTarget alloc] init];
-    });
-    return sShared;
-}
-
-- (void)buttonTapped:(UIButton *)sender {
-    UIView *header = sender.superview;
-    if (!header)
-        return;
-    SPKExecuteActionIdentifier(kSPKActionInstantsMarkSeen,
-                              SPKInstantsActionContext(header, sender), NO);
-}
-
-@end
 
 static CGRect SPKInstantsMarkSeenButtonFrame(UIView *header, UIView *button) {
     CGFloat side = 44.0;
@@ -307,21 +341,9 @@ static void SPKInstantsPlaceMarkSeenButton(UIView *header) {
 
     UIButton *button = existing;
     if (!button) {
-        button = [UIButton buttonWithType:UIButtonTypeSystem];
-        button.tag = kSPKInstantsMarkSeenButtonTag;
+        button = SPKInstantsNewMarkSeenButton();
         button.translatesAutoresizingMaskIntoConstraints = YES;
-        button.tintColor = UIColor.whiteColor;
-        button.adjustsImageWhenHighlighted = YES;
-        button.accessibilityLabel = SPKL(@"INSTANTS_MARK_SEEN_TITLE");
-        [button setImage:[SPKAssetUtils instagramIconNamed:@"eye"
-                                                pointSize:24.0
-                                            renderingMode:UIImageRenderingModeAlwaysTemplate]
-                forState:UIControlStateNormal];
-        [button addTarget:[SPKInstantsMarkSeenButtonTarget shared]
-                      action:@selector(buttonTapped:)
-            forControlEvents:UIControlEventTouchUpInside];
         [header addSubview:button];
-        SPKApplyButtonStyle(button, SPKActionButtonSourceInstants);
     }
 
     CGRect expectedFrame = SPKInstantsMarkSeenButtonFrame(header, button);

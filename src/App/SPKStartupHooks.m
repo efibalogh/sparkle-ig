@@ -97,6 +97,7 @@ FOUNDATION_EXPORT void SPKInstallProfileAnalyzerVisitTrackerHooksIfEnabled(void)
 FOUNDATION_EXPORT void SPKInstallDisableDMStorySeenHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableInstantsCreationHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsActionButtonHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallInstantsNavigationBarItemsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallInstantsAutoSaveHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsAllowScreenshotHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsReactionConfirmHooksIfEnabled(void);
@@ -308,6 +309,7 @@ void SPKInstallMessagesSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallDisableDMStorySeenHooksIfNeeded);
     SPK_INSTALL(SPKInstallDisableInstantsCreationHooksIfEnabled);
     SPK_INSTALL(SPKInstallInstantsActionButtonHooksIfEnabled);
+    SPK_INSTALL(SPKInstallInstantsNavigationBarItemsHooksIfNeeded);
     SPK_INSTALL(SPKInstallInstantsAutoSaveHooksIfEnabled);
     SPK_INSTALL(SPKInstallInstantsAllowScreenshotHooksIfEnabled);
     SPK_INSTALL(SPKInstallInstantsReactionConfirmHooksIfEnabled);
