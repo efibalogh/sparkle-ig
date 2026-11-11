@@ -701,7 +701,9 @@ SPKAudioMetadataFromItem(SPKAudioItem *item, SPKGallerySaveMetadata *metadata) {
     SPKGallerySaveMetadata *resolved =
         metadata ?: [[SPKGallerySaveMetadata alloc] init];
     resolved.source = (int16_t)[item gallerySource];
-    if (!resolved.sourceUsername.length) {
+    // The "audio" placeholder only names files that have nothing better; an
+    // artist display name in importFileNameStem already names this one.
+    if (!resolved.sourceUsername.length && (item.artist.length > 0 || !resolved.importFileNameStem.length)) {
         resolved.sourceUsername = item.artist.length > 0 ? item.artist : @"audio";
     }
     if (!resolved.sourceMediaPK.length) {

@@ -1,6 +1,7 @@
 #import "SPKStrings.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #include <UIKit/UIKit.h>
 
 #import "../../AssetUtils.h"
@@ -9,6 +10,8 @@
 #import "../ActionButton/ActionButtonCore.h"
 #import "../ActionButton/SPKActionDescriptor.h"
 #import "../ActionButton/SPKBulkMediaSelectionViewController.h"
+#import "../Audio/SPKAudioDownloadCoordinator.h"
+#import "../Audio/SPKAudioItem.h"
 #import "../Downloads/SPKDownloadHelpers.h"
 #import "../Gallery/SPKGalleryCoreDataStack.h"
 #import "../Gallery/SPKGalleryFile.h"
@@ -174,6 +177,8 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 @property (nonatomic, strong) UIBarButtonItem *topFavoriteItem;
 
 @property (nonatomic, strong) UIBarButtonItem *savePhotosItem;
+// Takes Save to Photos' slot for audio, which Photos cannot hold.
+@property (nonatomic, strong) UIBarButtonItem *saveFilesItem;
 @property (nonatomic, strong) UIBarButtonItem *saveGalleryItem;
 @property (nonatomic, strong) UIBarButtonItem *deleteGalleryItem;
 @property (nonatomic, strong) UIBarButtonItem *shareItem;
@@ -916,6 +921,8 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 
     _savePhotosItem = SPKMediaChromeBottomBarButtonItem(
         @"download", SPKL(@"FEED_COMMENT_ACTIONS_SAVE_PHOTOS_TEXT"), self, @selector(saveToPhotos));
+    _saveFilesItem = SPKMediaChromeBottomBarButtonItem(
+        @"audio_download", SPKL(@"ALERT_ACTION_SAVE_AUDIO_FILES"), self, @selector(saveAudioToFiles));
     _shareItem = SPKMediaChromeBottomBarButtonItem(@"share", SPKL(@"ALERT_ACTION_SHARE"), self,
                                                    @selector(shareMedia));
     _clipboardItem = SPKMediaChromeBottomBarButtonItem(@"copy", SPKL(@"FEED_COMMENT_ACTIONS_COPY_TEXT"), self,
@@ -963,13 +970,13 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     NSMutableArray<UIBarButtonItem *> *primary = [NSMutableArray array];
     NSMutableArray<UIBarButtonItem *> *editing = [NSMutableArray array];
     NSMutableArray<UIBarButtonItem *> *trailing = [NSMutableArray array];
-    [primary addObject:_savePhotosItem];
+    SPKMediaItemType currentType = [self currentItem].mediaType;
+    [primary addObject:(currentType == SPKMediaItemTypeAudio && _saveFilesItem) ? _saveFilesItem : _savePhotosItem];
     [primary addObject:_shareItem];
     [primary addObject:_clipboardItem];
 
     // Trim (video or audio) breaks out into its own trailing capsule so it reads
     // as a distinct action rather than crowding the save/share group.
-    SPKMediaItemType currentType = [self currentItem].mediaType;
     if (_trimItem && (currentType == SPKMediaItemTypeVideo ||
                       currentType == SPKMediaItemTypeAudio)) {
         [editing addObject:_trimItem];
@@ -1494,6 +1501,10 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
         UIMenu *menu = [self bulkActionsMenu];
         self.bulkActionsItem.menu = menu;
         self.bulkActionsItemVisible = (menu != nil);
+        [self rebuildBottomToolbarItems];
+    } else if (!_isFromGallery) {
+        // The save slot and Trim follow the current item's type. Gallery pages
+        // rebuild through updateGalleryOriginButton.
         [self rebuildBottomToolbarItems];
     }
 }
@@ -2107,6 +2118,76 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
                                            fromMedia:item.sourceMediaObject];
     }
     return meta;
+}
+
+static SPKAudioSource SPKAudioSourceForGallerySource(SPKGallerySource source) {
+    switch (source) {
+    case SPKGallerySourceFeed:
+        return SPKAudioSourceFeed;
+    case SPKGallerySourceReels:
+        return SPKAudioSourceReels;
+    case SPKGallerySourceStories:
+        return SPKAudioSourceStories;
+    case SPKGallerySourceDMs:
+        return SPKAudioSourceDMs;
+    case SPKGallerySourceAudioPage:
+        return SPKAudioSourceAudioPage;
+    default:
+        return SPKAudioSourceOther;
+    }
+}
+
+// Audio leaves the player through the audio pipeline, never the photo/video one:
+// an audio page's track is often an audio-only .mp4, which the generic paths file
+// as a video by its extension. The audio flow converts anything that is not
+// already an audio file to .m4a and saves it as audio. Returns NO for other items.
+- (BOOL)performAudioActionForCurrentItem:(SPKAudioAction)action identifier:(NSString *)identifier {
+    SPKMediaItem *item = [self currentItem];
+    if (item.mediaType != SPKMediaItemTypeAudio)
+        return NO;
+    NSURL *url = [self currentOperationURL];
+    if (!url)
+        return YES;
+    SPKGallerySaveMetadata *meta = [self metadataForCurrentItem];
+    SPKGallerySource gallerySource = meta ? (SPKGallerySource)meta.source : SPKGallerySourceForPlaybackSource(self.playbackSource);
+    SPKAudioItem *audio = [SPKAudioItem itemWithURL:url source:SPKAudioSourceForGallerySource(gallerySource)];
+    audio.artist = meta.sourceUsername;
+    audio.title = meta.customName ?: item.galleryFile.customName;
+    audio.mediaIdentifier = meta.sourceMediaPK;
+    [SPKAudioDownloadCoordinator performAction:action
+                                          item:audio
+                                     presenter:self
+                                    sourceView:[self bottomBarAnchorView]
+                                      metadata:meta
+                        notificationIdentifier:identifier];
+    return YES;
+}
+
+// Audio's stand-in for Save to Photos.
+- (void)saveAudioToFiles {
+    [self performAudioActionForCurrentItem:SPKAudioActionSaveToFiles identifier:kSPKNotificationDownloadAudio];
+}
+
+// Copies the played file as audio. A track not cached locally has nothing to copy.
+- (BOOL)copyAudioForCurrentItem {
+    SPKMediaItem *item = [self currentItem];
+    if (item.mediaType != SPKMediaItemTypeAudio)
+        return NO;
+    NSURL *url = [self currentFileURL];
+    NSData *data = url.isFileURL ? [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:nil] : nil;
+    if (!data) {
+        SPKNotify(kSPKNotificationMediaPreviewCopy, SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_COULD_NOT_COPY_AUDIO_TEXT"), nil,
+                  @"error_filled", SPKNotificationToneError);
+        return YES;
+    }
+    UTType *type = [UTType typeWithFilenameExtension:url.pathExtension.lowercaseString];
+    // An audio-only .mp4 is MPEG-4 audio, not a movie.
+    if (!type || ![type conformsToType:UTTypeAudio])
+        type = UTTypeMPEG4Audio;
+    [UIPasteboard generalPasteboard].items = @[ @{type.identifier : data} ];
+    SPKNotify(kSPKNotificationMediaPreviewCopy, SPKL(@"DOWNLOADS_DOWNLOAD_PRESENTER_COPIED_AUDIO_CLIPBOARD_TEXT"), nil,
+              @"circle_check_filled", SPKNotificationToneSuccess);
+    return YES;
 }
 
 - (SPKGallerySaveMetadata *)metadataForCurrentItem {
@@ -2735,6 +2816,9 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 - (void)saveToGallery {
+    if ([self performAudioActionForCurrentItem:SPKAudioActionSaveToGallery identifier:kSPKNotificationMediaPreviewSaveGallery]) {
+        return;
+    }
     if ([self handleRemoteOperationWithAction:SPKDownloadDestinationGallery
                            feedbackIdentifier:
                                kSPKNotificationMediaPreviewSaveGallery]) {
@@ -2812,6 +2896,9 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 - (void)shareMedia {
+    if ([self performAudioActionForCurrentItem:SPKAudioActionShare identifier:kSPKNotificationMediaPreviewShare]) {
+        return;
+    }
     if ([self
             handleRemoteOperationWithAction:SPKDownloadDestinationShare
                          feedbackIdentifier:kSPKNotificationMediaPreviewShare]) {
@@ -2886,6 +2973,9 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 - (void)copyMedia {
+    if ([self copyAudioForCurrentItem]) {
+        return;
+    }
     if ([self handleRemoteCopyOperation]) {
         return;
     }
