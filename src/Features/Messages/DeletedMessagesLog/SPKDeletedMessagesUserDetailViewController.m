@@ -3,6 +3,9 @@
 
 #import "../../../AssetUtils.h"
 #import "../../../Shared/Avatars/SPKAvatarCache.h"
+#import "../../../Shared/Downloads/SPKExportFileNaming.h"
+#import "../../../Shared/Gallery/SPKGalleryFile.h"
+#import "../../../Shared/Gallery/SPKGallerySaveMetadata.h"
 #import "../../../Shared/MediaPreview/SPKFullScreenMediaPlayer.h"
 #import "../../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../../Shared/UI/SPKMediaChrome.h"
@@ -677,6 +680,18 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     });
 }
 
+// Who sent the media and when, so saving or sharing it (from the menu or the
+// preview) names the file after the sender instead of "Other".
+static SPKGallerySaveMetadata *SPKDeletedMessageSaveMetadata(SPKDeletedMessage *message) {
+    SPKGallerySaveMetadata *meta = [[SPKGallerySaveMetadata alloc] init];
+    meta.source = SPKGallerySourceDMs;
+    meta.sourceUsername = message.senderUsername;
+    meta.sourceUserPK = message.senderPk;
+    meta.importPostedDate = message.sentAt;
+    meta.importCapturedDate = message.capturedAt;
+    return meta;
+}
+
 #pragma mark - Bubble delegate
 
 - (void)bubbleCell:(SPKDeletedMessageBubbleCell *)cell didTapMediaForMessage:(SPKDeletedMessage *)message {
@@ -684,7 +699,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     if (path.length) {
         // SPKFullScreenMediaPlayer detects audio/video/image by extension and
         // presents the right player — voice notes play here too.
-        [SPKFullScreenMediaPlayer showFileURL:[NSURL fileURLWithPath:path]];
+        [SPKFullScreenMediaPlayer showFileURL:[NSURL fileURLWithPath:path] metadata:SPKDeletedMessageSaveMetadata(message)];
         return;
     }
     // Visual CDN URLs are short-lived. Once recovery failed, do not send the
@@ -744,7 +759,10 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
                                                     image:[SPKAssetUtils menuIconNamed:@"share"]
                                                identifier:nil
                                                   handler:^(__unused UIAction *a) {
-                                                      UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[ mediaURL ] applicationActivities:nil];
+                                                      NSURL *shareURL = mediaURL.isFileURL
+                                                                            ? SPKExportShareableFileURL(mediaURL, SPKDeletedMessageSaveMetadata(message), SPKDownloadDestinationShare)
+                                                                            : mediaURL;
+                                                      UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[ shareURL ] applicationActivities:nil];
                                                       [weakSelf presentViewController:vc animated:YES completion:nil];
                                                   }];
         [children addObject:shareAction];

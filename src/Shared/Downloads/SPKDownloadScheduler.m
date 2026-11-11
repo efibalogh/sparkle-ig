@@ -1,5 +1,6 @@
 #import "SPKStrings.h"
 #import "SPKDownloadScheduler.h"
+#import "SPKExportFileNaming.h"
 
 #import "../../Utils.h"
 #import "../Audio/SPKAudioDownloadCoordinator.h"
@@ -146,6 +147,39 @@ static NSString *SPKPreferredExtensionForDownloadItem(NSString *stagedPath, NSUR
     return extension.length > 0 ? extension : nil;
 }
 
+// The user's custom export name for this item, or nil to keep the default one.
+// Items of one job that would share a name (a carousel's slides have the same
+// author and posted date) are numbered in job order.
+static NSString *SPKCustomExportStemForItem(SPKDownloadItem *item, SPKDownloadJob *job) {
+    // Download All → Share stages the batch cache-only and presents one share
+    // sheet at the end, so it names like any other share.
+    SPKDownloadDestination destination = job.request.finalizeAsBatchShare ? SPKDownloadDestinationShare : job.request.destination;
+    if (!SPKExportNamingAppliesToDestination(destination))
+        return nil;
+    NSString * (^stemFor)(SPKDownloadItem *) = ^NSString *(SPKDownloadItem *candidate) {
+        SPKGallerySaveMetadata *metadata = candidate.request.metadata ?: job.request.metadata;
+        // A local source keeps its original name (a Gallery file's carries its dates).
+        return SPKExportFileNameStem(metadata, candidate.request.localSourcePath.lastPathComponent);
+    };
+    NSString *stem = stemFor(item);
+    if (stem.length == 0)
+        return nil;
+    NSArray<SPKDownloadItem *> *items = job.items;
+    if (items.count < 2)
+        return stem;
+    NSInteger matches = 0;
+    NSInteger position = 0;
+    for (SPKDownloadItem *candidate in items) {
+        BOOL isSelf = [candidate.itemID isEqualToString:item.itemID];
+        if (isSelf || [stemFor(candidate) isEqualToString:stem]) {
+            matches++;
+            if (isSelf)
+                position = matches;
+        }
+    }
+    return (matches > 1 && position > 0) ? SPKExportFileNameAppendingIndex(stem, position) : stem;
+}
+
 static NSString *SPKRenameStagedPath(NSString *stagedPath, SPKDownloadItem *item, SPKDownloadJob *job) {
     // The rename replaces whatever already sits at the destination, so it must
     // never run beside files the scheduler does not own.
@@ -153,6 +187,19 @@ static NSString *SPKRenameStagedPath(NSString *stagedPath, SPKDownloadItem *item
         return stagedPath;
     SPKGallerySaveMetadata *metadata = item.request.metadata ?: job.request.metadata;
     NSURL *sourceURL = item.request.remoteURLString.length ? [NSURL URLWithString:item.request.remoteURLString] : [NSURL fileURLWithPath:stagedPath];
+    NSString *customStem = SPKCustomExportStemForItem(item, job);
+    if (customStem.length > 0) {
+        // User-chosen names can repeat across files, so number a clash instead of
+        // replacing the file already there.
+        NSString *extension = SPKPreferredExtensionForDownloadItem(stagedPath, sourceURL, item);
+        NSString *destination = SPKExportUniquePath(stagedPath.stringByDeletingLastPathComponent, customStem, extension, stagedPath);
+        if ([destination isEqualToString:stagedPath])
+            return stagedPath;
+        NSError *moveError = nil;
+        if ([[NSFileManager defaultManager] moveItemAtPath:stagedPath toPath:destination error:&moveError])
+            return destination;
+        SPKLog(@"Downloads", @"Custom export name rename failed: %@", moveError);
+    }
     NSString *preferred = nil;
     NSString *expectedStem = item.request.expectedFilenameStem;
     if (expectedStem.length > 0) {
@@ -792,7 +839,19 @@ static int64_t SPKFileSizeAtPath(NSString *path) {
                         [weakSelf pumpQueue];
                         return;
                     }
-                    NSString *renamed = SPKRenameStagedPath(outputURL.path, liveItem, liveJob);
+                    // A track with no separate audio finishes as the raw download in
+                    // Caches, outside the scheduler's scratch, where the rename never
+                    // runs and the file kept a UUID name. It is this job's own file,
+                    // so it moves into the job's staging first.
+                    NSString *outputPath = outputURL.path;
+                    if (!SPKDownloadPathIsScratch(outputPath)) {
+                        NSString *staging = [SPKDownloadStore stagingDirectoryForJobID:liveJob.jobID];
+                        [[NSFileManager defaultManager] createDirectoryAtPath:staging withIntermediateDirectories:YES attributes:nil error:nil];
+                        NSString *staged = [staging stringByAppendingPathComponent:outputPath.lastPathComponent];
+                        if ([[NSFileManager defaultManager] moveItemAtPath:outputPath toPath:staged error:nil])
+                            outputPath = staged;
+                    }
+                    NSString *renamed = SPKRenameStagedPath(outputPath, liveItem, liveJob);
                     [weakSelf finalizeItem:liveItem job:liveJob stagedPath:renamed];
                 } else
                     [weakSelf pumpQueue];

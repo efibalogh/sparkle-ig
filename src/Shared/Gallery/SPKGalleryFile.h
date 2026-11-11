@@ -15,6 +15,10 @@ FOUNDATION_EXPORT NSString *SPKFileNameForMedia(NSURL *originalURL, SPKGalleryMe
 
 /// Best-effort parse of tweak/Sparkle-style basenames, e.g. \c 1778088045602_username_story_20260210001603 — fills save-time epoch, posted-time compact date, user pk, username, and source slug when \a metadata fields are still empty (or source is Other).
 FOUNDATION_EXPORT void SPKGalleryApplyImportHeuristicsFromFilename(NSString *fileName, SPKGallerySaveMetadata *metadata);
+/// Reads the save time and posted date back out of a name built by `SPKFileNameForMedia`
+/// (`<epochMs>_..._<yyyyMMddHHmmss>`). Returns NO, leaving both outputs untouched, for any
+/// other layout. Pure parsing: unlike the import heuristics it never looks anything up.
+FOUNDATION_EXPORT BOOL SPKGalleryParseSparkleFilenameDates(NSString *_Nullable fileName, NSDate *_Nullable *_Nullable savedDate, NSDate *_Nullable *_Nullable postedDate);
 
 typedef NS_ENUM(int16_t, SPKGallerySource) {
     SPKGallerySourceOther = 0,

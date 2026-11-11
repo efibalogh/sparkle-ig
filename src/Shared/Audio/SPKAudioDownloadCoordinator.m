@@ -11,6 +11,7 @@
 #import "../Downloads/SPKDownloadRequest.h"
 #import "../Downloads/SPKDownloadService.h"
 #import "../Downloads/SPKDownloadTypes.h"
+#import "../Downloads/SPKExportFileNaming.h"
 #import "../Gallery/SPKGallerySaveMetadata.h"
 #import "../MediaDownload/SPKDashParser.h"
 #import "../MediaDownload/SPKMediaFFmpeg.h"
@@ -842,6 +843,7 @@ static NSString *SPKAudioBasename(SPKAudioItem *item) {
 }
 
 static void SPKAudioPresentSaveToFiles(NSURL *fileURL,
+                                       SPKGallerySaveMetadata *metadata,
                                        UIViewController *presenter,
                                        UIView *sourceView,
                                        NSString *identifier) {
@@ -855,7 +857,7 @@ static void SPKAudioPresentSaveToFiles(NSURL *fileURL,
     }
 
     UIDocumentPickerViewController *picker =
-        [[UIDocumentPickerViewController alloc] initForExportingURLs:@[ fileURL ]
+        [[UIDocumentPickerViewController alloc] initForExportingURLs:@[ SPKExportShareableFileURL(fileURL, metadata, SPKDownloadDestinationShare) ]
                                                               asCopy:YES];
     picker.modalPresentationStyle = UIModalPresentationFormSheet;
     if (sourceView) {
@@ -866,6 +868,7 @@ static void SPKAudioPresentSaveToFiles(NSURL *fileURL,
 }
 
 static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
+                                           SPKGallerySaveMetadata *metadata,
                                            UIViewController *presenter,
                                            UIView *sourceView,
                                            NSString *identifier) {
@@ -905,7 +908,7 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
             return;
         if (pill)
             [pill dismiss];
-        SPKAudioPresentSaveToFiles(fileURL, presenter, sourceView, identifier);
+        SPKAudioPresentSaveToFiles(fileURL, metadata, presenter, sourceView, identifier);
     };
 
     void (^processDownloadedFile)(NSURL *) = ^(NSURL *sourceURL) {
@@ -1124,10 +1127,10 @@ static void SPKAudioDownloadForSaveToFiles(SPKAudioItem *item, BOOL convert,
 
     if (saveToFilesAction) {
         if (item.url.isFileURL && !SPKAudioShouldConvertURL(item.url, convert)) {
-            SPKAudioPresentSaveToFiles(item.url, presenter, sourceView, identifier);
+            SPKAudioPresentSaveToFiles(item.url, resolvedMetadata, presenter, sourceView, identifier);
             return;
         }
-        SPKAudioDownloadForSaveToFiles(item, convert, presenter, sourceView,
+        SPKAudioDownloadForSaveToFiles(item, convert, resolvedMetadata, presenter, sourceView,
                                        identifier);
         return;
     }

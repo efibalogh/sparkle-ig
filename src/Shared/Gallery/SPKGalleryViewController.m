@@ -4,6 +4,10 @@
 #import "../../InstagramHeaders.h"
 #import "../../Utils.h"
 #import "../Account/SPKAccountManager.h"
+#import "../Downloads/SPKDownloadHelpers.h"
+#import "../Downloads/SPKDownloadRequest.h"
+#import "../Downloads/SPKExportFileNaming.h"
+#import "../UI/SPKNotificationCenter.h"
 #import "../MediaPreview/SPKFullScreenMediaPlayer.h"
 #import "../MediaTrim/SPKTrimConfiguration.h"
 #import "../MediaTrim/SPKTrimEditorViewController.h"
@@ -506,13 +510,14 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 
     NSArray<UIBarButtonItem *> *primary;
     if (self.selectionMode) {
+        UIBarButtonItem *savePhotosItem = [self galleryBottomBarItemWithResource:@"download" accessibility:SPKL(@"GALLERY_GALLERY_SAVE_SELECTED_PHOTOS_TEXT") action:@selector(saveSelectedFilesToPhotos)];
         UIBarButtonItem *shareItem = [self galleryBottomBarItemWithResource:@"share" accessibility:SPKL(@"GALLERY_GALLERY_SHARE_SELECTED_TEXT") action:@selector(shareSelectedFiles)];
         UIBarButtonItem *moveItem = [self galleryBottomBarItemWithResource:@"folder_move" accessibility:SPKL(@"GALLERY_GALLERY_MOVE_SELECTED_TEXT") action:@selector(moveSelectedFiles)];
         UIBarButtonItem *favoriteItem = [self galleryBottomBarItemWithResource:@"heart" accessibility:SPKL(@"GALLERY_GALLERY_FAVORITE_SELECTED_TEXT") action:@selector(toggleFavoriteForSelectedFiles)];
         UIBarButtonItem *deleteItem = [self galleryBottomBarItemWithResource:@"trash" accessibility:SPKL(@"GALLERY_GALLERY_DELETE_SELECTED_TEXT") action:@selector(deleteSelectedFiles)];
         deleteItem.tintColor = [SPKUtils SPKColor_InstagramDestructive];
 
-        primary = @[ shareItem, moveItem, favoriteItem, deleteItem ];
+        primary = @[ savePhotosItem, shareItem, moveItem, favoriteItem, deleteItem ];
     } else {
         UIBarButtonItem *filterItem = [self galleryBottomBarItemWithResource:@"filter" accessibility:SPKL(@"GALLERY_GALLERY_FILTER_FILTER_TEXT") action:@selector(presentFilter)];
         UIBarButtonItem *sortItem = [self galleryBottomBarItemWithResource:@"sort" accessibility:SPKL(@"MENU_SORT") action:@selector(presentSort)];
@@ -1754,6 +1759,43 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     }
 }
 
+- (void)saveSelectedFilesToPhotos {
+    [self saveFilesToPhotos:[self selectedGalleryFiles] notificationID:kSPKNotificationDownloadAllLibrary];
+}
+
+// Saves through the download pipeline rather than the share sheet: the system
+// Save Image action re-encodes photos and Photos names them IMG_xxxx, while this
+// hands Photos the file itself, under its export name. Audio has no place in
+// Photos and is left out.
+- (void)saveFilesToPhotos:(NSArray<SPKGalleryFile *> *)files notificationID:(NSString *)notificationID {
+    NSMutableArray<SPKDownloadItemRequest *> *items = [NSMutableArray array];
+    for (SPKGalleryFile *file in files) {
+        if (file.mediaType == SPKGalleryMediaTypeAudio || ![file fileExists])
+            continue;
+        SPKDownloadMediaKind kind = file.mediaType == SPKGalleryMediaTypeVideo ? SPKDownloadMediaKindVideo : SPKDownloadMediaKindImage;
+        SPKDownloadItemRequest *item = [SPKDownloadItemRequest itemWithLocalPath:[file filePath] mediaKind:kind];
+        item.preferredFileExtension = file.relativePath.pathExtension;
+        item.metadata = [file saveMetadata];
+        item.index = (NSInteger)items.count;
+        // Without custom names the file keeps its Gallery name.
+        item.expectedFilenameStem = file.relativePath.lastPathComponent.stringByDeletingPathExtension;
+        [items addObject:item];
+    }
+    if (items.count == 0) {
+        SPKNotify(notificationID, SPKL(@"DOWNLOADS_DOWNLOAD_DESTINATION_WRITER_AUDIO_CANNOT_SAVED_PHOTOS_TEXT"), nil,
+                  @"error_filled", SPKNotificationToneError);
+        return;
+    }
+    [SPKDownloadHelpers performBulkItems:items
+                             destination:SPKDownloadDestinationPhotos
+                        actionIdentifier:notificationID
+                               presenter:self
+                              anchorView:nil
+                           sourceSurface:SPKDownloadSourceSurfaceGallery
+                      finalizeBatchShare:NO
+                  finalizeBatchClipboard:NO];
+}
+
 - (void)shareSelectedFiles {
     NSArray<SPKGalleryFile *> *files = [self selectedGalleryFiles];
     if (files.count == 0) {
@@ -1761,11 +1803,14 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     }
 
     NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:files.count];
+    NSMutableArray<SPKGallerySaveMetadata *> *metadata = [NSMutableArray arrayWithCapacity:files.count];
     for (SPKGalleryFile *file in files) {
         [urls addObject:file.fileURL];
+        [metadata addObject:[file saveMetadata]];
     }
 
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:urls applicationActivities:nil];
+    NSArray<NSURL *> *shareURLs = SPKExportShareableFileURLs(urls, metadata, SPKDownloadDestinationShare);
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:shareURLs applicationActivities:nil];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -1907,12 +1952,22 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
                                        }];
     }
 
+    UIAction *savePhotosAction = nil;
+    if (file.mediaType != SPKGalleryMediaTypeAudio) {
+        savePhotosAction = [UIAction actionWithTitle:SPKL(@"FEED_COMMENT_ACTIONS_SAVE_PHOTOS_TEXT")
+                                               image:SPKGalleryMenuActionIcon(@"download")
+                                          identifier:nil
+                                             handler:^(__unused UIAction *a) {
+                                                 [weakSelf saveFilesToPhotos:@[ file ] notificationID:kSPKNotificationMediaPreviewSavePhotos];
+                                             }];
+    }
+
     UIImage *shareImg = SPKGalleryMenuActionIcon(@"share");
     UIAction *shareAction = [UIAction actionWithTitle:SPKL(@"ALERT_ACTION_SHARE")
                                                 image:shareImg
                                            identifier:nil
                                               handler:^(UIAction *a) {
-                                                  NSURL *url = [file fileURL];
+                                                  NSURL *url = SPKExportShareableFileURL([file fileURL], [file saveMetadata], SPKDownloadDestinationShare);
                                                   UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[ url ] applicationActivities:nil];
                                                   [weakSelf presentViewController:acVC animated:YES completion:nil];
                                               }];
@@ -2001,7 +2056,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
         [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:openSection]];
     }
     [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:editSection]];
-    [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:@[ shareAction ]]];
+    [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:(savePhotosAction ? @[ savePhotosAction, shareAction ] : @[ shareAction ])]];
     [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:@[ deleteAction ]]];
     return [UIMenu menuWithTitle:@"" children:sections];
 }

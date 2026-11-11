@@ -495,6 +495,26 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
     return [NSString stringWithFormat:@"%@_%@_%@_%@.%@", epoch, user, slug, dateCompact, ext];
 }
 
+BOOL SPKGalleryParseSparkleFilenameDates(NSString *fileName, NSDate **savedDate, NSDate **postedDate) {
+    NSString *stem = fileName.lastPathComponent.stringByDeletingPathExtension;
+    NSArray<NSString *> *parts = [stem componentsSeparatedByString:@"_"];
+    if (parts.count < 3) {
+        return NO;
+    }
+    NSDate *saved = SPKParseEpochDateFromString(parts.firstObject);
+    NSDate *posted = SPKParseCompactDigitDateFromString(parts.lastObject);
+    if (!saved || !posted) {
+        return NO;
+    }
+    if (savedDate) {
+        *savedDate = saved;
+    }
+    if (postedDate) {
+        *postedDate = posted;
+    }
+    return YES;
+}
+
 @implementation SPKGalleryFile
 
 @dynamic identifier;

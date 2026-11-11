@@ -13,6 +13,7 @@
 #import "../Audio/SPKAudioDownloadCoordinator.h"
 #import "../Audio/SPKAudioItem.h"
 #import "../Downloads/SPKDownloadHelpers.h"
+#import "../Downloads/SPKExportFileNaming.h"
 #import "../Gallery/SPKGalleryCoreDataStack.h"
 #import "../Gallery/SPKGalleryFile.h"
 #import "../Gallery/SPKGalleryManager.h"
@@ -2913,7 +2914,11 @@ static SPKAudioSource SPKAudioSourceForGallerySource(SPKGallerySource source) {
     if (url.isFileURL || (!url && item.image)) {
         id activityItem = url;
         SPKGallerySaveMetadata *meta = [self metadataForCurrentItem];
-        if (url.isFileURL) {
+        if (url.isFileURL && SPKExportNamingAppliesToDestination(SPKDownloadDestinationShare)) {
+            // Name from the original file, whose own name still holds a Gallery
+            // item's dates.
+            activityItem = SPKExportShareableFileURL(url, meta, SPKDownloadDestinationShare);
+        } else if (url.isFileURL) {
             SPKGalleryMediaType mediaType = (item.mediaType == SPKMediaItemTypeVideo)
                                                 ? SPKGalleryMediaTypeVideo
                                                 : SPKGalleryMediaTypeImage;
@@ -2939,7 +2944,7 @@ static SPKAudioSource SPKAudioSourceForGallerySource(SPKGallerySource source) {
                                            stringByAppendingPathComponent:fileName]];
             [[NSFileManager defaultManager] removeItemAtURL:targetURL error:nil];
             if (jpegData && [jpegData writeToURL:targetURL atomically:YES]) {
-                activityItem = targetURL;
+                activityItem = SPKExportShareableFileURL(targetURL, meta, SPKDownloadDestinationShare);
             } else {
                 activityItem = item.image;
             }
