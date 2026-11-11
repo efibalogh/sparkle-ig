@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Enregistrer";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Taille";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Type";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Ouvrir la page audio";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Ouvrir la publication";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Ouvrir le Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Ouvrir la Story";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Nom Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Les sources masquées restent stockées dans la galerie et restent disponibles pour la maintenance, l'export et la détection des doublons.";
 "GALLERY_TITLE" = "Galerie";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Impossible d'ouvrir la page audio";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Impossible d'ouvrir la publication originale";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Impossible d’ouvrir le reel original";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Impossible d’ouvrir la story originale";

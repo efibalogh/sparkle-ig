@@ -1,6 +1,7 @@
 #pragma once
 
 #import "../UI/SPKChrome.h"
+#import "../Downloads/SPKDownloadTypes.h"
 #import "ActionButtonLookupUtils.h"
 #import <UIKit/UIKit.h>
 
@@ -116,6 +117,19 @@ BOOL SPKResolveGalleryDownloadForMedia(id _Nullable media,
                                        NSURL *_Nullable *_Nullable outVideoURL,
                                        SPKGallerySaveMetadata *_Nullable *_Nullable outMetadata);
 NSArray<NSString *> *SPKConfiguredBulkActionIdentifiersForSource(SPKActionButtonSource source);
+/// Bulk download of already-resolved media objects (a carousel's children) through
+/// the action button's own batch path: the photo-quality setting, Always Ask, 4K
+/// candidates and metadata all apply. `parentMedia` is the post the objects belong
+/// to, used for post-level metadata and the 4K lookup; nil when unknown. Returns NO,
+/// doing nothing, when any object cannot be resolved.
+BOOL SPKPerformBulkDownloadForMediaObjects(NSArray *mediaObjects,
+                                           SPKActionButtonSource source,
+                                           NSString *_Nullable username,
+                                           id _Nullable parentMedia,
+                                           NSString *identifier,
+                                           UIViewController *_Nullable presenter,
+                                           UIView *_Nullable anchorView,
+                                           SPKDownloadSourceSurface surface);
 NSArray *SPKActionButtonCarouselChildren(id _Nullable media);
 void SPKArmPendingRepostFeedback(SPKActionButtonContext *context);
 NSDictionary<NSString *, NSString *> *_Nullable SPKConsumePendingRepostFeedback(SPKActionButtonSource source);

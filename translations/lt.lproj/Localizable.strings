@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Išsaugoti";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Dydis";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Tipas";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Atidaryti garso puslapį";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Atidaryti įrašą";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Atidaryti Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Atidaryti Stories";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Pavadinimas Z–A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Paslėpti šaltiniai lieka saugomi Galerijoje ir pasiekiami priežiūrai, eksportavimui bei dublikatų tikrinimui.";
 "GALLERY_TITLE" = "Galerija";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Nepavyko atidaryti garso puslapio";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Nepavyko atidaryti originalaus įrašo";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Nepavyko atidaryti originalaus Reels įrašo";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Nepavyko atidaryti originalios Stories istorijos";

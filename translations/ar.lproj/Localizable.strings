@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "حفظ";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "الحجم";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "النوع";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "فتح صفحة الصوت";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "فتح المنشور";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "فتح Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "فتح القصة";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "الاسم ي-أ";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "تبقى المصادر المخفية مخزنة في المعرض ومتاحة للصيانة والتصدير وفحص التكرار.";
 "GALLERY_TITLE" = "المعرض";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "تعذّر فتح صفحة الصوت";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "تعذّر فتح المنشور الأصلي";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "تعذر فتح مقطع Reels الأصلي";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "تعذر فتح القصة الأصلية";

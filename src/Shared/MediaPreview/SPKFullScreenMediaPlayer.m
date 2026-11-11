@@ -2491,6 +2491,36 @@ static SPKAudioSource SPKAudioSourceForGallerySource(SPKGallerySource source) {
     [self copyDownloadLinks:linkString.length > 0 ? @[ linkString ] : @[]];
 }
 
+// Bulk saves of Instagram media go through the action button's batch path, so the
+// photo-quality setting, Always Ask and 4K apply exactly as they do there. Falls back
+// (returns NO) for local files, rendered images, and Gallery items, which have no
+// Instagram media to re-resolve. Copy Download URLs is handled here too.
+- (BOOL)performNativeBulkIdentifier:(NSString *)identifier
+                       forBulkItems:(NSArray<SPKDownloadItemRequest *> *)bulkItems
+                      sourceSurface:(SPKDownloadSourceSurface)surface {
+    if (_isFromGallery || bulkItems.count == 0)
+        return NO;
+    NSMutableArray *mediaObjects = [NSMutableArray arrayWithCapacity:bulkItems.count];
+    id parentMedia = nil;
+    NSString *username = nil;
+    for (SPKDownloadItemRequest *req in bulkItems) {
+        SPKMediaItem *mediaItem = [self itemAtIndex:req.index];
+        if (!mediaItem.sourceMediaObject)
+            return NO;
+        [mediaObjects addObject:mediaItem.sourceMediaObject];
+        parentMedia = parentMedia ?: mediaItem.parentMediaObject;
+        username = username ?: (mediaItem.title.length ? mediaItem.title : mediaItem.galleryMetadata.sourceUsername);
+    }
+    return SPKPerformBulkDownloadForMediaObjects(mediaObjects,
+                                                 SPKActionButtonSourceForPlaybackSource(self.playbackSource),
+                                                 username,
+                                                 parentMedia,
+                                                 identifier,
+                                                 self,
+                                                 [self bottomBarAnchorView],
+                                                 surface);
+}
+
 - (UIMenu *)bulkActionsMenu {
     NSArray<SPKDownloadItemRequest *> *bulkItems =
         [self bulkDownloadItemsForPreview];
@@ -2518,6 +2548,10 @@ static SPKAudioSource SPKAudioSourceForGallerySource(SPKGallerySource source) {
                     handler:^(__unused UIAction *a) {
                         typeof(self) strongSelf = weakSelf;
                         if (!strongSelf)
+                            return;
+                        if ([strongSelf performNativeBulkIdentifier:identifier
+                                                       forBulkItems:bulkItems
+                                                      sourceSurface:surface])
                             return;
                         if (![SPKDownloadHelpers
                                 performBulkDownloadIdentifier:identifier
@@ -2617,6 +2651,10 @@ static SPKAudioSource SPKAudioSourceForGallerySource(SPKGallerySource source) {
                                return;
                            NSArray<SPKDownloadItemRequest *> *selected =
                                [bulkItems objectsAtIndexes:selectedIndexes];
+                           if ([strongSelf performNativeBulkIdentifier:destinationIdentifier
+                                                          forBulkItems:selected
+                                                         sourceSurface:surface])
+                               return;
                            if ([SPKDownloadHelpers
                                    performBulkDownloadIdentifier:destinationIdentifier
                                                            items:selected

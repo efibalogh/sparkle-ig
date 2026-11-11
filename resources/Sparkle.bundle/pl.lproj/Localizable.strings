@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Zapisz";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Rozmiar";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Typ";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Otwórz stronę audio";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Otwórz post";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Otwórz rolkę";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Otwórz relację";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Nazwa Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Ukryte źródła pozostają zapisane w Galerii i są nadal dostępne dla konserwacji, eksportu i sprawdzania duplikatów.";
 "GALLERY_TITLE" = "Galeria";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Nie można otworzyć strony audio";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Nie można otworzyć oryginalnego wpisu";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Nie można otworzyć oryginalnej rolki";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Nie można otworzyć oryginalnej relacji";

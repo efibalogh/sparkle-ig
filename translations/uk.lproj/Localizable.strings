@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Зберегти";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Розмір";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Тип";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Відкрити сторінку звуку";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Відкрити пост";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Відкрити Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Відкрити історію";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Ім'я Я-А";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Приховані джерела лишаються збереженими в галереї та доступними для обслуговування, експорту й перевірки дублікатів.";
 "GALLERY_TITLE" = "Галерея";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Не вдалося відкрити сторінку звуку";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Не можна відкрити оригінальну публікацію";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Не вдалося відкрити оригінальний Reels";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Не вдалося відкрити оригінальну історію";

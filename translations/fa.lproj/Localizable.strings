@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "ذخیره";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "حجم";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "نوع";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "باز کردن صفحهٔ صدا";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "باز کردن پست";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "باز کردن ریل";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "باز کردن استوری";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "نام (ی تا الف)";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "منابع مخفی همچنان در گالری ذخیره می‌مانند و برای نگهداری، خروجی گرفتن و بررسی موارد تکراری در دسترس باقی می‌مانند.";
 "GALLERY_TITLE" = "گالری";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "باز کردن صفحهٔ صدا ممکن نشد";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "باز کردن پست اصلی ممکن نشد";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "باز کردن ریل اصلی ممکن نشد";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "باز کردن استوری اصلی ممکن نشد";

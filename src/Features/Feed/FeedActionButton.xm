@@ -723,6 +723,7 @@ static void SPKHandleFeedExpandLongPress(UIView *view, UILongPressGestureRecogni
                 }
             }
             item.sourceMediaObject = child;
+            item.parentMediaObject = media;
             if (username.length > 0)
                 item.title = username;
             [items addObject:item];
@@ -757,6 +758,7 @@ static void SPKHandleFeedExpandLongPress(UIView *view, UILongPressGestureRecogni
     item.gallerySaveSource = SPKGallerySourceFeed;
     item.galleryMetadata = metadata;
     item.sourceMediaObject = media;
+    item.parentMediaObject = media;
     if (username.length > 0)
         item.title = username;
 

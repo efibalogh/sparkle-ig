@@ -2695,6 +2695,9 @@ static BOOL SPKInstagramRouteLandsInHomeFeed(NSURL *url) {
         if (segment.length > 0)
             [segments addObject:segment.lowercaseString];
     }
+    // An audio page (/reels/audio/<id>/) opens its own page, like a profile.
+    if (segments.count >= 2 && [segments[0] isEqualToString:@"reels"] && [segments[1] isEqualToString:@"audio"])
+        return NO;
     // instagram.com/<username>/p/<code>/ is the same post link with the author in front.
     if (segments.count >= 3 && [@[ @"p", @"reel", @"reels", @"tv" ] containsObject:segments[1]])
         return YES;

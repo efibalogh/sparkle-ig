@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Lưu";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Kích thước";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Loại";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Mở trang âm thanh";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Mở bài viết";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Mở Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Mở tin";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Tên Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Các nguồn ẩn vẫn được lưu trữ trong Thư viện và sẵn sàng cho việc bảo trì, xuất và kiểm tra trùng lặp.";
 "GALLERY_TITLE" = "Thư viện";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Không thể mở trang âm thanh";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Không thể mở bài viết gốc";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Không thể mở Reel gốc";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Không thể mở tin gốc";

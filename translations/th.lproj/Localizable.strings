@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "บันทึก";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "ขนาดไฟล์";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "ประเภท";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "เปิดหน้าเสียง";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "เปิดโพสต์";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "เปิดรีล";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "เปิดสตอรี่";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "ชื่อ Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "แหล่งที่มาที่ซ่อนไว้จะยังคงถูกเก็บไว้ในแกลเลอรี และยังใช้งานได้กับการบำรุงรักษา การส่งออก และการตรวจสอบรายการซ้ำ";
 "GALLERY_TITLE" = "แกลเลอรี";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "ไม่สามารถเปิดหน้าเสียงได้";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "ไม่สามารถเปิดโพสต์ต้นฉบับได้";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "ไม่สามารถเปิดรีลต้นฉบับได้";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "ไม่สามารถเปิดสตอรีต้นฉบับได้";

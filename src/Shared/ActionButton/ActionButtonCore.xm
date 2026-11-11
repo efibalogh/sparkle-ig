@@ -1799,6 +1799,9 @@ static NSArray<SPKMediaItem *> *SPKPlayerItemsFromEntries(NSArray<SPKResolvedMed
             }
         }
         item.sourceMediaObject = metadataObject;
+        // The post itself, so the preview's bulk saves resolve exactly like this
+        // button's (post-level metadata, 4K lookup).
+        item.parentMediaObject = media;
         if (itemUsername.length > 0)
             item.title = itemUsername;
         [items addObject:item];
@@ -2735,6 +2738,30 @@ static BOOL SPKExecuteBulkChildAction(NSString *identifier,
     SPKDownloadDestination destination = [identifier isEqualToString:kSPKActionDownloadAllGallery] ? SPKDownloadDestinationGallery : SPKDownloadDestinationPhotos;
 
     SPKPerformBatchDownloadWithQualityPrompt(downloadableEntries, context.source, username, media, destination, identifier, presenter, anchorView, surface);
+    return YES;
+}
+
+BOOL SPKPerformBulkDownloadForMediaObjects(NSArray *mediaObjects,
+                                           SPKActionButtonSource source,
+                                           NSString *username,
+                                           id parentMedia,
+                                           NSString *identifier,
+                                           UIViewController *presenter,
+                                           UIView *anchorView,
+                                           SPKDownloadSourceSurface surface) {
+    if (mediaObjects.count == 0)
+        return NO;
+    // All or nothing: a batch that mixed this path with the caller's own would
+    // apply two different quality rules to one download.
+    NSMutableArray<SPKResolvedMediaEntry *> *entries = [NSMutableArray arrayWithCapacity:mediaObjects.count];
+    for (id mediaObject in mediaObjects) {
+        SPKResolvedMediaEntry *entry = SPKEntryFromMediaObject(mediaObject);
+        if (!entry || (!entry.photoURL && !entry.videoURL))
+            return NO;
+        [entries addObject:entry];
+    }
+    SPKDownloadDestination destination = [identifier isEqualToString:kSPKActionDownloadAllGallery] ? SPKDownloadDestinationGallery : SPKDownloadDestinationPhotos;
+    SPKPerformBatchDownloadWithQualityPrompt(entries, source, username, parentMedia, destination, identifier, presenter, anchorView, surface);
     return YES;
 }
 

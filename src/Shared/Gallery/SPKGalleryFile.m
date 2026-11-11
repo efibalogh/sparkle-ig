@@ -1065,8 +1065,18 @@ BOOL SPKGalleryParseSparkleFilenameDates(NSString *fileName, NSDate **savedDate,
     return [NSString stringWithFormat:@"%@_%@", mediaPK, userPK];
 }
 
+/// An audio-page save keeps the audio asset id as its media pk; its page lives at
+/// /reels/audio/<id>/. Older saves may hold no id, so only a numeric one counts.
+- (nullable NSURL *)spk_audioPageURL {
+    if ((SPKGallerySource)self.source != SPKGallerySourceAudioPage || !SPKDigitsOnlyString(self.sourceMediaPK))
+        return nil;
+    return [NSURL URLWithString:[NSString stringWithFormat:@"https://www.instagram.com/reels/audio/%@/", self.sourceMediaPK]];
+}
+
 - (NSURL *)preferredOriginalMediaURL {
     SPKGallerySource source = (SPKGallerySource)self.source;
+    if (source == SPKGallerySourceAudioPage)
+        return [self spk_audioPageURL];
     if (source != SPKGallerySourceFeed &&
         source != SPKGallerySourceStories &&
         source != SPKGallerySourceReels) {
@@ -1165,6 +1175,8 @@ BOOL SPKGalleryParseSparkleFilenameDates(NSString *fileName, NSDate **savedDate,
         NSURL *url = [self preferredOriginalMediaURL];
         return [url.scheme.lowercaseString hasPrefix:@"http"] ? url : nil;
     }
+    if (source == SPKGallerySourceAudioPage)
+        return [self spk_audioPageURL];
     if (source != SPKGallerySourceFeed && source != SPKGallerySourceReels)
         return nil;
 
@@ -1194,6 +1206,8 @@ BOOL SPKGalleryParseSparkleFilenameDates(NSString *fileName, NSDate **savedDate,
     case SPKGallerySourceFeed:
     case SPKGallerySourceProfile:
         return SPKL(@"GALLERY_GALLERY_FILE_OPEN_POST_TEXT");
+    case SPKGallerySourceAudioPage:
+        return SPKL(@"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT");
     default:
         return SPKL(@"ALERT_ACTION_OPEN_ORIGINAL_POST");
     }

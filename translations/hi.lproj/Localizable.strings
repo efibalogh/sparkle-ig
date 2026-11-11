@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "सहेजें";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "आकार";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "प्रकार";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "ऑडियो पृष्ठ खोलें";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "पोस्ट खोलें";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Reel खोलें";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "कहानी खोलें";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "नाम Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "छिपाए गए स्रोत Gallery में संग्रहित रहते हैं और रखरखाव, निर्यात और डुप्लिकेट जांच के लिए उपलब्ध रहते हैं।";
 "GALLERY_TITLE" = "गैलरी";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "ऑडियो पृष्ठ खोलने में सक्षम नहीं";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "मूल पोस्ट खोलने में सक्षम नहीं";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "मूल Reel नहीं खोली जा सकी";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "मूल स्टोरी नहीं खोली जा सकी";

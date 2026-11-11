@@ -1535,6 +1535,9 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     case SPKGallerySourceReels:
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST");
         break;
+    case SPKGallerySourceAudioPage:
+        failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST");
+        break;
     default:
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST");
         break;

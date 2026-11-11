@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Simpan";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Ukuran";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Jenis";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Buka Halaman Audio";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Buka Postingan";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Buka Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Buka Story";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Nama Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Sumber yang disembunyikan tetap tersimpan di Galeri dan tetap tersedia untuk pemeliharaan, ekspor, dan pengecekan duplikat.";
 "GALLERY_TITLE" = "Galeri";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Tidak dapat membuka halaman audio";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Tidak dapat membuka postingan asli";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Tidak dapat membuka reel asli";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Tidak dapat membuka story asli";

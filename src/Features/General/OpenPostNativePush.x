@@ -27,6 +27,9 @@ static const NSTimeInterval kSPKOpenPostCaptureWindow = 2.5;
 static void (^spk_openPostOnDismiss)(void) = nil;
 static NSDate *spk_openPostWindowExpiry = nil;
 static __weak UIViewController *spk_openPostPresenter = nil;
+// The page the pending route pushes: the single-post page for instagram://media,
+// the audio page for an /reels/audio/<id>/ link.
+static Class spk_openPostCaptureClass = Nil;
 static void (^spk_openPostFallback)(void) = nil;
 // Separate from the expiry: the window closing is what stops the hook acting on a
 // stale push, but the fallback has to be able to run *because* the window closed.
@@ -47,6 +50,7 @@ static void SPKOpenPostDisarm(void) {
     spk_openPostPending = NO;
     spk_openPostWindowExpiry = nil;
     spk_openPostPresenter = nil;
+    spk_openPostCaptureClass = Nil;
     spk_openPostFallback = nil;
     spk_openPostOnDismiss = nil;
 }
@@ -57,30 +61,46 @@ static void SPKOpenPostFallbackIfStillArmed(void) {
     if (!spk_openPostPending)
         return;
     void (^fallback)(void) = spk_openPostFallback;
-    SPKLog(@"OpenPost", @"no single-feed push captured within %.1fs, falling back", kSPKOpenPostCaptureWindow);
+    SPKLog(@"OpenPost", @"no page push captured within %.1fs, falling back", kSPKOpenPostCaptureWindow);
     SPKOpenPostDisarm();
     if (fallback)
         fallback();
+}
+
+// Only routes that push a page of their own can be caught. A post's web permalink
+// resolves through continueUserActivity: into the main feed instead, so it has
+// nothing to redirect and keeps the legacy behaviour; the authenticated
+// instagram://media route pushes the single-post page. An audio page link
+// (/reels/audio/<id>/) pushes the audio page from either route.
+static Class SPKOpenPostCaptureClassForURL(NSURL *url) {
+    NSString *scheme = url.scheme.lowercaseString ?: @"";
+    if ([scheme isEqualToString:@"instagram"] && [url.host.lowercaseString isEqualToString:@"media"])
+        return objc_getClass("IGSingleFeedViewController");
+    if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) {
+        NSMutableArray<NSString *> *segments = [NSMutableArray array];
+        for (NSString *segment in [url.path componentsSeparatedByString:@"/"]) {
+            if (segment.length > 0)
+                [segments addObject:segment.lowercaseString];
+        }
+        if (segments.count >= 3 && [segments[0] isEqualToString:@"reels"] && [segments[1] isEqualToString:@"audio"])
+            return objc_getClass("IGAudioPageViewController");
+    }
+    return Nil;
 }
 
 BOOL SPKOpenPostPushMediaURL(NSURL *url, UIViewController *presentingVC, void (^fallback)(void), void (^onDismiss)(void)) {
     if (!url || !presentingVC) {
         return NO;
     }
-    // Only the authenticated in-app route pushes a page we can catch. A web
-    // permalink resolves through continueUserActivity: into the main feed instead,
-    // so it has nothing to redirect and must keep the legacy behaviour.
-    if (![url.scheme.lowercaseString isEqualToString:@"instagram"] ||
-        ![url.host.lowercaseString isEqualToString:@"media"]) {
-        return NO;
-    }
-    if (!objc_getClass("IGSingleFeedViewController")) {
+    Class captureClass = SPKOpenPostCaptureClassForURL(url);
+    if (!captureClass) {
         return NO;
     }
     if (!spk_openPostHooksInstalled) {
         return NO;
     }
     spk_openPostPresenter = presentingVC;
+    spk_openPostCaptureClass = captureClass;
     spk_openPostFallback = [fallback copy];
     spk_openPostOnDismiss = [onDismiss copy];
     spk_openPostWindowExpiry = [NSDate dateWithTimeIntervalSinceNow:kSPKOpenPostCaptureWindow];
@@ -119,7 +139,8 @@ BOOL SPKOpenPostPushMediaURL(NSURL *url, UIViewController *presentingVC, void (^
         %orig;
         return;
     }
-    if (![viewController isKindOfClass:objc_getClass("IGSingleFeedViewController")]) {
+    if (!spk_openPostCaptureClass || ![viewController isKindOfClass:spk_openPostCaptureClass]) {
+        SPKLog(@"OpenPost", @"armed, ignoring push of %@", NSStringFromClass(viewController.class));
         %orig;
         return;
     }

@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "I-save";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Sukat";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Uri";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Buksan ang Pahina ng Audio";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Buksan ang Post";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Buksan ang Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Buksan ang Story";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Pangalan Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Ang mga nakatagong source ay nananatiling naka-imbak sa Gallery at available pa rin para sa maintenance, export, at duplicate checks.";
 "GALLERY_TITLE" = "Galerya";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Hindi mabuksan ang pahina ng audio";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Hindi mabuksan ang orihinal na post";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Hindi mabuksan ang orihinal na reel";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Hindi mabuksan ang orihinal na story";

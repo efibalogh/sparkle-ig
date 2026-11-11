@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Kaydet";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Boyut";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Tür";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Ses Sayfasını Aç";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Gönderimi Aç";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Reel Aç";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Hikaye'yi Aç";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Ad Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Gizlenen kaynaklar galeride saklanmaya devam eder ve bakım, dışa aktarma ve kopya denetimleri için erişilebilir kalır.";
 "GALLERY_TITLE" = "Galeri";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Ses sayfası açılamıyor";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Orijinal gönderi açılamıyor";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Orijinal Reels açılamadı";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Orijinal hikâye açılamadı";

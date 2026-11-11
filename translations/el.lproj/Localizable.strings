@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Αποθήκευση";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Μέγεθος";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Τύπος";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Άνοιγμα σελίδας ήχου";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Άνοιγμα δημοσίευσης";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Άνοιγμα Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Άνοιγμα ιστορίας";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Όνομα Ω-Α";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Οι κρυμμένες πηγές παραμένουν αποθηκευμένες στη συλλογή και διαθέσιμες για συντήρηση, εξαγωγή και έλεγχο διπλότυπων.";
 "GALLERY_TITLE" = "Γκαλερί";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Δεν είναι δυνατό το άνοιγμα της σελίδας ήχου";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Δεν είναι δυνατό να ανοιχθεί η αρχική ανάρτηση";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Δεν ήταν δυνατό το άνοιγμα του αρχικού reel";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Δεν ήταν δυνατό το άνοιγμα του αρχικού story";

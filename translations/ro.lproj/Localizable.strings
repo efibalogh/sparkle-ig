@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Salvează";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Dimensiune";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Tip";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Deschide pagina audio";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Deschide postare";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Deschide Reel";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Deschide poveste";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Nume Z-A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Sursele ascunse rămân stocate în galerie și disponibile pentru întreținere, export și verificarea duplicatelor.";
 "GALLERY_TITLE" = "Galerie";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Imposibil de deschis pagina audio";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Imposibil de deschis postul original";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Reel-ul original nu a putut fi deschis";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Povestea originală nu a putut fi deschisă";

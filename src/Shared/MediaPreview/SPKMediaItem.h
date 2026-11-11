@@ -18,6 +18,8 @@ typedef NS_ENUM(NSInteger, SPKMediaItemType) {
 @property (nonatomic, strong, nullable) UIImage *image;
 @property (nonatomic, strong, nullable) UIImage *thumbnail;
 @property (nonatomic, strong, nullable) id sourceMediaObject;
+/// The post a carousel child belongs to, for post-level metadata and 4K lookups in bulk saves.
+@property (nonatomic, strong, nullable) id parentMediaObject;
 @property (nonatomic, copy, nullable) NSString *title;
 /// When >= 0, `SPKGallerySaveMetadata.source` uses this value (`SPKGallerySource`). Default -1 = not set.
 @property (nonatomic, assign) NSInteger gallerySaveSource;

@@ -738,6 +738,7 @@
 "GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT" = "Speichere";
 "GALLERY_GALLERY_FILE_DETAILS_SIZE_TEXT" = "Grössi";
 "GALLERY_GALLERY_FILE_DETAILS_TYPE_TEXT" = "Typ";
+"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT" = "Audio-Syte ufmache";
 "GALLERY_GALLERY_FILE_OPEN_POST_TEXT" = "Post ufmache";
 "GALLERY_GALLERY_FILE_OPEN_REEL_TEXT" = "Reel ufmache";
 "GALLERY_GALLERY_FILE_OPEN_STORY_TEXT" = "Story ufmache";
@@ -896,6 +897,7 @@
 "GALLERY_SORT_NAME_DESCENDING_TITLE" = "Name Z–A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Verschteckti Quäue blybe i dr Galerie gspeicheret und blybe für Wartig, Export u Duplikat-Checks verfüegbar.";
 "GALLERY_TITLE" = "Galerie";
+"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST" = "Audio-Syte cha nid ufgmacht wärde";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Original-Post cha nid ufgmacht wärde";
 "GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST" = "Original-Reel cha nid ufgmacht wärde";
 "GALLERY_UNABLE_OPEN_ORIGINAL_STORY_TOAST" = "Original-Story cha nid ufgmacht wärde";
