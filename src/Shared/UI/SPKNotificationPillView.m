@@ -121,6 +121,8 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 @property (nonatomic, assign) CGSize instagramContentSize;
 @property (nonatomic, strong) UIView *instagramTintView;
 @property (nonatomic, strong) UIVisualEffect *instagramUntintedEffect;
+// The fresh toast's background, hidden by Sparkle while a replaced toast hands over.
+@property (nonatomic, weak) UIVisualEffectView *instagramHandoffBackground;
 @property (nonatomic, assign) BOOL instagramShowsSubtitle;
 @property (nonatomic, strong) UILabel *instagramLiveSubtitleLabel;
 @property (nonatomic, copy) NSString *instagramLiveSubtitleText;
@@ -130,6 +132,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
 - (void)applyCurrentVisualStyleAnimated:(BOOL)animated;
 - (void)spk_applyProgressModeInfoIcon;
+- (void)spk_setPillHeight:(CGFloat)height;
 - (CGFloat)spk_subtitleRowLayoutHeight;
 - (CGFloat)spk_progressBarHeightMatchingSubtitle;
 - (float)sanitizedProgressValue:(float)progress;
@@ -149,6 +152,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 - (void)spk_layoutInstagramProgressRing;
 - (void)spk_applyInstagramToneTint;
 - (void)spk_layoutInstagramToastOwnTint;
+- (UIVisualEffectView *)spk_instagramToastLiveMaterial;
 - (BOOL)spk_instagramRightButtonContainsTap;
 @end
 
@@ -607,6 +611,15 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     return MAX(2.0, ceil(third));
 }
 
+// The pill's own height for its state. Instagram's toast is sized by what Instagram
+// measures instead (see -spk_syncInstagramSkin): resetting it here, even when a sync
+// put it back a moment later, made the toast bounce on every progress tick.
+- (void)spk_setPillHeight:(CGFloat)height {
+    if (self.instagramSkin)
+        return;
+    self.heightConstraint.constant = height;
+}
+
 - (void)spk_applyProgressModeInfoIcon {
     self.iconView.image = SPKNotificationIconNamed(@"info_filled", self.instagramSkin);
     self.iconView.tintColor = [self iconTintForTone:SPKPillVisualToneInfo];
@@ -682,7 +695,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     self.progressView.progress = 0.0f;
 
     [self setCloseButtonVisible:self.cancellable];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:self.cancellable];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:self.cancellable]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.text hasButton:self.cancellable];
     self.progressRingLayer.strokeEnd = 0.0;
 
@@ -724,7 +737,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     [self updateToastWidthForTitle:self.titleLabel.text subtitle:subtitle];
 
     // A toast has no button; the one from a previous progress state is hidden below.
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:NO];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:NO]];
     [self setProgressVisible:NO];
     [self setCloseButtonVisible:NO];
 
@@ -849,7 +862,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     self.subtitleLabel.text = subtitle;
     [self spk_setSubtitleHidden:(subtitle.length == 0)];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:subtitle hasButton:!self.closeButton.hidden];
     [self spk_syncInstagramSkin];
 }
@@ -883,7 +896,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
         [self spk_stopIndeterminateSpin];
         self.usesAutomaticProgressSubtitle = YES;
         [self spk_applyAutomaticProgressSubtitleIfNeeded];
-        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
         [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.text hasButton:!self.closeButton.hidden];
         [self spk_syncInstagramSkin];
         [self layoutIfNeeded];
@@ -894,7 +907,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     self.usesAutomaticProgressSubtitle = NO;
     self.subtitleLabel.text = nil;
     [self spk_setSubtitleHidden:YES];
-    self.heightConstraint.constant = kDynamicPillHeight;
+    [self spk_setPillHeight:kDynamicPillHeight];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:nil hasButton:!self.closeButton.hidden];
 
     [self setProgressVisible:YES];
@@ -949,7 +962,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
         self.subtitleLabel.text = [self spk_progressSubtitleForProgress:self.currentProgress];
         [self spk_setSubtitleHidden:(self.subtitleLabel.text.length == 0)];
         [self setCloseButtonVisible:self.cancellable];
-        self.heightConstraint.constant = [self spk_dynamicHeightForButton:self.cancellable];
+        [self spk_setPillHeight:[self spk_dynamicHeightForButton:self.cancellable]];
         [self setProgressVisible:YES];
 
         [self spk_applyProgressModeInfoIcon];
@@ -1001,7 +1014,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     }
 
     [self setCloseButtonVisible:self.cancellable];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:self.cancellable];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:self.cancellable]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.text hasButton:self.cancellable];
 
     [self setProgressVisible:YES];
@@ -1054,7 +1067,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
                         [self updateToastWidthForTitle:self.titleLabel.text subtitle:subtitle];
                         [self setCloseButtonVisible:NO];
                         [self setProgressVisible:NO];
-                        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+                        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
                         [self layoutIfNeeded];
                     }
                     completion:nil];
@@ -1103,7 +1116,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
                         [self updateToastWidthForTitle:self.titleLabel.text subtitle:resolvedSubtitle];
                         [self setCloseButtonVisible:YES];
                         [self setProgressVisible:NO];
-                        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+                        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
                         [self layoutIfNeeded];
                     }
                     completion:nil];
@@ -1142,7 +1155,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
                         [self updateToastWidthForTitle:self.titleLabel.text subtitle:subtitle];
                         [self setCloseButtonVisible:NO];
                         [self setProgressVisible:NO];
-                        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+                        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
                         [self layoutIfNeeded];
                     }
                     completion:nil];
@@ -1347,7 +1360,7 @@ static CGFloat const kSPKPillCloseButtonHitSide = 44.0;
     if (self.mode != SPKNotificationPillModeProgress || self.isCompleted || self.isErrorState)
         return;
     [self setCloseButtonVisible:cancellable];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:cancellable];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:cancellable]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.hidden ? nil : self.subtitleLabel.text hasButton:cancellable];
     [self spk_syncInstagramSkin];
     [self layoutIfNeeded];
@@ -1405,6 +1418,18 @@ static NSArray<UIView *> *SPKInstagramToastContentViews(UIView *toastView) {
     return views;
 }
 
+// Where a text line has to end: before the right-hand button, or at the padding.
+static CGFloat SPKInstagramToastTextLimit(UIView *toastView) {
+    CGFloat textLimit = CGRectGetWidth(toastView.bounds) - kSPKInstagramToastPadding;
+    for (NSString *name in @[ @"_rightButton", @"_rightStyledTextButton" ]) {
+        Ivar ivar = class_getInstanceVariable(object_getClass(toastView), name.UTF8String);
+        UIView *button = ivar ? object_getIvar(toastView, ivar) : nil;
+        if ([button isKindOfClass:UIView.class] && !button.hidden && button.superview && !CGRectIsEmpty(button.frame))
+            textLimit = MIN(textLimit, CGRectGetMinX([button.superview convertRect:button.frame toView:toastView]) - 12.0);
+    }
+    return textLimit;
+}
+
 static void SPKInstagramToastLayoutSubviews(UIView *self, SEL _cmd) {
     struct objc_super superInfo = {self, class_getSuperclass(object_getClass(self))};
     ((void (*)(struct objc_super *, SEL))objc_msgSendSuper)(&superInfo, _cmd);
@@ -1427,13 +1452,7 @@ static void SPKInstagramToastLayoutSubviews(UIView *self, SEL _cmd) {
 
     // Text views are sized to their text, so they move whole. Only a line that would
     // now run into the right-hand button gives up the overlap.
-    CGFloat textLimit = CGRectGetWidth(self.bounds) - kSPKInstagramToastPadding;
-    for (NSString *name in @[ @"_rightButton", @"_rightStyledTextButton" ]) {
-        Ivar ivar = class_getInstanceVariable(object_getClass(self), name.UTF8String);
-        UIView *button = ivar ? object_getIvar(self, ivar) : nil;
-        if ([button isKindOfClass:UIView.class] && !button.hidden && button.superview && !CGRectIsEmpty(button.frame))
-            textLimit = MIN(textLimit, CGRectGetMinX([button.superview convertRect:button.frame toView:self]) - 12.0);
-    }
+    CGFloat textLimit = SPKInstagramToastTextLimit(self);
     for (UIView *view in views) {
         CGRect frame = view.frame;
         frame.origin.x += dx;
@@ -1564,6 +1583,7 @@ static NSArray<UIView *> *SPKInstagramToastFadingViews(UIView *toastView, NSArra
         view.alpha = 0.0;
     }
     freshBackground.hidden = YES;
+    self.instagramHandoffBackground = freshBackground;
     [UIView animateWithDuration:0.24
         delay:0
         options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
@@ -1576,6 +1596,8 @@ static NSArray<UIView *> *SPKInstagramToastFadingViews(UIView *toastView, NSArra
         }
         completion:^(__unused BOOL finished) {
             freshBackground.hidden = NO;
+            if (self.instagramHandoffBackground == freshBackground)
+                self.instagramHandoffBackground = nil;
             [oldTint removeFromSuperview];
             [old removeFromSuperview];
         }];
@@ -1805,6 +1827,7 @@ static BOOL SPKInstagramTextHasDigits(NSString *text) {
     return text.length > 0 && [text rangeOfCharacterFromSet:NSCharacterSet.decimalDigitCharacterSet].location != NSNotFound;
 }
 
+
 // Every digit becomes the widest one, so the text Instagram measures keeps the live
 // text's shape and only changes when a number gains a digit or the wording changes,
 // never on a tick. A fixed wide stand-in per number would overstate a line like
@@ -1882,8 +1905,13 @@ static NSString *SPKInstagramStableLayoutText(NSString *text) {
     label.hidden = NO;
     subtitleView.alpha = 0.0;
 
-    // The stand-in is measured with the widest numbers, so the live text fits its frame.
-    label.frame = [subtitleView convertRect:subtitleView.bounds toView:toastView];
+    // The stand-in is sized to its own text, which Instagram measures with proportional
+    // digits; the live line's fixed-width digits run a little wider. The live line takes
+    // the stand-in's position and height but all the room up to the button, so it only
+    // truncates when it genuinely runs out of space.
+    CGRect frame = [subtitleView convertRect:subtitleView.bounds toView:toastView];
+    frame.size.width = MAX(CGRectGetWidth(frame), SPKInstagramToastTextLimit(toastView) - CGRectGetMinX(frame));
+    label.frame = frame;
     [toastView bringSubviewToFront:label];
 }
 
@@ -1994,13 +2022,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     UIView *toastView = self.instagramToastView;
     if (!toastView)
         return;
-    UIVisualEffectView *background = SPKInstagramToastBackgroundEffectView(toastView);
-    // Older builds (410) draw the toast without a live material: the effect view is
-    // missing, hidden or empty, and the visible background is the toast itself. The
-    // tint then goes under the toast's own content instead.
-    if (background && (background.hidden || background.alpha < 0.01 || !background.effect ||
-                       CGRectGetWidth(background.bounds) < 1.0 || CGRectGetHeight(background.bounds) < 1.0))
-        background = nil;
+    UIVisualEffectView *background = [self spk_instagramToastLiveMaterial];
 
     if (![SPKUtils getBoolPref:kSPKNotificationPillGlowEnabledKey]) {
         [self.instagramTintView removeFromSuperview];
@@ -2071,12 +2093,47 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     tintView.backgroundColor = tint;
 }
 
+// The effect view that draws the toast's background, or nil when the toast draws it
+// itself. Older builds (410) keep an effect view that is missing, hidden or empty, and
+// the visible background is the toast. Liquid Glass is always the live material: a
+// fresh toast is configured before its first layout, when the glass is still zero
+// sized, and a replaced toast's glass is hidden by the handoff, not by Instagram.
+// Emptiness only counts once the toast itself has a size.
+- (UIVisualEffectView *)spk_instagramToastLiveMaterial {
+    UIView *toastView = self.instagramToastView;
+    UIVisualEffectView *background = SPKInstagramToastBackgroundEffectView(toastView);
+    if (!background || !background.effect)
+        return nil;
+    Class glassClass = NSClassFromString(@"UIGlassEffect");
+    if (glassClass && [background.effect isKindOfClass:glassClass])
+        return background;
+    if (background.alpha < 0.01 || (background.hidden && background != self.instagramHandoffBackground))
+        return nil;
+    BOOL toastLaidOut = CGRectGetWidth(toastView.bounds) >= 1.0 && CGRectGetHeight(toastView.bounds) >= 1.0;
+    if (toastLaidOut && (CGRectGetWidth(background.bounds) < 1.0 || CGRectGetHeight(background.bounds) < 1.0))
+        return nil;
+    return background;
+}
+
 // A tint hosted on the toast itself follows its size and rounding, which Instagram
-// only settles in its own layout.
+// only settles in its own layout. The material is only known for sure once the toast
+// has a size, so a tint placed for the wrong one before that is moved here.
 - (void)spk_layoutInstagramToastOwnTint {
     UIView *toastView = self.instagramToastView;
     UIView *tintView = self.instagramTintView;
-    if (!toastView || tintView.superview != toastView)
+    if (!toastView || !tintView.superview)
+        return;
+    if (CGRectGetWidth(toastView.bounds) >= 1.0) {
+        UIVisualEffectView *background = [self spk_instagramToastLiveMaterial];
+        BOOL glass = background && NSClassFromString(@"UIGlassEffect") &&
+                     [background.effect isKindOfClass:NSClassFromString(@"UIGlassEffect")];
+        UIView *host = glass ? nil : (background ? background.contentView : toastView);
+        if (tintView.superview != host) {
+            [self spk_applyInstagramToneTint];
+            tintView = self.instagramTintView;
+        }
+    }
+    if (tintView.superview != toastView)
         return;
     [toastView layoutIfNeeded];
     tintView.frame = toastView.bounds;
