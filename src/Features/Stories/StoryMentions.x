@@ -168,6 +168,7 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 12, 0);
     self.tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.tableView];
+    [self.tableView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(spk_rowLongPressed:)]];
 
     [NSLayoutConstraint activateConstraints:@[
         [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
@@ -417,6 +418,23 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
         return;
 
     [SPKUtils openInstagramProfileForUser:userObject pk:mention.pk username:mention.username fromViewController:self];
+}
+
+#pragma mark - Long-press → copy username
+
+- (void)spk_rowLongPressed:(UILongPressGestureRecognizer *)recognizer {
+    if (recognizer.state != UIGestureRecognizerStateBegan)
+        return;
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[recognizer locationInView:self.tableView]];
+    if (!indexPath || indexPath.row >= (NSInteger)self.mentions.count)
+        return;
+    // Rows without a username show the "unknown" placeholder, which must never be copied.
+    NSString *username = self.mentions[indexPath.row].username;
+    if (username.length == 0)
+        return;
+
+    UIPasteboard.generalPasteboard.string = username;
+    SPKNotify(kSPKNotificationStoryMentionsSheet, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_USERNAME_COPIED_TEXT"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
 }
 
 @end
