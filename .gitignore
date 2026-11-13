@@ -54,6 +54,7 @@ __pycache__
 dumps
 livecontainer
 
+docs/
 src/**/wip.x
 src/**/wip.xm
 headers/
@@ -63,3 +64,5 @@ modules/*
 !modules/OpenInSparkleSafariExtension.appex/
 !modules/SafariExtensionHandler/
 !modules/SPKSideloadFix/
+
+diff-*
