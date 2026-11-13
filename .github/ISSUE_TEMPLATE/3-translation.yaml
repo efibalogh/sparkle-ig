@@ -1,41 +1,38 @@
 name: 🌍 Translation
-description: Correct a translation, report untranslated text, or offer to translate a language.
-title: 'i18n: '
+description: "Correct a translation or report text that is still in English. Give it a short title, e.g. \"Turkish: Downloads footer cut off\"."
 labels:
-  - documentation
+  - i18n
 assignees:
   - efibalogh
 body:
   - type: markdown
     attributes:
       value: >-
-        Sparkle ships English only. Every other language is a community catalog,
-        and none has been reviewed by a native speaker yet, so corrections are
-        expected rather than exceptional.
-
-
+        Sparkle ships English, Japanese and Polish. Every other language is an
+        unreviewed community translation, so corrections are expected.
         A correction needs no justification: if it reads wrong to you as a
-        speaker of that language, it is wrong. If you would rather fix it
-        directly, [TRANSLATING.md](https://github.com/efibalogh/sparkle-ig/blob/main/TRANSLATING.md)
-        is a three-step loop that needs no build.
+        speaker of that language, it is wrong.
+
+
+        Want to translate or review a whole language, or fix strings yourself?
+        Follow [TRANSLATING.md](https://github.com/efibalogh/sparkle-ig/blob/main/TRANSLATING.md)
+        instead. It needs no build.
   - type: input
     id: language
     attributes:
       label: Language
-      description: The language this is about, as a name or a code.
       placeholder: e.g. Romanian, or ro
     validations:
       required: true
   - type: dropdown
     id: kind
     attributes:
-      label: What is this about?
+      label: What is wrong?
       options:
         - Wording is wrong or unnatural
         - Text describes the setting incorrectly
         - Text is still in English
         - Text is cut off or breaks the layout
-        - I want to translate or review this language
         - Something else
     validations:
       required: true
@@ -43,17 +40,17 @@ body:
     id: location
     attributes:
       label: Where does it appear?
-      description: The screen or path in Sparkle, so the string can be found.
+      description: The screen in Sparkle, so the text can be found.
       placeholder: e.g. Settings > Downloads > Media Quality, the first footer
     validations:
-      required: false
+      required: true
   - type: textarea
     id: current
     attributes:
       label: Current text
-      description: Copy or screenshot what Sparkle shows today.
+      description: Copy what Sparkle shows today, or attach a screenshot.
     validations:
-      required: false
+      required: true
   - type: textarea
     id: suggested
     attributes:
@@ -61,8 +58,6 @@ body:
       description: >-
         What it should say instead. If several strings are wrong in the same
         way, list them all here.
-    validations:
-      required: false
   - type: markdown
     attributes:
       value: '---'

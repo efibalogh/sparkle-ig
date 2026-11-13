@@ -1,47 +1,77 @@
 name: 🐛 Bug Report
-description: "Notice something isn't working quite right? Help improve the tweak by reporting issues that you experience."
-title: 'bug: '
+description: "Something in Sparkle isn't working right. Give the issue a short, specific title, e.g. \"Reels action button missing after updating Instagram\"."
 labels:
-  - bug
+  - Bug
 assignees:
   - efibalogh
 body:
   - type: checkboxes
     id: before-start
     attributes:
-      label: Before creating a bug report...
-      description: 'Please make sure you have done the following steps:'
+      label: Before reporting
       options:
-        - label: I have made sure this issue has not already been reported previously
+        - label: I searched existing issues and I'm on the latest version of Sparkle
           required: true
-        - label: >-
-            I have made sure this issue is present in the latest version of
-            Sparkle
-          required: true
-        - label: >-
-            I am confident that this bug presents unintended behaviour within
-            the tweak
-          required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Where in Instagram or Sparkle does it happen?
+      options:
+        - Feed
+        - Stories
+        - Reels
+        - Messages
+        - Instants
+        - Profile
+        - Profile Analyzer
+        - Gallery
+        - Downloads
+        - Interface
+        - Notifications
+        - Sparkle Settings
+        - Install, launch or crash on start
+        - Other
+    validations:
+      required: true
   - type: textarea
     id: description
     attributes:
-      label: Description
-      description: A clear and concise description of the problem
-      placeholder: >-
-        Provide as much information about the issue you are experiencing as
-        possible!
+      label: What happens
+      description: What goes wrong, and what you expected instead.
     validations:
       required: true
   - type: textarea
     id: reproduction
     attributes:
-      label: Minimal Reproduction
-      description: Provide steps and relevant information to reproduce the problem
-      placeholder: >-
-        If possible, providing screenshots & videos are extremely helpful when
-        trying to fix an issue
+      label: Steps to reproduce
+      description: Exact steps. Screenshots or a screen recording help a lot; drag them in here.
+      placeholder: |
+        1. Open a reel
+        2. Tap the Sparkle action button
+        3. ...
     validations:
       required: true
+  - type: dropdown
+    id: without-sparkle
+    attributes:
+      label: Does it also happen with Sparkle turned off?
+      description: Turn on Tools > Disable All Settings in Sparkle, restart Instagram, and try again.
+      options:
+        - No, only with Sparkle
+        - Yes, it also happens without Sparkle
+        - I didn't check
+    validations:
+      required: true
+  - type: textarea
+    id: crash-log
+    attributes:
+      label: Crash log
+      description: >-
+        Only for crashes. Find it in iOS Settings > Privacy & Security >
+        Analytics & Improvements > Analytics Data, in a file starting with
+        "Instagram". Paste its contents here.
+      render: text
   - type: markdown
     attributes:
       value: '---'
@@ -49,35 +79,47 @@ body:
     id: info-sparkle-version
     attributes:
       label: Sparkle Version
-      description: This can be found at the bottom of the tweak settings
-      placeholder: e.g. v1.0.0
+      description: Shown at the bottom of Sparkle's settings.
+      placeholder: e.g. v1.6.1
     validations:
       required: true
   - type: input
     id: info-instagram-version
     attributes:
       label: Instagram Version
-      description: This can be found as well at the bottom of the tweak settings
-      placeholder: e.g. 437.2.0
+      description: Also shown at the bottom of Sparkle's settings.
+      placeholder: e.g. 455.0.0
+    validations:
+      required: true
+  - type: input
+    id: info-device
+    attributes:
+      label: Device
+      placeholder: e.g. iPhone 16 Pro
+    validations:
+      required: true
+  - type: input
+    id: info-ios-version
+    attributes:
+      label: iOS Version
+      placeholder: e.g. 27.0
     validations:
       required: true
   - type: dropdown
     id: info-install-type
     attributes:
       label: Install Type
-      description: The method used to use to install Sparkle
       options:
         - Sideloaded
+        - LiveContainer
         - TrollStore
         - Jailbroken (Rootless)
         - Jailbroken (Rootful)
     validations:
       required: true
-  - type: textarea
-    id: info-device-info
+  - type: input
+    id: info-signer
     attributes:
-      label: Device Info
-      description: Details about the phone running the tweak
-      value: |-
-        Model: [e.g. iPhone 15 Pro]
-        iOS Version: [e.g. 18.4]
+      label: Signing app
+      description: If sideloaded, the app you installed it with.
+      placeholder: e.g. SideStore, AltStore, Feather, Sideloadly

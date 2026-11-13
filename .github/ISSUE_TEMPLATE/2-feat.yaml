@@ -1,35 +1,52 @@
 name: ✨ Feature Request
-description: Have an idea for a new feature/enhancement? Let us know!
-title: 'feat: '
+description: "Suggest a new feature or an improvement. Give it a short, specific title, e.g. \"Copy usernames from a story's Mentions list\"."
 labels:
-  - enhancement
+  - Feature
 assignees:
   - efibalogh
 body:
   - type: checkboxes
     id: before-start
     attributes:
-      label: Before creating a feature request...
-      description: 'Please make sure you have done the following steps:'
+      label: Before requesting
       options:
-        - label: I have made sure this feature has not already been already suggested
+        - label: I searched existing issues and this hasn't been suggested yet
           required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Where in Instagram or Sparkle would it live?
+      options:
+        - Feed
+        - Stories
+        - Reels
+        - Messages
+        - Instants
+        - Profile
+        - Profile Analyzer
+        - Gallery
+        - Downloads
+        - Interface
+        - Notifications
+        - Sparkle Settings
+        - Other
+    validations:
+      required: true
   - type: textarea
     id: description
     attributes:
-      label: Description
-      description: A clear and concise description of the problem or missing functionality
+      label: What's missing
+      description: The problem you run into, or what you'd like to be able to do.
     validations:
       required: true
   - type: textarea
     id: solution
     attributes:
-      label: Describe the solution you'd like
-      description: If you have a solution in mind, please describe it
-    validations:
-      required: true
+      label: How it could work
+      description: Optional. Only if you have a specific idea in mind.
   - type: textarea
     id: alternatives
     attributes:
-      label: Describe alternatives you've considered
-      description: Have you considered any alternative solutions or workarounds?
+      label: Workarounds or alternatives
+      description: Optional. Anything you've tried or considered instead.
