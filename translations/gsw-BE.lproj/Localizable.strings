@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "GIF-Titu Zeige";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Schliess Kommentar-Blätter mit emene horizontale Swipe. Wenn das aa isch, erschynt dr Richtigs-Wähler.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Swipe zum Kommentar Schliesse";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "E Swipe uf emene ufgklappte Kommentar-Blatt schliesst's ganz, statt's uf di halb Höchi z'verchlinere.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Us dr Vollaasicht ganz schliesse";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Wo dr Schliess-Swipe higa muess: links, rächts oder eis vo beidne.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Swipe-Richtig";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Lang drücke dr Foti-Chnopf im Composer, für es Bild us dyner Sparkle-Galerie aazhänke.";

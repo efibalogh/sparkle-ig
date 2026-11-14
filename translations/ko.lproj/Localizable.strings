@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "GIF 제목 표시";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "가로로 스와이프해 댓글 시트를 닫습니다. 켜면 방향 선택 항목이 나타납니다.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "스와이프로 댓글 닫기";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "확장된 댓글 시트에서 스와이프하면 절반 높이로 줄이지 않고 완전히 닫습니다.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "확장 상태에서 완전히 닫기";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "닫기 스와이프 방향을 왼쪽, 오른쪽, 또는 둘 다 중에서 선택합니다.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "스와이프 방향";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "작성 화면의 사진 버튼을 길게 눌러 Sparkle 갤러리의 이미지를 첨부합니다.";

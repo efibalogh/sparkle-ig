@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Tampilkan Judul GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Tutup lembar komentar dengan geser horizontal. Mengaktifkan ini akan menampilkan pemilih arah.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Geser untuk Menutup Komentar";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Geser pada lembar komentar yang diperluas akan menutupnya sepenuhnya, bukan mengecilkannya ke setengah tinggi.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Tutup sepenuhnya dari mode diperluas";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Ke arah mana geseran penutup harus dilakukan: kiri, kanan, atau keduanya.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Arah Geser";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Tekan lama tombol foto pada penyusun untuk melampirkan gambar dari Galeri Sparkle-mu.";

@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Rodyti GIF pavadinimą";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Uždarykite komentarų lapus horizontaliu braukimu. Įjungus parodomas krypties parinkiklis.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Braukimas komentarams uždaryti";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Braukimas išskleistame komentarų lape jį visiškai uždaro, užuot sumažinęs iki pusės aukščio.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Visiškai uždaryti iš išskleisto";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Kuria kryptimi turi judėti uždarymo braukimas: kairėn, dešinėn arba bet kuria.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Braukimo kryptis";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Ilgai paspauskite kūrimo lauko nuotraukos mygtuką, kad pridėtumėte vaizdą iš savo Sparkle Galerijos.";

@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "عرض عنوان GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "أغلق أوراق التعليقات بتمريرة أفقية. تفعيل هذا يُظهر منتقي الاتجاه.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "السحب لإغلاق التعليقات";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "التمرير على ورقة تعليقات موسّعة يغلقها بالكامل بدلًا من تصغيرها إلى نصف الارتفاع.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "إغلاق كامل من الوضع الموسّع";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "الاتجاه الذي يجب أن تسلكه تمريرة الإغلاق: يساراً أو يميناً أو أي منهما.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "اتجاه السحب";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "اضغط مطولاً على زر الصورة في مربع الكتابة لإرفاق صورة من معرض Sparkle.";

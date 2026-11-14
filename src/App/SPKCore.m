@@ -237,6 +237,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_hide_ads_reels" : @(YES),
         @"general_hide_ads_explore" : @(YES),
         @"general_comments_swipe_close_direction" : @"both",
+        @"general_comments_swipe_close_fully" : @(YES),
         @"general_comments_copy_text" : @(YES),
         @"general_comments_media_actions" : @(YES),
         @"general_comments_gif_title" : @(NO),

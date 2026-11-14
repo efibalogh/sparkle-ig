@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "GIFタイトルを表示";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "横方向のスワイプでコメントシートを閉じます。オンにするとスワイプ方向の選択が表示されます。";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "スワイプしてコメントを閉じる";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "全画面表示のコメントシートでスワイプすると、半分の高さに縮めずに完全に閉じます。";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "全画面から完全に閉じる";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "閉じるスワイプをどちらの方向に行う必要があるか(左、右、またはどちらでも)を設定します。";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "スワイプ方向";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "作成欄の写真ボタンを長押しすると、Sparkleギャラリーから画像を添付できます。";

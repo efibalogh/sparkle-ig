@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Afficher le titre du GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Fermez les feuilles de commentaires par un balayage horizontal. L'activer révèle le sélecteur de direction.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Swipe pour fermer les commentaires";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Un balayage sur une feuille de commentaires agrandie la ferme complètement au lieu de la réduire à mi-hauteur.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Fermer complètement depuis l'état agrandi";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Le sens que doit prendre le balayage de fermeture : gauche, droite ou les deux.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Direction du swipe";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Appuyez longuement sur le bouton photo de la zone de rédaction pour joindre une image depuis votre galerie Sparkle.";

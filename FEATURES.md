@@ -51,7 +51,7 @@ marked **(restart)** and prompt for a relaunch when changed.
   - **Hide Profile Suggestions**: Keeps suggested accounts closed on profiles, including after you follow someone, until you tap the suggestions button. With **Show Suggestions Button** (Profile) off, the button is removed as well.
 
 ### Comments
-- **Swipe to Close Comments** + **Swipe Direction**: Adds a horizontal swipe-to-dismiss gesture to comment sheets. The swipe drives Instagram's own sheet dismissal, so it follows your finger, dims the background and snaps back or closes exactly like a vertical drag.
+- **Swipe to Close Comments** + **Swipe Direction**: Adds a horizontal swipe-to-dismiss gesture to comment sheets. The swipe drives Instagram's own sheet dismissal, so it follows your finger, dims the background and snaps back or closes exactly like a vertical drag. The swipe can start over a comment's like and reply buttons. **Close Fully from Expanded** (on by default) closes an expanded sheet completely instead of shrinking it to half height.
 - **Comment Menu Actions**: Adds opt-in comment text copying, plus Photos/Share/Gallery/clipboard actions and link copying for both GIF and photo comments (GIF gets a Giphy link, photo gets a direct image download link). Gallery saves use a dedicated `Comments` source.
 - **Show GIF Title**: Long-press a GIF comment and its menu resolves the GIF's real name and the channel that uploaded it, with a tap to copy the name. Off by default, because each lookup asks giphy.com about that one GIF; nothing is requested until you open the menu, and results are cached for the session.
 - **Confirm Comment Like**.

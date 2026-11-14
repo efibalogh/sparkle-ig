@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Pokazuj tytuł GIF-a";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Zamykaj arkusze komentarzy poziomym przesunięciem. Włączenie tej opcji ujawnia wybór kierunku.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Przesuń, aby zamknąć komentarze";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Przesunięcie na rozwiniętym arkuszu komentarzy zamyka go całkowicie, zamiast zmniejszać do połowy wysokości.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Zamykaj całkowicie z pełnego widoku";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "W którym kierunku musi iść gest zamykania: w lewo, w prawo albo w dowolny.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Kierunek przesunięcia";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Przytrzymaj przycisk zdjęcia w kompozytorze, aby załączyć obraz ze swojej Galerii Sparkle.";

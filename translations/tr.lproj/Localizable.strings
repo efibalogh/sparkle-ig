@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "GIF Başlığını Göster";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Yorum sayfalarını yatay kaydırmayla kapat. Bunu açmak yön seçicisini gösterir.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Yorumları Kapatmak İçin Kaydır";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Genişletilmiş bir yorum sayfasında kaydırma, onu yarı yüksekliğe küçültmek yerine tamamen kapatır.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Genişletilmişten tamamen kapat";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Kapatma kaydırmasının hangi yöne gitmesi gerektiği: sol, sağ ya da her ikisi.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Kaydırma Yönü";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Sparkle galerinden bir görsel eklemek için yazma alanındaki fotoğraf düğmesine uzun bas.";

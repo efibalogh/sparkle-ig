@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "GIF शीर्षक दिखाएं";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "कमेंट शीट को क्षैतिज स्वाइप से बंद करें। इसे चालू करने पर दिशा चयनकर्ता दिखता है।";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "टिप्पणियां बंद करने के लिए स्वाइप करें";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "विस्तृत कमेंट शीट पर स्वाइप करने से वह आधी ऊंचाई तक छोटी होने के बजाय पूरी तरह बंद हो जाती है।";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "विस्तृत से पूरी तरह बंद करें";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "बंद करने वाले स्वाइप को किस दिशा में जाना चाहिए: बाएं, दाएं या कोई भी।";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "स्वाइप दिशा";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "अपनी Sparkle Gallery से इमेज जोड़ने के लिए कंपोजर के फ़ोटो बटन को लंबा दबाएं।";

@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Afișează titlu GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Închide panourile de comentarii cu o glisare orizontală. Activarea dezvăluie selectorul de direcție.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Glisare pentru a inchide comentarii";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "O glisare pe un panou de comentarii extins îl închide complet, în loc să-l micșoreze la jumătate de înălțime.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Închide complet din extins";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "În ce direcție trebuie să meargă glisarea de închidere: stânga, dreapta sau oricare.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Direcția glisării";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Apasă lung pe butonul foto din câmpul de comentarii pentru a atașa o imagine din galeria ta Sparkle.";

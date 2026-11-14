@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Mostrar Título do GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Feche as folhas de comentários com um deslize horizontal. Ativar isto revela o seletor de direção.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Deslizar para Fechar Comentários";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Deslizar em uma folha de comentários expandida a fecha totalmente, em vez de reduzi-la à metade da altura.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Fechar totalmente quando expandido";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Para que lado o deslize de fechar precisa ir: esquerda, direita ou qualquer um.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Direção de Deslizamento";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Toque e segure o botão de foto do campo de comentários para anexar uma imagem da sua galeria do Sparkle.";

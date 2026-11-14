@@ -59,6 +59,7 @@
 - (void)_didPan:(UIPanGestureRecognizer *)pan; // target of _verticalPanGesture
 - (BOOL)disablePanToClose;
 - (BOOL)disableVerticalPan;
+- (unsigned long long)targetSheetState; // 0 closed, 1 partial, 2 expanded
 @end
 
 @interface IGMainFeedAppHeaderController : UIViewController

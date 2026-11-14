@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "نمایش عنوان GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "برگه‌های کامنت را با سوایپ افقی ببندید. فعال کردن این گزینه انتخاب‌گر جهت را نمایان می‌کند.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "سوایپ برای بستن کامنت‌ها";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "سوایپ روی برگه کامنت باز، آن را به‌طور کامل می‌بندد، به‌جای اینکه به نیمه ارتفاع کوچک شود.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "بستن کامل از حالت باز";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "سوایپِ بستن باید به کدام جهت باشد: چپ، راست یا هر دو.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "جهت سوایپ";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "برای پیوست کردن یک تصویر از گالری Sparkle خود، دکمه عکس در کادر نوشتن را لمس طولانی کنید.";

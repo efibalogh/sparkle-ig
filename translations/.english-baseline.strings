@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Show GIF Title";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Close comment sheets with a horizontal swipe. Turning this on reveals the direction picker.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Swipe to Close Comments";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "A swipe on an expanded comments sheet closes it completely instead of shrinking it to half height.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Close Fully from Expanded";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Which way the closing swipe has to travel: left, right, or either.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Swipe Direction";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Long press the composer's photo button to attach an image from your Sparkle Gallery.";

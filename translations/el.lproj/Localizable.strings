@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Εμφάνιση Τίτλου GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Κλείσε τα φύλλα σχολίων με οριζόντια σάρωση. Η ενεργοποίηση αποκαλύπτει τον επιλογέα κατεύθυνσης.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Σάρωση για Κλείσιμο Σχολίων";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Μια σάρωση σε αναπτυγμένο φύλλο σχολίων το κλείνει εντελώς αντί να το μικραίνει στο μισό ύψος.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Πλήρες κλείσιμο από την ανάπτυξη";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "Προς ποια κατεύθυνση πρέπει να γίνει η σάρωση κλεισίματος: αριστερά, δεξιά ή οποιαδήποτε.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Κατεύθυνση Σάρωσης";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Πάτα παρατεταμένα το κουμπί φωτογραφίας στο πεδίο σύνταξης για να επισυνάψεις εικόνα από τη συλλογή Sparkle.";

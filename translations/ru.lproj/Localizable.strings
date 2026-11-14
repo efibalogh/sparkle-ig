@@ -953,6 +953,8 @@
 "GENERAL_COMMENTS_SHOW_GIF_TITLE_TITLE" = "Показать название GIF";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP" = "Закрывайте панели комментариев горизонтальным смахиванием. Включение показывает выбор направления.";
 "GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_TITLE" = "Смахнуть для закрытия комментариев";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP" = "Смахивание на развёрнутой панели комментариев закрывает её полностью, а не уменьшает до половины высоты.";
+"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE" = "Закрывать полностью из развёрнутого";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_HELP" = "В какую сторону должно идти закрывающее смахивание: влево, вправо или в любую.";
 "GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE" = "Направление смахивания";
 "GENERAL_COMMENTS_UPLOAD_PHOTO_GALLERY_HELP" = "Удерживайте кнопку фото в поле ввода, чтобы прикрепить изображение из вашей галереи Sparkle.";
