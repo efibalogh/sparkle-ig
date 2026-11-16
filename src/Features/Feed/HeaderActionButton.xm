@@ -13,6 +13,7 @@
 #import "../../Shared/Gallery/SPKGalleryViewController.h"
 #import "../../Shared/UI/SPKChrome.h"
 #import "../../Shared/UI/SPKChromeGlassMirror.h"
+#import "../../Shared/UI/SPKSideColumn.h"
 #import "../../Utils.h"
 #import "../Messages/DeletedMessagesLog/SPKDeletedMessagesViewController.h"
 #import "../Profile/ProfileAnalyzer/SPKProfileAnalyzerViewController.h"
@@ -221,32 +222,12 @@ static UIView *SPKHeaderLogoView(UIView *header) {
 static const CGFloat kSPKHeaderColumnGap = 10.0;
 static const CGFloat kSPKHeaderColumnSlot = 48.0; // a vertical bar item's footprint
 static const CGFloat kSPKHeaderColumnEdgeInset = 24.0; // vertical bar items' gap to the display edge
-static const void *kSPKHeaderColumnGlassEffectKey = &kSPKHeaderColumnGlassEffectKey;
 
 // The glass group holding the tabs when the tab bar runs vertically down a side
-// column. UIKit draws it as a private platter outside the UITabBar itself, so it
-// is found by class name; nil (horizontal bar, older iOS, renamed class) keeps the
-// button in the header.
+// column; nil (horizontal bar, older iOS, renamed class) keeps the button in the
+// header.
 static UIView *SPKVerticalTabPlatter(UIView *header) {
-    static __weak UIView *cachedPlatter;
-    UIView *platter = cachedPlatter;
-    if (!platter || !platter.window || platter.window != header.window) {
-        platter = nil;
-        UIView *root = [SPKUtils nearestViewControllerForView:header].tabBarController.view;
-        NSMutableArray<UIView *> *queue = root ? [NSMutableArray arrayWithObject:root] : [NSMutableArray array];
-        for (NSUInteger i = 0; i < queue.count && i < 600; i++) {
-            if ([NSStringFromClass(queue[i].class) containsString:@"TabBarItemPlatterView"]) {
-                platter = queue[i];
-                break;
-            }
-            [queue addObjectsFromArray:queue[i].subviews];
-        }
-        cachedPlatter = platter;
-    }
-    if (!platter || platter.hidden)
-        return nil;
-    CGSize size = platter.bounds.size;
-    return size.height > size.width * 2.0 ? platter : nil;
+    return SPKSideColumnTabPlatter([SPKUtils nearestViewControllerForView:header].tabBarController.view);
 }
 
 // Bottom edge, in `view`'s space, of the system-reserved area (status items and
@@ -311,6 +292,8 @@ static CGRect SPKColumnStatusRegion(UIView *view, CGFloat minX) {
 - (void)spk_installHeaderActionButtonIfNeeded;
 - (void)spk_layoutHeaderActionButton;
 - (BOOL)spk_layoutHeaderActionButton:(SPKFeedHeaderActionButton *)button inColumnAbovePlatter:(UIView *)platter;
+- (BOOL)spk_layoutHeaderActionButton:(SPKFeedHeaderActionButton *)button belowColumnItem:(UIView *)item;
+- (UIView *)spk_headerColumnGlassForButton:(SPKFeedHeaderActionButton *)button;
 - (void)spk_configureHeaderActionButton:(SPKFeedHeaderActionButton *)button;
 - (void)spk_updateHeaderGlass:(SPKFeedHeaderActionButton *)button;
 @end
@@ -413,6 +396,7 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
                              SPKHeaderButtonConfigSignature(enabled, defaultAction), OBJC_ASSOCIATION_COPY_NONATOMIC);
     // Force one reposition after a reconfigure (glyph swap can change intrinsic state).
     objc_setAssociatedObject(button, kSPKHeaderButtonLastFrameAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    SPKSideColumnResetDock(button);
 
     SPKLog(@"HeaderButton", @"[Sparkle] Configured header button: enabled=%lu default=%@ primaryIsMenu=%@",
            (unsigned long)enabled.count, defaultAction, button.showsMenuAsPrimaryAction ? @"YES" : @"NO");
@@ -422,6 +406,14 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
     SPKFeedHeaderActionButton *button = [self spk_headerActionButton];
     if (!button)
         return;
+
+    // Off-window layout passes (a pushed screen covers the feed) must not bring
+    // back a button docked outside the header, which the header hid as it left.
+    if (!self.window) {
+        if (button.superview != self)
+            button.hidden = YES;
+        return;
+    }
 
     // Respect the per-account master toggle at layout time (not just at install):
     // after a live account switch the hooks stay installed, so re-read the toggle
@@ -450,6 +442,15 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
 
     UIView *heart = SPKHeaderSubview(self, @[ @"activityButton" ]);
     UIView *messages = SPKHeaderSubview(self, @[ @"directButton" ]);
+
+    // The header's bar items can move out of the header into a side column (a
+    // narrow window beside a vertical tab bar); the button then follows them.
+    UIView *columnItem = SPKSideColumnItemContainer(heart) ?: SPKSideColumnItemContainer(SPKHeaderSubview(self, @[ @"createButton" ]));
+    if (columnItem) {
+        if (![self spk_layoutHeaderActionButton:button belowColumnItem:columnItem])
+            button.hidden = YES;
+        return;
+    }
 
     // Convert an anchor's bounds into this header's coordinate space so the math
     // holds whether IG parents these buttons directly on the header or nests them
@@ -563,6 +564,7 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
 
     if (button.superview != self)
         [self addSubview:button];
+    SPKSideColumnSizeButton(button, side);
     button.frame = expectedFrame;
     objc_setAssociatedObject(button, kSPKHeaderButtonLastFrameAssocKey, [NSValue valueWithCGRect:expectedFrame], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self bringSubviewToFront:button];
@@ -581,7 +583,7 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
         return NO;
 
     CGRect platterFrame = [host convertRect:platter.bounds fromView:platter];
-    CGFloat side = kSPKHeaderButtonSide;
+    CGFloat side = SPKSideColumnButtonSide;
     CGFloat x = floor(CGRectGetMidX(platterFrame) - side / 2.0);
 
     // Top of the column, right under the status items, where the vertical bar puts
@@ -597,51 +599,30 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
         CGRectGetMaxY(expectedFrame) > CGRectGetMinY(platterFrame) - kSPKHeaderColumnGap)
         return NO;
 
-    button.hidden = NO;
-    button.alpha = 1.0;
+    SPKSideColumnPlaceButton(button, [self spk_headerColumnGlassForButton:button], host, expectedFrame, 1.0);
+    return YES;
+}
 
-    // System glass to match the tab group; there is no IG bubble here to mirror.
+// When the side column carries the header's create and heart buttons as bar
+// items, the button gets its own glass circle right under their group, so it
+// reads as one more column control and hides from captures as a whole.
+- (BOOL)spk_layoutHeaderActionButton:(SPKFeedHeaderActionButton *)button belowColumnItem:(UIView *)item {
+    UIView *host = [SPKUtils nearestViewControllerForView:self].tabBarController.view;
+    if (!host)
+        return NO;
+    CGFloat alpha = 1.0;
+    CGRect group = SPKSideColumnGroupFrame(item, host, &alpha);
+    return SPKSideColumnDockButton(button, [self spk_headerColumnGlassForButton:button], host, group, alpha);
+}
+
+- (UIView *)spk_headerColumnGlassForButton:(SPKFeedHeaderActionButton *)button {
     UIView *glassView = objc_getAssociatedObject(button, kSPKHeaderGlassViewKey);
     if (!glassView) {
         glassView = SPKChromeGlassMirrorMakeBubble(@"sparkle-header-action-glass");
         if (glassView)
             objc_setAssociatedObject(button, kSPKHeaderGlassViewKey, glassView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    if ([glassView isKindOfClass:[UIVisualEffectView class]]) {
-        UIVisualEffect *effect = objc_getAssociatedObject(button, kSPKHeaderColumnGlassEffectKey);
-        if (!effect) {
-            effect = [[NSClassFromString(@"UIGlassEffect") alloc] init];
-            if (effect)
-                objc_setAssociatedObject(button, kSPKHeaderColumnGlassEffectKey, effect, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }
-        UIVisualEffectView *bubble = (UIVisualEffectView *)glassView;
-        if (effect && bubble.effect != effect)
-            bubble.effect = effect;
-        if (bubble.layer.borderWidth != 0.0)
-            bubble.layer.borderWidth = 0.0;
-        if (bubble.alpha != 1.0)
-            bubble.alpha = 1.0;
-    }
-
-    // Every pass, like the header's glass: the canvas sizes its host lazily, so an
-    // attach right after a frame change can still see zero bounds. Write-guarded.
-    if (glassView)
-        SPKChromeGlassMirrorAttach(glassView, button);
-
-    NSValue *lastVal = objc_getAssociatedObject(button, kSPKHeaderButtonLastFrameAssocKey);
-    if (button.superview == host && lastVal && CGRectEqualToRect(expectedFrame, [lastVal CGRectValue]))
-        return YES;
-
-    if (button.superview != host)
-        [host addSubview:button];
-    button.frame = expectedFrame;
-    objc_setAssociatedObject(button, kSPKHeaderButtonLastFrameAssocKey, [NSValue valueWithCGRect:expectedFrame], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [host bringSubviewToFront:button];
-    [button layoutIfNeeded];
-    if (glassView)
-        SPKChromeGlassMirrorAttach(glassView, button);
-    SPKLog(@"HeaderButton", @"[Sparkle] Laid out header button in the side tab column frame=%@", NSStringFromCGRect(expectedFrame));
-    return YES;
+    return glassView;
 }
 
 - (void)spk_updateHeaderGlass:(SPKFeedHeaderActionButton *)button {
@@ -783,6 +764,11 @@ static CGRect SPKInboxHeaderFrameAvoidingControls(UIView *header, UIView *button
     SPKFeedHeaderActionButton *button = [self spk_inboxHeaderButton];
     if (!button)
         return;
+    if (!self.window) {
+        if (![button isDescendantOfView:self])
+            button.hidden = YES;
+        return;
+    }
 
     BOOL messagesOnly = [SPKUtils getBoolPref:@"interface_show_header_button_in_messages_only"] &&
                          SPKIsMessagesOnlyMode();
@@ -886,6 +872,7 @@ static CGRect SPKInboxHeaderFrameAvoidingControls(UIView *header, UIView *button
         return;
     }
 
+    SPKSideColumnSizeButton(button, kSPKHeaderButtonSide);
     button.frame = hostFrame;
     objc_setAssociatedObject(button, kSPKInboxHeaderButtonLastFrameAssocKey, [NSValue valueWithCGRect:expectedFrame], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [host bringSubviewToFront:button];
@@ -917,7 +904,7 @@ static CGRect SPKInboxHeaderFrameAvoidingControls(UIView *header, UIView *button
     // the axis when it is up; with the bar hidden (single-tab mode) the axis is
     // where the bar centers its items, one slot plus its edge inset in from the
     // column's trailing edge, which is also where the status items sit.
-    CGFloat side = kSPKHeaderButtonSide;
+    CGFloat side = SPKSideColumnButtonSide;
     UIView *platter = SPKVerticalTabPlatter(self);
     CGFloat axis = platter && platter.window == host.window
                        ? CGRectGetMidX([host convertRect:platter.bounds fromView:platter])
@@ -926,17 +913,6 @@ static CGRect SPKInboxHeaderFrameAvoidingControls(UIView *header, UIView *button
                                       floor(CGRectGetMaxY(status) + (kSPKHeaderColumnSlot - side) / 2.0), side, side);
     if (CGRectGetMinX(expectedFrame) < CGRectGetMinX(status) || CGRectGetMaxX(expectedFrame) > CGRectGetMaxX(host.bounds))
         return NO;
-
-    button.hidden = NO;
-    button.alpha = 1.0;
-    if (button.superview != host)
-        [host addSubview:button];
-    if (!CGRectEqualToRect(button.frame, expectedFrame)) {
-        button.frame = expectedFrame;
-        SPKLog(@"HeaderButton", @"[Sparkle] Inbox header row is full, docked the button under the column status items frame=%@", NSStringFromCGRect(expectedFrame));
-    }
-    objc_setAssociatedObject(button, kSPKInboxHeaderButtonLastFrameAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [host bringSubviewToFront:button];
 
     // System glass, like the feed button and the tab group in the column; there
     // is no IG bubble out here to mirror. Back in the header row the mirror
@@ -947,23 +923,8 @@ static CGRect SPKInboxHeaderFrameAvoidingControls(UIView *header, UIView *button
         if (glassView)
             objc_setAssociatedObject(button, kSPKInboxHeaderGlassViewKey, glassView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    if ([glassView isKindOfClass:[UIVisualEffectView class]]) {
-        UIVisualEffect *effect = objc_getAssociatedObject(button, kSPKHeaderColumnGlassEffectKey);
-        if (!effect) {
-            effect = [[NSClassFromString(@"UIGlassEffect") alloc] init];
-            if (effect)
-                objc_setAssociatedObject(button, kSPKHeaderColumnGlassEffectKey, effect, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }
-        UIVisualEffectView *bubble = (UIVisualEffectView *)glassView;
-        if (effect && bubble.effect != effect)
-            bubble.effect = effect;
-        if (bubble.layer.borderWidth != 0.0)
-            bubble.layer.borderWidth = 0.0;
-        if (bubble.alpha != 1.0)
-            bubble.alpha = 1.0;
-    }
-    if (glassView)
-        SPKChromeGlassMirrorAttach(glassView, button);
+    SPKSideColumnPlaceButton(button, glassView, host, expectedFrame, 1.0);
+    objc_setAssociatedObject(button, kSPKInboxHeaderButtonLastFrameAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return YES;
 }
 

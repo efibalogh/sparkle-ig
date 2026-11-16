@@ -13,6 +13,7 @@
 #import "../../Shared/Gallery/SPKGallerySaveMetadata.h"
 #import "../../Shared/MediaPreview/SPKFullScreenMediaPlayer.h"
 #import "../../Shared/UI/SPKChromeGlassMirror.h"
+#import "../../Shared/UI/SPKSideColumn.h"
 #import "../../App/SPKPerfMeter.h"
 
 static CGFloat const kSPKProfileActionButtonWidth = 44.0;
@@ -180,15 +181,21 @@ static void SPKProfileUpdateGlass(SPKProfileHeaderActionButton *button, UIView *
     return CGSizeMake(kSPKProfileActionButtonWidth, kSPKProfileActionButtonHeight);
 }
 
+// IG's header resizes its buttons, so the size is pinned; only the side column
+// size is let through, for the button docked there.
+static CGSize SPKProfileActionButtonPinnedSize(CGSize size) {
+    if (size.width == SPKSideColumnButtonSide && size.height == SPKSideColumnButtonSide)
+        return size;
+    return CGSizeMake(kSPKProfileActionButtonWidth, kSPKProfileActionButtonHeight);
+}
+
 - (void)setFrame:(CGRect)frame {
-    frame.size.width = kSPKProfileActionButtonWidth;
-    frame.size.height = kSPKProfileActionButtonHeight;
+    frame.size = SPKProfileActionButtonPinnedSize(frame.size);
     [super setFrame:frame];
 }
 
 - (void)setBounds:(CGRect)bounds {
-    bounds.size.width = kSPKProfileActionButtonWidth;
-    bounds.size.height = kSPKProfileActionButtonHeight;
+    bounds.size = SPKProfileActionButtonPinnedSize(bounds.size);
     [super setBounds:bounds];
 }
 
@@ -528,6 +535,65 @@ static void SPKProfileClampTitleToButton(UIView *headerView, CGFloat buttonMinX)
     }
 }
 
+// MARK: - Side column
+
+// When the profile's navigation items sit in a side column (a narrow window
+// beside a vertical tab bar), the header row has no trailing controls to sit
+// beside, so the button joins the column as its own glass circle under the
+// lowest of the profile's groups (the ••• menu). Returns NO when the profile's
+// items are in the header row.
+static const void *kSPKProfileColumnRetryKey = &kSPKProfileColumnRetryKey;
+
+static BOOL SPKProfileDockActionButtonInColumn(UIView *headerView, SPKProfileHeaderActionButton *button) {
+    UIViewController *controller = [SPKUtils nearestViewControllerForView:headerView];
+    UIView *host = controller.tabBarController.view;
+    if (!host || !headerView.window || host.window != headerView.window)
+        return NO;
+    UIViewController *owner = nil;
+    for (UIViewController *current = controller; current && !owner; current = current.parentViewController) {
+        if (SPKSideColumnHoldsItems(current.navigationItem))
+            owner = current;
+    }
+    if (!owner)
+        return NO;
+
+    CGFloat alpha = 1.0;
+    CGRect group = SPKSideColumnLowestGroup(owner.navigationItem, host, &alpha);
+    if (CGRectIsNull(group)) {
+        // The items attach to the column once a push settles, after the header's
+        // last layout pass; look again then.
+        [button removeFromSuperview];
+        SPKSideColumnResetDock(button);
+        NSInteger attempts = [objc_getAssociatedObject(headerView, kSPKProfileColumnRetryKey) integerValue];
+        if (attempts >= 0 && attempts < 6) {
+            // Negative marks a pending look, so layout passes in between add none.
+            objc_setAssociatedObject(headerView, kSPKProfileColumnRetryKey, @(-(attempts + 1)), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            __weak UIView *weakHeader = headerView;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                UIView *header = weakHeader;
+                if (!header)
+                    return;
+                objc_setAssociatedObject(header, kSPKProfileColumnRetryKey, @(attempts + 1), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                if (header.window)
+                    [header setNeedsLayout];
+            });
+        }
+        return YES;
+    }
+    objc_setAssociatedObject(headerView, kSPKProfileColumnRetryKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+    if (!button.spkGlassView && !button.spkGlassUnavailable) {
+        button.spkGlassView = SPKChromeGlassMirrorMakeBubble(@"sparkle-profile-action-glass");
+        button.spkGlassUnavailable = button.spkGlassView == nil;
+    }
+    objc_setAssociatedObject(button, kSPKProfileLastExpectedFrameKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (!SPKSideColumnDockButton(button, button.spkGlassView, host, group, alpha)) {
+        [button removeFromSuperview];
+        SPKSideColumnResetDock(button);
+    }
+    return YES;
+}
+
 static void SPKProfilePlaceActionButton(UIView *headerView, BOOL titleIsCentered, BOOL reconfigure) {
     if (![SPKUtils getBoolPref:@"profile_action_btn"]) {
         SPKProfileHeaderActionButton *button = objc_getAssociatedObject(headerView, kSPKProfileHeaderActionButtonAssocKey);
@@ -568,6 +634,10 @@ static void SPKProfilePlaceActionButton(UIView *headerView, BOOL titleIsCentered
         objc_setAssociatedObject(button, kSPKProfileLastExpectedFrameKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return;
     }
+
+    if (SPKProfileDockActionButtonInColumn(headerView, button))
+        return;
+    SPKSideColumnResetDock(button);
 
     if (button.superview != headerView) {
         [headerView addSubview:button];
@@ -624,6 +694,14 @@ static void SPKProfilePlaceActionButton(UIView *headerView, BOOL titleIsCentered
             SPKProfileClampTitleToButton(headerView, CGRectGetMinX(lastFrame));
             return;
         }
+        // Beside a side column the header row has no trailing controls of its
+        // own; the button waits for the column instead of taking the corner,
+        // which sits under the camera there.
+        UIEdgeInsets windowInsets = headerView.window.safeAreaInsets;
+        if (windowInsets.right > 20.0 || windowInsets.left > 20.0) {
+            [button removeFromSuperview];
+            return;
+        }
         CGRect anyBtnFrame = SPKProfileGetAnyButtonFrame(headerView, headerView, CGRectZero);
         if (!CGRectIsEmpty(anyBtnFrame) && CGRectGetMidX(anyBtnFrame) >= w * 0.5) {
             centerY = CGRectGetMidY(anyBtnFrame);
@@ -647,6 +725,7 @@ static void SPKProfilePlaceActionButton(UIView *headerView, BOOL titleIsCentered
         return; // Avoid layout churn and layout resetting mid-animation
     }
 
+    SPKSideColumnSizeButton(button, btnW);
     button.frame = expectedFrame;
     objc_setAssociatedObject(button, kSPKProfileLastExpectedFrameKey, [NSValue valueWithCGRect:expectedFrame], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [headerView bringSubviewToFront:button];
@@ -707,6 +786,43 @@ static void hooked_profileHeaderLayoutSubviews(id self, SEL _cmd) {
     SPKProfileReplaceActionButtonFromHeader(self);
 }
 
+// Docked in the side column the button lives outside the header, so it leaves
+// with the header here and comes back on the header's next layout.
+static void (*orig_profileHeaderDidMoveToWindow)(id, SEL);
+
+static void hooked_profileHeaderDidMoveToWindow(id self, SEL _cmd) {
+    if (orig_profileHeaderDidMoveToWindow)
+        orig_profileHeaderDidMoveToWindow(self, _cmd);
+    if ([(UIView *)self window])
+        return;
+    SPKProfileHeaderActionButton *button = objc_getAssociatedObject(self, kSPKProfileHeaderActionButtonAssocKey);
+    if (button && button.superview && ![button isDescendantOfView:(UIView *)self]) {
+        [button removeFromSuperview];
+        SPKSideColumnResetDock(button);
+    }
+}
+
+// The profile's items reach the side column once the screen settles, which can
+// be after the header's last layout pass; place the button again then.
+static Class sSPKProfileHeaderClass;
+static void (*orig_profileViewDidAppear)(id, SEL, BOOL);
+
+static void hooked_profileViewDidAppear(id self, SEL _cmd, BOOL animated) {
+    if (orig_profileViewDidAppear)
+        orig_profileViewDidAppear(self, _cmd, animated);
+    if (!sSPKProfileHeaderClass || ![SPKUtils getBoolPref:@"profile_action_btn"] || ![self isKindOfClass:[UIViewController class]])
+        return;
+    UIViewController *controller = (UIViewController *)self;
+    NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:controller.view];
+    for (NSUInteger i = 0; i < queue.count && i < 200; i++) {
+        if ([queue[i] isKindOfClass:sSPKProfileHeaderClass]) {
+            SPKProfileReplaceActionButtonFromHeader(queue[i]);
+            return;
+        }
+        [queue addObjectsFromArray:queue[i].subviews];
+    }
+}
+
 static BOOL hooksInstalled = NO;
 static BOOL retryScheduled = NO;
 static NSInteger installAttempts = 0;
@@ -754,6 +870,15 @@ extern "C" void SPKInstallProfileActionButtonHooksIfEnabled(void) {
             MSHookMessageEx(headerClass, layoutSelector, (IMP)hooked_profileHeaderLayoutSubviews, (IMP *)&orig_profileHeaderLayoutSubviews);
             layoutHooked = YES;
         }
+
+        SEL windowSelector = @selector(didMoveToWindow);
+        if ([headerClass instancesRespondToSelector:windowSelector])
+            MSHookMessageEx(headerClass, windowSelector, (IMP)hooked_profileHeaderDidMoveToWindow, (IMP *)&orig_profileHeaderDidMoveToWindow);
+
+        sSPKProfileHeaderClass = headerClass;
+        Class profileClass = NSClassFromString(@"IGProfileViewController");
+        if (profileClass && [profileClass instancesRespondToSelector:@selector(viewDidAppear:)])
+            MSHookMessageEx(profileClass, @selector(viewDidAppear:), (IMP)hooked_profileViewDidAppear, (IMP *)&orig_profileViewDidAppear);
 
         hooksInstalled = configureHooked || layoutHooked;
         SPKLog(@"ProfileBtn", @"Install class=%@ configure=%@ layout=%@ installed=%@",
