@@ -10,6 +10,7 @@
 #import "../../Shared/Navigation/SPKTabConfiguration.h"
 #import "../SPKTabEditorViewController.h"
 #import "SPKNotificationSettingsProvider.h"
+#import "../../Features/Interface/SPKNativeTabBar.h"
 
 FOUNDATION_EXPORT BOOL SPKLiquidGlassInstagramEnabled(void);
 
@@ -34,6 +35,23 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
         return [SPKNotificationSettingsProvider sections];
     };
     return setting;
+}
+
+// Why the system tab bar ignores some of this page, said once under the group
+// it affects. Nil while Instagram's own bar is in use.
+static NSString *SPKSystemTabBarGlassFooter(void) {
+    if (!SPKSystemTabBarInUse())
+        return nil;
+    if (![SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar])
+        return SPKL(@"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER");
+    return SPKL(@"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER");
+}
+
+static NSString *SPKSystemTabBarBlackGlassFooter(void) {
+    if (!SPKSystemTabBarInUse() || !SPKPrefIsAvailable(@"interface_oled_black_glass") ||
+        ![SPKUtils getBoolPref:@"interface_oled_dark_mode"])
+        return nil;
+    return SPKL(@"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER");
 }
 
 @implementation SPKInterfaceSettingsProvider
@@ -85,7 +103,7 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
                 blackGlass;
             }),
         ],
-                        nil),
+                        SPKSystemTabBarBlackGlassFooter()),
         SPKTopicSection(SPKL(@"INTERFACE_EXPLORE_SEARCH_HEADER"), @[
             ({
                 SPKSetting *s = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE")
@@ -167,8 +185,9 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
             tabBarBehavior.defaultsKey = kSPKPrefInterfaceLiquidGlassTabBarMode;
             tabBarBehavior.enabledProvider = ^BOOL {
                 // The system tab bar is not Instagram's floating bar, so the
-                // scroll behavior it configures does not reach it.
-                if (SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar) && [SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar])
+                // scroll behavior it configures does not reach it. Asked of the
+                // running bar: foldables pick the system bar by themselves.
+                if (SPKSystemTabBarInUse())
                     return NO;
                 return SPKLiquidGlassSwitchIsOn();
             };
@@ -197,6 +216,11 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
                 return !SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar);
             };
             nativeTabBar.reloadsTableOnSwitchChange = YES;
+            // Where Instagram runs the system bar by itself, the switch has
+            // nothing to force or give back.
+            nativeTabBar.enabledProvider = ^BOOL {
+                return !SPKSystemTabBarInUse() || [SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar];
+            };
 
             [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_HEADER"), @[
                           liquidGlass,
@@ -204,7 +228,7 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
                           nativeTabBar,
                           tabBarBehaviorCell(),
                       ],
-                                                nil)];
+                                                SPKSystemTabBarGlassFooter())];
         } else {
             // Pre-iOS 26 can't render the glass material, but the same tab bar
             // experiment gates still reshape the bar into the floating pill.

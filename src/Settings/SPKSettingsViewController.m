@@ -1007,8 +1007,10 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (![self isSearching]) {
         // The group has an info button, so its explanations live in the sheet.
+        // A footer the section states itself (a notice about its current
+        // state, not help) still shows.
         if ([self spk_infoSheetAnchorForSection:section] != NSNotFound)
-            return nil;
+            return self.sections[section][@"footer"];
 
         // Too small for a sheet, or with no header to hang a button on: the
         // help text stays where it has always been, under the rows.
