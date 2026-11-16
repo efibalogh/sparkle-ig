@@ -18,6 +18,8 @@
 #import <UIKit/UIKit.h>
 #import <objc/message.h>
 #import <objc/runtime.h>
+#include <dlfcn.h>
+#include <sys/sysctl.h>
 
 #import "../../InstagramHeaders.h"
 #import "../../Settings/SPKSetting.h"
@@ -275,6 +277,100 @@ static IGTabBarController *SPKDevTourTabBarController(void) {
         [queue addObjectsFromArray:queue[i].childViewControllers];
     }
     return nil;
+}
+
+static UITabBarController *SPKDevTourNativeTabBarController(void) {
+    NSMutableArray<UIViewController *> *queue = [NSMutableArray array];
+    if (SPKDevTourWindow().rootViewController)
+        [queue addObject:SPKDevTourWindow().rootViewController];
+    for (NSUInteger i = 0; i < queue.count && i < 400; i++) {
+        if ([queue[i] isKindOfClass:UITabBarController.class])
+            return (UITabBarController *)queue[i];
+        [queue addObjectsFromArray:queue[i].childViewControllers];
+    }
+    return nil;
+}
+
+static NSString *SPKDevTourSurfaceList(id surfaces) {
+    if (![surfaces isKindOfClass:NSArray.class])
+        return [NSString stringWithFormat:@"%@", surfaces];
+    NSMutableArray<NSString *> *names = [NSMutableArray array];
+    for (id surface in (NSArray *)surfaces) {
+        NSString *tab = [surface respondsToSelector:@selector(tabStringFromSurfaceIntent)] ? [surface tabStringFromSurfaceIntent] : nil;
+        NSNumber *subtype = nil;
+        @try {
+            subtype = [surface valueForKey:@"_subtype"];
+        } @catch (__unused NSException *e) {
+        }
+        [names addObject:tab.length ? tab : [NSString stringWithFormat:@"sub%@", subtype]];
+    }
+    return [names componentsJoinedByString:@","];
+}
+
+// Native tab bar state, for the system tab bar audit.
+static NSString *SPKDevTourTabs(void) {
+    NSMutableArray<NSString *> *lines = [NSMutableArray array];
+    IGTabBarController *tabs = SPKDevTourTabBarController();
+    Ivar flag = tabs ? class_getInstanceVariable(object_getClass(tabs), "_usesNativeTabBarController") : NULL;
+    BOOL native = flag && *((uint8_t *)(__bridge void *)tabs + ivar_getOffset(flag));
+    [lines addObject:[NSString stringWithFormat:@"native=%d sizeClass=%ld safe=%@ style=%@", native, (long)tabs.traitCollection.horizontalSizeClass,
+                                                NSStringFromUIEdgeInsets(tabs.view.safeAreaInsets),
+                                                [tabs respondsToSelector:@selector(tabBarStyle)] ? @(tabs.tabBarStyle) : @"?"]];
+    [lines addObject:[@"surfaces=" stringByAppendingString:SPKDevTourSurfaceList([SPKUtils getIvarForObj:tabs name:"_tabBarSurfaces"])]];
+    [lines addObject:[@"compact=" stringByAppendingString:SPKDevTourSurfaceList([SPKUtils getIvarForObj:tabs name:"_nativeCompactTabBarSurfaces"])]];
+    SEL ordered = NSSelectorFromString(@"_nativeOrderedSurfacesForHorizontalSizeClass:");
+    if ([tabs respondsToSelector:ordered]) {
+        for (NSInteger sizeClass = 1; sizeClass <= 2; sizeClass++)
+            [lines addObject:[NSString stringWithFormat:@"ordered[%ld]=%@", (long)sizeClass,
+                                                        SPKDevTourSurfaceList(((id (*)(id, SEL, NSInteger))objc_msgSend)(tabs, ordered, sizeClass))]];
+    }
+    SEL rendered = NSSelectorFromString(@"_renderedTabBarSurfaces");
+    if ([tabs respondsToSelector:rendered])
+        [lines addObject:[@"rendered=" stringByAppendingString:SPKDevTourSurfaceList(((id (*)(id, SEL))objc_msgSend)(tabs, rendered))]];
+    SEL descriptors = NSSelectorFromString(@"_nativeTabDescriptors");
+    if ([tabs respondsToSelector:descriptors]) {
+        NSArray *list = ((id (*)(id, SEL))objc_msgSend)(tabs, descriptors);
+        id first = list.firstObject;
+        if (first) {
+            unsigned int count = 0;
+            Ivar *ivars = class_copyIvarList(object_getClass(first), &count);
+            NSMutableArray *names = [NSMutableArray array];
+            for (unsigned int i = 0; i < count; i++)
+                [names addObject:@(ivar_getName(ivars[i]))];
+            free(ivars);
+            [lines addObject:[NSString stringWithFormat:@"descriptor %@ ivars=%@", NSStringFromClass(object_getClass(first)), [names componentsJoinedByString:@","]]];
+        }
+        for (id d in list)
+            [lines addObject:[NSString stringWithFormat:@"  %@", [d description]]];
+    }
+    [lines addObject:[@"selectedSurface=" stringByAppendingString:SPKDevTourSurfaceList(@[ [tabs selectedTabBarSurface] ?: NSNull.null ])]];
+    UITabBarController *system = SPKDevTourNativeTabBarController();
+    if (system) {
+        NSMutableArray<NSString *> *items = [NSMutableArray array];
+        if ([system respondsToSelector:NSSelectorFromString(@"tabs")]) {
+            for (id tab in ((NSArray * (*)(id, SEL)) objc_msgSend)(system, NSSelectorFromString(@"tabs")))
+                [items addObject:[NSString stringWithFormat:@"%@[%@]%@", [tab valueForKey:@"title"], [tab valueForKey:@"identifier"],
+                                                            [[tab valueForKey:@"hidden"] boolValue] ? @"(hidden)" : @""]];
+        }
+        [lines addObject:[NSString stringWithFormat:@"system tabs=%@ selectedIndex=%lu", [items componentsJoinedByString:@" | "], (unsigned long)system.selectedIndex]];
+        UITabBar *bar = system.tabBar;
+        [lines addObject:[NSString stringWithFormat:@"bar %@ frame=%@ hidden=%d items=%lu sizeClass=%ld", NSStringFromClass(bar.class),
+                                                    NSStringFromCGRect([bar convertRect:bar.bounds toView:nil]), bar.hidden,
+                                                    (unsigned long)bar.items.count, (long)system.traitCollection.horizontalSizeClass]];
+        SEL minimize = NSSelectorFromString(@"tabBarMinimizeBehavior");
+        if ([system respondsToSelector:minimize])
+            [lines addObject:[NSString stringWithFormat:@"minimize=%ld", (long)((NSInteger (*)(id, SEL))objc_msgSend)(system, minimize)]];
+        [lines addObject:[NSString stringWithFormat:@"standardAppearance bg=%@ effect=%@ shadow=%@", bar.standardAppearance.backgroundColor,
+                                                    bar.standardAppearance.backgroundEffect, bar.standardAppearance.shadowColor]];
+        for (NSString *name in @[ @"_nativeTabBarAppearance", @"_nativeTabBarHidden" ]) {
+            Ivar ivar = class_getInstanceVariable(object_getClass(tabs), name.UTF8String);
+            if (ivar)
+                [lines addObject:[NSString stringWithFormat:@"%@=%d", name, *((uint8_t *)(__bridge void *)tabs + ivar_getOffset(ivar))]];
+        }
+    } else {
+        [lines addObject:@"system=none"];
+    }
+    return [lines componentsJoinedByString:@"\n"];
 }
 
 // Selects a tab through the tab bar controller's own button handler.
@@ -647,6 +743,47 @@ static NSString *SPKDevTourChrome(void) {
 
 // Lists every visible view whose class or accessibility identifier contains the
 // needle, with its window frame, recognizers, and nearest ancestors.
+// Lists every live view controller's navigation bar items, with the identifiers
+// and labels found inside each custom view.
+static NSString *SPKDevTourDescribeBarItem(UIBarButtonItem *item) {
+    NSMutableArray<NSString *> *parts = [NSMutableArray array];
+    UIView *custom = item.customView;
+    if (custom) {
+        NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:custom];
+        for (NSUInteger i = 0; i < queue.count && i < 60; i++) {
+            UIView *view = queue[i];
+            [queue addObjectsFromArray:view.subviews];
+            if (view.accessibilityIdentifier.length || view.accessibilityLabel.length)
+                [parts addObject:[NSString stringWithFormat:@"%@[%@|%@]", NSStringFromClass(view.class), view.accessibilityIdentifier ?: @"", view.accessibilityLabel ?: @""]];
+        }
+    }
+    return [NSString stringWithFormat:@"<%@ %p custom=%@ title=%@ id=%@ %@>", NSStringFromClass(item.class), item, NSStringFromClass(custom.class),
+                                      item.title ?: @"", item.accessibilityIdentifier ?: @"", [parts componentsJoinedByString:@" "]];
+}
+
+static void SPKDevTourCollectNavItems(UIViewController *vc, NSMutableArray<NSString *> *lines, NSUInteger depth) {
+    if (!vc || depth > 12 || !vc.isViewLoaded || !vc.view.window)
+        return;
+    UINavigationItem *item = vc.navigationItem;
+    if (item.leftBarButtonItems.count || item.rightBarButtonItems.count) {
+        [lines addObject:[NSString stringWithFormat:@"%@ %@", [@"" stringByPaddingToLength:depth * 2 withString:@" " startingAtIndex:0], NSStringFromClass(vc.class)]];
+        for (UIBarButtonItem *bar in item.leftBarButtonItems)
+            [lines addObject:[NSString stringWithFormat:@"   L %@", SPKDevTourDescribeBarItem(bar)]];
+        for (UIBarButtonItem *bar in item.rightBarButtonItems)
+            [lines addObject:[NSString stringWithFormat:@"   R %@", SPKDevTourDescribeBarItem(bar)]];
+    }
+    for (UIViewController *child in vc.childViewControllers)
+        SPKDevTourCollectNavItems(child, lines, depth + 1);
+    if (vc.presentedViewController && vc.presentedViewController.presentingViewController == vc)
+        SPKDevTourCollectNavItems(vc.presentedViewController, lines, depth + 1);
+}
+
+static NSString *SPKDevTourNavItems(void) {
+    NSMutableArray<NSString *> *lines = [NSMutableArray array];
+    SPKDevTourCollectNavItems(SPKDevTourWindow().rootViewController, lines, 0);
+    return lines.count ? [lines componentsJoinedByString:@"\n"] : @"none";
+}
+
 static NSString *SPKDevTourFind(NSString *needle) {
     NSMutableArray<NSString *> *lines = [NSMutableArray array];
     NSString *lower = needle.lowercaseString;
@@ -724,6 +861,49 @@ static void SPKDevTourHandle(void) {
     [NSFileManager.defaultManager removeItemAtURL:SPKDevTourFile(@"spk-dev-tour.out") error:nil];
     if ([command isEqualToString:@"list"]) {
         SPKDevTourFinish(SPKDevTourList());
+    } else if ([command hasPrefix:@"hit "]) {
+        // The view a touch at window point "x y" lands on.
+        NSArray<NSString *> *parts = [[command substringFromIndex:4] componentsSeparatedByString:@" "];
+        UIWindow *window = SPKDevTourWindow();
+        CGPoint point = CGPointMake(parts.firstObject.doubleValue, parts.lastObject.doubleValue);
+        UIView *hit = [window hitTest:point withEvent:nil];
+        NSMutableArray<NSString *> *chain = [NSMutableArray array];
+        for (UIView *view = hit; view && chain.count < 6; view = view.superview)
+            [chain addObject:NSStringFromClass(view.class)];
+        SPKDevTourFinish([chain componentsJoinedByString:@" < "]);
+    } else if ([command isEqualToString:@"tallbar"]) {
+        // Instagram's tall navigation bar: where its trailing items go.
+        NSMutableArray<NSString *> *lines = [NSMutableArray array];
+        Class tallClass = NSClassFromString(@"IGTallNavigationBarView");
+        NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:SPKDevTourWindow()];
+        for (NSUInteger i = 0; i < queue.count && i < 20000; i++) {
+            UIView *view = queue[i];
+            [queue addObjectsFromArray:view.subviews];
+            if (!tallClass || ![view isKindOfClass:tallClass])
+                continue;
+            id bar = [SPKUtils getIvarForObj:view name:"_navigationBar"];
+            UINavigationItem *item = [SPKUtils getIvarForObj:view name:"_navigationItem"];
+            [lines addObject:[NSString stringWithFormat:@"tall %@ bar=%@", NSStringFromCGRect(view.frame), NSStringFromClass([bar class])]];
+            for (NSString *name in @[ @"_trailingButtonsInVerticalBar", @"_backButtonInVerticalBar" ]) {
+                Ivar ivar = bar ? class_getInstanceVariable([bar class], name.UTF8String) : NULL;
+                if (ivar)
+                    [lines addObject:[NSString stringWithFormat:@"  %@=%d", name, *(BOOL *)((__bridge void *)bar + ivar_getOffset(ivar))]];
+            }
+            for (NSString *selName in @[ @"isPresentedInVerticalBar", @"allowsVerticalBarButtonItems" ]) {
+                SEL sel = NSSelectorFromString(selName);
+                if ([bar respondsToSelector:sel])
+                    [lines addObject:[NSString stringWithFormat:@"  %@=%d", selName, ((BOOL (*)(id, SEL))objc_msgSend)(bar, sel)]];
+            }
+            for (UIBarButtonItem *bbi in item.rightBarButtonItems)
+                [lines addObject:[NSString stringWithFormat:@"  item R %@", SPKDevTourDescribeBarItem(bbi)]];
+            SEL trailing = NSSelectorFromString(@"ig_headerTrailingBarButtonItems");
+            if ([bar respondsToSelector:trailing])
+                for (UIBarButtonItem *bbi in ((NSArray * (*)(id, SEL)) objc_msgSend)(bar, trailing))
+                    [lines addObject:[NSString stringWithFormat:@"  trailing %@", SPKDevTourDescribeBarItem(bbi)]];
+        }
+        SPKDevTourFinish(lines.count ? [lines componentsJoinedByString:@"\n"] : @"none");
+    } else if ([command isEqualToString:@"navitems"]) {
+        SPKDevTourFinish(SPKDevTourNavItems());
     } else if ([command isEqualToString:@"chrome"]) {
         SPKDevTourFinish(SPKDevTourChrome());
     } else if ([command hasPrefix:@"story "]) {
@@ -774,6 +954,62 @@ static void SPKDevTourHandle(void) {
         // Sets the app's pasteboard directly; the host clipboard sync overwrites simctl pbcopy.
         UIPasteboard.generalPasteboard.string = [command substringFromIndex:5];
         SPKDevTourFinish([NSString stringWithFormat:@"ok %@", UIPasteboard.generalPasteboard.string]);
+    } else if ([command isEqualToString:@"adaptive"]) {
+        // Every argument-free BOOL class method of Instagram's adaptive layout classes.
+        NSMutableArray<NSString *> *lines = [NSMutableArray array];
+        for (NSString *name in @[ @"_TtC22IGAdaptivePresentation22IGAdaptivePresentation", @"_TtC22IGAdaptivePresentation19IGAdaptiveStatusBar" ]) {
+            Class cls = NSClassFromString(name);
+            unsigned int count = 0;
+            Method *methods = cls ? class_copyMethodList(object_getClass(cls), &count) : NULL;
+            for (unsigned int i = 0; i < count; i++) {
+                const char *type = method_getTypeEncoding(methods[i]);
+                SEL sel = method_getName(methods[i]);
+                if (!type || type[0] != 'B' || method_getNumberOfArguments(methods[i]) != 2)
+                    continue;
+                BOOL value = ((BOOL (*)(id, SEL))objc_msgSend)(cls, sel);
+                Dl_info info = {0};
+                dladdr((const void *)method_getImplementation(methods[i]), &info);
+                [lines addObject:[NSString stringWithFormat:@"%@ %@ = %d imp=+0x%lx", [name substringFromIndex:24], NSStringFromSelector(sel), value,
+                                                            (unsigned long)((uintptr_t)method_getImplementation(methods[i]) - (uintptr_t)info.dli_fbase)]];
+            }
+            free(methods);
+        }
+        int (*sdkCheck)(void) = (int (*)(void))dlsym(RTLD_DEFAULT, "METAIsIOS27_1SDKAndRuntime");
+        [lines addObject:[NSString stringWithFormat:@"METAIsIOS27_1SDKAndRuntime = %d", sdkCheck ? sdkCheck() : -1]];
+        for (NSString *key in @[ @"kern.osproductversion", @"kern.iossupportversion", @"kern.osversion" ]) {
+            char buffer[64] = {0};
+            size_t length = sizeof(buffer);
+            int rc = sysctlbyname(key.UTF8String, buffer, &length, NULL, 0);
+            [lines addObject:[NSString stringWithFormat:@"%@ rc=%d '%s'", key, rc, buffer]];
+        }
+        [lines addObject:[NSString stringWithFormat:@"SIMULATOR_RUNTIME_VERSION=%s", getenv("SIMULATOR_RUNTIME_VERSION") ?: "(null)"]];
+        SPKDevTourFinish([lines componentsJoinedByString:@"\n"]);
+    } else if ([command isEqualToString:@"mc"]) {
+        FOUNDATION_EXPORT NSString *SPKDevMobileConfigProbeDump(void);
+        SPKDevTourFinish(SPKDevMobileConfigProbeDump());
+    } else if ([command hasPrefix:@"mcset "]) {
+        // mcset <hex id> <value|clear>
+        FOUNDATION_EXPORT NSString *SPKDevMobileConfigProbeSet(NSString *, NSNumber *);
+        NSArray<NSString *> *parts = [[command substringFromIndex:6] componentsSeparatedByString:@" "];
+        if (parts.count != 2) {
+            SPKDevTourFinish(@"error usage: mcset <hex id> <value|clear>");
+            return;
+        }
+        SPKDevTourFinish(SPKDevMobileConfigProbeSet(parts[0], [parts[1] isEqualToString:@"clear"] ? nil : @(parts[1].longLongValue)));
+    } else if ([command isEqualToString:@"tabs"]) {
+        SPKDevTourFinish(SPKDevTourTabs());
+    } else if ([command hasPrefix:@"tabsel "]) {
+        // Selects the native tab at an index the way a finger on it does.
+        UITabBarController *system = SPKDevTourNativeTabBarController();
+        NSUInteger index = (NSUInteger)[[command substringFromIndex:7] integerValue];
+        NSArray<UITabBarItem *> *items = system.tabBar.items;
+        SEL click = NSSelectorFromString(@"_tabBarItemClicked:");
+        if (index >= items.count || ![system respondsToSelector:click]) {
+            SPKDevTourFinish(@"error no such native tab");
+            return;
+        }
+        ((void (*)(id, SEL, id))objc_msgSend)(system, click, items[index]);
+        SPKDevTourFinish([NSString stringWithFormat:@"ok %@", items[index].title]);
     } else if ([command isEqualToString:@"tabtap"]) {
         // Re-taps the selected tab of the native tab bar the way UIKit's own
         // item click does, which is what a finger on the selected tab sends.
@@ -794,14 +1030,17 @@ static void SPKDevTourHandle(void) {
         }
         ((void (*)(id, SEL, id))objc_msgSend)(native, click, item);
         SPKDevTourFinish([NSString stringWithFormat:@"ok %@", item.title]);
-    } else if ([command isEqualToString:@"tabhold explore"]) {
-        // Drives the native tab bar's hold on Explore the way its coordinator
-        // does: asks whether the tab can be held, then sends the began phase.
+    } else if ([command hasPrefix:@"tabhold "]) {
+        // tabhold <explore|FEED|CLIPS|DIRECT|SEARCH|PROFILE>: drives the native
+        // tab bar's hold the way its coordinator does: asks whether the tab can
+        // be held, then sends the began and ended phases.
         IGTabBarController *tabs = SPKDevTourTabBarController();
-        id explore = tabs ? [SPKUtils getIvarForObj:tabs name:"_exploreButton"] : nil;
+        NSString *wanted = [command substringFromIndex:8].uppercaseString;
+        if ([wanted isEqualToString:@"EXPLORE"])
+            wanted = @"SEARCH";
         id surface = nil;
         for (id candidate in (NSArray *)[SPKUtils getIvarForObj:tabs name:"_tabBarSurfaces"]) {
-            if ([tabs respondsToSelector:@selector(_buttonForTabBarSurface:)] && [tabs _buttonForTabBarSurface:candidate] == explore)
+            if ([[candidate tabStringFromSurfaceIntent] isEqualToString:wanted])
                 surface = candidate;
         }
         SEL identifierSelector = NSSelectorFromString(@"_nativeIdentifierForSurface:");
@@ -809,13 +1048,16 @@ static void SPKDevTourHandle(void) {
                             ? ((id (*)(id, SEL, id))objc_msgSend)(tabs, identifierSelector, surface)
                             : nil;
         if (!identifier) {
-            SPKDevTourFinish(@"error no native Explore tab");
+            SPKDevTourFinish(@"error no such native tab");
             return;
         }
+        NSString *action = [tabs _nativeLongPressAccessibilityActionNameForSurface:surface];
         BOOL canHold = [tabs nativeTabBarControllerCoordinator:nil canLongPressIdentifier:identifier];
-        if (canHold)
+        if (canHold) {
             [tabs nativeTabBarControllerCoordinator:nil didUpdateLongPressIdentifier:identifier phase:0];
-        SPKDevTourFinish([NSString stringWithFormat:@"ok identifier=%@ canHold=%d", identifier, canHold]);
+            [tabs nativeTabBarControllerCoordinator:nil didUpdateLongPressIdentifier:identifier phase:2];
+        }
+        SPKDevTourFinish([NSString stringWithFormat:@"ok identifier=%@ canHold=%d action=%@", identifier, canHold, action]);
     } else if ([command isEqualToString:@"back"]) {
         // Pops the selected tab's navigation stack, as its back button would.
         // The deepest navigation controller with something to pop: Direct
