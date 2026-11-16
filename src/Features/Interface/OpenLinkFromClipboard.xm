@@ -139,6 +139,11 @@ static NSURL *SPKNormalizedInstagramClipboardURL(NSString *raw) {
     if (trimmed.length == 0)
         return nil;
     if (![trimmed containsString:@"://"]) {
+        // Without a scheme only a host-shaped string counts as a link. A copied
+        // handle such as "@instagram" or "instagramfan" is left to the username
+        // shortcut instead of being read as a host.
+        if ([trimmed hasPrefix:@"@"] || ![trimmed containsString:@"."])
+            return nil;
         trimmed = [@"https://" stringByAppendingString:trimmed];
     }
 
