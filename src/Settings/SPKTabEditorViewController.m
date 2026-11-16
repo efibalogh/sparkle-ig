@@ -808,13 +808,17 @@ static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
     y += chipHeight + 4.0;
 
     BOOL column = [self previewUsesColumn];
-    CGFloat previewHeight = [self usesClassicLayout] && ![self previewIsRegularWidth] ? 212.0 : 168.0;
-    if (column)
-        previewHeight = [SPKTabBarColumnPreviewView preferredHeightForItemCount:MAX(self.previewItemCount, (NSUInteger)1)
-                                                                    showsLegend:self.previewShowsLegend];
     self.previewView.hidden = column;
     self.columnPreviewView.hidden = !column;
-    (column ? (UIView *)self.columnPreviewView : (UIView *)self.previewView).frame = CGRectMake(x, y, width, previewHeight);
+    CGFloat previewHeight;
+    if (column) {
+        CGRect frame = [self columnPreviewFrameInAvailableWidth:width];
+        self.columnPreviewView.frame = CGRectOffset(frame, x, y);
+        previewHeight = CGRectGetHeight(frame);
+    } else {
+        previewHeight = [self usesClassicLayout] && ![self previewIsRegularWidth] ? 212.0 : 168.0;
+        self.previewView.frame = CGRectMake(x, y, width, previewHeight);
+    }
     y += previewHeight;
 
     self.layoutCaption.frame = CGRectMake(x + margin, y, captionWidth, captionSize.height);
@@ -825,6 +829,31 @@ static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
         self.headerContainer.frame = frame;
         self.tableView.tableHeaderView = self.headerContainer;
     }
+}
+
+// The column preview is a miniature of the window it describes, so its card takes
+// the window's aspect ratio: portrait when folded, landscape when open. It is
+// as tall as its contents need, grows toward the window's shape up to about half
+// the window's height so the rows stay in reach, and is centered when that
+// leaves it narrower than the table.
+- (CGRect)columnPreviewFrameInAvailableWidth:(CGFloat)availableWidth {
+    CGFloat const horizontalInset = 32.0; // The card sits 16pt inside the view on each side.
+    CGFloat const verticalInset = 20.0;   // 4pt above the card, 16pt below.
+    CGFloat contentHeight = [SPKTabBarColumnPreviewView preferredHeightForItemCount:MAX(self.previewItemCount, (NSUInteger)1)
+                                                                        showsLegend:self.previewShowsLegend];
+    CGFloat minCardHeight = contentHeight - verticalInset;
+    CGFloat maxCardWidth = availableWidth - horizontalInset;
+
+    CGSize window = self.view.window ? self.view.window.bounds.size : self.view.bounds.size;
+    if (maxCardWidth <= 0.0 || window.width <= 0.0 || window.height <= 0.0)
+        return CGRectMake(0.0, 0.0, availableWidth, contentHeight);
+    CGFloat aspect = window.width / window.height;
+
+    CGFloat cardHeight = MIN(maxCardWidth / aspect, window.height * 0.5);
+    cardHeight = MAX(cardHeight, minCardHeight);
+    CGFloat cardWidth = MIN(maxCardWidth, round(cardHeight * aspect));
+    CGFloat viewWidth = cardWidth + horizontalInset;
+    return CGRectMake(round((availableWidth - viewWidth) / 2.0), 0.0, viewWidth, round(cardHeight) + verticalInset);
 }
 
 - (NSString *)layoutCaptionText {
