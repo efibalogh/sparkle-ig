@@ -968,6 +968,10 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 - (void)rebuildBottomToolbarItems {
+    // Bare preview mode never creates the toolbar items (setupBottomBar returns
+    // early), so there is nothing to lay out and the nil items would throw.
+    if (_previewOnly)
+        return;
     NSMutableArray<UIBarButtonItem *> *primary = [NSMutableArray array];
     NSMutableArray<UIBarButtonItem *> *editing = [NSMutableArray array];
     NSMutableArray<UIBarButtonItem *> *trailing = [NSMutableArray array];
