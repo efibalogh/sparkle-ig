@@ -4,7 +4,9 @@
 
 #import "../../App/SPKStabilityGuard.h"
 #import "../../InstagramHeaders.h"
+#import "../../Settings/SPKPreferenceAvailability.h"
 #import "../../Settings/SPKPreferences.h"
+#import "SPKNativeTabBar.h"
 #import "../../Shared/UI/SPKReplayedLongPressGesture.h"
 #import "../../Shared/i18n/SPKStrings.h"
 #import "../../Utils.h"
@@ -115,13 +117,174 @@ static void hook_initializeViewControllers(id self, SEL _cmd) {
     orig_initializeViewControllers(self, _cmd);
 }
 
+// MARK: - Live answer
+
+// Containment only: the tab bar controller is never inside a presentation, and
+// walking presented controllers from every child re-walks the same subtree.
+static id SPKNativeTabBarFindController(UIViewController *controller, NSUInteger depth) {
+    if (!controller || depth > 12)
+        return nil;
+    if ([controller isKindOfClass:objc_getClass("IGTabBarController")])
+        return controller;
+    for (UIViewController *child in controller.childViewControllers) {
+        id match = SPKNativeTabBarFindController(child, depth + 1);
+        if (match)
+            return match;
+    }
+    return nil;
+}
+
+static id SPKNativeTabBarLiveController(void) {
+    for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+        if (![scene isKindOfClass:[UIWindowScene class]])
+            continue;
+        for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+            id controller = SPKNativeTabBarFindController(window.rootViewController, 0);
+            if (controller)
+                return controller;
+        }
+    }
+    return nil;
+}
+
+// Instagram's regular-width order includes the Activity (subtype 4) and Create
+// (subtype 3) launchers only where its header items cannot move into the side
+// column, so this is asked of Instagram's own ordering, never of the OS.
+BOOL SPKSystemTabBarRegularWidthAddsInstagramTabs(void) {
+    id controller = SPKNativeTabBarLiveController();
+    SEL ordered = NSSelectorFromString(@"_nativeOrderedSurfacesForHorizontalSizeClass:");
+    if (!SPKNativeTabBarIsActive(controller) || ![controller respondsToSelector:ordered])
+        return NO;
+    NSArray *surfaces = ((id (*)(id, SEL, NSInteger))objc_msgSend)(controller, ordered, UIUserInterfaceSizeClassRegular);
+    if (![surfaces isKindOfClass:[NSArray class]])
+        return NO;
+    for (id surface in surfaces) {
+        @try {
+            NSUInteger subtype = [[surface valueForKey:@"_subtype"] unsignedIntegerValue];
+            if (subtype == 3 || subtype == 4)
+                return YES;
+        } @catch (__unused NSException *exception) {
+        }
+    }
+    return NO;
+}
+
+// Whether the last tab bar Instagram built was the system one. Instagram picks
+// it on its own on some devices, and launch code that runs before the tab bar
+// controller exists (the tab ordering read) still needs that answer.
+static NSString *const kSPKSystemTabBarLastSeenKey = @"spk_system_tab_bar_last_seen";
+
+static void SPKRememberSystemTabBarInUse(BOOL inUse) {
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    if ([defaults boolForKey:kSPKSystemTabBarLastSeenKey] != inUse)
+        [defaults setBool:inUse forKey:kSPKSystemTabBarLastSeenKey];
+}
+
+// Whether the system tab bar stands as a column down a side of the window, the
+// shape a foldable iPhone gets. Read from the live tab group's proportions;
+// before it exists, from the last one seen.
+static NSString *const kSPKSystemTabBarColumnLastSeenKey = @"spk_system_tab_bar_column_last_seen";
+
+BOOL SPKSystemTabBarRunsAsColumn(void) {
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    UIViewController *controller = SPKNativeTabBarLiveController();
+    if (!controller)
+        return [defaults boolForKey:kSPKSystemTabBarColumnLastSeenKey];
+    if (!SPKNativeTabBarIsActive(controller)) {
+        if ([defaults boolForKey:kSPKSystemTabBarColumnLastSeenKey])
+            [defaults setBool:NO forKey:kSPKSystemTabBarColumnLastSeenKey];
+        return NO;
+    }
+    UIView *platter = nil;
+    NSMutableArray<UIView *> *queue = controller.isViewLoaded ? [NSMutableArray arrayWithObject:controller.view] : [NSMutableArray array];
+    for (NSUInteger i = 0; i < queue.count && i < 800; i++) {
+        if ([NSStringFromClass(queue[i].class) containsString:@"TabBarItemPlatterView"]) {
+            platter = queue[i];
+            break;
+        }
+        [queue addObjectsFromArray:queue[i].subviews];
+    }
+    if (!platter || CGRectIsEmpty(platter.bounds))
+        return [defaults boolForKey:kSPKSystemTabBarColumnLastSeenKey];
+    BOOL column = CGRectGetHeight(platter.bounds) > CGRectGetWidth(platter.bounds) * 2.0;
+    if ([defaults boolForKey:kSPKSystemTabBarColumnLastSeenKey] != column)
+        [defaults setBool:column forKey:kSPKSystemTabBarColumnLastSeenKey];
+    return column;
+}
+
+BOOL SPKSystemTabBarInUse(void) {
+    id controller = SPKNativeTabBarLiveController();
+    if (controller) {
+        BOOL inUse = SPKNativeTabBarIsActive(controller);
+        SPKRememberSystemTabBarInUse(inUse);
+        return inUse;
+    }
+    if (SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar) && SPKNativeTabBarPreferenceEnabled())
+        return YES;
+    return [NSUserDefaults.standardUserDefaults boolForKey:kSPKSystemTabBarLastSeenKey];
+}
+
+// MARK: - Surfaces and tabs
+//
+// The native path builds its UITabs from _tabBarSurfaces (regular width) and
+// _nativeCompactTabBarSurfaces (compact width) each time it installs or updates
+// the bar, so Navigation filters and orders both lists first, then relabels the
+// Saved tab, whose UITab title comes from the surface rather than the button.
+
+extern "C" void SPKNavigationPrepareNativeTabBarSurfaces(id controller);
+extern "C" void SPKNavigationDecorateNativeTabs(id controller);
+extern "C" BOOL SPKNavigationSingleTabHidesTabBar(void);
+extern "C" BOOL SPKNavigationProfileTabCarriesSaved(void);
+
+static BOOL (*orig_installOrUpdateNative)(id, SEL);
+static BOOL hook_installOrUpdateNative(id self, SEL _cmd) {
+    if (SPKStabilityGuardIsSafeStartupMode())
+        return orig_installOrUpdateNative(self, _cmd);
+    SPKRememberSystemTabBarInUse(SPKNativeTabBarIsActive(self));
+    SPKNavigationPrepareNativeTabBarSurfaces(self);
+    BOOL result = orig_installOrUpdateNative(self, _cmd);
+    SPKNavigationDecorateNativeTabs(self);
+    return result;
+}
+
+// The coordinator also rebuilds its UITabs without the controller when the
+// width class changes (the compact projection on fold and unfold) and when
+// Instagram swaps descriptors, so the Saved title is put back after those too.
+static void (*orig_setUsesCompactProjection)(id, SEL, BOOL, id);
+static BOOL hook_setUsesCompactProjection(id self, SEL _cmd, BOOL compact, id fallback) {
+    BOOL result = ((BOOL (*)(id, SEL, BOOL, id))orig_setUsesCompactProjection)(self, _cmd, compact, fallback);
+    if (!SPKStabilityGuardIsSafeStartupMode())
+        SPKNavigationDecorateNativeTabs(SPKNativeTabBarLiveController());
+    return result;
+}
+
+static void (*orig_replaceDescriptors)(id, SEL, id, id);
+static BOOL hook_replaceDescriptors(id self, SEL _cmd, id descriptors, id fallback) {
+    BOOL result = ((BOOL (*)(id, SEL, id, id))orig_replaceDescriptors)(self, _cmd, descriptors, fallback);
+    if (!SPKStabilityGuardIsSafeStartupMode())
+        SPKNavigationDecorateNativeTabs(SPKNativeTabBarLiveController());
+    return result;
+}
+
+// The profile tab draws the account photo over its glyph. While that slot
+// carries Saved the photo would cover the Saved glyph, so it is not fetched.
+static void (*orig_updateNativeProfileTabPhoto)(id, SEL);
+static void hook_updateNativeProfileTabPhoto(id self, SEL _cmd) {
+    if (!SPKStabilityGuardIsSafeStartupMode() && SPKNavigationProfileTabCarriesSaved())
+        return;
+    orig_updateNativeProfileTabPhoto(self, _cmd);
+}
+
 // MARK: - Visibility
 //
-// Chrome helpers on the native style turn their "show the bar" state into
-// -setTabBarVisibilityHidden:NO. Instagram drops that request while the visible
-// screen hides the bar (a reel opened from Direct or from a feed post), but
-// only behind IGAdaptivePresentation.isEnabled, which only foldables turn on,
-// so it is dropped here with Instagram's own predicate.
+// Two reasons to keep the bar down, both answered here so one hook owns the
+// setter. Single-tab mode hides the bar for good: hiding the bar view alone
+// leaves UIKit's floating tab up, and Instagram asks to show it again after
+// every pop. And chrome helpers on the native style turn their "show the bar"
+// state into -setTabBarVisibilityHidden:NO even while the visible screen hides
+// the bar (a reel opened from Direct or from a feed post). Instagram drops that
+// request itself only behind IGAdaptivePresentation.isEnabled, which only
+// foldables turn on, so it is dropped here with Instagram's own predicate.
 
 static BOOL SPKNativeTabBarContentHidesBar(id controller) {
     if (![controller respondsToSelector:@selector(selectedViewController)] ||
@@ -133,41 +296,70 @@ static BOOL SPKNativeTabBarContentHidesBar(id controller) {
 
 static void (*orig_setTabBarVisibilityHidden)(id, SEL, BOOL, BOOL);
 static void hook_setTabBarVisibilityHidden(id self, SEL _cmd, BOOL hidden, BOOL animated) {
-    if (!hidden && SPKNativeTabBarIsActive(self) && SPKNativeTabBarContentHidesBar(self))
-        return;
+    if (!hidden && !SPKStabilityGuardIsSafeStartupMode()) {
+        if (SPKNavigationSingleTabHidesTabBar())
+            hidden = YES;
+        else if (SPKNativeTabBarIsActive(self) && SPKNativeTabBarContentHidesBar(self))
+            return;
+    }
     orig_setTabBarVisibilityHidden(self, _cmd, hidden, animated);
 }
 
-// MARK: - Explore hold
+// MARK: - Tab holds
 //
-// The custom bar's Explore button carries a long press (search, and the
-// clipboard link and username shortcuts that hook the same handler). The
-// native bar only attaches a hold to tabs whose descriptor names a long-press
-// action, and Explore has none outside a server gate, so it gets one here and
-// the coordinator's phases drive the custom bar's handler with a stand-in
-// recognizer.
+// The native bar draws system tabs, so the gestures Sparkle and Instagram put
+// on the custom bar's buttons never see a touch. The coordinator only attaches
+// a hold to tabs whose descriptor names a long-press action (Instagram's own:
+// Home and Profile), asks the controller whether a tab can be held, and then
+// reports the press phases. Two Sparkle holds ride on that: the Settings and
+// Gallery shortcuts on their host tabs, which take precedence as they do on
+// the custom bar, and the Explore hold (search, plus the clipboard link and
+// username shortcuts that hook the custom bar's Explore handler), replayed
+// into that handler with a stand-in recognizer.
+
+extern "C" NSInteger SPKNativeTabShortcutForSurface(id controller, id surface);
+extern "C" NSString *SPKNativeTabShortcutActionName(NSInteger shortcut);
+extern "C" void SPKPerformNativeTabShortcut(id controller, NSInteger shortcut);
+
+static id SPKNativeTabBarSurfaceForIdentifier(id controller, id identifier) {
+    if (!identifier || ![controller respondsToSelector:@selector(_surfaceForNativeIdentifier:)])
+        return nil;
+    return [controller _surfaceForNativeIdentifier:identifier];
+}
 
 static BOOL SPKNativeTabBarSurfaceIsExplore(id controller, id surface) {
-    if (!surface || ![controller respondsToSelector:@selector(_buttonForTabBarSurface:)])
+    if (!surface || ![controller respondsToSelector:@selector(_buttonForTabBarSurface:)] ||
+        ![controller respondsToSelector:@selector(_exploreButtonLongPressed:)])
         return NO;
     id explore = [SPKUtils getIvarForObj:controller name:"_exploreButton"];
     return explore && [controller _buttonForTabBarSurface:surface] == explore;
 }
 
 // Foldables get the native bar from Instagram itself, with no Sparkle pref
-// involved, so the hold is offered whenever the bar is native and something
-// Sparkle owns wants it: the forced bar (to keep search on hold) or the
-// clipboard link shortcut.
-static BOOL SPKNativeTabBarExploreHoldWanted(id controller) {
-    if (!SPKNativeTabBarIsActive(controller))
-        return NO;
+// involved, so the hold is offered whenever something Sparkle owns wants it:
+// the forced bar (to keep search on hold) or the clipboard link shortcut.
+static BOOL SPKNativeTabBarExploreHoldWanted(void) {
     return SPKNativeTabBarPreferenceEnabled() || [SPKUtils getBoolPref:@"interface_open_clipboard_link"];
 }
 
-static BOOL SPKNativeTabBarIdentifierIsExplore(id controller, id identifier) {
-    if (!identifier || ![controller respondsToSelector:@selector(_surfaceForNativeIdentifier:)])
-        return NO;
-    return SPKNativeTabBarSurfaceIsExplore(controller, [controller _surfaceForNativeIdentifier:identifier]);
+typedef NS_ENUM(NSInteger, SPKNativeTabHold) {
+    SPKNativeTabHoldInstagram = 0,
+    SPKNativeTabHoldShortcut,
+    SPKNativeTabHoldExplore,
+};
+
+static SPKNativeTabHold SPKNativeTabHoldForSurface(id controller, id surface, NSInteger *shortcut) {
+    if (!surface || SPKStabilityGuardIsSafeStartupMode() || !SPKNativeTabBarIsActive(controller))
+        return SPKNativeTabHoldInstagram;
+    NSInteger found = SPKNativeTabShortcutForSurface(controller, surface);
+    if (found != 0) {
+        if (shortcut)
+            *shortcut = found;
+        return SPKNativeTabHoldShortcut;
+    }
+    if (SPKNativeTabBarExploreHoldWanted() && SPKNativeTabBarSurfaceIsExplore(controller, surface))
+        return SPKNativeTabHoldExplore;
+    return SPKNativeTabHoldInstagram;
 }
 
 // Coordinator long-press phases, as Instagram's own handler reads them.
@@ -188,42 +380,48 @@ static UIGestureRecognizerState SPKNativeTabBarGestureStateForPhase(NSInteger ph
 
 static NSString *(*orig_longPressActionName)(id, SEL, id);
 static NSString *hook_longPressActionName(id self, SEL _cmd, id surface) {
-    NSString *name = orig_longPressActionName(self, _cmd, surface);
-    if (name.length == 0 && SPKNativeTabBarExploreHoldWanted(self) && SPKNativeTabBarSurfaceIsExplore(self, surface))
-        return SPKL(@"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION");
-    return name;
+    NSInteger shortcut = 0;
+    switch (SPKNativeTabHoldForSurface(self, surface, &shortcut)) {
+    case SPKNativeTabHoldShortcut:
+        return SPKNativeTabShortcutActionName(shortcut);
+    case SPKNativeTabHoldExplore: {
+        NSString *name = orig_longPressActionName(self, _cmd, surface);
+        return name.length > 0 ? name : SPKL(@"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION");
+    }
+    case SPKNativeTabHoldInstagram:
+        break;
+    }
+    return orig_longPressActionName(self, _cmd, surface);
 }
 
 static BOOL (*orig_canLongPress)(id, SEL, id, id);
 static BOOL hook_canLongPress(id self, SEL _cmd, id coordinator, id identifier) {
-    if (SPKNativeTabBarExploreHoldWanted(self) && SPKNativeTabBarIdentifierIsExplore(self, identifier))
+    if (SPKNativeTabHoldForSurface(self, SPKNativeTabBarSurfaceForIdentifier(self, identifier), NULL) != SPKNativeTabHoldInstagram)
         return YES;
     return orig_canLongPress(self, _cmd, coordinator, identifier);
 }
 
 static void (*orig_didUpdateLongPress)(id, SEL, id, id, NSInteger);
 static void hook_didUpdateLongPress(id self, SEL _cmd, id coordinator, id identifier, NSInteger phase) {
-    if (!SPKNativeTabBarExploreHoldWanted(self) || !SPKNativeTabBarIdentifierIsExplore(self, identifier) ||
-        ![self respondsToSelector:@selector(_exploreButtonLongPressed:)]) {
-        orig_didUpdateLongPress(self, _cmd, coordinator, identifier, phase);
+    NSInteger shortcut = 0;
+    switch (SPKNativeTabHoldForSurface(self, SPKNativeTabBarSurfaceForIdentifier(self, identifier), &shortcut)) {
+    case SPKNativeTabHoldShortcut:
+        // The press belongs to Sparkle, so the tab's own hold action (the
+        // account switcher on Profile) never sees any of its phases. Phase 0 is
+        // the press being recognized; the later ones belong to the same press.
+        if (phase == 0)
+            SPKPerformNativeTabShortcut(self, shortcut);
+        return;
+    case SPKNativeTabHoldExplore: {
+        SPKReplayedLongPressGesture *gesture = [[SPKReplayedLongPressGesture alloc] initWithTarget:nil action:NULL];
+        gesture.spk_state = SPKNativeTabBarGestureStateForPhase(phase);
+        [self _exploreButtonLongPressed:gesture];
         return;
     }
-    SPKReplayedLongPressGesture *gesture = [[SPKReplayedLongPressGesture alloc] initWithTarget:nil action:NULL];
-    gesture.spk_state = SPKNativeTabBarGestureStateForPhase(phase);
-    [self _exploreButtonLongPressed:gesture];
-}
-
-static void SPKInstallNativeTabBarExploreHoldHooks(Class controllerClass) {
-    SEL actionName = @selector(_nativeLongPressAccessibilityActionNameForSurface:);
-    SEL canLongPress = @selector(nativeTabBarControllerCoordinator:canLongPressIdentifier:);
-    SEL didUpdate = @selector(nativeTabBarControllerCoordinator:didUpdateLongPressIdentifier:phase:);
-    if (!class_getInstanceMethod(controllerClass, actionName) || !class_getInstanceMethod(controllerClass, canLongPress) ||
-        !class_getInstanceMethod(controllerClass, didUpdate) || !class_getInstanceMethod(controllerClass, @selector(_surfaceForNativeIdentifier:)) ||
-        !class_getInstanceMethod(controllerClass, @selector(_exploreButtonLongPressed:)))
-        return;
-    MSHookMessageEx(controllerClass, actionName, (IMP)hook_longPressActionName, (IMP *)&orig_longPressActionName);
-    MSHookMessageEx(controllerClass, canLongPress, (IMP)hook_canLongPress, (IMP *)&orig_canLongPress);
-    MSHookMessageEx(controllerClass, didUpdate, (IMP)hook_didUpdateLongPress, (IMP *)&orig_didUpdateLongPress);
+    case SPKNativeTabHoldInstagram:
+        break;
+    }
+    orig_didUpdateLongPress(self, _cmd, coordinator, identifier, phase);
 }
 
 static void (*orig_fallBackToLegacy)(id, SEL);
@@ -232,30 +430,65 @@ static void hook_fallBackToLegacy(id self, SEL _cmd) {
     orig_fallBackToLegacy(self, _cmd);
 }
 
-static void SPKInstallNativeTabBarVisibilityHooks(Class controllerClass) {
-    SEL setHidden = NSSelectorFromString(@"setTabBarVisibilityHidden:animated:");
-    if (class_getInstanceMethod(controllerClass, setHidden))
-        MSHookMessageEx(controllerClass, setHidden, (IMP)hook_setTabBarVisibilityHidden, (IMP *)&orig_setTabBarVisibilityHidden);
-    SEL fallback = NSSelectorFromString(@"_fallBackToLegacyTabBarAfterNativeCoordinatorFailure");
-    if (class_getInstanceMethod(controllerClass, fallback))
-        MSHookMessageEx(controllerClass, fallback, (IMP)hook_fallBackToLegacy, (IMP *)&orig_fallBackToLegacy);
+// MARK: - Installers
+
+static void SPKNativeTabBarHookIfPresent(Class cls, NSString *selectorName, IMP replacement, IMP *original) {
+    SEL selector = NSSelectorFromString(selectorName);
+    if (class_getInstanceMethod(cls, selector))
+        MSHookMessageEx(cls, selector, replacement, original);
+}
+
+void SPKInstallNativeTabBarCoordinatorHooks(void) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // IG 410 and every build before the native path stop here: nothing
+        // below exists there, and the custom bar's own hooks cover it.
+        Class controllerClass = objc_getClass("IGTabBarController");
+        if (!controllerClass || !class_getInstanceVariable(controllerClass, "_usesNativeTabBarController"))
+            return;
+
+        SPKNativeTabBarHookIfPresent(controllerClass, @"_installOrUpdateNativeTabBarController", (IMP)hook_installOrUpdateNative,
+                                     (IMP *)&orig_installOrUpdateNative);
+        SPKNativeTabBarHookIfPresent(controllerClass, @"_updateNativeProfileTabPhoto", (IMP)hook_updateNativeProfileTabPhoto,
+                                     (IMP *)&orig_updateNativeProfileTabPhoto);
+        SPKNativeTabBarHookIfPresent(controllerClass, @"setTabBarVisibilityHidden:animated:", (IMP)hook_setTabBarVisibilityHidden,
+                                     (IMP *)&orig_setTabBarVisibilityHidden);
+        SPKNativeTabBarHookIfPresent(controllerClass, @"_fallBackToLegacyTabBarAfterNativeCoordinatorFailure", (IMP)hook_fallBackToLegacy,
+                                     (IMP *)&orig_fallBackToLegacy);
+
+        Class coordinatorClass = objc_getClass("_TtC35IGNativeTabBarControllerCoordinator35IGNativeTabBarControllerCoordinator");
+        if (coordinatorClass) {
+            SPKNativeTabBarHookIfPresent(coordinatorClass, @"setUsesCompactTabProjection:fallbackSelectedIdentifier:",
+                                         (IMP)hook_setUsesCompactProjection, (IMP *)&orig_setUsesCompactProjection);
+            SPKNativeTabBarHookIfPresent(coordinatorClass, @"replaceDescriptors:fallbackSelectedIdentifier:", (IMP)hook_replaceDescriptors,
+                                         (IMP *)&orig_replaceDescriptors);
+        }
+
+        SEL actionName = @selector(_nativeLongPressAccessibilityActionNameForSurface:);
+        SEL canLongPress = @selector(nativeTabBarControllerCoordinator:canLongPressIdentifier:);
+        SEL didUpdate = @selector(nativeTabBarControllerCoordinator:didUpdateLongPressIdentifier:phase:);
+        if (class_getInstanceMethod(controllerClass, actionName) && class_getInstanceMethod(controllerClass, canLongPress) &&
+            class_getInstanceMethod(controllerClass, didUpdate) &&
+            class_getInstanceMethod(controllerClass, @selector(_surfaceForNativeIdentifier:))) {
+            MSHookMessageEx(controllerClass, actionName, (IMP)hook_longPressActionName, (IMP *)&orig_longPressActionName);
+            MSHookMessageEx(controllerClass, canLongPress, (IMP)hook_canLongPress, (IMP *)&orig_canLongPress);
+            MSHookMessageEx(controllerClass, didUpdate, (IMP)hook_didUpdateLongPress, (IMP *)&orig_didUpdateLongPress);
+        }
+    });
 }
 
 // iOS 27 UIKit API the native path messages from Objective-C. iOS 26 lacks it,
 // and there is nothing to update there, so it answers with a no-op.
 static void SPKNoOpUpdateVerticalBarConfiguration(__unused id self, __unused SEL _cmd) {}
 
+// System Tab Bar: forces the native bar where Instagram would not pick it.
+// The controller is built once during launch, so the choice needs a restart.
 extern "C" void SPKInstallNativeTabBarHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class controllerClass = objc_getClass("IGTabBarController");
-        // Installed whatever the pref says: foldables run the native bar on
-        // their own, and the hold re-checks its prefs at call time.
-        if (controllerClass && !SPKStabilityGuardIsSafeStartupMode())
-            SPKInstallNativeTabBarExploreHoldHooks(controllerClass);
-        // The controller is built once during launch, so the choice needs a restart.
         if (!SPKNativeTabBarPreferenceEnabled())
             return;
+        Class controllerClass = objc_getClass("IGTabBarController");
         SEL initializeSelector = NSSelectorFromString(@"_initializeViewControllers");
         if (!controllerClass || !class_getInstanceMethod(controllerClass, initializeSelector) ||
             !class_getInstanceVariable(controllerClass, "_usesNativeTabBarController")) {
@@ -268,6 +501,5 @@ extern "C" void SPKInstallNativeTabBarHooksIfEnabled(void) {
             class_addMethod([UIViewController class], verticalBarSelector, (IMP)SPKNoOpUpdateVerticalBarConfiguration, "v@:");
 
         MSHookMessageEx(controllerClass, initializeSelector, (IMP)hook_initializeViewControllers, (IMP *)&orig_initializeViewControllers);
-        SPKInstallNativeTabBarVisibilityHooks(controllerClass);
     });
 }

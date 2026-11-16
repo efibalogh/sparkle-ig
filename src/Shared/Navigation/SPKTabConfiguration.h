@@ -59,6 +59,10 @@ NSArray<NSString *> *SPKTabSavedCarrierPreference(void);
 BOOL SPKTabOccupiesBarSlot(NSString *identifier, NSString *layout);
 NSArray<NSString *> *SPKNormalizeTabOrder(id _Nullable value);
 NSString *SPKNormalizedTabLayout(id _Nullable value);
+/// The layout the tab bar is built with: the stored one, except that Classic
+/// falls back to Default where the tab bar runs down a side column (a foldable
+/// iPhone's layout), which cannot take its shape.
+NSString *SPKEffectiveTabLayout(void);
 NSString *SPKNormalizedSavedCarrier(id _Nullable value);
 
 /// The slot Saved is drawing in right now, or `SPKTabSavedCarrierNone`. Saved is

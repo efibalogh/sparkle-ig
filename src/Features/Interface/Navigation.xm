@@ -4,6 +4,7 @@
 #import "../../AssetUtils.h"
 #import "../../Shared/Account/SPKAccountManager.h"
 #import "../../Shared/Navigation/SPKTabConfiguration.h"
+#import "SPKNativeTabBar.h"
 #import <objc/message.h>
 #import <objc/runtime.h>
 #import "../../App/SPKPerfMeter.h"
@@ -51,7 +52,7 @@ static NSString *SPKSavedCarrierIdentifier(void) {
 static BOOL SPKMessagesTabHidden(void) {
     if (SPKStabilityGuardIsSafeStartupMode())
         return NO;
-    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    NSString *layout = SPKEffectiveTabLayout();
     if (!SPKTabOccupiesBarSlot(SPKTabIdentifierDirect, layout))
         return NO;
     return [SPKUtils getBoolPref:SPKTabHidePreferenceKey(SPKTabIdentifierDirect)];
@@ -673,7 +674,7 @@ NSArray *filterSurfacesArray(NSArray *surfaces) {
             [unknownSurfaces addObject:surface];
     }
 
-    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    NSString *layout = SPKEffectiveTabLayout();
     if ([layout isEqualToString:SPKTabLayoutClassic]) {
         NSMutableArray *classic = [NSMutableArray array];
         for (id surface in surfaces) {
@@ -714,10 +715,25 @@ NSArray *filterSurfacesArray(NSArray *surfaces) {
         id surface = knownSurfaces[isSavedEntry ? savedCarrier : identifier];
         if (surface && isSurfaceShown(surface)) [transformed addObject:surface];
     }
-    // Keep Instagram surfaces Sparkle does not know about, in their native
-    // relative order, so a future app update does not silently delete them.
-    for (id surface in unknownSurfaces) {
-        if (isSurfaceShown(surface)) [transformed addObject:surface];
+    // Keep Instagram surfaces Sparkle does not know about, so a future app
+    // update does not silently delete them. Each keeps the slot Instagram gave
+    // it, counted in tabs Sparkle places: in regular width Instagram puts
+    // Activity and Create before the last tab, and appending them would move
+    // them under Profile even in the Default layout.
+    NSUInteger placedUnknowns = 0;
+    NSUInteger knownBefore = 0;
+    for (id surface in surfaces) {
+        if (SPKTabIdentifierForSurface(surface)) {
+            if (isSurfaceShown(surface))
+                knownBefore++;
+            continue;
+        }
+        if (![unknownSurfaces containsObject:surface] || !isSurfaceShown(surface))
+            continue;
+        NSUInteger knownCount = transformed.count - placedUnknowns;
+        NSUInteger slot = MIN(knownBefore, knownCount) + placedUnknowns;
+        [transformed insertObject:surface atIndex:MIN(slot, transformed.count)];
+        placedUnknowns++;
     }
 
     BOOL hasDestination = NO;
@@ -745,7 +761,7 @@ NSArray *filterSurfacesArray(NSArray *surfaces) {
 static void SPKApplyCustomTabButtonOrder(IGTabBarController *controller) {
     if (SPKStabilityGuardIsSafeStartupMode())
         return;
-    if (![SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]) isEqualToString:SPKTabLayoutCustom])
+    if (![SPKEffectiveTabLayout() isEqualToString:SPKTabLayoutCustom])
         return;
 
     id<SPKTabBarViewRepresentable> bar = (id<SPKTabBarViewRepresentable>)controller.tabBar;
@@ -813,26 +829,15 @@ static void SPKSyncTabBarSelectionIndex(IGTabBarController *controller) {
         [bar setSelectedTabBarItemIndex:(NSInteger)index];
 }
 
-static BOOL SPKTabBarReadBoolIvar(id object, const char *name) {
-    if (!object)
-        return NO;
-    Ivar ivar = class_getInstanceVariable(object_getClass(object), name);
-    if (!ivar)
-        return NO;
-    const char *type = ivar_getTypeEncoding(ivar);
-    if (type && type[0] != 'B' && type[0] != 'c')
-        return NO;
-    return *((uint8_t *)(__bridge void *)object + ivar_getOffset(ivar)) != 0;
-}
-
 // IG 451+ can drive the bar with a native UITabBarController instead of its own
-// tab bar view; it is what a folded iPhone Duo uses. That path builds its tabs
-// from _tabBarSurfaces and, in compact width, _nativeCompactTabBarSurfaces, and
-// never asks _buttonForTabBarSurface:, so both lists are filtered before it
-// installs or updates. The compact list keeps only surfaces that are still
-// shown, in the configured order, and falls back to the first five shown.
-static void SPKFilterNativeTabBarSurfaces(IGTabBarController *controller) {
-    if (SPKStabilityGuardIsSafeStartupMode() || !SPKTabBarReadBoolIvar(controller, "_usesNativeTabBarController"))
+// tab bar view (foldables, or the forced System Tab Bar). That path builds its
+// tabs from _tabBarSurfaces (regular width) and _nativeCompactTabBarSurfaces
+// (compact width) and never asks _buttonForTabBarSurface:, so NativeTabBar.xm
+// has both lists filtered here before it installs or updates. The regular list
+// takes the configured order; the compact one keeps only surfaces that are
+// still shown, in that same order, and falls back to the first five shown.
+extern "C" void SPKNavigationPrepareNativeTabBarSurfaces(id controller) {
+    if (SPKStabilityGuardIsSafeStartupMode() || !SPKNativeTabBarIsActive(controller))
         return;
 
     NSArray *surfaces = [SPKUtils getIvarForObj:controller name:"_tabBarSurfaces"];
@@ -857,6 +862,49 @@ static void SPKFilterNativeTabBarSurfaces(IGTabBarController *controller) {
         [SPKUtils setIvarForObj:controller name:"_nativeCompactTabBarSurfaces" value:[filteredCompact copy]];
 }
 
+static UITabBarController *SPKNativeSystemTabBarController(UIViewController *controller) {
+    for (UIViewController *child in controller.childViewControllers) {
+        if ([child isKindOfClass:[UITabBarController class]])
+            return (UITabBarController *)child;
+    }
+    return nil;
+}
+
+// The native descriptor takes its artwork from the carrier's button, which
+// already draws Saved, but its title from the surface, so the UITab would still
+// read as the borrowed tab (it is what VoiceOver and the large-text HUD say).
+extern "C" void SPKNavigationDecorateNativeTabs(id controller) {
+    if (SPKStabilityGuardIsSafeStartupMode() || !SPKNativeTabBarIsActive(controller) || !SPKHasSavedTabDestination())
+        return;
+    SEL identifierSelector = NSSelectorFromString(@"_nativeIdentifierForSurface:");
+    UITabBarController *system = SPKNativeSystemTabBarController(controller);
+    SEL tabsSelector = NSSelectorFromString(@"tabs");
+    if (![controller respondsToSelector:identifierSelector] || ![system respondsToSelector:tabsSelector])
+        return;
+
+    NSString *carrier = SPKSavedCarrierIdentifier();
+    id nativeIdentifier = nil;
+    for (IGMainAppSurfaceIntent *surface in (NSArray *)[SPKUtils getIvarForObj:controller name:"_tabBarSurfaces"]) {
+        if ([carrier isEqualToString:SPKTabIdentifierForSurface(surface) ?: @""]) {
+            nativeIdentifier = ((id (*)(id, SEL, id))objc_msgSend)(controller, identifierSelector, surface);
+            break;
+        }
+    }
+    if (!nativeIdentifier)
+        return;
+    for (id tab in ((NSArray * (*)(id, SEL)) objc_msgSend)(system, tabsSelector)) {
+        if (![tab respondsToSelector:@selector(identifier)] || ![[tab identifier] isEqual:nativeIdentifier])
+            continue;
+        if ([tab respondsToSelector:@selector(setTitle:)] && ![[tab title] isEqualToString:SPKSavedTabAccessibilityLabel()])
+            [tab setTitle:SPKSavedTabAccessibilityLabel()];
+        break;
+    }
+}
+
+extern "C" BOOL SPKNavigationProfileTabCarriesSaved(void) {
+    return [SPKSavedCarrierIdentifier() isEqualToString:SPKTabIdentifierProfile];
+}
+
 // Should the tab bar be taken away entirely? Only when the configuration leaves
 // exactly one tab, and only for a tab that keeps a way back into Sparkle
 // Settings without the tab bar long-press.
@@ -867,27 +915,21 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
     return single != nil && SPKSingleTabAllowsHidingTabBar(single);
 }
 
-// The native tab bar (foldables, or the forced System Tab Bar) is shown and
-// hidden through UIKit's tab bar controller, whose floating bar carries the tab
-// on its own. Hiding the bar view alone leaves that floating tab up, and
-// Instagram asks to show the bar again after every pop, so in single-tab mode
-// every request goes through as hidden.
-BOOL SPKNativeTabBarIsActive(id controller);
-
-static void (*orig_SPKSetTabBarVisibilityHidden)(id, SEL, BOOL, BOOL);
-static void hook_SPKSetTabBarVisibilityHidden(id self, SEL _cmd, BOOL hidden, BOOL animated) {
-    if (!hidden && !SPKStabilityGuardIsSafeStartupMode() && SPKShouldHideTabBarForSingleTab())
-        hidden = YES;
-    orig_SPKSetTabBarVisibilityHidden(self, _cmd, hidden, animated);
+extern "C" BOOL SPKNavigationSingleTabHidesTabBar(void) {
+    return SPKShouldHideTabBarForSingleTab();
 }
 
+// The native bar is shown and hidden through UIKit's tab bar controller, whose
+// floating bar carries the tab on its own, so hiding the bar view is not
+// enough. NativeTabBar.xm's visibility hook keeps every later request hidden.
 static void SPKHideNativeTabBarForSingleTab(IGTabBarController *controller) {
-    if (!orig_SPKSetTabBarVisibilityHidden || !SPKNativeTabBarIsActive(controller))
+    SEL setter = NSSelectorFromString(@"setTabBarVisibilityHidden:animated:");
+    if (!SPKNativeTabBarIsActive(controller) || ![controller respondsToSelector:setter])
         return;
     Ivar hiddenIvar = class_getInstanceVariable(object_getClass(controller), "_nativeTabBarHidden");
     if (hiddenIvar && *((uint8_t *)(__bridge void *)controller + ivar_getOffset(hiddenIvar)) != 0)
         return;
-    ((void (*)(id, SEL, BOOL, BOOL))objc_msgSend)(controller, NSSelectorFromString(@"setTabBarVisibilityHidden:animated:"), YES, NO);
+    ((void (*)(id, SEL, BOOL, BOOL))objc_msgSend)(controller, setter, YES, NO);
 }
 
 ///////////////////////////////////////////////
@@ -908,17 +950,6 @@ static void SPKHideNativeTabBarForSingleTab(IGTabBarController *controller) {
 - (void)layoutSubviews {
     %orig;
     SPKConfigureSavedTabButtonInstance(self);
-}
-%end
-
-%end
-
-%group SPKNativeTabBarHooks
-
-%hook IGTabBarController
-- (BOOL)_installOrUpdateNativeTabBarController {
-    SPKFilterNativeTabBarSurfaces(self);
-    return %orig;
 }
 %end
 
@@ -1045,7 +1076,7 @@ static void SPKHideNativeTabBarForSingleTab(IGTabBarController *controller) {
 
     BOOL feedHidden = [SPKUtils getBoolPref:@"interface_hide_feed_tab"];
 
-    BOOL usesCustomOrder = [SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout])
+    BOOL usesCustomOrder = [SPKEffectiveTabLayout()
         isEqualToString:SPKTabLayoutCustom];
 
     if ([launchPref isEqualToString:@"default"]) {
@@ -1157,7 +1188,7 @@ static void SPKHideNativeTabBarForSingleTab(IGTabBarController *controller) {
 - (NSInteger)tabOrdering {
     if (SPKStabilityGuardIsSafeStartupMode())
         return %orig;
-    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    NSString *layout = SPKEffectiveTabLayout();
     if ([layout isEqualToString:SPKTabLayoutClassic])
         return 0;
     // Both Default and Custom use Instagram's standard five-carrier topology.
@@ -1261,13 +1292,7 @@ extern "C" void SPKInstallNavigationHooksIfNeeded(void) {
     dispatch_once(&onceToken, ^{
         %init(SPKNavigationHooks,
                        IGHomeFeedHeaderView = SPKResolveIGClass(@"IGHomeFeedHeader.IGHomeFeedHeaderView", @"IGHomeFeedHeaderView"));
-        if ([NSClassFromString(@"IGTabBarController") instancesRespondToSelector:NSSelectorFromString(@"_installOrUpdateNativeTabBarController")]) {
-            %init(SPKNativeTabBarHooks);
-            Class controllerClass = NSClassFromString(@"IGTabBarController");
-            SEL visibility = NSSelectorFromString(@"setTabBarVisibilityHidden:animated:");
-            if (class_getInstanceMethod(controllerClass, visibility))
-                MSHookMessageEx(controllerClass, visibility, (IMP)hook_SPKSetTabBarVisibilityHidden, (IMP *)&orig_SPKSetTabBarVisibilityHidden);
-        }
+        SPKInstallNativeTabBarCoordinatorHooks();
         if (SPKSavedTabPreferenceMayEnable()) {
             %init(SPKSavedTabButtonHooks);
             [[NSNotificationCenter defaultCenter] addObserverForName:SPKAccountDidChangeNotification

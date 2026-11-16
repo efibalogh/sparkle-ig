@@ -1,5 +1,6 @@
 #import "SPKStrings.h"
 #import "SPKTabConfiguration.h"
+#import "../../Features/Interface/SPKNativeTabBar.h"
 
 #import "../../Utils.h"
 
@@ -100,6 +101,13 @@ NSString *SPKNormalizedTabLayout(id value) {
     return SPKTabLayoutDefault;
 }
 
+NSString *SPKEffectiveTabLayout(void) {
+    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    if ([layout isEqualToString:SPKTabLayoutClassic] && SPKSystemTabBarRunsAsColumn())
+        return SPKTabLayoutDefault;
+    return layout;
+}
+
 // The carrier is whichever bar slot Saved is currently borrowing, or "none" when
 // Saved is off. Every identifier that owns a slot in some layout is valid here;
 // whether it owns one in the *current* layout is a separate question that
@@ -125,7 +133,7 @@ static NSString *SPKResolveSavedCarrier(void) {
     NSString *carrier = SPKNormalizedSavedCarrier(SPKPreferenceObjectForKey(SPKPrefSavedTabCarrier));
     if ([carrier isEqualToString:SPKTabSavedCarrierNone])
         return carrier;
-    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    NSString *layout = SPKEffectiveTabLayout();
     if (![layout isEqualToString:SPKTabLayoutCustom] || !SPKTabOccupiesBarSlot(carrier, layout))
         return SPKTabSavedCarrierNone;
     // The carrier's hidden slot is what Saved draws in, so a carrier whose tab is
@@ -188,7 +196,7 @@ NSString *SPKSingleVisibleTabIdentifierFromPreferences(void) {
         if ([SPKUtils getBoolPref:SPKTabHidePreferenceKey(identifier)])
             [hidden addObject:identifier];
     }
-    return SPKSingleVisibleTabIdentifier(SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]),
+    return SPKSingleVisibleTabIdentifier(SPKEffectiveTabLayout(),
                                          hidden,
                                          SPKNormalizedSavedCarrier(SPKPreferenceObjectForKey(SPKPrefSavedTabCarrier)));
 }
@@ -257,7 +265,7 @@ NSString *SPKTabIdentifierForLaunchPreference(NSString *value) {
 }
 
 NSString *SPKEffectiveLaunchTabIdentifierFromPreferences(void) {
-    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    NSString *layout = SPKEffectiveTabLayout();
     BOOL custom = [layout isEqualToString:SPKTabLayoutCustom];
     NSString *carrier = SPKEffectiveSavedCarrier();
     BOOL savedEnabled = ![carrier isEqualToString:SPKTabSavedCarrierNone];
