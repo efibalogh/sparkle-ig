@@ -57,16 +57,27 @@ static BOOL SPKMessagesTabHidden(void) {
     return [SPKUtils getBoolPref:SPKTabHidePreferenceKey(SPKTabIdentifierDirect)];
 }
 
-// The Create launcher carries no tab string, so it is identified by its surface
-// subtype. Instagram reuses 3 for the camera entry on every supported build.
-static BOOL SPKIsCreateSurface(IGMainAppSurfaceIntent *surface) {
+// Surfaces without a tab string are told apart by their subtype.
+static BOOL SPKSurfaceHasSubtype(IGMainAppSurfaceIntent *surface, NSUInteger subtype) {
     if (!surface)
         return NO;
     @try {
-        return [(NSNumber *)[surface valueForKey:@"_subtype"] unsignedIntegerValue] == 3;
+        return [(NSNumber *)[surface valueForKey:@"_subtype"] unsignedIntegerValue] == subtype;
     } @catch (__unused NSException *exception) {
         return NO;
     }
+}
+
+// The Create launcher carries no tab string, so it is identified by its surface
+// subtype. Instagram reuses 3 for the camera entry on every supported build.
+static BOOL SPKIsCreateSurface(IGMainAppSurfaceIntent *surface) {
+    return SPKSurfaceHasSubtype(surface, 3);
+}
+
+// Activity only becomes a tab of its own in regular width (unfolded foldables);
+// in compact width it is the heart in the Feed header.
+static BOOL SPKIsActivitySurface(IGMainAppSurfaceIntent *surface) {
+    return SPKSurfaceHasSubtype(surface, 4);
 }
 
 static BOOL SPKHasSavedTabDestination(void) {
@@ -641,6 +652,10 @@ BOOL isSurfaceShown(IGMainAppSurfaceIntent *surface) {
         return NO;
     if (SPKIsCreateSurface(surface) && [SPKUtils getBoolPref:@"interface_hide_create_tab"])
         return NO;
+    // The Activity tab follows Feed: hiding Feed hides its heart in compact
+    // width, so the regular-width tab that replaces the heart goes with it.
+    if (SPKIsActivitySurface(surface) && [SPKUtils getBoolPref:SPKTabHidePreferenceKey(SPKTabIdentifierFeed)])
+        return NO;
     return YES;
 }
 
@@ -852,6 +867,29 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
     return single != nil && SPKSingleTabAllowsHidingTabBar(single);
 }
 
+// The native tab bar (foldables, or the forced System Tab Bar) is shown and
+// hidden through UIKit's tab bar controller, whose floating bar carries the tab
+// on its own. Hiding the bar view alone leaves that floating tab up, and
+// Instagram asks to show the bar again after every pop, so in single-tab mode
+// every request goes through as hidden.
+BOOL SPKNativeTabBarIsActive(id controller);
+
+static void (*orig_SPKSetTabBarVisibilityHidden)(id, SEL, BOOL, BOOL);
+static void hook_SPKSetTabBarVisibilityHidden(id self, SEL _cmd, BOOL hidden, BOOL animated) {
+    if (!hidden && !SPKStabilityGuardIsSafeStartupMode() && SPKShouldHideTabBarForSingleTab())
+        hidden = YES;
+    orig_SPKSetTabBarVisibilityHidden(self, _cmd, hidden, animated);
+}
+
+static void SPKHideNativeTabBarForSingleTab(IGTabBarController *controller) {
+    if (!orig_SPKSetTabBarVisibilityHidden || !SPKNativeTabBarIsActive(controller))
+        return;
+    Ivar hiddenIvar = class_getInstanceVariable(object_getClass(controller), "_nativeTabBarHidden");
+    if (hiddenIvar && *((uint8_t *)(__bridge void *)controller + ivar_getOffset(hiddenIvar)) != 0)
+        return;
+    ((void (*)(id, SEL, BOOL, BOOL))objc_msgSend)(controller, NSSelectorFromString(@"setTabBarVisibilityHidden:animated:"), YES, NO);
+}
+
 ///////////////////////////////////////////////
 
 // Installed separately from the rest of the navigation hooks: this one runs on
@@ -985,6 +1023,7 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
     }
     if (SPKShouldHideTabBarForSingleTab()) {
         self.tabBar.hidden = YES;
+        SPKHideNativeTabBarForSingleTab(self);
     }
 }
 
@@ -1224,6 +1263,10 @@ extern "C" void SPKInstallNavigationHooksIfNeeded(void) {
                        IGHomeFeedHeaderView = SPKResolveIGClass(@"IGHomeFeedHeader.IGHomeFeedHeaderView", @"IGHomeFeedHeaderView"));
         if ([NSClassFromString(@"IGTabBarController") instancesRespondToSelector:NSSelectorFromString(@"_installOrUpdateNativeTabBarController")]) {
             %init(SPKNativeTabBarHooks);
+            Class controllerClass = NSClassFromString(@"IGTabBarController");
+            SEL visibility = NSSelectorFromString(@"setTabBarVisibilityHidden:animated:");
+            if (class_getInstanceMethod(controllerClass, visibility))
+                MSHookMessageEx(controllerClass, visibility, (IMP)hook_SPKSetTabBarVisibilityHidden, (IMP *)&orig_SPKSetTabBarVisibilityHidden);
         }
         if (SPKSavedTabPreferenceMayEnable()) {
             %init(SPKSavedTabButtonHooks);
