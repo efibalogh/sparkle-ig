@@ -82,7 +82,44 @@ static UIViewController *SPKStoryViewerControllerFromOverlay(UIView *overlayView
     return viewer ?: nearest;
 }
 
+// The section controller that owns this overlay's own cell. In regular width
+// (iPad, unfolded iPhone Duo) the viewer keeps neighbouring reels laid out
+// beside the focused one, and the viewer's "currently displayed" section can
+// name a neighbour, so every overlay must resolve through its own cell first.
+static id SPKStoryOwnSectionControllerFromOverlay(UIView *overlayView) {
+    SEL lookupSelector = NSSelectorFromString(@"sectionControllerForView:");
+    SEL itemSelector = NSSelectorFromString(@"currentStoryItem");
+    Class sectionControllerClass = SPKStoryFullscreenSectionControllerClass();
+    for (UIView *walker = overlayView.superview; walker; walker = walker.superview) {
+        if (![walker isKindOfClass:[UICollectionViewCell class]])
+            continue;
+        UIView *collection = walker.superview;
+        while (collection && ![collection isKindOfClass:[UICollectionView class]])
+            collection = collection.superview;
+        if (!collection)
+            return nil;
+        id adapter = ((UICollectionView *)collection).dataSource;
+        if (![adapter respondsToSelector:lookupSelector])
+            continue;
+        id sectionController = nil;
+        @try {
+            sectionController = ((id (*)(id, SEL, id))objc_msgSend)(adapter, lookupSelector, walker);
+        } @catch (__unused NSException *exception) {
+        }
+        if (!sectionController)
+            continue;
+        if ((sectionControllerClass && [sectionController isKindOfClass:sectionControllerClass]) ||
+            [sectionController respondsToSelector:itemSelector])
+            return sectionController;
+    }
+    return nil;
+}
+
 static id SPKStorySectionControllerFromOverlay(UIView *overlayView, UIViewController *viewerController) {
+    id ownSectionController = SPKStoryOwnSectionControllerFromOverlay(overlayView);
+    if (ownSectionController)
+        return ownSectionController;
+
     id sectionController = SPKStoryFirstObjectForSelectors(viewerController, @[ @"currentlyDisplayedSectionController", @"currentSectionController" ]);
     if (!sectionController)
         sectionController = [SPKUtils getIvarForObj:viewerController name:"_currentSectionController"];
