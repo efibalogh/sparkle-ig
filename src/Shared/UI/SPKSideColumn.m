@@ -100,17 +100,21 @@ BOOL SPKSideColumnHoldsItems(UINavigationItem *navigationItem) {
 // UIKit's floating bar containers hold the navigation item groups, the column's
 // among them (a split view adds its own for a pane's buttons; the tabs live in
 // the tab bar). Remembered per window, looked up again once one goes away.
-static NSArray<UIView *> *SPKSideColumnFloatingBarContainers(UIView *root) {
+static NSArray<UIView *> *SPKSideColumnFloatingBarContainersRefreshing(UIView *root, BOOL refresh) {
     static NSHashTable<UIView *> *cached;
     static __weak UIWindow *cachedWindow;
-    BOOL valid = cached.count > 0 && cachedWindow == root.window;
+    static CGSize cachedWindowSize;
+    // A size change (unfolding, for one) builds a new container while the old one
+    // stays in the window, so the window's size is part of the cache key.
+    BOOL valid = cached.count > 0 && cachedWindow == root.window && CGSizeEqualToSize(cachedWindowSize, root.window.bounds.size);
     for (UIView *container in cached.allObjects) {
         if (container.window != root.window)
             valid = NO;
     }
-    if (!valid) {
+    if (!valid || refresh) {
         cached = [NSHashTable weakObjectsHashTable];
         cachedWindow = root.window;
+        cachedWindowSize = root.window.bounds.size;
         NSMutableArray<UIView *> *queue = root.window ? [NSMutableArray arrayWithObject:root.window] : [NSMutableArray array];
         for (NSUInteger i = 0; i < queue.count && i < 3000; i++) {
             if (SPKSideColumnClassContains(queue[i], @"FloatingBarContainerView")) {
@@ -126,6 +130,10 @@ static NSArray<UIView *> *SPKSideColumnFloatingBarContainers(UIView *root) {
             [inRoot addObject:container];
     }
     return inRoot;
+}
+
+static NSArray<UIView *> *SPKSideColumnFloatingBarContainers(UIView *root) {
+    return SPKSideColumnFloatingBarContainersRefreshing(root, NO);
 }
 
 UIView *SPKSideColumnHostForView(UIView *view) {
@@ -147,7 +155,7 @@ UIView *SPKSideColumnHostForView(UIView *view) {
     return host;
 }
 
-CGRect SPKSideColumnLowestVisibleGroup(UIView *host, CGFloat *alpha) {
+static CGRect SPKSideColumnLowestVisibleGroupRefreshing(UIView *host, CGFloat *alpha, BOOL refresh) {
     CGRect lowest = CGRectNull;
     CGFloat lowestAlpha = 1.0;
     if (!host.window)
@@ -155,7 +163,7 @@ CGRect SPKSideColumnLowestVisibleGroup(UIView *host, CGFloat *alpha) {
     // The tab group can share a container with the navigation items; it is not one.
     UIView *platter = SPKSideColumnTabPlatter(host);
     CGRect platterFrame = platter ? [host convertRect:platter.bounds fromView:platter] : CGRectNull;
-    NSMutableArray<UIView *> *queue = [SPKSideColumnFloatingBarContainers(host) mutableCopy];
+    NSMutableArray<UIView *> *queue = [SPKSideColumnFloatingBarContainersRefreshing(host, refresh) mutableCopy];
     for (NSUInteger i = 0; i < queue.count && i < 600; i++) {
         UIView *view = queue[i];
         if (view.hidden || view.alpha < 0.01)
@@ -188,6 +196,16 @@ CGRect SPKSideColumnLowestVisibleGroup(UIView *host, CGFloat *alpha) {
     if (alpha)
         *alpha = lowestAlpha;
     return lowest;
+}
+
+CGRect SPKSideColumnLowestVisibleGroup(UIView *host, CGFloat *alpha) {
+    CGRect group = SPKSideColumnLowestVisibleGroupRefreshing(host, alpha, NO);
+    // The remembered containers can predate a column UIKit is still building
+    // (after unfolding, the old one stays in the window), so an empty answer
+    // looks through the window again before it is trusted.
+    if (CGRectIsNull(group))
+        group = SPKSideColumnLowestVisibleGroupRefreshing(host, alpha, YES);
+    return group;
 }
 
 UIView *SPKSideColumnTabPlatter(UIView *root) {
