@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Möchtest du dieses Reel wirklich an %@ senden?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Nachrichten als gesehen markiert";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Konnte nicht als gesehen markiert werden";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Als gesehen markieren";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Möchtest du die Einstellung für sich selbst löschende Nachrichten in diesem Chat wirklich ändern?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Screenshot-Erkennung deaktivieren";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Deaktiviert die Wischgeste, die den Vanish-Modus aktiviert.";

@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Ar tikrai norite išsiųsti šį „Reel“ %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Žinutės pažymėtos kaip matytos";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nepavyko pažymėti žinučių kaip matytų";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Pažymėti kaip matytą";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Ar tikrai norite pakeisti išnykstančias žinutes šiame pokalbyje?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Išjungti ekrano kopijos aptikimą";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Išjungia perbraukimo gestą, įjungiantį išnykimo režimą.";

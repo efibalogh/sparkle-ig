@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "क्या आप निश्चित रूप से यह रील %@ को भेजना चाहते हैं?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "संदेशों को पढ़ा हुआ चिह्नित किया";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "देखे जाने के रूप में चिह्नित करने में विफल";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "देखा गया के रूप में चिह्नित करें";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "क्या आप निश्चित रूप से इस चैट के लिए गायब होने वाले संदेशों को बदलना चाहते हैं?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "स्क्रीनशॉट पहचान अक्षम करें";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "उस स्वाइप जेस्चर को बंद करता है जो Vanish मोड चालू करता है।";

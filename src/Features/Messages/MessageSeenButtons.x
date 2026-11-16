@@ -11,6 +11,8 @@
 #import "../../Shared/Messages/SPKPresenceTracking.h"
 #import "../../Shared/Stories/SPKStoryContext.h"
 #import "../../Shared/UI/SPKChrome.h"
+#import "../../Shared/UI/SPKChromeGlassMirror.h"
+#import "../../Shared/UI/SPKSideColumn.h"
 #import "../../Tweak.h"
 #import "../../Utils.h"
 #import "DeletedMessagesLog/SPKDeletedMessagesViewController.h"
@@ -1143,6 +1145,302 @@ static void SPKReconcileThreadSeenPlacement(UIViewController *controller) {
     }
 }
 
+// MARK: - Header seen button
+
+static void SPKThreadSeenButtonTapped(UIViewController *controller) {
+    SPKPlayButtonTappedHaptic();
+    if (![controller isKindOfClass:NSClassFromString(@"IGDirectThreadViewController")])
+        return;
+    if (SPKMarkDirectThreadMessagesAsSeen(controller)) {
+        SPKNotify(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"MESSAGES_SEEN_MARKED_MESSAGES_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
+    } else {
+        SPKNotify(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST"), nil, @"error_filled", SPKNotificationToneError);
+    }
+}
+
+static BOOL SPKThreadHeaderSeenButtonWanted(UIViewController *controller) {
+    return SPKDirectManualSeenRulesEnabled() && !SPKThreadSeenButtonAtBottom() && SPKDirectShouldShowSeenButtonForSource(controller);
+}
+
+// In a narrow window beside a vertical tab bar, Instagram hands the thread's call
+// buttons to the side column as the thread's own navigation items and leaves its
+// header bar empty. The seen button then joins them in the column.
+static BOOL SPKThreadHeaderItemsInColumn(UIViewController *controller) {
+    return controller.navigationItem.rightBarButtonItems.count > 0;
+}
+
+static const void *kSPKThreadSeenGlassKey = &kSPKThreadSeenGlassKey;
+static const void *kSPKThreadSeenColumnButtonKey = &kSPKThreadSeenColumnButtonKey;
+
+// The header button's own glass circle, used while "Hide UI on Capture" is on.
+// Glass nested inside the capture canvas stops rendering whenever the system
+// composites the app specially (a navigation push, Control Center over the app),
+// so the glass sits beside the canvas instead. To still redact it, it is masked
+// by a solid circle that lives in a capture canvas of its own: on screen the
+// mask is opaque, in a screenshot or recording it is blanked and so is the glass.
+static const void *kSPKThreadSeenHeaderGlassKey = &kSPKThreadSeenHeaderGlassKey;
+static const void *kSPKThreadSeenHeaderGlassFillKey = &kSPKThreadSeenHeaderGlassFillKey;
+static const void *kSPKThreadSeenHeaderGlassFieldKey = &kSPKThreadSeenHeaderGlassFieldKey;
+
+static UIView *SPKFindSecureCanvas(UIView *root, NSInteger depth) {
+    if (depth > 4)
+        return nil;
+    for (UIView *subview in root.subviews) {
+        if ([NSStringFromClass(subview.class) containsString:@"CanvasView"])
+            return subview;
+        UIView *found = SPKFindSecureCanvas(subview, depth + 1);
+        if (found)
+            return found;
+    }
+    return nil;
+}
+
+static void SPKApplyThreadSeenHeaderGlass(SPKChromeButton *button) {
+    Class glassClass = NSClassFromString(@"UIGlassEffect");
+    if (!button || !glassClass)
+        return;
+    UIVisualEffectView *glass = objc_getAssociatedObject(button, kSPKThreadSeenHeaderGlassKey);
+    if (!glass) {
+        glass = [[UIVisualEffectView alloc] initWithEffect:[[glassClass alloc] init]];
+        glass.userInteractionEnabled = NO;
+        glass.clipsToBounds = YES;
+        glass.layer.cornerCurve = kCACornerCurveContinuous;
+
+        // The mask is a secure text field's canvas itself, placed by frame: it
+        // never joins a window, so nothing would lay it out with constraints.
+        UITextField *field = [UITextField new];
+        SPKChromeMarkSecureFieldOwned(field);
+        field.userInteractionEnabled = NO;
+        field.secureTextEntry = YES;
+        [field layoutIfNeeded];
+        UIView *canvas = SPKFindSecureCanvas(field, 0);
+        if (canvas) {
+            [canvas removeFromSuperview];
+            canvas.translatesAutoresizingMaskIntoConstraints = YES;
+            canvas.userInteractionEnabled = NO;
+            canvas.clipsToBounds = NO;
+            canvas.transform = CGAffineTransformIdentity;
+            UIView *fill = [UIView new];
+            fill.backgroundColor = UIColor.blackColor;
+            fill.layer.cornerCurve = kCACornerCurveContinuous;
+            [canvas addSubview:fill];
+            glass.maskView = canvas;
+            objc_setAssociatedObject(button, kSPKThreadSeenHeaderGlassFillKey, fill, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            objc_setAssociatedObject(button, kSPKThreadSeenHeaderGlassFieldKey, field, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        objc_setAssociatedObject(button, kSPKThreadSeenHeaderGlassKey, glass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+
+    // Sized from the button's own diameter: it can be added before the bar has
+    // laid the button out.
+    CGSize size = CGRectIsEmpty(button.bounds) ? button.intrinsicContentSize : button.bounds.size;
+    CGRect bounds = CGRectMake(0.0, 0.0, size.width, size.height);
+    CGFloat radius = MIN(size.width, size.height) / 2.0;
+    if (!CGRectEqualToRect(glass.frame, bounds)) {
+        glass.frame = bounds;
+        glass.layer.cornerRadius = radius;
+    }
+    // The canvas keeps the text field's geometry habits (a shifted bounds
+    // origin among them), so its frame, bounds and fill are pinned every pass.
+    UIView *mask = glass.maskView;
+    if (mask) {
+        if (!CGRectEqualToRect(mask.bounds, bounds))
+            mask.bounds = bounds;
+        if (!CGPointEqualToPoint(mask.center, CGPointMake(size.width / 2.0, size.height / 2.0)))
+            mask.center = CGPointMake(size.width / 2.0, size.height / 2.0);
+        UIView *fill = objc_getAssociatedObject(button, kSPKThreadSeenHeaderGlassFillKey);
+        if (!CGRectEqualToRect(fill.frame, bounds)) {
+            fill.frame = bounds;
+            fill.layer.cornerRadius = radius;
+        }
+    }
+    if (glass.superview != button)
+        [button insertSubview:glass atIndex:0];
+}
+
+static SPKChromeButton *SPKMakeThreadSeenButton(UIViewController *controller) {
+    SPKChromeButton *button = [[SPKChromeButton alloc] initWithSymbol:@"" pointSize:24.0 diameter:44.0];
+    [button setIconResource:kSPKSeenMessagesBarIconResource pointSize:24.0];
+    button.accessibilityIdentifier = @"spk-seen-btn";
+    button.accessibilityLabel = SPKL(@"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL");
+    button.bubbleColor = UIColor.clearColor;
+    button.iconTint = UIColor.labelColor;
+    button.menu = SPKDirectSeenButtonMenu(controller);
+    button.showsMenuAsPrimaryAction = NO;
+    button.menuWillDisplayHandler = ^{ SPKPlayButtonTappedHaptic(); };
+    __weak UIViewController *weakController = controller;
+    [button addAction:[UIAction actionWithHandler:^(__unused UIAction *action) {
+                SPKThreadSeenButtonTapped(weakController);
+            }]
+        forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
+static void SPKRemoveThreadSeenColumnButton(UIViewController *controller) {
+    SPKChromeButton *button = objc_getAssociatedObject(controller, kSPKThreadSeenColumnButtonKey);
+    if (!button)
+        return;
+    [button removeFromSuperview];
+    SPKSideColumnResetDock(button);
+}
+
+static UIView *SPKThreadTallNavigationBar(UIViewController *controller) {
+    Class tallClass = NSClassFromString(@"IGTallNavigationBarView");
+    if (!tallClass || !controller.isViewLoaded)
+        return nil;
+    NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:controller.view];
+    for (NSUInteger i = 0; i < queue.count && i < 80; i++) {
+        if ([queue[i] isKindOfClass:tallClass])
+            return queue[i];
+        [queue addObjectsFromArray:queue[i].subviews];
+    }
+    return nil;
+}
+
+// Docks the seen button under the column's lowest group of call buttons, as its
+// own glass circle, or takes it away when the header row hosts it instead.
+static const void *kSPKThreadSeenLeavingKey = &kSPKThreadSeenLeavingKey;
+
+static void SPKLayoutThreadSeenColumnButton(UIViewController *controller);
+static const void *kSPKThreadSeenColumnRetriesKey = &kSPKThreadSeenColumnRetriesKey;
+static const void *kSPKThreadSeenColumnRetryPendingKey = &kSPKThreadSeenColumnRetryPendingKey;
+
+// The column can hold the thread's call buttons before they are visible: after
+// the window changes size (unfolding, for one), UIKit rebuilds the column after
+// the thread's last layout pass, and nothing lays the thread out again. A few
+// spaced retries pick the buttons up once they show.
+static void SPKRetryThreadSeenColumnButton(UIViewController *controller) {
+    if (objc_getAssociatedObject(controller, kSPKThreadSeenColumnRetryPendingKey))
+        return;
+    NSInteger attempts = [objc_getAssociatedObject(controller, kSPKThreadSeenColumnRetriesKey) integerValue];
+    if (attempts >= 8)
+        return;
+    objc_setAssociatedObject(controller, kSPKThreadSeenColumnRetriesKey, @(attempts + 1), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(controller, kSPKThreadSeenColumnRetryPendingKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    __weak UIViewController *weakController = controller;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIViewController *strongController = weakController;
+        if (!strongController)
+            return;
+        objc_setAssociatedObject(strongController, kSPKThreadSeenColumnRetryPendingKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        SPKLayoutThreadSeenColumnButton(strongController);
+    });
+}
+
+static void SPKLayoutThreadSeenColumnButton(UIViewController *controller) {
+    // Only while this thread is the screen on show: it lives above the
+    // navigation stack, so a thread being left must not bring it back.
+    UINavigationController *navigation = controller.navigationController;
+    UIViewController *stackEntry = controller;
+    while (stackEntry.parentViewController && stackEntry.parentViewController != navigation)
+        stackEntry = stackEntry.parentViewController;
+    BOOL showing = controller.view.window && navigation.topViewController == stackEntry &&
+                   !objc_getAssociatedObject(controller, kSPKThreadSeenLeavingKey) && !controller.presentedViewController;
+    BOOL inColumn = showing && SPKThreadHeaderItemsInColumn(controller);
+    if (!inColumn || !SPKThreadHeaderSeenButtonWanted(controller)) {
+        SPKRemoveThreadSeenColumnButton(controller);
+        objc_setAssociatedObject(controller, kSPKThreadSeenColumnRetriesKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        return;
+    }
+
+    // The header bar may have taken the button before Instagram moved the call
+    // buttons out; setting its items again drops it there (see the hook below).
+    IGTallNavigationBarView *tallBar = (IGTallNavigationBarView *)SPKThreadTallNavigationBar(controller);
+    if ([tallBar respondsToSelector:@selector(rightBarButtonItems)]) {
+        NSArray<UIBarButtonItem *> *items = tallBar.rightBarButtonItems;
+        for (UIBarButtonItem *item in items) {
+            if ([item.accessibilityIdentifier isEqualToString:@"spk-seen-btn"]) {
+                [tallBar setRightBarButtonItems:items];
+                break;
+            }
+        }
+    }
+
+    UIView *host = controller.tabBarController.view ?: SPKSideColumnHostForView(controller.view);
+    if (!host)
+        return;
+    // Under the column's last group, whichever buttons the thread carries (a
+    // business account adds its own label button, for one).
+    CGFloat alpha = 1.0;
+    CGRect group = SPKSideColumnLowestVisibleGroup(host, &alpha);
+    SPKChromeButton *button = objc_getAssociatedObject(controller, kSPKThreadSeenColumnButtonKey);
+    if (CGRectIsNull(group)) {
+        SPKRemoveThreadSeenColumnButton(controller);
+        SPKRetryThreadSeenColumnButton(controller);
+        return;
+    }
+    if (!button) {
+        button = SPKMakeThreadSeenButton(controller);
+        objc_setAssociatedObject(controller, kSPKThreadSeenColumnButtonKey, button, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    UIView *glassView = objc_getAssociatedObject(button, kSPKThreadSeenGlassKey);
+    if (!glassView) {
+        glassView = SPKChromeGlassMirrorMakeBubble(@"sparkle-thread-seen-glass");
+        if (glassView)
+            objc_setAssociatedObject(button, kSPKThreadSeenGlassKey, glassView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    if (!SPKSideColumnDockButton(button, glassView, host, group, alpha)) {
+        SPKRemoveThreadSeenColumnButton(controller);
+        SPKRetryThreadSeenColumnButton(controller);
+        return;
+    }
+    objc_setAssociatedObject(controller, kSPKThreadSeenColumnRetriesKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+// The header item is kept per thread screen and handed back on every header
+// rebuild (Instagram resets its buttons several times while a chat opens), so
+// the button and its glass are built once. Whether the item belongs in the
+// header is still decided by the caller on every rebuild. The two capture modes
+// use different kinds of item, so switching "Hide UI on Capture" builds anew.
+static const void *kSPKThreadSeenHeaderItemKey = &kSPKThreadSeenHeaderItemKey;
+static const void *kSPKThreadSeenHeaderItemModeKey = &kSPKThreadSeenHeaderItemModeKey;
+
+static UIBarButtonItem *SPKThreadHeaderSeenItem(UIViewController *controller) {
+    NSNumber *mode = @([SPKUtils getBoolPref:@"interface_hide_ui_on_capture"]);
+    UIBarButtonItem *cached = objc_getAssociatedObject(controller, kSPKThreadSeenHeaderItemKey);
+    if (cached && [objc_getAssociatedObject(controller, kSPKThreadSeenHeaderItemModeKey) isEqual:mode])
+        return cached;
+
+    // Its own glass circle rather than a share of the call buttons' capsule.
+    // The item still takes its slot, so the title makes room for it.
+    SEL hidesShared = NSSelectorFromString(@"setHidesSharedBackground:");
+    SEL sharesBackground = NSSelectorFromString(@"setSharesBackground:");
+    BOOL glassBar = [UIBarButtonItem instancesRespondToSelector:hidesShared] &&
+                    [UIBarButtonItem instancesRespondToSelector:sharesBackground] && NSClassFromString(@"UIGlassEffect");
+    UIBarButtonItem *seenButton = nil;
+    if (glassBar && !mode.boolValue) {
+        // Nothing to hide from captures: a plain image item, so the bar draws
+        // its own circle (a custom view gets padded into a capsule).
+        __weak UIViewController *weakController = controller;
+        UIAction *tap = [UIAction actionWithTitle:SPKL(@"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL")
+                                            image:[SPKAssetUtils instagramIconNamed:kSPKSeenMessagesBarIconResource
+                                                                          pointSize:24.0
+                                                                      renderingMode:UIImageRenderingModeAlwaysTemplate]
+                                       identifier:nil
+                                          handler:^(__unused UIAction *action) {
+                                              SPKThreadSeenButtonTapped(weakController);
+                                          }];
+        seenButton = [[UIBarButtonItem alloc] initWithPrimaryAction:tap];
+        seenButton.menu = SPKDirectSeenButtonMenu(controller);
+        seenButton.tintColor = UIColor.labelColor;
+        ((void (*)(id, SEL, BOOL))objc_msgSend)(seenButton, sharesBackground, NO);
+    } else {
+        // The button draws the glass itself, so the capture redaction covers it.
+        SPKChromeButton *chromeButton = SPKMakeThreadSeenButton(controller);
+        seenButton = [[UIBarButtonItem alloc] initWithCustomView:chromeButton];
+        if (glassBar) {
+            ((void (*)(id, SEL, BOOL))objc_msgSend)(seenButton, hidesShared, YES);
+            SPKApplyThreadSeenHeaderGlass(chromeButton);
+        }
+    }
+    seenButton.accessibilityIdentifier = @"spk-seen-btn";
+    seenButton.accessibilityLabel = SPKL(@"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL");
+
+    objc_setAssociatedObject(controller, kSPKThreadSeenHeaderItemKey, seenButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(controller, kSPKThreadSeenHeaderItemModeKey, mode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return seenButton;
+}
+
 %group SPKMessageSeenButtonHooks
 
 %hook IGTallNavigationBarView
@@ -1160,45 +1458,35 @@ static void SPKReconcileThreadSeenPlacement(UIViewController *controller) {
                                             }]] mutableCopy];
 
     // Messages seen — skip the nav-bar button when the user has moved it to the
-    // composer bubble.
-    if (SPKDirectManualSeenRulesEnabled() && !SPKThreadSeenButtonAtBottom()) {
-        UIViewController *nearestVC = [SPKUtils nearestViewControllerForView:self];
-        Class directThreadClass = NSClassFromString(@"IGDirectThreadViewController");
-        if (directThreadClass && [nearestVC isKindOfClass:directThreadClass] && SPKDirectShouldShowSeenButtonForSource(nearestVC)) {
-            SPKChromeButton *chromeButton = nil;
-            UIBarButtonItem *seenButton = SPKChromeBarButtonItem(@"", 24.0, self, @selector(seenButtonHandler:), &chromeButton);
-            [chromeButton setIconResource:kSPKSeenMessagesBarIconResource pointSize:24.0];
-            seenButton.accessibilityIdentifier = @"spk-seen-btn";
-            chromeButton.bubbleColor = UIColor.clearColor;
-            chromeButton.iconTint = UIColor.labelColor;
-            chromeButton.menu = SPKDirectSeenButtonMenu(nearestVC);
-            chromeButton.showsMenuAsPrimaryAction = NO;
-            chromeButton.menuWillDisplayHandler = ^{ SPKPlayButtonTappedHaptic(); };
+    // composer bubble, or when the call buttons went to the side column (the
+    // button docks there instead).
+    UIViewController *nearestVC = [SPKUtils nearestViewControllerForView:self];
+    Class directThreadClass = NSClassFromString(@"IGDirectThreadViewController");
+    if (directThreadClass && [nearestVC isKindOfClass:directThreadClass] && SPKThreadHeaderSeenButtonWanted(nearestVC) &&
+        !SPKThreadHeaderItemsInColumn(nearestVC)) {
+        UIBarButtonItem *seenButton = SPKThreadHeaderSeenItem(nearestVC);
+        if (seenButton)
             [new_items addObject:seenButton];
-        }
     }
 
     %orig([new_items copy]);
 }
 
-// Messages seen button
-%new - (void)seenButtonHandler:(UIBarButtonItem *)sender {
-(void)sender;
-SPKPlayButtonTappedHaptic();
-UIViewController *nearestVC = [SPKUtils nearestViewControllerForView:self];
-if ([nearestVC isKindOfClass:%c(IGDirectThreadViewController)]) {
-    if (SPKMarkDirectThreadMessagesAsSeen(nearestVC)) {
-        SPKNotify(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"MESSAGES_SEEN_MARKED_MESSAGES_TOAST"), nil, @"circle_check_filled", SPKNotificationToneSuccess);
-    } else {
-        SPKNotify(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST"), nil, @"error_filled", SPKNotificationToneError);
+- (void)layoutSubviews {
+    %orig;
+    // The button sizes lazily, so its glass follows once it is laid out.
+    for (UIBarButtonItem *item in self.rightBarButtonItems) {
+        if ([item.accessibilityIdentifier isEqualToString:@"spk-seen-btn"] && [item.customView isKindOfClass:[SPKChromeButton class]] &&
+            objc_getAssociatedObject(item.customView, kSPKThreadSeenHeaderGlassKey))
+            SPKApplyThreadSeenHeaderGlass((SPKChromeButton *)item.customView);
     }
-}
 }
 %end
 
 %hook IGDirectThreadViewController
 - (void)viewWillAppear:(BOOL)animated {
     %orig;
+    objc_setAssociatedObject(self, kSPKThreadSeenLeavingKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (!SPKDirectSeenHooksNeeded())
         return;
     SPKDirectRememberActiveThreadContextForController(self, @"viewWillAppear");
@@ -1206,6 +1494,9 @@ if ([nearestVC isKindOfClass:%c(IGDirectThreadViewController)]) {
 
 - (void)viewDidAppear:(BOOL)animated {
     %orig;
+    // The call buttons attach to the side column as the push settles, after the
+    // last layout pass.
+    SPKLayoutThreadSeenColumnButton(self);
     if (!SPKDirectSeenHooksNeeded())
         return;
     SPKDirectRememberActiveThreadContextForController(self, @"viewDidAppear");
@@ -1228,6 +1519,8 @@ if ([nearestVC isKindOfClass:%c(IGDirectThreadViewController)]) {
 - (void)viewDidLayoutSubviews {
     %orig;
     SPK_PERF_SCOPE(@"MessageSeenButtons.viewDidLayoutSubviews");
+    if (SPKDirectManualSeenRulesEnabled() || objc_getAssociatedObject(self, kSPKThreadSeenColumnButtonKey))
+        SPKLayoutThreadSeenColumnButton(self);
     // Cheap reposition only — the bubble is installed in viewDidAppear. Avoids
     // rebuilding thread context on every layout pass.
     if (SPKThreadSeenBubbleEnabled()) {
@@ -1323,6 +1616,12 @@ if (SPKMarkDirectThreadMessagesAsSeen(self)) {
     }
     if (fabs(offset - baseline.doubleValue) > kSPKThreadSeenScrollSnapThreshold)
         SPKSnapThreadSeenBubbleHome(self);
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    %orig;
+    objc_setAssociatedObject(self, kSPKThreadSeenLeavingKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    SPKRemoveThreadSeenColumnButton(self);
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

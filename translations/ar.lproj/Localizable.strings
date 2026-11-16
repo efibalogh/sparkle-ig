@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "هل أنت متأكد من أنك تريد إرسال هذا الريل إلى %@؟";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "تم وضع علامة على الرسائل كمشاهدة";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "تعذر تحديد كمشاهد";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "وضع علامة كمقروءة";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "هل أنت متأكد من أنك تريد تغيير الرسائل المختفية لهذه المحادثة؟";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "تعطيل كشف لقطة الشاشة";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "يعطل إيماءة التمرير التي تفعّل وضع الاختفاء.";

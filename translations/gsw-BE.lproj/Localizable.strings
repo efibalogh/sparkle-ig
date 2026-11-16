@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bisch sicher, dass du das Reel an %@ wottsch schicke?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Nachrichte als gseh markiert";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Cha Nachrichte nid als gseh markiere";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Als gseh markiere";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Bisch sicher, dass du d'Verschwindendi-Nachrichte für dä Chat wottsch ändere?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Screenshot-Erkennig usschaute";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Schautet d'Wüsch-Geste us, wo dr Vanish-Modus ygschautet.";

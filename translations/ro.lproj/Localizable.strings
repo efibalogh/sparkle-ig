@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Sigur doriți să trimiteți acest reel către %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Mesajele marcate ca vizualizate";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nu pot marca ca vizionat";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Marchează ca văzut";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Sigur doriți să schimbați setările pentru mesajele care dispar pentru această conversație?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Dezactivează detectarea capturii de ecran";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Dezactivează gestul de glisare care activează modul dispariție.";

@@ -1930,6 +1930,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Are you sure you want to send this reel to %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Marked messages as seen";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Unable to mark messages as seen";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Mark as Seen";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Are you sure you want to change disappearing messages for this chat?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Disable Screenshot Detection";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Disables the swipe gesture that enables vanish mode.";

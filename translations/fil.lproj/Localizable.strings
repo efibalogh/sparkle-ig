@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Sigurado ka bang gusto mong ipadala ang reel na ito kay %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Na-mark ang mga mensahe bilang seen";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Hindi ma-mark ang mga mensahe bilang seen";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Markahan bilang Nakita";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Sigurado ka bang gusto mong palitan ang disappearing messages para sa chat na ito?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "I-disable ang Screenshot Detection";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Idi-disable ang swipe gesture na nag-e-enable ng vanish mode.";

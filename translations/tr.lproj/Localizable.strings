@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bu reelsi %@ kullanıcısına göndermek istediğinden emin misin?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Mesajlar görüldü olarak işaretlendi";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Görüldü olarak işaretlenemedi";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Görüldü olarak işaretle";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Bu sohbet için kaybolan iletileri değiştirmek istediğinden emin misin?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Ekran Görüntüsü Algılamasını Devre Dışı Bırak";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Kaybolma modunu açan kaydırma hareketini devre dışı bırakır.";

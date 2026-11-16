@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bạn có chắc chắn muốn gửi reel này đến %@ không?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Đã đánh dấu tin nhắn là đã xem";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Không thể đánh dấu tin nhắn là đã xem";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Đánh dấu là đã xem";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Bạn có chắc chắn muốn thay đổi cài đặt tin nhắn tự xóa cho đoạn chat này không?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Tắt phát hiện chụp màn hình";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Tắt cử chỉ vuốt lên để bật chế độ tạm thời.";

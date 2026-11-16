@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Ви впевнені, що хочете надіслати цей рілс %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Повідомлення позначені як прочитані";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Не вдалося позначити як переглянуте";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Позначити як переглянуте";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Ви впевнені, що хочете змінити зникаючі повідомлення для цього чату?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Відключити виявлення знімків екрана";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Вимикає жест свайпу, який вмикає зникомий режим.";

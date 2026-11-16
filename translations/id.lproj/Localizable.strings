@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Apakah Anda yakin ingin mengirim reel ini ke %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Pesan ditandai sebagai dilihat";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Tidak dapat menandai pesan sebagai dilihat";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Tandai sebagai Dilihat";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Apakah Anda yakin ingin mengubah pesan menghilang untuk obrolan ini?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Nonaktifkan Deteksi Tangkapan Layar";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Menonaktifkan gestur geser yang mengaktifkan mode menghilang.";

@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Είστε σίγουρος ότι θέλετε να στείλετε αυτό το reel στον/στην %@;";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Σημειώθηκαν τα μηνύματα ως διαβασμένα";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Δεν ήταν δυνατή η σήμανση ως αναγνωρισμένη";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Σήμανση ως αναγνωσμένο";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Είστε σίγουρος ότι θέλετε να αλλάξετε τα εξαφανιζόμενα μηνύματα για αυτήν τη συνομιλία;";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Απενεργοποίηση Ανίχνευσης Στιγμιότυπου";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Απενεργοποιεί την κίνηση σάρωσης που ενεργοποιεί τη λειτουργία εξαφάνισης.";

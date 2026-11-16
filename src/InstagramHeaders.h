@@ -241,6 +241,8 @@
 @end
 
 @interface IGTallNavigationBarView : UIView
+- (NSArray<UIBarButtonItem *> *)rightBarButtonItems;
+- (void)setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)items;
 @end
 
 @interface UIView (RCTViewUnmounting)

@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "คุณแน่ใจหรือไม่ว่าต้องการส่งรีลนี้ไปยัง %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "ทำเครื่องหมายข้อความว่าเห็นแล้ว";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "ไม่สามารถทำเครื่องหมายข้อความว่าเห็นแล้วได้";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "ทำเครื่องหมายว่าเห็นแล้ว";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนข้อความหายไปสำหรับแชทนี้?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "ปิดการตรวจจับภาพหน้าจอ";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "ปิดใช้งานท่าปัดขึ้นที่ใช้เปิดโหมดหายไป";

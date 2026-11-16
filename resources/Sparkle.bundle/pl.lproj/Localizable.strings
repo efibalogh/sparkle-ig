@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Czy na pewno chcesz wysłać tę rolkę do %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Oznaczono wiadomości jako odczytane";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nie można oznaczyć wiadomości jako wyświetlonych";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Oznacz jako odczytane";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "Czy na pewno chcesz zmienić znikające wiadomości w tym czacie?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Wyłącz wykrywanie zrzutów ekranu";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Wyłącza gest przesunięcia włączający tryb znikania.";

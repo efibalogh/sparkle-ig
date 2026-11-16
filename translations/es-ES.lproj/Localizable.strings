@@ -1867,6 +1867,7 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "¿Estás seguro de que deseas enviar este reel a %@?";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Mensajes marcados como vistos";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "No se puede marcar como visto";
+"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Marcar como visto";
 "MESSAGES_VANISH_MODE_CONFIRM_CHANGE_DISAPPEARING_MESSAGES_CHAT_CONFIRMATION_MESSAGE" = "¿Estás seguro de que deseas cambiar los mensajes que desaparecen para este chat?";
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "Desactivar detección de captura de pantalla";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Desactiva el gesto de deslizar que activa el modo efímero.";
