@@ -63,6 +63,7 @@ ryuk ryukgram socuul scinsta instasane zxpluginsinject
 # release users never see them, so no other catalog carries or translates them, and
 # lookups fall back to English.
 DEV_ONLY_KEY_PREFIX = "DEV_"
+DEV_ONLY_SOURCE_GUARD = "#if SPK_DEV"
 # English a native reviewer of a shipped catalog chose to keep. Checked per key, so
 # the same words left untranslated anywhere else still count against the catalog.
 REVIEWED_ENGLISH = {
@@ -359,6 +360,11 @@ def main(only_locale: str | None = None, emit_table: bool = False) -> int:
             normal_uses[match.group(1) or match.group(2)] += 1
         for match in PLURAL_CALL_RE.finditer(text):
             plural_uses[match.group(1)] += 1
+        # A source wrapped in SPK_DEV from its first line is dev-build-only tooling:
+        # release users never see its text, so it is not checked for raw strings.
+        # Its key uses still count, like the DEV_ keys it may look up.
+        if text.lstrip().startswith(DEV_ONLY_SOURCE_GUARD):
+            continue
         for pattern, description in (
             (RAW_CHROME_RE, "raw user-facing chrome label"),
             (RAW_BULK_MENU_RE, "raw user-facing bulk-menu title"),
