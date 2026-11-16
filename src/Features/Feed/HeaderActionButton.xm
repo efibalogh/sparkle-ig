@@ -220,6 +220,7 @@ static UIView *SPKHeaderLogoView(UIView *header) {
 
 static const CGFloat kSPKHeaderColumnGap = 10.0;
 static const CGFloat kSPKHeaderColumnSlot = 48.0; // a vertical bar item's footprint
+static const CGFloat kSPKHeaderColumnEdgeInset = 24.0; // vertical bar items' gap to the display edge
 static const void *kSPKHeaderColumnGlassEffectKey = &kSPKHeaderColumnGlassEffectKey;
 
 // The glass group holding the tabs when the tab bar runs vertically down a side
@@ -276,6 +277,33 @@ static CGFloat SPKColumnOcclusionMaxY(UIView *view, CGRect columnFrame) {
         }
     }
     return maxY;
+}
+
+// The system-reserved region (status items) at the top of a side column that
+// starts at or past `minX` in `view`'s space, or CGRectNull when there is none.
+static CGRect SPKColumnStatusRegion(UIView *view, CGFloat minX) {
+    Class kindClass = NSClassFromString(@"UIViewReservedRegionKind");
+    SEL kindSel = NSSelectorFromString(@"occlusionRegionKind");
+    SEL regionsSel = NSSelectorFromString(@"reservedRegionsOfKind:");
+    if (!kindClass || ![kindClass respondsToSelector:kindSel] || ![view respondsToSelector:regionsSel])
+        return CGRectNull;
+    id kind = ((id (*)(id, SEL))objc_msgSend)(kindClass, kindSel);
+    NSArray *regions = kind ? ((id (*)(id, SEL, id))objc_msgSend)(view, regionsSel, kind) : nil;
+    if (![regions isKindOfClass:[NSArray class]])
+        return CGRectNull;
+    CGRect best = CGRectNull;
+    for (id region in regions) {
+        @try {
+            if (![[region valueForKey:@"active"] boolValue])
+                continue;
+            CGRect frame = [[region valueForKey:@"frame"] CGRectValue];
+            if (CGRectGetMinX(frame) < minX - 1.0 || CGRectGetMinY(frame) > 1.0)
+                continue;
+            best = CGRectIsNull(best) ? frame : CGRectUnion(best, frame);
+        } @catch (__unused NSException *e) {
+        }
+    }
+    return best;
 }
 
 @interface UIView (SPKHeaderButton)
@@ -641,7 +669,58 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
 - (void)spk_installInboxHeaderActionButtonIfNeeded;
 - (void)spk_layoutInboxHeaderActionButton;
 - (void)spk_updateInboxHeaderGlass:(SPKFeedHeaderActionButton *)button;
+- (BOOL)spk_layoutInboxHeaderButtonInColumn:(SPKFeedHeaderActionButton *)button;
 @end
+
+// Instagram adds header controls by account type (a business inbox carries a
+// menu button), and one can sit where the mirrored slot is. The button then
+// steps toward the middle past it. Returns CGRectNull when that runs into
+// another control or out of the safe content width: the row has no room.
+static BOOL SPKInboxHeaderControlIsVisible(UIView *view, UIView *header) {
+    for (UIView *current = view; current && current != header; current = current.superview) {
+        if (current.hidden || current.alpha < 0.01)
+            return NO;
+    }
+    return YES;
+}
+
+static CGRect SPKInboxHeaderFrameAvoidingControls(UIView *header, UIView *button, CGRect frame) {
+    NSMutableArray<NSValue *> *occupied = [NSMutableArray array];
+    NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:header];
+    for (NSUInteger i = 0; i < queue.count && i < 200; i++) {
+        UIView *view = queue[i];
+        if (view == button)
+            continue;
+        if (view != header && [view isKindOfClass:UIControl.class]) {
+            CGRect controlFrame = [view convertRect:view.bounds toView:header];
+            if (SPKInboxHeaderControlIsVisible(view, header) && CGRectGetWidth(controlFrame) > 1.0 && CGRectGetHeight(controlFrame) > 1.0)
+                [occupied addObject:[NSValue valueWithCGRect:controlFrame]];
+            continue;
+        }
+        [queue addObjectsFromArray:view.subviews];
+    }
+
+    CGRect content = UIEdgeInsetsInsetRect(header.bounds, header.safeAreaInsets);
+    BOOL trailingHalf = CGRectGetMidX(frame) > CGRectGetMidX(content);
+    for (NSUInteger pass = 0; pass <= occupied.count; pass++) {
+        CGRect blocker = CGRectNull;
+        for (NSValue *value in occupied) {
+            if (CGRectIntersectsRect(CGRectInset(frame, -kSPKHeaderButtonSpacing / 2.0, 0.0), value.CGRectValue)) {
+                blocker = value.CGRectValue;
+                break;
+            }
+        }
+        if (CGRectIsNull(blocker))
+            return CGRectGetMinX(frame) >= CGRectGetMinX(content) && CGRectGetMaxX(frame) <= CGRectGetMaxX(content) ? frame : CGRectNull;
+        // Stepping past a wide control (the account title) would leave the row's
+        // own side, so only button-sized controls are stepped past.
+        if (CGRectGetWidth(blocker) > CGRectGetWidth(frame) * 2.0)
+            return CGRectNull;
+        frame.origin.x = floor(trailingHalf ? CGRectGetMinX(blocker) - kSPKHeaderButtonSpacing - CGRectGetWidth(frame)
+                                            : CGRectGetMaxX(blocker) + kSPKHeaderButtonSpacing);
+    }
+    return CGRectNull;
+}
 
 @implementation UIView (SPKInboxHeaderButton)
 
@@ -737,12 +816,26 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
     CGFloat side = kSPKHeaderButtonSide;
     CGRect expectedFrame;
     if (!CGRectIsNull(composerFrame) && composerFrame.size.width > 1.0) {
-        CGFloat rightInset = CGRectGetWidth(self.bounds) - CGRectGetMaxX(composerFrame);
+        // Mirror the compose button across the safe content width, not the
+        // header's full width: the header runs under a side column on wide or
+        // foldable layouts, and a mirror of a leading compose button would land
+        // in that column.
+        CGRect content = UIEdgeInsetsInsetRect(self.bounds, self.safeAreaInsets);
+        CGFloat mirroredX = CGRectGetMinX(content) + (CGRectGetMaxX(content) - CGRectGetMaxX(composerFrame));
         CGFloat centerY = CGRectGetMidY(composerFrame);
-        expectedFrame = CGRectMake(floor(rightInset), floor(centerY - side / 2.0), side, side);
+        expectedFrame = CGRectMake(floor(mirroredX), floor(centerY - side / 2.0), side, side);
     } else {
         CGFloat leftX = self.safeAreaInsets.left + kSPKHeaderButtonLeftInset;
         expectedFrame = CGRectMake(floor(leftX), floor(CGRectGetHeight(self.bounds) / 2.0 - side / 2.0), side, side);
+    }
+    expectedFrame = SPKInboxHeaderFrameAvoidingControls(self, button, expectedFrame);
+    if (CGRectIsNull(expectedFrame)) {
+        // No room in the row. With a side column beside the header, the button
+        // docks at its top under the status items, where a vertical bar puts a
+        // screen's first item; without one it stays out of the way.
+        if (![self spk_layoutInboxHeaderButtonInColumn:button])
+            button.hidden = YES;
+        return;
     }
 
     // v410's inbox header is the legacy Obj-C IGCustomHeaderView subclass,
@@ -804,6 +897,76 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
     [self spk_updateInboxHeaderGlass:button];
 }
 
+- (BOOL)spk_layoutInboxHeaderButtonInColumn:(SPKFeedHeaderActionButton *)button {
+    UIView *host = [SPKUtils nearestViewControllerForView:self].tabBarController.view;
+    if (!host || host.window != self.window)
+        return NO;
+
+    // The status items' reserved region at the top of a side column, found
+    // beside the header rather than above it: past the header's safe content
+    // when the header runs under the column (folded), or past the header
+    // entirely when it sits in a narrower pane (unfolded). A phone's camera
+    // region sits above the header's content, so it never qualifies.
+    CGRect content = [host convertRect:UIEdgeInsetsInsetRect(self.bounds, self.safeAreaInsets) fromView:self];
+    CGRect status = SPKColumnStatusRegion(host, CGRectGetMaxX(content));
+    if (CGRectIsNull(status))
+        return NO;
+
+    // Same placement as the feed button in the column: on the vertical bar's item
+    // axis, in the 48pt slot right under the status items. The tab group gives
+    // the axis when it is up; with the bar hidden (single-tab mode) the axis is
+    // where the bar centers its items, one slot plus its edge inset in from the
+    // column's trailing edge, which is also where the status items sit.
+    CGFloat side = kSPKHeaderButtonSide;
+    UIView *platter = SPKVerticalTabPlatter(self);
+    CGFloat axis = platter && platter.window == host.window
+                       ? CGRectGetMidX([host convertRect:platter.bounds fromView:platter])
+                       : CGRectGetMaxX(status) - kSPKHeaderColumnEdgeInset - kSPKHeaderColumnSlot / 2.0;
+    CGRect expectedFrame = CGRectMake(floor(axis - side / 2.0),
+                                      floor(CGRectGetMaxY(status) + (kSPKHeaderColumnSlot - side) / 2.0), side, side);
+    if (CGRectGetMinX(expectedFrame) < CGRectGetMinX(status) || CGRectGetMaxX(expectedFrame) > CGRectGetMaxX(host.bounds))
+        return NO;
+
+    button.hidden = NO;
+    button.alpha = 1.0;
+    if (button.superview != host)
+        [host addSubview:button];
+    if (!CGRectEqualToRect(button.frame, expectedFrame)) {
+        button.frame = expectedFrame;
+        SPKLog(@"HeaderButton", @"[Sparkle] Inbox header row is full, docked the button under the column status items frame=%@", NSStringFromCGRect(expectedFrame));
+    }
+    objc_setAssociatedObject(button, kSPKInboxHeaderButtonLastFrameAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [host bringSubviewToFront:button];
+
+    // System glass, like the feed button and the tab group in the column; there
+    // is no IG bubble out here to mirror. Back in the header row the mirror
+    // adopts IG's effect again.
+    UIView *glassView = objc_getAssociatedObject(button, kSPKInboxHeaderGlassViewKey);
+    if (!glassView) {
+        glassView = SPKChromeGlassMirrorMakeBubble(@"sparkle-inbox-action-glass");
+        if (glassView)
+            objc_setAssociatedObject(button, kSPKInboxHeaderGlassViewKey, glassView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    if ([glassView isKindOfClass:[UIVisualEffectView class]]) {
+        UIVisualEffect *effect = objc_getAssociatedObject(button, kSPKHeaderColumnGlassEffectKey);
+        if (!effect) {
+            effect = [[NSClassFromString(@"UIGlassEffect") alloc] init];
+            if (effect)
+                objc_setAssociatedObject(button, kSPKHeaderColumnGlassEffectKey, effect, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        UIVisualEffectView *bubble = (UIVisualEffectView *)glassView;
+        if (effect && bubble.effect != effect)
+            bubble.effect = effect;
+        if (bubble.layer.borderWidth != 0.0)
+            bubble.layer.borderWidth = 0.0;
+        if (bubble.alpha != 1.0)
+            bubble.alpha = 1.0;
+    }
+    if (glassView)
+        SPKChromeGlassMirrorAttach(glassView, button);
+    return YES;
+}
+
 - (void)spk_updateInboxHeaderGlass:(SPKFeedHeaderActionButton *)button {
     UIView *glassView = objc_getAssociatedObject(button, kSPKInboxHeaderGlassViewKey);
     if (!glassView) {
@@ -831,8 +994,15 @@ static NSString *SPKHeaderButtonConfigSignature(NSArray<SPKHeaderDestination *> 
 - (void)didMoveToWindow {
     %orig;
     SPK_PERF_SCOPE(@"HeaderActionButton.didMoveToWindow");
-    if ([(UIView *)self window])
+    if ([(UIView *)self window]) {
         [self spk_installInboxHeaderActionButtonIfNeeded];
+        return;
+    }
+    // Docked in the side column the button lives outside the header, so it is
+    // hidden here until the header's next layout places it again.
+    SPKFeedHeaderActionButton *button = [self spk_inboxHeaderButton];
+    if (button && ![button isDescendantOfView:(UIView *)self])
+        button.hidden = YES;
 }
 
 - (void)layoutSubviews {
