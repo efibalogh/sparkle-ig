@@ -28,6 +28,10 @@ extern "C" {
 /// Used by the Instants screenshot bypass to skip our own redaction fields.
 BOOL SPKChromeCanvasOwnsSecureField(UITextField *field);
 
+/// Marks a Sparkle-made redaction field so the Instants screenshot bypass, which
+/// turns off every other secure field while an Instant is up, leaves it secure.
+void SPKChromeMarkSecureFieldOwned(UITextField *field);
+
 #ifdef __cplusplus
 }
 #endif
