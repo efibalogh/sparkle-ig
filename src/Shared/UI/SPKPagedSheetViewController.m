@@ -111,27 +111,42 @@
     [self.view addSubview:self.skipButton];
 
     UILayoutGuide *safe = self.view.safeAreaLayoutGuide;
+    // A side bar or clock column shows up as a horizontal safe-area inset, so
+    // everything centres on a column inside the safe area. On a wide screen the
+    // column stops at a readable width instead of stretching the text and the
+    // button across it.
+    UILayoutGuide *column = [[UILayoutGuide alloc] init];
+    [self.view addLayoutGuide:column];
+    NSLayoutConstraint *columnFill = [column.widthAnchor constraintEqualToAnchor:safe.widthAnchor];
+    columnFill.priority = UILayoutPriorityDefaultHigh;
     [NSLayoutConstraint activateConstraints:@[
+        [column.topAnchor constraintEqualToAnchor:safe.topAnchor],
+        [column.bottomAnchor constraintEqualToAnchor:safe.bottomAnchor],
+        [column.centerXAnchor constraintEqualToAnchor:safe.centerXAnchor],
+        [column.widthAnchor constraintLessThanOrEqualToAnchor:safe.widthAnchor],
+        [column.widthAnchor constraintLessThanOrEqualToConstant:560.0],
+        columnFill,
+
         [self.heroView.topAnchor constraintEqualToAnchor:safe.topAnchor constant:24.0],
-        [self.heroView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.heroView.centerXAnchor constraintEqualToAnchor:column.centerXAnchor],
         [self.heroView.widthAnchor constraintEqualToConstant:92.0],
         [self.heroView.heightAnchor constraintEqualToConstant:92.0],
 
         [self.pager.topAnchor constraintEqualToAnchor:self.heroView.bottomAnchor constant:16.0],
-        [self.pager.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.pager.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.pager.leadingAnchor constraintEqualToAnchor:column.leadingAnchor],
+        [self.pager.trailingAnchor constraintEqualToAnchor:column.trailingAnchor],
         [self.pager.bottomAnchor constraintEqualToAnchor:self.pageControl.topAnchor constant:-4.0],
 
-        [self.pageControl.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.pageControl.centerXAnchor constraintEqualToAnchor:column.centerXAnchor],
         [self.pageControl.bottomAnchor constraintEqualToAnchor:self.primaryButton.topAnchor constant:-8.0],
 
-        [self.primaryButton.leadingAnchor constraintEqualToAnchor:safe.leadingAnchor constant:24.0],
-        [self.primaryButton.trailingAnchor constraintEqualToAnchor:safe.trailingAnchor constant:-24.0],
+        [self.primaryButton.leadingAnchor constraintEqualToAnchor:column.leadingAnchor constant:24.0],
+        [self.primaryButton.trailingAnchor constraintEqualToAnchor:column.trailingAnchor constant:-24.0],
         [self.primaryButton.heightAnchor constraintEqualToConstant:50.0],
 
         // Skip sits directly beneath the primary CTA.
         [self.skipButton.topAnchor constraintEqualToAnchor:self.primaryButton.bottomAnchor constant:8.0],
-        [self.skipButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.skipButton.centerXAnchor constraintEqualToAnchor:column.centerXAnchor],
         [self.skipButton.bottomAnchor constraintEqualToAnchor:safe.bottomAnchor constant:-10.0],
         [self.skipButton.heightAnchor constraintEqualToConstant:32.0],
     ]];

@@ -1372,9 +1372,29 @@ static CGFloat const kSPKPillCloseButtonHitSide = 44.0;
 // photo 1, ..., localImage 5, ..., alert 8 (the last one confirmed live on 447). The
 // local image case is the one that takes a plain UIImage icon.
 static unsigned long long const kSPKInstagramToastLocalImageSubtype = 5;
-static CGFloat const kSPKInstagramToastMaxWidth = 420.0;
-// Instagram presents its toast 8pt in from each screen edge (measured against a
-// native toast), against the pill's 12pt.
+// Width a notification can use: its host's safe area, so it stays clear of side
+// chrome (a status bar or side bar on a foldable). Equal to the screen width on a
+// portrait iPhone.
+static CGFloat SPKNotificationAvailableWidth(UIView *view) {
+    UIView *host = view.superview ?: view.window;
+    if (!host) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if (![scene isKindOfClass:UIWindowScene.class] || scene.activationState != UISceneActivationStateForegroundActive)
+                continue;
+            for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+                if (window.isKeyWindow)
+                    host = window;
+            }
+        }
+    }
+    if (!host)
+        return CGRectGetWidth(UIScreen.mainScreen.bounds);
+    return CGRectGetWidth(UIEdgeInsetsInsetRect(host.bounds, host.safeAreaInsets));
+}
+
+// Instagram presents its toast 8pt in from each edge of the safe area (measured
+// against native toasts on a phone and on an 850pt-wide unfolded screen, with no
+// width cap), against the pill's 12pt.
 static CGFloat const kSPKInstagramToastSideMargin = 8.0;
 static CGFloat const kSPKInstagramProgressRingWidth = 2.5;
 
@@ -1964,7 +1984,7 @@ static NSString *SPKInstagramStableLayoutText(NSString *text) {
 
     [self spk_applyInstagramToneTint];
 
-    CGFloat maxWidth = MIN(kSPKInstagramToastMaxWidth, CGRectGetWidth(UIScreen.mainScreen.bounds) - 2.0 * kSPKInstagramToastSideMargin);
+    CGFloat maxWidth = SPKNotificationAvailableWidth(self) - 2.0 * kSPKInstagramToastSideMargin;
     CGSize size = [toastView sizeThatFits:CGSizeMake(maxWidth, CGFLOAT_MAX)];
     self.instagramContentSize = CGSizeMake(size.width >= 1.0 ? MIN(size.width, maxWidth) : maxWidth,
                                            size.height >= 1.0 ? size.height : kDynamicTallHeight);
@@ -2302,7 +2322,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     CGFloat fixedWidth = kHorizontalPad + kIconBadgeSize + 10.0 + kHorizontalPad;
     if (hasButton)
         fixedWidth += 24.0 + 13.0 + 10.0;
-    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, CGRectGetWidth(UIScreen.mainScreen.bounds) - 24.0);
+    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, SPKNotificationAvailableWidth(self) - 24.0);
     CGFloat widestText = MIN(kDynamicMaxWidth, screenMaxWidth) - fixedWidth;
 
     BOOL wraps = subtitleWidth > widestText + 0.5;
@@ -2345,7 +2365,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     }
 
     CGFloat targetWidth = ceil(textWidth) + fixedWidth;
-    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, CGRectGetWidth(UIScreen.mainScreen.bounds) - 24.0);
+    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, SPKNotificationAvailableWidth(self) - 24.0);
     targetWidth = MIN(MIN(kDynamicMaxWidth, screenMaxWidth), MAX(kDynamicMinWidth, targetWidth));
 
     CGFloat newWidth = targetWidth;

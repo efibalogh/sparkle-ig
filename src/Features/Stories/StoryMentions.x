@@ -167,6 +167,9 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 12, 0);
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 12, 0);
     self.tableView.showsVerticalScrollIndicator = NO;
+    // The sheet already covers a side column (folded foldable), so rows span its
+    // full width instead of stopping short of a column they sit on top of.
+    self.tableView.insetsContentViewsToSafeArea = NO;
     [self.view addSubview:self.tableView];
 
     // Long-press a row to copy that account's username without leaving the story.

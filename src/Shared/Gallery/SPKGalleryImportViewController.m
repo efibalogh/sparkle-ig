@@ -658,10 +658,7 @@ static UIColor *SPKImportAmberColor(void) {
 }
 
 - (void)refreshOverflowMenu {
-    UIButton *button = (UIButton *)self.overflowBarButtonItem.customView;
-    if ([button isKindOfClass:[UIButton class]]) {
-        button.menu = [self buildOverflowMenu];
-    }
+    self.overflowBarButtonItem.menu = [self buildOverflowMenu];
 }
 
 #pragma mark - Import action

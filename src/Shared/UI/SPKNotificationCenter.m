@@ -860,9 +860,13 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
             }
             if (tabBarControllerClass && [controller isKindOfClass:tabBarControllerClass] && [controller respondsToSelector:@selector(tabBar)]) {
                 UIView *tabBar = ((UITabBarController *)controller).tabBar;
+                // Only a bottom bar counts. Beside a vertical side bar (foldables,
+                // regular width) the bar's top is mid-screen and says nothing about
+                // the bottom edge.
                 if ([tabBar isKindOfClass:UIView.class] && SPKNotificationViewIsOnScreen(tabBar, window)) {
-                    CGFloat top = CGRectGetMinY([tabBar convertRect:tabBar.bounds toView:nil]);
-                    gap = MAX(gap, screenHeight - top + spacing);
+                    CGRect frame = [tabBar convertRect:tabBar.bounds toView:nil];
+                    if (CGRectGetWidth(frame) > CGRectGetHeight(frame) && screenHeight - CGRectGetMinY(frame) < screenHeight / 2.0)
+                        gap = MAX(gap, screenHeight - CGRectGetMinY(frame) + spacing);
                 }
             }
             if ([NSStringFromClass(controller.class) containsString:@"DirectThread"])
@@ -963,7 +967,7 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
     [pill setPresentationTopConstraint:anchor];
     [NSLayoutConstraint activateConstraints:@[
         anchor,
-        [pill.centerXAnchor constraintEqualToAnchor:host.centerXAnchor],
+        [pill.centerXAnchor constraintEqualToAnchor:host.safeAreaLayoutGuide.centerXAnchor],
     ]];
 
     SPKNotificationSlot *slot = [SPKNotificationSlot new];

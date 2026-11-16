@@ -508,10 +508,10 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
     [self.emptyStateView addSubview:self.emptyStateSubtitle];
 
     [NSLayoutConstraint activateConstraints:@[
-        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [self.emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-20.0],
-        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:40.0],
-        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor constant:-40.0],
+        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:40.0],
+        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-40.0],
 
         [self.emptyStateIcon.topAnchor constraintEqualToAnchor:self.emptyStateView.topAnchor],
         [self.emptyStateIcon.centerXAnchor constraintEqualToAnchor:self.emptyStateView.centerXAnchor],

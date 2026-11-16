@@ -244,8 +244,8 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
 
         [self.entryStack.topAnchor constraintEqualToAnchor:content.topAnchor constant:kSPKInfoSheetTopPadding],
         [self.entryStack.bottomAnchor constraintEqualToAnchor:content.bottomAnchor constant:-kSPKInfoSheetBottomPadding],
-        [self.entryStack.leadingAnchor constraintEqualToAnchor:scrollView.frameLayoutGuide.leadingAnchor constant:kSPKInfoSheetHorizontalInset],
-        [self.entryStack.trailingAnchor constraintEqualToAnchor:scrollView.frameLayoutGuide.trailingAnchor constant:-kSPKInfoSheetHorizontalInset]
+        [self.entryStack.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:kSPKInfoSheetHorizontalInset],
+        [self.entryStack.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-kSPKInfoSheetHorizontalInset]
     ]];
 }
 

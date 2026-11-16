@@ -400,8 +400,8 @@ static NSURL *SPKNetworkWriteTemporaryFile(NSString *stem, NSString *extension, 
 
     [NSLayoutConstraint activateConstraints:@[
         [self.chipBar.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
-        [self.chipBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.chipBar.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.chipBar.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [self.chipBar.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
         [self.chipBar.heightAnchor constraintEqualToConstant:50.0],
         [self.tableView.topAnchor constraintEqualToAnchor:self.chipBar.bottomAnchor],
         [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
@@ -595,14 +595,14 @@ static NSString *const kSPKNetworkInterceptorRevealKey = @"network_interceptor";
     [container addSubview:subtitle];
 
     [NSLayoutConstraint activateConstraints:@[
-        [icon.centerXAnchor constraintEqualToAnchor:container.centerXAnchor],
+        [icon.centerXAnchor constraintEqualToAnchor:container.safeAreaLayoutGuide.centerXAnchor],
         [icon.widthAnchor constraintEqualToConstant:96],
         [icon.heightAnchor constraintEqualToConstant:96],
         [title.topAnchor constraintEqualToAnchor:icon.bottomAnchor constant:18],
         // Centre the icon + text block, nudged up like the other empty screens.
         [title.centerYAnchor constraintEqualToAnchor:container.centerYAnchor constant:6],
-        [title.leadingAnchor constraintEqualToAnchor:container.leadingAnchor constant:40],
-        [title.trailingAnchor constraintEqualToAnchor:container.trailingAnchor constant:-40],
+        [title.leadingAnchor constraintEqualToAnchor:container.safeAreaLayoutGuide.leadingAnchor constant:40],
+        [title.trailingAnchor constraintEqualToAnchor:container.safeAreaLayoutGuide.trailingAnchor constant:-40],
         [subtitle.topAnchor constraintEqualToAnchor:title.bottomAnchor constant:6],
         [subtitle.leadingAnchor constraintEqualToAnchor:title.leadingAnchor],
         [subtitle.trailingAnchor constraintEqualToAnchor:title.trailingAnchor],

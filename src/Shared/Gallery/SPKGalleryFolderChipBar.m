@@ -40,8 +40,9 @@ static CGFloat const kChipHorizontalInset = 14.0;
         [_scroll addSubview:_stack];
 
         [NSLayoutConstraint activateConstraints:@[
-            [_scroll.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-            [_scroll.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+            // Clear of a side column, like the grid below it.
+            [_scroll.leadingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],
+            [_scroll.trailingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor],
             [_scroll.topAnchor constraintEqualToAnchor:self.topAnchor],
             [_scroll.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
 

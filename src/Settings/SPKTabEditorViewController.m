@@ -387,7 +387,15 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     if (!self.headerContainer)
         return;
 
-    CGFloat width = CGRectGetWidth(self.tableView.bounds);
+    // The rows sit on the table's layout margins, which already absorb a side
+    // column's safe-area inset. The chips and preview card are drawn 16pt
+    // inside their frames, so these frames reach 16pt past the margins to line
+    // their edges up with the rows.
+    UIEdgeInsets margins = self.tableView.layoutMargins;
+    CGFloat const contentInset = 16.0;
+    CGFloat fullWidth = CGRectGetWidth(self.tableView.bounds);
+    CGFloat x = MAX(0.0, margins.left - contentInset);
+    CGFloat width = fullWidth - x - MAX(0.0, margins.right - contentInset);
     if (width <= 0.0)
         return;
 
@@ -399,17 +407,17 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     CGSize captionSize = [self.layoutCaption sizeThatFits:CGSizeMake(captionWidth, CGFLOAT_MAX)];
 
     CGFloat y = 4.0;
-    self.layoutChipBar.frame = CGRectMake(0, y, width, chipHeight);
+    self.layoutChipBar.frame = CGRectMake(x, y, width, chipHeight);
     y += chipHeight + 4.0;
 
     CGFloat previewHeight = [self usesClassicLayout] ? 212.0 : 168.0;
-    self.previewView.frame = CGRectMake(0, y, width, previewHeight);
+    self.previewView.frame = CGRectMake(x, y, width, previewHeight);
     y += previewHeight;
 
-    self.layoutCaption.frame = CGRectMake(margin, y, captionWidth, captionSize.height);
+    self.layoutCaption.frame = CGRectMake(x + margin, y, captionWidth, captionSize.height);
     y += captionSize.height + 10.0;
 
-    CGRect frame = CGRectMake(0, 0, width, y);
+    CGRect frame = CGRectMake(0, 0, fullWidth, y);
     if (!CGRectEqualToRect(self.headerContainer.frame, frame)) {
         self.headerContainer.frame = frame;
         self.tableView.tableHeaderView = self.headerContainer;

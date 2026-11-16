@@ -1,3 +1,4 @@
+#import "../UI/SPKSafeAreaLayout.h"
 #import "SPKStrings.h"
 #import "SPKGalleryViewController.h"
 #import "../../AssetUtils.h"
@@ -601,6 +602,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 - (void)viewSafeAreaInsetsDidChange {
     [super viewSafeAreaInsetsDidChange];
     [self updateCollectionInsets];
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)updateCollectionInsets {
@@ -627,6 +629,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
         layout.minimumLineSpacing = 0;
     }
     layout.sectionHeadersPinToVisibleBounds = SPKGalleryFolderBarPinned();
+    SPKFlowLayoutUseSafeArea(layout);
     return layout;
 }
 
@@ -807,12 +810,12 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     _emptyStateSubtitle = subtitle;
 
     [NSLayoutConstraint activateConstraints:@[
-        [_emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [_emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [_emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor
                                                       constant:-40],
-        [_emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor
+        [_emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
                                                                    constant:40],
-        [_emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor
+        [_emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor
                                                                  constant:-40],
 
         [icon.topAnchor constraintEqualToAnchor:_emptyStateView.topAnchor],
@@ -1308,12 +1311,12 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 - (CGSize)collectionView:(UICollectionView *)cv
                     layout:(UICollectionViewLayout *)layout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = cv.bounds.size.width;
+    CGFloat width = SPKCollectionViewUsableWidth(cv);
     if ([self isFolderIndexPath:indexPath]) {
         return CGSizeMake(width, 88);
     }
     if (self.viewMode == SPKGalleryViewModeGrid) {
-        NSInteger columns = MAX(kSPKGalleryGridColumnsMin, MIN(kSPKGalleryGridColumnsMax, self.gridColumns));
+        NSInteger columns = SPKAdaptiveColumnCount(MAX(kSPKGalleryGridColumnsMin, MIN(kSPKGalleryGridColumnsMax, self.gridColumns)), width);
         CGFloat totalSpacing = kGridSpacing * (columns - 1);
         CGFloat side = floor((width - totalSpacing) / columns);
         return CGSizeMake(side, side);

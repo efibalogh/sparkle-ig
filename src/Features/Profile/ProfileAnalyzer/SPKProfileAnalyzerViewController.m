@@ -255,6 +255,7 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
 - (void)buildTableHeader {
     self.headerContainer = [UIView new];
+    self.headerContainer.preservesSuperviewLayoutMargins = YES;
     self.header = [[SPKPAIdentityHeader alloc] init];
     self.header.translatesAutoresizingMaskIntoConstraints = NO;
     [self.headerContainer addSubview:self.header];
@@ -263,8 +264,11 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
     [NSLayoutConstraint activateConstraints:@[
         [self.header.topAnchor constraintEqualToAnchor:self.headerContainer.topAnchor],
-        [self.header.leadingAnchor constraintEqualToAnchor:self.headerContainer.leadingAnchor],
-        [self.header.trailingAnchor constraintEqualToAnchor:self.headerContainer.trailingAnchor],
+        // Line the scan button (16pt inside the header) up with the rows below,
+        // which sit on the table's layout margins. Those already absorb a side
+        // column's safe-area inset, so the header stays clear of it too.
+        [self.header.leadingAnchor constraintEqualToAnchor:self.headerContainer.layoutMarginsGuide.leadingAnchor constant:-16.0],
+        [self.header.trailingAnchor constraintEqualToAnchor:self.headerContainer.layoutMarginsGuide.trailingAnchor constant:16.0],
         [self.header.bottomAnchor constraintEqualToAnchor:self.headerContainer.bottomAnchor],
     ]];
 }

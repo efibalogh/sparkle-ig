@@ -16,8 +16,8 @@ static NSString *const kSPKFontSpecimenUppercase = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 static NSString *const kSPKFontSpecimenLowercase = @"abcdefghijklmnopqrstuvwxyz";
 static NSString *const kSPKFontSpecimenFigures = @"0123456789 &@#%$ ?!.,:;'\"-()";
 
-// Matches an inset-grouped table's own side margins, so the card lines up with the
-// section below it, and the text inside the card with the card's edges.
+// Text inset inside the specimen card. The card itself sits on the table's layout
+// margins, so it lines up with the section below it.
 static CGFloat const kSPKFontSpecimenInset = 20.0;
 
 // A specimen card for the font currently selected. It is the whole point of the
@@ -112,8 +112,10 @@ static CGFloat const kSPKFontSpecimenInset = 20.0;
 
     CGFloat const inset = kSPKFontSpecimenInset;
     [NSLayoutConstraint activateConstraints:@[
-        [_card.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:inset],
-        [_card.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-inset],
+        // The table's layout margins, where the rows below sit; they already
+        // absorb a side column's safe-area inset.
+        [_card.leadingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor],
+        [_card.trailingAnchor constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
         [_card.topAnchor constraintEqualToAnchor:self.topAnchor],
         [_card.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
 
@@ -161,7 +163,9 @@ static CGFloat const kSPKFontSpecimenInset = 20.0;
     if (!font)
         return;
     CGFloat twoLines = ceil(font.lineHeight * 2.0);
-    CGFloat available = width - (kSPKFontSpecimenInset * 4.0); // card inset + text inset, both sides
+    // The card spans the margins, the text sits one inset inside it.
+    UIEdgeInsets margins = self.layoutMargins;
+    CGFloat available = width - margins.left - margins.right - (kSPKFontSpecimenInset * 2.0);
     CGFloat tallest = twoLines;
     if (available > 0.0) {
         for (NSString *text in self.sampleTexts) {
@@ -282,6 +286,7 @@ static NSArray<NSString *> *SPKFontSpecimenSamples(void) {
     [super viewDidLoad];
 
     self.specimenView = [[SPKFontSpecimenView alloc] initWithFrame:CGRectZero];
+    self.specimenView.preservesSuperviewLayoutMargins = YES;
     [self.specimenView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                     action:@selector(cycleSampleText)]];
     self.tableView.tableHeaderView = self.specimenView;

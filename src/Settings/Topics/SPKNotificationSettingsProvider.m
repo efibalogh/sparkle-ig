@@ -50,9 +50,9 @@
     hint.textAlignment = NSTextAlignmentCenter;
     [header addSubview:hint];
     [NSLayoutConstraint activateConstraints:@[
-        [hint.centerXAnchor constraintEqualToAnchor:header.centerXAnchor],
+        [hint.centerXAnchor constraintEqualToAnchor:header.safeAreaLayoutGuide.centerXAnchor],
         [hint.bottomAnchor constraintEqualToAnchor:header.bottomAnchor constant:-6.0],
-        [hint.leadingAnchor constraintGreaterThanOrEqualToAnchor:header.leadingAnchor constant:16.0],
+        [hint.leadingAnchor constraintGreaterThanOrEqualToAnchor:header.safeAreaLayoutGuide.leadingAnchor constant:16.0],
     ]];
 
     self.previewHeader = header;
@@ -229,7 +229,7 @@ static const NSTimeInterval kSPKPreviewDownloadTick = 1.0 / 20.0;
     UIView *oldPill = self.previewPill;
     [self.previewHeader addSubview:pill];
     [NSLayoutConstraint activateConstraints:@[
-        [pill.centerXAnchor constraintEqualToAnchor:self.previewHeader.centerXAnchor],
+        [pill.centerXAnchor constraintEqualToAnchor:self.previewHeader.safeAreaLayoutGuide.centerXAnchor],
         [pill.topAnchor constraintEqualToAnchor:self.previewHeader.topAnchor constant:14.0],
     ]];
     if (![config[@"kind"] isEqualToString:@"toast"]) {

@@ -1,3 +1,4 @@
+#import "../Shared/UI/SPKSafeAreaLayout.h"
 #import "SPKIconPickerViewController.h"
 #import "SPKStrings.h"
 
@@ -353,8 +354,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     return SPKIconPickerCellStyleGlyph;
 }
 - (NSInteger)columnCountForWidth:(CGFloat)width {
-    (void)width;
-    return 3;
+    return SPKAdaptiveColumnCount(3, width);
 }
 - (CGFloat)itemHeight {
     return [self cellStyle] == SPKIconPickerCellStyleAppIcon ? 124.0 : 96.0;
@@ -381,6 +381,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
     layout.sectionInset = UIEdgeInsetsMake(14.0, 14.0, 24.0, 14.0);
     layout.headerReferenceSize = CGSizeMake(1.0, 42.0);
+    SPKFlowLayoutUseSafeArea(layout);
 
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -418,7 +419,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     [super viewWillLayoutSubviews];
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     CGFloat horizontalInset = layout.sectionInset.left + layout.sectionInset.right;
-    CGFloat availableWidth = MAX(1.0, self.view.bounds.size.width - horizontalInset);
+    CGFloat availableWidth = MAX(1.0, SPKCollectionViewUsableWidth(self.collectionView) - horizontalInset);
     NSInteger columns = MAX(1, [self columnCountForWidth:availableWidth]);
     CGFloat itemWidth = floor((availableWidth - (columns - 1) * layout.minimumInteritemSpacing) / columns);
     layout.itemSize = CGSizeMake(itemWidth, [self itemHeight]);
@@ -558,7 +559,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     SPKIconPickerItem *item = self.filteredSections[indexPath.section].items[indexPath.item];
     if (item.previewImages.count == 0)
         return layout.itemSize;
-    CGFloat width = collectionView.bounds.size.width - layout.sectionInset.left - layout.sectionInset.right;
+    CGFloat width = SPKCollectionViewUsableWidth(collectionView) - layout.sectionInset.left - layout.sectionInset.right;
     return CGSizeMake(MAX(1.0, width), [self itemHeight]);
 }
 

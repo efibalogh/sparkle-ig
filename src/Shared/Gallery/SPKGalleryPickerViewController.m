@@ -1,3 +1,4 @@
+#import "../UI/SPKSafeAreaLayout.h"
 #import "SPKStrings.h"
 #import "SPKGalleryPickerViewController.h"
 
@@ -500,6 +501,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryPickerViewMode) {
         layout.minimumLineSpacing = 0.0;
         layout.minimumInteritemSpacing = 0.0;
     }
+    SPKFlowLayoutUseSafeArea(layout);
     return layout;
 }
 
@@ -560,14 +562,16 @@ typedef NS_ENUM(NSInteger, SPKGalleryPickerViewMode) {
 
 - (void)refreshNavigationRightItems {
     if (self.allowsMultipleSelection) {
-        UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithTitle:SPKL(@"ALERT_ACTION_ADD")
-                                                                    style:UIBarButtonItemStyleDone
-                                                                   target:self
-                                                                   action:@selector(doneTapped)];
+        // An icon item like the editors' confirm button, so it can move into a
+        // vertical side bar with the other bar items.
+        UIBarButtonItem *addItem = SPKMediaChromeTopBarButtonItemWithStyle(@"check", self, @selector(doneTapped),
+                                                                           UIBarButtonItemStyleDone,
+                                                                           [SPKUtils SPKColor_InstagramBlue],
+                                                                           SPKL(@"ALERT_ACTION_ADD"));
         addItem.enabled = self.selectedIDs.count > 0;
-        self.navigationItem.rightBarButtonItems = @[ addItem ];
+        SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[ addItem ]);
     } else {
-        self.navigationItem.rightBarButtonItems = @[];
+        SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[]);
     }
 }
 
@@ -760,12 +764,12 @@ typedef NS_ENUM(NSInteger, SPKGalleryPickerViewMode) {
     _emptyStateSubtitle = subtitle;
 
     [NSLayoutConstraint activateConstraints:@[
-        [_emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [_emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [_emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor
                                                       constant:-40.0],
-        [_emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor
+        [_emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
                                                                    constant:40.0],
-        [_emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor
+        [_emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor
                                                                  constant:-40.0],
 
         [icon.topAnchor constraintEqualToAnchor:_emptyStateView.topAnchor],
@@ -1042,9 +1046,9 @@ typedef NS_ENUM(NSInteger, SPKGalleryPickerViewMode) {
 - (CGSize)collectionView:(UICollectionView *)collectionView
                     layout:(UICollectionViewLayout *)layout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = collectionView.bounds.size.width;
+    CGFloat width = SPKCollectionViewUsableWidth(collectionView);
     if (self.viewMode == SPKGalleryPickerViewModeGrid) {
-        NSInteger columns = MAX(kSPKGalleryGridColumnsMin, MIN(kSPKGalleryGridColumnsMax, self.gridColumns));
+        NSInteger columns = SPKAdaptiveColumnCount(MAX(kSPKGalleryGridColumnsMin, MIN(kSPKGalleryGridColumnsMax, self.gridColumns)), width);
         CGFloat totalSpacing = kSPKGalleryPickerGridSpacing * (columns - 1);
         CGFloat side = floor((width - totalSpacing) / columns);
         return CGSizeMake(side, side);

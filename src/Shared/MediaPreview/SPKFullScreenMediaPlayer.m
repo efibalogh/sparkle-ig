@@ -628,8 +628,8 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     _infoOverlayBottomConstraint =
         [_infoOverlay.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
     [NSLayoutConstraint activateConstraints:@[
-        [_infoOverlay.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [_infoOverlay.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [_infoOverlay.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [_infoOverlay.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
         _infoOverlayBottomConstraint,
     ]];
     [self refreshInfoOverlay];

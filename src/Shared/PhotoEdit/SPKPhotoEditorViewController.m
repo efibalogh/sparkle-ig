@@ -195,8 +195,8 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
     [self.view addSubview:_canvas];
     [NSLayoutConstraint activateConstraints:@[
         [_canvas.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
-        [_canvas.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [_canvas.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [_canvas.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [_canvas.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
     ]];
 
     _imageView = [[UIImageView alloc] initWithImage:_workingImage];

@@ -1,3 +1,4 @@
+#import "../Shared/UI/SPKSafeAreaLayout.h"
 #import "SPKStrings.h"
 #import "SPKAppIconPickerViewController.h"
 
@@ -44,7 +45,7 @@
     return SPKIconPickerCellStyleAppIcon;
 }
 - (NSInteger)columnCountForWidth:(CGFloat)width {
-    return width >= 500.0 ? 4 : 3;
+    return SPKAdaptiveColumnCount(3, width);
 }
 
 - (NSArray<SPKIconPickerSection *> *)buildSections {

@@ -389,8 +389,8 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
     [NSLayoutConstraint activateConstraints:@[
         [self.chipBar.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
-        [self.chipBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.chipBar.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.chipBar.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [self.chipBar.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
         [self.chipBar.heightAnchor constraintEqualToConstant:50],
 
         [self.tableView.topAnchor constraintEqualToAnchor:self.chipBar.bottomAnchor],
@@ -565,12 +565,12 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
     [self.emptyStateView addSubview:self.emptyStateSubtitle];
 
     [NSLayoutConstraint activateConstraints:@[
-        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [self.emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor
                                                           constant:-30],
-        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor
+        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
                                                                        constant:40],
-        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor
+        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor
                                                                      constant:-40],
 
         [self.emptyStateIcon.topAnchor constraintEqualToAnchor:self.emptyStateView.topAnchor],
