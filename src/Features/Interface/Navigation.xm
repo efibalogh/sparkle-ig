@@ -586,6 +586,15 @@ static BOOL SPKHandleSavedCarrierButtonPress(IGTabBarController *controller, NSS
     return NO;
 }
 
+// Set while the launch tab is applied by pressing its tab button, so tab button
+// hooks that treat a press on the current tab as a re-tap (Confirm Feed Refresh,
+// Disable Home Tab Refresh) let it through.
+static BOOL sSPKApplyingLaunchTab = NO;
+
+extern "C" BOOL SPKNavigationIsApplyingLaunchTab(void) {
+    return sSPKApplyingLaunchTab;
+}
+
 static NSString *SPKSelectorForLaunchTabPreference(NSString *preference) {
     if ([preference isEqualToString:@"feed"])
         return @"_timelineButtonPressed";
@@ -1044,7 +1053,9 @@ static BOOL SPKShouldHideTabBarForSingleTab(void) {
 
     SEL selector = selectorName.length > 0 ? NSSelectorFromString(selectorName) : nil;
     if (selector && [self respondsToSelector:selector]) {
+        sSPKApplyingLaunchTab = YES;
         ((void (*)(id, SEL))objc_msgSend)(self, selector);
+        sSPKApplyingLaunchTab = NO;
         SPKFilterTabBarSurfacesIvar(self);
         SPKSyncTabBarSelectionIndex(self);
     }

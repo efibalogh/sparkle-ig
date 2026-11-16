@@ -171,6 +171,8 @@ static void SPKInstallRefreshUtilityHooks(void) {
 
 // Implemented in FeedRefreshConfirm.x.
 BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController);
+// Implemented in Navigation.xm.
+BOOL SPKNavigationIsApplyingLaunchTab(void);
 
 // The feed controller when the Home tab is re-tapped on the feed itself, nil
 // when the tap switches tabs or pops a pushed screen.
@@ -212,6 +214,13 @@ static void spkScrollFeedToTop(UIViewController *feedController) {
 %hook IGTabBarController
 
 - (void)_timelineButtonPressed {
+    // Sparkle applies the launch tab by pressing its button, which is not a
+    // re-tap of the feed, so it runs untouched.
+    if (SPKNavigationIsApplyingLaunchTab()) {
+        %orig;
+        return;
+    }
+
     BOOL disableRefresh = spkDisableHomeRefresh();
     if (!disableRefresh && ![SPKUtils getBoolPref:@"feed_confirm_refresh"]) {
         %orig;
