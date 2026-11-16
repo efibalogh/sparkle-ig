@@ -116,9 +116,58 @@ static void SPKInstantsMatchSharedBackground(NSArray<UIBarButtonItem *> *ours, U
     }
 }
 
+// MARK: - Column order
+
+static const void *kSPKInstantsInColumnKey = &kSPKInstantsInColumnKey;
+
+/// Whether the screen's items stand in a vertical column (a foldable's side bar)
+/// rather than a horizontal header, as last measured.
+static BOOL SPKInstantsItemsInColumn(UINavigationItem *navigationItem) {
+    return [objc_getAssociatedObject(navigationItem, kSPKInstantsInColumnKey) boolValue];
+}
+
+static void SPKInstantsCollectHostViews(NSArray<UIBarButtonItem *> *items, NSMutableArray<UIView *> *hosts) {
+    for (UIBarButtonItem *item in items) {
+        if (SPKInstantsItemIsChromeHost(item) && item.customView.window && !item.customView.hidden)
+            [hosts addObject:item.customView];
+    }
+}
+
+/// Measured from Instagram's own items: in a column they share one x and stack,
+/// in a header they share one y. Unknown (-1) until two of them are on screen.
+static NSInteger SPKInstantsMeasureColumn(UINavigationItem *navigationItem) {
+    NSMutableArray<UIView *> *hosts = [NSMutableArray array];
+    SPKInstantsCollectHostViews(navigationItem.leftBarButtonItems, hosts);
+    SPKInstantsCollectHostViews(navigationItem.rightBarButtonItems, hosts);
+    if (@available(iOS 16.0, *)) {
+        for (UIBarButtonItemGroup *group in navigationItem.leadingItemGroups)
+            SPKInstantsCollectHostViews(group.barButtonItems, hosts);
+        for (UIBarButtonItemGroup *group in navigationItem.trailingItemGroups)
+            SPKInstantsCollectHostViews(group.barButtonItems, hosts);
+    }
+    if (hosts.count < 2)
+        return -1;
+    UIWindow *window = hosts.firstObject.window;
+    CGRect first = [window convertRect:hosts[0].bounds fromView:hosts[0]];
+    for (NSUInteger i = 1; i < hosts.count; i++) {
+        if (hosts[i].window != window)
+            continue;
+        CGRect other = [window convertRect:hosts[i].bounds fromView:hosts[i]];
+        CGFloat dx = fabs(CGRectGetMidX(other) - CGRectGetMidX(first));
+        CGFloat dy = fabs(CGRectGetMidY(other) - CGRectGetMidY(first));
+        if (dx < 4.0 && dy > 20.0)
+            return 1;
+        if (dy < 4.0 && dx > 20.0)
+            return 0;
+    }
+    return -1;
+}
+
 /// `rightBarButtonItems` runs from the trailing edge inwards, so Sparkle's items go after
 /// the last Instagram host: action next to it, then mark seen. The gallery item shares
 /// the action item's slot (they never show together), so it goes last.
+/// In a column UIKit stacks the items leading to trailing from the top, so there they
+/// go before Instagram's instead: under its buttons, the action item above mark seen.
 static NSArray<UIBarButtonItem *> *SPKInstantsAugmentedRightItems(UINavigationItem *navigationItem,
                                                                   NSArray<UIBarButtonItem *> *items) {
     NSMutableArray<UIBarButtonItem *> *stripped = [NSMutableArray arrayWithCapacity:items.count + 3];
@@ -134,6 +183,16 @@ static NSArray<UIBarButtonItem *> *SPKInstantsAugmentedRightItems(UINavigationIt
         return nil;
     NSArray<UIBarButtonItem *> *ours = SPKInstantsEnsureSparkleItems(navigationItem);
     SPKInstantsMatchSharedBackground(ours, stripped[lastHost]);
+    if (SPKInstantsItemsInColumn(navigationItem)) {
+        NSInteger firstHost = 0;
+        while (firstHost < (NSInteger)stripped.count && !SPKInstantsItemIsChromeHost(stripped[firstHost]))
+            firstHost++;
+        NSArray<UIBarButtonItem *> *columnOrder = @[
+            ours[SPKInstantsBarItemSlotMarkSeen], ours[SPKInstantsBarItemSlotAction], ours[SPKInstantsBarItemSlotGallery]
+        ];
+        [stripped insertObjects:columnOrder atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(firstHost, columnOrder.count)]];
+        return stripped;
+    }
     [stripped insertObjects:ours atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(lastHost + 1, ours.count)]];
     return stripped;
 }
@@ -145,6 +204,7 @@ static NSArray<UIBarButtonItemGroup *> *SPKInstantsAugmentedTrailingGroups(UINav
                                                                           NSArray<UIBarButtonItemGroup *> *groups) {
     NSMutableArray<UIBarButtonItemGroup *> *stripped = [NSMutableArray arrayWithCapacity:groups.count + 1];
     NSInteger firstHost = -1;
+    NSInteger lastHost = -1;
     UIBarButtonItem *neighbour = nil;
     for (UIBarButtonItemGroup *group in groups) {
         BOOL isOurs = NO;
@@ -156,13 +216,14 @@ static NSArray<UIBarButtonItemGroup *> *SPKInstantsAugmentedTrailingGroups(UINav
         }
         if (isOurs)
             continue;
-        if (firstHost < 0) {
-            for (UIBarButtonItem *item in group.barButtonItems) {
-                if (SPKInstantsItemIsChromeHost(item)) {
+        for (UIBarButtonItem *item in group.barButtonItems) {
+            if (SPKInstantsItemIsChromeHost(item)) {
+                if (firstHost < 0) {
                     firstHost = (NSInteger)stripped.count;
                     neighbour = item;
-                    break;
                 }
+                lastHost = (NSInteger)stripped.count;
+                break;
             }
         }
         [stripped addObject:group];
@@ -171,6 +232,15 @@ static NSArray<UIBarButtonItemGroup *> *SPKInstantsAugmentedTrailingGroups(UINav
         return nil;
     NSArray<UIBarButtonItem *> *ours = SPKInstantsEnsureSparkleItems(navigationItem);
     SPKInstantsMatchSharedBackground(ours, neighbour);
+    if (SPKInstantsItemsInColumn(navigationItem)) {
+        // Under Instagram's buttons in a column (see SPKInstantsAugmentedRightItems).
+        NSArray<UIBarButtonItem *> *columnOrder = @[
+            ours[SPKInstantsBarItemSlotGallery], ours[SPKInstantsBarItemSlotAction], ours[SPKInstantsBarItemSlotMarkSeen]
+        ];
+        [stripped insertObject:[UIBarButtonItemGroup fixedGroupWithRepresentativeItem:nil items:columnOrder]
+                       atIndex:(NSUInteger)lastHost + 1];
+        return stripped;
+    }
     NSArray<UIBarButtonItem *> *leadingToTrailing = [[ours reverseObjectEnumerator] allObjects];
     [stripped insertObject:[UIBarButtonItemGroup fixedGroupWithRepresentativeItem:nil items:leadingToTrailing]
                    atIndex:(NSUInteger)firstHost];
@@ -265,10 +335,32 @@ static UIView *SPKInstantsHostViewForNavigationItem(UINavigationItem *navigation
     return nil;
 }
 
+/// Re-places Sparkle's items when the screen moves between a header and a column
+/// (folding or unfolding with Instants open), since the two take opposite orders.
+static void SPKInstantsSyncColumnOrder(UINavigationItem *navigationItem) {
+    NSInteger measured = SPKInstantsMeasureColumn(navigationItem);
+    if (measured < 0 || (BOOL)measured == SPKInstantsItemsInColumn(navigationItem) || sApplyingItems)
+        return;
+    objc_setAssociatedObject(navigationItem, kSPKInstantsInColumnKey, @(measured == 1), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    BOOL wasApplying = sApplyingItems;
+    sApplyingItems = YES;
+    NSArray *augmented = SPKInstantsAugmentedRightItems(navigationItem, navigationItem.rightBarButtonItems);
+    if (augmented) {
+        [navigationItem setRightBarButtonItems:augmented animated:NO];
+    } else if (@available(iOS 16.0, *)) {
+        NSArray *groups = SPKInstantsAugmentedTrailingGroups(navigationItem, navigationItem.trailingItemGroups);
+        if (groups)
+            navigationItem.trailingItemGroups = groups;
+    }
+    sApplyingItems = wasApplying;
+    SPKLog(@"Instants", @"Navigation bar header: items now in %@ order", measured == 1 ? @"column" : @"header");
+}
+
 static void SPKInstantsUpdateNavigationItem(UINavigationItem *navigationItem) {
     NSArray<UIBarButtonItem *> *items = SPKInstantsSparkleItems(navigationItem);
     if (items.count != SPKInstantsBarItemSlotCount)
         return;
+    SPKInstantsSyncColumnOrder(navigationItem);
     UIView *host = SPKInstantsHostViewForNavigationItem(navigationItem);
     UIWindow *window = host.window;
     if (host)
