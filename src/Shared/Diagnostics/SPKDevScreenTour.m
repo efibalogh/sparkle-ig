@@ -17,6 +17,7 @@
 
 #import <UIKit/UIKit.h>
 #import <objc/message.h>
+#import <objc/runtime.h>
 
 #import "../../InstagramHeaders.h"
 #import "../../Settings/SPKSetting.h"
@@ -35,6 +36,8 @@
 #import "../Gallery/SPKGalleryFileDetailsViewController.h"
 #import "../PhotoEdit/SPKPhotoEditorViewController.h"
 #import "../UI/SPKMediaChrome.h"
+#import "../Playback/SPKPlaybackPanel.h"
+#import "../Location/SPKFakeLocationPickerViewController.h"
 #import "../UI/SPKNotificationCenter.h"
 #import "../UI/SPKNotificationPillView.h"
 #import "../UI/SPKUserListViewController.h"
@@ -136,8 +139,10 @@ static void SPKDevTourCollect(NSArray *sections, NSString *prefix, NSMutableArra
         NSString *path = [prefix stringByAppendingFormat:@"/%@", entry[0]];
         [paths addObject:path];
         SPKSetting *row = entry[1];
-        if (row.navSections.count)
-            SPKDevTourCollect(row.navSections, path, paths, depth + 1);
+        // Pages with their own controller expose their rows through the search provider.
+        NSArray *children = row.navSections.count ? row.navSections : (row.searchSectionsProvider ? row.searchSectionsProvider() : nil);
+        if (children.count)
+            SPKDevTourCollect(children, path, paths, depth + 1);
     }
 }
 
@@ -236,7 +241,7 @@ static void SPKDevTourVideo(void (^use)(NSURL *url)) {
 
 // Opens the story at `index` of the home feed's tray through the tray's own
 // selection delegate, the same path a tap takes.
-static void SPKDevTourOpenStory(NSInteger index) {
+static void SPKDevTourOpenStoryInTray(NSInteger index) {
     NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:SPKDevTourWindow()];
     for (NSUInteger i = 0; i < queue.count && i < 4000; i++) {
         UIView *view = queue[i];
@@ -260,10 +265,81 @@ static void SPKDevTourOpenStory(NSInteger index) {
     }
 }
 
+static IGTabBarController *SPKDevTourTabBarController(void) {
+    NSMutableArray<UIViewController *> *queue = [NSMutableArray array];
+    if (SPKDevTourWindow().rootViewController)
+        [queue addObject:SPKDevTourWindow().rootViewController];
+    for (NSUInteger i = 0; i < queue.count && i < 400; i++) {
+        if ([queue[i] isKindOfClass:NSClassFromString(@"IGTabBarController")])
+            return (IGTabBarController *)queue[i];
+        [queue addObjectsFromArray:queue[i].childViewControllers];
+    }
+    return nil;
+}
+
+// Selects a tab through the tab bar controller's own button handler.
+static void SPKDevTourSelectTab(SEL handler) {
+    IGTabBarController *tabs = SPKDevTourTabBarController();
+    if ([tabs respondsToSelector:handler])
+        ((void (*)(id, SEL))objc_msgSend)(tabs, handler);
+}
+
+// Opens the first conversation of the Direct inbox, the way a tap does.
+static void SPKDevTourOpenFirstThread(void) {
+    SPKDevTourSelectTab(@selector(_directInboxButtonPressed));
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:SPKDevTourWindow()];
+        for (NSUInteger i = 0; i < queue.count && i < 20000; i++) {
+            UIView *view = queue[i];
+            [queue addObjectsFromArray:view.subviews];
+            if (![view isKindOfClass:UICollectionView.class] || !view.window)
+                continue;
+            UICollectionView *list = (UICollectionView *)view;
+            for (UICollectionViewCell *cell in [list.visibleCells sortedArrayUsingComparator:^NSComparisonResult(UICollectionViewCell *a, UICollectionViewCell *b) {
+                     return [@(CGRectGetMinY(a.frame)) compare:@(CGRectGetMinY(b.frame))];
+                 }]) {
+                if (![NSStringFromClass(cell.class) containsString:@"InboxThread"] && ![NSStringFromClass(cell.class) containsString:@"ThreadCell"])
+                    continue;
+                NSIndexPath *path = [list indexPathForCell:cell];
+                if (path && [list.delegate respondsToSelector:@selector(collectionView:didSelectItemAtIndexPath:)]) {
+                    [list.delegate collectionView:list didSelectItemAtIndexPath:path];
+                    return;
+                }
+            }
+        }
+    });
+}
+
+// The tray lives on the home feed, so switch there first.
+static void SPKDevTourOpenStory(NSInteger index) {
+    SPKDevTourSelectTab(@selector(_timelineButtonPressed));
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        SPKDevTourOpenStoryInTray(index);
+    });
+}
+
 FOUNDATION_EXPORT void SPKPresentStoryMentionsSheet(UIView *overlayView);
 
 static NSDictionary<NSString *, dispatch_block_t> *SPKDevTourScreens(void) {
     return @{
+        @"ig/feed" : ^{
+            SPKDevTourSelectTab(@selector(_timelineButtonPressed));
+        },
+        @"ig/reels" : ^{
+            SPKDevTourSelectTab(@selector(_discoverVideoButtonPressed));
+        },
+        @"ig/inbox" : ^{
+            SPKDevTourSelectTab(@selector(_directInboxButtonPressed));
+        },
+        @"ig/explore" : ^{
+            SPKDevTourSelectTab(@selector(_exploreButtonPressed));
+        },
+        @"ig/profile" : ^{
+            SPKDevTourSelectTab(@selector(_profileButtonPressed));
+        },
+        @"ig/thread" : ^{
+            SPKDevTourOpenFirstThread();
+        },
         @"ig/story-own" : ^{
             SPKDevTourOpenStory(0);
         },
@@ -275,7 +351,7 @@ static NSDictionary<NSString *, dispatch_block_t> *SPKDevTourScreens(void) {
         },
         @"ig/story-mentions" : ^{
             SPKDevTourOpenStory(2);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 Class overlayClass = NSClassFromString(@"IGStoryFullscreenOverlayView");
                 NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:SPKDevTourWindow()];
                 for (NSUInteger i = 0; i < queue.count && i < 20000; i++) {
@@ -407,6 +483,9 @@ static NSDictionary<NSString *, dispatch_block_t> *SPKDevTourScreens(void) {
             nav.modalPresentationStyle = UIModalPresentationPageSheet;
             [topMostController() presentViewController:nav animated:YES completion:nil];
         },
+        @"screen/fake-location-picker" : ^{
+            [SPKFakeLocationPickerViewController presentFromViewController:nil initialPlace:nil title:@"Location" completion:^(SPKFakeLocationPlace *place){}];
+        },
         @"screen/deleted-messages" : ^{
             [SPKDeletedMessagesViewController presentFromViewController:nil];
         },
@@ -445,6 +524,7 @@ static void SPKDevTourClearNotifications(void) {
 static void SPKDevTourDismissAll(dispatch_block_t completion) {
     SPKDevTourRestorePrefs();
     SPKDevTourClearNotifications();
+    SPKPlaybackPanelDismiss(NO);
     UIViewController *root = SPKDevTourWindow().rootViewController;
     if (root.presentedViewController)
         [root dismissViewControllerAnimated:NO completion:completion];
@@ -565,6 +645,79 @@ static NSString *SPKDevTourChrome(void) {
     return [lines componentsJoinedByString:@"\n"];
 }
 
+// Lists every visible view whose class or accessibility identifier contains the
+// needle, with its window frame, recognizers, and nearest ancestors.
+static NSString *SPKDevTourFind(NSString *needle) {
+    NSMutableArray<NSString *> *lines = [NSMutableArray array];
+    NSString *lower = needle.lowercaseString;
+    for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+        if (![scene isKindOfClass:UIWindowScene.class])
+            continue;
+        for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+            NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:window];
+            for (NSUInteger i = 0; i < queue.count && i < 30000; i++) {
+                UIView *view = queue[i];
+                [queue addObjectsFromArray:view.subviews];
+                NSString *name = NSStringFromClass(view.class);
+                NSString *identifier = view.accessibilityIdentifier ?: @"";
+                if (![name.lowercaseString containsString:lower] && ![identifier.lowercaseString containsString:lower])
+                    continue;
+                CGRect frame = [window convertRect:view.bounds fromView:view];
+                [lines addObject:[NSString stringWithFormat:@"%@ id=%@ %@ hidden=%d alpha=%.2f ui=%d", name, identifier, NSStringFromCGRect(frame), view.hidden, view.alpha, view.userInteractionEnabled]];
+                for (UIGestureRecognizer *gesture in view.gestureRecognizers)
+                    [lines addObject:[NSString stringWithFormat:@"    gr %@", gesture.description]];
+                if ([view isKindOfClass:UIControl.class]) {
+                    for (id target in ((UIControl *)view).allTargets)
+                        [lines addObject:[NSString stringWithFormat:@"    target %@ %@", NSStringFromClass([target class]), [((UIControl *)view) actionsForTarget:target forControlEvent:UIControlEventTouchUpInside]]];
+                }
+                NSMutableArray<NSString *> *chain = [NSMutableArray array];
+                UIView *walker = view.superview;
+                for (NSUInteger depth = 0; walker && depth < 10; depth++, walker = walker.superview)
+                    [chain addObject:NSStringFromClass(walker.class)];
+                [lines addObject:[NSString stringWithFormat:@"    in %@", [chain componentsJoinedByString:@" < "]]];
+            }
+        }
+    }
+    return lines.count ? [lines componentsJoinedByString:@"\n"] : @"none";
+}
+
+// Fires the long-press targets whose action contains `actionNeedle` on the first
+// visible view whose class or accessibility identifier contains `viewNeedle`, as
+// if the press had just begun.
+static NSString *SPKDevTourLongPress(NSString *viewNeedle, NSString *actionNeedle) {
+    NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:SPKDevTourWindow()];
+    for (NSUInteger i = 0; i < queue.count && i < 30000; i++) {
+        UIView *view = queue[i];
+        [queue addObjectsFromArray:view.subviews];
+        if (view.hidden || view.alpha < 0.01 || !view.window)
+            continue;
+        NSString *name = [NSStringFromClass(view.class) stringByAppendingFormat:@" %@", view.accessibilityIdentifier ?: @""];
+        if ([name rangeOfString:viewNeedle options:NSCaseInsensitiveSearch].location == NSNotFound)
+            continue;
+        for (UIGestureRecognizer *gesture in view.gestureRecognizers) {
+            if (![gesture isKindOfClass:UILongPressGestureRecognizer.class])
+                continue;
+            Ivar targetsIvar = class_getInstanceVariable(UIGestureRecognizer.class, "_targets");
+            NSArray *targets = targetsIvar ? object_getIvar(gesture, targetsIvar) : nil;
+            for (id entry in targets) {
+                Ivar targetIvar = class_getInstanceVariable([entry class], "_target");
+                Ivar actionIvar = class_getInstanceVariable([entry class], "_action");
+                if (!targetIvar || !actionIvar)
+                    continue;
+                id target = object_getIvar(entry, targetIvar);
+                SEL action = *(SEL *)((uint8_t *)(__bridge void *)entry + ivar_getOffset(actionIvar));
+                if ([NSStringFromSelector(action) rangeOfString:actionNeedle options:NSCaseInsensitiveSearch].location == NSNotFound)
+                    continue;
+                [gesture setValue:@(UIGestureRecognizerStateBegan) forKey:@"state"];
+                ((void (*)(id, SEL, id))objc_msgSend)(target, action, gesture);
+                [gesture setValue:@(UIGestureRecognizerStateEnded) forKey:@"state"];
+                return [NSString stringWithFormat:@"ok %@ -[%@ %@]", NSStringFromClass(view.class), NSStringFromClass([target class]), NSStringFromSelector(action)];
+            }
+        }
+    }
+    return @"error no matching long press";
+}
+
 static void SPKDevTourHandle(void) {
     NSString *command = [NSString stringWithContentsOfURL:SPKDevTourFile(@"spk-dev-tour.cmd") encoding:NSUTF8StringEncoding error:nil];
     command = [command stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
@@ -573,6 +726,114 @@ static void SPKDevTourHandle(void) {
         SPKDevTourFinish(SPKDevTourList());
     } else if ([command isEqualToString:@"chrome"]) {
         SPKDevTourFinish(SPKDevTourChrome());
+    } else if ([command hasPrefix:@"story "]) {
+        NSInteger index = [[command substringFromIndex:6] integerValue];
+        SPKDevTourDismissAll(^{
+            SPKDevTourOpenStory(index);
+            SPKDevTourFinish(SPKDevTourOK());
+        });
+    } else if ([command hasPrefix:@"longpress "]) {
+        NSArray<NSString *> *parts = [[command substringFromIndex:10] componentsSeparatedByString:@" "];
+        SPKDevTourFinish(parts.count == 2 ? SPKDevTourLongPress(parts[0], parts[1]) : @"error usage: longpress <view> <action>");
+    } else if ([command hasPrefix:@"pref "]) {
+        // pref <key> <value>: persists a preference (1/0 = bool, numbers, else string).
+        NSArray<NSString *> *parts = [[command substringFromIndex:5] componentsSeparatedByString:@" "];
+        if (parts.count < 2) {
+            SPKDevTourFinish(@"error usage: pref <key> <value>");
+            return;
+        }
+        NSString *raw = parts[1];
+        id value = raw;
+        if ([raw isEqualToString:@"1"] || [raw isEqualToString:@"0"] || [raw isEqualToString:@"true"] || [raw isEqualToString:@"false"])
+            value = @([raw isEqualToString:@"1"] || [raw isEqualToString:@"true"]);
+        else if ([raw rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"0123456789.-"].invertedSet].location == NSNotFound)
+            value = @(raw.doubleValue);
+        NSString *key = SPKEffectivePreferenceKey(parts[0]);
+        [NSUserDefaults.standardUserDefaults setObject:value forKey:key];
+        SPKDevTourFinish([NSString stringWithFormat:@"ok %@ = %@", key, value]);
+    } else if ([command hasPrefix:@"scroll "]) {
+        // Scrolls the largest visible vertical scroll view of the key window by dy points.
+        CGFloat dy = [[command substringFromIndex:7] doubleValue];
+        UIScrollView *best = nil;
+        NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:SPKDevTourWindow()];
+        for (NSUInteger i = 0; i < queue.count && i < 20000; i++) {
+            UIView *view = queue[i];
+            [queue addObjectsFromArray:view.subviews];
+            if (![view isKindOfClass:UIScrollView.class] || view.hidden || view.alpha < 0.01 || !view.window)
+                continue;
+            UIScrollView *scroll = (UIScrollView *)view;
+            if (scroll.contentSize.height <= CGRectGetHeight(scroll.bounds))
+                continue;
+            if (!best || CGRectGetWidth(scroll.bounds) * CGRectGetHeight(scroll.bounds) > CGRectGetWidth(best.bounds) * CGRectGetHeight(best.bounds))
+                best = scroll;
+        }
+        CGFloat maxY = MAX(best.contentSize.height - CGRectGetHeight(best.bounds) + best.adjustedContentInset.bottom, -best.adjustedContentInset.top);
+        [best setContentOffset:CGPointMake(best.contentOffset.x, MIN(MAX(best.contentOffset.y + dy, -best.adjustedContentInset.top), maxY)) animated:NO];
+        SPKDevTourFinish(best ? [NSString stringWithFormat:@"ok %@ %.0f", NSStringFromClass(best.class), best.contentOffset.y] : @"error no scroll view");
+    } else if ([command hasPrefix:@"clip "]) {
+        // Sets the app's pasteboard directly; the host clipboard sync overwrites simctl pbcopy.
+        UIPasteboard.generalPasteboard.string = [command substringFromIndex:5];
+        SPKDevTourFinish([NSString stringWithFormat:@"ok %@", UIPasteboard.generalPasteboard.string]);
+    } else if ([command isEqualToString:@"tabtap"]) {
+        // Re-taps the selected tab of the native tab bar the way UIKit's own
+        // item click does, which is what a finger on the selected tab sends.
+        UITabBarController *native = nil;
+        NSMutableArray<UIViewController *> *queue = [NSMutableArray array];
+        if (SPKDevTourWindow().rootViewController)
+            [queue addObject:SPKDevTourWindow().rootViewController];
+        for (NSUInteger i = 0; i < queue.count && i < 400 && !native; i++) {
+            if ([queue[i] isKindOfClass:UITabBarController.class])
+                native = (UITabBarController *)queue[i];
+            [queue addObjectsFromArray:queue[i].childViewControllers];
+        }
+        SEL click = NSSelectorFromString(@"_tabBarItemClicked:");
+        UITabBarItem *item = native.tabBar.selectedItem;
+        if (!item || ![native respondsToSelector:click]) {
+            SPKDevTourFinish(@"error no native tab bar");
+            return;
+        }
+        ((void (*)(id, SEL, id))objc_msgSend)(native, click, item);
+        SPKDevTourFinish([NSString stringWithFormat:@"ok %@", item.title]);
+    } else if ([command isEqualToString:@"tabhold explore"]) {
+        // Drives the native tab bar's hold on Explore the way its coordinator
+        // does: asks whether the tab can be held, then sends the began phase.
+        IGTabBarController *tabs = SPKDevTourTabBarController();
+        id explore = tabs ? [SPKUtils getIvarForObj:tabs name:"_exploreButton"] : nil;
+        id surface = nil;
+        for (id candidate in (NSArray *)[SPKUtils getIvarForObj:tabs name:"_tabBarSurfaces"]) {
+            if ([tabs respondsToSelector:@selector(_buttonForTabBarSurface:)] && [tabs _buttonForTabBarSurface:candidate] == explore)
+                surface = candidate;
+        }
+        SEL identifierSelector = NSSelectorFromString(@"_nativeIdentifierForSurface:");
+        id identifier = surface && [tabs respondsToSelector:identifierSelector]
+                            ? ((id (*)(id, SEL, id))objc_msgSend)(tabs, identifierSelector, surface)
+                            : nil;
+        if (!identifier) {
+            SPKDevTourFinish(@"error no native Explore tab");
+            return;
+        }
+        BOOL canHold = [tabs nativeTabBarControllerCoordinator:nil canLongPressIdentifier:identifier];
+        if (canHold)
+            [tabs nativeTabBarControllerCoordinator:nil didUpdateLongPressIdentifier:identifier phase:0];
+        SPKDevTourFinish([NSString stringWithFormat:@"ok identifier=%@ canHold=%d", identifier, canHold]);
+    } else if ([command isEqualToString:@"back"]) {
+        // Pops the selected tab's navigation stack, as its back button would.
+        // The deepest navigation controller with something to pop: Direct
+        // pushes threads onto a navigation controller nested inside the tab's.
+        UINavigationController *navigation = nil;
+        NSMutableArray<UIViewController *> *queue = [NSMutableArray array];
+        if (SPKDevTourTabBarController().selectedViewController)
+            [queue addObject:SPKDevTourTabBarController().selectedViewController];
+        for (NSUInteger i = 0; i < queue.count && i < 400; i++) {
+            UIViewController *candidate = queue[i];
+            if ([candidate isKindOfClass:UINavigationController.class] && ((UINavigationController *)candidate).viewControllers.count > 1)
+                navigation = (UINavigationController *)candidate;
+            [queue addObjectsFromArray:candidate.childViewControllers];
+        }
+        UIViewController *popped = [navigation popViewControllerAnimated:YES];
+        SPKDevTourFinish(popped ? [NSString stringWithFormat:@"ok popped %@", NSStringFromClass(popped.class)] : @"error nothing to pop");
+    } else if ([command hasPrefix:@"find "]) {
+        SPKDevTourFinish(SPKDevTourFind([command substringFromIndex:5]));
     } else if ([command isEqualToString:@"dismiss"]) {
         SPKDevTourDismissAll(^{
             SPKDevTourFinish(SPKDevTourOK());
