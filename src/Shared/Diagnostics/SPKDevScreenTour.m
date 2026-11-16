@@ -43,6 +43,7 @@
 #import "../UI/SPKNotificationCenter.h"
 #import "../UI/SPKNotificationPillView.h"
 #import "../UI/SPKUserListViewController.h"
+#import "../Stories/SPKStoryOpener.h"
 #import "../Gallery/SPKGalleryImportViewController.h"
 #import "../Gallery/SPKGalleryPickerViewController.h"
 #import "../ActionButton/SPKBulkMediaSelectionViewController.h"
@@ -718,6 +719,18 @@ static NSString *SPKDevTourChrome(void) {
                         if ([sub isKindOfClass:UIView.class])
                             [lines addObject:[NSString stringWithFormat:@"  %@ %@ in-overlay %@ hidden=%d", ivarName, NSStringFromClass(sub.class), NSStringFromCGRect([view convertRect:sub.bounds fromView:sub]), sub.hidden]];
                     }
+                    for (NSString *rootIvar in @[ @"_footerContainerView", @"_hypeFaceswarmView" ]) {
+                    UIView *footerRoot = [SPKUtils getIvarForObj:view name:rootIvar.UTF8String];
+                    if ([footerRoot isKindOfClass:UIView.class]) {
+                        NSMutableArray<UIView *> *footerQueue = [NSMutableArray arrayWithObject:footerRoot];
+                        for (NSUInteger j = 0; j < footerQueue.count && j < 400; j++) {
+                            UIView *sub = footerQueue[j];
+                            [lines addObject:[NSString stringWithFormat:@"    %@> %@ %@ hidden=%d alpha=%.2f subs=%lu bg=%@", rootIvar, NSStringFromClass(sub.class), NSStringFromCGRect([view convertRect:sub.bounds fromView:sub]), sub.hidden, sub.alpha, (unsigned long)sub.subviews.count, sub.backgroundColor]];
+                            if (!sub.hidden && sub.alpha > 0.01)
+                                [footerQueue addObjectsFromArray:sub.subviews];
+                        }
+                    }
+                    }
                     NSMutableArray<UIView *> *inner = [NSMutableArray arrayWithObject:view];
                     for (NSUInteger j = 0; j < inner.count && j < 4000; j++) {
                         UIView *sub = inner[j];
@@ -1080,6 +1093,14 @@ static void SPKDevTourHandle(void) {
         SPKDevTourDismissAll(^{
             SPKDevTourFinish(SPKDevTourOK());
         });
+    } else if ([command hasPrefix:@"url "]) {
+        // Opens a story or highlight link through Sparkle's own resolver, which
+        // starts on the story the link names.
+        NSURL *url = [NSURL URLWithString:[[command substringFromIndex:4] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet]];
+        SPKStoryLink *link = [SPKStoryLink linkWithURL:url];
+        UIViewController *source = topMostController();
+        BOOL opened = link.reelPK && source && SPKStoryOpenReel(link.reelPK, link.mediaPK, source);
+        SPKDevTourFinish(opened ? SPKDevTourOK() : [NSString stringWithFormat:@"error reel=%@ media=%@", link.reelPK, link.mediaPK]);
     } else if ([command hasPrefix:@"open "]) {
         SPKDevTourOpen([[command substringFromIndex:5] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet]);
     } else {
