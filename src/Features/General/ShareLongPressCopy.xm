@@ -345,10 +345,30 @@ static UIView *SPKShareStoryOverlayAncestorForView(UIView *view) {
     return nil;
 }
 
+// Story controls the viewer moves into a floating bar (the folded side-bar
+// layout) live outside their overlay, so each one remembers the overlay that
+// built it.
+static NSMapTable<UIView *, UIView *> *SPKShareDetachedStoryControlOverlays(void) {
+    static NSMapTable<UIView *, UIView *> *table;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        table = [NSMapTable weakToWeakObjectsMapTable];
+    });
+    return table;
+}
+
 static UIView *SPKShareStoryOverlayForView(UIView *view) {
     UIView *overlay = SPKShareStoryOverlayAncestorForView(view);
     if (overlay)
         return overlay;
+
+    for (UIView *walker = view; walker; walker = walker.superview) {
+        UIView *owner = [SPKShareDetachedStoryControlOverlays() objectForKey:walker];
+        if (owner.window) {
+            SPKLog(@"General", @"[Sparkle ShareCopy] Using owning story overlay for bar control view=%@ overlay=%@", SPKShareDebugViewName(view), SPKShareDebugViewName(owner));
+            return owner;
+        }
+    }
 
     UIView *activeOverlay = SPKStoryActiveOverlay();
     if (!activeOverlay || !activeOverlay.window || activeOverlay.window != view.window)
@@ -607,6 +627,28 @@ static void SPKInstallShareLongPressInContainer(UIView *container, NSArray<NSStr
     }
 }
 
+// The folded side-bar layout gives the story viewer a second send button that
+// lives in the window's floating bar, not in the overlay's footer. The overlay
+// vends those buttons as bar items, so attach the long press as they are vended.
+static id (*orig_SPKShareStoryBarItems)(UIView *, SEL);
+static id hook_SPKShareStoryBarItems(UIView *self, SEL _cmd) {
+    id items = orig_SPKShareStoryBarItems(self, _cmd);
+    if (![items isKindOfClass:NSArray.class])
+        return items;
+    for (id item in (NSArray *)items) {
+        if (![item isKindOfClass:UIBarButtonItem.class])
+            continue;
+        UIView *customView = ((UIBarButtonItem *)item).customView;
+        if (!customView)
+            continue;
+        for (UIView *candidate in SPKShareCandidateSubviews(customView, 3)) {
+            [SPKShareDetachedStoryControlOverlays() setObject:self forKey:candidate];
+            SPKInstallShareLongPressOnView(candidate);
+        }
+    }
+    return items;
+}
+
 %group SPKShareLongPressCopyHooks
 
 %hook UIView
@@ -664,6 +706,10 @@ extern "C" void SPKInstallShareLongPressCopyHooksIfNeeded(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         %init(SPKShareLongPressCopyHooks, IGSundialViewerVerticalUFI = SPKReelsVerticalUFIClass());
+        Class overlayClass = objc_getClass("IGStoryFullscreenOverlayView");
+        SEL barItemsSelector = NSSelectorFromString(@"foldedDuoVerticalBarItems");
+        if (overlayClass && class_getInstanceMethod(overlayClass, barItemsSelector))
+            MSHookMessageEx(overlayClass, barItemsSelector, (IMP)hook_SPKShareStoryBarItems, (IMP *)&orig_SPKShareStoryBarItems);
         [[NSNotificationCenter defaultCenter] addObserverForName:NSUserDefaultsDidChangeNotification
                                                           object:nil
                                                            queue:nil
