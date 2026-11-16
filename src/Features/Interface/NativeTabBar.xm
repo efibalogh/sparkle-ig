@@ -154,6 +154,16 @@ static BOOL SPKNativeTabBarSurfaceIsExplore(id controller, id surface) {
     return explore && [controller _buttonForTabBarSurface:surface] == explore;
 }
 
+// Foldables get the native bar from Instagram itself, with no Sparkle pref
+// involved, so the hold is offered whenever the bar is native and something
+// Sparkle owns wants it: the forced bar (to keep search on hold) or the
+// clipboard link shortcut.
+static BOOL SPKNativeTabBarExploreHoldWanted(id controller) {
+    if (!SPKNativeTabBarIsActive(controller))
+        return NO;
+    return SPKNativeTabBarPreferenceEnabled() || [SPKUtils getBoolPref:@"interface_open_clipboard_link"];
+}
+
 static BOOL SPKNativeTabBarIdentifierIsExplore(id controller, id identifier) {
     if (!identifier || ![controller respondsToSelector:@selector(_surfaceForNativeIdentifier:)])
         return NO;
@@ -179,21 +189,21 @@ static UIGestureRecognizerState SPKNativeTabBarGestureStateForPhase(NSInteger ph
 static NSString *(*orig_longPressActionName)(id, SEL, id);
 static NSString *hook_longPressActionName(id self, SEL _cmd, id surface) {
     NSString *name = orig_longPressActionName(self, _cmd, surface);
-    if (name.length == 0 && SPKNativeTabBarIsActive(self) && SPKNativeTabBarSurfaceIsExplore(self, surface))
+    if (name.length == 0 && SPKNativeTabBarExploreHoldWanted(self) && SPKNativeTabBarSurfaceIsExplore(self, surface))
         return SPKL(@"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION");
     return name;
 }
 
 static BOOL (*orig_canLongPress)(id, SEL, id, id);
 static BOOL hook_canLongPress(id self, SEL _cmd, id coordinator, id identifier) {
-    if (SPKNativeTabBarIsActive(self) && SPKNativeTabBarIdentifierIsExplore(self, identifier))
+    if (SPKNativeTabBarExploreHoldWanted(self) && SPKNativeTabBarIdentifierIsExplore(self, identifier))
         return YES;
     return orig_canLongPress(self, _cmd, coordinator, identifier);
 }
 
 static void (*orig_didUpdateLongPress)(id, SEL, id, id, NSInteger);
 static void hook_didUpdateLongPress(id self, SEL _cmd, id coordinator, id identifier, NSInteger phase) {
-    if (!SPKNativeTabBarIsActive(self) || !SPKNativeTabBarIdentifierIsExplore(self, identifier) ||
+    if (!SPKNativeTabBarExploreHoldWanted(self) || !SPKNativeTabBarIdentifierIsExplore(self, identifier) ||
         ![self respondsToSelector:@selector(_exploreButtonLongPressed:)]) {
         orig_didUpdateLongPress(self, _cmd, coordinator, identifier, phase);
         return;
@@ -238,10 +248,14 @@ static void SPKNoOpUpdateVerticalBarConfiguration(__unused id self, __unused SEL
 extern "C" void SPKInstallNativeTabBarHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        Class controllerClass = objc_getClass("IGTabBarController");
+        // Installed whatever the pref says: foldables run the native bar on
+        // their own, and the hold re-checks its prefs at call time.
+        if (controllerClass && !SPKStabilityGuardIsSafeStartupMode())
+            SPKInstallNativeTabBarExploreHoldHooks(controllerClass);
         // The controller is built once during launch, so the choice needs a restart.
         if (!SPKNativeTabBarPreferenceEnabled())
             return;
-        Class controllerClass = objc_getClass("IGTabBarController");
         SEL initializeSelector = NSSelectorFromString(@"_initializeViewControllers");
         if (!controllerClass || !class_getInstanceMethod(controllerClass, initializeSelector) ||
             !class_getInstanceVariable(controllerClass, "_usesNativeTabBarController")) {
@@ -255,6 +269,5 @@ extern "C" void SPKInstallNativeTabBarHooksIfEnabled(void) {
 
         MSHookMessageEx(controllerClass, initializeSelector, (IMP)hook_initializeViewControllers, (IMP *)&orig_initializeViewControllers);
         SPKInstallNativeTabBarVisibilityHooks(controllerClass);
-        SPKInstallNativeTabBarExploreHoldHooks(controllerClass);
     });
 }
