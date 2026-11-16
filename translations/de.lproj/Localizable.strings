@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt die Schrift in Instagram und Sparkle. Importiere .otf-, .ttf- oder .ttc-Dateien. Das Instagram-Logo und das Story-Textwerkzeug behalten ihre eigenen Schriften.";
 "INTERFACE_APPEARANCE_HEADER" = "Aussehen";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Hält Liquid-Glass-Elemente wie die Tableiste tiefschwarz wie den Hintergrund. Wenn aus, erhalten sie einen dunkelgrauen Ton, damit sie sich davon abheben.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Schwarzes Glas erreicht die System-Tab-Leiste nicht, sie behält ihr eigenes Glas.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Schwarzes Glas";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Macht den Dunkelmodus von Instagram tiefschwarz, Sheets eingeschlossen. Nachrichtenblasen, Suchfelder und ähnliche Elemente bleiben eine Spur heller, damit sie sichtbar bleiben. Gilt nur im Dunkelmodus.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED-Dunkelmodus";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Unschärfe";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pillenförmige Tab-Leiste";
 "INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt die native Liquid-Glass-Oberfläche von Instagram an oder aus. Bei Standard entscheidet Instagram für dieses Konto, und seine Einführung bleibt unberührt. Erfordert einen Neustart.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram verwendet hier bereits die System-Tab-Leiste. Sie zeichnet immer ihr eigenes Glas, daher ändern Liquid Glass aus und Tab-Leisten-Verhalten sie nicht.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Die System-Tab-Leiste zeichnet immer ihr eigenes Glas, daher ändern Liquid Glass aus und Tab-Leisten-Verhalten sie nicht.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Suche öffnen";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Ersetzt Instagrams eigene Tab-Leiste durch die System-Tab-Leiste, die Instagram auf faltbaren iPhones verwendet. Zwischen Registerkarten wischen und Tab-Leisten-Verhalten gelten dafür nicht. Erfordert einen Neustart.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "System-Tab-Leiste";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Keine sichtbaren Tabs";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Öffnet die Kamera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Öffnet beim Start";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Von Instagram hinzugefügt";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Ersetzt %@ Tab";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Auf Instagram-Standard zurücksetzen";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Tab anzeigen";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Story konnte nicht als angesehen markiert werden";
 "TAB_CREATE" = "Erstellen";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Die Registerkarte kann nicht ausgeblendet werden, wenn %@ die einzige Registerkarte ist: Das lange Drücken wäre die einzige Möglichkeit, zu den Sparkle-Einstellungen zu gelangen.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Klassisch ist nicht verfügbar, solange die Tab-Leiste am Bildschirmrand entlang verläuft.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Sparkle-Einstellungen bleiben durch langes Drücken der Nachrichtenschaltfläche erreichbar.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Aktiviere die Feed-Header-Schaltfläche, um die Registerkarte hier ausblenden zu können. Ohne diese ist das lange Drücken auf der Registerkarte die einzige Möglichkeit, zu den Sparkle-Einstellungen zu gelangen.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Die Feed-Header-Schaltfläche bleibt dein Weg zu den Sparkle-Einstellungen.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Die Header-Schaltfläche fügt die Sparkle-Verknüpfung links von der Nachrichten-Navigationsleiste hinzu, wenn Nachrichten die verbleibende Registerkarte sind.";
 "TAB_EDITOR_HELP_DRAG" = "Ziehe die Griffe, um sie neu anzuordnen. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Bei dieser Breite fügt Instagram der System-Tab-Leiste Aktivität und Erstellen hinzu. Aktivität folgt dem Feed-Tab.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Der letzte sichtbare Tab kann nicht ausgeblendet werden.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Messages ist hier nicht aufgelistet: Dieses Layout behält es in der Feed-Kopfzeile, wo du es durch Antippen oder Streichen erreichst.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Nur %@ ist noch übrig, daher kann die Leiste vollständig entfernt werden. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Gespeichert nutzt den Platz eines ausgeblendeten Tabs, deshalb muss einer der fünf Instagram-Tabs ausgeschaltet sein, bevor dieser aktiviert werden kann. Die gesamte Tab-Leisten-Einstellung wird von jedem Konto auf diesem Gerät gemeinsam genutzt.";
 "TAB_EDITOR_HELP_TAP" = "Tippe auf einen Tab, um ihn anzuzeigen oder auszublenden. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Diese gelten, sobald die Leiste auf eine einzelne Registerkarte reduziert ist. Blende die anderen oben aus, um sie zu verwenden.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Zwischen Registerkarten wischen ist nicht verfügbar, solange die System-Tab-Leiste aktiv ist.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Zwischen Registerkarten wischen ist in der System-Tab-Leiste nicht verfügbar.";
 "TAB_EXPLORE" = "Erkunden";
 "TAB_LAYOUT_CUSTOM" = "Benutzerdefiniert";
 "TAB_SAVED" = "Gespeichert";

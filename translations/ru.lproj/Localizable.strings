@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Заменяет шрифт во всём Instagram и Sparkle. Импортируйте файлы .otf, .ttf или .ttc. Логотип Instagram и инструмент текста в историях сохраняют свои шрифты.";
 "INTERFACE_APPEARANCE_HEADER" = "Внешний вид";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Оставляет элементы Liquid Glass, например панель вкладок, чисто чёрными, как фон. Если выключено, они получают тёмно-серый оттенок, чтобы выделяться на фоне.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Чёрное стекло не применяется к системной панели вкладок, у неё остаётся собственное стекло.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Чёрное стекло";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Делает тёмную тему Instagram чисто чёрной, включая листы. Пузыри сообщений, поля поиска и похожие элементы остаются на тон светлее, чтобы их было видно. Действует только в тёмной теме.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Тёмная тема OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass и размытие";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Панель вкладок в виде пилюли";
 "INTERFACE_LIQUID_GLASS_HELP" = "Принудительно включает или отключает нативный интерфейс Liquid Glass в Instagram. В режиме «По умолчанию» решает Instagram для этого аккаунта, а его развёртывание не затрагивается. Требуется перезапуск.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram уже использует здесь системную панель вкладок. Она всегда рисует собственное стекло, поэтому выключенный Liquid Glass и Поведение панели вкладок её не меняют.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Системная панель вкладок всегда рисует собственное стекло, поэтому выключенный Liquid Glass и Поведение панели вкладок её не меняют.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Открыть поиск";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Заменяет собственную панель вкладок Instagram системной панелью вкладок, которую Instagram использует на складных iPhone. Свайп между вкладками и Поведение панели вкладок к ней не применяются. Требуется перезапуск.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Системная панель вкладок";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Нет видимых вкладок";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Открывает камеру";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Открывается при запуске";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Добавлено Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Заменяет вкладку %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Сброс на стандартные Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Показать вкладку";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Не удалось отметить историю как просмотренную";
 "TAB_CREATE" = "Создание";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Панель вкладок не может быть скрыта с %@ в качестве единственной вкладки: долгое нажатие было бы единственным способом доступа к параметрам Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Классический макет недоступен, пока панель вкладок расположена сбоку экрана.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Параметры Sparkle остаются доступны долгим нажатием кнопки нового сообщения.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Включите кнопку заголовка ленты, чтобы иметь возможность скрыть панель вкладок здесь. Без нее долгое нажатие на панель вкладок — единственный способ доступа к параметрам Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Кнопка заголовка ленты остается вашим способом доступа к параметрам Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Кнопка заголовка добавляет ярлык Sparkle слева от панели навигации сообщений, для случаев когда сообщения — это единственная оставшаяся вкладка.";
 "TAB_EDITOR_HELP_DRAG" = "Перетаскивай для переупорядочения. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "При такой ширине Instagram добавляет в системную панель вкладок Действия и Создание. Действия следуют за вкладкой Ленты.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Последнюю видимую вкладку нельзя скрыть.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Messages здесь не указаны: этот макет сохраняет их в шапке ленты, где они доступны через нажатие или свайп.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Осталась только %@, поэтому панель можно полностью убрать. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Сохранённое занимает место скрытой вкладки, поэтому одна из пяти вкладок Instagram должна быть отключена, прежде чем её можно включить. Настройка всей панели вкладок общая для всех аккаунтов на этом устройстве.";
 "TAB_EDITOR_HELP_TAP" = "Нажми на вкладку, чтобы показать или скрыть её. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Эти параметры применяются, когда на панели остается одна вкладка. Скройте остальные выше, чтобы их использовать.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Свайп между вкладками недоступен, пока включена Системная панель вкладок.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Свайп между вкладками недоступен в системной панели вкладок.";
 "TAB_EXPLORE" = "Исследование";
 "TAB_LAYOUT_CUSTOM" = "Пользовательское";
 "TAB_SAVED" = "Сохранённое";

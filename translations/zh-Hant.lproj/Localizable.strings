@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "替換 Instagram 與 Sparkle 中的字型。可匯入 .otf、.ttf 或 .ttc 檔案。Instagram 的標誌與限時動態文字工具會保留原本的字型。";
 "INTERFACE_APPEARANCE_HEADER" = "外觀";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "讓標籤列等 Liquid Glass 元素與背景一樣保持純黑。關閉後，它們會帶上深灰色調，以便從背景中區分出來。";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "黑色玻璃不會作用於系統分頁列，它會保留自己的玻璃效果。";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "黑色玻璃";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "將 Instagram 的深色模式連同面板一起變為純黑。訊息泡泡、搜尋欄等元素會保持稍亮，以便清楚辨識。僅在深色模式下生效。";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED 深色模式";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 與模糊效果";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "藥丸形分頁列";
 "INTERFACE_LIQUID_GLASS_HELP" = "強制開啟或關閉 Instagram 原生的 Liquid Glass 介面。預設時由 Instagram 為此帳號決定，且不影響其推出。需要重新啟動。";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram 在這裡已經使用系統分頁列。它一律繪製自己的玻璃效果，因此關閉液態玻璃和分頁列行為都不會改變它。";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "系統分頁列一律繪製自己的玻璃效果，因此關閉液態玻璃和分頁列行為都不會改變它。";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "開啟搜尋";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "將 Instagram 自帶的分頁列替換為 Instagram 在摺疊式 iPhone 上使用的系統分頁列。滑動切換分頁和分頁列行為不適用於它。需要重新啟動。";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "系統分頁列";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "沒有顯示中的分頁";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "開啟相機";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "啟動時開啟";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "由 Instagram 新增";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "取代「%@」分頁";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "重設為 Instagram 預設值";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "顯示分頁";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "無法將限時動態標記為已讀";
 "TAB_CREATE" = "建立";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "分頁列無法在只剩「%@」一個分頁時隱藏：長按它會是進入 Sparkle 設定的唯一方式。";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "分頁列位於螢幕側邊時，無法使用經典版面配置。";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "長按新訊息按鈕仍可進入 Sparkle 設定。";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "開啟動態消息頂部按鈕，才能在此隱藏分頁列。若未開啟，長按分頁列會是進入 Sparkle 設定的唯一方式。";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "動態消息頂部按鈕仍可作為你進入 Sparkle 設定的方式。";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "此頂部按鈕會在「訊息」導覽列左側新增 Sparkle 捷徑，適用於「訊息」是唯一保留分頁的情況。";
 "TAB_EDITOR_HELP_DRAG" = "拖曳把手可重新排序。 ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "在此寬度下，Instagram 會在系統分頁列中新增動態和建立。動態跟隨動態消息分頁。";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "最後一個顯示中的分頁無法隱藏。\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "此處未列出「訊息」：此版面配置會將它保留在動態消息頂部，可透過點按或滑動存取。\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "只剩下「%@」，因此可以完全移除分頁列。 ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "「已儲存」會借用已隱藏分頁的位置，因此必須先關閉五個 Instagram 分頁中的一個，才能開啟它。整個分頁列設定由此裝置上的所有帳號共用。";
 "TAB_EDITOR_HELP_TAP" = "點按分頁即可顯示或隱藏它。 ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "這些選項會在分頁列縮減為單一分頁時生效。請在上方隱藏其他分頁以使用它們。";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "開啟系統分頁列時，無法使用滑動切換分頁。";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "系統分頁列不支援滑動切換分頁。";
 "TAB_EXPLORE" = "探索";
 "TAB_LAYOUT_CUSTOM" = "自訂";
 "TAB_SAVED" = "已儲存";

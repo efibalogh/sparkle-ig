@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "فونت را در سراسر اینستاگرام و Sparkle جایگزین می‌کند. فایل‌های .otf، .ttf یا .ttc را درون‌ریزی کنید. لوگوی اینستاگرام و ابزار متن استوری فونت مخصوص خودشان را حفظ می‌کنند.";
 "INTERFACE_APPEARANCE_HEADER" = "ظاهر";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "عناصر Liquid Glass مانند نوار زبانه‌ها را مثل پس‌زمینه کاملاً سیاه نگه می‌دارد. وقتی خاموش باشد، رنگ خاکستری تیره می‌گیرند تا از پس‌زمینه متمایز شوند.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "شیشه سیاه به نوار تب سیستم نمی‌رسد و این نوار شیشه خودش را نگه می‌دارد.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "شیشه سیاه";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "حالت تیره اینستاگرام را، همراه با برگه‌ها، کاملاً سیاه می‌کند. حباب‌های پیام، فیلدهای جستجو و عناصر مشابه کمی روشن‌تر می‌مانند تا دیده شوند. فقط در حالت تیره اعمال می‌شود.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "حالت تیره OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "شیشه مایع و تاری";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "نوار تب کپسولی‌شکل";
 "INTERFACE_LIQUID_GLASS_HELP" = "رابط Liquid Glass بومی اینستاگرام را به‌اجبار روشن یا خاموش می‌کند. در حالت پیش‌فرض، اینستاگرام برای این حساب تصمیم می‌گیرد و روند عرضه‌اش دست‌نخورده می‌ماند. نیاز به راه‌اندازی مجدد دارد.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram همین حالا اینجا از نوار تب سیستم استفاده می‌کند. این نوار همیشه شیشه خودش را می‌کشد، بنابراین خاموش بودن شیشه مایع و رفتار نوار تب آن را تغییر نمی‌دهند.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "نوار تب سیستم همیشه شیشه خودش را می‌کشد، بنابراین خاموش بودن شیشه مایع و رفتار نوار تب آن را تغییر نمی‌دهند.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "باز کردن جستجو";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "نوار تب خود Instagram را با نوار تب سیستمی که Instagram در آیفون‌های تاشو استفاده می‌کند جایگزین می‌کند. کشیدن انگشت بین تب‌ها و رفتار نوار تب روی آن اعمال نمی‌شوند. نیاز به راه‌اندازی مجدد دارد.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "نوار تب سیستم";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "هیچ تب قابل مشاهده‌ای وجود ندارد";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "دوربین را باز می‌کند";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "هنگام راه‌اندازی باز می‌شود";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "افزوده‌شده توسط Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "جایگزین تب %@ می‌شود";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "بازنشانی به پیش‌فرض اینستاگرام";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "نمایش تب";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "امکان علامت‌گذاری استوری به‌عنوان دیده‌شده وجود ندارد";
 "TAB_CREATE" = "ایجاد";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "نوار تب را نمی‌توان با %@ به‌عنوان تنها تب پنهان کرد: لمس طولانی آن تنها راه ورود به تنظیمات Sparkle خواهد بود.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "وقتی نوار زبانه‌ها در کنار صفحه قرار دارد، چیدمان کلاسیک در دسترس نیست.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "تنظیمات Sparkle با لمس طولانی دکمه پیام جدید همچنان در دسترس می‌ماند.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "برای این‌که بتوانید نوار تب را در اینجا پنهان کنید، دکمه هدر فید را روشن کنید. بدون آن، لمس طولانی روی نوار تب تنها راه ورود به تنظیمات Sparkle است.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "دکمه هدر فید همچنان راه شما برای ورود به تنظیمات Sparkle باقی می‌ماند.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "دکمه هدر میانبر Sparkle را به سمت چپ نوار پیمایش پیام‌ها اضافه می‌کند، برای زمانی که پیام‌ها تنها تب باقی‌مانده است.";
 "TAB_EDITOR_HELP_DRAG" = "برای تغییر ترتیب، دستگیره‌ها را بکشید. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "در این عرض، Instagram فعالیت و ایجاد را به نوار تب سیستم اضافه می‌کند. فعالیت از تب فید پیروی می‌کند.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "آخرین تب قابل‌مشاهده را نمی‌توان پنهان کرد.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "پیام‌ها در اینجا فهرست نشده است: این چیدمان آن را در هدر فید نگه می‌دارد، جایی که با ضربه زدن یا کشیدن انگشت همچنان در دسترس است.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "فقط %@ باقی مانده است، بنابراین می‌توان نوار را کاملاً حذف کرد. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "ذخیره‌شده‌ها جای یک تب پنهان‌شده را قرض می‌گیرد، بنابراین باید یکی از پنج تب اینستاگرام خاموش باشد تا بتوان آن را روشن کرد. کل تنظیمات نوار تب بین همه حساب‌های این دستگاه مشترک است.";
 "TAB_EDITOR_HELP_TAP" = "برای نمایش یا پنهان کردن یک تب، روی آن ضربه بزنید. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "این‌ها زمانی اعمال می‌شوند که نوار به یک تب کاهش یابد. برای استفاده از آن‌ها، بقیه را در بالا پنهان کنید.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "تا زمانی که نوار تب سیستم روشن است، کشیدن انگشت بین تب‌ها در دسترس نیست.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "کشیدن انگشت بین تب‌ها در نوار تب سیستم در دسترس نیست.";
 "TAB_EXPLORE" = "کاوش";
 "TAB_LAYOUT_CUSTOM" = "سفارشی";
 "TAB_SAVED" = "ذخیره‌شده‌ها";

@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Zastępuje font w całym Instagramie i Sparkle. Importuj pliki .otf, .ttf lub .ttc. Logo Instagrama i narzędzie tekstu relacji zachowują własne fonty.";
 "INTERFACE_APPEARANCE_HEADER" = "Wygląd";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Elementy Liquid Glass, takie jak pasek kart, pozostają czysto czarne jak tło. Po wyłączeniu otrzymują ciemnoszary odcień, aby odróżniały się od tła.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Czarne szkło nie obejmuje systemowego paska kart, który zachowuje własne szkło.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Czarne szkło";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Zmienia tryb ciemny Instagrama na czystą czerń, łącznie z arkuszami. Dymki wiadomości, pola wyszukiwania i podobne elementy pozostają o odcień jaśniejsze, aby były widoczne. Działa tylko w trybie ciemnym.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Tryb ciemny OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass i rozmycie";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Zaokrąglony pasek zakładek";
 "INTERFACE_LIQUID_GLASS_HELP" = "Wymusza włączenie lub wyłączenie natywnego interfejsu Liquid Glass Instagrama. Domyślnie decyduje Instagram dla tego konta, a jego wdrażanie pozostaje nietknięte. Wymaga ponownego uruchomienia.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram już używa tu systemowego paska kart. Zawsze rysuje on własne szkło, więc wyłączenie Liquid Glass i Zachowanie paska kart go nie zmieniają.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Systemowy pasek kart zawsze rysuje własne szkło, więc wyłączenie Liquid Glass i Zachowanie paska kart go nie zmieniają.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Otwórz wyszukiwanie";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Zastępuje pasek kart Instagrama systemowym paskiem kart, którego Instagram używa na składanych iPhone'ach. Przesuwanie między kartami i Zachowanie paska kart nie mają do niego zastosowania. Wymaga ponownego uruchomienia.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Systemowy pasek kart";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Brak widocznych zakładek";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Otwiera aparat";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Otwiera się przy uruchomieniu";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Dodane przez Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Zastępuje zakładkę %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Przywróć domyślne Instagrama";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Pokaż zakładkę";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Nie można oznaczyć relacji jako wyświetlonej";
 "TAB_CREATE" = "Utwórz";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Pasek kart nie może być ukryty przy %@ jako jedynie karcie: przytrzymanie byłoby jedyną drogą do Ustawień Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Układ Klasyczny jest niedostępny, gdy pasek kart biegnie wzdłuż boku ekranu.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Ustawienia Sparkle pozostają dostępne przez przytrzymanie przycisku nowej wiadomości.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Włącz Przycisk nagłówka na kanale, aby móc tutaj ukryć pasek kart. Bez niego przytrzymanie paska kart to jedyna droga do Ustawień Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Przycisk nagłówka na kanale pozostaje drogą do Ustawień Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Przycisk nagłówka dodaje skrót Sparkle na lewo od paska wiadomości, na wypadek gdy wiadomości pozostaną jedyną kartą.";
 "TAB_EDITOR_HELP_DRAG" = "Przeciągnij uchwyty, aby zmienić kolejność. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Przy tej szerokości Instagram dodaje do systemowego paska kart Aktywność i Utwórz. Aktywność podąża za kartą Aktualności.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Ostatnia widoczna karta nie może być ukryta.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Wiadomości nie ma na tej liście: ten układ pozostawia je w nagłówku kanału, gdzie pozostają dostępne przez dotknięcie lub przesunięcie.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Pozostało tylko %@, więc pasek można całkowicie usunąć. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Zapisane zajmuje miejsce ukrytej zakładki, więc jedna z pięciu zakładek Instagrama musi być wyłączona, zanim będzie można ją włączyć. Cała konfiguracja paska zakładek jest współdzielona przez każde konto na tym urządzeniu.";
 "TAB_EDITOR_HELP_TAP" = "Dotknij karty, aby ją pokazać lub ukryć. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Obowiązują, gdy na pasku zostanie tylko jedna karta. Ukryj pozostałe powyżej, aby ich użyć.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Przesuwanie między kartami jest niedostępne, gdy włączony jest Systemowy pasek kart.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Przesuwanie między kartami jest niedostępne na systemowym pasku kart.";
 "TAB_EXPLORE" = "Eksploruj";
 "TAB_LAYOUT_CUSTOM" = "Niestandardowy";
 "TAB_SAVED" = "Zapisano";

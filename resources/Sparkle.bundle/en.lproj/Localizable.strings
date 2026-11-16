@@ -1193,6 +1193,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Replaces the font across Instagram and Sparkle. Import .otf, .ttf, or .ttc files. Instagram's logo and the story text tool keep their own fonts.";
 "INTERFACE_APPEARANCE_HEADER" = "Appearance";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Keeps Liquid Glass elements, such as the tab bar, pure black like the background. When off, they get a dark gray tint so they stand out against it.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Black Glass does not reach the system tab bar, which keeps its own glass.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Black Glass";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Makes Instagram's dark mode pure black, sheets included. Message bubbles, search fields and similar elements stay a shade lighter so they remain visible. Only applies in dark mode.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Dark Mode";
@@ -1228,6 +1229,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pill-Shaped Tab Bar";
 "INTERFACE_LIQUID_GLASS_HELP" = "Forces Instagram's native Liquid Glass interface on or off. Default lets Instagram decide for this account and leaves its rollout untouched. Requires a restart.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram already uses the system tab bar here. It always draws its own glass, so Liquid Glass Off and Tab Bar Behavior do not change it.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "The system tab bar always draws its own glass, so Liquid Glass Off and Tab Bar Behavior do not change it.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Open Search";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Replaces Instagram's own tab bar with the system tab bar Instagram uses on foldable iPhones. Swipe Between Tabs and Tab Bar Behavior do not apply to it. Requires a restart.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "System Tab Bar";
@@ -2276,6 +2279,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "No visible tabs";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Opens the camera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Opens at launch";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Added by Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Replaces %@ tab";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Reset to Instagram Default";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Show tab";
@@ -2504,18 +2508,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Unable to mark story as seen";
 "TAB_CREATE" = "Create";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "The tab bar cannot be hidden with %@ as the only tab: its long-press would be the only way into Sparkle Settings.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Classic is not available while the tab bar runs down the side of the screen.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Sparkle Settings stays reachable by long-pressing the new message button.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Turn on the Feed Header Button to be able to hide the tab bar here. Without it, the long-press on the tab bar is the only way into Sparkle Settings.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "The feed header button stays as your way into Sparkle Settings.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "The header button adds the Sparkle shortcut to the left of the Messages navigation bar, for when Messages is the tab that is left.";
 "TAB_EDITOR_HELP_DRAG" = "Drag the handles to reorder. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "At this width Instagram adds Activity and Create to the system tab bar. Activity follows the Feed tab.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "The last visible tab cannot be hidden.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Messages is not listed here: this layout keeps it in the feed header, where it stays reachable by tapping it or by swiping.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Only %@ is left, so the bar can be taken away entirely. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Saved borrows the slot of a hidden tab, so one of the five Instagram tabs has to be off before it can be turned on. The whole tab bar setup is shared by every account on this device.";
 "TAB_EDITOR_HELP_TAP" = "Tap a tab to show or hide it. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "These apply once the bar is down to a single tab. Hide the others above to use them.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Swipe Between Tabs is not available while System Tab Bar is on.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Swipe Between Tabs is not available on the system tab bar.";
 "TAB_EXPLORE" = "Explore";
 "TAB_LAYOUT_CUSTOM" = "Custom";
 "TAB_SAVED" = "Saved";

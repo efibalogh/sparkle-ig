@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Pakeičia šriftą visoje Instagram ir Sparkle. Importuokite .otf, .ttf arba .ttc failus. Instagram logotipas ir istorijų teksto įrankis išlaiko savo šriftus.";
 "INTERFACE_APPEARANCE_HEADER" = "Išvaizda";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Liquid Glass elementai, pvz., skirtukų juosta, lieka visiškai juodi kaip fonas. Išjungus jie gauna tamsiai pilką atspalvį, kad išsiskirtų iš fono.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Juodas stiklas nepasiekia sistemos skirtukų juostos, kuri išlaiko savo stiklą.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Juodas stiklas";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram tamsųjį režimą paverčia visiškai juodu, įskaitant lapus. Žinučių burbulai, paieškos laukai ir panašūs elementai lieka atspalviu šviesesni, kad būtų matomi. Taikoma tik tamsiuoju režimu.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED tamsusis režimas";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ir suliejimas";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Kapsulės formos skirtukų juosta";
 "INTERFACE_LIQUID_GLASS_HELP" = "Priverstinai įjungia arba išjungia savąją Instagram Liquid Glass sąsają. Pasirinkus Numatytasis, šiai paskyrai sprendžia Instagram, o jo diegimas lieka nepaliestas. Reikia paleisti iš naujo.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram čia jau naudoja sistemos skirtukų juostą. Ji visada piešia savo stiklą, todėl išjungtas Liquid Glass ir Skirtukų juostos elgsena jos nekeičia.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Sistemos skirtukų juosta visada piešia savo stiklą, todėl išjungtas Liquid Glass ir Skirtukų juostos elgsena jos nekeičia.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Atidaryti paiešką";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Pakeičia Instagram skirtukų juostą sistemos skirtukų juosta, kurią Instagram naudoja sulankstomuose iPhone. Braukimas tarp skirtukų ir Skirtukų juostos elgsena jai netaikomi. Reikia paleisti iš naujo.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Sistemos skirtukų juosta";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Nėra matomų skirtukų";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Atidaro fotoaparatą";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Atidaroma paleidžiant";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Pridėjo Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Pakeičia skirtuką %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Grąžinti Instagram numatytąsias reikšmes";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Rodyti skirtuką";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Nepavyko pažymėti Stories įrašo kaip peržiūrėto";
 "TAB_CREATE" = "Kurti";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Skirtukų juostos negalima slėpti, kai %@ yra vienintelis skirtukas: jos ilgas paspaudimas būtų vienintelis kelias į Sparkle Nustatymai.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Klasikinis išdėstymas nepasiekiamas, kai skirtukų juosta yra ekrano šone.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Sparkle Nustatymai lieka pasiekiami ilgai paspaudus naujo pranešimo mygtuką.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Įjunkite Srauto antraštės mygtuką, kad čia galėtumėte slėpti skirtukų juostą. Be jo ilgas skirtukų juostos paspaudimas yra vienintelis kelias į Sparkle Nustatymai.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Srauto antraštės mygtukas lieka jūsų keliu į Sparkle Nustatymai.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Antraštės mygtukas prideda Sparkle nuorodą kairėje nuo Žinutės naršymo juostos, kai Žinutės yra likęs skirtukas.";
 "TAB_EDITOR_HELP_DRAG" = "Vilkite rankenėles, kad pakeistumėte tvarką.";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Esant šiam pločiui Instagram į sistemos skirtukų juostą prideda Veiklą ir Kurti. Veikla seka paskui Srauto skirtuką.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Paskutinio matomo skirtuko negalima slėpti.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Žinutės čia nerodomos: šis išdėstymas jas palieka Srauto antraštėje, kur jas pasiekiate palietimu arba perbraukimu.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Likęs tik %@, todėl juostą galima visiškai pašalinti.";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Įrašyta skolinasi paslėpto skirtuko vietą, todėl prieš ją įjungiant turi būti išjungtas vienas iš penkių Instagram skirtukų. Visa skirtukų juostos sąranka yra bendra visoms šiame įrenginyje esančioms paskyroms.";
 "TAB_EDITOR_HELP_TAP" = "Palieskite skirtuką, kad jį rodytumėte arba slėptumėte.";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Tai taikoma, kai juostoje lieka vienas skirtukas. Norėdami tai naudoti, aukščiau slėpkite kitus.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Braukimas tarp skirtukų nepasiekiamas, kol įjungta Sistemos skirtukų juosta.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Braukimas tarp skirtukų sistemos skirtukų juostoje nepasiekiamas.";
 "TAB_EXPLORE" = "Naršyti";
 "TAB_LAYOUT_CUSTOM" = "Tinkinta";
 "TAB_SAVED" = "Įrašyta";

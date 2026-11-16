@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "يستبدل الخط في كل أنحاء Instagram وSparkle. استورد ملفات ‎.otf أو ‎.ttf أو ‎.ttc. يحتفظ شعار Instagram وأداة نص القصص بخطوطهما.";
 "INTERFACE_APPEARANCE_HEADER" = "المظهر";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "يُبقي عناصر Liquid Glass، مثل شريط علامات التبويب، سوداء خالصة مثل الخلفية. عند إيقافه تحصل على لون رمادي داكن لتبرز عنها.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "لا يصل الزجاج الأسود إلى شريط علامات التبويب الخاص بالنظام، الذي يحتفظ بزجاجه الخاص.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "زجاج أسود";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "يحوّل الوضع الداكن في Instagram إلى أسود خالص، بما في ذلك الأوراق. تبقى فقاعات الرسائل وحقول البحث والعناصر المشابهة أفتح بدرجة لتظل مرئية. يُطبَّق في الوضع الداكن فقط.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "الوضع الداكن OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "الزجاج السائل والتمويه";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "شريط علامات تبويب بشكل حبة";
 "INTERFACE_LIQUID_GLASS_HELP" = "يفرض تشغيل واجهة Liquid Glass الأصلية في Instagram أو إيقافها. في الوضع الافتراضي يقرر Instagram لهذا الحساب ويبقى طرحه دون تغيير. يتطلب إعادة التشغيل.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "يستخدم Instagram شريط علامات التبويب الخاص بالنظام هنا بالفعل. وهو يرسم زجاجه الخاص دائمًا، لذا لا يغيّره إيقاف الزجاج السائل ولا سلوك شريط علامات التبويب.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "يرسم شريط علامات التبويب الخاص بالنظام زجاجه الخاص دائمًا، لذا لا يغيّره إيقاف الزجاج السائل ولا سلوك شريط علامات التبويب.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "فتح البحث";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "يستبدل شريط علامات التبويب الخاص بـ Instagram بشريط علامات التبويب الخاص بالنظام الذي يستخدمه Instagram على أجهزة iPhone القابلة للطي. لا ينطبق عليه التمرير بين التبويبات وسلوك شريط علامات التبويب. يتطلب إعادة التشغيل.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "شريط علامات التبويب الخاص بالنظام";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "لا توجد تبويبات مرئية";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "يفتح الكاميرا";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "يفتح عند البدء";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "أضافه Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "استبدال تبويب %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "إعادة تعيين إلى Instagram الافتراضية";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "إظهار تبويب";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "تعذر تحديد القصة كمشاهدة";
 "TAB_CREATE" = "إنشاء";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "لا يمكن إخفاء شريط الألسنة مع %@ كالعلامة التبويب الوحيدة: الضغط المطول عليه سيكون الطريقة الوحيدة للوصول إلى إعدادات Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "التخطيط الكلاسيكي غير متاح عندما يمتد شريط علامات التبويب على جانب الشاشة.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "إعدادات Sparkle يبقى يمكن الوصول إليه بالضغط المطول على زر الرسالة الجديدة.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "قم بتشغيل زر رأس التغذية لتتمكن من إخفاء شريط الألسنة هنا. بدونه، الضغط المطول على شريط الألسنة هو الطريقة الوحيدة للوصول إلى إعدادات Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "زر رأس التغذية يبقى طريقتك للوصول إلى إعدادات Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "زر الرأس يضيف اختصار Sparkle إلى يسار شريط التنقل للرسائل، عندما تكون الرسائل هي العلامة المتبقية.";
 "TAB_EDITOR_HELP_DRAG" = "اسحب المقابض لإعادة ترتيبها. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "في هذا العرض يضيف Instagram النشاط والإنشاء إلى شريط علامات التبويب الخاص بالنظام. يتبع النشاط علامة تبويب الخلاصة.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "لا يمكن إخفاء آخر تبويب مرئي.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "الرسائل غير مدرجة هنا: هذا التخطيط يبقيها في أعلى الخلاصة، حيث تبقى قابلة للوصول بالضغط عليها أو التمرير.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "يتبقى فقط %@، لذا يمكن إزالة الشريط بالكامل. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "تستخدم \"المحفوظ\" مكان تبويب مخفي، لذا يجب إيقاف تشغيل أحد التبويبات الخمسة من Instagram قبل تشغيلها. إعداد شريط التبويب كامل مشترك بين جميع الحسابات على هذا الجهاز.";
 "TAB_EDITOR_HELP_TAP" = "اضغط على تبويب لإظهاره أو إخفاؤه. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "تنطبق هذه على بمجرد أن ينخفض الشريط إلى علامة تبويب واحدة. أخف الآخرين أعلاه لاستخدامهم.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "التمرير بين التبويبات غير متاح أثناء تشغيل شريط علامات التبويب الخاص بالنظام.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "التمرير بين التبويبات غير متاح في شريط علامات التبويب الخاص بالنظام.";
 "TAB_EXPLORE" = "استكشاف";
 "TAB_LAYOUT_CUSTOM" = "مخصص";
 "TAB_SAVED" = "محفوظات";

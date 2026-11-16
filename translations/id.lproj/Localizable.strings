@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Mengganti font di seluruh Instagram dan Sparkle. Impor file .otf, .ttf, atau .ttc. Logo Instagram dan alat teks story tetap menggunakan fontnya sendiri.";
 "INTERFACE_APPEARANCE_HEADER" = "Tampilan";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Menjaga elemen Liquid Glass, seperti bilah tab, tetap hitam pekat seperti latar belakang. Saat nonaktif, elemen tersebut diberi rona abu-abu gelap agar menonjol dari latar.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Kaca Hitam tidak menjangkau Bilah Tab Sistem, yang tetap memakai kacanya sendiri.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Kaca Hitam";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Mengubah mode gelap Instagram menjadi hitam pekat, termasuk lembar. Gelembung pesan, kolom pencarian, dan elemen serupa tetap sedikit lebih terang agar tetap terlihat. Hanya berlaku dalam mode gelap.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mode Gelap OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Buram";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Bilah Tab Berbentuk Pil";
 "INTERFACE_LIQUID_GLASS_HELP" = "Memaksa antarmuka Liquid Glass bawaan Instagram aktif atau nonaktif. Pada Bawaan, Instagram yang memutuskan untuk akun ini dan peluncurannya tidak disentuh. Perlu mulai ulang.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram sudah memakai Bilah Tab Sistem di sini. Bilah ini selalu menggambar kacanya sendiri, jadi Liquid Glass Nonaktif dan Perilaku Bilah Tab tidak mengubahnya.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Bilah Tab Sistem selalu menggambar kacanya sendiri, jadi Liquid Glass Nonaktif dan Perilaku Bilah Tab tidak mengubahnya.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Buka Pencarian";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Mengganti bilah tab milik Instagram dengan bilah tab sistem yang digunakan Instagram di iPhone lipat. Geser Antar Tab dan Perilaku Bilah Tab tidak berlaku untuknya. Perlu memulai ulang.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Bilah Tab Sistem";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Tidak ada tab yang terlihat";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Membuka kamera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Terbuka saat aplikasi dijalankan";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Ditambahkan oleh Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Menggantikan tab %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Reset ke Default Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Tampilkan tab";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Tidak dapat menandai story sebagai dilihat";
 "TAB_CREATE" = "Buat";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Bilah tab tidak dapat disembunyikan dengan %@ sebagai satu-satunya tab: tekan lama padanya menjadi satu-satunya jalan masuk ke Pengaturan Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Klasik tidak tersedia saat bilah tab berada di sisi layar.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Pengaturan Sparkle tetap bisa dijangkau dengan menekan lama tombol pesan baru.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Aktifkan Tombol Header Feed agar bisa menyembunyikan bilah tab di sini. Tanpa itu, tekan lama pada bilah tab menjadi satu-satunya jalan masuk ke Pengaturan Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Tombol header feed tetap menjadi jalan masukmu ke Pengaturan Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Tombol header menambahkan pintasan Sparkle di kiri bilah navigasi Pesan, untuk saat Pesan menjadi tab yang tersisa.";
 "TAB_EDITOR_HELP_DRAG" = "Seret gagang untuk mengatur ulang urutan. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Pada lebar ini Instagram menambahkan Aktivitas dan Buat ke Bilah Tab Sistem. Aktivitas mengikuti tab Feed.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Tab terakhir yang terlihat tidak dapat disembunyikan.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Pesan tidak tercantum di sini: tata letak ini menyimpannya di header feed, tempatnya tetap bisa dijangkau dengan mengetuknya atau menggeser.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Hanya %@ yang tersisa, sehingga bilah tab dapat dihilangkan seluruhnya. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Tersimpan meminjam slot dari tab yang disembunyikan, jadi salah satu dari lima tab Instagram harus dimatikan dulu sebelum tab ini bisa diaktifkan. Seluruh pengaturan bilah tab ini digunakan bersama oleh semua akun di perangkat ini.";
 "TAB_EDITOR_HELP_TAP" = "Ketuk sebuah tab untuk menampilkan atau menyembunyikannya. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Ini berlaku setelah bilah tab tersisa satu tab saja. Sembunyikan yang lain di atas untuk menggunakannya.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Geser Antar Tab tidak tersedia saat Bilah Tab Sistem aktif.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Geser Antar Tab tidak tersedia di Bilah Tab Sistem.";
 "TAB_EXPLORE" = "Jelajahi";
 "TAB_LAYOUT_CUSTOM" = "Kustom";
 "TAB_SAVED" = "Tersimpan";

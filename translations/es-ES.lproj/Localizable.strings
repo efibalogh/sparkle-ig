@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sustituye la fuente en Instagram y en Sparkle. Importa archivos .otf, .ttf o .ttc. El logo de Instagram y la herramienta de texto de historias conservan sus propias fuentes.";
 "INTERFACE_APPEARANCE_HEADER" = "Apariencia";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Mantiene los elementos de Liquid Glass, como la barra de pestañas, en negro puro como el fondo. Si está desactivado, reciben un tono gris oscuro para que se distingan del fondo.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Cristal negro no llega a la barra de pestañas del sistema, que conserva su propio cristal.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Cristal negro";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Convierte el modo oscuro de Instagram en negro puro, incluidas las hojas. Las burbujas de mensajes, los campos de búsqueda y elementos similares quedan un tono más claros para que sigan viéndose. Solo se aplica en modo oscuro.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Modo oscuro OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass y desenfoque";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra de pestañas en forma de píldora";
 "INTERFACE_LIQUID_GLASS_HELP" = "Fuerza la interfaz nativa Liquid Glass de Instagram activada o desactivada. En Predeterminado, Instagram decide para esta cuenta y su despliegue no se toca. Requiere reiniciar.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram ya usa aquí la barra de pestañas del sistema. Siempre dibuja su propio cristal, así que Liquid Glass desactivado y Comportamiento de la barra de pestañas no la cambian.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "La barra de pestañas del sistema siempre dibuja su propio cristal, así que Liquid Glass desactivado y Comportamiento de la barra de pestañas no la cambian.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Abrir búsqueda";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Sustituye la barra de pestañas propia de Instagram por la barra de pestañas del sistema que Instagram usa en los iPhone plegables. Deslizar entre pestañas y Comportamiento de la barra de pestañas no se aplican a ella. Requiere reiniciar.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Barra de pestañas del sistema";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Sin pestañas visibles";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Abre la cámara";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Se abre al iniciar";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Añadido por Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Reemplaza la pestaña %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Restaurar valores predeterminados de Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Mostrar pestaña";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "No se puede marcar la historia como vista";
 "TAB_CREATE" = "Crear";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "La barra de pestañas no se puede ocultar con %@ como la única pestaña: su pulsación prolongada sería la única forma de acceder a Configuración de Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "El diseño clásico no está disponible mientras la barra de pestañas está en el lateral de la pantalla.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Configuración de Sparkle se mantiene accesible presionando prolongadamente el botón de nuevo mensaje.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Activa el botón de encabezado de feed para poder ocultar la barra de pestañas aquí. Sin él, la pulsación prolongada en la barra de pestañas es la única forma de acceder a Configuración de Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "El botón de encabezado de feed se mantiene como tu forma de acceder a Configuración de Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "El botón de encabezado añade el atajo de Sparkle a la izquierda de la barra de navegación de Mensajes, para cuando Mensajes es la pestaña que queda.";
 "TAB_EDITOR_HELP_DRAG" = "Arrastra los tiradores para reordenar. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "En esta anchura, Instagram añade Actividad y Crear a la barra de pestañas del sistema. Actividad sigue a la pestaña Feed.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "La última pestaña visible no se puede ocultar.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Mensajes no aparece aquí: este diseño lo mantiene en la cabecera del feed, donde puedes acceder tocándolo o deslizándote.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Solo %@ queda, así que se puede ocultar la barra completamente. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Guardado toma el espacio de una pestaña oculta, así que una de las cinco pestañas de Instagram tiene que estar desactivada antes de poder activarla. La configuración completa de la barra de pestañas se comparte entre todas las cuentas del dispositivo.";
 "TAB_EDITOR_HELP_TAP" = "Toca una pestaña para mostrarla u ocultarla. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Estos aplican una vez que la barra se reduce a una única pestaña. Oculta las otras arriba para usarlas.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Deslizar entre pestañas no está disponible mientras la Barra de pestañas del sistema esté activada.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Deslizar entre pestañas no está disponible en la barra de pestañas del sistema.";
 "TAB_EXPLORE" = "Explorar";
 "TAB_LAYOUT_CUSTOM" = "Personalizado";
 "TAB_SAVED" = "Guardados";

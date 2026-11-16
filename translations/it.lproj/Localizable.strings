@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sostituisce il carattere in Instagram e in Sparkle. Importa file .otf, .ttf o .ttc. Il logo di Instagram e lo strumento testo delle storie mantengono i propri caratteri.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspetto";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Mantiene gli elementi Liquid Glass, come la barra delle schede, nero puro come lo sfondo. Se disattivato, ricevono una tinta grigio scuro per distinguersi dallo sfondo.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Vetro nero non raggiunge la Barra Schede di Sistema, che mantiene il proprio vetro.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Vetro nero";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Rende nera pura la modalità scura di Instagram, pannelli inclusi. Bolle dei messaggi, campi di ricerca ed elementi simili restano di una tonalità più chiara per rimanere visibili. Si applica solo in modalità scura.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Modalità scura OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Sfocatura";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra Schede a Forma di Pillola";
 "INTERFACE_LIQUID_GLASS_HELP" = "Forza l'interfaccia Liquid Glass nativa di Instagram su attivata o disattivata. Con Predefinito decide Instagram per questo account e il suo rilascio resta invariato. Richiede un riavvio.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram usa già qui la Barra Schede di Sistema. Disegna sempre il proprio vetro, quindi Liquid Glass disattivato e Comportamento Barra Schede non la modificano.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "La Barra Schede di Sistema disegna sempre il proprio vetro, quindi Liquid Glass disattivato e Comportamento Barra Schede non la modificano.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Apri ricerca";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Sostituisce la barra delle schede di Instagram con la barra delle schede di sistema che Instagram usa sugli iPhone pieghevoli. Scorri tra le schede e Comportamento Barra Schede non si applicano. Richiede un riavvio.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Barra Schede di Sistema";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Nessuna scheda visibile";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Apre la fotocamera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Apre all'avvio";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Aggiunta da Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Sostituisce la scheda %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Ripristina predefinito Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Mostra scheda";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Impossibile contrassegnare la storia come visualizzata";
 "TAB_CREATE" = "Crea";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "La barra delle schede non può essere nascosta con %@ come unica scheda: la sua pressione lunga sarebbe l'unico modo per accedere alle impostazioni di Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Il layout classico non è disponibile quando la barra delle schede è sul lato dello schermo.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Le impostazioni di Sparkle rimangono raggiungibili premendo a lungo il pulsante di nuovo messaggio.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Attiva il pulsante Feed Header per poter nascondere la barra delle schede qui. Senza di esso, la pressione lunga sulla barra delle schede è l'unico modo per accedere alle impostazioni di Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Il pulsante dell'intestazione del feed rimane il tuo modo per accedere alle impostazioni di Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Il pulsante dell'intestazione aggiunge il collegamento di Sparkle a sinistra della barra di navigazione dei messaggi, per quando i messaggi sono l'unica scheda rimasta.";
 "TAB_EDITOR_HELP_DRAG" = "Trascina per riordinare. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "A questa larghezza Instagram aggiunge Attività e Crea alla Barra Schede di Sistema. Attività segue la scheda Feed.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "L'ultima scheda visibile non può essere nascosta.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "I Messaggi non sono elencati qui: questo layout li mantiene nell'intestazione del feed, dove rimangono raggiungibili toccandoli o scorrendo.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Rimane solo %@, quindi la barra può essere completamente rimossa. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Salvati utilizza lo spazio di una scheda nascosta, quindi una delle cinque schede di Instagram deve essere disattivata prima che Salvati possa essere attivata. L'intera configurazione della barra delle schede è condivisa da ogni account su questo dispositivo.";
 "TAB_EDITOR_HELP_TAP" = "Tocca una scheda per mostrarla o nasconderla. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Questi si applicano una volta che la barra è ridotta a una singola scheda. Nascondi gli altri sopra per usarli.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Scorri tra le schede non è disponibile mentre la Barra Schede di Sistema è attiva.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Scorri tra le schede non è disponibile nella Barra Schede di Sistema.";
 "TAB_EXPLORE" = "Esplora";
 "TAB_LAYOUT_CUSTOM" = "Personalizzato";
 "TAB_SAVED" = "Salvati";

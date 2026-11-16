@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Înlocuiește fontul în Instagram și în Sparkle. Importă fișiere .otf, .ttf sau .ttc. Sigla Instagram și instrumentul de text al poveștilor își păstrează propriile fonturi.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspect";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Păstrează elementele Liquid Glass, cum ar fi bara de file, negru pur ca fundalul. Când este dezactivat, primesc o nuanță gri închis ca să se distingă de fundal.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Sticla neagră nu ajunge la bara de file de sistem, care își păstrează propria sticlă.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Sticlă neagră";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Face modul întunecat al Instagram negru pur, inclusiv foile. Bulele de mesaje, câmpurile de căutare și elementele similare rămân cu o nuanță mai deschise ca să se vadă. Se aplică doar în modul întunecat.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mod întunecat OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass și estompare";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Bară file în formă de pastilă";
 "INTERFACE_LIQUID_GLASS_HELP" = "Forțează interfața Liquid Glass nativă a Instagram să fie pornită sau oprită. La Implicit, Instagram decide pentru acest cont, iar lansarea sa rămâne neatinsă. Necesită repornire.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram folosește deja aici bara de file de sistem. Aceasta își desenează mereu propria sticlă, așa că Liquid Glass oprit și Comportament bară file nu o schimbă.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Bara de file de sistem își desenează mereu propria sticlă, așa că Liquid Glass oprit și Comportament bară file nu o schimbă.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Deschide căutarea";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Înlocuiește bara de file proprie Instagram cu bara de file de sistem pe care Instagram o folosește pe iPhone-urile pliabile. Glisează între file și Comportament bară file nu se aplică acesteia. Necesită o repornire.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Bară file de sistem";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Niciun tab vizibil";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Deschide camera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Se deschide la pornire";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Adăugat de Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Înlocuiește fila %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Resetează la implicit Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Arată fila";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Imposibil de marcat povesta ca vizionată";
 "TAB_CREATE" = "Creare";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Bara de file nu poate fi ascunsă cu %@ ca singurul tab: apasul lung ar fi singurul mod de accesare a Setărilor Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Aspectul clasic nu este disponibil cât timp bara de file se află pe marginea ecranului.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Setările Sparkle rămân accesibile prin apasul lung pe butonul de mesaj nou.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Activează Butonul Antet Alimentare pentru a putea ascunde bara de file aici. Fără el, apasul lung pe bara de file este singurul mod de accesare a Setărilor Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Butonul antet alimentare rămâne calea ta în Setările Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Butonul antet adaugă scurtătura Sparkle la stânga barei de navigare Mesaje, pentru când Mesajele este fila rămasă.";
 "TAB_EDITOR_HELP_DRAG" = "Trage de mânere pentru a reordona. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "La această lățime Instagram adaugă Activitate și Creare pe bara de file de sistem. Activitate urmează fila Feed.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Ultima filă vizibilă nu poate fi ascunsă.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Mesaje nu apare aici: acest layout o ține în antetul feed-ului, unde rămâne accesibilă prin atingere sau glisare.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Rămâne doar %@, deci bara poate fi eliminată complet. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Colecție ocupă locul unei file ascunse, deci una dintre cele cinci file Instagram trebuie să fie dezactivată pentru ca aceasta să poată fi activată. Configurația barei de file este partajată de fiecare cont de pe acest dispozitiv.";
 "TAB_EDITOR_HELP_TAP" = "Atinge o filă pentru a o afișa sau ascunde. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Acestea se aplică odată ce bara este redusă la o singură filă. Ascunde altele mai sus pentru a le folosi.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Glisează între file nu este disponibil cât timp Bară file de sistem este activată.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Glisează între file nu este disponibil pe bara de file de sistem.";
 "TAB_EXPLORE" = "Explorează";
 "TAB_LAYOUT_CUSTOM" = "Personalizat";
 "TAB_SAVED" = "Salvat";

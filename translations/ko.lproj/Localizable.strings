@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram과 Sparkle 전체의 글꼴을 교체합니다. .otf, .ttf, .ttc 파일을 가져올 수 있습니다. Instagram 로고와 스토리 텍스트 도구는 자체 글꼴을 유지합니다.";
 "INTERFACE_APPEARANCE_HEADER" = "모양";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "탭 막대 같은 Liquid Glass 요소를 배경처럼 완전한 검은색으로 유지합니다. 끄면 배경과 구분되도록 어두운 회색 색조가 적용됩니다.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "검은 글래스는 시스템 탭 바에 적용되지 않으며, 탭 바는 자체 글래스를 유지합니다.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "검은 글래스";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "시트를 포함해 Instagram의 다크 모드를 완전한 검은색으로 바꿉니다. 메시지 말풍선, 검색창 등은 잘 보이도록 조금 더 밝게 유지됩니다. 다크 모드에서만 적용됩니다.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED 다크 모드";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 및 흐림";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "알약 모양 탭 바";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram의 네이티브 Liquid Glass 인터페이스를 강제로 켜거나 끕니다. 기본값에서는 이 계정에 대해 Instagram이 결정하며 배포 상태를 건드리지 않습니다. 재시작이 필요합니다.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram이 이미 여기에서 시스템 탭 바를 사용합니다. 항상 자체 글래스를 그리므로 Liquid Glass 끄기와 탭 바 동작이 적용되지 않습니다.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "시스템 탭 바는 항상 자체 글래스를 그리므로 Liquid Glass 끄기와 탭 바 동작이 적용되지 않습니다.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "검색 열기";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Instagram 자체 탭 바를 Instagram이 폴더블 iPhone에서 사용하는 시스템 탭 바로 바꿉니다. 탭 사이에서 스와이프와 탭 바 동작은 적용되지 않습니다. 재시작이 필요합니다.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "시스템 탭 바";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "표시되는 탭 없음";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "카메라를 엽니다";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "시작할 때 엽니다";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Instagram이 추가함";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "%@ 탭을 대체합니다";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Instagram 기본값으로 재설정";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "탭 표시";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "스토리를 본 것으로 표시할 수 없습니다.";
 "TAB_CREATE" = "만들기";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "%@이(가) 유일한 탭인 상태에서는 탭 막대를 숨길 수 없습니다. 길게 누르기가 Sparkle 설정으로 가는 유일한 방법이기 때문입니다.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "탭 막대가 화면 옆에 세로로 있을 때는 클래식을 사용할 수 없습니다.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "새 메시지 버튼을 길게 누르면 Sparkle 설정에 계속 액세스할 수 있습니다.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "여기서 탭 막대를 숨기려면 피드 헤더 버튼을 켜십시오. 없으면 탭 막대의 길게 누르기만이 Sparkle 설정으로 가는 유일한 방법입니다.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "피드 헤더 버튼은 계속 Sparkle 설정으로의 방법으로 유지됩니다.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "헤더 버튼은 메시지가 남은 유일한 탭일 때 메시지 네비게이션 바 왼쪽에 Sparkle 바로가기를 추가합니다.";
 "TAB_EDITOR_HELP_DRAG" = "핸들을 드래그해서 순서를 바꿀 수 있어. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "이 폭에서는 Instagram이 시스템 탭 바에 활동과 만들기를 추가합니다. 활동은 피드 탭을 따릅니다.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "마지막 보이는 탭은 숨길 수 없어.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "메시지는 여기 목록에 없어. 이 레이아웃은 메시지를 피드 헤더에 두니까, 탭하거나 스와이프로 접근할 수 있어.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "%@만 남아 있으니까, 탭 바를 아예 없앨 수도 있어. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "저장됨은 숨겨진 탭의 슬롯을 사용하니까, 인스타그램의 5개 탭 중 하나가 꺼져 있어야 켤 수 있어. 탭 바 설정은 이 기기의 모든 계정이 공유해.";
 "TAB_EDITOR_HELP_TAP" = "탭을 눌러서 표시하거나 숨길 수 있어. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "이러한 옵션은 막대가 단일 탭으로 축소되면 적용됩니다. 다른 탭을 위에 숨겨서 사용하십시오.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "시스템 탭 바가 켜져 있는 동안에는 탭 사이에서 스와이프를 사용할 수 없습니다.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "시스템 탭 바에서는 탭 사이에서 스와이프를 사용할 수 없습니다.";
 "TAB_EXPLORE" = "탐색";
 "TAB_LAYOUT_CUSTOM" = "사용자 정의";
 "TAB_SAVED" = "저장됨";

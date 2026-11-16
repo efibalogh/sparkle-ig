@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Pinapalitan ang font sa buong Instagram at Sparkle. Mag-import ng .otf, .ttf, o .ttc na file. Pinapanatili ng logo ng Instagram at ng story text tool ang sarili nilang font.";
 "INTERFACE_APPEARANCE_HEADER" = "Hitsura";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Pinapanatiling purong itim ang mga elemento ng Liquid Glass, gaya ng tab bar, tulad ng background. Kapag naka-off, nagkakaroon sila ng madilim na kulay abo para lumitaw sila mula rito.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Hindi umaabot ang Itim na Glass sa Tab Bar ng System, na nananatili sa sarili nitong salamin.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Itim na Glass";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Ginagawang purong itim ang dark mode ng Instagram, kasama ang mga sheet. Bahagyang mas maliwanag ang mga message bubble, search field, at katulad na elemento para manatiling nakikita. Sa dark mode lang ito gumagana.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Dark Mode";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass at Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Tab Bar na Hugis-Pildoras";
 "INTERFACE_LIQUID_GLASS_HELP" = "Sapilitang ino-on o ino-off ang native na Liquid Glass interface ng Instagram. Ang Karaniwan ay hinahayaan ang Instagram na magpasya para sa account na ito at hindi ginagalaw ang rollout nito. Kailangan ng restart.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Ginagamit na rito ng Instagram ang Tab Bar ng System. Laging gumuguhit ito ng sariling salamin, kaya hindi ito binabago ng naka-off na Liquid Glass at ng Ugali ng Tab Bar.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Laging gumuguhit ng sariling salamin ang Tab Bar ng System, kaya hindi ito binabago ng naka-off na Liquid Glass at ng Ugali ng Tab Bar.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Buksan ang Paghahanap";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Pinapalitan ang sariling tab bar ng Instagram ng system tab bar na ginagamit ng Instagram sa mga foldable na iPhone. Hindi sakop nito ang Mag-swipe sa Pagitan ng mga Tab at Ugali ng Tab Bar. Kailangang i-restart.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Tab Bar ng System";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Walang nakikitang tab";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Binubuksan ang camera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Bubukas kapag nag-launch";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Idinagdag ng Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Papalitan ang %@ tab";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "I-reset sa Default ng Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Ipakita ang tab";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Hindi ma-mark ang story bilang nakita";
 "TAB_CREATE" = "Gumawa";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Hindi maitatago ang tab bar kung %@ na lang ang tanging tab: ang long-press nito na lang ang magiging daan papasok sa Sparkle Settings.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Hindi available ang Classic habang nasa gilid ng screen ang tab bar.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Naaabot pa rin ang Sparkle Settings sa pamamagitan ng pag-long press sa new message button.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "I-on ang Feed Header Button para maitago ang tab bar dito. Kung wala ito, ang long-press sa tab bar na lang ang magiging daan papasok sa Sparkle Settings.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Nananatiling daan mo papasok sa Sparkle Settings ang feed header button.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Nagdaragdag ang header button ng Sparkle shortcut sa kaliwa ng navigation bar ng Messages, para sa mga panahong Messages na lang ang natitirang tab.";
 "TAB_EDITOR_HELP_DRAG" = "I-drag ang mga handle para ayusin ulit ang pagkakasunod-sunod. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Sa lapad na ito, idinadagdag ng Instagram ang Activity at Gumawa sa Tab Bar ng System. Sumusunod ang Activity sa Feed tab.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Hindi maitatago ang huling nakikitang tab.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Hindi nakalista dito ang Messages: pinananatili ito ng layout na ito sa feed header, kung saan naaabot pa rin ito sa pag-tap o pag-swipe.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "%@ na lang ang natitira, kaya puwede nang alisin nang tuluyan ang bar. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Humihiram ang Saved ng slot ng isang nakatagong tab, kaya kailangang naka-off ang isa sa limang tab ng Instagram bago ito maaaring i-on. Ang buong setup ng tab bar ay ginagamit ng lahat ng account sa device na ito.";
 "TAB_EDITOR_HELP_TAP" = "I-tap ang isang tab para ipakita o itago ito. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Ma-a-apply ang mga ito kapag naiwan na lang ang bar sa isang tab. Itago ang iba sa itaas para magamit ang mga ito.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Hindi available ang Mag-swipe sa Pagitan ng mga Tab habang naka-on ang Tab Bar ng System.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Hindi available ang Mag-swipe sa Pagitan ng mga Tab sa Tab Bar ng System.";
 "TAB_EXPLORE" = "Explore";
 "TAB_LAYOUT_CUSTOM" = "Pasadya";
 "TAB_SAVED" = "Naka-save";

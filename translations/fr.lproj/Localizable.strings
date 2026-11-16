@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Remplace la police dans Instagram et Sparkle. Importez des fichiers .otf, .ttf ou .ttc. Le logo Instagram et l'outil texte des stories gardent leurs propres polices.";
 "INTERFACE_APPEARANCE_HEADER" = "Apparence";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Garde les éléments Liquid Glass, comme la barre d'onglets, en noir pur comme l'arrière-plan. Désactivé, ils prennent une teinte gris foncé pour s'en détacher.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Verre noir n'atteint pas la barre d'onglets système, qui garde son propre verre.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Verre noir";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Rend le mode sombre d'Instagram noir pur, feuilles comprises. Les bulles de message, les champs de recherche et les éléments similaires restent un ton plus clair pour rester visibles. S'applique uniquement en mode sombre.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Mode sombre OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass et flou";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barre d'onglets en forme de pilule";
 "INTERFACE_LIQUID_GLASS_HELP" = "Force l'interface Liquid Glass native d'Instagram en activé ou désactivé. Par défaut, Instagram décide pour ce compte et son déploiement reste intact. Nécessite un redémarrage.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram utilise déjà ici la barre d'onglets système. Elle dessine toujours son propre verre : Liquid Glass désactivé et Comportement de la barre d'onglets ne la modifient pas.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "La barre d'onglets système dessine toujours son propre verre : Liquid Glass désactivé et Comportement de la barre d'onglets ne la modifient pas.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Ouvrir la recherche";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Remplace la barre d'onglets d'Instagram par la barre d'onglets système qu'Instagram utilise sur les iPhone pliables. Balayer entre les onglets et Comportement de la barre d'onglets ne s'y appliquent pas. Nécessite un redémarrage.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Barre d'onglets système";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Aucun onglet visible";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Ouvre l'appareil photo";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "S'ouvre au démarrage";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Ajouté par Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Remplace l'onglet %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Réinitialiser par défaut d'Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Afficher l'onglet";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Impossible de marquer la story comme vue";
 "TAB_CREATE" = "Créer";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "La barre d'onglets ne peut pas être masquée avec %@ comme seul onglet : son appui long serait le seul accès aux paramètres Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "La disposition classique n'est pas disponible lorsque la barre d'onglets longe le côté de l'écran.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Les paramètres Sparkle restent accessibles en appuyant longtemps sur le bouton de nouveau message.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Activez le bouton d'en-tête du flux pour pouvoir masquer la barre d'onglets ici. Sans cela, l'appui long sur la barre d'onglets est le seul accès aux paramètres Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Le bouton d'en-tête du flux reste votre accès aux paramètres Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Le bouton d'en-tête ajoute le raccourci Sparkle à gauche de la barre de navigation Messages, pour lorsque Messages est l'onglet qui reste.";
 "TAB_EDITOR_HELP_DRAG" = "Fais glisser les poignées pour réorganiser. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "À cette largeur, Instagram ajoute Activité et Créer à la barre d'onglets système. Activité suit l'onglet Fil.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Le dernier onglet visible ne peut pas être masqué.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Messages n'est pas répertorié ici : cette mise en page le maintient dans l'en-tête du fil d'actualité, où il reste accessible en l'effleurant ou en le balayant.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Seul %@ reste, tu peux donc enlever complètement la barre. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Enregistré emprunte l'emplacement d'un onglet masqué, donc l'un des cinq onglets Instagram doit être désactivé avant de pouvoir l'activer. La configuration entière de la barre d'onglets est partagée par tous les comptes sur cet appareil.";
 "TAB_EDITOR_HELP_TAP" = "Appuie sur un onglet pour l'afficher ou le masquer. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "S'appliquent une fois que la barre est réduite à un seul onglet. Masquez les autres ci-dessus pour les utiliser.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Balayer entre les onglets n'est pas disponible tant que la Barre d'onglets système est activée.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Balayer entre les onglets n'est pas disponible dans la barre d'onglets système.";
 "TAB_EXPLORE" = "Explorer";
 "TAB_LAYOUT_CUSTOM" = "Personnalisé";
 "TAB_SAVED" = "Enregistrées";

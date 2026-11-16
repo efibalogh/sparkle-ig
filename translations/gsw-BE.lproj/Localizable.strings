@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt d'Schriftart i Instagram u Sparkle. Importier .otf-, .ttf- oder .ttc-Dateie. S'Instagram-Logo u s'Story-Text-Tool behaute ihri eigeti Schriftart.";
 "INTERFACE_APPEARANCE_HEADER" = "Ussgseh";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Haltet Liquid-Glass-Elemänt wie d Tableiste tüüfschwarz wie dr Hintergrund. Wänns us isch, überchömed sie e dunkelgraue Ton, damit sie sich devo abhebed.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Schwarzes Glas chunnt nid bis zur System-Tab-Balke, si bhaltet ihres eigete Glas.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Schwarzes Glas";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Macht de Dunkelmodus vo Instagram tüüfschwarz, Sheets inbegriffe. Nachrichteblase, Suechfälder und ähnlichi Elemänt blibed e Spur heller, damit mer sie gseht. Gilt nume im Dunkelmodus.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED-Dunkelmodus";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass u Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pillenförmige Tab-Balke";
 "INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt s'native Liquid-Glass-Interface vo Instagram aa oder us. Standard lat Instagram für dis Konto entscheide und lat dr Rollout unverändert. Bruucht en Neustart.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram bruucht hie scho d System-Tab-Balke. Si zeichnet immer ihres eigete Glas, drum ändere Liquid Glass us und Tab-Balke-Verhaute se nid.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "D System-Tab-Balke zeichnet immer ihres eigete Glas, drum ändere Liquid Glass us und Tab-Balke-Verhaute se nid.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Suechi öffne";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Ersetzt dr eigeti Tab-Balke vo Instagram dur dr System-Tab-Balke, wo Instagram uf fautbare iPhones bruucht. Zwüsche Tabs wüsche und Tab-Balke-Verhaute gäute derfür nid. Bruucht e Neustart.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "System-Tab-Balke";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Kei sichtbari Tabs";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Macht d'Kamera uf";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Macht sech bim Start uf";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Vo Instagram dezuegfüegt";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Ersetzt dr %@-Tab";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Zrügg uf Instagram-Standard";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Tab zeige";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Cha Story nid als gseh markiere";
 "TAB_CREATE" = "Erstelle";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "D'Tab-Balke cha nid verstecke wärde, wenn %@ dr einzig Tab isch: dr Lang-Drück druf wär dr einzig Wäg i d'Sparkle-Ystellige.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Klassisch isch nöd verfüegbar, solang d Tab-Leischte am Bildschirmrand lauft.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "D'Sparkle-Ystellige blybe erreichbar via Lang-Drücke uf em Neui-Nachricht-Chnopf.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Schaut dr Feed-Header-Chnopf y, zum d'Tab-Balke da chönne verstecke. Ohni dëm isch dr Lang-Drück uf dr Tab-Balke dr einzig Wäg i d'Sparkle-Ystellige.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Dr Feed-Header-Chnopf blybt dyni Wäg i d'Sparkle-Ystellige.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Dr Header-Chnopf fügt dr Sparkle-Kürzu links vor Nachrichte-Navigationsläiste dezue, für wenn Nachrichte dr Tab isch, wo übrig blybt.";
 "TAB_EDITOR_HELP_DRAG" = "Zieh a de Griff zum Umsortiere. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Bi dere Breiti füegt Instagram dr System-Tab-Balke Aktivität und Erstelle dezue. Aktivität folgt em Feed-Tab.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Dr letscht sichtbari Tab cha nid verstecke wärde.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Nachrichte isch da nid uflischtet: das Layout behautet's i dr Feed-Header, wo's erreichbar blybt via Aatippe oder Wüsche.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Nume %@ isch no übrig, drum cha d'Balke ganz wäggno wärde. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Gspeicheret bruucht dr Platz vomene verstecktä Tab, drum muess eine vo de föif Instagram-Tabs us sy, bevor's cha aagah. D'ganzi Tab-Balke-Konfiguration wird vo aune Accounts uf däm Gerät teilt.";
 "TAB_EDITOR_HELP_TAP" = "Tippe uf en Tab, zum ihn zeige oder verstecke. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Die gäute, sobald d'Balke nume no eine Tab het. Versteck die andere obe, zum sie z'bruuche.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Zwüsche Tabs wüsche isch nid verfüegbar, solang dr System-Tab-Balke aa isch.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Zwüsche Tabs wüsche isch i dr System-Tab-Balke nid verfüegbar.";
 "TAB_EXPLORE" = "Explore";
 "TAB_LAYOUT_CUSTOM" = "Aagepasst";
 "TAB_SAVED" = "Gspeicheret";

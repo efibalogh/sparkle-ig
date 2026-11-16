@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Thay thế phông chữ trên Instagram và Sparkle. Nhập các tệp .otf, .ttf hoặc .ttc. Logo Instagram và công cụ văn bản trong tin vẫn giữ phông chữ riêng.";
 "INTERFACE_APPEARANCE_HEADER" = "Giao diện";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Giữ các thành phần Liquid Glass, như thanh tab, đen tuyền giống nền. Khi tắt, chúng có sắc xám đậm để nổi bật trên nền.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Kính đen không áp dụng cho thanh thẻ hệ thống, thanh này giữ lớp kính riêng.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Kính đen";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Chuyển chế độ tối của Instagram thành đen tuyền, kể cả các bảng. Bong bóng tin nhắn, ô tìm kiếm và các thành phần tương tự vẫn sáng hơn một chút để dễ nhìn. Chỉ áp dụng ở chế độ tối.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Chế độ tối OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Làm mờ";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Thanh thẻ dạng viên thuốc";
 "INTERFACE_LIQUID_GLASS_HELP" = "Buộc bật hoặc tắt giao diện Liquid Glass gốc của Instagram. Ở Mặc định, Instagram quyết định cho tài khoản này và việc triển khai của họ không bị động đến. Cần khởi động lại.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram đã dùng thanh thẻ hệ thống ở đây. Thanh này luôn tự vẽ lớp kính của nó, nên tắt Liquid Glass và Hành vi thanh thẻ không thay đổi nó.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Thanh thẻ hệ thống luôn tự vẽ lớp kính của nó, nên tắt Liquid Glass và Hành vi thanh thẻ không thay đổi nó.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Mở tìm kiếm";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Thay thanh thẻ riêng của Instagram bằng thanh thẻ hệ thống mà Instagram dùng trên iPhone màn hình gập. Vuốt giữa các thẻ và Hành vi thanh thẻ không áp dụng cho thanh này. Cần khởi động lại.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Thanh thẻ hệ thống";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Không có thẻ nào hiển thị";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Mở camera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Mở khi khởi động";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Do Instagram thêm";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Thay thế thẻ %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Đặt lại về mặc định của Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Hiện thẻ";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Không thể đánh dấu story là đã xem";
 "TAB_CREATE" = "Tạo";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Không thể ẩn thanh thẻ khi %@ là thẻ duy nhất còn lại: việc nhấn giữ thẻ này là cách duy nhất để vào Cài đặt Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Bố cục Cổ điển không khả dụng khi thanh tab nằm dọc cạnh màn hình.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Bạn vẫn có thể truy cập Cài đặt Sparkle bằng cách nhấn giữ nút tạo tin nhắn mới.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Bật nút Tiêu đề Bảng tin để có thể ẩn thanh thẻ tại đây. Nếu không, nhấn giữ thanh thẻ là cách duy nhất để mở Cài đặt Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Nút đầu trang bảng tin vẫn là lối vào Cài đặt Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Nút đầu trang sẽ thêm phím tắt Sparkle vào bên trái thanh điều hướng Tin nhắn, dành cho trường hợp Tin nhắn là thẻ còn lại duy nhất.";
 "TAB_EDITOR_HELP_DRAG" = "Kéo biểu tượng tay cầm để sắp xếp lại. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Ở chiều rộng này, Instagram thêm Hoạt động và Tạo vào thanh thẻ hệ thống. Hoạt động đi theo thẻ Bảng feed.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Thẻ hiển thị cuối cùng không thể bị ẩn.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Tin nhắn không có trong danh sách này: bố cục này giữ nó ở phần đầu Bảng tin, bạn có thể truy cập bằng cách nhấn hoặc vuốt.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Chỉ còn %@, nên thanh thẻ có thể được ẩn hoàn toàn. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Mục 'Đã lưu' chiếm vị trí của một thẻ bị ẩn, vì vậy một trong năm thẻ của Instagram phải được tắt trước khi bật mục này. Toàn bộ thiết lập thanh thẻ được chia sẻ chung cho mọi tài khoản trên thiết bị này.";
 "TAB_EDITOR_HELP_TAP" = "Nhấn vào một thẻ để ẩn hoặc hiện. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Các tùy chọn này áp dụng khi thanh thẻ chỉ còn lại một thẻ duy nhất. Ẩn các thẻ khác ở trên để sử dụng.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Vuốt giữa các thẻ không khả dụng khi Thanh thẻ hệ thống đang bật.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Vuốt giữa các thẻ không khả dụng trên thanh thẻ hệ thống.";
 "TAB_EXPLORE" = "Khám phá";
 "TAB_LAYOUT_CUSTOM" = "Tùy chỉnh";
 "TAB_SAVED" = "Đã lưu";

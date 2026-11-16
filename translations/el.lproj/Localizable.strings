@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Αντικαθιστά τη γραμματοσειρά σε όλο το Instagram και το Sparkle. Εισήγαγε αρχεία .otf, .ttf ή .ttc. Το λογότυπο του Instagram και το εργαλείο κειμένου των ιστοριών κρατούν τις δικές τους γραμματοσειρές.";
 "INTERFACE_APPEARANCE_HEADER" = "Εμφάνιση";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Κρατά τα στοιχεία Liquid Glass, όπως τη γραμμή καρτελών, καθαρά μαύρα όπως το φόντο. Όταν είναι ανενεργό, παίρνουν μια σκούρα γκρι απόχρωση ώστε να ξεχωρίζουν.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Το Μαύρο γυαλί δεν φτάνει στη Γραμμή Καρτελών Συστήματος, που κρατά το δικό της γυαλί.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Μαύρο γυαλί";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Κάνει τη σκοτεινή λειτουργία του Instagram καθαρά μαύρη, μαζί με τα φύλλα. Τα συννεφάκια μηνυμάτων, τα πεδία αναζήτησης και παρόμοια στοιχεία μένουν λίγο πιο ανοιχτά ώστε να φαίνονται. Ισχύει μόνο στη σκοτεινή λειτουργία.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Σκοτεινή λειτουργία OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Θόλωμα";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Γραμμή Καρτέλας Σχήματος Χαπιού";
 "INTERFACE_LIQUID_GLASS_HELP" = "Επιβάλλει την ενεργοποίηση ή απενεργοποίηση της εγγενούς διεπαφής Liquid Glass του Instagram. Στην Προεπιλογή αποφασίζει το Instagram για αυτόν τον λογαριασμό και η διάθεσή του μένει ανέγγιχτη. Απαιτεί επανεκκίνηση.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Το Instagram χρησιμοποιεί ήδη εδώ τη Γραμμή Καρτελών Συστήματος. Σχεδιάζει πάντα το δικό της γυαλί, οπότε η απενεργοποίηση του Liquid Glass και η Συμπεριφορά Γραμμής Καρτέλας δεν την αλλάζουν.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Η Γραμμή Καρτελών Συστήματος σχεδιάζει πάντα το δικό της γυαλί, οπότε η απενεργοποίηση του Liquid Glass και η Συμπεριφορά Γραμμής Καρτέλας δεν την αλλάζουν.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Άνοιγμα αναζήτησης";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Αντικαθιστά τη γραμμή καρτελών του Instagram με τη γραμμή καρτελών συστήματος που χρησιμοποιεί το Instagram σε αναδιπλούμενα iPhone. Η Σάρωση μεταξύ καρτελών και η Συμπεριφορά Γραμμής Καρτέλας δεν ισχύουν σε αυτήν. Απαιτεί επανεκκίνηση.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Γραμμή Καρτελών Συστήματος";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Καμία ορατή καρτέλα";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Ανοίγει την κάμερα";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Ανοίγει κατά την εκκίνηση";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Προστέθηκε από το Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Αντικαθιστά την καρτέλα %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Επαναφορά στην προεπιλογή Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Εμφάνιση καρτέλας";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Δεν ήταν δυνατή η σήμανση της ιστορίας ως προβεβλημένη";
 "TAB_CREATE" = "Δημιουργία";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Η γραμμή ενοτήτων δεν μπορεί να κρυφτεί με %@ ως τη μόνη ενότητα: το μακρύ πάτημά του θα ήταν ο μόνος τρόπος στις ρυθμίσεις Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Η κλασική διάταξη δεν είναι διαθέσιμη όταν η γραμμή καρτελών βρίσκεται στο πλάι της οθόνης.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Οι ρυθμίσεις Sparkle παραμένουν προσπελάσιμες με μακρύ πάτημα του κουμπιού νέου μηνύματος.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Ενεργοποιήστε το κουμπί κεφαλίδας τροφοδοσίας για να μπορέσετε να αποκρύψετε τη γραμμή ενοτήτων εδώ. Χωρίς αυτό, το μακρύ πάτημα στη γραμμή ενοτήτων είναι ο μόνος τρόπος στις ρυθμίσεις Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Το κουμπί κεφαλίδας ταινίας παραμένει ως ο τρόπος σας στις ρυθμίσεις Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Το κουμπί κεφαλίδας προσθέτει τη δημιουργία συντόμευσης Sparkle στα αριστερά της γραμμής πλοήγησης Μηνυμάτων, για όταν τα Μηνύματα είναι η ενότητα που απομένει.";
 "TAB_EDITOR_HELP_DRAG" = "Σύρετε τις λαβές για να αναδιατάξετε. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Σε αυτό το πλάτος το Instagram προσθέτει τη Δραστηριότητα και τη Δημιουργία στη Γραμμή Καρτελών Συστήματος. Η Δραστηριότητα ακολουθεί την καρτέλα Ροής.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Η τελευταία ορατή καρτέλα δεν μπορεί να αποκρυφθεί.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Τα Μηνύματα δεν εμφανίζονται εδώ: αυτή η διάταξη τα διατηρεί στην κεφαλίδα της ροής, όπου παραμένουν προσβάσιμα με ένα πάτημα ή σύρσιμο.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Μόνο %@ απομένει, οπότε η γραμμή μπορεί να αφαιρεθεί εντελώς. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Τα Αποθηκευμένα δανείζονται τη θέση από μια κρυμμένη καρτέλα, οπότε ένα από τα πέντε κύρια tabs του Instagram πρέπει να είναι απενεργοποιημένο για να μπορέσει να ενεργοποιηθεί. Ολόκληρη η ρύθμιση της γραμμής καρτελών μοιράζεται από όλους τους λογαριασμούς σε αυτή τη συσκευή.";
 "TAB_EDITOR_HELP_TAP" = "Πατήστε μια καρτέλα για να την εμφανίσετε ή να την αποκρύψετε. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Αυτές ισχύουν όταν η γραμμή κατεβαίνει σε μία μόνο ενότητα. Αποκρύψτε τις άλλες πάνω για να τις χρησιμοποιήσετε.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Η Σάρωση μεταξύ καρτελών δεν είναι διαθέσιμη όσο είναι ενεργή η Γραμμή Καρτελών Συστήματος.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Η Σάρωση μεταξύ καρτελών δεν είναι διαθέσιμη στη Γραμμή Καρτελών Συστήματος.";
 "TAB_EXPLORE" = "Εξερεύνηση";
 "TAB_LAYOUT_CUSTOM" = "Προσαρμοσμένη";
 "TAB_SAVED" = "Αποθηκευμένα";

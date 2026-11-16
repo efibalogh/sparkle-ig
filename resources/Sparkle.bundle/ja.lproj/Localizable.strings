@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "InstagramとSparkle全体のフォントを置き換えます。.otf、.ttf、.ttcファイルをインポートできます。Instagramのロゴとストーリーズのテキストツールは独自のフォントのままです。";
 "INTERFACE_APPEARANCE_HEADER" = "外観";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "タブバーなどのLiquid Glass要素を、背景と同じ真っ黒のままにします。オフにすると、背景から浮き出て見えるよう濃いグレーの色合いになります。";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "黒いガラスはシステムタブバーには適用されず、タブバーは独自のガラスのままです。";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "黒いガラス";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagramのダークモードを、シートも含めて真っ黒にします。メッセージの吹き出しや検索欄などは見やすいよう少し明るいまま残ります。ダークモードでのみ適用されます。";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLEDダークモード";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & ぼかし";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "ピル型タブバー";
 "INTERFACE_LIQUID_GLASS_HELP" = "InstagramのネイティブLiquid Glassインターフェースを強制的にオンまたはオフにします。デフォルトではこのアカウントについてInstagramが決定し、その展開には手を加えません。再起動が必要です。";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "ここでは Instagram がすでにシステムタブバーを使用しています。常に独自のガラスで表示されるため、Liquid Glass のオフとタブバーの動作は反映されません。";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "システムタブバーは常に独自のガラスで表示されるため、Liquid Glass のオフとタブバーの動作は反映されません。";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "検索を開く";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Instagram のタブバーを、Instagram が折りたたみ式 iPhone で使うシステムタブバーに置き換えます。タブ間をスワイプとタブバーの動作は適用されません。再起動が必要です。";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "システムタブバー";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "表示されるタブがありません";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "カメラを開きます";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "起動時に開きます";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Instagram が追加";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "%@タブを置き換えます";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Instagramのデフォルトにリセット";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "タブを表示";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "ストーリーを既読としてマークできません";
 "TAB_CREATE" = "作成";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "タブ バーは %@ を唯一のタブとして非表示にすることはできません。その長押しが Sparkle 設定への唯一の方法になります。";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "タブバーが画面の横に縦に並んでいる間は、クラシックは使用できません。";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Sparkle 設定は新しいメッセージボタンを長く押すことでアクセスできます。";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "フィード ヘッダー ボタンを有効にして、ここでタブ バーを非表示にできます。これがないと、タブ バーを長く押すことが Sparkle 設定への唯一の方法です。";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "フィード ヘッダー ボタンが Sparkle 設定への方法として残ります。";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "ヘッダー ボタンは、メッセージが残されたタブの場合、メッセージ ナビゲーション バーの左に Sparkle ショートカットを追加します。";
 "TAB_EDITOR_HELP_DRAG" = "ハンドルをドラッグして並べ替えます。 ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "この幅では、Instagram がシステムタブバーにアクティビティと作成を追加します。アクティビティはフィードタブに従います。";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "最後に表示されているタブは非表示にできません。\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "メッセージはここにリストされていません。このレイアウトではフィードヘッダーに保持され、タップまたはスワイプでアクセスできます。\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "残っているのは%@だけなので、バーを完全に削除することができます。 ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "保存済みは非表示のタブのスロットを使用するため、5つのInstagramタブのいずれかをオフにしてから有効にする必要があります。タブバー全体のセットアップはこのデバイスのすべてのアカウントで共有されます。";
 "TAB_EDITOR_HELP_TAP" = "タブをタップして表示/非表示を切り替えます。 ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "これらはバーが単一タブに下がると適用されます。それらを使用するには、上記の他のタブを非表示にします。";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "システムタブバーがオンの間は、タブ間をスワイプは使用できません。";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "システムタブバーでは、タブ間をスワイプは使用できません。";
 "TAB_EXPLORE" = "検索";
 "TAB_LAYOUT_CUSTOM" = "カスタム";
 "TAB_SAVED" = "保存済み";

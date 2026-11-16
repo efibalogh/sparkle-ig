@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Substitui a fonte no Instagram e no Sparkle. Importe arquivos .otf, .ttf ou .ttc. O logo do Instagram e a ferramenta de texto dos stories mantêm as próprias fontes.";
 "INTERFACE_APPEARANCE_HEADER" = "Aparência";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Mantém os elementos de Liquid Glass, como a barra de abas, em preto puro como o fundo. Desativado, eles ganham um tom cinza-escuro para se destacarem do fundo.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Vidro preto não chega à Barra de Abas do Sistema, que mantém o próprio vidro.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Vidro preto";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Deixa o modo escuro do Instagram em preto puro, incluindo os painéis. Balões de mensagem, campos de busca e elementos parecidos ficam um tom mais claros para continuarem visíveis. Só se aplica no modo escuro.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "Modo escuro OLED";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass e Desfoque";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra de Abas em Formato de Pílula";
 "INTERFACE_LIQUID_GLASS_HELP" = "Força a interface Liquid Glass nativa do Instagram a ficar ativada ou desativada. Em Padrão, o Instagram decide para esta conta e a implantação dele fica intacta. Requer reinício.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "O Instagram já usa a Barra de Abas do Sistema aqui. Ela sempre desenha o próprio vidro, então Liquid Glass desativado e Comportamento da Barra de Abas não a alteram.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "A Barra de Abas do Sistema sempre desenha o próprio vidro, então Liquid Glass desativado e Comportamento da Barra de Abas não a alteram.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Abrir Busca";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Substitui a barra de abas do Instagram pela barra de abas do sistema que o Instagram usa em iPhones dobráveis. Deslizar entre abas e Comportamento da Barra de Abas não se aplicam a ela. Requer reinicialização.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Barra de Abas do Sistema";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Nenhuma aba visível";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Abre a câmera";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Abre ao iniciar";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Adicionado pelo Instagram";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "Substitui a aba %@";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Redefinir para padrão do Instagram";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Mostrar aba";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Não foi possível marcar a story como vista";
 "TAB_CREATE" = "Criar";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "A barra de abas não pode ser oculta com %@ como a única aba: sua pressão longa seria a única maneira de acessar as Configurações do Sparkle.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "O layout clássico não está disponível enquanto a barra de abas fica na lateral da tela.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Configurações do Sparkle permanecem acessíveis ao manter pressionado o botão de nova mensagem.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Ative o Botão de Cabeçalho do Feed para poder ocultar a barra de abas aqui. Sem ele, a pressão longa na barra de abas é a única maneira de acessar as Configurações do Sparkle.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "O botão de cabeçalho do feed permanece como sua maneira de acessar as Configurações do Sparkle.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "O botão de cabeçalho adiciona o atalho do Sparkle à esquerda da barra de navegação de Mensagens, para quando Mensagens for a aba restante.";
 "TAB_EDITOR_HELP_DRAG" = "Arraste para reorganizar. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Nesta largura o Instagram adiciona Atividade e Criar à Barra de Abas do Sistema. Atividade segue a aba Feed.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "A última aba visível não pode ser ocultada.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Mensagens não aparece aqui: esse layout a mantém no cabeçalho do feed, onde fica acessível tocando ou deslizando.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Apenas %@ restou, então a barra pode ser removida completamente. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Salvos usa o espaço de uma aba oculta, então uma das cinco abas do Instagram deve estar desativada para que ele possa ser ativado. A configuração inteira da barra de abas é compartilhada por todas as contas neste dispositivo.";
 "TAB_EDITOR_HELP_TAP" = "Toque em uma aba para exibir ou ocultar. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Estas se aplicam quando a barra fica com uma única aba. Oculte as outras acima para usá-las.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Deslizar entre abas não está disponível enquanto a Barra de Abas do Sistema estiver ativada.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Deslizar entre abas não está disponível na Barra de Abas do Sistema.";
 "TAB_EXPLORE" = "Explorar";
 "TAB_LAYOUT_CUSTOM" = "Personalizado";
 "TAB_SAVED" = "Salvos";

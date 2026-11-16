@@ -1130,6 +1130,7 @@
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram ve Sparkle genelinde yazı tipini değiştirir. .otf, .ttf veya .ttc dosyaları içe aktar. Instagram logosu ve hikaye metin aracı kendi yazı tiplerini korur.";
 "INTERFACE_APPEARANCE_HEADER" = "Görünüm";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_HELP" = "Sekme çubuğu gibi Liquid Glass öğelerini arka plan gibi saf siyah tutar. Kapalıyken arka plandan ayrışmaları için koyu gri bir ton alırlar.";
+"INTERFACE_APPEARANCE_OLED_BLACK_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Siyah Cam, kendi camını koruyan Sistem Sekme Çubuğuna uygulanmaz.";
 "INTERFACE_APPEARANCE_OLED_BLACK_GLASS_TITLE" = "Siyah Cam";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_HELP" = "Instagram'ın karanlık modunu, sayfalar dahil saf siyaha çevirir. Mesaj balonları, arama alanları ve benzeri öğeler görünür kalmaları için bir ton açık kalır. Yalnızca karanlık modda uygulanır.";
 "INTERFACE_APPEARANCE_OLED_DARK_MODE_TITLE" = "OLED Karanlık Mod";
@@ -1165,6 +1166,8 @@
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ve Bulanıklık";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Hap Şeklindeki Sekme Çubuğu";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram'ın yerel Liquid Glass arayüzünü zorla açar veya kapatır. Varsayılan'da bu hesap için Instagram karar verir ve dağıtımına dokunulmaz. Yeniden başlatma gerektirir.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER" = "Instagram burada zaten Sistem Sekme Çubuğunu kullanıyor. Her zaman kendi camını çizer, bu yüzden Liquid Glass Kapalı ve Sekme Çubuğu Davranışı onu değiştirmez.";
+"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER" = "Sistem Sekme Çubuğu her zaman kendi camını çizer, bu yüzden Liquid Glass Kapalı ve Sekme Çubuğu Davranışı onu değiştirmez.";
 "INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION" = "Aramayı Aç";
 "INTERFACE_NATIVE_TAB_BAR_HELP" = "Instagram'ın kendi sekme çubuğunu, Instagram'ın katlanabilir iPhone'larda kullandığı sistem sekme çubuğuyla değiştirir. Sekmeler Arasında Kaydır ve Sekme Çubuğu Davranışı buna uygulanmaz. Yeniden başlatma gerektirir.";
 "INTERFACE_NATIVE_TAB_BAR_TITLE" = "Sistem Sekme Çubuğu";
@@ -2213,6 +2216,7 @@
 "SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT" = "Görünür sekme yok";
 "SETTINGS_TAB_EDITOR_OPENS_CAMERA_TEXT" = "Kamerayı açar";
 "SETTINGS_TAB_EDITOR_OPENS_LAUNCH_TEXT" = "Açılışta açılır";
+"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL" = "Instagram tarafından eklendi";
 "SETTINGS_TAB_EDITOR_REPLACES_VALUE_TAB_FORMAT" = "%@ sekmesinin yerini alır";
 "SETTINGS_TAB_EDITOR_RESET_INSTAGRAM_DEFAULT_TEXT" = "Instagram Varsayılanını Sıfırla";
 "SETTINGS_TAB_EDITOR_SHOW_TAB_TEXT" = "Sekmesini göster";
@@ -2441,18 +2445,20 @@
 "STORY_ERROR_MARK_SEEN_FAILED" = "Hikaye görüldü olarak işaretlenemedi";
 "TAB_CREATE" = "Oluştur";
 "TAB_EDITOR_CANNOT_HIDE_FORMAT" = "Sekmeler çubuğu %@ tek sekme olduğunda gizlenemez: onun uzun basışı Sparkle Ayarları'na gidiş tek yolu olur.";
+"TAB_EDITOR_CLASSIC_SIDE_TAB_BAR_UNAVAILABLE_TEXT" = "Sekme çubuğu ekranın yanında dururken Klasik düzen kullanılamaz.";
 "TAB_EDITOR_DIRECT_TAB_ACCESS" = "Sparkle Ayarları, yeni ileti düğmesine uzun basarak erişilebilir durumda kalır.";
 "TAB_EDITOR_FEED_HEADER_REQUIRED" = "Sekmeler çubuğunu gizleyebilmek için Akış Başlığı Düğmesini açın. Bu olmadan, sekmeler çubuğuna uzun basış Sparkle Ayarları'na gidiş tek yoludur.";
 "TAB_EDITOR_FEED_TAB_ACCESS" = "Akış başlığı düğmesi Sparkle Ayarları'na giriş yönteminiz olarak kalır.";
 "TAB_EDITOR_HEADER_BUTTON_DESC" = "Başlık düğmesi, Mesajlar sol kalan sekme olduğunda, Sparkle kısayolunu Mesajlar gezinti çubuğunun soluna ekler.";
 "TAB_EDITOR_HELP_DRAG" = "Yeniden sıralamak için tutamaçları sürükleyin. ";
+"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS" = "Bu genişlikte Instagram, Sistem Sekme Çubuğuna Etkinlik ve Oluştur ekler. Etkinlik, Akış sekmesini izler.";
 "TAB_EDITOR_HELP_LAST_VISIBLE" = "Son görünür sekme gizlenemez.\n";
 "TAB_EDITOR_HELP_MESSAGES_CLASSIC" = "Mesajlar burada listelenmez: bu düzen onu akış başlığında tutar, buradan dokunarak veya kaydırarak erişebilirsiniz.\n";
 "TAB_EDITOR_HELP_ONLY_LEFT" = "Yalnız %@ kaldı, bu nedenle çubuk tamamen kaldırılabilir. ";
 "TAB_EDITOR_HELP_SAVED_BORROWS" = "Kaydedilenler, gizli bir sekmenin yerini kullanır, bu nedenle beş Instagram sekmesinden biri kapatılmış olmalıdır. Tüm sekme çubuğu ayarları bu cihazda tüm hesaplar tarafından paylaşılır.";
 "TAB_EDITOR_HELP_TAP" = "Bir sekmeyi göstermek veya gizlemek için dokunun. ";
 "TAB_EDITOR_SINGLE_TAB_EXPLANATION" = "Bunlar çubuk tek bir sekmeye düştüğünde geçerli olur. Onları kullanmak için yukarıdakileri gizleyin.";
-"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Sistem Sekme Çubuğu açıkken Sekmeler Arasında Kaydır kullanılamaz.";
+"TAB_EDITOR_SWIPE_SYSTEM_TAB_BAR_FOOTER" = "Sekmeler Arasında Kaydır, Sistem Sekme Çubuğunda kullanılamaz.";
 "TAB_EXPLORE" = "Keşfet";
 "TAB_LAYOUT_CUSTOM" = "Özel";
 "TAB_SAVED" = "Kaydedildi";
