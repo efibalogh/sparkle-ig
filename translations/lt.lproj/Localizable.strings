@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Patvirtinti Instant siuntimą";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Prideda Sparkle mygtuką į Instants kameros vaizdą, kad įkeltumėte nuotrauką iš nuotraukų, failų ar Galerijos ir naršytumėte išsaugotus Instants įrašus.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Kameros vaizdo mygtukas";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Neleidžia aparatiniam kameros valdiklio mygtukui iPhone 16 ir 17 daryti Instant įrašo.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Neleidžia aparatiniam kameros valdiklio mygtukui daryti Instant įrašo.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Išjungti kameros valdiklį";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Blokuoja Instant fiksavimą, nuotraukas ir vaizdo įrašus, neišjungdama gautų Instants įrašų. Užraktas patamsinamas.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Išjungti Instants kūrimą";

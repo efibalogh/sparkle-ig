@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Instant 전송 확인";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Instants 카메라 화면에 Sparkle 버튼을 추가해 사진 앱, 파일, 갤러리에서 사진을 올리고 저장한 Instants를 둘러볼 수 있습니다.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "카메라 보기 버튼";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "iPhone 16 및 17의 하드웨어 카메라 컨트롤 버튼으로 Instant를 촬영하지 못하게 합니다.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "하드웨어 카메라 컨트롤 버튼으로 Instant를 촬영하지 못하게 합니다.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "카메라 컨트롤 비활성화";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "받은 Instant는 그대로 두고 사진과 동영상 Instant 촬영만 차단합니다. 셔터가 어둡게 표시됩니다.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Instants 생성 비활성화";

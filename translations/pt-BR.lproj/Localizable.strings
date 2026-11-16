@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Confirmar envio do Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Adiciona um botão do Sparkle à câmera dos instants para enviar uma foto do Fotos, do Arquivos ou da galeria, e para navegar pelos instants que você salvou.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Botão de Visualização de Câmera";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Impede que o botão físico Controle da Câmera do iPhone 16 e 17 capture um instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Impede que o botão físico Controle da Câmera capture um instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Desabilitar Controle de Câmera";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Bloqueia a captura de instants, foto e vídeo, sem desativar os instants recebidos. O disparador fica escurecido.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Desabilitar Criação de Instants";

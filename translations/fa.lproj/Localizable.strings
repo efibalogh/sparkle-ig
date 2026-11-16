@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "تأیید ارسال Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "دکمه‌ای از Sparkle به نمای دوربین Instants اضافه می‌کند تا بتوانید عکسی از Photos، فایل‌ها یا گالری آپلود کنید و Instantهایی را که ذخیره کرده‌اید مرور کنید.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "دکمه نمای دوربین";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "مانع می‌شود دکمه سخت‌افزاری Camera Control روی آیفون ۱۶ و ۱۷ یک Instant بگیرد.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "مانع می‌شود دکمه سخت‌افزاری Camera Control یک Instant بگیرد.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "غیرفعال کردن Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "بدون غیرفعال کردن Instantهای دریافتی، ضبط Instant (عکس و ویدیو) را مسدود می‌کند. شاتر تیره می‌شود.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "غیرفعال کردن ساخت Instants";

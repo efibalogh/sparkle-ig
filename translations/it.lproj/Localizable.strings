@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Conferma invio Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Aggiunge un pulsante Sparkle alla fotocamera degli instant per caricare una foto da Foto, File o galleria e per sfogliare gli instant che hai salvato.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Pulsante visualizzazione fotocamera";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Impedisce al tasto fisico Controllo fotocamera di iPhone 16 e 17 di scattare un instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Impedisce al tasto fisico Controllo fotocamera di scattare un instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Disabilita Controllo Camera";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Blocca la creazione di instant, foto e video, senza disattivare quelli ricevuti. Il pulsante di scatto viene oscurato.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Disabilita Creazione Instants";

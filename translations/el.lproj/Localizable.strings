@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Επιβεβαίωση αποστολής Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Προσθέτει ένα κουμπί Sparkle στην κάμερα των instants για μεταφόρτωση φωτογραφίας από τις Φωτογραφίες, τα Αρχεία ή τη συλλογή, και για περιήγηση στα instants που έχεις αποθηκεύσει.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Κουμπί Προβολής Κάμερας";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Εμποδίζει το φυσικό κουμπί Camera Control σε iPhone 16 και 17 να τραβήξει instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Εμποδίζει το φυσικό κουμπί Camera Control να τραβήξει instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Απενεργοποίηση Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Μπλοκάρει τη λήψη instants, φωτογραφίας και βίντεο, χωρίς να απενεργοποιεί τα instants που λαμβάνεις. Το κουμπί λήψης σκουραίνει.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Απενεργοποίηση Δημιουργίας Instants";

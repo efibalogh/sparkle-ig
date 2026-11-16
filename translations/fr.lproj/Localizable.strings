@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Confirmer l'envoi de l'Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Ajoute un bouton Sparkle à la vue caméra des instants pour envoyer une photo depuis Photos, Fichiers ou la galerie, et parcourir les instants enregistrés.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Bouton de vue caméra";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Empêche le bouton matériel Contrôle de l'appareil photo des iPhone 16 et 17 de capturer un instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Empêche le bouton matériel Contrôle de l'appareil photo de capturer un instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Désactiver Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Bloque la capture d'instants, photo et vidéo, sans désactiver les instants reçus. Le déclencheur est assombri.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Désactiver la création d'Instants";

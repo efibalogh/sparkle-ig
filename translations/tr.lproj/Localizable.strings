@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Instant Gönderimini Onayla";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Instants kamera görünümüne, Fotoğraflar'dan, Dosyalar'dan veya galeriden fotoğraf yüklemek ve kaydettiğin instant'lara göz atmak için bir Sparkle düğmesi ekler.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Kamera Görünümü Düğmesi";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "iPhone 16 ve 17'deki fiziksel Kamera Kontrolü düğmesinin instant çekmesini engeller.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Fiziksel Kamera Kontrolü düğmesinin instant çekmesini engeller.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Kamera Kontrolünü Devre Dışı Bırak";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Fotoğraf ve video instant çekimini engeller, gelen instant'ları devre dışı bırakmadan. Deklanşör karartılır.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Instant Oluşturmayı Devre Dışı Bırak";

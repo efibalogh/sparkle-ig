@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "تأكيد إرسال Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "يضيف زر Sparkle إلى واجهة كاميرا اللحظات لرفع صورة من الصور أو الملفات أو المعرض، ولتصفح اللحظات التي حفظتها.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "زر عرض الكاميرا";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "يمنع زر التحكم بالكاميرا في iPhone 16 و17 من التقاط لحظة.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "يمنع زر التحكم بالكاميرا من التقاط لحظة.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "تعطيل عنصر التحكم بالكاميرا";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "يمنع التقاط اللحظات، صوراً وفيديو، دون تعطيل اللحظات الواردة. يصبح زر الالتقاط معتماً.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "تعطيل إنشاء Instants";

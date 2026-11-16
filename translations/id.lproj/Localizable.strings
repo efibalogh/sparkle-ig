@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Konfirmasi Kirim Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Menambahkan tombol Sparkle ke tampilan kamera Instants untuk mengunggah foto dari Foto, File, atau Galeri, serta menelusuri Instants yang telah kamu simpan.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Tombol Tampilan Kamera";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Mencegah tombol perangkat keras Camera Control di iPhone 16 dan 17 mengambil Instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Mencegah tombol perangkat keras Camera Control mengambil Instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Nonaktifkan Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Memblokir pengambilan Instant, foto dan video, tanpa menonaktifkan Instant yang diterima. Rana akan digelapkan.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Nonaktifkan Pembuatan Instants";

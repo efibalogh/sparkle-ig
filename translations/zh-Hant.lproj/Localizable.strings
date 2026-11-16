@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "確認傳送 Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "在 Instants 相機畫面新增 Sparkle 按鈕，可從「照片」、「檔案」或圖庫上傳照片，並瀏覽你已儲存的 Instants。";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "相機畫面按鈕";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "阻止 iPhone 16 及 17 的硬體 Camera Control 按鈕拍攝 Instant。";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "阻止硬體 Camera Control 按鈕拍攝 Instant。";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "停用 Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "封鎖 Instant 的拍攝（照片與影片），但不會停用接收 Instant 的功能。快門按鈕會變暗。";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "停用 Instants 拍攝";

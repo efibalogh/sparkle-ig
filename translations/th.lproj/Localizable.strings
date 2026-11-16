@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "ยืนยันการส่ง Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "เพิ่มปุ่ม Sparkle ในหน้ากล้อง Instants เพื่ออัปโหลดรูปภาพจากรูปภาพ ไฟล์ หรือแกลเลอรี และเรียกดู Instants ที่คุณบันทึกไว้";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "ปุ่มในหน้ากล้อง";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "ป้องกันไม่ให้ปุ่ม Camera Control บนฮาร์ดแวร์ของ iPhone 16 และ 17 ถ่าย Instant";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "ป้องกันไม่ให้ปุ่ม Camera Control บนฮาร์ดแวร์ถ่าย Instant";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "ปิดใช้งาน Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "บล็อกการถ่าย Instant ทั้งรูปภาพและวิดีโอ โดยไม่ปิดการรับ Instants ปุ่มชัตเตอร์จะถูกทำให้มืดลง";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "ปิดใช้งานการสร้าง Instants";

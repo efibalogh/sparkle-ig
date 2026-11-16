@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Confirmă trimiterea Instantului";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Adaugă un buton Sparkle în camera pentru instant-uri, pentru a încărca o poză din Poze, Fișiere sau galerie și pentru a răsfoi instant-urile salvate.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Buton vizualizare cameră";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Împiedică butonul fizic Control cameră de pe iPhone 16 și 17 să captureze un instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Împiedică butonul fizic Control cameră să captureze un instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Dezactivare control cameră";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Blochează capturarea de instant-uri, poze și clipuri, fără a dezactiva instant-urile primite. Declanșatorul este întunecat.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Dezactivare creare Instants";

@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Instant-Sände Bestätige";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Fügt e Sparkle-Chnopf i dr Instants-Kamera-Aasicht dezue, für e Foti us Fotis, Files oder Galerie hochzlade, u für dyni gspeicherte Instants z'dursueche.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Kamera-Aasicht-Chnopf";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Verhinderet, dass dr Hardware-Camera-Control-Chnopf uf em iPhone 16 u 17 es Instant ufnimmt.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Verhinderet, dass dr Hardware-Camera-Control-Chnopf es Instant ufnimmt.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Camera Control Deaktiviere";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Blockiert d'Instant-Ufnahm, Foti u Video, ohni empfangeni Instants z'deaktiviere. Dr Uslöser wird abdunkled.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Instants-Erstellig Deaktiviere";

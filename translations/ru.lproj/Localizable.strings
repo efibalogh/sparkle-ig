@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Подтвердить отправку Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Добавляет кнопку Sparkle в камеру инстантов, чтобы загрузить фото из Фото, Файлов или галереи и просмотреть сохранённые инстанты.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Кнопка представления камеры";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Не даёт аппаратной кнопке управления камерой на iPhone 16 и 17 снимать инстант.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Не даёт аппаратной кнопке управления камерой снимать инстант.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Отключить Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Блокирует съёмку инстантов, фото и видео, не отключая полученные инстанты. Кнопка спуска затемняется.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Отключить создание Instants";

@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Kumpirmahin ang Pagpapadala ng Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Nagdaragdag ng Sparkle button sa camera view ng Instants para mag-upload ng larawan mula sa Photos, Files, o Gallery, at mag-browse ng mga Instant na na-save mo.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Pindutan ng Camera View";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Pinipigilan ang hardware Camera Control button sa iPhone 16 at 17 mula sa pagkuha ng Instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Pinipigilan ang pisikal na pindutang Camera Control na kumuha ng Instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "I-disable ang Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Hinaharangan ang pagkuha ng Instant, larawan man o video, nang hindi dini-disable ang mga natanggap na Instant. Napapadilim ang shutter.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "I-disable ang Paglikha ng Instants";

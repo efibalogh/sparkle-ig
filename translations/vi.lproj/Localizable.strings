@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Xác nhận gửi Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Thêm nút Sparkle vào giao diện camera Instants để tải ảnh lên từ Ứng dụng Ảnh, Tệp hoặc Thư viện, và duyệt các Instant đã lưu.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Nút xem camera";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Ngăn nút Điều khiển Camera vật lý trên iPhone 16 và 17 chụp Instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Ngăn nút Điều khiển Camera vật lý chụp Instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Tắt phím Điều khiển Camera (Camera Control)";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Chặn việc chụp/quay Instant (ảnh và video) mà không làm ảnh hưởng đến Instant nhận được. Nút chụp sẽ bị làm tối.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Tắt tạo Instant";

@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Potwierdź wysyłanie Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Dodaje przycisk Sparkle w widoku kamery Instants, aby przesłać zdjęcie z Zdjęć, Plików lub Galerii oraz przeglądać zapisane instanty.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Przycisk widoku kamery";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Zatrzymuje robienie Instantów fizycznym przyciskiem Camera Control na iPhone16 i 17.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Zatrzymuje robienie Instantów fizycznym przyciskiem Camera Control.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Wyłącz sterowanie kamerą";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Blokuje robienie instantów — zdjęć i filmów — bez wyłączania otrzymywanych instantów. Migawka jest przyciemniana.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Wyłącz tworzenie Instants";

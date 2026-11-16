@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Instant भेजने की पुष्टि करें";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Instants कैमरा दृश्य में Sparkle बटन जोड़ता है, जिससे फ़ोटो, फ़ाइलों या Gallery से फ़ोटो अपलोड की जा सकें और सहेजे गए Instants ब्राउज़ किए जा सकें।";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "कैमरा दृश्य बटन";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "iPhone 16 और 17 के हार्डवेयर Camera Control बटन से Instant लेने की सुविधा बंद करता है।";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "हार्डवेयर Camera Control बटन से Instant लेने की सुविधा बंद करता है।";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Camera Control बंद करें";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "प्राप्त Instants को बंद किए बिना फ़ोटो और वीडियो, दोनों के लिए Instant कैप्चर रोकता है। शटर धुंधला कर दिया जाता है।";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Instants बनाना बंद करें";

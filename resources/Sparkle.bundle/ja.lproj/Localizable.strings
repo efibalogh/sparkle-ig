@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Instantの送信を確認";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Instantsのカメラ画面にSparkleボタンを追加し、写真・ファイル・ギャラリーから画像をアップロードしたり、保存済みのInstantsを閲覧したりできるようにします。";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "カメラビューボタン";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "iPhone 16および17のハードウェアCamera Controlボタンで、Instantを撮影できないようにします。";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "ハードウェアのCamera Controlボタンで、Instantを撮影できないようにします。";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "カメラコントロールを無効化";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "受信済みのInstantsは無効にせず、Instantの撮影(写真・動画)のみをブロックします。シャッターは暗く表示されます。";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Instants 作成を無効化";

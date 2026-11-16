@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Senden des Instants bestätigen";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Fügt der Instants-Kameraansicht einen Sparkle-Button hinzu, um ein Foto aus Fotos, Dateien oder der Galerie hochzuladen und die gespeicherten Instants zu durchsuchen.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Kameraansicht-Schaltfläche";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Verhindert, dass die Kamerataste des iPhone 16 und 17 einen Instant aufnimmt.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Verhindert, dass die Kamerataste einen Instant aufnimmt.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Kamera-Steuerung deaktivieren";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Blockiert die Instant-Aufnahme, Foto und Video, ohne empfangene Instants zu deaktivieren. Der Auslöser wird abgedunkelt.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Instants-Erstellung deaktivieren";

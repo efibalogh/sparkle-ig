@@ -44,7 +44,7 @@ BOOL SPKDeviceHasCameraControl(void) {
         NSString *model = [NSString stringWithUTF8String:machine];
 
         // Models with the hardware Camera Control button. iPhone 16e (iPhone17,5)
-        // is intentionally excluded — it has no Camera Control.
+        // and iPhone 17e (iPhone18,5) are intentionally excluded: they have none.
         static NSSet<NSString *> *cameraControlModels;
         cameraControlModels = [NSSet setWithArray:@[
             @"iPhone17,1", // iPhone 16 Pro
@@ -55,6 +55,9 @@ BOOL SPKDeviceHasCameraControl(void) {
             @"iPhone18,2", // iPhone 17 Pro Max
             @"iPhone18,3", // iPhone 17
             @"iPhone18,4", // iPhone Air
+            @"iPhone19,2", // iPhone 18 Pro
+            @"iPhone19,3", // iPhone 18 Pro Max
+            @"iPhone19,4", // iPhone Duo
         ]];
         hasCameraControl = [cameraControlModels containsObject:model];
     });

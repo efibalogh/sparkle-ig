@@ -1067,7 +1067,7 @@
 "INSTANTS_CONFIRMATION_SEND_VIDEO_TITLE" = "Confirm Sending Instant";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_HELP" = "Adds a Sparkle button to the Instants camera view to upload a photo from Photos, Files, or Gallery, and to browse the Instants you have saved.";
 "INSTANTS_CREATION_CAMERA_VIEW_BUTTON_TITLE" = "Camera View Button";
-"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Stops the hardware Camera Control button on iPhone 16 and 17 from taking an Instant.";
+"INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_HELP" = "Stops the hardware Camera Control button from taking an Instant.";
 "INSTANTS_CREATION_DISABLE_CAMERA_CONTROL_TITLE" = "Disable Camera Control";
 "INSTANTS_CREATION_DISABLE_CREATION_HELP" = "Blocks Instant capture, photo and video, without disabling received Instants. The shutter is darkened.";
 "INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE" = "Disable Instants Creation";
