@@ -32,6 +32,19 @@ static NSArray *SPKHideMetaAIDirectMenuOptions(NSArray *options) {
     return [options filteredArrayUsingPredicate:predicate];
 }
 
+static void SPKHideMetaAIImagineTile(IGDirectMediaPickerConfig *config) {
+    if (!SPKHideMetaAIDirect() || !config)
+        return;
+    SPKLog(@"General", @"[Sparkle] Hiding meta ai: imagine tile in media picker");
+    @try {
+        IGDirectMediaPickerGalleryConfig *galleryConfig = [config valueForKey:@"galleryConfig"];
+        [galleryConfig setValue:0 forKey:@"isImagineEntryPointEnabled"];
+    }
+    @catch (NSException *exception) {
+        SPKLog(@"General", @"[Sparkle] WARNING: %@\n\nFull object: %@", exception.reason, config);
+    }
+}
+
 %group SPKHideMetaAIHooks
 
 // Direct
@@ -131,7 +144,8 @@ static NSArray *SPKHideMetaAIDirectMenuOptions(NSArray *options) {
 }
 %end
 
-// Meta AI "imagine" in media picker
+// Meta AI "imagine" in media picker. IG 410 uses the short initializer; newer
+// builds insert the two cutout senders after messageSender.
 %hook IGDirectMediaPickerViewController
 - (id)initWithUserSession:(id)arg1
                     config:(IGDirectMediaPickerConfig *)config
@@ -142,20 +156,23 @@ static NSArray *SPKHideMetaAIDirectMenuOptions(NSArray *options) {
       multimodalPerfLogger:(id)arg7
       localSendSpeedLogger:(id)arg8
     sendAttributionFactory:(id)arg9 {
-    if (SPKHideMetaAIDirect()) {
-        SPKLog(@"General", @"[Sparkle] Hiding meta ai: imagine tile in media picker");
-
-        @try {
-            IGDirectMediaPickerGalleryConfig *galleryConfig = [config valueForKey:@"galleryConfig"];
-
-            [galleryConfig setValue:0 forKey:@"isImagineEntryPointEnabled"];
-        }
-        @catch (NSException *exception) {
-            SPKLog(@"General", @"[Sparkle] WARNING: %@\n\nFull object: %@", exception.reason, config);
-        }
-    }
-
+    SPKHideMetaAIImagineTile(config);
     return %orig(arg1, [config copy], arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+}
+
+- (id)initWithUserSession:(id)arg1
+                        config:(IGDirectMediaPickerConfig *)config
+                  capabilities:(id)arg3
+                threadMetadata:(id)arg4
+                 messageSender:(id)arg5
+        cutoutOptimisticSender:(id)arg6
+    cutoutStickerFactorySender:(id)arg7
+         threadAnalyticsLogger:(id)arg8
+          multimodalPerfLogger:(id)arg9
+          localSendSpeedLogger:(id)arg10
+        sendAttributionFactory:(id)arg11 {
+    SPKHideMetaAIImagineTile(config);
+    return %orig(arg1, [config copy], arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
 }
 %end
 
@@ -286,6 +303,22 @@ return [config copy];
                                userSession:(id)arg9
                                 tapHandler:(id)arg10 {
     return %orig(SPKHideMetaAIDirectMenuOptions(options), arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+}
+
+// IG 456 appended the More submenu tap handlers.
++ (id)menuConfigurationWithEligibleOptions:(id)options
+                          messageViewModel:(id)arg2
+                               contentType:(id)arg3
+                                 isSticker:(_Bool)arg4
+                            isMusicSticker:(_Bool)arg5
+                          directNuxManager:(id)arg6
+                       sessionUserDefaults:(id)arg7
+                              mobileConfig:(id)arg8
+                               userSession:(id)arg9
+                                tapHandler:(id)arg10
+                     moreSubmenuTapHandler:(id)arg11
+                 moreSubmenuItemTapHandler:(id)arg12 {
+    return %orig(SPKHideMetaAIDirectMenuOptions(options), arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
 }
 %end
 
@@ -979,6 +1012,7 @@ extern "C" void SPKInstallHideMetaAIHooksIfEnabled(void) {
         %init(SPKHideMetaAIHooks,
                        IGCreationTextToolView = SPKResolveIGClass(@"IGStoryPostCaptureTextControls.IGCreationTextToolView", @"IGCreationTextToolView"),
                        IGDirectInboxNavigationHeaderView = SPKResolveIGClass(@"IGDirectInboxNavigationHeaderView.IGDirectInboxNavigationHeaderView", @"IGDirectInboxNavigationHeaderView"),
+                       IGDirectMediaPickerViewController = SPKResolveIGClass(@"IGDirectMediaPicker.IGDirectMediaPickerViewController", @"IGDirectMediaPickerViewController"),
                        IGDirectThreadViewMetaAISummaryFeatureController = SPKResolveIGClass(@"IGDirectThreadViewMetaAISummaryFeatureController.IGDirectThreadViewMetaAISummaryFeatureController", @"IGDirectThreadViewMetaAISummaryFeatureController"));
     });
 }

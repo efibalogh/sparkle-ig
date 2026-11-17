@@ -1733,7 +1733,10 @@ void SPKInstallMessageSeenButtonHooksIfNeeded(void) {
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        %init(SPKMessageSeenButtonHooks);
+        // Swift from IG 456; the bare ObjC name no longer resolves there.
+        %init(SPKMessageSeenButtonHooks,
+              IGDirectThreadViewListAdapterDataSource = SPKResolveIGClass(@"IGDirectThreadViewListAdapterDataSource.IGDirectThreadViewListAdapterDataSource",
+                                                                          @"IGDirectThreadViewListAdapterDataSource"));
         SPKInstallDirectInboxSeenContextMenuHook();
 
         // Reconcile the currently open thread when placement changes live.
