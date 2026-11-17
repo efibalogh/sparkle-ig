@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Ikon & Teks";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "TIDAK MENGIKUTI ANDA";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Ikon + Teks";
+"PROFILE_HIGHLIGHTS_HEADER" = "Sorotan";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Memungkinkan Anda mengatur ulang sorotan di profil Anda sendiri: tahan sebuah sorotan, lalu seret ke posisi baru. Menggunakan fitur pengaturan ulang yang sedang diluncurkan Instagram secara bertahap. Buka kembali profil Anda untuk menerapkan.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Atur Ulang Sorotan";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Versi Instagram ini tidak menyertakan fitur pengaturan ulang sorotan.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Mewarnai indikator dengan hijau atau merah alih-alih abu-abu bawaan Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indikator Berwarna";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Menampilkan jumlah pengikut lengkap di profil.";

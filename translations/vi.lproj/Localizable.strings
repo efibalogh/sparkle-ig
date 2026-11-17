@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Biểu tượng & Văn bản";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "KHÔNG THEO DÕI BẠN";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Biểu tượng + Văn bản";
+"PROFILE_HIGHLIGHTS_HEADER" = "Tin nổi bật";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Cho phép bạn sắp xếp lại tin nổi bật trên trang cá nhân của mình: giữ một tin nổi bật, rồi kéo đến vị trí mới. Sử dụng tính năng sắp xếp lại mà Instagram đang triển khai dần. Mở lại trang cá nhân để áp dụng.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Sắp xếp lại tin nổi bật";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Phiên bản Instagram này không có tính năng sắp xếp lại tin nổi bật.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Đổi màu chỉ báo thành xanh lá hoặc đỏ thay vì màu xám mặc định của Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Chỉ báo nhiều màu";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Hiển thị đầy đủ số người theo dõi trên trang cá nhân.";

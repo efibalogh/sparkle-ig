@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icono y texto";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NO TE SIGUE";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icono + Texto";
+"PROFILE_HIGHLIGHTS_HEADER" = "Destacadas";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Te permite reordenar las historias destacadas de tu propio perfil: mantén presionada una destacada y arrástrala a un nuevo lugar. Usa el reordenamiento que Instagram está lanzando de forma gradual. Vuelve a abrir tu perfil para aplicarlo.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Reordenar destacadas";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Esta versión de Instagram no incluye el reordenamiento de destacadas.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colorea el indicador en verde o rojo en lugar del gris nativo de Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indicador colorido";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Muestra el número completo de seguidores en los perfiles.";

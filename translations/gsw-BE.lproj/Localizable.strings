@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icon u Text";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "FOLGT DIR NID";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon u Text";
+"PROFILE_HIGHLIGHTS_HEADER" = "Highlights";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Dämit chasch d Highlights uf dim eigete Profil neu aaordne: Heb es Highlight druckt und zieh's anen neue Platz. Nutzt d Neuaaordnig, wo Instagram schrittwiis iiführt. Öffne dis Profil nomal, zum's aawände.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Highlights neu aaordne";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Die Instagram-Version het kei Neuaaordnig vo Highlights.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Färbt dr Yzeiger grüen oder rot, aastatt em native Grau vo Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Farbige Yzeiger";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Zeigt di vollständig Follower-Zahl uf Profil aa.";

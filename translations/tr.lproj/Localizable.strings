@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "İkon ve Metin";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "SİZİ TAKİP ETMİYOR";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "İkon + Metin";
+"PROFILE_HIGHLIGHTS_HEADER" = "Öne Çıkanlar";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Kendi profilindeki öne çıkanları yeniden sıralamanı sağlar: bir öne çıkanı basılı tut, ardından yeni bir yere sürükle. Instagram'ın kademeli olarak sunduğu yeniden sıralama özelliğini kullanır. Uygulamak için profilini yeniden aç.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Öne Çıkanları Yeniden Sırala";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Instagram'ın bu sürümünde öne çıkanları yeniden sıralama özelliği yok.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Göstergeyi Instagram'ın yerel grisi yerine yeşil ya da kırmızı yapar.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Renkli Gösterge";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Profillerde takipçi sayısının tamamını gösterir.";

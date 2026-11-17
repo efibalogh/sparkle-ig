@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Piktograma ir tekstas";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "JŪSŲ NESEKA";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Piktograma + tekstas";
+"PROFILE_HIGHLIGHTS_HEADER" = "Akimirkos";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Leidžia pakeisti akimirkų tvarką jūsų profilyje: palaikykite akimirką, tada nuvilkite ją į naują vietą. Naudoja tvarkos keitimą, kurį Instagram diegia palaipsniui. Kad pritaikytumėte, iš naujo atidarykite profilį.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Pertvarkyti akimirkas";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Šioje Instagram versijoje akimirkų tvarkos keitimo nėra.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Spalvina indikatorių žaliai arba raudonai vietoj įprastos Instagram pilkos.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Spalvotas indikatorius";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Profiliuose rodo visą sekėjų skaičių.";

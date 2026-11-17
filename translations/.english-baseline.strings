@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icon & Text";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NOT FOLLOWING YOU";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon + Text";
+"PROFILE_HIGHLIGHTS_HEADER" = "Highlights";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Lets you rearrange the highlights on your own profile: hold a highlight, then drag it to a new spot. Uses the reordering Instagram is rolling out. Reopen your profile to apply.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Reorder Highlights";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "This version of Instagram does not include highlight reordering.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colors the indicator green or red instead of Instagram's native gray.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Colorful Indicator";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Shows the full follower count on profiles.";

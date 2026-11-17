@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icône et texte";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NE VOUS SUIT PAS";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icône + Texte";
+"PROFILE_HIGHLIGHTS_HEADER" = "À la une";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Permet de réorganiser les stories à la une de votre propre profil : maintenez une story à la une, puis faites-la glisser vers un nouvel emplacement. Utilise la réorganisation qu'Instagram déploie progressivement. Rouvrez votre profil pour appliquer.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Réorganiser les stories à la une";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Cette version d'Instagram ne propose pas la réorganisation des stories à la une.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colore l'indicateur en vert ou en rouge au lieu du gris natif d'Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indicateur coloré";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Affiche le nombre complet d'abonnés sur les profils.";

@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "ไอคอนและข้อความ";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "ไม่ได้ติดตามคุณ";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "ไอคอน + ข้อความ";
+"PROFILE_HIGHLIGHTS_HEADER" = "ไฮไลต์";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "ให้คุณจัดลำดับไฮไลต์ในโปรไฟล์ของคุณเองใหม่ได้: กดค้างที่ไฮไลต์ แล้วลากไปยังตำแหน่งใหม่ ใช้การจัดลำดับที่ Instagram กำลังทยอยเปิดให้ใช้ เปิดโปรไฟล์ของคุณอีกครั้งเพื่อให้มีผล";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "จัดลำดับไฮไลต์";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Instagram เวอร์ชันนี้ไม่มีการจัดลำดับไฮไลต์";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "เปลี่ยนตัวบ่งชี้เป็นสีเขียวหรือสีแดง แทนสีเทาแบบดั้งเดิมของ Instagram";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "ตัวบ่งชี้แบบสีสัน";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "แสดงจำนวนผู้ติดตามแบบเต็มในโปรไฟล์";

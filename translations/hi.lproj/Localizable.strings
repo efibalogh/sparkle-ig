@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "आइकन और पाठ";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "आपको फॉलो नहीं कर रहे";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "आइकन + पाठ";
+"PROFILE_HIGHLIGHTS_HEADER" = "हाइलाइट्स";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "आपको अपनी प्रोफ़ाइल के हाइलाइट्स का क्रम बदलने देता है: किसी हाइलाइट को दबाकर रखें, फिर उसे नई जगह पर खींचें। Instagram द्वारा धीरे-धीरे जारी की जा रही क्रम बदलने की सुविधा का उपयोग करता है। लागू करने के लिए अपनी प्रोफ़ाइल फिर से खोलें।";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "हाइलाइट्स का क्रम बदलें";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Instagram के इस संस्करण में हाइलाइट्स का क्रम बदलने की सुविधा नहीं है।";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "संकेतक को Instagram के मूल स्लेटी रंग के बजाय हरा या लाल कर देता है।";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "रंगीन संकेतक";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "प्रोफ़ाइल पर फ़ॉलोअर की पूरी संख्या दिखाता है।";

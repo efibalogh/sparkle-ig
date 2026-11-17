@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icona e testo";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NON TI SEGUE";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icona + Testo";
+"PROFILE_HIGHLIGHTS_HEADER" = "In evidenza";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Ti consente di riordinare le storie in evidenza sul tuo profilo: tieni premuta una storia in evidenza, poi trascinala in una nuova posizione. Usa il riordinamento che Instagram sta distribuendo gradualmente. Riapri il tuo profilo per applicare.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Riordina storie in evidenza";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Questa versione di Instagram non include il riordinamento delle storie in evidenza.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colora l'indicatore di verde o rosso invece del grigio nativo di Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indicatore Colorato";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Mostra il numero completo di follower nei profili.";

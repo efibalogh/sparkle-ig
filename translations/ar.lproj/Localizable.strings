@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "الرمز والنص";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "لا يتابعك";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "الرمز + النص";
+"PROFILE_HIGHLIGHTS_HEADER" = "الأبرز";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "يتيح لك إعادة ترتيب القصص البارزة في ملفك الشخصي: اضغط مطولًا على قصة بارزة ثم اسحبها إلى مكان جديد. يستخدم ميزة إعادة الترتيب التي يطرحها Instagram تدريجيًا. أعد فتح ملفك الشخصي للتطبيق.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "إعادة ترتيب الأبرز";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "لا يتضمن هذا الإصدار من Instagram ميزة إعادة ترتيب القصص البارزة.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "يلوّن المؤشر بالأخضر أو الأحمر بدل الرمادي الأصلي في Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "مؤشر ملون";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "يعرض العدد الكامل للمتابعين في الملفات الشخصية.";

@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "아이콘 & 텍스트";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "팔로우하지 않음";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "아이콘 + 텍스트";
+"PROFILE_HIGHLIGHTS_HEADER" = "하이라이트";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "내 프로필의 하이라이트 순서를 바꿀 수 있습니다. 하이라이트를 길게 누른 다음 새 위치로 드래그하세요. Instagram이 단계적으로 제공 중인 순서 변경 기능을 사용합니다. 적용하려면 프로필을 다시 여세요.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "하이라이트 순서 변경";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "이 버전의 Instagram에는 하이라이트 순서 변경 기능이 없습니다.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Instagram 기본 회색 대신 표시기를 초록색 또는 빨간색으로 표시합니다.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "컬러풀 표시기";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "프로필에서 팔로워 수를 정확하게 표시합니다.";

@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icon at Text";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "HINDI SUMUSUNOD SA IYO";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon + Teksto";
+"PROFILE_HIGHLIGHTS_HEADER" = "Mga Highlight";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Hinahayaan kang ayusin muli ang mga highlight sa sarili mong profile: pindutin nang matagal ang isang highlight, saka i-drag ito sa bagong puwesto. Ginagamit ang pag-aayos na unti-unting inilalabas ng Instagram. Buksan muli ang iyong profile para mailapat.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Ayusin ang Mga Highlight";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Walang pag-aayos ng highlight ang bersyong ito ng Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Kinukulayan ang indicator ng berde o pula sa halip na katutubong kulay abo ng Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Makulay na Indicator";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Ipinapakita ang buong bilang ng followers sa mga profile.";

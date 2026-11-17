@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Pictogramă și text";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NU TE URMĂRESC";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Pictogramă + text";
+"PROFILE_HIGHLIGHTS_HEADER" = "Highlights";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Îți permite să rearanjezi highlights de pe propriul profil: ține apăsat un highlight, apoi trage-l într-o poziție nouă. Folosește reordonarea pe care Instagram o lansează treptat. Redeschide profilul pentru a aplica.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Reordonează highlights";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Această versiune de Instagram nu include reordonarea highlights.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Colorează indicatorul în verde sau roșu în loc de grisul nativ al Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Indicator colorat";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Afișează numărul complet de urmăritori pe profiluri.";

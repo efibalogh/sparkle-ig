@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "آیکون و متن";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "شما را فالو نمی‌کند";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "آیکون + متن";
+"PROFILE_HIGHLIGHTS_HEADER" = "هایلایت‌ها";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "امکان جابه‌جایی هایلایت‌های پروفایل خودتان را می‌دهد: یک هایلایت را نگه دارید و آن را به جای جدید بکشید. از قابلیت مرتب‌سازی که اینستاگرام به‌تدریج عرضه می‌کند استفاده می‌کند. برای اعمال، پروفایل خود را دوباره باز کنید.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "مرتب‌سازی هایلایت‌ها";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "این نسخه از اینستاگرام قابلیت مرتب‌سازی هایلایت‌ها را ندارد.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "نشانگر را به‌جای خاکستری اصلی اینستاگرام، سبز یا قرمز رنگ می‌کند.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "نشانگر رنگی";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "تعداد کامل دنبال‌کنندگان را در پروفایل‌ها نشان می‌دهد.";

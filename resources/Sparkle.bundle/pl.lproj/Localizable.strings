@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Ikona i tekst";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NIE OBSERWUJE CIĘ";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Ikona + tekst";
+"PROFILE_HIGHLIGHTS_HEADER" = "Wyróżnione relacje";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Pozwala zmienić kolejność wyróżnionych relacji na Twoim profilu: przytrzymaj wyróżnioną relację, a następnie przeciągnij ją w nowe miejsce. Korzysta z funkcji zmiany kolejności, którą Instagram stopniowo udostępnia. Otwórz ponownie swój profil, aby zastosować.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Zmień kolejność wyróżnionych";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Ta wersja Instagrama nie obsługuje zmiany kolejności wyróżnionych relacji.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Koloruje wskaźnik na zielono lub czerwono zamiast natywnego szarego Instagrama.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Kolorowy wskaźnik";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Pokazuje pełną liczbę obserwujących na profilach.";

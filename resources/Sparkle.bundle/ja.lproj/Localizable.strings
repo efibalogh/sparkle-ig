@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "アイコン＆テキスト";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "フォローされていません";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "アイコン＋テキスト";
+"PROFILE_HIGHLIGHTS_HEADER" = "ハイライト";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "自分のプロフィールのハイライトを並べ替えられます。ハイライトを長押しして、新しい位置までドラッグしてください。Instagramが段階的に提供している並べ替え機能を使用します。プロフィールを開き直すと反映されます。";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "ハイライトを並べ替え";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "このバージョンのInstagramにはハイライトの並べ替え機能がありません。";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "インジケーターをInstagram標準のグレーではなく、緑または赤で表示します。";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "カラフルインジケーター";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "プロフィールのフォロワー数を正確に表示します。";

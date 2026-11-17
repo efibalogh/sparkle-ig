@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Εικονίδιο & Κείμενο";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "ΔΕΝ ΣΕ ΑΚΟΛΟΥΘΕΙ";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Εικονίδιο + Κείμενο";
+"PROFILE_HIGHLIGHTS_HEADER" = "Επισημάνσεις";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Σας επιτρέπει να αναδιατάξετε τις επισημάνσεις στο δικό σας προφίλ: κρατήστε πατημένη μια επισήμανση και σύρετέ τη σε νέα θέση. Χρησιμοποιεί την αναδιάταξη που διαθέτει σταδιακά το Instagram. Ανοίξτε ξανά το προφίλ σας για εφαρμογή.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Αναδιάταξη επισημάνσεων";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Αυτή η έκδοση του Instagram δεν περιλαμβάνει αναδιάταξη επισημάνσεων.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Χρωματίζει την ένδειξη πράσινη ή κόκκινη αντί για το εγγενές γκρι του Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Χρωματιστός Δείκτης";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Εμφανίζει τον πλήρη αριθμό ακολούθων στα προφίλ.";

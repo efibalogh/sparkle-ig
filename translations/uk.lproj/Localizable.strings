@@ -1973,6 +1973,10 @@
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Значок та текст";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "НЕ СТЕЖИТЬ ЗА ВАМИ";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Значок + Текст";
+"PROFILE_HIGHLIGHTS_HEADER" = "Хайлайти";
+"PROFILE_HIGHLIGHTS_REORDER_HELP" = "Дозволяє змінювати порядок хайлайтів у власному профілі: утримуйте хайлайт, а потім перетягніть його на нове місце. Використовує зміну порядку, яку Instagram поступово впроваджує. Відкрийте профіль знову, щоб застосувати.";
+"PROFILE_HIGHLIGHTS_REORDER_TITLE" = "Змінити порядок хайлайтів";
+"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP" = "Ця версія Instagram не підтримує зміну порядку хайлайтів.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_HELP" = "Забарвлює індикатор у зелений або червоний замість типового сірого Instagram.";
 "PROFILE_INDICATORS_COLORFUL_INDICATOR_TITLE" = "Кольоровий індикатор";
 "PROFILE_INDICATORS_EXACT_FOLLOWER_COUNT_HELP" = "Показує повну кількість підписників у профілях.";
