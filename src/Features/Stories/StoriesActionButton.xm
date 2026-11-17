@@ -216,6 +216,13 @@ static void SPKInstallStoriesActionButton(UIView *overlayView) {
     id currentMedia = SPKStoryMediaFromOverlay(overlayView);
     id lastMedia = button ? objc_getAssociatedObject(button, kSPKStoriesActionButtonMediaKey) : nil;
 
+    // Instagram adds its bottom gradient to the overlay again when it rebuilds
+    // the comments and footer area (returning to a story with comments), which
+    // then draws over the button and darkens it. Stay on top on every pass,
+    // like the other story buttons.
+    if (button && button.superview == overlayView && overlayView.subviews.lastObject != button)
+        [overlayView bringSubviewToFront:button];
+
     if (SPKStoriesActionFrameMatches(button, expectedFrame) && lastMedia == currentMedia)
         return;
 
