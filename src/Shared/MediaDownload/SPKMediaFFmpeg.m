@@ -8,6 +8,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <dlfcn.h>
 #import <objc/message.h>
+#import "../UI/SPKFont.h"
 
 static Class sSPKFFmpegKitClass = Nil;
 static Class sSPKReturnCodeClass = Nil;
@@ -1441,7 +1442,7 @@ static void SPKFFmpegRunMergeAttempts(NSArray<NSDictionary<NSString *, id> *> *a
     _textView.editable = NO;
     _textView.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
     _textView.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
-    _textView.font = [UIFont monospacedSystemFontOfSize:12.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont monospacedFontForStyle:SPKFontStyleCaption1 weight:UIFontWeightRegular] to:_textView];
     _textView.textContainerInset = UIEdgeInsetsMake(16.0, 14.0, 16.0, 14.0);
     _textView.layer.cornerRadius = 14.0;
     [self.view addSubview:_textView];
@@ -1539,7 +1540,7 @@ static void SPKFFmpegRunMergeAttempts(NSArray<NSDictionary<NSString *, id> *> *a
 
     UILabel *title = [UILabel new];
     title.translatesAutoresizingMaskIntoConstraints = NO;
-    title.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:title];
     title.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     title.textAlignment = NSTextAlignmentCenter;
     title.numberOfLines = 0;
@@ -1548,7 +1549,7 @@ static void SPKFFmpegRunMergeAttempts(NSArray<NSDictionary<NSString *, id> *> *a
 
     UILabel *subtitle = [UILabel new];
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    subtitle.font = [UIFont systemFontOfSize:14];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:subtitle];
     subtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     subtitle.textAlignment = NSTextAlignmentCenter;
     subtitle.numberOfLines = 0;

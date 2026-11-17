@@ -11,6 +11,7 @@
 #import "SPKVideoCropViewController.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import "../UI/SPKFont.h"
 
 // Player-control glyphs use the host app's own IG assets (video-play-small /
 // video-pause) so they match Instagram's player exactly, falling back to known
@@ -377,7 +378,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _timeLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText] ?: [UIColor whiteColor];
-    _timeLabel.font = [UIFont monospacedDigitSystemFontOfSize:13.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont monospacedDigitFontForStyle:SPKFontStyleFootnote weight:UIFontWeightMedium] to:_timeLabel];
     _timeLabel.textAlignment = NSTextAlignmentCenter;
     [_bottomContent addSubview:_timeLabel];
 

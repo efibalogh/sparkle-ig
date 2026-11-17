@@ -9,6 +9,7 @@
 #import "../../../Utils.h"
 #import "../../../Shared/Avatars/SPKAvatarView.h"
 #import "../../../Shared/UI/SPKNotificationCenter.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 // IG throttles /friendships/ — batch follow-state lookups (50/request) with a
 // short cushion stays inside the limit.
@@ -92,7 +93,7 @@ typedef NS_ENUM(NSInteger, SPKPASortMode) {
 
     _usernameLabel = [UILabel new];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _usernameLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_usernameLabel];
     _usernameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     [_usernameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
 
@@ -112,9 +113,13 @@ typedef NS_ENUM(NSInteger, SPKPASortMode) {
 
     _subtitleLabel = [UILabel new];
     _subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _subtitleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_subtitleLabel];
     _subtitleLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _subtitleLabel.numberOfLines = 1;
+    // Shrink before truncating: on the Visited list the line ends in the visit
+    // count, which is the part a truncation would drop.
+    _subtitleLabel.adjustsFontSizeToFitWidth = YES;
+    _subtitleLabel.minimumScaleFactor = 0.75;
     [self.contentView addSubview:_subtitleLabel];
 
     _actionButton = [SPKFollowButton button];
@@ -353,7 +358,7 @@ typedef NS_ENUM(NSInteger, SPKPASortMode) {
 
     self.emptyStateTitle = [UILabel new];
     self.emptyStateTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateTitle.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:self.emptyStateTitle];
     self.emptyStateTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.emptyStateTitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateTitle.numberOfLines = 0;
@@ -361,7 +366,7 @@ typedef NS_ENUM(NSInteger, SPKPASortMode) {
 
     self.emptyStateSubtitle = [UILabel new];
     self.emptyStateSubtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateSubtitle.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.emptyStateSubtitle];
     self.emptyStateSubtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.emptyStateSubtitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateSubtitle.numberOfLines = 0;
@@ -709,7 +714,7 @@ static NSString *SPKPARelativeDate(NSDate *date) {
 
     UILabel *label = [UILabel new];
     label.translatesAutoresizingMaskIntoConstraints = NO;
-    label.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold] to:label];
     label.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     label.text = [NSString stringWithFormat:@"%@  ·  %lu", s.title, (unsigned long)s.items.count];
     [container addSubview:label];

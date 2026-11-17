@@ -34,6 +34,7 @@
 #import "SPKGallerySettingsViewController.h"
 #import "SPKGallerySortViewController.h"
 #import <CoreData/CoreData.h>
+#import "../UI/SPKFont.h"
 
 static NSString *const kGridCellID = @"SPKGalleryGridCell";
 static NSString *const kListCellID = @"SPKGalleryListCell";
@@ -254,6 +255,13 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 }
 
 #pragma mark - Lifecycle
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    // List row heights follow the text size.
+    if (![previousTraitCollection.preferredContentSizeCategory isEqualToString:self.traitCollection.preferredContentSizeCategory])
+        [self.collectionView.collectionViewLayout invalidateLayout];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -553,7 +561,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
             @try {
                 UIBarButtonItem *vended = [self.navigationItem valueForKey:@"searchBarPlacementBarButtonItem"];
                 if ([vended isKindOfClass:[UIBarButtonItem class]]) {
-                    searchItem = vended;
+                        searchItem = vended;
                     self.cachedSearchToolbarItem = vended;
                 }
             } @catch (__unused NSException *exception) {
@@ -794,7 +802,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     label.translatesAutoresizingMaskIntoConstraints = NO;
     label.text = SPKL(@"GALLERY_GALLERY_NO_FILES_GALLERY_TEXT");
     label.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
-    label.font = [UIFont systemFontOfSize:17 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium] to:label];
     label.textAlignment = NSTextAlignmentCenter;
     [_emptyStateView addSubview:label];
     _emptyStateLabel = label;
@@ -803,7 +811,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
     subtitle.text = SPKL(@"GALLERY_GALLERY_MEDIA_SAVE_SPARKLE_APPEAR_HERE_TEXT");
     subtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
-    subtitle.font = [UIFont systemFontOfSize:14];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:subtitle];
     subtitle.textAlignment = NSTextAlignmentCenter;
     subtitle.numberOfLines = 0;
     [_emptyStateView addSubview:subtitle];
@@ -1313,7 +1321,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat width = SPKCollectionViewUsableWidth(cv);
     if ([self isFolderIndexPath:indexPath]) {
-        return CGSizeMake(width, 88);
+        return CGSizeMake(width, 88.0 + [SPKFont lineGrowthForStyle:SPKFontStyleSubheadline] + [SPKFont lineGrowthForStyle:SPKFontStyleFootnote]);
     }
     if (self.viewMode == SPKGalleryViewModeGrid) {
         NSInteger columns = SPKAdaptiveColumnCount(MAX(kSPKGalleryGridColumnsMin, MIN(kSPKGalleryGridColumnsMax, self.gridColumns)), width);
@@ -1321,7 +1329,10 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
         CGFloat side = floor((width - totalSpacing) / columns);
         return CGSizeMake(side, side);
     }
-    return CGSizeMake(width, 72);
+    // Media rows stack three lines of text; each grows with the user's text size.
+    CGFloat textGrowth = [SPKFont lineGrowthForStyle:SPKFontStyleCallout] + [SPKFont lineGrowthForStyle:SPKFontStyleCaption1] +
+                         [SPKFont lineGrowthForStyle:SPKFontStyleCaption2];
+    return CGSizeMake(width, 72.0 + textGrowth);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)cv

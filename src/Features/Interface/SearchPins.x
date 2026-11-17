@@ -6,6 +6,7 @@
 #import "../../AssetUtils.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
+#import "../../Shared/UI/SPKFont.h"
 
 // Pin people in the main search. Holding a person in search toggles their pin. Pinned
 // people get their own section above the recent searches, in the order they were
@@ -352,7 +353,7 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
     if ((self = [super initWithFrame:frame])) {
         _titleLabel = [UILabel new];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightBold] to:_titleLabel];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.text = SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE");
         _titleLabel.accessibilityTraits = UIAccessibilityTraitHeader | UIAccessibilityTraitButton;
@@ -369,7 +370,7 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
 
         _reorderButton = [UIButton buttonWithType:UIButtonTypeSystem];
         _reorderButton.translatesAutoresizingMaskIntoConstraints = NO;
-        _reorderButton.titleLabel.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_reorderButton.titleLabel];
         [_reorderButton setTitleColor:[SPKUtils SPKColor_InstagramBlue] forState:UIControlStateNormal];
         [_reorderButton addTarget:self action:@selector(reorderTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_reorderButton];

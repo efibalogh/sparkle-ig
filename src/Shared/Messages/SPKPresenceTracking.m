@@ -20,6 +20,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import "../UI/SPKFont.h"
 
 static NSString *const kSPKPresenceEnabledKey = @"msgs_presence_notifications";
 static NSString *const kSPKPresenceNotifyOnlineKey = @"msgs_presence_notify_online";
@@ -1294,7 +1295,7 @@ NSString *SPKPresenceDiagnosticsText(void) {
     _textView.editable = NO;
     _textView.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
     _textView.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
-    _textView.font = [UIFont monospacedSystemFontOfSize:12.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont monospacedFontForStyle:SPKFontStyleCaption1 weight:UIFontWeightRegular] to:_textView];
     _textView.textContainerInset = UIEdgeInsetsMake(16.0, 14.0, 16.0, 14.0);
     _textView.layer.cornerRadius = 14.0;
     [self.view addSubview:_textView];

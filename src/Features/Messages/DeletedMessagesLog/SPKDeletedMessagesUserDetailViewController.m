@@ -17,6 +17,7 @@
 #import "SPKDeletedMessagesFilter.h"
 #import "SPKDeletedMessagesStorage.h"
 #import "../../../Shared/UI/SPKNotificationCenter.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 @interface SPKDeletedMessagesUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, SPKDeletedMessagesChipBarDelegate, SPKDeletedMessageBubbleCellDelegate>
 @property (nonatomic, strong) SPKDeletedMessageGroup *group;
@@ -123,7 +124,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
         // far too early. It now only truncates at the real space available between
         // the back button and the trailing items.
         titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        titleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:titleLabel];
         titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -205,7 +206,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
 
     self.emptyStateTitle = [UILabel new];
     self.emptyStateTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateTitle.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:self.emptyStateTitle];
     self.emptyStateTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.emptyStateTitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateTitle.numberOfLines = 0;
@@ -213,7 +214,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
 
     self.emptyStateSubtitle = [UILabel new];
     self.emptyStateSubtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateSubtitle.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.emptyStateSubtitle];
     self.emptyStateSubtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.emptyStateSubtitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateSubtitle.numberOfLines = 0;
@@ -487,7 +488,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     // Name label.
     UILabel *nameLabel = [UILabel new];
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    nameLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:nameLabel];
     nameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     nameLabel.numberOfLines = 1;
     NSString *displayName = self.group.senderFullName.length ? self.group.senderFullName
@@ -497,7 +498,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     // Username label.
     UILabel *usernameLabel = [UILabel new];
     usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    usernameLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:usernameLabel];
     usernameLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     usernameLabel.numberOfLines = 1;
     usernameLabel.hidden = (self.group.senderUsername.length == 0);

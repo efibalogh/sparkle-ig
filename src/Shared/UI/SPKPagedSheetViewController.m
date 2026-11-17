@@ -6,6 +6,7 @@
 #import "SPKGlassButton.h"
 #import "SPKBrandHeroView.h"
 #import "../../Utils.h"
+#import "SPKFont.h"
 
 @implementation SPKPagedSheetPage
 + (instancetype)pageWithTitle:(NSString *)title
@@ -105,7 +106,7 @@
     self.skipButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.skipButton setTitle:SPKL(@"VC_BTN_SKIP") forState:UIControlStateNormal];
     [self.skipButton setTitleColor:[SPKUtils SPKColor_InstagramSecondaryText] forState:UIControlStateNormal];
-    self.skipButton.titleLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:self.skipButton];
     self.skipButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.skipButton addTarget:self action:@selector(finish) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.skipButton];
@@ -205,7 +206,7 @@
 
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = page.title;
-    titleLabel.font = [UIFont systemFontOfSize:26.0 weight:UIFontWeightBold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleTitle1 weight:UIFontWeightBold] to:titleLabel];
     titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines = 0;
@@ -218,7 +219,7 @@
     if (page.body.length > 0) {
         UILabel *bodyLabel = [[UILabel alloc] init];
         bodyLabel.text = page.body;
-        bodyLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout] to:bodyLabel];
         bodyLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         bodyLabel.textAlignment = NSTextAlignmentCenter;
         bodyLabel.numberOfLines = 0;
@@ -310,12 +311,14 @@
     label.text = text;
     label.numberOfLines = 0;
     if (isTeaser) {
-        UIFont *base = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+        UIFont *base = [SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold];
         UIFontDescriptor *italicDescriptor = [base.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
-        label.font = italicDescriptor ? [UIFont fontWithDescriptor:italicDescriptor size:16.0] : base;
+        CGFloat baseSize = [SPKFont basePointSizeForStyle:SPKFontStyleCallout];
+        UIFont *italic = italicDescriptor ? [SPKFont scaledFont:[UIFont fontWithDescriptor:italicDescriptor size:baseSize] forStyle:SPKFontStyleCallout] : base;
+        [SPKFont apply:italic to:label];
         label.textColor = [SPKUtils SPKColor_InstagramBlue];
     } else {
-        label.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightMedium];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightMedium] to:label];
         label.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     }
     [row addArrangedSubview:label];

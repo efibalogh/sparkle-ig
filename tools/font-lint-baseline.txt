@@ -1,0 +1,2 @@
+# Files still on fixed font sizes, with how many each may hold.
+# Lower only, via tools/lint-fonts.py --update-baseline. Never add a file.

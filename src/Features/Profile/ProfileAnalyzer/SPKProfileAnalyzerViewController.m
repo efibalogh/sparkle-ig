@@ -13,6 +13,7 @@
 #import "SPKProfileAnalyzerService.h"
 #import "SPKProfileAnalyzerStorage.h"
 #import "../../../App/SPKPerfMeter.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 #pragma mark - Category descriptor
 
@@ -61,14 +62,14 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
     _nameLabel = [UILabel new];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _nameLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightBold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleTitle3 weight:UIFontWeightBold] to:_nameLabel];
     _nameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     _nameLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_nameLabel];
 
     _usernameLabel = [UILabel new];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _usernameLabel.font = [UIFont systemFontOfSize:14.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:_usernameLabel];
     _usernameLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _usernameLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_usernameLabel];
@@ -109,7 +110,9 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
                                                 constant:24.0],
         [_statsRow.trailingAnchor constraintEqualToAnchor:self.trailingAnchor
                                                  constant:-24.0],
-        [_statsRow.heightAnchor constraintEqualToConstant:44.0],
+        // A number over a caption; grows by what the text size adds to both lines.
+        [_statsRow.heightAnchor constraintEqualToConstant:44.0 + [SPKFont lineGrowthForStyle:SPKFontStyleBody] +
+                                                          [SPKFont lineGrowthForStyle:SPKFontStyleCaption1]],
 
         [_scanButton.topAnchor constraintEqualToAnchor:_statsRow.bottomAnchor
                                               constant:16.0],
@@ -132,14 +135,14 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
     col.spacing = 1.0;
 
     UILabel *v = [UILabel new];
-    v.font = [UIFont systemFontOfSize:18.0 weight:UIFontWeightBold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightBold] to:v];
     v.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     v.textAlignment = NSTextAlignmentCenter;
     v.text = value;
     [col addArrangedSubview:v];
 
     UILabel *c = [UILabel new];
-    c.font = [UIFont systemFontOfSize:12.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:c];
     c.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     c.textAlignment = NSTextAlignmentCenter;
     c.text = caption;
@@ -691,7 +694,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
             content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
             content.secondaryText = [NSString stringWithFormat:@"%lu", (unsigned long)self.visits.count];
             content.prefersSideBySideTextAndSecondaryText = YES;
-            content.secondaryTextProperties.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+            content.secondaryTextProperties.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else { // About
             content.text = SPKL(@"PROFILE_PROFILE_ANALYZER_ABOUT_PROFILE_ANALYZER_TEXT");
@@ -709,7 +712,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
     content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
 
     content.prefersSideBySideTextAndSecondaryText = YES;
-    content.secondaryTextProperties.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+    content.secondaryTextProperties.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
 
     // With unseen changes the count is badged (blue pill) and shows how many are
     // NEW; opening the category marks them seen and the number reverts to the plain
@@ -732,7 +735,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 - (UIView *)badgeAccessoryWithCount:(NSInteger)count {
     UILabel *pill = [UILabel new];
     pill.text = [NSString stringWithFormat:@"%ld", (long)count];
-    pill.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:pill];
     pill.textColor = [UIColor whiteColor];
     pill.textAlignment = NSTextAlignmentCenter;
     pill.backgroundColor = [SPKUtils SPKColor_InstagramBlue] ?: [UIColor systemBlueColor];

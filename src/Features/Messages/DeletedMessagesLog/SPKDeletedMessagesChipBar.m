@@ -2,6 +2,7 @@
 #import "../../../AssetUtils.h"
 #import "../../../Shared/UI/SPKChipGlass.h"
 #import "../../../Utils.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 @interface SPKDeletedMessagesChipBar ()
 @property (nonatomic, strong) UIScrollView *scroll;
@@ -73,7 +74,7 @@
     for (NSInteger i = 0; i < (NSInteger)titles.count; i++) {
         NSString *sym = (i < (NSInteger)symbols.count) ? symbols[i] : nil;
         UIButton *c = [UIButton buttonWithType:UIButtonTypeSystem];
-        c.titleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold] to:c.titleLabel];
         [c setTitle:titles[i] forState:UIControlStateNormal];
         if (sym.length) {
             UIImage *image = [SPKAssetUtils instagramIconNamed:sym pointSize:14.0 renderingMode:UIImageRenderingModeAlwaysTemplate];

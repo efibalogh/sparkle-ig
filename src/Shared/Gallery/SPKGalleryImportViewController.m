@@ -14,6 +14,7 @@
 #import "SPKGallerySaveMetadata.h"
 #import "SPKRegramImporter.h"
 #import <CoreServices/CoreServices.h>
+#import "../UI/SPKFont.h"
 
 typedef NS_ENUM(NSInteger, SPKGalleryImportMainSection) {
     SPKGalleryImportMainSectionShared = 0,
@@ -114,14 +115,14 @@ static UIColor *SPKImportAmberColor(void) {
 
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:_titleLabel];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.text = SPKL(@"GALLERY_IMPORT_SHARED_DETAILS_TITLE");
         [self.contentView addSubview:_titleLabel];
 
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _subtitleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_subtitleLabel];
         _subtitleLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _subtitleLabel.numberOfLines = 1;
         _subtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -222,7 +223,7 @@ static UIColor *SPKImportAmberColor(void) {
 
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:_titleLabel];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.numberOfLines = 1;
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -236,7 +237,7 @@ static UIColor *SPKImportAmberColor(void) {
 
         _technicalLabel = [[UILabel alloc] init];
         _technicalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _technicalLabel.font = [UIFont systemFontOfSize:12.0];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:_technicalLabel];
         _technicalLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _technicalLabel.numberOfLines = 1;
         _technicalLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -270,7 +271,7 @@ static UIColor *SPKImportAmberColor(void) {
             [_placeholderGlyph.centerYAnchor constraintEqualToAnchor:_thumbnailView.centerYAnchor],
 
             [_titleLabel.leadingAnchor constraintEqualToAnchor:_thumbnailView.trailingAnchor constant:12.0],
-            [_titleLabel.topAnchor constraintEqualToAnchor:_thumbnailView.topAnchor constant:-1.0],
+            [_titleLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:9.0],
             [_titleLabel.trailingAnchor constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor],
 
             [_rowTypeIcon.leadingAnchor constraintEqualToAnchor:_titleLabel.leadingAnchor],
@@ -301,7 +302,7 @@ static UIColor *SPKImportAmberColor(void) {
     pill.clipsToBounds = YES;
     UILabel *label = [[UILabel alloc] init];
     label.translatesAutoresizingMaskIntoConstraints = NO;
-    label.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold] to:label];
     label.numberOfLines = 1;
     [pill addSubview:label];
     [NSLayoutConstraint activateConstraints:@[
@@ -531,6 +532,13 @@ static UIColor *SPKImportAmberColor(void) {
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    // Row heights follow the text size, so a text size change needs new heights.
+    if (![previousTraitCollection.preferredContentSizeCategory isEqualToString:self.traitCollection.preferredContentSizeCategory])
+        [self.tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = SPKL(@"GALLERY_GALLERY_SETTINGS_IMPORT_MEDIA_TITLE");
@@ -574,7 +582,7 @@ static UIColor *SPKImportAmberColor(void) {
     UILabel *title = [[UILabel alloc] init];
     title.translatesAutoresizingMaskIntoConstraints = NO;
     title.text = SPKL(@"GALLERY_IMPORT_EMPTY_TITLE");
-    title.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium] to:title];
     title.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     title.textAlignment = NSTextAlignmentCenter;
     [container addSubview:title];
@@ -582,7 +590,7 @@ static UIColor *SPKImportAmberColor(void) {
     UILabel *subtitle = [[UILabel alloc] init];
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
     subtitle.text = SPKL(@"GALLERY_IMPORT_EMPTY_SUBTITLE");
-    subtitle.font = [UIFont systemFontOfSize:14.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:subtitle];
     subtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     subtitle.numberOfLines = 0;
     subtitle.textAlignment = NSTextAlignmentCenter;
@@ -830,7 +838,9 @@ static UIColor *SPKImportAmberColor(void) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SPKImportRowHeight;
+    // The fixed row plus whatever the user's text size adds to its three lines.
+    return SPKImportRowHeight + [SPKFont lineGrowthForStyle:SPKFontStyleCallout] + [SPKFont lineGrowthForStyle:SPKFontStyleCaption1] +
+           [SPKFont lineGrowthForStyle:SPKFontStyleCaption2];
 }
 
 #pragma mark - Shared summary

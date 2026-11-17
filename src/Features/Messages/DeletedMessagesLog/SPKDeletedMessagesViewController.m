@@ -16,6 +16,7 @@
 
 #import <objc/runtime.h>
 #import "../../../Shared/UI/SPKNotificationCenter.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 static NSString *SPKDMCurrentUserPK(void) {
     @try {
@@ -230,7 +231,7 @@ static SPKDeletedMessageKind SPKDMChipKindForIndex(NSInteger index) {
 
     self.emptyStateTitle = [UILabel new];
     self.emptyStateTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateTitle.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:self.emptyStateTitle];
     self.emptyStateTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.emptyStateTitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateTitle.numberOfLines = 0;
@@ -238,7 +239,7 @@ static SPKDeletedMessageKind SPKDMChipKindForIndex(NSInteger index) {
 
     self.emptyStateSubtitle = [UILabel new];
     self.emptyStateSubtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateSubtitle.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.emptyStateSubtitle];
     self.emptyStateSubtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.emptyStateSubtitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateSubtitle.numberOfLines = 0;

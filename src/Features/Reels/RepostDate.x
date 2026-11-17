@@ -100,7 +100,7 @@ static UILabel *SPKRepostDateLabel(UIView *titleView, UIButton *titleButton, NSS
     // One step below the name so it reads as secondary to it.
     UIFont *titleFont = [titleButton respondsToSelector:@selector(titleLabel)] ? titleButton.titleLabel.font : nil;
     CGFloat pointSize = titleFont.pointSize > 0 ? titleFont.pointSize - 1.0 : 13.0;
-    label.font = [UIFont systemFontOfSize:pointSize weight:UIFontWeightRegular];
+    label.font = [UIFont systemFontOfSize:pointSize weight:UIFontWeightRegular]; // spk-font-fixed: one step under Instagram's own title, which owns the scaling
     label.text = text;
     return label;
 }

@@ -3,6 +3,7 @@
 #import "../../Utils.h"
 #import "../../Settings/SPKPreferences.h"
 #import <objc/message.h>
+#import "SPKFont.h"
 
 CGFloat const SPKMediaChromeTopBarContentHeight = 44.0;
 
@@ -412,7 +413,7 @@ static CGFloat const kSPKGlassTitleHeight = 36.0;
         [self addSubview:_glassView];
 
         _label = [[UILabel alloc] init];
-        _label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        _label.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold];
         _label.adjustsFontForContentSizeCategory = YES;
         _label.textColor = [UIColor labelColor];
         _label.textAlignment = NSTextAlignmentCenter;

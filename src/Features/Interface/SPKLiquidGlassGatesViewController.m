@@ -7,6 +7,7 @@
 #import "../../Settings/SPKSettingsViewController.h"
 #import "../../Shared/i18n/SPKStrings.h"
 #import "../../Utils.h"
+#import "../../Shared/UI/SPKFont.h"
 
 static NSString *const kSPKLiquidGlassGatesRevealKey = @"tools_liquid_glass_gates";
 static NSString *const kSPKLiquidGlassGatesCellIdentifier = @"gate";
@@ -251,7 +252,7 @@ static NSArray *SPKGateVisibleState(NSArray<NSDictionary *> *gates) {
 
     UILabel *summary = [UILabel new];
     summary.numberOfLines = 0;
-    summary.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:summary];
     summary.textColor = UIColor.secondaryLabelColor;
     summary.translatesAutoresizingMaskIntoConstraints = NO;
     self.summaryLabel = summary;
@@ -454,17 +455,17 @@ static NSArray *SPKGateVisibleState(NSArray<NSDictionary *> *gates) {
 
     NSMutableAttributedString *secondary = [[NSMutableAttributedString alloc]
         initWithString:statusText
-            attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline], NSForegroundColorAttributeName : statusColor}];
+            attributes:@{NSFontAttributeName : [SPKFont fontForStyle:SPKFontStyleSubheadline], NSForegroundColorAttributeName : statusColor}];
     [secondary appendAttributedString:[[NSAttributedString alloc]
                                           initWithString:[@"\n" stringByAppendingString:symbol]
                                               attributes:@{
-                                                  NSFontAttributeName : [UIFont monospacedSystemFontOfSize:11 weight:UIFontWeightRegular],
+                                                  NSFontAttributeName : [SPKFont monospacedFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightRegular],
                                                   NSForegroundColorAttributeName : UIColor.tertiaryLabelColor
                                               }]];
 
     UIListContentConfiguration *content = [UIListContentConfiguration subtitleCellConfiguration];
     content.text = SPKLiquidGlassGateDisplayName(symbol);
-    content.textProperties.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    content.textProperties.font = [SPKFont fontForStyle:SPKFontStyleBody];
     content.secondaryAttributedText = secondary;
     content.textToSecondaryTextVerticalPadding = 3;
     cell.contentConfiguration = content;

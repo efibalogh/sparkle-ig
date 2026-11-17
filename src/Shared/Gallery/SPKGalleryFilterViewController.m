@@ -5,8 +5,8 @@
 #import "../UI/SPKMediaChrome.h"
 #import "SPKGalleryHiddenSources.h"
 #import "SPKGalleryUserPickerViewController.h"
+#import "../UI/SPKFont.h"
 
-static CGFloat const kSPKGalleryFilterChipLabelPointSize = 16.0;
 static CGFloat const kSPKGalleryFilterChipIconPointSize = 14.0;
 
 @interface SPKGalleryFilterChip : UIButton
@@ -23,8 +23,9 @@ static CGFloat const kSPKGalleryFilterChipIconPointSize = 14.0;
         _itemTag = tag;
         self.layer.cornerRadius = 12;
         self.contentEdgeInsets = UIEdgeInsetsMake(0, 12, 0, 12);
-        self.titleLabel.font = [UIFont systemFontOfSize:kSPKGalleryFilterChipLabelPointSize weight:UIFontWeightMedium];
+        self.titleLabel.font = [SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightMedium];
         self.titleLabel.adjustsFontSizeToFitWidth = YES;
+        self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         self.titleLabel.minimumScaleFactor = 0.78;
         [self updateChipAppearance];
     }
@@ -254,7 +255,7 @@ static CGFloat const kSPKGalleryFilterChipIconPointSize = 14.0;
 - (UILabel *)sectionTitle:(NSString *)title {
     UILabel *l = [[UILabel alloc] init];
     l.text = title;
-    l.font = [UIFont systemFontOfSize:12 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1 weight:UIFontWeightSemibold] to:l];
     l.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     return l;
 }
@@ -353,8 +354,9 @@ static CGFloat const kSPKGalleryFilterChipIconPointSize = 14.0;
     [row addSubview:icon];
 
     UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:kSPKGalleryFilterChipLabelPointSize weight:UIFontWeightMedium];
+    label.font = [SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightMedium];
     label.adjustsFontSizeToFitWidth = YES;
+    label.lineBreakMode = NSLineBreakByTruncatingTail;
     label.minimumScaleFactor = 0.78;
     label.translatesAutoresizingMaskIntoConstraints = NO;
     [row addSubview:label];
@@ -435,8 +437,9 @@ static CGFloat const kSPKGalleryFilterChipIconPointSize = 14.0;
 
     UILabel *label = [[UILabel alloc] init];
     label.text = SPKL(@"GALLERY_GALLERY_FILTER_FAVORITES_TEXT");
-    label.font = [UIFont systemFontOfSize:kSPKGalleryFilterChipLabelPointSize weight:UIFontWeightMedium];
+    label.font = [SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightMedium];
     label.adjustsFontSizeToFitWidth = YES;
+    label.lineBreakMode = NSLineBreakByTruncatingTail;
     label.minimumScaleFactor = 0.78;
     label.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     label.translatesAutoresizingMaskIntoConstraints = NO;
@@ -486,8 +489,9 @@ static CGFloat const kSPKGalleryFilterChipIconPointSize = 14.0;
 
     UILabel *label = [[UILabel alloc] init];
     label.text = SPKL(@"GALLERY_GALLERY_FILTER_CLEAR_FILTERS_TEXT");
-    label.font = [UIFont systemFontOfSize:kSPKGalleryFilterChipLabelPointSize weight:UIFontWeightMedium];
+    label.font = [SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightMedium];
     label.adjustsFontSizeToFitWidth = YES;
+    label.lineBreakMode = NSLineBreakByTruncatingTail;
     label.minimumScaleFactor = 0.78;
     label.translatesAutoresizingMaskIntoConstraints = NO;
     [row addSubview:label];

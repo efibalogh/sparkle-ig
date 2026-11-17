@@ -3,6 +3,7 @@
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
 #import "SPKGalleryFile.h"
+#import "../UI/SPKFont.h"
 
 /// The row's more button. Its menu closes by morphing back into a view, and UIKit
 /// asks for that view only after the chosen action has run. An action that reloads
@@ -84,7 +85,7 @@
 
     self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:self.titleLabel];
     self.titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.titleLabel.numberOfLines = 1;
     self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -92,7 +93,7 @@
 
     self.technicalLabel = [[UILabel alloc] init];
     self.technicalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.technicalLabel.font = [UIFont systemFontOfSize:12];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:self.technicalLabel];
     self.technicalLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.technicalLabel.numberOfLines = 1;
     self.technicalLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -107,14 +108,14 @@
 
     self.pillLabel = [[UILabel alloc] init];
     self.pillLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.pillLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold] to:self.pillLabel];
     self.pillLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.pillLabel.numberOfLines = 1;
     [self.pillBackground addSubview:self.pillLabel];
 
     self.dateLabel = [[UILabel alloc] init];
     self.dateLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.dateLabel.font = [UIFont systemFontOfSize:11];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2] to:self.dateLabel];
     self.dateLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
     self.dateLabel.numberOfLines = 1;
     self.dateLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -136,7 +137,7 @@
 
     self.folderContextLabel = [[UILabel alloc] init];
     self.folderContextLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.folderContextLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold] to:self.folderContextLabel];
     self.folderContextLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.folderContextLabel.numberOfLines = 1;
     self.folderContextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -198,8 +199,7 @@
 
         [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.thumbnailView.trailingAnchor
                                                       constant:12],
-        [self.titleLabel.topAnchor constraintEqualToAnchor:self.thumbnailView.topAnchor
-                                                  constant:-1],
+        [self.titleLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:9.0],
         [self.titleLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.favoriteIcon.leadingAnchor
                                                                  constant:-4],
 

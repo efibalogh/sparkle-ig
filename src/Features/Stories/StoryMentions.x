@@ -15,6 +15,7 @@
 #import "../../Utils.h"
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import "../../Shared/UI/SPKFont.h"
 
 extern void SPKPauseStoryPlaybackFromOverlaySubview(UIView *view);
 extern void SPKResumeStoryPlaybackFromOverlaySubview(UIView *view);
@@ -74,12 +75,12 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
         [self.contentView addSubview:self.avatarView];
 
         self.nameLabel = [[UILabel alloc] init];
-        self.nameLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:self.nameLabel];
         self.nameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         self.nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
         self.subLabel = [[UILabel alloc] init];
-        self.subLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:self.subLabel];
         self.subLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         self.subLabel.translatesAutoresizingMaskIntoConstraints = NO;
 

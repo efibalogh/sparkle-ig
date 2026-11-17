@@ -6,6 +6,7 @@
 #import "../../Settings/SPKTopicSettingsSupport.h"
 #import "../../Utils.h"
 #import "SPKExportFileNaming.h"
+#import "../UI/SPKFont.h"
 
 static BOOL SPKFileNamesAnyDestinationEnabled(void) {
     return [SPKUtils getBoolPref:kSPKExportNamePhotosKey] || [SPKUtils getBoolPref:kSPKExportNameShareKey];
@@ -68,7 +69,7 @@ static UIImage *SPKFileNamePreviewIcon(void) {
 
     _nameLabel = [UILabel new];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _nameLabel.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:_nameLabel];
     _nameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     _nameLabel.textAlignment = NSTextAlignmentCenter;
     _nameLabel.numberOfLines = 0;
@@ -78,7 +79,7 @@ static UIImage *SPKFileNamePreviewIcon(void) {
 
     _captionLabel = [UILabel new];
     _captionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _captionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    _captionLabel.font = [SPKFont fontForStyle:SPKFontStyleFootnote];
     _captionLabel.adjustsFontForContentSizeCategory = YES;
     _captionLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     // Reads as the section footer it replaces.

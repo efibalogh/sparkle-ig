@@ -16,6 +16,7 @@
 #import "SPKPreferenceAvailability.h"
 #import "SPKSettingsInfoSheetViewController.h"
 #import "SPKWhatsNewViewController.h"
+#import "../Shared/UI/SPKFont.h"
 
 static char rowStaticRef[] = "row";
 static CGFloat const kSPKSettingsRemoteImageSize = 45.0;
@@ -145,7 +146,7 @@ static NSString *SPKSettingsAccessoryText(SPKSetting *row) {
 /// The accessory for a button row that also has a subtitle (which the side-by-side
 /// accessory text would otherwise replace), or whose accessory is prominent.
 static UIView *SPKSettingsAccessoryLabelView(NSString *text, BOOL prominent) {
-    UIFont *font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+    UIFont *font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
     if (!prominent) {
         UILabel *label = [UILabel new];
         label.text = text;
@@ -159,7 +160,7 @@ static UIView *SPKSettingsAccessoryLabelView(NSString *text, BOOL prominent) {
     configuration.baseBackgroundColor = [SPKUtils SPKColor_InstagramBlue];
     configuration.baseForegroundColor = UIColor.whiteColor;
     configuration.contentInsets = NSDirectionalEdgeInsetsMake(5.0, 12.0, 5.0, 12.0);
-    UIFont *badgeFont = [UIFont systemFontOfSize:font.pointSize - 2.0 weight:UIFontWeightSemibold];
+    UIFont *badgeFont = [SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold];
     configuration.attributedTitle = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName : badgeFont}];
     UIButton *badge = [UIButton buttonWithConfiguration:configuration primaryAction:nil];
     // Decoration only: the row's own tap runs the action.
@@ -298,7 +299,7 @@ static UIImage *SPKSettingsInfoGlyph(void) {
 /// keeps the glyph on the title's line without touching private views.
 static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     UIListContentConfiguration *reference = [UIListContentConfiguration groupedHeaderConfiguration];
-    UIFont *font = reference.textProperties.font ?: [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    UIFont *font = reference.textProperties.font ?: [SPKFont fontForStyle:SPKFontStyleFootnote];
     return kSPKSectionHeaderTextBottomInset + (font.lineHeight / 2.0);
 }
 
@@ -624,7 +625,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
         cellContentConfig.textProperties.color = [SPKUtils SPKColor_InstagramBlue];
         UIFont *linkFont = [row.userInfo[@"titleFont"] isKindOfClass:[UIFont class]]
                                ? row.userInfo[@"titleFont"]
-                               : [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+                               : [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
         cellContentConfig.textProperties.font = linkFont;
 
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
@@ -703,8 +704,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
             cellContentConfig.secondaryText = accessoryText;
             cellContentConfig.prefersSideBySideTextAndSecondaryText = YES;
             cellContentConfig.secondaryTextProperties.color = [SPKUtils SPKColor_InstagramSecondaryText];
-            cellContentConfig.secondaryTextProperties.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize
-                                                                               weight:UIFontWeightMedium];
+            cellContentConfig.secondaryTextProperties.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
         }
         // Avatar rows read as flat list entries (like Profile Analyzer), not
         // settings nav rows — no disclosure chevron.
@@ -724,8 +724,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
         menuButton.menu = [row menuForButton:menuButton];
         menuButton.showsMenuAsPrimaryAction = YES;
         menuButton.enabled = rowEnabled;
-        menuButton.titleLabel.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize
-                                                       weight:UIFontWeightMedium];
+        menuButton.titleLabel.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
         menuButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         [menuButton setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [menuButton setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
@@ -765,8 +764,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
             cellContentConfig.secondaryTextProperties.numberOfLines = 1;
             cellContentConfig.secondaryTextProperties.lineBreakMode = NSLineBreakByTruncatingTail;
             cellContentConfig.secondaryTextProperties.color = [SPKUtils SPKColor_InstagramSecondaryText];
-            cellContentConfig.secondaryTextProperties.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize
-                                                                               weight:UIFontWeightMedium];
+            cellContentConfig.secondaryTextProperties.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
         }
         cell.accessoryType = rowEnabled ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
         if (!rowEnabled) {
@@ -780,7 +778,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     case SPKTableCellTextField: {
         UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 34)];
         textField.textAlignment = NSTextAlignmentRight;
-        textField.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+        textField.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
         textField.textColor = rowEnabled ? [SPKUtils SPKColor_InstagramPrimaryText] : [SPKUtils SPKColor_InstagramTertiaryText];
         textField.placeholder = row.placeholder;
         textField.keyboardType = row.keyboardType;
@@ -840,7 +838,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     stack.spacing = 5.0;
     stack.translatesAutoresizingMaskIntoConstraints = NO;
 
-    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    UIFont *font = [SPKFont fontForStyle:SPKFontStyleFootnote];
     UIColor *textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     UIColor *chevronColor = [SPKUtils SPKColor_InstagramTertiaryText];
     UIImage *chevron = SPKSettingsBreadcrumbChevronImage();

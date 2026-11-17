@@ -1,6 +1,7 @@
 #import "SPKProgressPillButton.h"
 
 #import "../../Utils.h"
+#import "SPKFont.h"
 
 @interface SPKProgressPillButton ()
 @property (nonatomic, strong) UILabel *label;
@@ -21,7 +22,7 @@
 
     _label = [UILabel new];
     _label.translatesAutoresizingMaskIntoConstraints = NO;
-    _label.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_label];
     _label.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_label];
     [NSLayoutConstraint activateConstraints:@[

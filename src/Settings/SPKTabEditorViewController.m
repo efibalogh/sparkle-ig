@@ -12,6 +12,7 @@
 #import "../Shared/UI/SPKSwitch.h"
 #import "../Utils.h"
 #import "../Features/Interface/SPKNativeTabBar.h"
+#import "../Shared/UI/SPKFont.h"
 
 static CGFloat const SPKTabEditorGlyphSize = 24.0;
 
@@ -89,7 +90,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.text = SPKL(@"SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT");
     _emptyLabel.textAlignment = NSTextAlignmentCenter;
-    _emptyLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_emptyLabel];
     _emptyLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
     _emptyLabel.hidden = YES;
     _emptyLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -278,7 +279,7 @@ static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
 
     UILabel *clock = [[UILabel alloc] init];
     clock.text = @"9:41";
-    clock.font = [UIFont monospacedDigitSystemFontOfSize:11.0 weight:UIFontWeightSemibold];
+    clock.font = [UIFont monospacedDigitSystemFontOfSize:11.0 weight:UIFontWeightSemibold]; // spk-font-fixed: drawn to the miniature phone preview scale
     clock.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     clock.isAccessibilityElement = NO;
     UIImageView *signal = [[UIImageView alloc] initWithImage:[UIImage systemImageNamed:@"wifi"]];
@@ -334,7 +335,7 @@ static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
 
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.text = SPKL(@"SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT");
-    _emptyLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_emptyLabel];
     _emptyLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
     _emptyLabel.numberOfLines = 0;
     _emptyLabel.hidden = YES;
@@ -344,7 +345,7 @@ static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
     UIView *legendRing = [self instagramRingView];
     UILabel *legendLabel = [[UILabel alloc] init];
     legendLabel.text = SPKL(@"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL");
-    legendLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    legendLabel.font = [SPKFont fontForStyle:SPKFontStyleCaption1];
     legendLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _legend = [[UIStackView alloc] initWithArrangedSubviews:@[ legendRing, legendLabel ]];
     _legend.axis = UILayoutConstraintAxisHorizontal;
@@ -574,11 +575,11 @@ static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
     [_glyphView.heightAnchor constraintEqualToConstant:SPKTabEditorGlyphSize].active = YES;
 
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _titleLabel.font = [SPKFont fontForStyle:SPKFontStyleBody];
     _titleLabel.adjustsFontForContentSizeCategory = YES;
 
     _statusLabel = [[UILabel alloc] init];
-    _statusLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    _statusLabel.font = [SPKFont fontForStyle:SPKFontStyleSubheadline];
     _statusLabel.adjustsFontForContentSizeCategory = YES;
     _statusLabel.textAlignment = NSTextAlignmentRight;
     _statusLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
@@ -702,7 +703,7 @@ static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
     [self.headerContainer addSubview:self.layoutChipBar];
 
     self.layoutCaption = [[UILabel alloc] init];
-    self.layoutCaption.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    self.layoutCaption.font = [SPKFont fontForStyle:SPKFontStyleFootnote];
     self.layoutCaption.adjustsFontForContentSizeCategory = YES;
     self.layoutCaption.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.layoutCaption.numberOfLines = 0;

@@ -2,6 +2,7 @@
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
 #import "SPKChipGlass.h"
+#import "SPKFont.h"
 
 @interface SPKChipBar ()
 @property (nonatomic, strong) UIScrollView *scroll;
@@ -98,12 +99,9 @@
     [self applyDistributionMode];
 }
 
-// Full-size font/icons at all times; on narrow screens the fill-mode chips let
-// their titles auto-shrink (adjustsFontSizeToFitWidth) rather than the whole row
+// Full-size icons at all times; on narrow screens the fill-mode chips let their
+// titles auto-shrink (adjustsFontSizeToFitWidth) rather than the whole row
 // shrinking regardless of screen size.
-- (CGFloat)chipFontSize {
-    return 13.0;
-}
 - (CGFloat)chipIconPointSize {
     return 14.0;
 }
@@ -125,7 +123,7 @@
     for (NSInteger i = 0; i < (NSInteger)titles.count; i++) {
         NSString *sym = (i < (NSInteger)symbols.count) ? symbols[i] : nil;
         UIButton *c = [UIButton buttonWithType:UIButtonTypeSystem];
-        c.titleLabel.font = [UIFont systemFontOfSize:[self chipFontSize] weight:UIFontWeightSemibold];
+        c.titleLabel.font = [SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold];
         // In a fill mode a label may not fit its share, so allow a touch of
         // shrink rather than truncating. Equal-fill needs more room (0.7);
         // proportional sizes chips to content so it only needs a small safety

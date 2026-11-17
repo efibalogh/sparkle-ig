@@ -197,7 +197,10 @@ static void SPKAnchorFollowBadgeBelowStats(UIView *badge, UIView *container) {
         if ([anchored containsObject:label])
             continue;
         [anchored addObject:label];
-        [constraints addObject:[badge.topAnchor constraintGreaterThanOrEqualToAnchor:label.bottomAnchor constant:4.0]];
+        // 2pt: a stat label's frame already includes its descender space, and at
+        // larger text sizes Instagram's counts grow into the gap below them, so
+        // any more pushes the badge past the container's bottom edge.
+        [constraints addObject:[badge.topAnchor constraintGreaterThanOrEqualToAnchor:label.bottomAnchor constant:2.0]];
     }
     if (constraints.count > 0)
         [NSLayoutConstraint activateConstraints:constraints];
@@ -252,7 +255,7 @@ static void SPKRenderFollowBadge(UIViewController *controller, UIView *container
 
     SPKChromeLabel *badge = [[SPKChromeLabel alloc] initWithText:text
                                                            icon:icon
-                                                           font:[UIFont systemFontOfSize:11.0 weight:UIFontWeightMedium]
+                                                           font:[UIFont systemFontOfSize:11.0 weight:UIFontWeightMedium] // spk-font-fixed: fits the gap Instagram leaves under the stats, which does not grow
                                                           color:accent];
     badge.tag = kSPKFollowBadgeTag;
     objc_setAssociatedObject(badge, kSPKFollowBadgeSpecAssocKey, spec, OBJC_ASSOCIATION_COPY_NONATOMIC);

@@ -1,6 +1,7 @@
 #import "SPKStrings.h"
 #import "SPKGalleryFolderCell.h"
 #import "../../Utils.h"
+#import "../UI/SPKFont.h"
 
 @interface SPKGalleryFolderCell ()
 
@@ -37,7 +38,7 @@
 
         _listTitle = [[UILabel alloc] init];
         _listTitle.translatesAutoresizingMaskIntoConstraints = NO;
-        _listTitle.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_listTitle];
         _listTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _listTitle.numberOfLines = 1;
         _listTitle.lineBreakMode = NSLineBreakByTruncatingMiddle;
@@ -46,7 +47,7 @@
 
         _listSubtitle = [[UILabel alloc] init];
         _listSubtitle.translatesAutoresizingMaskIntoConstraints = NO;
-        _listSubtitle.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_listSubtitle];
         _listSubtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _listSubtitle.numberOfLines = 1;
         _listSubtitle.lineBreakMode = NSLineBreakByTruncatingTail;

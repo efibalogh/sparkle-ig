@@ -1,5 +1,6 @@
 #import "SPKGlassButton.h"
 #import "../../Utils.h"
+#import "SPKFont.h"
 
 // The glass look AND its interactive "bounce" both come from the system's
 // prominentGlass button configuration — a UIGlassEffect behind a plain button was
@@ -27,7 +28,7 @@
 
         id titleTransformer = ^(NSDictionary *incoming) {
             NSMutableDictionary *mut = [incoming mutableCopy] ?: [NSMutableDictionary dictionary];
-            mut[NSFontAttributeName] = [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+            mut[NSFontAttributeName] = [SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold];
             return mut;
         };
 

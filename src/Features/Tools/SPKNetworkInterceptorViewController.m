@@ -7,6 +7,7 @@
 #import "../../Shared/UI/SPKMediaChrome.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
+#import "../../Shared/UI/SPKFont.h"
 
 typedef NS_ENUM(NSInteger, SPKNetworkScope) {
     SPKNetworkScopeAll,
@@ -200,7 +201,7 @@ static NSURL *SPKNetworkWriteTemporaryFile(NSString *stem, NSString *extension, 
     _textView.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
     _textView.textContainerInset = UIEdgeInsetsMake(16.0, 14.0, 16.0, 14.0);
     _textView.layer.cornerRadius = 14.0;
-    _textView.font = [UIFont monospacedSystemFontOfSize:12.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont monospacedFontForStyle:SPKFontStyleCaption1 weight:UIFontWeightRegular] to:_textView];
     _textView.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _textView.text = SPKL(@"TOOLS_NETWORK_INTERCEPTOR_LOADING");
     [self.view addSubview:_textView];
@@ -269,8 +270,8 @@ static NSURL *SPKNetworkWriteTemporaryFile(NSString *stem, NSString *extension, 
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSMutableAttributedString *text = [NSMutableAttributedString new];
         NSMutableString *plain = [NSMutableString string];
-        UIFont *headingFont = [UIFont monospacedSystemFontOfSize:13.0 weight:UIFontWeightBold];
-        UIFont *bodyFont = [UIFont monospacedSystemFontOfSize:12.0 weight:UIFontWeightRegular];
+        UIFont *headingFont = [SPKFont monospacedFontForStyle:SPKFontStyleFootnote weight:UIFontWeightBold];
+        UIFont *bodyFont = [SPKFont monospacedFontForStyle:SPKFontStyleCaption1 weight:UIFontWeightRegular];
 
         void (^append)(NSString *, UIFont *, UIColor *) = ^(NSString *string, UIFont *font, UIColor *color) {
             if (string.length == 0)
@@ -577,7 +578,7 @@ static NSString *const kSPKNetworkInterceptorRevealKey = @"network_interceptor";
 
     UILabel *title = [UILabel new];
     title.translatesAutoresizingMaskIntoConstraints = NO;
-    title.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:title];
     title.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     title.textAlignment = NSTextAlignmentCenter;
     title.numberOfLines = 0;
@@ -586,7 +587,7 @@ static NSString *const kSPKNetworkInterceptorRevealKey = @"network_interceptor";
 
     UILabel *subtitle = [UILabel new];
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    subtitle.font = [UIFont systemFontOfSize:14];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:subtitle];
     subtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     subtitle.textAlignment = NSTextAlignmentCenter;
     subtitle.numberOfLines = 0;
@@ -637,7 +638,7 @@ static NSString *const kSPKNetworkInterceptorRevealKey = @"network_interceptor";
     SPKNetworkEntry *entry = self.visibleEntries[indexPath.row];
     UIListContentConfiguration *content = [UIListContentConfiguration subtitleCellConfiguration];
     content.text = entry.displayTitle;
-    content.textProperties.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+    content.textProperties.font = [SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold];
     content.textProperties.color = [SPKUtils SPKColor_InstagramPrimaryText];
     content.textProperties.numberOfLines = 2;
     content.textProperties.lineBreakMode = NSLineBreakByTruncatingMiddle;
@@ -651,7 +652,7 @@ static NSString *const kSPKNetworkInterceptorRevealKey = @"network_interceptor";
         [parts addObject:SPKNetworkDurationString(entry.duration)];
     [parts addObject:SPKNetworkTimeString(entry.startDate)];
     content.secondaryText = [parts componentsJoinedByString:@" · "];
-    content.secondaryTextProperties.font = [UIFont monospacedDigitSystemFontOfSize:12 weight:UIFontWeightRegular];
+    content.secondaryTextProperties.font = [SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption1 weight:UIFontWeightRegular];
     content.secondaryTextProperties.color = SPKNetworkEntryIsError(entry) ? [SPKUtils SPKColor_InstagramDestructive]
                                                                           : [SPKUtils SPKColor_InstagramSecondaryText];
     cell.contentConfiguration = content;

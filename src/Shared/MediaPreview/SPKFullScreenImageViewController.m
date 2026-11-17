@@ -9,6 +9,7 @@
 #import "../../Utils.h"
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import "../UI/SPKFont.h"
 
 static CGFloat const kMaxZoom = 5.0;
 static CGFloat const kMinZoom = 1.0;
@@ -295,7 +296,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
         ^NSDictionary<NSAttributedStringKey, id> *(NSDictionary<NSAttributedStringKey, id> *incoming) {
             NSMutableDictionary *attributes = [incoming mutableCopy] ?: [NSMutableDictionary dictionary];
             attributes[NSFontAttributeName] =
-                [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+                [SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold];
             return attributes;
         };
     if (!SPKLiveTextGlassAvailable()) {
@@ -487,7 +488,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
     _errorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _errorLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
-    _errorLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:_errorLabel];
     _errorLabel.textAlignment = NSTextAlignmentCenter;
     _errorLabel.numberOfLines = 0;
     [_errorView addSubview:_errorLabel];
@@ -496,7 +497,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
     _retryButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_retryButton setTitle:SPKL(@"ALERT_ACTION_RETRY") forState:UIControlStateNormal];
     [_retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _retryButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_retryButton.titleLabel];
     _retryButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
     _retryButton.layer.cornerRadius = 18;
     [_retryButton addTarget:self action:@selector(retryLoading) forControlEvents:UIControlEventTouchUpInside];

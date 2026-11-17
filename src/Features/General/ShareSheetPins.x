@@ -6,6 +6,7 @@
 #import "../../Shared/UI/SPKChrome.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
+#import "../../Shared/UI/SPKFont.h"
 
 // Pin people and groups to the top of the share sheet. Holding a person's photo or
 // name toggles their pin. Holding a group keeps Instagram's own member preview and
@@ -497,7 +498,7 @@ static UIButton *SPKShareSheetMakeGroupPinButton(SPKShareSheetPinTarget *target,
     configuration.cornerStyle = UIButtonConfigurationCornerStyleLarge;
     configuration.titleTextAttributesTransformer = ^NSDictionary *(NSDictionary *attributes) {
         NSMutableDictionary *updated = [attributes mutableCopy];
-        updated[NSFontAttributeName] = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+        updated[NSFontAttributeName] = [SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold];
         return updated;
     };
 

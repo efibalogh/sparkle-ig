@@ -2,6 +2,7 @@
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
 #import "../UI/SPKChipGlass.h"
+#import "../UI/SPKFont.h"
 
 static CGFloat const kChipBarHeight = 52.0;
 static CGFloat const kChipHeight = 34.0;
@@ -87,7 +88,7 @@ static CGFloat const kChipHorizontalInset = 14.0;
 - (UIButton *)chipForName:(NSString *)name count:(NSInteger)count index:(NSInteger)index {
     UIButton *chip = [UIButton buttonWithType:UIButtonTypeSystem];
     chip.tag = index;
-    chip.titleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold] to:chip.titleLabel];
 
     NSString *title = count > 0
                           ? [NSString stringWithFormat:@"%@  •  %ld", name, (long)count]

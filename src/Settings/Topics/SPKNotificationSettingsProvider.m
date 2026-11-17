@@ -5,6 +5,7 @@
 #import "../SPKPreferenceAvailability.h"
 #import "../SPKSettingsViewController.h"
 #import "../SPKTopicSettingsSupport.h"
+#import "../../Shared/UI/SPKFont.h"
 
 // The page carries a live sample of the chosen style above its rows, updated
 // whenever a row that changes the look does. Tapping it steps through the kinds of
@@ -44,7 +45,7 @@
     UILabel *hint = [UILabel new];
     hint.translatesAutoresizingMaskIntoConstraints = NO;
     hint.text = SPKL(@"NOTIFICATION_PREVIEW_TAP_HINT");
-    hint.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    hint.font = [SPKFont fontForStyle:SPKFontStyleFootnote];
     hint.adjustsFontForContentSizeCategory = YES;
     hint.textColor = UIColor.secondaryLabelColor;
     hint.textAlignment = NSTextAlignmentCenter;

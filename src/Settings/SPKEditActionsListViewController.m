@@ -12,6 +12,7 @@
 #import "SPKPreferences.h"
 #import "SPKSettingsTransferManager.h"
 #import "SPKTopicSettingsSupport.h"
+#import "../Shared/UI/SPKFont.h"
 
 static char kSPKActionsListSwitchAssocKey;
 
@@ -194,7 +195,7 @@ static char kSPKActionsListSwitchAssocKey;
             // Prefix the Collapsible/Inline subtitle with an amber warning triangle so
             // it's obvious — while arranging sections — that this section contains an
             // action switched off in "Available Actions" (hidden from the runtime menu).
-            UIFont *font = config.secondaryTextProperties.font ?: [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+            UIFont *font = config.secondaryTextProperties.font ?: [SPKFont fontForStyle:SPKFontStyleSubheadline];
             UIImage *warning = [[SPKAssetUtils instagramIconNamed:@"warning_filled" pointSize:16.0]
                 imageWithTintColor:[UIColor systemOrangeColor]
                      renderingMode:UIImageRenderingModeAlwaysOriginal];

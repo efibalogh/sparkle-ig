@@ -7,6 +7,7 @@
 #import "SPKGalleryFile.h"
 #import "SPKGalleryOriginController.h"
 #import "SPKGallerySaveMetadata.h"
+#import "../UI/SPKFont.h"
 
 typedef NS_ENUM(NSInteger, SPKGalleryImportFormRow) {
     SPKGalleryImportFormRowDisplayName = 0,
@@ -247,7 +248,7 @@ static BOOL SPKParseInstagramLink(NSString *raw, SPKGallerySaveMetadata *m) {
     // middle-truncated line beneath it (wrapping it produced an ugly multi-line monospace blob).
     UILabel *sub = [[UILabel alloc] init];
     sub.translatesAutoresizingMaskIntoConstraints = NO;
-    sub.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold] to:sub];
     sub.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     sub.text = self.previewSubtitle;
     sub.textAlignment = NSTextAlignmentCenter;
@@ -255,7 +256,7 @@ static BOOL SPKParseInstagramLink(NSString *raw, SPKGallerySaveMetadata *m) {
 
     UILabel *file = [[UILabel alloc] init];
     file.translatesAutoresizingMaskIntoConstraints = NO;
-    file.font = [UIFont monospacedSystemFontOfSize:11.0 weight:UIFontWeightRegular];
+    file.font = [SPKFont monospacedFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightRegular];
     file.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
     file.text = self.previewFilename;
     file.numberOfLines = 1;
@@ -581,7 +582,7 @@ static BOOL SPKParseInstagramLink(NSString *raw, SPKGallerySaveMetadata *m) {
 - (UITextField *)accessoryFieldForRow:(SPKGalleryImportFormRow)row {
     UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 170, 34)];
     tf.textAlignment = NSTextAlignmentRight;
-    tf.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+    tf.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
     tf.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     tf.text = [self stringValueForRow:row];
     tf.placeholder = [self placeholderForRow:row];
@@ -642,8 +643,7 @@ static BOOL SPKParseInstagramLink(NSString *raw, SPKGallerySaveMetadata *m) {
     cfg.prefersSideBySideTextAndSecondaryText = YES;
     cfg.secondaryTextProperties.numberOfLines = 1;
     cfg.secondaryTextProperties.color = [SPKUtils SPKColor_InstagramSecondaryText];
-    cfg.secondaryTextProperties.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize
-                                                         weight:UIFontWeightMedium];
+    cfg.secondaryTextProperties.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
     cell.contentConfiguration = cfg;
     return cell;
 }
@@ -655,6 +655,12 @@ static BOOL SPKParseInstagramLink(NSString *raw, SPKGallerySaveMetadata *m) {
     UIListContentConfiguration *cfg = cell.defaultContentConfiguration;
     cfg.text = SPKL(@"GALLERY_GALLERY_FILE_DETAILS_DATE_TEXT");
     cfg.textProperties.color = [SPKUtils SPKColor_InstagramPrimaryText];
+    // The picker's date and time pills grow with the text size and take most of
+    // the row, so the title keeps to one line and shrinks rather than breaking
+    // between letters.
+    cfg.textProperties.numberOfLines = 1;
+    cfg.textProperties.adjustsFontSizeToFitWidth = YES;
+    cfg.textProperties.minimumScaleFactor = 0.7;
     cell.contentConfiguration = cfg;
 
     UIDatePicker *picker = [[UIDatePicker alloc] init];
@@ -669,10 +675,14 @@ static BOOL SPKParseInstagramLink(NSString *raw, SPKGallerySaveMetadata *m) {
     accessory.spacing = 6.0;
 
     if (self.metadata.importCapturedDate != nil) {
+        // An icon, like a text field's clear button, so it costs the title as
+        // little width as possible at any text size and in any language.
         UIButton *clear = [UIButton buttonWithType:UIButtonTypeSystem];
-        [clear setTitle:SPKL(@"ALERT_ACTION_CLEAR") forState:UIControlStateNormal];
-        clear.titleLabel.font = [UIFont systemFontOfSize:14.0];
-        [clear setTitleColor:[SPKUtils SPKColor_InstagramSecondaryText] forState:UIControlStateNormal];
+        UIImageSymbolConfiguration *clearSymbol =
+            [UIImageSymbolConfiguration configurationWithTextStyle:UIFontTextStyleBody scale:UIImageSymbolScaleMedium];
+        [clear setImage:[UIImage systemImageNamed:@"xmark.circle.fill" withConfiguration:clearSymbol] forState:UIControlStateNormal];
+        clear.tintColor = [SPKUtils SPKColor_InstagramTertiaryText];
+        clear.accessibilityLabel = SPKL(@"ALERT_ACTION_CLEAR");
         [clear addTarget:self action:@selector(clearDate) forControlEvents:UIControlEventTouchUpInside];
         [accessory addArrangedSubview:clear];
     }

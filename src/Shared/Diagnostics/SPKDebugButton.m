@@ -5,6 +5,7 @@
 #import "../../Utils.h"
 #import "../i18n/SPKStrings.h"
 #import "../UI/SPKChipGlass.h"
+#import "../UI/SPKFont.h"
 #import "../../Features/Tools/SPKNetworkInterceptor.h"
 #import "../../Features/Tools/SPKNetworkInterceptorViewController.h"
 #if SPK_DEV
@@ -150,7 +151,7 @@ static void SPKDebugShareReport(NSString *name, NSString *report) {
     UILabel *hint = [UILabel new];
     hint.translatesAutoresizingMaskIntoConstraints = NO;
     hint.text = SPKL(@"TOOLS_DEBUG_BUTTON_INSPECT_HINT");
-    hint.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:hint];
     hint.textColor = UIColor.labelColor;
     hint.textAlignment = NSTextAlignmentCenter;
     hint.numberOfLines = 0;
@@ -166,7 +167,7 @@ static void SPKDebugShareReport(NSString *name, NSString *report) {
     UIButton *cancel = [UIButton buttonWithType:UIButtonTypeSystem];
     cancel.translatesAutoresizingMaskIntoConstraints = NO;
     [cancel setTitle:SPKL(@"ALERT_ACTION_CANCEL") forState:UIControlStateNormal];
-    cancel.titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:cancel.titleLabel];
     cancel.tintColor = UIColor.labelColor;
     cancel.backgroundColor = UIColor.secondarySystemBackgroundColor;
     cancel.layer.cornerRadius = 22;

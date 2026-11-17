@@ -7,6 +7,7 @@
 #import "../../Tweak.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
+#import "../../Shared/UI/SPKFont.h"
 
 /// The installed version, which doubles as the way to check for a newer one: it shows what the
 /// last check found, and a tap opens the update sheet or checks again.
@@ -65,7 +66,7 @@ static NSDictionary *SPKUpdatesDevSection(void) {
                                               imageUrl:@"https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/670f5a01229bf8a18f97a3c1_favion.png"
                                                    url:@"https://ko-fi.com/sparkle_ig"];
     donate.userInfo = @{
-        @"titleFont" : [UIFont systemFontOfSize:20.0 weight:UIFontWeightSemibold],
+        @"titleFont" : [SPKFont fontForStyle:SPKFontStyleTitle3 weight:UIFontWeightSemibold],
         @"remoteImageCircular" : @NO
     };
 

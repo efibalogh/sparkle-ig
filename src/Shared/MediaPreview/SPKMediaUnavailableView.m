@@ -1,6 +1,7 @@
 #import "SPKMediaUnavailableView.h"
 
 #import "../../AssetUtils.h"
+#import "../UI/SPKFont.h"
 
 @interface SPKMediaUnavailableView ()
 @property (nonatomic, strong) UIImageView *iconView;
@@ -23,13 +24,13 @@
 
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.textColor = [UIColor whiteColor];
-    _titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:_titleLabel];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.numberOfLines = 0;
 
     _messageLabel = [[UILabel alloc] init];
     _messageLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
-    _messageLabel.font = [UIFont systemFontOfSize:15];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:_messageLabel];
     _messageLabel.textAlignment = NSTextAlignmentCenter;
     _messageLabel.numberOfLines = 0;
 

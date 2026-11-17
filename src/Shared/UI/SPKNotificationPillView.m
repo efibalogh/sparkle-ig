@@ -8,6 +8,7 @@
 #import <objc/runtime.h>
 #import <CoreText/CoreText.h>
 #import <os/log.h>
+#import "SPKFont.h"
 
 FOUNDATION_EXPORT void SPKLogMessage(NSString *category, os_log_type_t type, NSString *format, ...) NS_FORMAT_FUNCTION(3, 4);
 
@@ -52,6 +53,17 @@ static CGFloat const kDynamicMaxWidth = 360.0;
 static CGFloat const kRingLineWidth = 2.5;
 static CGFloat const kDynamicPillHeight = 52.0;
 static CGFloat const kDynamicTallHeight = 64.0;
+
+// The pill's own heights at the user's text size: the fixed design height plus
+// what the text size adds to each line it holds. The Instagram skin keeps the
+// fixed constants, since Instagram's toast view sizes itself.
+static CGFloat SPKPillHeight(void) {
+    return kDynamicPillHeight + [SPKFont lineGrowthForStyle:SPKFontStyleFootnote];
+}
+
+static CGFloat SPKPillTallHeight(void) {
+    return kDynamicTallHeight + [SPKFont lineGrowthForStyle:SPKFontStyleFootnote] + [SPKFont lineGrowthForStyle:SPKFontStyleCaption2];
+}
 static CGFloat const kIconBadgeSize = 28.0;
 static CGFloat const kEntranceTranslateY = -24.0;
 static CGFloat const kEntranceScale = 0.88;
@@ -165,7 +177,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     [pill applyCurrentVisualStyleAnimated:NO];
     pill.translatesAutoresizingMaskIntoConstraints = NO;
 
-    pill.heightConstraint = [pill.heightAnchor constraintEqualToConstant:kDynamicPillHeight];
+    pill.heightConstraint = [pill.heightAnchor constraintEqualToConstant:SPKPillHeight()];
     pill.widthConstraint = [pill.widthAnchor constraintEqualToConstant:kDynamicMinWidth];
     [NSLayoutConstraint activateConstraints:@[
         pill.widthConstraint,
@@ -299,13 +311,13 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.text = SPKL(@"MEDIA_TRIM_TRIM_ENTRY_DOWNLOADING_TEXT");
     _titleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.98];
-    _titleLabel.font = [UIFont systemFontOfSize:13.5 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold] to:_titleLabel];
     _titleLabel.numberOfLines = 1;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 
     _subtitleLabel = [[UILabel alloc] init];
     _subtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-    _subtitleLabel.font = [UIFont monospacedDigitSystemFontOfSize:11.5 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium] to:_subtitleLabel];
     _subtitleLabel.numberOfLines = 1;
     _subtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _subtitleLabel.hidden = YES;
@@ -601,7 +613,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 }
 
 - (CGFloat)spk_subtitleRowLayoutHeight {
-    UIFont *font = self.subtitleLabel.font ?: [UIFont systemFontOfSize:11.5 weight:UIFontWeightMedium];
+    UIFont *font = self.subtitleLabel.font ?: [SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium];
     return ceil(font.lineHeight);
 }
 
@@ -907,7 +919,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     self.usesAutomaticProgressSubtitle = NO;
     self.subtitleLabel.text = nil;
     [self spk_setSubtitleHidden:YES];
-    [self spk_setPillHeight:kDynamicPillHeight];
+    [self spk_setPillHeight:SPKPillHeight()];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:nil hasButton:!self.closeButton.hidden];
 
     [self setProgressVisible:YES];
@@ -1912,7 +1924,7 @@ static NSString *SPKInstagramStableLayoutText(NSString *text) {
         }
     } @catch (__unused NSException *exception) {
     }
-    font = font ?: [UIFont systemFontOfSize:13.0];
+    font = font ?: [SPKFont fontForStyle:SPKFontStyleFootnote];
     UIFontDescriptor *descriptor = [font.fontDescriptor fontDescriptorByAddingAttributes:@{
         UIFontDescriptorFeatureSettingsAttribute : @[ @{
             UIFontFeatureTypeIdentifierKey : @(kNumberSpacingType),
@@ -2305,7 +2317,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
 - (CGFloat)spk_dynamicHeightForButton:(BOOL)hasButton {
     if (self.subtitleLabel.hidden) {
         self.subtitleLabel.numberOfLines = 1;
-        return kDynamicPillHeight;
+        return SPKPillHeight();
     }
     // The Instagram style is laid out by Instagram's own toast view.
     if (self.instagramSkin) {
@@ -2313,7 +2325,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
         return kDynamicTallHeight;
     }
 
-    UIFont *font = self.subtitleLabel.font ?: [UIFont systemFontOfSize:11.5 weight:UIFontWeightMedium];
+    UIFont *font = self.subtitleLabel.font ?: [SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium];
     CGFloat subtitleWidth = ceil([self.subtitleLabel.text ?: @"" boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, font.lineHeight)
                                                                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                                            attributes:@{NSFontAttributeName : font}
@@ -2327,7 +2339,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
 
     BOOL wraps = subtitleWidth > widestText + 0.5;
     self.subtitleLabel.numberOfLines = wraps ? 2 : 1;
-    return wraps ? kDynamicTallHeight + ceil(font.lineHeight) : kDynamicTallHeight;
+    return wraps ? SPKPillTallHeight() + ceil(font.lineHeight) : SPKPillTallHeight();
 }
 
 - (void)spk_updateDynamicWidthForTitle:(NSString *)title subtitle:(NSString *)subtitle hasButton:(BOOL)hasButton {
@@ -2335,8 +2347,8 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     if (!self.widthConstraint || self.instagramSkin)
         return;
 
-    UIFont *titleFont = self.titleLabel.font ?: [UIFont systemFontOfSize:13.5 weight:UIFontWeightSemibold];
-    UIFont *subtitleFont = self.subtitleLabel.font ?: [UIFont systemFontOfSize:11.5 weight:UIFontWeightMedium];
+    UIFont *titleFont = self.titleLabel.font ?: [SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold];
+    UIFont *subtitleFont = self.subtitleLabel.font ?: [SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium];
 
     CGFloat titleWidth = 0.0;
     if (title.length > 0) {

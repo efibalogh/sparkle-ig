@@ -148,7 +148,7 @@ static void SPKUpdateStoryMentionsBadge(UIButton *button, NSUInteger count) {
         badge.tag = kSPKStoryMentionsBadgeTag;
         badge.translatesAutoresizingMaskIntoConstraints = NO;
         badge.textAlignment = NSTextAlignmentCenter;
-        badge.font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightBold];
+        badge.font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightBold]; // spk-font-fixed: count inside a fixed-height badge
         badge.textColor = UIColor.whiteColor;
         badge.backgroundColor = [SPKUtils SPKColor_InstagramBlue];
         badge.layer.cornerRadius = kSPKStoryMentionsBadgeHeight / 2.0;

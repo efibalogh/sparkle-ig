@@ -5,6 +5,7 @@
 #include <UIKit/UIKit.h>
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import "SPKFont.h"
 
 static const void *kSPKIGAlertInputViewKey = &kSPKIGAlertInputViewKey;
 static const void *kSPKIGAlertInputFieldKey = &kSPKIGAlertInputFieldKey;
@@ -382,7 +383,7 @@ static UIView *SPKIGCreateInputView(NSString *placeholder, NSString *initialText
     inputView.clipsToBounds = NO;
 
     textField.backgroundColor = UIColor.clearColor;
-    textField.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:textField];
     textField.textColor = UIColor.labelColor;
     textField.tintColor = [UIColor systemBlueColor];
     textField.attributedPlaceholder = placeholder.length > 0

@@ -18,6 +18,7 @@
 #import "SPKGalleryLockViewController.h"
 #import "SPKGalleryManager.h"
 #import "SPKGallerySortViewController.h"
+#import "../UI/SPKFont.h"
 
 NSNotificationName const SPKGalleryPickerDidDismissNotification = @"SPKGalleryPickerDidDismissNotification";
 
@@ -748,7 +749,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryPickerViewMode) {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.translatesAutoresizingMaskIntoConstraints = NO;
     label.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
-    label.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium] to:label];
     label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = 0;
     [_emptyStateView addSubview:label];
@@ -757,7 +758,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryPickerViewMode) {
     UILabel *subtitle = [[UILabel alloc] initWithFrame:CGRectZero];
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
     subtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
-    subtitle.font = [UIFont systemFontOfSize:14.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:subtitle];
     subtitle.textAlignment = NSTextAlignmentCenter;
     subtitle.numberOfLines = 0;
     [_emptyStateView addSubview:subtitle];

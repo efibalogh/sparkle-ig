@@ -351,7 +351,7 @@ static void SPKStoryPlaybackUpdateButtonContent(SPKChromeButton *button, UIView 
         label = [UILabel new];
         // Sized to sit with the neighbouring 24pt glyphs; longer values like
         // "1.25×" shrink to fit the 44pt button.
-        label.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightBold];
+        label.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightBold]; // spk-font-fixed: stands in for a 24pt glyph in a 44pt button
         label.textAlignment = NSTextAlignmentCenter;
         label.adjustsFontSizeToFitWidth = YES;
         label.minimumScaleFactor = 0.6;
