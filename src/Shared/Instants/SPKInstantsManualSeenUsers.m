@@ -264,9 +264,11 @@ NSString *SPKInstantsManualSeenListTitle(void) {
 // The list keys on pk, which is what a snap's media PK carries, so a lookup that cannot
 // produce one cannot produce a usable entry either.
 - (void)lookupUsername:(NSString *)rawUsername {
-    NSString *username = [SPKUtils sanitizedInstagramUsername:rawUsername];
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        [self presentError:SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")];
         return;
+    }
 
     __weak typeof(self) weakSelf = self;
     [SPKInstagramAPI resolveUserForUsername:username

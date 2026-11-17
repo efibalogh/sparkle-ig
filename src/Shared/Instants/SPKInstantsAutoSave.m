@@ -324,9 +324,11 @@ void SPKInstantsAutoSaveConsiderSnap(id snap, NSString *username, NSString *snap
 // The list keys on username, so the lookup is only for the avatar, full name, and to
 // catch typos -- a failed lookup still leaves a usable entry.
 - (void)lookupUsername:(NSString *)rawUsername {
-    NSString *username = [SPKUtils sanitizedInstagramUsername:rawUsername];
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        [self presentError:SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")];
         return;
+    }
 
     __weak typeof(self) weakSelf = self;
     [SPKInstagramAPI resolveUserForUsername:username

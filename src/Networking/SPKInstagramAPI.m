@@ -545,7 +545,7 @@ static NSString *spkNormalizePK(NSString *pk) {
 
 + (void)resolveUserForUsername:(NSString *)username
                     completion:(void (^)(NSDictionary *_Nullable userDict, NSError *_Nullable error))completion {
-    NSString *cleanUsername = [SPKUtils sanitizedInstagramUsername:username];
+    NSString *cleanUsername = [SPKUtils usernameFromUserInput:username];
     if (cleanUsername.length == 0) {
         if (completion) {
             completion(nil, [NSError errorWithDomain:@"SPKInstagramAPI" code:400 userInfo:@{NSLocalizedDescriptionKey: SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")}]);

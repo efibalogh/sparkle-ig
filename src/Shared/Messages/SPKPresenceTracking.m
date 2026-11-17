@@ -1498,30 +1498,24 @@ void SPKPresencePresentChatRuleToggle(SPKDirectThreadContext *context) {
 }
 
 - (void)lookupUsername:(NSString *)rawUsername {
-    NSString *username = SPKAutoSaveFilterNormalizedUsername(rawUsername);
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        [self presentError:SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")];
         return;
-    NSString *encodedUsername = [username stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
-    if (encodedUsername.length == 0)
-        return;
+    }
 
     __weak typeof(self) weakSelf = self;
-    [SPKInstagramAPI sendRequestWithMethod:@"GET"
-                                      path:[NSString stringWithFormat:@"users/web_profile_info/?username=%@", encodedUsername]
-                                      body:nil
-                                completion:^(NSDictionary *response, NSError *error) {
+    [SPKInstagramAPI resolveUserForUsername:username
+                                 completion:^(NSDictionary *user, NSError *error) {
                                     __strong typeof(weakSelf) strongSelf = weakSelf;
                                     if (!strongSelf)
                                         return;
-                                    NSDictionary *user = response[@"data"][@"user"];
-                                    if (![user isKindOfClass:NSDictionary.class])
-                                        user = response[@"user"];
                                     if (![user isKindOfClass:NSDictionary.class] || error) {
                                         [strongSelf presentError:[NSString stringWithFormat:SPKL(@"INSTANTS_INSTANTS_AUTO_SAVE_USER_VALUE_NOT_FOUND_FORMAT"), username]];
                                         return;
                                     }
 
-                                    NSString *pk = SPKStringFromValue(user[@"id"] ?: user[@"pk"]);
+                                    NSString *pk = SPKStringFromValue(user[@"pk"] ?: user[@"id"]);
                                     if (pk.length == 0) {
                                         [strongSelf presentError:SPKL(@"MESSAGES_DIRECT_AUTO_SAVE_COULD_NOT_RESOLVE_USER_S_INSTAGRAM_ID_TEXT")];
                                         return;

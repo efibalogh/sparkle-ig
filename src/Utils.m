@@ -2418,6 +2418,44 @@ static const unsigned long long kSPKUserReferenceSubtypeUser = 2;
     [top dismissViewControllerAnimated:YES completion:nil];
 }
 
+static NSString *SPKValidatedUsername(NSString *clean) {
+    if (clean.length == 0 || clean.length > 30)
+        return nil;
+    NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz0123456789._"];
+    if ([[clean stringByTrimmingCharactersInSet:allowed] length] > 0)
+        return nil;
+    return clean;
+}
+
+// instagram.com/<name>, instagram.com/_u/<name> and instagram.com/stories/<name>/...,
+// with or without a scheme or query. Media and app routes are not usernames.
+static NSString *SPKUsernameFromProfileLink(NSString *text) {
+    NSString *lower = text.lowercaseString;
+    if ([lower rangeOfString:@"instagram.com/"].location == NSNotFound && [lower rangeOfString:@"instagr.am/"].location == NSNotFound)
+        return nil;
+    NSString *urlString = [lower containsString:@"://"] ? text : [@"https://" stringByAppendingString:text];
+    NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
+    NSString *host = components.host.lowercaseString;
+    if (!([host isEqualToString:@"instagram.com"] || [host hasSuffix:@".instagram.com"] || [host isEqualToString:@"instagr.am"]))
+        return nil;
+    NSMutableArray<NSString *> *parts = [NSMutableArray array];
+    for (NSString *part in [components.path componentsSeparatedByString:@"/"]) {
+        if (part.length > 0)
+            [parts addObject:part];
+    }
+    if (parts.count == 0)
+        return nil;
+    NSString *first = parts[0].lowercaseString;
+    if ([first isEqualToString:@"_u"] || [first isEqualToString:@"stories"])
+        return parts.count > 1 ? parts[1] : nil;
+    static NSSet<NSString *> *routes;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        routes = [NSSet setWithArray:@[ @"p", @"reel", @"reels", @"tv", @"explore", @"direct", @"accounts", @"s", @"share" ]];
+    });
+    return [routes containsObject:first] ? nil : parts[0];
+}
+
 + (NSString *)sanitizedInstagramUsername:(NSString *)rawUsername {
     if (!rawUsername || ![rawUsername isKindOfClass:[NSString class]])
         return nil;
@@ -2440,11 +2478,28 @@ static const unsigned long long kSPKUserReferenceSubtypeUser = 2;
     if ([dummyUsernames containsObject:clean])
         return nil;
 
-    NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz0123456789._"];
-    if ([[clean stringByTrimmingCharactersInSet:allowed] length] > 0)
-        return nil;
+    return SPKValidatedUsername(clean);
+}
 
-    return clean;
+// Typed or pasted input from an Add User prompt. Unlike the sanitizer above it
+// accepts a copied profile link and drops the invisible format characters that
+// copied text often carries, and it does not apply the metadata deny-list: a
+// person typing "audio" means the account named audio.
++ (NSString *)usernameFromUserInput:(NSString *)input {
+    if (![input isKindOfClass:[NSString class]])
+        return nil;
+    // Cc + Cf: zero-width spaces, bidi marks, BOMs.
+    NSString *clean = [[input componentsSeparatedByCharactersInSet:[NSCharacterSet controlCharacterSet]] componentsJoinedByString:@""];
+    clean = [clean stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString *fromLink = SPKUsernameFromProfileLink(clean);
+    if (fromLink)
+        clean = fromLink;
+
+    clean = clean.lowercaseString;
+    while ([clean hasPrefix:@"@"])
+        clean = [clean substringFromIndex:1];
+    return SPKValidatedUsername(clean);
 }
 
 // Memo of username -> pk for the openInstagramProfile... path. Main thread only,

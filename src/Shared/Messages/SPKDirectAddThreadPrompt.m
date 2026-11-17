@@ -77,9 +77,11 @@ static void SPKDirectAddThreadLookupUsername(UIViewController *host,
                                              SPKDirectAddThreadPromptCopy *copy,
                                              NSString *rawUsername,
                                              void (^completion)(NSDictionary *entry, NSString *username)) {
-    NSString *username = [SPKUtils sanitizedInstagramUsername:rawUsername];
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        SPKDirectAddThreadPresentError(host, copy.errorTitle, SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT"));
         return;
+    }
 
     [SPKInstagramAPI resolveUserForUsername:username
                                  completion:^(NSDictionary *user, NSError *error) {

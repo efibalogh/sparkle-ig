@@ -628,20 +628,8 @@ static void SPKStoryResolveAndRememberManualSeenUserName(NSString *username, voi
         return;
     }
 
-    NSString *encodedUsername = [normalized stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
-    if (encodedUsername.length == 0) {
-        if (completion)
-            completion();
-        return;
-    }
-
-    [SPKInstagramAPI sendRequestWithMethod:@"GET"
-                                      path:[NSString stringWithFormat:@"users/web_profile_info/?username=%@", encodedUsername]
-                                      body:nil
-                                completion:^(NSDictionary *response, NSError *error) {
-                                    NSDictionary *user = response[@"data"][@"user"];
-                                    if (![user isKindOfClass:[NSDictionary class]])
-                                        user = response[@"user"];
+    [SPKInstagramAPI resolveUserForUsername:normalized
+                                 completion:^(NSDictionary *user, NSError *error) {
                                     if ([user isKindOfClass:[NSDictionary class]] && !error) {
                                         NSString *resolvedUsername = SPKStringFromValue(user[@"username"]) ?: normalized;
                                         NSString *fullName = SPKStringFromValue(user[@"full_name"] ?: user[@"fullName"]);
@@ -828,17 +816,8 @@ static void SPKStoryEnrichManualSeenUserEntryIfNeeded(NSDictionary *entry, BOOL 
     if (profilePicUrl.length > 0)
         return; // already fully enriched!
 
-    NSString *encodedUsername = [username stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
-    if (encodedUsername.length == 0)
-        return;
-
-    [SPKInstagramAPI sendRequestWithMethod:@"GET"
-                                      path:[NSString stringWithFormat:@"users/web_profile_info/?username=%@", encodedUsername]
-                                      body:nil
-                                completion:^(NSDictionary *response, NSError *error) {
-                                    NSDictionary *resolvedUser = response[@"data"][@"user"];
-                                    if (![resolvedUser isKindOfClass:[NSDictionary class]])
-                                        resolvedUser = response[@"user"];
+    [SPKInstagramAPI resolveUserForUsername:username
+                                 completion:^(NSDictionary *resolvedUser, NSError *error) {
                                     if (![resolvedUser isKindOfClass:[NSDictionary class]] || error) {
                                         return;
                                     }
@@ -1023,9 +1002,11 @@ static NSString *SPKStoryManualSeenListHelpText(BOOL manualSeenEnabled) {
 }
 
 - (void)lookupUsername:(NSString *)rawUsername {
-    NSString *username = [SPKUtils sanitizedInstagramUsername:rawUsername];
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        [self presentError:SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")];
         return;
+    }
 
     __weak typeof(self) weakSelf = self;
     [SPKInstagramAPI resolveUserForUsername:username
