@@ -98,6 +98,7 @@
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_MESSAGES_VALUE_SEEN_MESSAGE" = "Θέλετε να σταματήσετε τη σήμανση μηνυμάτων από %@ ως προβεβλημένα;";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_SEEN_TEXT" = "Διακοπή Σήμανσης Ιστοριών ως Διαβάστηκαν";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_VALUE_SEEN_FORMAT" = "Θέλετε να σταματήσετε τη σήμανση ιστοριών από @%@ ως προβεβλημένες;";
+"ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_LINK_COPIED_TEXT" = "Ο σύνδεσμος story αντιγράφηκε";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_MENTIONS_UNAVAILABLE_TEXT" = "Αναφορές ιστορίας μη διαθέσιμες";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_THUMBNAIL_ONLY_AVAILABLE_VIDEOS_TEXT" = "Η μικρογραφία είναι διαθέσιμη μόνο για βίντεο";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_TOGGLE_MESSAGES_SEEN_MESSAGE" = "Εναλλαγή εμφάνισης μηνυμάτων";
@@ -115,6 +116,7 @@
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_MEDIA_TEXT" = "Αντιγραφή Όλων των Μέσων";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_NAME_TEXT" = "Αντιγραφή Ονόματος";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_PROFILE_URL_TEXT" = "Αντιγραφή Διεύθυνσης URL Προφίλ";
+"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_STORY_LINK_TEXT" = "Αντιγραφή συνδέσμου story";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_USERNAME_TEXT" = "Αντιγραφή Ονόματος Χρήστη";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_DOWNLOAD_TEXT" = "Λήψη όλων";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_EDIT_SAVE_TEXT" = "Επεξεργασία & Αποθήκευση";

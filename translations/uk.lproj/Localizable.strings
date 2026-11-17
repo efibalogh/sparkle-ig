@@ -98,6 +98,7 @@
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_MESSAGES_VALUE_SEEN_MESSAGE" = "Ви хочете припинити позначати повідомлення від %@ як переглянуті?";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_SEEN_TEXT" = "Припинити позначення Історії як переглянутих";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_VALUE_SEEN_FORMAT" = "Ви хочете припинити позначати історії від @%@ як переглянуті?";
+"ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_LINK_COPIED_TEXT" = "Посилання на історію скопійовано";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_MENTIONS_UNAVAILABLE_TEXT" = "Згадування в Історії недоступні";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_THUMBNAIL_ONLY_AVAILABLE_VIDEOS_TEXT" = "Мініатюра доступна тільки для відео";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_TOGGLE_MESSAGES_SEEN_MESSAGE" = "Перемикання перегляду повідомлень";
@@ -115,6 +116,7 @@
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_MEDIA_TEXT" = "Копіювати всі мультимедіа";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_NAME_TEXT" = "Копіювати назву";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_PROFILE_URL_TEXT" = "Копіювати URL профіля";
+"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_STORY_LINK_TEXT" = "Скопіювати посилання на історію";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_USERNAME_TEXT" = "Копіювати ім'я користувача";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_DOWNLOAD_TEXT" = "Завантажити все";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_EDIT_SAVE_TEXT" = "Редагувати та Зберегти";

@@ -82,6 +82,9 @@
             [SPKActionDescriptor descriptorWithIdentifier:kSPKActionCopyCaption
                                                     title:SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_CAPTION_TEXT")
                                                  iconName:@"caption"],
+            [SPKActionDescriptor descriptorWithIdentifier:kSPKActionCopyLink
+                                                    title:SPKL(@"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_STORY_LINK_TEXT")
+                                                 iconName:@"story"],
             [SPKActionDescriptor descriptorWithIdentifier:kSPKActionOpenTopicSettings
                                                     title:SPKL(@"DATA_GENERAL_SETTINGS_TITLE")
                                                  iconName:@"settings"],

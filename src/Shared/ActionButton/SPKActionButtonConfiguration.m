@@ -118,6 +118,7 @@ NSArray<NSString *> *SPKActionButtonSupportedActionsForSource(SPKActionButtonSou
             kSPKActionCopyAudioURL,
             kSPKActionExpand,
             kSPKActionViewThumbnail,
+            kSPKActionCopyLink,
             kSPKActionStoryMentionsSheet,
             kSPKActionToggleStorySeenUserRule,
             kSPKActionToggleStoryAutoSaveUserRule,
@@ -285,7 +286,9 @@ NSArray<SPKActionMenuSection *> *SPKActionButtonDefaultSectionsForSource(SPKActi
                                            ? @[ kSPKActionCopyDownloadLink, kSPKActionCopyMedia, kSPKActionProfileCopyInfo ]
                                            : ((source == SPKActionButtonSourceFeed || source == SPKActionButtonSourceReels)
                                                   ? @[ kSPKActionCopyDownloadLink, kSPKActionCopyMedia, kSPKActionCopyCaption ]
-                                                  : @[ kSPKActionCopyDownloadLink, kSPKActionCopyMedia ]);
+                                                  : ((source == SPKActionButtonSourceStories)
+                                                         ? @[ kSPKActionCopyLink, kSPKActionCopyDownloadLink, kSPKActionCopyMedia ]
+                                                         : @[ kSPKActionCopyDownloadLink, kSPKActionCopyMedia ]));
     NSArray<NSString *> *moreActions;
     if (source == SPKActionButtonSourceFeed || source == SPKActionButtonSourceReels) {
         moreActions = @[ kSPKActionRepost, kSPKActionOpenTopicSettings ];
@@ -404,6 +407,11 @@ NSArray<SPKActionMenuSection *> *SPKActionButtonDefaultSectionsForSource(SPKActi
     if (stored && source == SPKActionButtonSourceInstants) {
         [configuration adoptAction:kSPKActionToggleInstantsAutoSaveUserRule intoSectionWithIdentifier:@"more"];
         [configuration adoptAction:kSPKActionToggleInstantsManualSeenUserRule intoSectionWithIdentifier:@"more"];
+    }
+
+    // Same for the story Copy Link action, which arrived after story configs could be saved.
+    if (stored && source == SPKActionButtonSourceStories) {
+        [configuration adoptAction:kSPKActionCopyLink intoSectionWithIdentifier:@"copy"];
     }
 
     [configuration normalize];

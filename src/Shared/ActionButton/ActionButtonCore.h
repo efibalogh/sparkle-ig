@@ -38,6 +38,7 @@ FOUNDATION_EXPORT NSString *const kSPKActionDownloadAllLinks;
 FOUNDATION_EXPORT NSString *const kSPKActionExpand;
 FOUNDATION_EXPORT NSString *const kSPKActionViewThumbnail;
 FOUNDATION_EXPORT NSString *const kSPKActionCopyCaption;
+FOUNDATION_EXPORT NSString *const kSPKActionCopyLink;
 FOUNDATION_EXPORT NSString *const kSPKActionOpenTopicSettings;
 FOUNDATION_EXPORT NSString *const kSPKActionDeletedMessagesLog;
 FOUNDATION_EXPORT NSString *const kSPKActionRepost;

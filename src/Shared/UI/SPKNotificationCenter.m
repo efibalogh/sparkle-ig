@@ -44,6 +44,7 @@ SPK_NOTIF_CONST(kSPKNotificationDownloadAllLinks, "download_all_links");
 SPK_NOTIF_CONST(kSPKNotificationExpand, "expand");
 SPK_NOTIF_CONST(kSPKNotificationViewThumbnail, "view_thumbnail");
 SPK_NOTIF_CONST(kSPKNotificationCopyCaption, "copy_caption");
+SPK_NOTIF_CONST(kSPKNotificationCopyLink, "copy_link");
 SPK_NOTIF_CONST(kSPKNotificationOpenTopicSettings, "open_topic_settings");
 SPK_NOTIF_CONST(kSPKNotificationRepost, "repost");
 
@@ -248,6 +249,7 @@ NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(
                 kSPKNotificationDownloadAllClipboard,
                 kSPKNotificationDownloadAllLinks,
                 kSPKNotificationCopyCaption,
+                kSPKNotificationCopyLink,
                 kSPKNotificationCopyAudioURL,
                 kSPKNotificationMediaPreviewCopy,
                 kSPKNotificationProfileCopyInfo,

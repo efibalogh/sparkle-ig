@@ -98,6 +98,7 @@
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_MESSAGES_VALUE_SEEN_MESSAGE" = "क्या आप %@ से संदेशों को देखे जाने के रूप में चिह्नित करना बंद करना चाहते हैं?";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_SEEN_TEXT" = "Stories को देखे गए के रूप में चिह्नित करना बंद करें";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_VALUE_SEEN_FORMAT" = "क्या आप @%@ से कहानियों को देखे जाने के रूप में चिह्नित करना बंद करना चाहते हैं?";
+"ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_LINK_COPIED_TEXT" = "स्टोरी लिंक कॉपी किया गया";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_MENTIONS_UNAVAILABLE_TEXT" = "Story उल्लेख अनुपलब्ध";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_THUMBNAIL_ONLY_AVAILABLE_VIDEOS_TEXT" = "थंबनेल केवल वीडियो के लिए उपलब्ध है";
 "ACTION_BUTTON_ACTION_BUTTON_CORE_TOGGLE_MESSAGES_SEEN_MESSAGE" = "संदेशों को 'देखा गया' के रूप में चिह्नित करना टॉगल करें";
@@ -115,6 +116,7 @@
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_MEDIA_TEXT" = "सभी मीडिया कॉपी करें";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_NAME_TEXT" = "नाम कॉपी करें";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_PROFILE_URL_TEXT" = "प्रोफ़ाइल URL कॉपी करें";
+"ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_STORY_LINK_TEXT" = "स्टोरी लिंक कॉपी करें";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_COPY_USERNAME_TEXT" = "उपयोगकर्ता नाम कॉपी करें";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_DOWNLOAD_TEXT" = "सभी डाउनलोड करें";
 "ACTION_BUTTON_ACTION_DESCRIPTOR_EDIT_SAVE_TEXT" = "संपादित करें और सेव करें";

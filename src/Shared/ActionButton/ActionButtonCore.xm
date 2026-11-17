@@ -61,6 +61,7 @@ NSString *const kSPKActionDownloadAllLinks = @"download_all_links";
 NSString *const kSPKActionExpand = @"expand";
 NSString *const kSPKActionViewThumbnail = @"view_thumbnail";
 NSString *const kSPKActionCopyCaption = @"copy_caption";
+NSString *const kSPKActionCopyLink = @"copy_link";
 NSString *const kSPKActionOpenTopicSettings = @"open_topic_settings";
 NSString *const kSPKActionDeletedMessagesLog = @"deleted_messages_log";
 NSString *const kSPKActionRepost = @"repost";
@@ -2345,6 +2346,11 @@ static BOOL SPKIsActionVisible(SPKActionButtonContext *context,
     if ([identifier isEqualToString:kSPKActionStoryMentionsSheet]) {
         return context.source == SPKActionButtonSourceStories && SPKStoryMediaHasMentions(media);
     }
+    if ([identifier isEqualToString:kSPKActionCopyLink]) {
+        // The link is built at tap time from the same metadata a Gallery save records,
+        // so the menu only needs to know there is a story on screen.
+        return context.source == SPKActionButtonSourceStories && media != nil;
+    }
     if (context.source == SPKActionButtonSourceProfile && [identifier isEqualToString:kSPKActionProfileCopyInfo]) {
         return media != nil;
     }
@@ -3073,6 +3079,23 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
 
         [UIPasteboard generalPasteboard].string = caption;
         SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_CAPTION_COPIED_TEXT"), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+        return YES;
+    }
+
+    if ([identifier isEqualToString:kSPKActionCopyLink]) {
+        // Instagram hides its own share button on some stories (Close Friends, for
+        // one), but the web link still opens for anyone allowed to see the story.
+        // This is the link a Gallery save stores: the story permalink, or the
+        // highlight link when the story is being viewed from a highlight.
+        NSString *linkString = meta.sourceMediaURLString;
+        NSURL *link = linkString.length > 0 ? [NSURL URLWithString:linkString] : nil;
+        if (!link) {
+            SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINK_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
+            return YES;
+        }
+
+        [UIPasteboard generalPasteboard].string = link.absoluteString;
+        SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_LINK_COPIED_TEXT"), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
         return YES;
     }
 
