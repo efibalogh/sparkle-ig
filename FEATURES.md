@@ -182,6 +182,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Action Button
 - **Stories Action Button**, **Default Tap Action**, **Configure Actions**: As with feed; placed above the bottom story bar.
+- **Copy Story Link**: Copies the story's web link, including on stories where Instagram hides its own share button (such as Close Friends stories). It is the same link a Gallery save records: the story link, or the highlight link when the story is opened from a highlight. The link opens for anyone who can already see the story. Found in the menu's Copy section, and available as the default tap action.
 
 ### Seen Receipts
 - **Manually Mark Seen**: *Off* (default) keeps normal seen receipts. *On Tap* suppresses automatic seen receipts and adds an eye button that marks the current story seen, together with that person's earlier stories, so the owner sees you on every story up to there. *Toggle* also suppresses them, but the eye button switches normal seen receipts on or off for every story: turning them on marks the story on screen and crosses out the eye, and they turn off again when you leave stories or restart Instagram. Users on the Excluded Users list keep normal seen receipts in both modes.
@@ -396,6 +397,9 @@ Its own page, reached from a single row on the Messages topic that shows how man
 
 ### Profile Picture
 - **Long Press to Expand**: Long-press the profile picture on a profile page to open it expanded. With **Unlock Story Preview** on, long-pressing a profile picture that has a story ring shows the story preview instead, and its **View profile picture** row opens the expanded photo.
+
+### Highlights
+- **Reorder Highlights**: Turns on Instagram's drag-to-reorder for the highlights on your own profile: hold a highlight, then drag it to a new spot, and Instagram saves the order. Instagram is rolling this out gradually; this turns it on for your account. Reopen your profile to apply. On Instagram versions without the feature (such as 410) the switch is unavailable.
 
 ### Tabs
 - **Saved Tab**: Adds your saved collections as a tab at the end of your own profile's tab strip, using Instagram's own Saved page (header collapse and pull to refresh included). Refresh your profile to apply.
