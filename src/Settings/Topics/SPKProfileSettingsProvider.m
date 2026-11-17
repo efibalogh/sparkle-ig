@@ -3,6 +3,7 @@
 
 #import "../../AssetUtils.h"
 #import "../../Features/Profile/FollowIndicator.h"
+#import "../../Features/Profile/HighlightReorder.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
@@ -155,6 +156,22 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                                            icon:SPKSettingsIcon(@"expand")
                                     defaultsKey:@"profile_photo_zoom"],
                                SPKL(@"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP"))
+        ],
+                        nil),
+        SPKTopicSection(SPKL(@"PROFILE_HIGHLIGHTS_HEADER"), @[
+            ({
+                BOOL available = SPKHighlightReorderIsAvailable();
+                SPKSetting *reorder = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_HIGHLIGHTS_REORDER_TITLE")
+                                                                                    icon:SPKSettingsIcon(@"left_right")
+                                                                             defaultsKey:@"profile_highlight_reorder"],
+                                                         available ? SPKL(@"PROFILE_HIGHLIGHTS_REORDER_HELP")
+                                                                   : SPKL(@"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP"));
+                // Builds without the config have nothing for the switch to turn on.
+                reorder.enabledProvider = ^BOOL {
+                    return available;
+                };
+                reorder;
+            })
         ],
                         nil),
         SPKTopicSection(SPKL(@"PROFILE_TABS_HEADER"), @[
