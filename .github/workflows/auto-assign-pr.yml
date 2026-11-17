@@ -1,19 +1,22 @@
 name: PR assignment
 
+# pull_request_target runs in the base repository's context, so fork PRs get a
+# token that can write assignees and need no "approve and run" click. That is
+# only safe because this job never checks out or runs the PR's code: keep it
+# that way.
 on:
-    pull_request:
+    pull_request_target:
         types: [opened, reopened]
 
 jobs:
     auto-assign:
         runs-on: ubuntu-latest
         permissions:
-            contents: read
             pull-requests: write
             issues: write
         steps:
             - name: 'Auto-assign PR'
-              uses: actions/github-script@v7
+              uses: actions/github-script@v8
               with:
                   script: |
                       await github.rest.issues.addAssignees({

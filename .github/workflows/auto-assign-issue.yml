@@ -1,0 +1,26 @@
+name: Issue assignment
+
+# The issue forms already assign efibalogh, but issues opened without a form
+# (the API, gh issue create, third-party clients) skip that. This is the
+# fallback for those, and leaves alone any issue that already has an assignee.
+on:
+    issues:
+        types: [opened]
+
+jobs:
+    auto-assign:
+        runs-on: ubuntu-latest
+        permissions:
+            issues: write
+        steps:
+            - name: 'Auto-assign issue'
+              uses: actions/github-script@v8
+              with:
+                  script: |
+                      if (context.payload.issue.assignees.length > 0) return;
+                      await github.rest.issues.addAssignees({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.payload.issue.number,
+                          assignees: ['efibalogh'],
+                      });
