@@ -603,7 +603,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     [UIView animateWithDuration:0.25
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          applyColors();
                      }
@@ -766,7 +766,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     [UIView animateWithDuration:0.24
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self layoutIfNeeded];
                      }
@@ -1040,7 +1040,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     [UIView animateWithDuration:0.2
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self layoutIfNeeded];
                      }
@@ -1931,7 +1931,7 @@ static UIUserInterfaceStyle SPKInstagramToastStyleForAppStyle(UIUserInterfaceSty
                               delay:0
              usingSpringWithDamping:0.72
               initialSpringVelocity:0.6
-                            options:UIViewAnimationOptionCurveEaseOut
+                            options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [self.superview layoutIfNeeded];
                          }
@@ -2496,7 +2496,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
                           delay:0
          usingSpringWithDamping:0.72
           initialSpringVelocity:0.6
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self.superview layoutIfNeeded];
                      }
