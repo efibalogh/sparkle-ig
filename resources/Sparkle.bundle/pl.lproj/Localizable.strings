@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Poświata";
 "NOTIFICATION_APPEARANCE_HEADER" = "Wygląd";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Rysuje pigułkę z efektem Liquid Glass zamiast standardowego rozmycia.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Nowszy wygląd komunikatów Instagrama, zaokrąglonych w pigułkę. Domyślnie działa tak, jak Instagram ustawił dla Twojego konta; Wł. i Wył. to zastępują. Dotyczy zarówno komunikatów Instagrama, jak i Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Komunikaty w kształcie pigułki";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Pozycja";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Pigułka Sparkle to własne powiadomienie Sparkle. Instagram używa komunikatu, który Instagram wyświetla przy własnych potwierdzeniach. Oba pojawiają się na każdym ekranie, także w Sparkle i w podglądzie pełnoekranowym.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Styl";

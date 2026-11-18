@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Сяйво";
 "NOTIFICATION_APPEARANCE_HEADER" = "Зовнішній вигляд";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Малює пігулку з Liquid Glass замість стандартного розмиття.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Новий дизайн спливних повідомлень Instagram, заокруглених у формі пігулки. «За замовчуванням» відповідає тому, що Instagram увімкнув для вашого облікового запису; «Увімкнено» і «Вимкнено» це змінюють. Діє як для повідомлень самого Instagram, так і для Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Повідомлення-пігулки";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Позиція";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Пігулка Sparkle є власним сповіщенням Sparkle. Instagram використовує спливне повідомлення, яке Instagram показує для своїх підтверджень. Обидва з'являються поверх будь-якого екрана, зокрема екранів Sparkle і повноекранного перегляду.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Стиль";

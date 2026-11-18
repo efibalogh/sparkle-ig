@@ -62,6 +62,7 @@ FOUNDATION_EXPORT void SPKInstallOLEDDarkModeHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallNavigationHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallSettingsShortcutsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableHapticsHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallInstagramToastDesignHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallCopyDescriptionHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallTappableTextLinksHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideRecentSearchesHooksIfEnabled(void);
@@ -402,6 +403,8 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallNavigationHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
     SPK_INSTALL(SPKInstallDisableHapticsHooksIfEnabled);
+    // Installed in every mode (iOS 26+ only): the mode is read on every call.
+    SPK_INSTALL(SPKInstallInstagramToastDesignHooksIfNeeded);
     SPK_INSTALL(SPKInstallCopyDescriptionHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideRecentSearchesHooksIfEnabled);
     SPK_INSTALL(SPKInstallSearchBarIconRemapHooksIfNeeded);

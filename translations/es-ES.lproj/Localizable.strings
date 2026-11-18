@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Brillo";
 "NOTIFICATION_APPEARANCE_HEADER" = "Apariencia";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Dibuja la píldora con Liquid Glass en lugar del desenfoque estándar.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "El diseño más reciente de avisos de Instagram, redondeado en forma de píldora. Predeterminado sigue lo que Instagram activa para tu cuenta; Activado y Desactivado lo reemplazan. Se aplica a los avisos propios de Instagram y también a los de Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Avisos en píldora";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Posición";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "La píldora de Sparkle es la notificación propia de Sparkle. Instagram usa el aviso que Instagram muestra para sus propias confirmaciones. Ambas aparecen sobre cualquier pantalla, incluidas las de Sparkle y la vista previa a pantalla completa.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Estilo";

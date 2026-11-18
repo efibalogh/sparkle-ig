@@ -589,6 +589,7 @@ Rows follow the chosen style.
 - **Glow** (Sparkle Pill): Soft glow around the pill in the result's color: green for success, red for errors, blue otherwise.
 - **Liquid Glass** (Sparkle Pill, iOS 26 and later only): Draws the pill with Liquid Glass instead of the standard blur.
 - **Tint by Result** (Instagram): Tints the toast in the result's color. Same setting as Glow.
+- **Pill Toasts** **(restart)** (Instagram, iOS 26 and later, Instagram 450 and later): Instagram's newer toast design, which rounds its toasts into pills. Instagram turns it on per account; **Default** follows that, **On** and **Off** override it. It applies to Instagram's own toasts as well as Sparkle's, and only while the Instagram style is chosen. Toasts with a **Cancel** button stay full width, as in Instagram. In the Instagram style, toasts with a subtitle stay pills too, where Instagram itself would round them into a rectangle. Hidden before iOS 26 because the design draws its background with Liquid Glass and has nothing to fall back on.
 
 ### Behavior
 - **Position**: Top or bottom. Notifications enter and leave on that edge. At the bottom they rest just above whatever is there when they appear: the tab bar, a toolbar, the bottom search bar or the keyboard, and right on top of the Direct composer. On a screen with none of those they sit lower, just above the bottom edge.

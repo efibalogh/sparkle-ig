@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Parıltı";
 "NOTIFICATION_APPEARANCE_HEADER" = "Görünüş";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Hapı standart bulanıklık yerine Liquid Glass ile çizer.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Instagram'ın yeni bildirim tasarımı, hap şeklinde yuvarlatılmış. Varsayılan, Instagram'ın hesabınız için etkinleştirdiğine uyar; Açık ve Kapalı bunu geçersiz kılar. Hem Instagram'ın kendi bildirimlerine hem de Sparkle'ınkilere uygulanır.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Hap Bildirimler";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Konum";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle Hapı, Sparkle'ın kendi bildirimidir. Instagram, Instagram'ın kendi onayları için gösterdiği bildirimi kullanır. İkisi de Sparkle ekranları ve tam ekran önizleme dahil her ekranın üzerinde görünür.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Stil";

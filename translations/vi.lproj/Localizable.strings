@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Phát sáng";
 "NOTIFICATION_APPEARANCE_HEADER" = "Giao diện";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Vẽ viên bằng Liquid Glass thay cho hiệu ứng làm mờ chuẩn.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Thiết kế thông báo mới của Instagram, bo tròn thành hình viên. Mặc định theo những gì Instagram bật cho tài khoản của bạn; Bật và Tắt sẽ ghi đè. Áp dụng cho cả thông báo của Instagram và của Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Thông báo dạng viên";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Vị trí";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Viên Sparkle là thông báo riêng của Sparkle. Instagram dùng thông báo nổi mà Instagram hiển thị cho các xác nhận của chính nó. Cả hai đều hiện trên mọi màn hình, kể cả màn hình Sparkle và bản xem trước toàn màn hình.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Kiểu";

@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Glow";
 "NOTIFICATION_APPEARANCE_HEADER" = "Appearance";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Draws the pill with Liquid Glass instead of the standard blur.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Instagram's newer toast design, rounded into a pill. Default follows what Instagram enables for your account; On and Off override it. Applies to Instagram's own toasts as well as Sparkle's.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Pill Toasts";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Position";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle Pill is Sparkle's own notification. Instagram uses the toast Instagram shows for its own confirmations. Both appear over every screen, including Sparkle's and the full-screen preview.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Style";

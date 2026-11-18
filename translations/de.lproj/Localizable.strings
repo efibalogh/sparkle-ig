@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Glühen";
 "NOTIFICATION_APPEARANCE_HEADER" = "Erscheinungsbild";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Zeichnet die Pille mit Liquid Glass statt der normalen Unschärfe.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Das neuere Hinweis-Design von Instagram, zu einer Pille abgerundet. Standard folgt dem, was Instagram für dein Konto aktiviert; Ein und Aus überschreiben es. Gilt für Instagrams eigene Hinweise ebenso wie für die von Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Pillen-Hinweise";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Position";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle-Pille ist Sparkles eigene Mitteilung. Instagram nutzt den Hinweis, den Instagram für eigene Bestätigungen zeigt. Beide erscheinen über jedem Bildschirm, auch über Sparkle und der Vollbildvorschau.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Stil";

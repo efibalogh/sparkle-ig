@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "चमक";
 "NOTIFICATION_APPEARANCE_HEADER" = "दृश्य";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "पिल को सामान्य ब्लर की जगह Liquid Glass से बनाता है।";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Instagram का नया टोस्ट डिज़ाइन, जो पिल के आकार में गोल होता है। डिफ़ॉल्ट वही मानता है जो Instagram आपके अकाउंट के लिए चालू करता है; चालू और बंद इसे बदल देते हैं। यह Instagram के अपने टोस्ट और Sparkle के टोस्ट दोनों पर लागू होता है।";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "पिल टोस्ट";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "स्थिति";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle पिल, Sparkle की अपनी सूचना है। Instagram वह टोस्ट इस्तेमाल करता है जो Instagram अपनी पुष्टियों के लिए दिखाता है। दोनों हर स्क्रीन के ऊपर दिखते हैं, Sparkle की स्क्रीन और फ़ुल-स्क्रीन प्रीव्यू पर भी।";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "शैली";

@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "글로우";
 "NOTIFICATION_APPEARANCE_HEADER" = "모양";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "표준 흐림 대신 Liquid Glass로 필을 그립니다.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Instagram의 새로운 토스트 디자인으로, 필 모양으로 둥글게 표시됩니다. 기본값은 Instagram이 계정에 켠 설정을 따르며, 켜기와 끄기는 이를 덮어씁니다. Instagram 자체 토스트와 Sparkle 토스트 모두에 적용됩니다.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "필 토스트";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "위치";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle 필은 Sparkle 자체 알림입니다. Instagram은 Instagram이 자체 확인에 표시하는 토스트를 사용합니다. 둘 다 Sparkle 화면과 전체 화면 미리보기를 포함한 모든 화면 위에 표시됩니다.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "스타일";

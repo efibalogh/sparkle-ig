@@ -409,6 +409,20 @@ UIMenu *SPKNotificationStyleMenu(void) {
     ]];
 }
 
+UIMenu *SPKInstagramToastDesignMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"notifs_instagram_toast_design", @"default", YES),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, @"notifs_instagram_toast_design", @"on", YES),
+                         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"notifs_instagram_toast_design", @"off", YES)
+                     ]]
+    ]];
+}
+
 UIMenu *SPKNotificationModeMenu(NSString *defaultsKey) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_MODE_ALL"), nil, nil, defaultsKey, kSPKNotificationModeValueAll, NO),

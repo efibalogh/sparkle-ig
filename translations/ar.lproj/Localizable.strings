@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "التوهج";
 "NOTIFICATION_APPEARANCE_HEADER" = "المظهر";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "يرسم الحبة بتأثير Liquid Glass بدلًا من التمويه العادي.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "تصميم الإشعارات الأحدث في Instagram، بشكل حبة مستديرة. الافتراضي يتبع ما يفعّله Instagram لحسابك، ومفعل ومعطل يتجاوزان ذلك. ينطبق على إشعارات Instagram نفسها وعلى إشعارات Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "إشعارات على شكل حبة";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "الموضع";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "حبة Sparkle هي إشعار Sparkle الخاص. يستخدم Instagram الإشعار المنبثق الذي يعرضه Instagram لتأكيداته. يظهر كلاهما فوق كل شاشة، بما فيها شاشات Sparkle والمعاينة بملء الشاشة.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "النمط";

@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Glow";
 "NOTIFICATION_APPEARANCE_HEADER" = "Ussgseh";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Zeichnet d Pille mit Liquid Glass statt dr normale Unschärfi.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "S neuere Hiiwiis-Design vo Instagram, zu nere Pille abgrundet. Standard folgt dem, wo Instagram für dis Konto aktiviert; A und Us überschriibe das. Gilt für d Hiiwiis vo Instagram und au für die vo Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Pille-Hiiwiis";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Position";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "D Sparkle-Pille isch Sparkles eigeti Mitteilig. Instagram bruucht dä Hiiwiis, wo Instagram für sini eigete Bestätigunge zeigt. Beidi erschiined über jedem Bildschirm, au über Sparkle und dr Vollbildvorschau.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Stil";

@@ -51,6 +51,19 @@ BOOL SPKPrefIsAvailable(NSString *key) {
         return SPKIsIOSVersionAtLeast(@"26.0");
     }
 
+    // Instagram's pill toast draws its background with Liquid Glass and has no older
+    // material, so forcing it before iOS 26 leaves toasts without a background. The
+    // gate it overrides exists from 450 on.
+    if ([key isEqualToString:@"notifs_instagram_toast_design"]) {
+        static BOOL available;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            available = SPKIsIOSVersionAtLeast(@"26.0") &&
+                        [NSClassFromString(@"IGDSLauncherConfig") instancesRespondToSelector:NSSelectorFromString(@"isToastM2Enabled")];
+        });
+        return available;
+    }
+
     // Live Text needs VisionKit's image analyzer: iOS 16+ on supported hardware.
     if ([key isEqualToString:@"general_preview_live_text"]) {
         return SPKLiveTextIsSupported();

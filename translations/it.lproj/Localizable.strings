@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Bagliore";
 "NOTIFICATION_APPEARANCE_HEADER" = "Aspetto";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Disegna la pillola con Liquid Glass invece della sfocatura standard.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Il nuovo design degli avvisi di Instagram, arrotondato a forma di pillola. Predefinito segue ciò che Instagram attiva per il tuo account; Attivato e Disattivato lo sostituiscono. Vale per gli avvisi di Instagram e per quelli di Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Avvisi a pillola";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Posizione";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "La pillola Sparkle è la notifica di Sparkle. Instagram usa l'avviso che Instagram mostra per le sue conferme. Entrambe appaiono sopra ogni schermata, comprese quelle di Sparkle e l'anteprima a schermo intero.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Stile";

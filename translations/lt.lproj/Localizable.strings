@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Švytėjimas";
 "NOTIFICATION_APPEARANCE_HEADER" = "Išvaizda";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Piešia piliulę su Liquid Glass vietoj įprasto suliejimo.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Naujesnis Instagram pranešimų dizainas, suapvalintas į piliulę. Numatytasis atitinka tai, ką Instagram įjungia jūsų paskyrai; Įjungta ir Išjungta tai pakeičia. Taikoma ir paties Instagram, ir Sparkle pranešimams.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Piliulės formos pranešimai";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Vieta";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle piliulė yra paties Sparkle pranešimas. Instagram naudoja pranešimą, kurį Instagram rodo savo patvirtinimams. Abu rodomi virš bet kurio ekrano, įskaitant Sparkle ekranus ir viso ekrano peržiūrą.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Stilius";

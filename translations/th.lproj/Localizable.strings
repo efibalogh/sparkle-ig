@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "แสงเรืองรอง";
 "NOTIFICATION_APPEARANCE_HEADER" = "รูปลักษณ์";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "วาด pill ด้วย Liquid Glass แทนการเบลอมาตรฐาน";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "ดีไซน์ข้อความแจ้งแบบใหม่ของ Instagram ที่โค้งมนเป็นรูป pill ค่าเริ่มต้นจะเป็นไปตามที่ Instagram เปิดให้บัญชีของคุณ ส่วนเปิดและปิดจะบังคับแทน มีผลกับข้อความแจ้งของ Instagram เองและของ Sparkle";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "ข้อความแจ้งแบบ pill";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "ตำแหน่ง";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle Pill คือการแจ้งเตือนของ Sparkle เอง Instagram ใช้ข้อความแจ้งที่ Instagram แสดงสำหรับการยืนยันของตัวเอง ทั้งสองแบบแสดงอยู่เหนือทุกหน้าจอ รวมถึงหน้าจอของ Sparkle และการแสดงตัวอย่างแบบเต็มหน้าจอ";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "รูปแบบ";

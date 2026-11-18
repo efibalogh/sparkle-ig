@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "درخشش";
 "NOTIFICATION_APPEARANCE_HEADER" = "ظاهر";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "قرص را به جای محوشدگی معمولی با Liquid Glass رسم می‌کند.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "طراحی جدیدتر پیام‌های Instagram که به شکل قرص گرد شده است. پیش‌فرض از آنچه Instagram برای حساب شما فعال کرده پیروی می‌کند؛ روشن و خاموش آن را لغو می‌کنند. هم برای پیام‌های خود Instagram و هم برای Sparkle اعمال می‌شود.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "پیام‌های قرصی";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "موقعیت";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "قرص Sparkle اعلان خود Sparkle است. Instagram از پیام کوتاهی استفاده می‌کند که Instagram برای تأییدهای خودش نشان می‌دهد. هر دو روی همهٔ صفحه‌ها نمایش داده می‌شوند، از جمله صفحه‌های Sparkle و پیش‌نمایش تمام‌صفحه.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "سبک";

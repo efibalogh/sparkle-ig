@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "光晕";
 "NOTIFICATION_APPEARANCE_HEADER" = "外观";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "用 Liquid Glass 代替标准模糊来绘制胶囊。";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Instagram 较新的提示条设计，圆角呈胶囊形。默认跟随 Instagram 为你的账号启用的设置；开启和关闭会覆盖它。同时适用于 Instagram 自己的提示条和 Sparkle 的提示条。";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "胶囊提示条";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "位置";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "Sparkle 胶囊是 Sparkle 自己的通知。Instagram 使用 Instagram 为自身确认显示的提示条。两者都会显示在所有界面之上，包括 Sparkle 界面和全屏预览。";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "样式";

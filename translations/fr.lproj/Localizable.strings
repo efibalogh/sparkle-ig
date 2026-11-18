@@ -1903,6 +1903,8 @@
 "NOTIFICATION_APPEARANCE_GLOW_TITLE" = "Éclat";
 "NOTIFICATION_APPEARANCE_HEADER" = "Apparence";
 "NOTIFICATION_APPEARANCE_LIQUID_GLASS_HELP" = "Dessine la pastille en Liquid Glass au lieu du flou standard.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP" = "Le nouveau design des toasts d'Instagram, arrondi en pastille. Par défaut suit ce qu'Instagram active pour votre compte ; Activé et Désactivé le remplacent. S'applique aux toasts d'Instagram comme à ceux de Sparkle.";
+"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE" = "Toasts en pastille";
 "NOTIFICATION_APPEARANCE_POSITION_TITLE" = "Position";
 "NOTIFICATION_APPEARANCE_STYLE_HELP" = "La pastille Sparkle est la notification propre à Sparkle. Instagram utilise le toast qu'Instagram affiche pour ses propres confirmations. Les deux s'affichent sur tous les écrans, y compris ceux de Sparkle et l'aperçu plein écran.";
 "NOTIFICATION_APPEARANCE_STYLE_TITLE" = "Style";
