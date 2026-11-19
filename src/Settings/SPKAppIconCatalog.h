@@ -37,6 +37,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// would have to re-pick the icon to actually apply it).
 + (void)applyStoredIconIfNeeded;
 
+/// The icon the user picked in Sparkle, or nil when they never picked one.
+/// An empty string means they picked the default icon.
++ (nullable NSString *)storedSelectedIdentifier;
+
+/// Changes the live app icon on Sparkle's behalf. Every Sparkle-initiated icon
+/// write goes through here so the reset guard lets it pass.
++ (void)setSystemAlternateIconName:(nullable NSString *)name
+                        completion:(nullable void (^)(NSError *_Nullable error))completion;
+
+/// YES while a write from `setSystemAlternateIconName:completion:` is on the stack.
++ (BOOL)isPerformingOwnedIconWrite;
+
 @end
 
 NS_ASSUME_NONNULL_END

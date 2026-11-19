@@ -138,6 +138,7 @@ FOUNDATION_EXPORT void SPKInstallFixDuplicateNotificationsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallOpenPostNativePushHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallEditsShareFallbackHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableAppIconGestureHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallAppIconResetGuardHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallUnlockStoryPreviewHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallUnlockMessagePreviewHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideViewerPlusButtonHooksIfEnabled(void);
@@ -210,6 +211,10 @@ void SPKInstallLaunchCriticalHooks(void) {
     // The audio session manager reads its mode gate once as the user session
     // starts, so the override has to be registered before that.
     SPK_INSTALL(SPKInstallKeepOtherAudioPlayingHooksIfNeeded);
+    // Instagram resets the app icon shortly after launch. On a slow cold launch
+    // its reset can come before the surface timers fire, so the guard goes in
+    // here. Installed in every mode; the stored pick is read on every call.
+    SPK_INSTALL(SPKInstallAppIconResetGuardHooksIfNeeded);
     // A share from Edits can be the URL that cold-launches the app, and that URL
     // is delivered while the first scene connects.
     SPK_INSTALL(SPKInstallEditsShareFallbackHooksIfNeeded);

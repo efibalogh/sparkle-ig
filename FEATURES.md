@@ -66,7 +66,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 - **Auto Clear Cache**: Automatic clearing checked whenever Instagram becomes active: `Never`, `Always`, `Daily`, `Weekly`, `Monthly`.
 
 ### App
-- **App Icon**: Choose an alternate icon from those exposed by the installed Instagram bundle.
+- **App Icon**: Choose an alternate icon from those exposed by the installed Instagram bundle. The chosen icon stays put: Instagram's launch-time reset of subscription icons (Throwback, Ricky, ...) is blocked.
 - **Open Menu Icon**: Choose the glyph shown on every action button whose default tap action is **Open Menu**. A single global choice (not per-surface), picked from the same unified icon picker used everywhere else. Defaults to the Sparkle action glyph.
 - **Disable App Haptics**: Turns off in-app haptics and vibrations.
 - **Keep Other Audio Playing**: Stops Instagram from pausing music or podcasts from other apps when it opens. Unmuting a video still takes over audio as usual. On by default. **(restart)**
