@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Išjungia haptiką ir vibraciją Instagram programoje.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Išjungti programos haptiką";
 "GENERAL_APP_HEADER" = "Programa";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Neleidžia Instagram atsidarant pristabdyti muzikos ar tinklalaidžių iš kitų programų. Įjungus vaizdo įrašo garsą, jis kaip įprasta perima garsą.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Leisti kitam garsui groti toliau";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Ši Instagram versija atsidarydama nepristabdo kito garso.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Glifas, rodomas ant kiekvieno veiksmo mygtuko, kurio numatytasis palietimo veiksmas yra meniu atidarymas.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Garso atsisiuntimai išjungti";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Nepavyko rasti garso URL";

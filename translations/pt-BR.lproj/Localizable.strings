@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Desativa o retorno tátil e as vibrações dentro do Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Desabilitar Háptica do App";
 "GENERAL_APP_HEADER" = "App";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Impede que o Instagram pause músicas ou podcasts de outros apps ao abrir. Ativar o som de um vídeo continua assumindo o áudio normalmente.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Manter outro áudio tocando";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Esta versão do Instagram não pausa outro áudio ao abrir.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "O símbolo mostrado em todo botão de ação cuja ação padrão é Abrir menu.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Downloads de áudio desativados";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Não foi possível encontrar a URL do áudio";

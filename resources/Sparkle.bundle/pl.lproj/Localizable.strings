@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Wyłącza haptykę i wibracje wewnątrz Instagrama.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Wyłącz haptykę aplikacji";
 "GENERAL_APP_HEADER" = "Aplikacja";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Zapobiega wstrzymywaniu muzyki lub podcastów z innych aplikacji przy otwieraniu Instagrama. Wyłączenie wyciszenia filmu nadal przejmuje dźwięk jak zwykle.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Nie przerywaj innego dźwięku";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Ta wersja Instagrama nie wstrzymuje innego dźwięku przy otwieraniu.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Symbol wyświetlany na każdym przycisku akcji, którego domyślną akcją dotknięcia jest Otwórz menu.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Pobieranie audio wyłączone";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Nie można znaleźć adresu URL dźwięku";

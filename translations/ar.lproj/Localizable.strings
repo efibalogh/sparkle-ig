@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "يوقف الاستجابة اللمسية والاهتزاز داخل Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "تعطيل اهتزازات التطبيق";
 "GENERAL_APP_HEADER" = "التطبيق";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "يمنع Instagram من إيقاف الموسيقى أو البودكاست في التطبيقات الأخرى مؤقتًا عند فتحه. إلغاء كتم صوت مقطع فيديو لا يزال يتولى الصوت كالمعتاد.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "إبقاء الصوت الآخر قيد التشغيل";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "لا يوقف هذا الإصدار من Instagram الصوت الآخر مؤقتًا عند فتحه.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "الرمز الظاهر على كل زر إجراء يكون إجراؤه الافتراضي هو فتح القائمة.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "تحميلات الصوت معطّلة";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "تعذّر العثور على رابط الصوت";

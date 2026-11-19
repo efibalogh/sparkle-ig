@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Instagram içindeki dokunsal geri bildirimi ve titreşimleri kapatır.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Uygulama Haptik Geri Bildirimini Devre Dışı Bırak";
 "GENERAL_APP_HEADER" = "Uygulama";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Instagram açılırken diğer uygulamalardaki müzik veya podcast'lerin duraklatılmasını engeller. Bir videonun sesini açmak, sesi her zamanki gibi devralmaya devam eder.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Diğer Ses Çalmaya Devam Etsin";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Instagram'ın bu sürümü açılırken diğer sesleri duraklatmaz.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Varsayılan dokunma işlemi Menüyü Aç olan her işlem düğmesinde gösterilen simge.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Ses indirilmesi devre dışı";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Ses URL'si bulunamadı";

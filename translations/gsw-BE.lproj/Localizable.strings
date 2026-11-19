@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Schautet Haptik u Vibratione i Instagram us.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "App-Haptik Deaktiviere";
 "GENERAL_APP_HEADER" = "App";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Verhinderet, dass Instagram bim Öffne Musig oder Podcasts vo andere Apps pausiert. Wenn du bimene Video dr Ton ischaltisch, übernimmt das dr Ton wie gwohnt.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Anderi Audiowiedergab wiiterlaufe lah";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Die Instagram-Version pausiert bim Öffne kei anderi Audiowiedergab.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "S'Symbol, wo bi jedem Aktion-Chnopf zeigt wird, wo Menü Ufmache sini Standardaktion isch.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Audio-Downloads deaktiviert";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Audio-URL het nid chönne gfunge wärde";

@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Instagram के भीतर हैप्टिक्स और कंपन बंद कर देता है।";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "ऐप हैप्टिक्स अक्षम करें";
 "GENERAL_APP_HEADER" = "ऐप";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Instagram खुलने पर अन्य ऐप्स के संगीत या पॉडकास्ट को रोकने से बचाता है। किसी वीडियो को अनम्यूट करने पर ऑडियो पहले की तरह उसी पर चला जाता है।";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "अन्य ऑडियो चलता रहने दें";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Instagram का यह संस्करण खुलने पर अन्य ऑडियो को नहीं रोकता।";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "हर उस एक्शन बटन पर दिखने वाला चिह्न जिसकी डिफ़ॉल्ट टैप क्रिया मेन्यू खोलें है।";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "ऑडियो डाउनलोड अक्षम";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "ऑडियो URL नहीं मिल सका";

@@ -59,6 +59,8 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"tools_netlog_recording" : @(NO),
         @"app_safe_startup" : @(NO),
         @"general_hide_ads_stories" : @(YES),
+        // Read by the MobileConfig override as the user session starts.
+        @"general_keep_other_audio_playing" : @(YES),
         @"feed_mode" : @"default",
     };
 }

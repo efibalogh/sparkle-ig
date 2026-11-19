@@ -220,6 +220,7 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"messages_filled" : @{@"candidates" : @[ @"ig_icon_direct_prism_filled_24", @"ig_icon_direct_filled_24" ]},
             @"messages_off" : @{@"candidates" : @[ @"ig_icon_direct_off_prism_outline_24", @"ig_icon_direct_off_outline_24" ]},
             @"mirror" : @{@"candidates" : @[ @"ig_icon_mirror_outline_24" ]},
+            @"music" : @{@"candidates" : @[ @"ig_icon_music_outline_24" ]},
             @"music_reels" : @{@"candidates" : @[ @"ig_icon_music_outline_44" ]},
             @"meta_ai" : @{@"candidates" : @[ @"ig_icon_meta_ai_orbit_7_segment_outline_24", @"ig_icon_meta_gen_ai_outline_24" ]},
             @"moon" : @{@"candidates" : @[ @"ig_icon_moon_outline_24" ]},

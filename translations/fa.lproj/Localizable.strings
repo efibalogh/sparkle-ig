@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "لرزش‌ها و بازخورد لمسی را در اینستاگرام خاموش می‌کند.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "غیرفعال کردن بازخورد لمسی اپ";
 "GENERAL_APP_HEADER" = "اپ";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "از توقف موسیقی یا پادکست برنامه‌های دیگر هنگام باز شدن Instagram جلوگیری می‌کند. روشن کردن صدای یک ویدیو همچنان مثل همیشه کنترل صدا را در دست می‌گیرد.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "ادامه پخش صدای دیگر";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "این نسخه از Instagram هنگام باز شدن صدای دیگر را متوقف نمی‌کند.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "نمادی که روی هر دکمه عملیاتی که کنش پیش‌فرض ضربه‌اش «باز کردن منو» است نمایش داده می‌شود.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "دانلود فایل صوتی غیرفعال است";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "آدرس فایل صوتی پیدا نشد";

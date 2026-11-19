@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Disattiva feedback aptico e vibrazioni dentro Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Disabilita Aptica App";
 "GENERAL_APP_HEADER" = "App";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Impedisce a Instagram di mettere in pausa musica o podcast di altre app all’apertura. Riattivare l’audio di un video prende comunque il controllo dell’audio come al solito.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Mantieni l’altro audio in riproduzione";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Questa versione di Instagram non mette in pausa l’altro audio all’apertura.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Il simbolo mostrato su ogni pulsante azione la cui azione predefinita è Apri menu.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Download audio disabilitati";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Impossibile trovare l'URL dell'audio";

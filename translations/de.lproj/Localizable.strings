@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Schaltet Haptik und Vibration innerhalb von Instagram aus.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "App-Haptik deaktivieren";
 "GENERAL_APP_HEADER" = "App";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Verhindert, dass Instagram beim Öffnen Musik oder Podcasts aus anderen Apps pausiert. Wenn du den Ton eines Videos einschaltest, übernimmt es die Wiedergabe weiterhin wie gewohnt.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Andere Audiowiedergabe fortsetzen";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Diese Instagram-Version pausiert beim Öffnen keine andere Audiowiedergabe.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Das Symbol auf jedem Aktionsbutton, dessen Standardaktion Menü öffnen ist.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Audio-Downloads deaktiviert";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Audio-URL konnte nicht gefunden werden";

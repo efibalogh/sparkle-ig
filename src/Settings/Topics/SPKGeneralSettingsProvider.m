@@ -9,6 +9,7 @@
 #import "../../Shared/MediaPreview/SPKFullScreenImageViewController.h"
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../Utils.h"
+#import "../../Features/General/KeepOtherAudioPlaying.h"
 #import "../SPKActionSectionIconPickerViewController.h"
 #import "../SPKAppIconCatalog.h"
 #import "../SPKAppIconPickerViewController.h"
@@ -42,6 +43,22 @@ static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
                                                            defaultsKey:@"general_action_btn_show_date"],
                                        SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_HELP"))];
     return rows;
+}
+
+static SPKSetting *SPKKeepOtherAudioPlayingSetting(void) {
+    BOOL available = SPKKeepOtherAudioPlayingIsAvailable();
+    SPKSetting *setting = [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE")
+                                                     icon:SPKSettingsIcon(@"music")
+                                              defaultsKey:@"general_keep_other_audio_playing"];
+    setting.helpText = available ? SPKL(@"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP")
+                                 : SPKL(@"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP");
+    // Builds without the movie-mode switch never interrupt other audio on launch.
+    setting.enabledProvider = ^BOOL {
+        return available;
+    };
+    // Instagram reads the audio mode gate once per launch.
+    setting.requiresRestart = YES;
+    return setting;
 }
 
 static SPKSetting *SPKTappableTextLinksSetting(void) {
@@ -326,7 +343,8 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_APP_DISABLE_APP_HAPTICS_TITLE")
                                                           icon:SPKSettingsIcon(@"haptics")
                                                    defaultsKey:@"general_disable_haptics"],
-                               SPKL(@"GENERAL_APP_DISABLE_APP_HAPTICS_HELP"))
+                               SPKL(@"GENERAL_APP_DISABLE_APP_HAPTICS_HELP")),
+            SPKKeepOtherAudioPlayingSetting()
         ],
                         nil),
     ]);

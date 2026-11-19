@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Menonaktifkan haptik dan getaran di dalam Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Nonaktifkan Haptik Aplikasi";
 "GENERAL_APP_HEADER" = "Aplikasi";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Mencegah Instagram menjeda musik atau podcast dari aplikasi lain saat dibuka. Membunyikan video tetap mengambil alih audio seperti biasa.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Biarkan Audio Lain Tetap Diputar";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Versi Instagram ini tidak menjeda audio lain saat dibuka.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Simbol yang ditampilkan pada setiap tombol aksi yang tindakan ketuk default-nya adalah Buka Menu.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Unduhan audio dinonaktifkan";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "URL audio tidak ditemukan";

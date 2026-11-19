@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Turns off haptics and vibrations inside Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Disable App Haptics";
 "GENERAL_APP_HEADER" = "App";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Stops Instagram from pausing music or podcasts from other apps when it opens. Unmuting a video still takes over audio as usual.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Keep Other Audio Playing";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "This version of Instagram does not pause other audio when it opens.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "The glyph shown on every action button whose default tap action is Open Menu.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Audio downloads disabled";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Could not find audio URL";

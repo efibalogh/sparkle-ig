@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Отключает тактильную отдачу и вибрацию внутри Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Отключить вибрацию приложения";
 "GENERAL_APP_HEADER" = "Приложение";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Не даёт Instagram ставить на паузу музыку или подкасты из других приложений при открытии. Включение звука в видео по-прежнему перехватывает воспроизведение как обычно.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Не прерывать другой звук";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Эта версия Instagram не ставит другой звук на паузу при открытии.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Значок на каждой кнопке действия, у которой действие по умолчанию Открыть меню.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Загрузки звука отключены";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Не удалось найти URL аудио";

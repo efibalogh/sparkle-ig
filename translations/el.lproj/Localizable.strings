@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Απενεργοποιεί την απτική ανάδραση και τους δονητές μέσα στο Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Απενεργοποίηση Απτικής Ανάδρασης Εφαρμογής";
 "GENERAL_APP_HEADER" = "Εφαρμογή";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Αποτρέπει το Instagram από το να θέτει σε παύση μουσική ή podcast από άλλες εφαρμογές όταν ανοίγει. Η κατάργηση της σίγασης ενός βίντεο εξακολουθεί να αναλαμβάνει τον ήχο όπως συνήθως.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Συνέχιση άλλου ήχου";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Αυτή η έκδοση του Instagram δεν θέτει σε παύση άλλον ήχο όταν ανοίγει.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Το σύμβολο που εμφανίζεται σε κάθε κουμπί ενέργειας του οποίου η προεπιλεγμένη ενέργεια είναι Άνοιγμα μενού.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Οι λήψεις ήχου είναι απενεργοποιημένες";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Δεν ήταν δυνατό να βρεθεί το URL ήχου";

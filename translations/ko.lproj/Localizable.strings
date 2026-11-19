@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Instagram 내 햅틱과 진동을 모두 끕니다.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "앱 햅틱 비활성화";
 "GENERAL_APP_HEADER" = "앱";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Instagram을 열 때 다른 앱의 음악이나 팟캐스트가 일시정지되지 않도록 합니다. 동영상 음소거를 해제하면 평소처럼 오디오가 전환됩니다.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "다른 오디오 계속 재생";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "이 버전의 Instagram은 열 때 다른 오디오를 일시정지하지 않습니다.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "기본 탭 동작이 메뉴 열기로 설정된 모든 액션 버튼에 표시되는 아이콘입니다.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "오디오 다운로드 비활성화됨";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "오디오 URL을 찾을 수 없음";

@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "ปิดการสั่นและการตอบสนองแบบสัมผัสภายใน Instagram";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "ปิดการสั่นของแอป";
 "GENERAL_APP_HEADER" = "แอป";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "ป้องกันไม่ให้ Instagram หยุดเพลงหรือพอดแคสต์จากแอปอื่นชั่วคราวเมื่อเปิดแอป การเปิดเสียงวิดีโอจะยังคงเข้าควบคุมเสียงตามปกติ";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "ให้เสียงอื่นเล่นต่อ";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Instagram เวอร์ชันนี้ไม่หยุดเสียงอื่นชั่วคราวเมื่อเปิดแอป";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "สัญลักษณ์ที่แสดงบนปุ่มการทำงานทุกปุ่มที่การแตะเริ่มต้นคือเปิดเมนู";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "ปิดใช้งานการดาวน์โหลดเสียง";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "ไม่พบ URL ของเสียง";

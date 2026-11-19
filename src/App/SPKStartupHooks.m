@@ -145,6 +145,7 @@ FOUNDATION_EXPORT void SPKInstallSearchStoryViewersHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoryVideoStickerHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideRecentHighlightsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoryHighlightTrayTrackingHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallKeepOtherAudioPlayingHooksIfNeeded(void);
 
 // Master kill switch: when YES, suppress all feature hook installation, but
 // keep the home long-press shortcut so users can still reach Settings to turn
@@ -206,6 +207,9 @@ void SPKInstallLaunchCriticalHooks(void) {
     // that first upload carry the real position.
     SPK_INSTALL(SPKInstallFakeLocationHooksIfNeeded);
     SPK_INSTALL(SPKInstallStoryAdBlockingHooksIfEnabled);
+    // The audio session manager reads its mode gate once as the user session
+    // starts, so the override has to be registered before that.
+    SPK_INSTALL(SPKInstallKeepOtherAudioPlayingHooksIfNeeded);
     // A share from Edits can be the URL that cold-launches the app, and that URL
     // is delivered while the first scene connects.
     SPK_INSTALL(SPKInstallEditsShareFallbackHooksIfNeeded);

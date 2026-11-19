@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Tắt phản hồi rung (haptics) bên trong ứng dụng Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "Tắt phản hồi rung ứng dụng";
 "GENERAL_APP_HEADER" = "Ứng dụng";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Ngăn Instagram tạm dừng nhạc hoặc podcast từ ứng dụng khác khi mở. Bật tiếng video vẫn chiếm quyền phát âm thanh như bình thường.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Giữ âm thanh khác tiếp tục phát";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Phiên bản Instagram này không tạm dừng âm thanh khác khi mở.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Biểu tượng hiển thị trên mỗi nút thao tác khi hành động chạm mặc định là Mở Menu.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Đã tắt tải xuống âm thanh";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Không tìm thấy URL âm thanh";

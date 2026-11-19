@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Pinapatay ang haptics at vibration sa loob ng Instagram.";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "I-disable ang App Haptics";
 "GENERAL_APP_HEADER" = "App";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Pinipigilan ang Instagram na i-pause ang musika o podcast mula sa ibang app kapag binuksan ito. Kapag in-unmute ang isang video, kukunin pa rin nito ang audio gaya ng dati.";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "Panatilihing Tumutugtog ang Ibang Audio";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "Hindi pinapahinto ng bersyong ito ng Instagram ang ibang audio kapag binuksan ito.";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "Ang glyph na ipinapakita sa bawat action button na ang default tap action ay Open Menu.";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "Naka-disable ang audio download";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "Hindi mahanap ang audio URL";

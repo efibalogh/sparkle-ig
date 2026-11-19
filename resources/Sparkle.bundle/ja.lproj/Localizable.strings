@@ -927,6 +927,9 @@
 "GENERAL_APP_DISABLE_APP_HAPTICS_HELP" = "Instagram内のハプティクスと振動をオフにします。";
 "GENERAL_APP_DISABLE_APP_HAPTICS_TITLE" = "アプリハプティクスを無効化";
 "GENERAL_APP_HEADER" = "アプリ";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP" = "Instagramを開いたときに、他のアプリの音楽やポッドキャストが一時停止されないようにします。動画のミュートを解除すると、通常どおり音声が切り替わります。";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE" = "他のオーディオを再生し続ける";
+"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP" = "このバージョンのInstagramは、開いたときに他のオーディオを一時停止しません。";
 "GENERAL_APP_OPEN_MENU_ICON_HELP" = "既定のタップ動作が「メニューを開く」に設定されているすべてのアクションボタンに表示されるアイコンです。";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_AUDIO_DOWNLOADS_DISABLED_TEXT" = "オーディオダウンロードは無効化されています";
 "GENERAL_AUDIO_PAGE_DOWNLOAD_COULD_NOT_FIND_AUDIO_URL_TEXT" = "音声URLが見つかりませんでした";
