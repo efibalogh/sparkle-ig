@@ -65,6 +65,7 @@ static double SPKNormalizedStepperValue(SPKSetting *row, double value) {
 @property (nonatomic, strong) UIBarButtonItem *applyRestartItem;
 @property (nonatomic) BOOL reduceMargin;
 @property (nonatomic) BOOL defersRestartPrompt;
+@property (nonatomic, strong, nullable) NSMapTable *pendingEnabledStates;
 @property (nonatomic) BOOL hasPendingRestartChanges;
 @property (nonatomic) BOOL didAttemptOnboarding;
 @property (nonatomic) BOOL showsLanguageSelector;
@@ -719,37 +720,11 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     }
 
     case SPKTableCellMenu: {
-        UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [menuButton setTitle:@"•••" forState:UIControlStateNormal];
-        menuButton.menu = [row menuForButton:menuButton];
-        menuButton.showsMenuAsPrimaryAction = YES;
-        menuButton.enabled = rowEnabled;
-        menuButton.titleLabel.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
-        menuButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        [menuButton setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-        [menuButton setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-
-        UIButtonConfiguration *config = menuButton.configuration ?: [UIButtonConfiguration plainButtonConfiguration];
-        config.contentInsets = NSDirectionalEdgeInsetsMake(8, 8, 8, 8);
-        config.image = [UIImage systemImageNamed:@"chevron.up.chevron.down"];
-        config.imagePlacement = NSDirectionalRectEdgeTrailing;
-        config.imagePadding = 6.0;
-        config.preferredSymbolConfigurationForImage = [UIImageSymbolConfiguration configurationWithPointSize:10.0 weight:UIImageSymbolWeightBold];
-
-        menuButton.configuration = config;
-        // Must be set AFTER assigning the configuration: UIButtonConfiguration
-        // re-manages titleLabel and defaults it to multi-line, so a long selected
-        // value wraps onto a second line inside the accessory. Clamp it to one line
-        // (truncating) here so the value stays on the row like every other picker.
-        menuButton.titleLabel.numberOfLines = 1;
-        menuButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        menuButton.tintColor = rowEnabled ? [SPKUtils SPKColor_InstagramSecondaryText] : [SPKUtils SPKColor_InstagramTertiaryText];
+        UIButton *menuButton = [self menuButtonForRow:row enabled:rowEnabled];
         if (!rowEnabled) {
             cellContentConfig.textProperties.color = [SPKUtils SPKColor_InstagramSecondaryText];
             cellContentConfig.secondaryTextProperties.color = [SPKUtils SPKColor_InstagramTertiaryText];
         }
-
-        [menuButton sizeToFit];
 
         cell.accessoryView = menuButton;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1302,6 +1277,8 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
         sender.on = NO;
         return;
     }
+    // Taken before the write so the refresh can tell which rows changed.
+    self.pendingEnabledStates = row.reloadsTableOnSwitchChange ? [self dependentRowEnabledStates] : nil;
 
     if (row.switchChangeHandler) {
         row.switchChangeHandler(sender.isOn);
@@ -1391,6 +1368,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 
 - (void)menuChanged:(UICommand *)command {
     NSDictionary *properties = command.propertyList;
+    NSMapTable<SPKSetting *, NSNumber *> *enabledBefore = [self dependentRowEnabledStates];
 
     NSString *defaultsKey = properties[@"defaultsKey"];
     NSString *writeKey = SPKEffectivePreferenceKey(defaultsKey);
@@ -1413,10 +1391,162 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 
     SPKLog(@"General", @"Menu changed: %@ = %@", writeKey, properties[@"value"]);
 
-    // A menu selection can gate another row's visibility or enabled state (e.g.
-    // the Create Tab toggle only shows for the Classic tab order). Only pay for a
-    // full rebuild on pages that actually have such rows; otherwise keep the
-    // animated single-cell refresh.
+    [self refreshAfterMenuChangeFromSender:command.sender enabledBefore:enabledBefore];
+
+    if (properties[@"requiresRestart"]) {
+        [SPKUtils showRestartConfirmation];
+    }
+}
+
+// MARK: - Helper
+
+// Builds a menu row's trailing button. Also used to replace the button after a
+// menu pick, so the new value is laid out exactly as on a freshly drawn row.
+- (UIButton *)menuButtonForRow:(SPKSetting *)row enabled:(BOOL)rowEnabled {
+    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [menuButton setTitle:@"•••" forState:UIControlStateNormal];
+    menuButton.menu = [row menuForButton:menuButton];
+    menuButton.showsMenuAsPrimaryAction = YES;
+    objc_setAssociatedObject(menuButton, rowStaticRef, row, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    menuButton.enabled = rowEnabled;
+    menuButton.titleLabel.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
+    menuButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    [menuButton setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [menuButton setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+
+    UIButtonConfiguration *config = menuButton.configuration ?: [UIButtonConfiguration plainButtonConfiguration];
+    config.contentInsets = NSDirectionalEdgeInsetsMake(8, 8, 8, 8);
+    config.image = [UIImage systemImageNamed:@"chevron.up.chevron.down"];
+    config.imagePlacement = NSDirectionalRectEdgeTrailing;
+    config.imagePadding = 6.0;
+    config.preferredSymbolConfigurationForImage = [UIImageSymbolConfiguration configurationWithPointSize:10.0 weight:UIImageSymbolWeightBold];
+
+    menuButton.configuration = config;
+    // Must be set AFTER assigning the configuration: UIButtonConfiguration
+    // re-manages titleLabel and defaults it to multi-line, so a long selected
+    // value wraps onto a second line inside the accessory. Clamp it to one line
+    // (truncating) here so the value stays on the row like every other picker.
+    menuButton.titleLabel.numberOfLines = 1;
+    menuButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    menuButton.tintColor = rowEnabled ? [SPKUtils SPKColor_InstagramSecondaryText] : [SPKUtils SPKColor_InstagramTertiaryText];
+
+    [menuButton sizeToFit];
+    return menuButton;
+}
+
+// A menu pick changes the picked row's value and, on some pages, whether other
+// rows are enabled or shown. Reloading a row builds a new cell and makes the
+// self-sized table re-estimate heights, which scrolls the page under the
+// closing menu. So the picked row's menu button is updated in place (its menu
+// rebuild also sets its title and checkmark), only rows whose enabled state
+// actually changed are reloaded, and a full reload is left for when rows
+// appear or disappear.
+static BOOL SPKSettingsRowEnabled(SPKSetting *row) {
+    return (row.userInfo[@"enabled"] ? [row.userInfo[@"enabled"] boolValue] : YES) &&
+           (!row.enabledProvider || row.enabledProvider()) &&
+           SPKPrefIsAvailable(row.defaultsKey);
+}
+
+- (NSMapTable<SPKSetting *, NSNumber *> *)dependentRowEnabledStates {
+    NSMapTable *states = [NSMapTable strongToStrongObjectsMapTable];
+    for (NSDictionary *section in self.sections) {
+        for (id row in section[@"rows"]) {
+            if ([row isKindOfClass:[SPKSetting class]] && ((SPKSetting *)row).enabledProvider)
+                [states setObject:@(SPKSettingsRowEnabled(row)) forKey:row];
+        }
+    }
+    return states;
+}
+
+- (void)restoreContentOffset:(CGPoint)offset {
+    [self.tableView layoutIfNeeded];
+    UIEdgeInsets inset = self.tableView.adjustedContentInset;
+    CGFloat maxY = MAX(-inset.top, self.tableView.contentSize.height + inset.bottom - CGRectGetHeight(self.tableView.bounds));
+    offset.y = MIN(MAX(offset.y, -inset.top), maxY);
+    [self.tableView setContentOffset:offset animated:NO];
+}
+
+- (void)updateMenuButtonInPlace:(id)sender {
+    UIButton *button = [sender isKindOfClass:[UIButton class]] ? sender : nil;
+    SPKSetting *row = button ? [self settingForSender:button] : nil;
+    UIView *cell = button.superview;
+    while (cell && ![cell isKindOfClass:[UITableViewCell class]])
+        cell = cell.superview;
+    if (!row || ((UITableViewCell *)cell).accessoryView != button) {
+        [self reloadCellForView:sender animated:NO];
+        return;
+    }
+    [UIView performWithoutAnimation:^{
+        ((UITableViewCell *)cell).accessoryView = [self menuButtonForRow:row enabled:button.enabled];
+        [cell layoutIfNeeded];
+    }];
+}
+
+// Brings the table in line with the rows' hidden and enabled providers after a
+// control changed a preference, without reloading what did not change: rows
+// that appeared or disappeared are inserted or removed with a fade, and rows
+// whose enabled state flipped are reloaded without animation. The row that made
+// the change is left alone so its own control keeps animating. Reloading every
+// row instead re-estimates self-sized heights mid-animation, which made rows
+// grow and the page jump.
+- (void)applyDependentRowChangesWithEnabledBefore:(NSMapTable<SPKSetting *, NSNumber *> *)enabledBefore skippingRow:(SPKSetting *)skippedRow {
+    NSArray *oldSections = self.sections;
+    NSMutableArray *newSections = SPKVisibleSectionsCopy(self.originalSections);
+    CGPoint offset = self.tableView.contentOffset;
+    if (oldSections.count != newSections.count) {
+        self.sections = newSections;
+        [UIView performWithoutAnimation:^{
+            [self.tableView reloadData];
+            [self restoreContentOffset:offset];
+        }];
+        return;
+    }
+
+    NSMutableArray<NSIndexPath *> *deletions = [NSMutableArray array];
+    NSMutableArray<NSIndexPath *> *insertions = [NSMutableArray array];
+    for (NSInteger section = 0; section < (NSInteger)newSections.count; section++) {
+        NSArray *oldRows = oldSections[section][@"rows"];
+        NSArray *newRows = newSections[section][@"rows"];
+        for (NSInteger index = 0; index < (NSInteger)oldRows.count; index++) {
+            if ([newRows indexOfObjectIdenticalTo:oldRows[index]] == NSNotFound)
+                [deletions addObject:[NSIndexPath indexPathForRow:index inSection:section]];
+        }
+        for (NSInteger index = 0; index < (NSInteger)newRows.count; index++) {
+            if ([oldRows indexOfObjectIdenticalTo:newRows[index]] == NSNotFound)
+                [insertions addObject:[NSIndexPath indexPathForRow:index inSection:section]];
+        }
+    }
+
+    self.sections = newSections;
+    if (deletions.count || insertions.count) {
+        [self.tableView performBatchUpdates:^{
+            [self.tableView deleteRowsAtIndexPaths:deletions withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:insertions withRowAnimation:UITableViewRowAnimationFade];
+        } completion:nil];
+    }
+
+    NSMutableArray<NSIndexPath *> *changed = [NSMutableArray array];
+    for (NSInteger section = 0; section < (NSInteger)newSections.count; section++) {
+        NSArray *rows = newSections[section][@"rows"];
+        for (NSInteger index = 0; index < (NSInteger)rows.count; index++) {
+            SPKSetting *row = rows[index];
+            if (![row isKindOfClass:[SPKSetting class]] || row == skippedRow)
+                continue;
+            NSNumber *before = [enabledBefore objectForKey:row];
+            if (before && before.boolValue != SPKSettingsRowEnabled(row))
+                [changed addObject:[NSIndexPath indexPathForRow:index inSection:section]];
+        }
+    }
+    if (changed.count == 0)
+        return;
+    offset = self.tableView.contentOffset;
+    [UIView performWithoutAnimation:^{
+        [self.tableView reloadRowsAtIndexPaths:changed withRowAnimation:UITableViewRowAnimationNone];
+        [self restoreContentOffset:offset];
+    }];
+}
+
+- (void)refreshAfterMenuChangeFromSender:(id)sender enabledBefore:(NSMapTable<SPKSetting *, NSNumber *> *)enabledBefore {
     BOOL hasDependentRows = NO;
     for (NSDictionary *section in self.originalSections) {
         for (id row in section[@"rows"]) {
@@ -1428,18 +1558,15 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
         if (hasDependentRows)
             break;
     }
-    if (hasDependentRows && ![self isSearching]) {
-        [self rebuildVisibleSections];
-    } else {
-        [self reloadCellForView:command.sender animated:YES];
+    if (!hasDependentRows || [self isSearching]) {
+        [self updateMenuButtonInPlace:sender];
+        return;
     }
 
-    if (properties[@"requiresRestart"]) {
-        [SPKUtils showRestartConfirmation];
-    }
+    [self updateMenuButtonInPlace:sender];
+    SPKSetting *menuRow = [sender isKindOfClass:[UIButton class]] ? [self settingForSender:sender] : nil;
+    [self applyDependentRowChangesWithEnabledBefore:enabledBefore skippingRow:menuRow];
 }
-
-// MARK: - Helper
 
 - (void)replaceSections:(NSArray *)sections {
     self.originalSections = [sections copy] ?: @[];
@@ -1464,42 +1591,14 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 // visible row layout changed (a row appeared/disappeared), where a targeted
 // reload would desync the table.
 - (void)refreshDependentRowsAfterSwitchChange:(UISwitch *)sender {
+    SPKSetting *row = objc_getAssociatedObject(sender, rowStaticRef);
+    NSMapTable *enabledBefore = self.pendingEnabledStates ?: [NSMapTable strongToStrongObjectsMapTable];
+    self.pendingEnabledStates = nil;
     if ([self isSearching]) {
         [self.tableView reloadData];
         return;
     }
-
-    UITableViewCell *cell = (UITableViewCell *)sender.superview;
-    while (cell && ![cell isKindOfClass:[UITableViewCell class]])
-        cell = (UITableViewCell *)cell.superview;
-    NSIndexPath *senderPath = cell ? [self.tableView indexPathForCell:cell] : nil;
-
-    NSMutableArray<NSNumber *> *previousCounts = [NSMutableArray array];
-    for (NSDictionary *section in self.sections)
-        [previousCounts addObject:@([section[@"rows"] count])];
-
-    self.sections = SPKVisibleSectionsCopy(self.originalSections);
-
-    NSMutableArray<NSNumber *> *newCounts = [NSMutableArray array];
-    for (NSDictionary *section in self.sections)
-        [newCounts addObject:@([section[@"rows"] count])];
-
-    if (!senderPath || ![previousCounts isEqualToArray:newCounts]) {
-        [self.tableView reloadData];
-        return;
-    }
-
-    NSMutableArray<NSIndexPath *> *paths = [NSMutableArray array];
-    for (NSInteger s = 0; s < (NSInteger)self.sections.count; s++) {
-        NSInteger rowCount = [self.sections[s][@"rows"] count];
-        for (NSInteger r = 0; r < rowCount; r++) {
-            if (s == senderPath.section && r == senderPath.row)
-                continue;
-            [paths addObject:[NSIndexPath indexPathForRow:r inSection:s]];
-        }
-    }
-    if (paths.count > 0)
-        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
+    [self applyDependentRowChangesWithEnabledBefore:enabledBefore skippingRow:row];
 }
 
 - (NSString *)formatString:(NSString *)template withValue:(double)value step:(double)step label:(NSString *)label singularLabel:(NSString *)singularLabel {
