@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Tabs";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Füegt dyni gspeicherete Sammlige as Tab uf dym eigete Profil dezue. Aktualisier dy Profil zum's aawände.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Gspeicheret-Tab";
+"PROFILE_TABS_REELS_SORT_HELP" = "Steuert der Pfiil uf em Reels-Tab, wo d Reels vom Profil nach de meischte Aufrufe sortiert. Instagram schaltet's mit de Zyt fürs Konto ii und uus. Mit A blibt's aktiv, mit Us wird's bi jedem Profil entfernt, mit Standard entscheidet Instagram. Gwüssi Profil chönd's nie übercho, au mit A. Profil neu öffne zum aawände.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Sortierig vom Reels-Tab";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Zeigt d Vorschaubilder im Beiträg- und Markierigs-Raster als Quadrat statt im höchere 3:4-Layout und bruucht es quadratischs Symbol für de Raster-Tab. Mach es Profil nomol uf, damit s gilt.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Quadratischs Raster";
 "PROFILE_TITLE" = "Profil";

@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Skirtukai";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Prideda išsaugotas kolekcijas kaip skirtuką jūsų profilyje. Norėdami pritaikyti, atnaujinkite profilį.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Išsaugotų skirtukas";
+"PROFILE_TABS_REELS_SORT_HELP" = "Valdo Reels skirtuko rodyklę, kuri profilio Reels rikiuoja pagal daugiausiai peržiūrų. Instagram laikui bėgant jūsų paskyrai ją įjungia ir išjungia. Esant Įjungta, ji lieka įjungta; esant Išjungta, pašalinama iš visų profilių; esant Numatytasis, pasirinkimas paliekamas Instagram. Kai kurie profiliai jos niekada negauna, net esant Įjungta. Norėdami taikyti, profilį atidarykite iš naujo.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Reels skirtuko rikiavimas";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Įrašų ir pažymėtųjų tinklelių miniatiūras rodo kvadratais, o ne aukštesniu 3:4 išdėstymu, ir tinklelio skirtukui naudoja kvadratinę piktogramą. Norėdami pritaikyti, iš naujo atidarykite profilį.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Kvadratinis tinklelis";
 "PROFILE_TITLE" = "Profilis";

@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Tabs";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Fügt deine gespeicherten Sammlungen als Tab zu deinem eigenen Profil hinzu. Aktualisiere dein Profil, um die Änderung anzuwenden.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Gespeichert-Tab";
+"PROFILE_TABS_REELS_SORT_HELP" = "Steuert den Pfeil auf dem Reels-Tab, der die Reels eines Profils nach den meisten Aufrufen sortiert. Instagram schaltet die Funktion im Laufe der Zeit für dein Konto ein und aus. Ein behält sie bei, Aus entfernt sie bei jedem Profil, Standard überlässt die Wahl Instagram. Manche Profile bekommen sie nie, auch bei Ein. Zum Übernehmen Profil neu öffnen.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Sortierung im Reels-Tab";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Zeigt Vorschaubilder in den Raster für Beiträge und Markierungen als Quadrate statt im höheren 3:4-Layout und verwendet ein quadratisches Symbol für den Raster-Tab. Öffne ein Profil erneut, um die Änderung anzuwenden.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Quadratisches Raster";
 "PROFILE_TITLE" = "Profil";

@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "タブ";
 "PROFILE_TABS_SAVED_TAB_HELP" = "保存したコレクションを自分のプロフィールのタブとして追加します。適用するにはプロフィールを更新してください。";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "保存済みタブ";
+"PROFILE_TABS_REELS_SORT_HELP" = "リールタブにあるシェブロンの表示を制御し、プロフィールのリールを再生回数の多い順に並べ替えます。Instagramはアカウントごとに、この機能を時期によってオン・オフします。オンは常に表示し、オフはすべてのプロフィールで非表示にし、デフォルトはInstagramの判断に任せます。オンでも表示されないプロフィールがあります。適用するにはプロフィールを開き直してください。";
+"PROFILE_TABS_REELS_SORT_TITLE" = "リールタブの並べ替え";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "投稿とタグ付けのグリッドのサムネイルを縦長の3:4ではなく正方形で表示し、グリッドタブに正方形のアイコンを使います。適用するにはプロフィールを開き直してください。";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "正方形グリッド";
 "PROFILE_TITLE" = "プロフィール";

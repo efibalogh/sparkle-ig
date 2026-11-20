@@ -405,6 +405,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 ### Tabs
 - **Saved Tab**: Adds your saved collections as a tab at the end of your own profile's tab strip, using Instagram's own Saved page (header collapse and pull to refresh included). Refresh your profile to apply.
 - **Square Grid**: Shows thumbnails on the posts and tagged grids as squares instead of the taller 3:4 layout, and uses a square icon for the grid tab. Reopen a profile to apply.
+- **Reels Tab Sort**: Default, On or Off for the menu on the Reels tab that sorts a profile's reels by most viewed. Instagram turns it on and off for an account over time; On keeps it on and Off removes it on every profile. Default leaves Instagram's choice. Profiles the server marks ineligible get no chevron even when On. Reopen a profile to apply.
 
 ### Indicators
 - **Exact Follower Count**: Shows the full follower count in the profile header, using your device's number format.

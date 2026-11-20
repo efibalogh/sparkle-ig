@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Abas";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adiciona suas coleções salvas como uma aba no seu próprio perfil. Atualize seu perfil para aplicar.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Aba Salvos";
+"PROFILE_TABS_REELS_SORT_HELP" = "Controla o chevron na aba Reels que ordena os reels de um perfil pelos mais vistos. O Instagram liga e desliga isso para sua conta ao longo do tempo. Com Ativado fica ativo, com Desativado é removido de todos os perfis, com Padrão a escolha fica com o Instagram. Alguns perfis nunca recebem, mesmo com Ativado. Reabra um perfil para aplicar.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Ordenação da aba Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Mostra as miniaturas das grades de publicações e marcações como quadrados em vez do layout 3:4 mais alto e usa um ícone quadrado na aba da grade. Abra um perfil novamente para aplicar.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Grade quadrada";
 "PROFILE_TITLE" = "Perfil";

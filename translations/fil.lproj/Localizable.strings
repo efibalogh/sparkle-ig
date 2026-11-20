@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Mga Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Idinaragdag ang mga naka-save mong collection bilang tab sa sarili mong profile. I-refresh ang profile mo para mag-apply.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Tab na Naka-save";
+"PROFILE_TABS_REELS_SORT_HELP" = "Kinokontrol ang chevron sa tab ng Reels na nagsasaayos ng mga reel ng profile ayon sa pinakamaraming view. Ino-on at ino-off ito ng Instagram para sa account mo paminsan-minsan. Sa Naka-on, nananatili ito; sa Naka-off, tinatanggal sa bawat profile; sa Karaniwan, nasa Instagram ang pagpili. May mga profile na hindi ito nakukuha kahit naka-Naka-on. I-reopen ang profile para mailapat.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Pagsunod ng Tab ng Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Ipinapakita ang mga thumbnail sa mga grid ng post at naka-tag bilang square sa halip ng mas mataas na 3:4 na layout, at gumagamit ng square na icon para sa grid tab. Buksan muli ang isang profile para ilapat.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Square na Grid";
 "PROFILE_TITLE" = "Profile";

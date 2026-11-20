@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Thêm các bộ sưu tập đã lưu của bạn thành một tab trên trang cá nhân. Làm mới trang cá nhân để áp dụng.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Tab Đã lưu";
+"PROFILE_TABS_REELS_SORT_HELP" = "Điều khiển mũi tên trên tab Reels để sắp xếp reel của hồ sơ theo lượt xem nhiều nhất. Instagram bật và tắt tính năng này cho tài khoản của bạn theo thời gian. Khi Bật thì giữ bật, khi Tắt thì gỡ khỏi mọi hồ sơ, còn khi Mặc định thì Instagram quyết định. Một số hồ sơ không bao giờ nhận được tính năng này, kể cả khi Bật. Mở lại hồ sơ để áp dụng.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Sắp xếp tab Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Hiển thị ảnh thu nhỏ trong lưới bài viết và được gắn thẻ dạng hình vuông thay vì bố cục 3:4 cao hơn, và dùng biểu tượng vuông cho tab lưới. Mở lại trang cá nhân để áp dụng.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Lưới vuông";
 "PROFILE_TITLE" = "Trang cá nhân";

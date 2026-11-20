@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Schede";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Aggiunge le tue raccolte salvate come scheda sul tuo profilo. Aggiorna il profilo per applicare.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Scheda Salvati";
+"PROFILE_TABS_REELS_SORT_HELP" = "Controlla lo chevron sulla scheda Reels che ordina i reel di un profilo per visualizzazioni. Instagram lo attiva e lo disattiva per il tuo account nel tempo. Con Attivato resta attivo, con Disattivato viene rimosso da ogni profilo, con Predefinito la scelta resta a Instagram. Alcuni profili non lo ricevono mai, anche con Attivato. Riapri un profilo per applicare.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Ordinamento scheda Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Mostra le miniature delle griglie di post e tag come quadrati invece del layout 3:4 più alto e usa un'icona quadrata per la scheda griglia. Riapri un profilo per applicare.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Griglia quadrata";
 "PROFILE_TITLE" = "Profilo";

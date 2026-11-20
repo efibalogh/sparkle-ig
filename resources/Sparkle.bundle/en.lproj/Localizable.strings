@@ -2122,6 +2122,8 @@
 "PROFILE_TABS_HEADER" = "Tabs";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adds your saved collections as a tab on your own profile. Refresh your profile to apply.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Saved Tab";
+"PROFILE_TABS_REELS_SORT_HELP" = "Controls the chevron on the Reels tab that sorts a profile's reels by most viewed. Instagram turns it on and off for your account over time. On keeps it on, Off removes it on every profile, Default leaves Instagram's choice. Some profiles never get it, even when On. Reopen a profile to apply.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Reels Tab Sort";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Shows thumbnails on the posts and tagged grids as squares instead of the taller 3:4 layout, and uses a square icon for the grid tab. Reopen a profile to apply.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Square Grid";
 "PROFILE_TITLE" = "Profile";

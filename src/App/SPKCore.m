@@ -116,6 +116,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"profile_square_grid" : @(NO),
         @"profile_exact_follower_count" : @(NO),
         @"profile_highlight_reorder" : @(NO),
+        @"profile_reels_sort_mode" : @"default",
         @"profile_follow_indicator" : @(NO),
         // The mode (`profile_follow_indicator_mode`) and colorful
         // (`profile_follow_indicator_colorful`) keys are intentionally left

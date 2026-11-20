@@ -115,6 +115,9 @@ BOOL SPKMobileConfigResolveParams(uint32_t config, const SPKMobileConfigParamSpe
 typedef struct {
     unsigned long long param;
     __unsafe_unretained NSString *prefKey;
+    // Set for a menu preference: the override applies while the string
+    // preference equals it. Nil for a switch preference.
+    __unsafe_unretained NSString *mode;
     BOOL isDouble;
     BOOL boolValue;
     double doubleValue;
@@ -131,7 +134,8 @@ static const SPKMCOverride *SPKMCActiveOverride(unsigned long long param, BOOL i
         // overridden parameters, never on the hot path of every other read.
         if (entry->param != param || entry->isDouble != isDouble)
             continue;
-        if ([SPKUtils getBoolPref:entry->prefKey])
+        if (entry->mode ? [[SPKUtils getStringPref:entry->prefKey] isEqualToString:entry->mode]
+                        : [SPKUtils getBoolPref:entry->prefKey])
             return entry;
     }
     return NULL;
@@ -300,6 +304,8 @@ static void SPKMCRegister(SPKMCOverride entry) {
     }
     // The registry holds the key without retaining it; keep it alive for the process.
     entry.prefKey = (__bridge NSString *)CFBridgingRetain([entry.prefKey copy]);
+    if (entry.mode)
+        entry.mode = (__bridge NSString *)CFBridgingRetain([entry.mode copy]);
     sSPKMCOverrides[count] = entry;
     atomic_store_explicit(&sSPKMCOverrideCount, count + 1, memory_order_release);
     [lock unlock];
@@ -316,4 +322,10 @@ void SPKMobileConfigOverrideBool(unsigned long long param, NSString *prefKey, BO
 
 void SPKMobileConfigOverrideDouble(unsigned long long param, NSString *prefKey, double value) {
     SPKMCRegister((SPKMCOverride){.param = param, .prefKey = prefKey, .isDouble = YES, .doubleValue = value});
+}
+
+void SPKMobileConfigOverrideBoolForMode(unsigned long long param, NSString *prefKey, NSString *mode, BOOL value) {
+    if (!mode)
+        return;
+    SPKMCRegister((SPKMCOverride){.param = param, .prefKey = prefKey, .mode = mode, .isDouble = NO, .boolValue = value});
 }

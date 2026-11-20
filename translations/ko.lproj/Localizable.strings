@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "탭";
 "PROFILE_TABS_SAVED_TAB_HELP" = "저장한 컬렉션을 내 프로필의 탭으로 추가합니다. 적용하려면 프로필을 새로고침하세요.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "저장됨 탭";
+"PROFILE_TABS_REELS_SORT_HELP" = "릴스 탭의 쉐브론을 제어하며, 프로필의 릴스를 조회수가 많은 순으로 정렬합니다. Instagram은 시간이 지나면서 회원님의 계정에 대해 이를 켜고 끕니다. 켜기으로 두면 계속 켜 두고, 끄기로 두면 모든 프로필에서 제거하며, 기본값로 두면 Instagram의 판단을 따릅니다. 켜기 상태에서도 일부 프로필에는 나타나지 않습니다. 적용하려면 프로필을 다시 여세요.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "릴스 탭 정렬";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "게시물 및 태그된 그리드의 썸네일을 더 긴 3:4 레이아웃 대신 정사각형으로 표시하고 그리드 탭에 정사각형 아이콘을 사용합니다. 적용하려면 프로필을 다시 여세요.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "정사각형 그리드";
 "PROFILE_TITLE" = "프로필";

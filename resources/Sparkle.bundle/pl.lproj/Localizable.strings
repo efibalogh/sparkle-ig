@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Karty";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Dodaje zapisane kolekcje jako zakładkę na Twoim profilu. Odśwież profil, aby zastosować.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Zakładka Zapisane";
+"PROFILE_TABS_REELS_SORT_HELP" = "Steruje strzałką na zakładce Rolki, która sortuje rolki profilu od najczęściej wyświetlanych. Instagram z czasem włącza i wyłącza tę funkcję na Twoim koncie. Wł. zostawia ją włączoną, Wył. usuwa ją z każdego profilu, a Domyślnie pozostawia wybór Instagramowi. Niektóre profile, nawet przy Wł., jej nie dostają. Otwórz profil ponownie, aby zastosować.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Sortowanie zakładki Rolki";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Pokazuje miniatury na siatkach postów i otagowanych jako kwadraty zamiast wyższego układu 3:4 i używa kwadratowej ikony dla zakładki siatki. Otwórz profil ponownie, aby zastosować.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Kwadratowa siatka";
 "PROFILE_TITLE" = "Profil";

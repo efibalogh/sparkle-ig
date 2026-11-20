@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Onglets";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Ajoute tes collections enregistrées sous forme d'onglet sur ton propre profil. Actualise ton profil pour appliquer.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Onglet Enregistrés";
+"PROFILE_TABS_REELS_SORT_HELP" = "Contrôle la flèche de l'onglet Reels qui trie les reels d'un profil par nombre de vues. Instagram l'active et la désactive pour votre compte au fil du temps. Le réglage Activé la garde active, Désactivé la retire de chaque profil, Par défaut laisse le choix à Instagram. Certains profils ne l'obtiennent jamais, même avec Activé. Rouvrez un profil pour appliquer.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Tri de l'onglet Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Affiche les miniatures des grilles de publications et d’identifications en carrés au lieu de la mise en page 3:4 plus haute, et utilise une icône carrée pour l’onglet grille. Rouvrez un profil pour appliquer.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Grille carrée";
 "PROFILE_TITLE" = "Profil";

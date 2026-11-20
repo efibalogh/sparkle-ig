@@ -40,6 +40,11 @@ BOOL SPKMobileConfigResolveParams(uint32_t config, const SPKMobileConfigParamSpe
 void SPKMobileConfigOverrideBool(unsigned long long param, NSString *prefKey, BOOL value);
 void SPKMobileConfigOverrideDouble(unsigned long long param, NSString *prefKey, double value);
 
+// Same, for a menu preference: the value is returned while the string
+// preference `prefKey` equals `mode`, so one parameter can carry a different
+// override per menu choice.
+void SPKMobileConfigOverrideBoolForMode(unsigned long long param, NSString *prefKey, NSString *mode, BOOL value);
+
 #ifdef __cplusplus
 }
 #endif

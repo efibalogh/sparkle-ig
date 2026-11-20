@@ -26,6 +26,7 @@ SPKSetting *SPKActionButtonDefaultActionNavigationSetting(SPKActionButtonSource 
 SPKSetting *SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSource source, NSString *topicTitle, NSArray<NSString *> *supportedActions, NSArray<SPKActionMenuSection *> *defaultSections);
 UIMenu *SPKReelsTapControlMenu(void);
 UIMenu *SPKReelsAutoScrollDefaultMenu(void);
+UIMenu *SPKProfileReelsSortModeMenu(void);
 /// "Keep Speed For" choices for a playback controls scope key (`stories_playback_speed_scope`, ...).
 UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey);
 UIMenu *SPKMainFeedModeMenu(void);

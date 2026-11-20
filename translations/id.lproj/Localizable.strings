@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Menambahkan koleksi tersimpanmu sebagai tab di profil sendiri. Segarkan profilmu untuk menerapkannya.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Tab Tersimpan";
+"PROFILE_TABS_REELS_SORT_HELP" = "Mengatur chevron di tab Reels yang mengurutkan reels profil berdasarkan yang paling banyak ditonton. Instagram menyalakan dan mematikannya untuk akun Anda dari waktu ke waktu. Aktif membuatnya tetap aktif, Nonaktif menghapusnya dari setiap profil, dan Bawaan membiarkan pilihan di tangan Instagram. Beberapa profil tidak pernah mendapatkannya, bahkan saat Aktif. Buka ulang profil untuk menerapkan.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Urutan Tab Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Menampilkan thumbnail di grid postingan dan tandai sebagai persegi, bukan tata letak 3:4 yang lebih tinggi, serta memakai ikon persegi untuk tab grid. Buka ulang profil untuk menerapkan.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Grid Persegi";
 "PROFILE_TITLE" = "Profil";

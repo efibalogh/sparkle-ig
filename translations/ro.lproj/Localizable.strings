@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "File";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adaugă colecțiile tale salvate ca filă pe propriul profil. Reîmprospătează profilul pentru a aplica.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Fila Salvate";
+"PROFILE_TABS_REELS_SORT_HELP" = "Controlează săgeata de pe fila Reels care sortează reel-urile unui profil după cele mai vizionate. Instagram o activează și o dezactivează pentru contul tău în timp. Cu Pornit rămâne activă, cu Oprit este eliminată de pe fiecare profil, iar cu Implicit alegerea rămâne la Instagram. Unele profiluri nu o primesc niciodată, chiar și cu Pornit. Redeschide un profil pentru a aplica.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Sortare în fila Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Afișează miniaturile din grilele de postări și etichete ca pătrate în loc de aspectul 3:4 mai înalt și folosește o pictogramă pătrată pentru fila grilei. Redeschide un profil pentru a aplica.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Grilă pătrată";
 "PROFILE_TITLE" = "Profil";

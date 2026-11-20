@@ -252,6 +252,20 @@ UIMenu *SPKReelsAutoScrollDefaultMenu(void) {
     ]];
 }
 
+UIMenu *SPKProfileReelsSortModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"profile_reels_sort_mode", @"default", NO),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, @"profile_reels_sort_mode", @"on", NO),
+                         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"profile_reels_sort_mode", @"off", NO)
+                     ]]
+    ]];
+}
+
 UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_VIDEO"), nil, nil, defaultsKey, @"video", NO),

@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "标签页";
 "PROFILE_TABS_SAVED_TAB_HELP" = "将你收藏的合集作为标签页添加到你自己的主页。刷新主页即可生效。";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "收藏标签页";
+"PROFILE_TABS_REELS_SORT_HELP" = "控制 Reels 标签页上的箭头，它会按播放量从高到低排序个人主页的 Reels。Instagram 会随时间为您的账号开启或关闭此功能。“开启”保持开启，“关闭”在所有个人主页上移除，“默认”则由 Instagram 决定。部分个人主页即使在“开启”时也不会显示。重新打开个人主页即可生效。";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Reels 标签页排序";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "将帖子和被标记网格中的缩略图显示为正方形，而不是更高的 3:4 布局，并为网格标签使用方形图标。重新打开主页以应用。";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "方形网格";
 "PROFILE_TITLE" = "个人档案";

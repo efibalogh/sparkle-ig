@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Pestañas";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Añade tus colecciones guardadas como una pestaña en tu propio perfil. Actualiza tu perfil para aplicarlo.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Pestaña de guardados";
+"PROFILE_TABS_REELS_SORT_HELP" = "Controla la flecha de la pestaña Reels que ordena los reels de un perfil por los más vistos. Instagram la activa y la desactiva en tu cuenta con el tiempo. Con Activado se mantiene activa, con Desactivado se quita de todos los perfiles y con Predeterminado la decisión queda en Instagram. Algunos perfiles nunca la reciben, incluso con Activado. Vuelve a abrir un perfil para aplicarlo.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Orden de la pestaña Reels";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Muestra las miniaturas de las cuadrículas de publicaciones y etiquetas como cuadrados en lugar del diseño más alto 3:4, y usa un icono cuadrado para la pestaña de cuadrícula. Vuelve a abrir un perfil para aplicarlo.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Cuadrícula cuadrada";
 "PROFILE_TITLE" = "Perfil";

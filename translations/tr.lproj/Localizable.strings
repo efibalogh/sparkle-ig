@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "Sekmeler";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Kaydedilen koleksiyonlarını kendi profilinde bir sekme olarak ekler. Uygulamak için profilini yenile.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Kaydedilenler Sekmesi";
+"PROFILE_TABS_REELS_SORT_HELP" = "Profilin reels'lerini en çok izlenene göre sıralayan Reels sekmesindeki şevronu denetler. Instagram bu özelliği zamanla hesabınız için açıp kapatır. Açık ile açık kalır, Kapalı ile her profilde kaldırılır, Varsayılan ile seçim Instagram'a bırakılır. Bazı profiller Açık olsa bile bunu hiç almaz. Uygulamak için profili yeniden açın.";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Reels Sekmesi Sıralaması";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Gönderi ve etiketlenenler ızgaralarındaki küçük resimleri daha uzun 3:4 düzeni yerine kare olarak gösterir ve ızgara sekmesi için kare simge kullanır. Uygulamak için profili yeniden açın.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Kare Izgara";
 "PROFILE_TITLE" = "Profil";

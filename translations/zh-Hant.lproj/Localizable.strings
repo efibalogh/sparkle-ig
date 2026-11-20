@@ -2059,6 +2059,8 @@
 "PROFILE_TABS_HEADER" = "分頁";
 "PROFILE_TABS_SAVED_TAB_HELP" = "在你自己的個人檔案加入已儲存收藏作為一個分頁。重新整理個人檔案即可套用。";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "已儲存分頁";
+"PROFILE_TABS_REELS_SORT_HELP" = "控制 Reels 分頁上的箭頭，依播放次數由高到低排序個人檔案的 Reels。Instagram 會隨時間為您的帳號開啟或關閉此功能。「開啟」保持開啟，「關閉」在所有個人檔案中移除，「預設」則由 Instagram 決定。部分個人檔案即使設為「開啟」也不會顯示。重新開啟個人檔案即可套用。";
+"PROFILE_TABS_REELS_SORT_TITLE" = "Reels 分頁排序";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "將貼文和被標註網格中的縮圖顯示為正方形，而非較高的 3:4 版面，並為網格分頁使用方形圖示。重新開啟個人檔案以套用。";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "方形網格";
 "PROFILE_TITLE" = "個人檔案";
