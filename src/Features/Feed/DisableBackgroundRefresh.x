@@ -170,7 +170,7 @@ static void SPKInstallRefreshUtilityHooks(void) {
 %end
 
 // Implemented in FeedRefreshConfirm.x.
-BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController);
+BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController, dispatch_block_t replay);
 // Implemented in Navigation.xm.
 BOOL SPKNavigationIsApplyingLaunchTab(void);
 
@@ -247,7 +247,11 @@ static void spkScrollFeedToTop(UIViewController *feedController) {
 
     // Confirm Feed Refresh scrolls up, shows the spinner and asks. Without a
     // refresh control to drive it only scrolls up, so nothing refreshes unasked.
-    if (disableRefresh || !SPKFeedConfirmHomeTabRefresh(top))
+    // On the Pull to Tune feed this press runs untouched and the prompt comes
+    // after IG starts the logo.
+    if (disableRefresh || !SPKFeedConfirmHomeTabRefresh(top, ^{
+            %orig;
+        }))
         spkScrollFeedToTop(top);
 }
 

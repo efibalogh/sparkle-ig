@@ -1057,6 +1057,17 @@
 - (void)finishLoading;
 @end
 
+// IG 456+ "Pull to Tune" home feed (server-gated): the feed controller hosts an
+// IGPullToTuneController.IGPullToTuneCoordinator, which owns the pull and calls
+// back into the controller to run the refresh.
+@interface IGMainFeedViewController_objc : UIViewController
+@property (readonly, nonatomic) IGRefreshControl *pullToTuneRefreshControl;
+@property (retain, nonatomic) id pullToTuneCoordinator;
+- (BOOL)pullToTuneIsEnabled;
+- (void)pullToTuneExecuteRefresh;
+- (void)pullToTuneDidStartRefresh;
+@end
+
 @interface IGDirectThreadViewDrawingViewController : UIViewController
 - (void)drawingControls:controls didSelectColor:color;
 @end

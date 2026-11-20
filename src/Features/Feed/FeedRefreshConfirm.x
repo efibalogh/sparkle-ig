@@ -6,7 +6,9 @@
 // entry points are Swift on newer builds and may be called directly, so they are
 // only a second line: they wait for an answer already being asked for, pass
 // through while a confirmed refresh runs, and gate on their own when they are
-// the first to arrive. One pull therefore asks exactly once.
+// the first to arrive. One pull therefore asks exactly once. The Pull to Tune
+// feed (logo spinner) is the exception: it is gated at -pullToTuneExecuteRefresh,
+// see the Pull to Tune section.
 //
 // A status bar tap never touches the refresh control: the feed refreshes from
 // inside the system scroll-to-top, which first asks the feed's scroll delegate
@@ -114,6 +116,26 @@ static void SPKFeedFinishCancelledPull(IGRefreshControl *control) {
         [control finishLoading];
 }
 
+// MARK: - Pull to Tune
+
+// Some accounts get a home feed where a pull past the trigger point can open the
+// feed tuning screen instead of refreshing (an Instagram logo replaces the
+// spinner). There the control's ValueChanged and the controller's PTR entry
+// point only mark a refresh as pending; the coordinator decides on release and
+// then asks the controller to -pullToTuneExecuteRefresh, which is what fetches.
+// Holding the earlier steps desynchronises the coordinator (the release arrives
+// after it has already seen the drag end, so it never executes the refresh and
+// the spinner is left in a half state), so on that feed the gate sits on the
+// execute call alone.
+static BOOL sSPKFeedPullToTuneGateInstalled = NO;
+
+static BOOL SPKFeedUsesPullToTune(id controller) {
+    if (!sSPKFeedPullToTuneGateInstalled || ![controller respondsToSelector:@selector(pullToTuneExecuteRefresh)] ||
+        ![controller respondsToSelector:@selector(pullToTuneIsEnabled)])
+        return NO;
+    return [(IGMainFeedViewController_objc *)controller pullToTuneIsEnabled];
+}
+
 static void SPKFeedHandlePullRefresh(id controller, IGRefreshControl *control, dispatch_block_t orig) {
     if (!SPKFeedShouldConfirmRefresh() || SPKFeedPassesThrough()) {
         orig();
@@ -121,6 +143,12 @@ static void SPKFeedHandlePullRefresh(id controller, IGRefreshControl *control, d
     }
     if (SPKFeedDeferIfPromptPending(orig))
         return;
+    // Only marks the refresh pending on the Pull to Tune feed; the execute call
+    // asks instead.
+    if (SPKFeedUsesPullToTune(controller)) {
+        orig();
+        return;
+    }
 
     IGRefreshControl *refreshControl = control ?: SPKFeedRefreshControlForController(controller);
     SPKLog(@"Feed", @"Asking before feed refresh (%@)", NSStringFromClass([controller class]));
@@ -214,6 +242,72 @@ static void SPKFeedHookPullEntryPoint(Class cls, SEL sel) {
     MSHookMessageEx(cls, sel, replacement, &orig);
 }
 
+static IGRefreshControl *SPKFeedPullToTuneRefreshControl(id controller) {
+    id control = nil;
+    if ([controller respondsToSelector:@selector(pullToTuneRefreshControl)])
+        control = [(IGMainFeedViewController_objc *)controller pullToTuneRefreshControl];
+    if (![control isKindOfClass:objc_getClass("IGRefreshControl")])
+        control = SPKFeedRefreshControlForController(controller);
+    return control;
+}
+
+// Ending the control's loading state runs IG's own teardown (the logo shrinks
+// and the coordinator hears -refreshDidFinish through the control's delegate).
+// If the coordinator still believes a refresh is in flight once the control is
+// idle again, it is told directly so the next pull is not swallowed.
+static void SPKFeedFinishCancelledPullToTune(id controller, IGRefreshControl *control) {
+    SPKFeedFinishCancelledPull(control);
+    __weak id weakController = controller;
+    __weak IGRefreshControl *weakControl = control;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        id strongController = weakController;
+        IGRefreshControl *strongControl = weakControl;
+        if (!strongController || sSPKFeedRefreshPromptPending)
+            return;
+        if (strongControl && [strongControl respondsToSelector:@selector(refreshState)] && strongControl.refreshState != 0)
+            return;
+        id coordinator = [strongController respondsToSelector:@selector(pullToTuneCoordinator)]
+                             ? [(IGMainFeedViewController_objc *)strongController pullToTuneCoordinator]
+                             : nil;
+        SEL inFlightSel = NSSelectorFromString(@"isRefreshInFlight");
+        SEL finishSel = NSSelectorFromString(@"refreshDidFinish");
+        if (![coordinator respondsToSelector:inFlightSel] || ![coordinator respondsToSelector:finishSel])
+            return;
+        if (((BOOL (*)(id, SEL))objc_msgSend)(coordinator, inFlightSel)) {
+            SPKLog(@"Feed", @"Pull to Tune still in flight after cancel, finishing it");
+            ((void (*)(id, SEL))objc_msgSend)(coordinator, finishSel);
+        }
+    });
+}
+
+static void SPKFeedHookPullToTuneExecute(Class cls) {
+    SEL sel = @selector(pullToTuneExecuteRefresh);
+    if (!cls || !SPKFeedClassOwnsMethod(cls, sel))
+        return;
+    __block IMP orig = NULL;
+    IMP replacement = imp_implementationWithBlock(^(id self) {
+        dispatch_block_t call = ^{
+            ((void (*)(id, SEL))orig)(self, sel);
+        };
+        if (!SPKFeedShouldConfirmRefresh() || SPKFeedPassesThrough()) {
+            call();
+            return;
+        }
+        if (SPKFeedDeferIfPromptPending(call))
+            return;
+
+        IGRefreshControl *control = SPKFeedPullToTuneRefreshControl(self);
+        SPKLog(@"Feed", @"Asking before Pull to Tune feed refresh (%@)", NSStringFromClass([self class]));
+        __weak id weakSelf = self;
+        SPKFeedPresentPrompt(call, ^{
+            SPKFeedFinishCancelledPullToTune(weakSelf, control);
+        });
+        sSPKFeedHeldControl = control;
+    });
+    MSHookMessageEx(cls, sel, replacement, &orig);
+    sSPKFeedPullToTuneGateInstalled = YES;
+}
+
 // The release callback can start the refresh on older builds, so it waits for
 // a pending prompt instead of racing it.
 static void SPKFeedHookReleaseCallback(Class cls) {
@@ -293,6 +387,123 @@ static void SPKFeedStartSpinnerWhenAtTop(UIScrollView *scrollView, IGRefreshCont
 // (ValueChanged, the release callback, the controller's refresh entry point)
 // waits for the answer. Confirming lets those run, or sends ValueChanged itself
 // when starting the spinner sent nothing. Cancelling ends the spinner.
+// On the Pull to Tune feed a tap refresh is run by the feed's own tap handling
+// (the Home tab press or the status bar scroll-to-top): it starts the control
+// loading and drives the coordinator itself, with no ValueChanged in between,
+// and -pullToTuneDidStartRefresh only reports a fetch already sent. Starting the
+// control alone shows the logo but never fetches. So IG's tap runs untouched
+// (it scrolls up and the logo animates, as for a pull), and the prompt sits on
+// the feed view model's head-load fetch, which then waits for the answer while
+// the logo keeps going. Only a fetch armed by a tap Sparkle saw is asked about,
+// since IG fetches the feed on its own for other reasons (launch, hot start).
+static CFTimeInterval const kSPKFeedPullToTuneTapArmWindow = 1.5;
+static CFTimeInterval sSPKFeedPullToTuneTapArmedUntil = 0;
+static __weak id sSPKFeedPullToTuneTapController = nil;
+static __weak IGRefreshControl *sSPKFeedPullToTuneTapControl = nil;
+// A status bar tap hands the scroll to the system's scroll-to-top, which can run
+// for a while from far down; IG starts the logo straight away there instead of
+// waiting for the top, so Sparkle does too.
+static BOOL sSPKFeedPullToTuneTapWaitsForTop = YES;
+
+static void SPKFeedArmPullToTuneTap(IGRefreshControl *control, BOOL waitForTop) {
+    sSPKFeedPullToTuneTapArmedUntil = CACurrentMediaTime() + kSPKFeedPullToTuneTapArmWindow;
+    sSPKFeedPullToTuneTapWaitsForTop = waitForTop;
+    sSPKFeedPullToTuneTapControl = control;
+    sSPKFeedPullToTuneTapController = SPKFeedControllerForRefreshControl(control);
+}
+
+static void SPKFeedSendCoordinator(id controller, NSString *selectorName) {
+    id coordinator = [controller respondsToSelector:@selector(pullToTuneCoordinator)]
+                         ? [(IGMainFeedViewController_objc *)controller pullToTuneCoordinator]
+                         : nil;
+    SEL sel = NSSelectorFromString(selectorName);
+    if ([coordinator respondsToSelector:sel])
+        ((void (*)(id, SEL))objc_msgSend)(coordinator, sel);
+}
+
+// IG's tap shows the logo only after the fetch call returns as started
+// (-startLoadingAnimated:, then the coordinator's refresh chrome), and it reads
+// that from the fetch actually running, so a held fetch leaves the feed without
+// a logo. Sparkle starts both itself once the feed is at the top, while the
+// prompt is still pending.
+static void SPKFeedStartPullToTuneTapLogo(id controller, IGRefreshControl *control, NSUInteger token, NSInteger attemptsLeft) {
+    if (token != sSPKFeedTapPromptToken || !sSPKFeedRefreshPromptPending || !control || sSPKFeedTapSpinnerStarted)
+        return;
+    id scrollView = [SPKUtils getIvarForObj:control name:"_scrollView"];
+    BOOL settled = ![scrollView isKindOfClass:[UIScrollView class]] ||
+                   (SPKFeedScrollViewIsAtTop(scrollView) && ![(UIScrollView *)scrollView isDecelerating]);
+    if (!settled && attemptsLeft > 0) {
+        __weak id weakController = controller;
+        __weak IGRefreshControl *weakControl = control;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            SPKFeedStartPullToTuneTapLogo(weakController, weakControl, token, attemptsLeft - 1);
+        });
+        return;
+    }
+    if (control.refreshState != 0 || ![control respondsToSelector:@selector(startLoadingAnimated:)])
+        return;
+    sSPKFeedTapSpinnerStarted = YES;
+    [control startLoadingAnimated:YES];
+    SPKFeedSendCoordinator(controller, @"startRefreshChrome");
+}
+
+typedef BOOL (*SPKFeedViewModelFetchIMP)(id, SEL, long long, id, id, id, BOOL, id, id);
+
+static void SPKFeedHookViewModelFetch(void) {
+    Class cls = objc_getClass("IGMainFeedViewModel");
+    SEL sel = NSSelectorFromString(@"fetchDataWithMainFeedFetchReason:hoistedMediaID:hoistedMediaShortcode:"
+                                   @"deeplinkURL:isAppStartNonFeedSurface:requestCancellationBlock:cachedMediaIDs:");
+    if (!cls || !SPKFeedClassOwnsMethod(cls, sel))
+        return;
+    __block IMP orig = NULL;
+    IMP replacement = imp_implementationWithBlock(^BOOL(id self, long long reason, id mediaID, id shortcode, id url,
+                                                        BOOL appStartNonFeed, id cancellationBlock, id cachedIDs) {
+        dispatch_block_t call = ^{
+            ((SPKFeedViewModelFetchIMP)orig)(self, sel, reason, mediaID, shortcode, url, appStartNonFeed, cancellationBlock, cachedIDs);
+        };
+        BOOL armed = CACurrentMediaTime() < sSPKFeedPullToTuneTapArmedUntil;
+        if (!armed || !SPKFeedShouldConfirmRefresh() || SPKFeedPassesThrough())
+            return ((SPKFeedViewModelFetchIMP)orig)(self, sel, reason, mediaID, shortcode, url, appStartNonFeed, cancellationBlock, cachedIDs);
+        sSPKFeedPullToTuneTapArmedUntil = 0;
+        // A YES keeps the caller treating the refresh as started; the fetch
+        // itself runs once the answer is Confirm.
+        if (SPKFeedDeferIfPromptPending(call))
+            return YES;
+
+        id controller = sSPKFeedPullToTuneTapController;
+        IGRefreshControl *control = sSPKFeedPullToTuneTapControl;
+        SPKLog(@"Feed", @"Asking before Pull to Tune tap refresh (reason %lld)", reason);
+        __weak id weakController = controller;
+        __weak IGRefreshControl *weakControl = control;
+        NSUInteger token = ++sSPKFeedTapPromptToken;
+        NSInteger attempts = sSPKFeedPullToTuneTapWaitsForTop ? 40 : 0;
+        sSPKFeedTapSpinnerStarted = NO;
+        SPKFeedPresentPrompt(^{
+            // Confirmed before the logo got going: show it now, as IG would have.
+            id strongController = weakController;
+            IGRefreshControl *strongControl = weakControl;
+            if (!sSPKFeedTapSpinnerStarted && strongControl && strongControl.refreshState == 0) {
+                sSPKFeedTapSpinnerStarted = YES;
+                [strongControl startLoadingAnimated:YES];
+                SPKFeedSendCoordinator(strongController, @"startRefreshChrome");
+            }
+            call();
+            if ([strongController respondsToSelector:@selector(pullToTuneDidStartRefresh)])
+                ((void (*)(id, SEL))objc_msgSend)(strongController, @selector(pullToTuneDidStartRefresh));
+        }, ^{
+            if (sSPKFeedTapSpinnerStarted)
+                SPKFeedFinishCancelledPullToTune(weakController, weakControl);
+        });
+        sSPKFeedHeldControl = control;
+        // After IG's tap handler returns, so its own scroll to the top has begun.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            SPKFeedStartPullToTuneTapLogo(weakController, weakControl, token, attempts);
+        });
+        return YES;
+    });
+    MSHookMessageEx(cls, sel, replacement, &orig);
+}
+
 static void SPKFeedConfirmTapRefresh(UIScrollView *scrollView, IGRefreshControl *control) {
     NSUInteger token = ++sSPKFeedTapPromptToken;
     __weak IGRefreshControl *weakControl = control;
@@ -346,7 +557,8 @@ static UIScrollView *SPKFeedScrollViewWithRefreshControl(UIViewController *root,
 // Called by the IGTabBarController -_timelineButtonPressed hook when the Home tab
 // is re-tapped on the feed with Confirm Feed Refresh on. Returns NO when there is
 // no refresh control to drive; the caller then only scrolls to the top.
-BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController) {
+// `replay` runs IG's own re-tap handling; it is used on the Pull to Tune feed.
+BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController, dispatch_block_t replay) {
     if (sSPKFeedRefreshPromptPending)
         return YES;
     IGRefreshControl *control = nil;
@@ -356,7 +568,12 @@ BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController) {
         return NO;
     }
     SPKLog(@"Feed", @"Asking before Home tab feed refresh (%@, %@)", NSStringFromClass([feedController class]), NSStringFromClass([scrollView class]));
-    SPKFeedConfirmTapRefresh(scrollView, control);
+    if (replay && SPKFeedUsesPullToTune(SPKFeedControllerForRefreshControl(control))) {
+        SPKFeedArmPullToTuneTap(control, YES);
+        replay();
+    } else {
+        SPKFeedConfirmTapRefresh(scrollView, control);
+    }
     return YES;
 }
 
@@ -381,6 +598,11 @@ static void SPKFeedHookStatusBarScrollToTop(Class cls) {
             return NO;
         }
 
+        if (SPKFeedUsesPullToTune(SPKFeedControllerForRefreshControl(control))) {
+            // IG's own tap runs; the prompt comes from -pullToTuneDidStartRefresh.
+            SPKFeedArmPullToTuneTap(control, NO);
+            return ((BOOL (*)(id, SEL, UIScrollView *))orig)(self, sel, scrollView);
+        }
         SPKLog(@"Feed", @"Asking before status bar feed refresh (%@)", NSStringFromClass([self class]));
         SPKFeedConfirmTapRefresh(scrollView, control);
         return NO;
@@ -394,6 +616,7 @@ void SPKInstallFeedRefreshConfirmHooksIfNeeded(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         SPKFeedInstallRefreshControlGate();
+        SPKFeedHookViewModelFetch();
         Class controlClass = objc_getClass("IGRefreshControl");
         if (controlClass && class_getInstanceMethod(controlClass, @selector(finishLoading)))
             MSHookMessageEx(controlClass, @selector(finishLoading), (IMP)SPKFeedFinishLoading, (IMP *)&orig_SPKFeedFinishLoading);
@@ -410,6 +633,7 @@ void SPKInstallFeedRefreshConfirmHooksIfNeeded(void) {
             SPKFeedHookPullEntryPoint(cls, NSSelectorFromString(@"_refreshWhenPTR"));
             SPKFeedHookPullEntryPoint(cls, NSSelectorFromString(@"refreshWhenPTR"));
             SPKFeedHookReleaseCallback(cls);
+            SPKFeedHookPullToTuneExecute(cls);
         }
 
         // The feed scroll view's delegate (410 and later) and the Swift scroll

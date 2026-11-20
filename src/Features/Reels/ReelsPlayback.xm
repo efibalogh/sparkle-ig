@@ -147,6 +147,25 @@ static void SPKReelsHandleRefresh(IGSundialFeedViewController *controller, IGRef
         message:SPKL(@"REELS_REELS_PLAYBACK_REFRESH_REELS_FEED_CONFIRMATION_MESSAGE")];
 }
 
+// The logo refresh spinner (a server-gated test) changes the pull: ValueChanged
+// arrives mid-drag and only marks the refresh pending, and the network source
+// fetches once the finger lifts. Holding ValueChanged there leaves the release
+// with nothing pending, so Confirm never fetches and the logo stalls. With that
+// spinner the pull runs untouched and arms the fetch gate below instead, the
+// same gate a tab re-tap uses.
+static CFTimeInterval const kSPKReelsPullArmWindow = 10.0;
+static __weak IGSundialFeedViewController *sSPKReelsPullController = nil;
+static __weak IGRefreshControl *sSPKReelsPullControl = nil;
+static CFTimeInterval sSPKReelsPullArmedUntil = 0;
+
+static BOOL SPKReelsControlUsesLogoSpinner(UIControl *control) {
+    SEL sel = NSSelectorFromString(@"customSpinner");
+    if (![control respondsToSelector:sel])
+        return NO;
+    id spinner = ((id (*)(id, SEL))objc_msgSend)(control, sel);
+    return spinner && [NSStringFromClass([spinner class]) containsString:@"LogoRefreshSpinner"];
+}
+
 static IMP sSPKOrigRefreshControlSendActions = NULL;
 
 static void SPKReelsRefreshControlSendActions(UIControl *self, SEL _cmd, UIControlEvents events) {
@@ -156,6 +175,13 @@ static void SPKReelsRefreshControlSendActions(UIControl *self, SEL _cmd, UIContr
     id delegate = [self respondsToSelector:@selector(delegate)] ? ((id (*)(id, SEL))objc_msgSend)(self, @selector(delegate)) : nil;
     Class feedClass = objc_getClass("IGSundialFeedViewController");
     if (!(events & UIControlEventValueChanged) || !feedClass || ![delegate isKindOfClass:feedClass] || !SPKReelsShouldGateRefresh()) {
+        orig();
+        return;
+    }
+    if (!sSPKReelsRunningConfirmedRefresh && !sSPKReelsRefreshPromptPending && SPKReelsControlUsesLogoSpinner(self)) {
+        sSPKReelsPullController = delegate;
+        sSPKReelsPullControl = (IGRefreshControl *)self;
+        sSPKReelsPullArmedUntil = CACurrentMediaTime() + kSPKReelsPullArmWindow;
         orig();
         return;
     }
@@ -258,6 +284,18 @@ static void SPKReelsInstallRefreshControlGate(void) {
 %group SPKReelsTabTapFetchHooks
 %hook IGSundialUnconnectedFeedNetworkSource
 - (BOOL)fetchDataWithAdditionalParameters:(id)parameters {
+    // A logo-spinner pull armed by its ValueChanged; Prevent Doom Scrolling
+    // applies to it as it does to any pull.
+    IGSundialFeedViewController *pullController = CACurrentMediaTime() < sSPKReelsPullArmedUntil ? sSPKReelsPullController : nil;
+    if (pullController && !sSPKReelsRunningConfirmedRefresh && SPKReelsShouldGateRefresh()) {
+        IGRefreshControl *control = sSPKReelsPullControl;
+        sSPKReelsPullArmedUntil = 0;
+        SPKReelsHandleRefresh(pullController, control, YES, ^{
+            %orig(parameters);
+        });
+        return YES;
+    }
+
     IGSundialFeedViewController *controller = sSPKReelsTabTapController;
     if (!controller || sSPKReelsRunningConfirmedRefresh || ![SPKUtils getBoolPref:@"reels_confirm_refresh"])
         return %orig(parameters);
