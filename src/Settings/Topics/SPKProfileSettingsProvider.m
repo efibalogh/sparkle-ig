@@ -175,18 +175,22 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
         ],
                         nil),
         SPKTopicSection(SPKL(@"PROFILE_TABS_HEADER"), @[
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SAVED_TAB_TITLE")
-                                           icon:SPKSettingsIcon(@"save")
-                                    defaultsKey:@"profile_saved_tab"],
-                               SPKL(@"PROFILE_TABS_SAVED_TAB_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SQUARE_GRID_TITLE")
                                            icon:SPKSettingsIcon(@"grid_square")
                                     defaultsKey:@"profile_square_grid"],
                                SPKL(@"PROFILE_TABS_SQUARE_GRID_HELP")),
+            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_GRID_FILTER_TITLE")
+                                                        icon:SPKSettingsIcon(@"filter")
+                                                        menu:SPKProfileGridFilterModeMenu()],
+                               SPKL(@"PROFILE_TABS_GRID_FILTER_HELP")),
             SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_REELS_SORT_TITLE")
                                                         icon:SPKSettingsIcon(@"sort")
                                                         menu:SPKProfileReelsSortModeMenu()],
-                               SPKL(@"PROFILE_TABS_REELS_SORT_HELP"))
+                               SPKL(@"PROFILE_TABS_REELS_SORT_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SAVED_TAB_TITLE")
+                                                          icon:SPKSettingsIcon(@"save")
+                                                   defaultsKey:@"profile_saved_tab"],
+                               SPKL(@"PROFILE_TABS_SAVED_TAB_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"PROFILE_INDICATORS_HEADER"), @[

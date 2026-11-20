@@ -252,6 +252,20 @@ UIMenu *SPKReelsAutoScrollDefaultMenu(void) {
     ]];
 }
 
+UIMenu *SPKProfileGridFilterModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"profile_grid_filter", @"off", NO),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"PROFILE_TABS_GRID_FILTER_ALL_OPTION"), nil, nil, @"profile_grid_filter", @"all", NO),
+                         SPKMenuCommand(SPKL(@"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION"), nil, nil, @"profile_grid_filter", @"posts", NO)
+                     ]]
+    ]];
+}
+
 UIMenu *SPKProfileReelsSortModeMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"profile_reels_sort_mode", @"default", NO),

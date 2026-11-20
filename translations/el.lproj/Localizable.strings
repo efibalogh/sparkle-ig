@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "ΣΑΣ ΑΚΟΛΟΥΘΕΙ";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Εικονίδιο & Κείμενο";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "ΔΕΝ ΣΕ ΑΚΟΛΟΥΘΕΙ";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Όλα";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Μόνο δημοσιεύσεις";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Εικονίδιο + Κείμενο";
 "PROFILE_HIGHLIGHTS_HEADER" = "Επισημάνσεις";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Σας επιτρέπει να αναδιατάξετε τις επισημάνσεις στο δικό σας προφίλ: κρατήστε πατημένη μια επισήμανση και σύρετέ τη σε νέα θέση. Χρησιμοποιεί την αναδιάταξη που διαθέτει σταδιακά το Instagram. Ανοίξτε ξανά το προφίλ σας για εφαρμογή.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Εικόνα Προφίλ";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Πάτα παρατεταμένα τη φωτογραφία προφίλ σε μια σελίδα προφίλ για να ανοίξει σε μεγέθυνση.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Αποθηκευμένα";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Όλα";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Προσθέτει στην καρτέλα δημοσιεύσεων ένα μενού για την απόκρυψη των Reels από τις δημοσιεύσεις ενός προφίλ. Η επιλογή ορίζει πώς ανοίγει κάθε προφίλ. Άνοιξε το μενού από το βέλος ή πάτησε ξανά την καρτέλα δημοσιεύσεων όταν οι καρτέλες είναι στην κορυφή.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Μόνο δημοσιεύσεις";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Φίλτρο καρτέλας δημοσιεύσεων";
 "PROFILE_TABS_HEADER" = "Καρτέλες";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Προσθέτει τις αποθηκευμένες συλλογές σου ως καρτέλα στο δικό σου προφίλ. Ανανέωσε το προφίλ σου για εφαρμογή.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Καρτέλα αποθηκευμένων";
 "PROFILE_TABS_REELS_SORT_HELP" = "Ελέγχει το βέλος στην καρτέλα Reels που ταξινομεί τα reels ενός προφίλ κατά τις περισσότερες προβολές. Το Instagram το ενεργοποιεί και το απενεργοποιεί για τον λογαριασμό σας με το πέρασμα του χρόνου. Με Ενεργό παραμένει ενεργό, με Ανενεργό αφαιρείται από κάθε προφίλ και με Προεπιλογή η επιλογή μένει στο Instagram. Ορισμένα προφίλ δεν το λαμβάνουν ποτέ, ακόμη και με Ενεργό. Ανοίξτε ξανά το προφίλ για να εφαρμοστεί.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Ταξινόμηση καρτέλας Reels";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Προσθέτει τις αποθηκευμένες συλλογές σου ως καρτέλα στο δικό σου προφίλ. Ανανέωσε το προφίλ σου για εφαρμογή.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Καρτέλα αποθηκευμένων";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Εμφανίζει τις μικρογραφίες στα πλέγματα δημοσιεύσεων και επισημάνσεων ως τετράγωνα αντί για την ψηλότερη διάταξη 3:4 και χρησιμοποιεί τετράγωνο εικονίδιο για την καρτέλα πλέγματος. Άνοιξε ξανά ένα προφίλ για εφαρμογή.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Τετράγωνο πλέγμα";
 "PROFILE_TITLE" = "Προφίλ";

@@ -74,6 +74,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Block doom-scrolling.
   - Build a custom tab bar with a live preview: reorder or hide destinations, choose launch and swipe behavior, trade a hidden tab for one-tap access to Saved collections in the custom layout, and drop the bar entirely when a single tab is left.
   - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
+  - Hide reels from a profile's posts tab with a menu on the tab, per profile or by default, including posts opened from the grid.
   - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
   - Show exact follower counts on profiles instead of abbreviated ones.
   - Hide your followers and following lists, and keep your account out of other people's lists, both saved to your Instagram account so they apply everywhere you sign in.

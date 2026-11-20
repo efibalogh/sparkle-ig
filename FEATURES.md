@@ -403,9 +403,10 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Reorder Highlights**: Turns on Instagram's drag-to-reorder for the highlights on your own profile: hold a highlight, then drag it to a new spot, and Instagram saves the order. Instagram is rolling this out gradually; this turns it on for your account. Reopen your profile to apply. On Instagram versions without the feature (such as 410) the switch is unavailable.
 
 ### Tabs
-- **Saved Tab**: Adds your saved collections as a tab at the end of your own profile's tab strip, using Instagram's own Saved page (header collapse and pull to refresh included). Refresh your profile to apply.
 - **Square Grid**: Shows thumbnails on the posts and tagged grids as squares instead of the taller 3:4 layout, and uses a square icon for the grid tab. Reopen a profile to apply.
+- **Posts Tab Filter**: Off, All or Posts Only. Adds a menu to the posts tab for hiding reels from a profile's posts. The option sets what each profile opens with. Open the menu from the chevron, or tap the posts tab again once its tabs are at the top.
 - **Reels Tab Sort**: Default, On or Off for the menu on the Reels tab that sorts a profile's reels by most viewed. Instagram turns it on and off for an account over time; On keeps it on and Off removes it on every profile. Default leaves Instagram's choice. Profiles the server marks ineligible get no chevron even when On. Reopen a profile to apply.
+- **Saved Tab**: Adds your saved collections as a tab at the end of your own profile's tab strip, using Instagram's own Saved page (header collapse and pull to refresh included). Refresh your profile to apply.
 
 ### Indicators
 - **Exact Follower Count**: Shows the full follower count in the profile header, using your device's number format.

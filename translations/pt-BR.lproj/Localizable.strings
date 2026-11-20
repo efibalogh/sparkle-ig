@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "SEGUINDO VOCÊ";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Ícone e texto";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NÃO TE SEGUE";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Tudo";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Só publicações";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Ícone + texto";
 "PROFILE_HIGHLIGHTS_HEADER" = "Destaques";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Permite reorganizar os destaques do seu próprio perfil: segure um destaque e arraste-o para uma nova posição. Usa a reordenação que o Instagram está liberando aos poucos. Abra seu perfil novamente para aplicar.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Foto de Perfil";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Toque e segure a foto de perfil em uma página de perfil para abri-la ampliada.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Salvos";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Tudo";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Adiciona um menu à aba de publicações para ocultar os reels das publicações de um perfil. A opção define como cada perfil abre. Abra o menu pela seta ou toque de novo na aba de publicações quando as abas estiverem no topo.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Só publicações";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Filtro da aba de publicações";
 "PROFILE_TABS_HEADER" = "Abas";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Adiciona suas coleções salvas como uma aba no seu próprio perfil. Atualize seu perfil para aplicar.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Aba Salvos";
 "PROFILE_TABS_REELS_SORT_HELP" = "Controla o chevron na aba Reels que ordena os reels de um perfil pelos mais vistos. O Instagram liga e desliga isso para sua conta ao longo do tempo. Com Ativado fica ativo, com Desativado é removido de todos os perfis, com Padrão a escolha fica com o Instagram. Alguns perfis nunca recebem, mesmo com Ativado. Reabra um perfil para aplicar.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Ordenação da aba Reels";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Adiciona suas coleções salvas como uma aba no seu próprio perfil. Atualize seu perfil para aplicar.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Aba Salvos";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Mostra as miniaturas das grades de publicações e marcações como quadrados em vez do layout 3:4 mais alto e usa um ícone quadrado na aba da grade. Abra um perfil novamente para aplicar.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Grade quadrada";
 "PROFILE_TITLE" = "Perfil";

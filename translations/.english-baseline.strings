@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "FOLLOWING YOU";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icon & Text";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NOT FOLLOWING YOU";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "All";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Posts Only";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon + Text";
 "PROFILE_HIGHLIGHTS_HEADER" = "Highlights";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Lets you rearrange the highlights on your own profile: hold a highlight, then drag it to a new spot. Uses the reordering Instagram is rolling out. Reopen your profile to apply.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profile Picture";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Long press the profile picture on a profile page to open it expanded.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Saved";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "All";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Adds a menu to the posts tab for hiding reels from a profile's posts. The option sets what each profile opens with. Open the menu from the chevron, or tap the posts tab again once its tabs are at the top.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Posts Only";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Posts Tab Filter";
 "PROFILE_TABS_HEADER" = "Tabs";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Adds your saved collections as a tab on your own profile. Refresh your profile to apply.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Saved Tab";
 "PROFILE_TABS_REELS_SORT_HELP" = "Controls the chevron on the Reels tab that sorts a profile's reels by most viewed. Instagram turns it on and off for your account over time. On keeps it on, Off removes it on every profile, Default leaves Instagram's choice. Some profiles never get it, even when On. Reopen a profile to apply.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Reels Tab Sort";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Adds your saved collections as a tab on your own profile. Refresh your profile to apply.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Saved Tab";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Shows thumbnails on the posts and tagged grids as squares instead of the taller 3:4 layout, and uses a square icon for the grid tab. Reopen a profile to apply.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Square Grid";
 "PROFILE_TITLE" = "Profile";

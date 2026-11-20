@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "СЛЕДЯТ ЗА ВАМИ";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Значок и текст";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "НЕ ПОДПИСАН НА ВАС";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Все";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Только публикации";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Значок + Текст";
 "PROFILE_HIGHLIGHTS_HEADER" = "Актуальное";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Позволяет менять порядок актуального в своём профиле: удерживайте историю из актуального и перетащите её на новое место. Использует изменение порядка, которое Instagram постепенно внедряет. Откройте профиль заново, чтобы применить.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Фото профиля";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Нажмите и удерживайте фото профиля на странице профиля, чтобы открыть его в увеличенном виде.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Сохранённое";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Все";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Добавляет на вкладку публикаций меню, которое скрывает Reels среди публикаций профиля. Параметр задаёт, в каком виде открывается каждый профиль. Откройте меню стрелкой или снова нажмите на вкладку публикаций, когда вкладки наверху.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Только публикации";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Фильтр вкладки публикаций";
 "PROFILE_TABS_HEADER" = "Вкладки";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Добавляет ваши сохранённые подборки как вкладку в вашем профиле. Обновите профиль, чтобы применить.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Вкладка «Сохранённое»";
 "PROFILE_TABS_REELS_SORT_HELP" = "Управляет шевроном на вкладке Reels, который сортирует рилсы профиля по количеству просмотров. Instagram со временем включает и выключает эту функцию для вашего аккаунта. «Включено» оставляет её включённой, «Отключено» убирает во всех профилях, а «По умолчанию» оставляет выбор за Instagram. Некоторые профили её не получают никогда, даже при «Включено». Откройте профиль заново, чтобы применить.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Сортировка вкладки Reels";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Добавляет ваши сохранённые подборки как вкладку в вашем профиле. Обновите профиль, чтобы применить.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Вкладка «Сохранённое»";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Показывает миниатюры в сетках публикаций и отметок квадратами вместо более высокой раскладки 3:4 и использует квадратный значок для вкладки сетки. Откройте профиль заново, чтобы применить.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Квадратная сетка";
 "PROFILE_TITLE" = "Профиль";

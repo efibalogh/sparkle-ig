@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "正在追蹤你";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "圖示與文字";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "未追蹤你";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "全部";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "僅貼文";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "圖示 + 文字";
 "PROFILE_HIGHLIGHTS_HEADER" = "精選動態";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "可重新排列你自己個人檔案上的精選動態：按住一則精選動態，然後拖曳到新位置。使用 Instagram 正在逐步推出的排序功能。重新開啟個人檔案後即會套用。";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "大頭貼";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "在個人檔案頁面長按大頭貼即可放大查看。";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "已儲存";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "全部";
+"PROFILE_TABS_GRID_FILTER_HELP" = "在貼文分頁加入選單，用來隱藏個人檔案貼文中的 Reels。此選項決定每個個人檔案開啟時的顯示方式。可從箭頭開啟選單，或在分頁位於頂端時再次點一下貼文分頁。";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "僅貼文";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "貼文分頁篩選";
 "PROFILE_TABS_HEADER" = "分頁";
-"PROFILE_TABS_SAVED_TAB_HELP" = "在你自己的個人檔案加入已儲存收藏作為一個分頁。重新整理個人檔案即可套用。";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "已儲存分頁";
 "PROFILE_TABS_REELS_SORT_HELP" = "控制 Reels 分頁上的箭頭，依播放次數由高到低排序個人檔案的 Reels。Instagram 會隨時間為您的帳號開啟或關閉此功能。「開啟」保持開啟，「關閉」在所有個人檔案中移除，「預設」則由 Instagram 決定。部分個人檔案即使設為「開啟」也不會顯示。重新開啟個人檔案即可套用。";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Reels 分頁排序";
+"PROFILE_TABS_SAVED_TAB_HELP" = "在你自己的個人檔案加入已儲存收藏作為一個分頁。重新整理個人檔案即可套用。";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "已儲存分頁";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "將貼文和被標註網格中的縮圖顯示為正方形，而非較高的 3:4 版面，並為網格分頁使用方形圖示。重新開啟個人檔案以套用。";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "方形網格";
 "PROFILE_TITLE" = "個人檔案";

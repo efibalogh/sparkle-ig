@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "正在关注您";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "图标和文本";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "未关注您";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "全部";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "仅帖子";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "图标 + 文本";
 "PROFILE_HIGHLIGHTS_HEADER" = "精选";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "可以重新排列你自己主页上的精选：按住一个精选，然后拖到新位置。使用 Instagram 正在逐步推出的排序功能。重新打开主页后生效。";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "资料图片";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "在个人主页长按头像即可放大查看。";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "已收藏";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "全部";
+"PROFILE_TABS_GRID_FILTER_HELP" = "在帖子标签页添加一个菜单，用于隐藏主页帖子中的 Reels。此选项决定每个主页打开时的显示方式。可从箭头打开菜单，或在标签位于顶部时再次轻点帖子标签页。";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "仅帖子";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "帖子标签页筛选";
 "PROFILE_TABS_HEADER" = "标签页";
-"PROFILE_TABS_SAVED_TAB_HELP" = "将你收藏的合集作为标签页添加到你自己的主页。刷新主页即可生效。";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "收藏标签页";
 "PROFILE_TABS_REELS_SORT_HELP" = "控制 Reels 标签页上的箭头，它会按播放量从高到低排序个人主页的 Reels。Instagram 会随时间为您的账号开启或关闭此功能。“开启”保持开启，“关闭”在所有个人主页上移除，“默认”则由 Instagram 决定。部分个人主页即使在“开启”时也不会显示。重新打开个人主页即可生效。";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Reels 标签页排序";
+"PROFILE_TABS_SAVED_TAB_HELP" = "将你收藏的合集作为标签页添加到你自己的主页。刷新主页即可生效。";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "收藏标签页";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "将帖子和被标记网格中的缩略图显示为正方形，而不是更高的 3:4 布局，并为网格标签使用方形图标。重新打开主页以应用。";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "方形网格";
 "PROFILE_TITLE" = "个人档案";

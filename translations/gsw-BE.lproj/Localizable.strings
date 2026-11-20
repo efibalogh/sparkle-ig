@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "FOLGT DIR";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icon u Text";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "FOLGT DIR NID";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Alli";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Nur Beiträg";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icon u Text";
 "PROFILE_HIGHLIGHTS_HEADER" = "Highlights";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Dämit chasch d Highlights uf dim eigete Profil neu aaordne: Heb es Highlight druckt und zieh's anen neue Platz. Nutzt d Neuaaordnig, wo Instagram schrittwiis iiführt. Öffne dis Profil nomal, zum's aawände.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profilbild";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Druck uf ere Profilsiite lang ufs Profilbild, zum es vergrösseret z'öffne.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Gspeicheret";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Alli";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Füegt im Beiträg-Tab es Menü dezue, wo d Reels us de Beiträg vomene Profil uusblendet. D Option leit fescht, wie jedes Profil uufgaht. Mach s Menü über de Pfiil uuf oder tipp nomal uf de Beiträg-Tab, wenn d Tabs zoberst sind.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Nur Beiträg";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Filter für de Beiträg-Tab";
 "PROFILE_TABS_HEADER" = "Tabs";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Füegt dyni gspeicherete Sammlige as Tab uf dym eigete Profil dezue. Aktualisier dy Profil zum's aawände.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Gspeicheret-Tab";
 "PROFILE_TABS_REELS_SORT_HELP" = "Steuert der Pfiil uf em Reels-Tab, wo d Reels vom Profil nach de meischte Aufrufe sortiert. Instagram schaltet's mit de Zyt fürs Konto ii und uus. Mit A blibt's aktiv, mit Us wird's bi jedem Profil entfernt, mit Standard entscheidet Instagram. Gwüssi Profil chönd's nie übercho, au mit A. Profil neu öffne zum aawände.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Sortierig vom Reels-Tab";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Füegt dyni gspeicherete Sammlige as Tab uf dym eigete Profil dezue. Aktualisier dy Profil zum's aawände.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Gspeicheret-Tab";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Zeigt d Vorschaubilder im Beiträg- und Markierigs-Raster als Quadrat statt im höchere 3:4-Layout und bruucht es quadratischs Symbol für de Raster-Tab. Mach es Profil nomol uf, damit s gilt.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Quadratischs Raster";
 "PROFILE_TITLE" = "Profil";

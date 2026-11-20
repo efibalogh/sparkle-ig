@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "JUS SEKA";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Piktograma ir tekstas";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "JŪSŲ NESEKA";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Visi";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Tik įrašai";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Piktograma + tekstas";
 "PROFILE_HIGHLIGHTS_HEADER" = "Akimirkos";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Leidžia pakeisti akimirkų tvarką jūsų profilyje: palaikykite akimirką, tada nuvilkite ją į naują vietą. Naudoja tvarkos keitimą, kurį Instagram diegia palaipsniui. Kad pritaikytumėte, iš naujo atidarykite profilį.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profilio nuotrauka";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Profilio puslapyje ilgai paspauskite profilio nuotrauką, kad ji atsidarytų padidinta.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Išsaugota";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Visi";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Prideda įrašų skirtuke meniu, kuriuo galima paslėpti Reels tarp profilio įrašų. Parinktis nustato, kaip atidaromas kiekvienas profilis. Meniu atidarykite rodykle arba dar kartą bakstelėkite įrašų skirtuką, kai skirtukai yra viršuje.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Tik įrašai";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Įrašų skirtuko filtras";
 "PROFILE_TABS_HEADER" = "Skirtukai";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Prideda išsaugotas kolekcijas kaip skirtuką jūsų profilyje. Norėdami pritaikyti, atnaujinkite profilį.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Išsaugotų skirtukas";
 "PROFILE_TABS_REELS_SORT_HELP" = "Valdo Reels skirtuko rodyklę, kuri profilio Reels rikiuoja pagal daugiausiai peržiūrų. Instagram laikui bėgant jūsų paskyrai ją įjungia ir išjungia. Esant Įjungta, ji lieka įjungta; esant Išjungta, pašalinama iš visų profilių; esant Numatytasis, pasirinkimas paliekamas Instagram. Kai kurie profiliai jos niekada negauna, net esant Įjungta. Norėdami taikyti, profilį atidarykite iš naujo.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Reels skirtuko rikiavimas";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Prideda išsaugotas kolekcijas kaip skirtuką jūsų profilyje. Norėdami pritaikyti, atnaujinkite profilį.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Išsaugotų skirtukas";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Įrašų ir pažymėtųjų tinklelių miniatiūras rodo kvadratais, o ne aukštesniu 3:4 išdėstymu, ir tinklelio skirtukui naudoja kvadratinę piktogramą. Norėdami pritaikyti, iš naujo atidarykite profilį.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Kvadratinis tinklelis";
 "PROFILE_TITLE" = "Profilis";

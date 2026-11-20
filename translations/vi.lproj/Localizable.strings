@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "ĐANG THEO DÕI BẠN";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Biểu tượng & Văn bản";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "KHÔNG THEO DÕI BẠN";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Tất cả";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Chỉ bài viết";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Biểu tượng + Văn bản";
 "PROFILE_HIGHLIGHTS_HEADER" = "Tin nổi bật";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Cho phép bạn sắp xếp lại tin nổi bật trên trang cá nhân của mình: giữ một tin nổi bật, rồi kéo đến vị trí mới. Sử dụng tính năng sắp xếp lại mà Instagram đang triển khai dần. Mở lại trang cá nhân để áp dụng.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Ảnh đại diện";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Nhấn giữ ảnh đại diện trên trang cá nhân để mở ảnh phóng to.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Đã lưu";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Tất cả";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Thêm menu vào tab bài viết để ẩn reels khỏi bài viết của trang cá nhân. Tùy chọn này quyết định cách mỗi trang cá nhân được mở. Mở menu từ mũi tên, hoặc chạm lại vào tab bài viết khi các tab đã ở trên cùng.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Chỉ bài viết";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Bộ lọc tab bài viết";
 "PROFILE_TABS_HEADER" = "Tab";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Thêm các bộ sưu tập đã lưu của bạn thành một tab trên trang cá nhân. Làm mới trang cá nhân để áp dụng.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Tab Đã lưu";
 "PROFILE_TABS_REELS_SORT_HELP" = "Điều khiển mũi tên trên tab Reels để sắp xếp reel của hồ sơ theo lượt xem nhiều nhất. Instagram bật và tắt tính năng này cho tài khoản của bạn theo thời gian. Khi Bật thì giữ bật, khi Tắt thì gỡ khỏi mọi hồ sơ, còn khi Mặc định thì Instagram quyết định. Một số hồ sơ không bao giờ nhận được tính năng này, kể cả khi Bật. Mở lại hồ sơ để áp dụng.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Sắp xếp tab Reels";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Thêm các bộ sưu tập đã lưu của bạn thành một tab trên trang cá nhân. Làm mới trang cá nhân để áp dụng.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Tab Đã lưu";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Hiển thị ảnh thu nhỏ trong lưới bài viết và được gắn thẻ dạng hình vuông thay vì bố cục 3:4 cao hơn, và dùng biểu tượng vuông cho tab lưới. Mở lại trang cá nhân để áp dụng.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Lưới vuông";
 "PROFILE_TITLE" = "Trang cá nhân";

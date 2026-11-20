@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "आपको फॉलो कर रहे हैं";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "आइकन और पाठ";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "आपको फॉलो नहीं कर रहे";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "सभी";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "केवल पोस्ट";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "आइकन + पाठ";
 "PROFILE_HIGHLIGHTS_HEADER" = "हाइलाइट्स";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "आपको अपनी प्रोफ़ाइल के हाइलाइट्स का क्रम बदलने देता है: किसी हाइलाइट को दबाकर रखें, फिर उसे नई जगह पर खींचें। Instagram द्वारा धीरे-धीरे जारी की जा रही क्रम बदलने की सुविधा का उपयोग करता है। लागू करने के लिए अपनी प्रोफ़ाइल फिर से खोलें।";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "प्रोफाइल चित्र";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "प्रोफ़ाइल पेज पर प्रोफ़ाइल फ़ोटो को देर तक दबाएँ ताकि वह बड़ी होकर खुले।";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "सहेजे गए";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "सभी";
+"PROFILE_TABS_GRID_FILTER_HELP" = "पोस्ट टैब में एक मेनू जोड़ता है, जिससे किसी प्रोफ़ाइल की पोस्ट में से Reels छिपाए जा सकते हैं। यह विकल्प तय करता है कि हर प्रोफ़ाइल किस तरह खुले। मेनू को तीर से खोलें, या टैब ऊपर पहुँचने पर पोस्ट टैब को फिर से टैप करें।";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "केवल पोस्ट";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "पोस्ट टैब फ़िल्टर";
 "PROFILE_TABS_HEADER" = "टैब";
-"PROFILE_TABS_SAVED_TAB_HELP" = "आपके सहेजे गए कलेक्शन को आपकी अपनी प्रोफ़ाइल पर एक टैब के रूप में जोड़ता है। लागू करने के लिए अपनी प्रोफ़ाइल रीफ़्रेश करें।";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "सहेजे गए टैब";
 "PROFILE_TABS_REELS_SORT_HELP" = "Reels टैब पर मौजूद शेवरॉन को नियंत्रित करता है, जो प्रोफ़ाइल की reels को सबसे ज़्यादा देखे गए के हिसाब से क्रमबद्ध करता है। Instagram समय के साथ आपके अकाउंट के लिए इसे चालू और बंद करता है। चालू होने पर यह चालू रहता है, बंद होने पर हर प्रोफ़ाइल से हटता है, और डिफ़ॉल्ट होने पर चुनाव Instagram पर रहता है। कुछ प्रोफ़ाइल इसे कभी नहीं पातीं, चालू होने पर भी। लागू करने के लिए प्रोफ़ाइल दोबारा खोलें।";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Reels टैब क्रम";
+"PROFILE_TABS_SAVED_TAB_HELP" = "आपके सहेजे गए कलेक्शन को आपकी अपनी प्रोफ़ाइल पर एक टैब के रूप में जोड़ता है। लागू करने के लिए अपनी प्रोफ़ाइल रीफ़्रेश करें।";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "सहेजे गए टैब";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "पोस्ट और टैग किए गए ग्रिड के थंबनेल को लंबे 3:4 लेआउट के बजाय चौकोर दिखाता है और ग्रिड टैब के लिए चौकोर आइकन का उपयोग करता है। लागू करने के लिए प्रोफ़ाइल फिर से खोलें।";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "चौकोर ग्रिड";
 "PROFILE_TITLE" = "प्रोफ़ाइल";

@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "SENİ TAKİP EDİYOR";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "İkon ve Metin";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "SİZİ TAKİP ETMİYOR";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Tümü";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Yalnızca Gönderiler";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "İkon + Metin";
 "PROFILE_HIGHLIGHTS_HEADER" = "Öne Çıkanlar";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Kendi profilindeki öne çıkanları yeniden sıralamanı sağlar: bir öne çıkanı basılı tut, ardından yeni bir yere sürükle. Instagram'ın kademeli olarak sunduğu yeniden sıralama özelliğini kullanır. Uygulamak için profilini yeniden aç.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profil Resmi";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Bir profil sayfasındaki profil fotoğrafına uzun basarak büyütülmüş olarak açın.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Kaydedilenler";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Tümü";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Gönderiler sekmesine, bir profilin gönderileri arasından Reels'i gizleyen bir menü ekler. Seçenek, her profilin nasıl açılacağını belirler. Menüyü oktan açın veya sekmeler en üstteyken gönderiler sekmesine yeniden dokunun.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Yalnızca Gönderiler";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Gönderiler Sekmesi Filtresi";
 "PROFILE_TABS_HEADER" = "Sekmeler";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Kaydedilen koleksiyonlarını kendi profilinde bir sekme olarak ekler. Uygulamak için profilini yenile.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Kaydedilenler Sekmesi";
 "PROFILE_TABS_REELS_SORT_HELP" = "Profilin reels'lerini en çok izlenene göre sıralayan Reels sekmesindeki şevronu denetler. Instagram bu özelliği zamanla hesabınız için açıp kapatır. Açık ile açık kalır, Kapalı ile her profilde kaldırılır, Varsayılan ile seçim Instagram'a bırakılır. Bazı profiller Açık olsa bile bunu hiç almaz. Uygulamak için profili yeniden açın.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Reels Sekmesi Sıralaması";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Kaydedilen koleksiyonlarını kendi profilinde bir sekme olarak ekler. Uygulamak için profilini yenile.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Kaydedilenler Sekmesi";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Gönderi ve etiketlenenler ızgaralarındaki küçük resimleri daha uzun 3:4 düzeni yerine kare olarak gösterir ve ızgara sekmesi için kare simge kullanır. Uygulamak için profili yeniden açın.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Kare Izgara";
 "PROFILE_TITLE" = "Profil";

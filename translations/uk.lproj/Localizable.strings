@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "СЛІДКУЄ ЗА ВАМИ";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Значок та текст";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "НЕ СТЕЖИТЬ ЗА ВАМИ";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Усі";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Лише дописи";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Значок + Текст";
 "PROFILE_HIGHLIGHTS_HEADER" = "Хайлайти";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Дозволяє змінювати порядок хайлайтів у власному профілі: утримуйте хайлайт, а потім перетягніть його на нове місце. Використовує зміну порядку, яку Instagram поступово впроваджує. Відкрийте профіль знову, щоб застосувати.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Фото профілю";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Натисніть і утримуйте фото профілю на сторінці профілю, щоб відкрити його збільшеним.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Збережене";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Усі";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Додає до вкладки дописів меню, яке приховує Reels серед дописів профілю. Параметр визначає, як відкривається кожен профіль. Відкрийте меню стрілкою або знову торкніться вкладки дописів, коли вкладки вгорі.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Лише дописи";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Фільтр вкладки дописів";
 "PROFILE_TABS_HEADER" = "Вкладки";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Додає ваші збережені добірки як вкладку у вашому профілі. Оновіть профіль, щоб застосувати.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Вкладка «Збережене»";
 "PROFILE_TABS_REELS_SORT_HELP" = "Керує шевроном на вкладці Reels, який сортує рілси профілю за кількістю переглядів. Instagram з часом вмикає й вимикає це для вашого акаунта. «Увімкнено» залишає увімкненим, «Вимкнено» прибирає в усіх профілях, а «За замовчуванням» залишає вибір за Instagram. Деякі профілі цього не отримують ніколи, навіть із «Увімкнено». Щоб застосувати, відкрийте профіль знову.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Сортування вкладки Reels";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Додає ваші збережені добірки як вкладку у вашому профілі. Оновіть профіль, щоб застосувати.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Вкладка «Збережене»";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Показує мініатюри в сітках дописів і позначок квадратами замість вищого макета 3:4 і використовує квадратний значок для вкладки сітки. Відкрийте профіль знову, щоб застосувати.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Квадратна сітка";
 "PROFILE_TITLE" = "Профіль";

@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "شما را فالو می‌کند";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "آیکون و متن";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "شما را فالو نمی‌کند";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "همه";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "فقط پست‌ها";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "آیکون + متن";
 "PROFILE_HIGHLIGHTS_HEADER" = "هایلایت‌ها";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "امکان جابه‌جایی هایلایت‌های پروفایل خودتان را می‌دهد: یک هایلایت را نگه دارید و آن را به جای جدید بکشید. از قابلیت مرتب‌سازی که اینستاگرام به‌تدریج عرضه می‌کند استفاده می‌کند. برای اعمال، پروفایل خود را دوباره باز کنید.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "عکس پروفایل";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "عکس پروفایل را در صفحهٔ پروفایل لمس طولانی کنید تا بزرگ‌شده باز شود.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "ذخیره‌شده‌ها";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "همه";
+"PROFILE_TABS_GRID_FILTER_HELP" = "به برگهٔ پست‌ها منویی برای پنهان کردن ریلزها از پست‌های یک پروفایل اضافه می‌کند. این گزینه تعیین می‌کند هر پروفایل چگونه باز شود. منو را از فلش باز کنید یا وقتی برگه‌ها در بالا هستند، دوباره روی برگهٔ پست‌ها بزنید.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "فقط پست‌ها";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "فیلتر برگهٔ پست‌ها";
 "PROFILE_TABS_HEADER" = "برگه‌ها";
-"PROFILE_TABS_SAVED_TAB_HELP" = "مجموعه‌های ذخیره‌شده شما را به‌عنوان یک برگه در پروفایل خودتان اضافه می‌کند. برای اعمال، پروفایل خود را تازه کنید.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "برگه ذخیره‌شده‌ها";
 "PROFILE_TABS_REELS_SORT_HELP" = "فلش روی برگهٔ ریلز را کنترل می‌کند که ریلزهای یک نمایه را بر اساس بیشترین بازدید مرتب می‌کند. Instagram این قابلیت را با گذشت زمان برای حساب شما روشن و خاموش می‌کند. با روشن روشن می‌ماند، با خاموش از همهٔ نمایه‌ها حذف می‌شود و با پیش‌فرض انتخاب با Instagram است. برخی نمایه‌ها هرگز آن را دریافت نمی‌کنند، حتی با روشن. برای اعمال، نمایه را دوباره باز کنید.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "مرتب‌سازی برگهٔ ریلز";
+"PROFILE_TABS_SAVED_TAB_HELP" = "مجموعه‌های ذخیره‌شده شما را به‌عنوان یک برگه در پروفایل خودتان اضافه می‌کند. برای اعمال، پروفایل خود را تازه کنید.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "برگه ذخیره‌شده‌ها";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "تصاویر کوچک شبکه پست‌ها و تگ‌ها را به‌جای چیدمان بلندتر ۳:۴ به‌صورت مربع نشان می‌دهد و برای زبانه شبکه از نماد مربعی استفاده می‌کند. برای اعمال، نمایه را دوباره باز کن.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "شبکه مربعی";
 "PROFILE_TITLE" = "پروفایل";

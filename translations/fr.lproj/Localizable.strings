@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "VOUS SUIT";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "Icône et texte";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "NE VOUS SUIT PAS";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "Tout";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "Publications uniquement";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "Icône + Texte";
 "PROFILE_HIGHLIGHTS_HEADER" = "À la une";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "Permet de réorganiser les stories à la une de votre propre profil : maintenez une story à la une, puis faites-la glisser vers un nouvel emplacement. Utilise la réorganisation qu'Instagram déploie progressivement. Rouvrez votre profil pour appliquer.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "Photo de profil";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Appuyez longuement sur la photo de profil d'une page de profil pour l'ouvrir en grand.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Enregistrés";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "Tout";
+"PROFILE_TABS_GRID_FILTER_HELP" = "Ajoute un menu à l'onglet Publications pour masquer les reels parmi les publications d'un profil. L'option définit l'affichage à l'ouverture de chaque profil. Ouvrez le menu depuis la flèche ou touchez à nouveau l'onglet Publications lorsque les onglets sont en haut.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "Publications uniquement";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "Filtre de l'onglet Publications";
 "PROFILE_TABS_HEADER" = "Onglets";
-"PROFILE_TABS_SAVED_TAB_HELP" = "Ajoute tes collections enregistrées sous forme d'onglet sur ton propre profil. Actualise ton profil pour appliquer.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Onglet Enregistrés";
 "PROFILE_TABS_REELS_SORT_HELP" = "Contrôle la flèche de l'onglet Reels qui trie les reels d'un profil par nombre de vues. Instagram l'active et la désactive pour votre compte au fil du temps. Le réglage Activé la garde active, Désactivé la retire de chaque profil, Par défaut laisse le choix à Instagram. Certains profils ne l'obtiennent jamais, même avec Activé. Rouvrez un profil pour appliquer.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "Tri de l'onglet Reels";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Ajoute tes collections enregistrées sous forme d'onglet sur ton propre profil. Actualise ton profil pour appliquer.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Onglet Enregistrés";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Affiche les miniatures des grilles de publications et d’identifications en carrés au lieu de la mise en page 3:4 plus haute, et utilise une icône carrée pour l’onglet grille. Rouvrez un profil pour appliquer.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Grille carrée";
 "PROFILE_TITLE" = "Profil";

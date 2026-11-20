@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "フォローされています";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "アイコン＆テキスト";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "フォローされていません";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "すべて";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "投稿のみ";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "アイコン＋テキスト";
 "PROFILE_HIGHLIGHTS_HEADER" = "ハイライト";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "自分のプロフィールのハイライトを並べ替えられます。ハイライトを長押しして、新しい位置までドラッグしてください。Instagramが段階的に提供している並べ替え機能を使用します。プロフィールを開き直すと反映されます。";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "プロフィール写真";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "プロフィールページでプロフィール写真を長押しすると拡大表示します。";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "保存済み";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "すべて";
+"PROFILE_TABS_GRID_FILTER_HELP" = "投稿タブに、プロフィールの投稿からリールを非表示にするメニューを追加します。選んだオプションは、各プロフィールを開いたときの表示になります。メニューはシェブロンから開くか、タブが上端にあるときに投稿タブをもう一度タップして開きます。";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "投稿のみ";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "投稿タブのフィルター";
 "PROFILE_TABS_HEADER" = "タブ";
-"PROFILE_TABS_SAVED_TAB_HELP" = "保存したコレクションを自分のプロフィールのタブとして追加します。適用するにはプロフィールを更新してください。";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "保存済みタブ";
 "PROFILE_TABS_REELS_SORT_HELP" = "リールタブにあるシェブロンの表示を制御し、プロフィールのリールを再生回数の多い順に並べ替えます。Instagramはアカウントごとに、この機能を時期によってオン・オフします。オンは常に表示し、オフはすべてのプロフィールで非表示にし、デフォルトはInstagramの判断に任せます。オンでも表示されないプロフィールがあります。適用するにはプロフィールを開き直してください。";
 "PROFILE_TABS_REELS_SORT_TITLE" = "リールタブの並べ替え";
+"PROFILE_TABS_SAVED_TAB_HELP" = "保存したコレクションを自分のプロフィールのタブとして追加します。適用するにはプロフィールを更新してください。";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "保存済みタブ";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "投稿とタグ付けのグリッドのサムネイルを縦長の3:4ではなく正方形で表示し、グリッドタブに正方形のアイコンを使います。適用するにはプロフィールを開き直してください。";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "正方形グリッド";
 "PROFILE_TITLE" = "プロフィール";

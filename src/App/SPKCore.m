@@ -114,6 +114,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"profile_photo_zoom" : @(NO),
         @"profile_saved_tab" : @(NO),
         @"profile_square_grid" : @(NO),
+        @"profile_grid_filter" : @"off",
         @"profile_exact_follower_count" : @(NO),
         @"profile_highlight_reorder" : @(NO),
         @"profile_reels_sort_mode" : @"default",

@@ -1977,6 +1977,8 @@
 "PROFILE_FOLLOW_INDICATOR_FOLLOWING_TEXT" = "나를 팔로우 중";
 "PROFILE_FOLLOW_INDICATOR_ICON_AND_TEXT_LABEL" = "아이콘 & 텍스트";
 "PROFILE_FOLLOW_INDICATOR_NOT_FOLLOWING_TEXT" = "팔로우하지 않음";
+"PROFILE_GRID_FILTER_MENU_ALL_ACTION" = "전체";
+"PROFILE_GRID_FILTER_MENU_POSTS_ONLY_ACTION" = "게시물만";
 "PROFILE_HEADER_BUTTON_ICON_AND_TEXT_LABEL" = "아이콘 + 텍스트";
 "PROFILE_HIGHLIGHTS_HEADER" = "하이라이트";
 "PROFILE_HIGHLIGHTS_REORDER_HELP" = "내 프로필의 하이라이트 순서를 바꿀 수 있습니다. 하이라이트를 길게 누른 다음 새 위치로 드래그하세요. Instagram이 단계적으로 제공 중인 순서 변경 기능을 사용합니다. 적용하려면 프로필을 다시 여세요.";
@@ -2056,11 +2058,15 @@
 "PROFILE_PROFILE_PICTURE_HEADER" = "프로필 사진";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "프로필 페이지에서 프로필 사진을 길게 눌러 확대해서 엽니다.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "저장됨";
+"PROFILE_TABS_GRID_FILTER_ALL_OPTION" = "전체";
+"PROFILE_TABS_GRID_FILTER_HELP" = "게시물 탭에 프로필 게시물에서 릴스를 숨기는 메뉴를 추가합니다. 이 옵션은 각 프로필을 열 때의 표시 방식을 정합니다. 화살표로 메뉴를 열거나, 탭이 맨 위에 있을 때 게시물 탭을 다시 탭하세요.";
+"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION" = "게시물만";
+"PROFILE_TABS_GRID_FILTER_TITLE" = "게시물 탭 필터";
 "PROFILE_TABS_HEADER" = "탭";
-"PROFILE_TABS_SAVED_TAB_HELP" = "저장한 컬렉션을 내 프로필의 탭으로 추가합니다. 적용하려면 프로필을 새로고침하세요.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "저장됨 탭";
 "PROFILE_TABS_REELS_SORT_HELP" = "릴스 탭의 쉐브론을 제어하며, 프로필의 릴스를 조회수가 많은 순으로 정렬합니다. Instagram은 시간이 지나면서 회원님의 계정에 대해 이를 켜고 끕니다. 켜기으로 두면 계속 켜 두고, 끄기로 두면 모든 프로필에서 제거하며, 기본값로 두면 Instagram의 판단을 따릅니다. 켜기 상태에서도 일부 프로필에는 나타나지 않습니다. 적용하려면 프로필을 다시 여세요.";
 "PROFILE_TABS_REELS_SORT_TITLE" = "릴스 탭 정렬";
+"PROFILE_TABS_SAVED_TAB_HELP" = "저장한 컬렉션을 내 프로필의 탭으로 추가합니다. 적용하려면 프로필을 새로고침하세요.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "저장됨 탭";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "게시물 및 태그된 그리드의 썸네일을 더 긴 3:4 레이아웃 대신 정사각형으로 표시하고 그리드 탭에 정사각형 아이콘을 사용합니다. 적용하려면 프로필을 다시 여세요.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "정사각형 그리드";
 "PROFILE_TITLE" = "프로필";
