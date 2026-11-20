@@ -236,6 +236,79 @@ extern "C" void SPKNavigationDecorateNativeTabs(id controller);
 extern "C" BOOL SPKNavigationSingleTabHidesTabBar(void);
 extern "C" BOOL SPKNavigationProfileTabCarriesSaved(void);
 
+// MARK: - Tab hold feel
+//
+// Every hold on the native bar goes through one recognizer the coordinator
+// owns, and the system bar's own press-and-slide selection competes with it:
+// a finger that drifts a little hands the touch to the selection lens and the
+// hold never fires. The custom bar avoids that by making every other gesture
+// on a tab button wait for its hold to fail. This gives the native bar the
+// same feel: the custom bar's hold duration, and the bar's other gestures wait
+// for the hold to fail first. A tap still selects the tab, because the hold
+// fails the moment the finger lifts.
+
+static const void *kSPKNativeTabHoldTunedKey = &kSPKNativeTabHoldTunedKey;
+static const void *kSPKNativeTabHoldWaitsKey = &kSPKNativeTabHoldWaitsKey;
+static const NSTimeInterval kSPKNativeTabHoldDuration = 0.5;
+
+static void SPKNativeTabBarCollectGestures(UIView *view, NSMutableArray<UIGestureRecognizer *> *gestures, NSUInteger depth) {
+    if (!view || depth > 10)
+        return;
+    for (UIGestureRecognizer *gesture in view.gestureRecognizers)
+        [gestures addObject:gesture];
+    for (UIView *subview in view.subviews)
+        SPKNativeTabBarCollectGestures(subview, gestures, depth + 1);
+}
+
+static void SPKNativeTabBarTuneHold(id controller) {
+    if (!controller || SPKStabilityGuardIsSafeStartupMode() || !SPKNativeTabBarIsActive(controller))
+        return;
+    id coordinator = [SPKUtils getIvarForObj:controller name:"_nativeTabBarControllerCoordinator"];
+    if (!coordinator)
+        return;
+    id recognizer = [SPKUtils getIvarForObj:coordinator name:"longPressRecognizer"];
+    if (![recognizer isKindOfClass:[UILongPressGestureRecognizer class]])
+        return;
+    UILongPressGestureRecognizer *hold = (UILongPressGestureRecognizer *)recognizer;
+
+    if (!objc_getAssociatedObject(hold, kSPKNativeTabHoldTunedKey)) {
+        SPKLog(kSPKNativeTabBarLogCategory, @"tab hold: duration %.2f movement %.1f view %@", hold.minimumPressDuration, hold.allowableMovement,
+               NSStringFromClass([hold.view class]));
+        hold.minimumPressDuration = kSPKNativeTabHoldDuration;
+        objc_setAssociatedObject(hold, kSPKNativeTabHoldTunedKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+
+    // Only the bar itself: the hold may be attached to the controller's whole
+    // view, and content gestures must not wait on it.
+    id tabBarController = [SPKUtils getIvarForObj:coordinator name:"tabBarController"];
+    if (![tabBarController isKindOfClass:[UITabBarController class]])
+        return;
+    UITabBar *tabBar = ((UITabBarController *)tabBarController).tabBar;
+    NSMutableArray<UIGestureRecognizer *> *gestures = [NSMutableArray array];
+    SPKNativeTabBarCollectGestures(tabBar, gestures, 0);
+    for (UIGestureRecognizer *gesture in gestures) {
+        if (gesture == hold || objc_getAssociatedObject(gesture, kSPKNativeTabHoldWaitsKey) == hold)
+            continue;
+        // Pointer hover and click never compete with a finger, and a hold that
+        // no finger ever touches would keep them waiting.
+        if ([gesture isKindOfClass:[UIHoverGestureRecognizer class]] ||
+            ![gesture.allowedTouchTypes containsObject:@(UITouchTypeDirect)])
+            continue;
+        [gesture requireGestureRecognizerToFail:hold];
+        objc_setAssociatedObject(gesture, kSPKNativeTabHoldWaitsKey, hold, OBJC_ASSOCIATION_ASSIGN);
+        SPKLog(kSPKNativeTabBarLogCategory, @"tab hold: %@ waits for the hold", NSStringFromClass([gesture class]));
+    }
+}
+
+// The bar builds its tab views lazily, so the pass runs again on the next turn.
+static void SPKNativeTabBarScheduleHoldTuning(id controller) {
+    SPKNativeTabBarTuneHold(controller);
+    __weak id weakController = controller;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SPKNativeTabBarTuneHold(weakController);
+    });
+}
+
 static BOOL (*orig_installOrUpdateNative)(id, SEL);
 static BOOL hook_installOrUpdateNative(id self, SEL _cmd) {
     if (SPKStabilityGuardIsSafeStartupMode())
@@ -244,6 +317,7 @@ static BOOL hook_installOrUpdateNative(id self, SEL _cmd) {
     SPKNavigationPrepareNativeTabBarSurfaces(self);
     BOOL result = orig_installOrUpdateNative(self, _cmd);
     SPKNavigationDecorateNativeTabs(self);
+    SPKNativeTabBarScheduleHoldTuning(self);
     return result;
 }
 
@@ -253,8 +327,10 @@ static BOOL hook_installOrUpdateNative(id self, SEL _cmd) {
 static void (*orig_setUsesCompactProjection)(id, SEL, BOOL, id);
 static BOOL hook_setUsesCompactProjection(id self, SEL _cmd, BOOL compact, id fallback) {
     BOOL result = ((BOOL (*)(id, SEL, BOOL, id))orig_setUsesCompactProjection)(self, _cmd, compact, fallback);
-    if (!SPKStabilityGuardIsSafeStartupMode())
+    if (!SPKStabilityGuardIsSafeStartupMode()) {
         SPKNavigationDecorateNativeTabs(SPKNativeTabBarLiveController());
+        SPKNativeTabBarScheduleHoldTuning(SPKNativeTabBarLiveController());
+    }
     return result;
 }
 
