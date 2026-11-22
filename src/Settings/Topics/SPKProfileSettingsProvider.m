@@ -7,8 +7,6 @@
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
-#import "../../Shared/Account/SPKAccountPrivacyService.h"
-#import "SPKAccountPrivacySettingsProvider.h"
 
 static NSString *const kSPKProfileActionNone = @"none";
 static NSString *const kSPKProfileActionCopyInfo = @"copy_info";
@@ -125,14 +123,6 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
 
 + (SPKSetting *)rootSetting {
     NSMutableArray *sections = [NSMutableArray array];
-    // Only offered when this Instagram build has the settings builders; an
-    // entry that can only fail is worse than none.
-    if ([SPKAccountPrivacyService isSupported]) {
-        [sections addObject:SPKTopicSection(SPKL(@"PROFILE_PRIVACY_HEADER"), @[
-                                                [SPKAccountPrivacySettingsProvider rootSetting]
-                                            ],
-                                            nil)];
-    }
     [sections addObjectsFromArray:@[
         // Two short explanations, each about one control: they read better as
         // footers under their own rows than behind a shared info button.

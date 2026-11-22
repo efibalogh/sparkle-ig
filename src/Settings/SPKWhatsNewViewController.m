@@ -28,7 +28,6 @@ static NSString *const SPKWhatsNewPreviousVersion = @"v1.6.0";
                                         @{ @"icon": @"download", @"text": SPKL(@"SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT") },
                                         @{ @"icon": @"moon", @"text": SPKL(@"SETTINGS_WHATS_NEW_OLED_DARK_MODE_TEXT") },
                                         @{ @"icon": @"pin", @"text": SPKL(@"SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT") },
-                                        @{ @"icon": @"lock", @"text": SPKL(@"SETTINGS_WHATS_NEW_ACCOUNT_PRIVACY_TEXT") },
                                         @{ @"icon": @"highlights", @"text": SPKL(@"SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT") },
                                         @{ @"icon": @"instants", @"text": SPKL(@"SETTINGS_WHATS_NEW_INSTANTS_SEEN_USER_LISTS_TEXT") },
                                         @{ @"icon": @"users", @"text": SPKL(@"SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT") },

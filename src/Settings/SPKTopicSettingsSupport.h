@@ -38,9 +38,6 @@ UIMenu *SPKLiquidGlassModeMenu(void);
 UIMenu *SPKLiquidGlassTabBarStateMenu(void);
 UIMenu *SPKScrollEdgeStyleMenu(void);
 UIMenu *SPKStoryManualSeenModeMenu(void);
-#if SPK_DEV
-UIMenu *SPKAccountPrivacySimulationMenu(void);
-#endif
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
 UIMenu *SPKLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);

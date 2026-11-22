@@ -159,9 +159,6 @@ static NSSet<NSString *> *SPKTransferExcludedKeys(void) {
         excluded = [NSSet setWithArray:@[
             @"app_safe_startup",
             @"app_startup_profiling",
-            // Cached server state and a dev-only switch, not user settings.
-            @"profile_account_privacy_cache",
-            @"dev_account_privacy_simulate",
             SPKPreferenceMigrationsCompletedKey
         ]];
     });
