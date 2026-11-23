@@ -319,7 +319,10 @@ NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItems(NSArray<UIBarButton
         return items;
     }
 
-    // Legacy: distribute evenly across a standard full-width bottom bar.
+    // Legacy: distribute evenly across a standard full-width bottom bar. The bar
+    // sizes each item by its glyph and ignores `width`, so items only land on
+    // even, centred slots when their glyphs share a width (Instagram's are all
+    // 24pt).
     [items addObject:SPKMediaChromeFlexibleSpace()];
     for (UIBarButtonItem *item in contentItems) {
         [items addObject:item];

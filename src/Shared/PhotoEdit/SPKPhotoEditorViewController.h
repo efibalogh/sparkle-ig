@@ -37,7 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// A self-contained, full-screen photo editor: pan/zoom crop with a selectable
-/// aspect (freeform + ratio presets), plus 90° rotate and horizontal flip.
+/// aspect (freeform + ratio presets), fine straightening, 90° rotate and
+/// horizontal flip.
 /// Generalized from the original Instants square cropper so it can be reused by
 /// the Gallery and the trim editor's Frame Only output.
 @interface SPKPhotoEditorViewController : UIViewController
@@ -57,6 +58,14 @@ NS_ASSUME_NONNULL_BEGIN
                  configuration:(nullable SPKPhotoEditorConfiguration *)configuration
                           from:(UIViewController *)presenter
                     completion:(void (^)(UIImage *image))completion;
+
+/// Opens the editor from inside another editor (the trimmer's Edit Frame): it
+/// replaces the host's content in the same editor stack rather than stacking a
+/// second full-screen modal. `completion` runs only when the user confirms.
++ (void)openFromEditor:(UIViewController *)host
+           sourceImage:(UIImage *)image
+         configuration:(nullable SPKPhotoEditorConfiguration *)configuration
+            completion:(void (^)(UIImage *image))completion;
 
 /// Destination-menu variant: `configuration.doneOptions` drives a Done menu and
 /// the chosen destination id is delivered alongside the edited image.

@@ -30,6 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// horizontal on screen.
 @property (nonatomic, assign) BOOL mirrored;
 
+/// Fine rotation in degrees, clockwise, applied after the quarter turns and
+/// mirror. The picture is scaled up by the cover factor so it still fills this
+/// view; the view clips the overflow.
+@property (nonatomic, assign) CGFloat straightenDegrees;
+
 @property (nonatomic, strong, readonly) AVPlayerLayer *playerLayer;
 
 /// The picture's size after `rotationQuarters` — the size this view should be

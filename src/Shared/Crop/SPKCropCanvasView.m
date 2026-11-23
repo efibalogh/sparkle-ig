@@ -7,10 +7,10 @@
 #pragma mark - Aspect presets
 
 // Order of the aspect chips (freeform mode). Index in this array == chip index.
-// Original leads (it's the default selection); each ratio is paired with its
-// landscape counterpart.
+// Free leads (it's the default selection), then Original; each ratio is paired
+// with its landscape counterpart.
 static const SPKCropAspect kSPKCropAspectOrder[] = {
-    SPKCropAspectOriginal, SPKCropAspectFreeform, SPKCropAspectSquare,
+    SPKCropAspectFreeform, SPKCropAspectOriginal, SPKCropAspectSquare,
     SPKCropAspectPortrait23, SPKCropAspectLandscape32,
     SPKCropAspectPortrait34, SPKCropAspectLandscape43,
     SPKCropAspectPortrait45, SPKCropAspectLandscape54,
@@ -121,22 +121,49 @@ static UIButton *SPKCropToolButton(UIImage *image, NSString *accessibility, id t
     return button;
 }
 
-UIView *SPKCropMakeToolRow(id target, SEL rotateLeft, SEL flip, SEL rotateRight) {
-    // rotate_left / rotate_right resolve to one shared base arrow asset, flipped
-    // into the two directions. The modern bend arrow needs a vertical flip to
-    // point upward; the IG 410 fallback (arrow_right_bend_filled) already points
-    // the right way, so it skips the vertical flip. "Left" is always the
-    // horizontal mirror of "right".
+// rotate_left / rotate_right resolve to one shared base arrow asset, flipped
+// into the two directions. The modern bend arrow needs a vertical flip to point
+// upward; the IG 410 fallback (arrow_right_bend_filled) already points the right
+// way, so it skips the vertical flip. "Left" is always the horizontal mirror of
+// "right".
+static void SPKCropToolIcons(UIImage **rotateLeft, UIImage **flip, UIImage **rotateRight) {
     UIImage *rotBase = [SPKAssetUtils instagramIconNamed:@"rotate_right"
                                                pointSize:24.0
                                            renderingMode:UIImageRenderingModeAlwaysTemplate];
     NSString *resolvedRotate = [SPKAssetUtils resolvedInstagramIconNameForName:@"rotate_right"];
     BOOL verticalFlip = ![resolvedRotate isEqualToString:@"ig_icon_arrow_right_bend_filled_24"];
-    UIImage *rotateRightIcon = SPKCropMirroredGlyph(rotBase, NO, verticalFlip);
-    UIImage *rotateLeftIcon = SPKCropMirroredGlyph(rotBase, YES, verticalFlip);
-    UIImage *mirror = [SPKAssetUtils instagramIconNamed:@"mirror"
-                                              pointSize:24.0
-                                          renderingMode:UIImageRenderingModeAlwaysTemplate];
+    if (rotateRight)
+        *rotateRight = SPKCropMirroredGlyph(rotBase, NO, verticalFlip);
+    if (rotateLeft)
+        *rotateLeft = SPKCropMirroredGlyph(rotBase, YES, verticalFlip);
+    if (flip)
+        *flip = [SPKAssetUtils instagramIconNamed:@"mirror"
+                                        pointSize:24.0
+                                    renderingMode:UIImageRenderingModeAlwaysTemplate];
+}
+
+NSArray<UIBarButtonItem *> *SPKCropMakeToolBarItems(id target, SEL rotateLeft, SEL flip, SEL rotateRight) {
+    UIImage *rotateLeftIcon = nil, *mirror = nil, *rotateRightIcon = nil;
+    SPKCropToolIcons(&rotateLeftIcon, &mirror, &rotateRightIcon);
+    UIBarButtonItem * (^make)(UIImage *, NSString *, SEL) = ^UIBarButtonItem *(UIImage *image, NSString *label, SEL action) {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:image
+                                                                 style:UIBarButtonItemStylePlain
+                                                                target:target
+                                                                action:action];
+        item.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
+        item.accessibilityLabel = label;
+        return item;
+    };
+    return @[
+        make(rotateLeftIcon, SPKL(@"CROP_CROP_CANVAS_VIEW_ROTATE_LEFT_TEXT"), rotateLeft),
+        make(mirror, SPKL(@"CROP_CROP_CANVAS_VIEW_FLIP_TEXT"), flip),
+        make(rotateRightIcon, SPKL(@"CROP_CROP_CANVAS_VIEW_ROTATE_RIGHT_TEXT"), rotateRight),
+    ];
+}
+
+UIView *SPKCropMakeToolRow(id target, SEL rotateLeft, SEL flip, SEL rotateRight) {
+    UIImage *rotateLeftIcon = nil, *mirror = nil, *rotateRightIcon = nil;
+    SPKCropToolIcons(&rotateLeftIcon, &mirror, &rotateRightIcon);
     NSArray<UIButton *> *buttons = @[
         SPKCropToolButton(rotateLeftIcon, SPKL(@"CROP_CROP_CANVAS_VIEW_ROTATE_LEFT_TEXT"), target, rotateLeft),
         SPKCropToolButton(mirror, SPKL(@"CROP_CROP_CANVAS_VIEW_FLIP_TEXT"), target, flip),
@@ -165,6 +192,27 @@ static const CGFloat kSPKCropInsetH = 24.0;
 static const CGFloat kSPKCropInsetV = 24.0;
 static const CGFloat kSPKCropHandleTouch = 44.0;
 static const CGFloat kSPKCropMinSide = 64.0;
+// The bar drawn at the middle of each side's grabber.
+static const CGFloat kSPKCropEdgeBarLength = 22.0;
+static const CGFloat kSPKCropEdgeBarThickness = 4.0;
+
+// Grabber tags. Corners come first so the corner-only maths can keep testing
+// `tag < 4`; sides follow.
+typedef NS_ENUM(NSInteger, SPKCropGrabber) {
+    SPKCropGrabberTopLeft = 0,
+    SPKCropGrabberTopRight = 1,
+    SPKCropGrabberBottomLeft = 2,
+    SPKCropGrabberBottomRight = 3,
+    SPKCropGrabberTop = 4,
+    SPKCropGrabberBottom = 5,
+    SPKCropGrabberLeft = 6,
+    SPKCropGrabberRight = 7,
+};
+static const NSInteger kSPKCropGrabberCount = 8;
+
+static BOOL SPKCropGrabberIsCorner(NSInteger grabber) {
+    return grabber >= SPKCropGrabberTopLeft && grabber <= SPKCropGrabberBottomRight;
+}
 
 #pragma mark - Canvas
 
@@ -177,7 +225,9 @@ static const CGFloat kSPKCropMinSide = 64.0;
     UIView *_overlayView;
     CAShapeLayer *_dimLayer;
     CAShapeLayer *_borderLayer;
+    CAShapeLayer *_gridLayer;
     NSArray<UIView *> *_handles;
+    CGSize _laidOutSize; // canvas size the crop rect was fitted to
 
     CGSize _contentSize;
     CGRect _cropRect; // in canvas coordinates
@@ -190,7 +240,7 @@ static const CGFloat kSPKCropMinSide = 64.0;
     if (self) {
         _aspectMode = SPKCropAspectModeFreeform;
         _lockedAspectRatio = 1.0;
-        _aspect = SPKCropAspectOriginal;
+        _aspect = SPKCropAspectFreeform;
         self.backgroundColor = [UIColor blackColor];
         self.clipsToBounds = YES;
 
@@ -199,6 +249,11 @@ static const CGFloat kSPKCropMinSide = 64.0;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.bouncesZoom = YES;
+        // The insets are the crop rect's margins and nothing else. Left to
+        // UIKit, a canvas laid out mid-transition (before the safe area settles)
+        // gets the safe area added on top once it arrives, which slides the
+        // content and skews every offset the crop maths reads back.
+        _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         _scrollView.backgroundColor = [UIColor blackColor];
         [self addSubview:_scrollView];
 
@@ -216,6 +271,14 @@ static const CGFloat kSPKCropMinSide = 64.0;
         _borderLayer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
         _borderLayer.lineWidth = 1.0;
         [_overlayView.layer addSublayer:_borderLayer];
+
+        // Rule-of-thirds guides, shown only while the framing is being adjusted.
+        _gridLayer = [CAShapeLayer layer];
+        _gridLayer.fillColor = UIColor.clearColor.CGColor;
+        _gridLayer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.45].CGColor;
+        _gridLayer.lineWidth = 0.5;
+        _gridLayer.opacity = 0.0;
+        [_overlayView.layer addSublayer:_gridLayer];
     }
     return self;
 }
@@ -256,25 +319,36 @@ static const CGFloat kSPKCropMinSide = 64.0;
 #pragma mark - Handles
 
 - (void)ensureHandles {
-    if (_handles.count == 4)
+    if (_handles.count == kSPKCropGrabberCount)
         return;
-    NSMutableArray<UIView *> *handles = [NSMutableArray arrayWithCapacity:4];
-    for (NSInteger i = 0; i < 4; i++) {
+    NSMutableArray<UIView *> *handles = [NSMutableArray arrayWithCapacity:kSPKCropGrabberCount];
+    for (NSInteger i = 0; i < kSPKCropGrabberCount; i++) {
         UIView *handle = [[UIView alloc] init];
         handle.backgroundColor = UIColor.clearColor;
-        handle.tag = i; // 0=TL 1=TR 2=BL 3=BR
+        handle.tag = i; // SPKCropGrabber
         handle.hidden = YES;
         CALayer *knob = [CALayer layer];
         knob.backgroundColor = UIColor.whiteColor.CGColor;
-        knob.cornerRadius = 5.0;
-        knob.frame = CGRectMake((kSPKCropHandleTouch - 10.0) / 2.0,
-                                (kSPKCropHandleTouch - 10.0) / 2.0, 10.0, 10.0);
+        if (SPKCropGrabberIsCorner(i)) {
+            knob.cornerRadius = 5.0;
+            knob.frame = CGRectMake((kSPKCropHandleTouch - 10.0) / 2.0,
+                                    (kSPKCropHandleTouch - 10.0) / 2.0, 10.0, 10.0);
+        } else {
+            // Sized and placed in layoutHandles, since a side's grabber
+            // stretches with the side.
+            knob.cornerRadius = kSPKCropEdgeBarThickness / 2.0;
+            knob.name = @"spk.edgeBar";
+        }
         [handle.layer addSublayer:knob];
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [handle addGestureRecognizer:pan];
-        [self addSubview:handle];
         [handles addObject:handle];
     }
+    // Sides go in first so the corners sit on top where the touch areas meet.
+    for (NSInteger i = SPKCropGrabberTop; i < kSPKCropGrabberCount; i++)
+        [self addSubview:handles[(NSUInteger)i]];
+    for (NSInteger i = SPKCropGrabberTopLeft; i <= SPKCropGrabberBottomRight; i++)
+        [self addSubview:handles[(NSUInteger)i]];
     _handles = handles;
 }
 
@@ -292,6 +366,7 @@ static const CGFloat kSPKCropMinSide = 64.0;
 
     if (!_configured) {
         _configured = YES;
+        _laidOutSize = bounds.size;
         if (!CGRectIsEmpty(_pendingRestore)) {
             CGRect restore = _pendingRestore;
             _pendingRestore = CGRectZero;
@@ -300,6 +375,19 @@ static const CGFloat kSPKCropMinSide = 64.0;
         }
         _cropRect = [self maxCropRectForCurrentAspect];
         [self configureScrollForCropRect];
+    } else if (!CGSizeEqualToSize(_laidOutSize, bounds.size)) {
+        // The canvas changed size (rotation, iPhone Duo folding or unfolding, the
+        // controls moving beside the media). Keep the same part of the picture
+        // selected and re-fit it to the new space; the zoom and offset alone
+        // describe it, so they are read before anything is re-derived.
+        CGRect keep = [self normalizedCropRect];
+        _laidOutSize = bounds.size;
+        if (!CGRectIsEmpty(keep)) {
+            [self restoreNormalizedCropRect:keep];
+            return;
+        }
+        [self resetCrop];
+        return;
     }
     [self updateOverlay];
     [self layoutHandles];
@@ -351,6 +439,7 @@ static const CGFloat kSPKCropMinSide = 64.0;
 }
 
 - (void)resetCrop {
+    _userAdjusted = NO;
     _cropRect = [self maxCropRectForCurrentAspect];
     [self configureScrollForCropRect];
     [self updateOverlay];
@@ -436,10 +525,34 @@ static const CGFloat kSPKCropMinSide = 64.0;
     _dimLayer.path = dimPath.CGPath;
     _borderLayer.frame = _overlayView.bounds;
     _borderLayer.path = cropPath.CGPath;
+
+    UIBezierPath *grid = [UIBezierPath bezierPath];
+    for (NSInteger i = 1; i <= 2; i++) {
+        CGFloat x = CGRectGetMinX(_cropRect) + _cropRect.size.width * i / 3.0;
+        CGFloat y = CGRectGetMinY(_cropRect) + _cropRect.size.height * i / 3.0;
+        [grid moveToPoint:CGPointMake(x, CGRectGetMinY(_cropRect))];
+        [grid addLineToPoint:CGPointMake(x, CGRectGetMaxY(_cropRect))];
+        [grid moveToPoint:CGPointMake(CGRectGetMinX(_cropRect), y)];
+        [grid addLineToPoint:CGPointMake(CGRectGetMaxX(_cropRect), y)];
+    }
+    _gridLayer.frame = _overlayView.bounds;
+    _gridLayer.path = grid.CGPath;
+}
+
+- (void)setGridVisible:(BOOL)visible {
+    float target = visible ? 1.0f : 0.0f;
+    if (_gridLayer.opacity == target)
+        return;
+    CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fade.fromValue = @(_gridLayer.presentationLayer ? _gridLayer.presentationLayer.opacity : _gridLayer.opacity);
+    fade.toValue = @(target);
+    fade.duration = visible ? 0.12 : 0.35;
+    _gridLayer.opacity = target;
+    [_gridLayer addAnimation:fade forKey:@"opacity"];
 }
 
 - (void)layoutHandles {
-    if (_handles.count != 4)
+    if (_handles.count != kSPKCropGrabberCount)
         return;
     CGRect r = _cropRect; // already in canvas coordinates
     CGPoint corners[4] = {
@@ -448,24 +561,61 @@ static const CGFloat kSPKCropMinSide = 64.0;
         CGPointMake(CGRectGetMinX(r), CGRectGetMaxY(r)),
         CGPointMake(CGRectGetMaxX(r), CGRectGetMaxY(r)),
     };
+    CGFloat touch = kSPKCropHandleTouch;
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
     for (NSInteger i = 0; i < 4; i++) {
-        UIView *handle = _handles[i];
+        UIView *handle = _handles[(NSUInteger)i];
         handle.hidden = NO; // grabbers show for every aspect (ratio-locked resize)
-        handle.frame = CGRectMake(corners[i].x - kSPKCropHandleTouch / 2.0,
-                                  corners[i].y - kSPKCropHandleTouch / 2.0,
-                                  kSPKCropHandleTouch, kSPKCropHandleTouch);
+        handle.frame = CGRectMake(corners[i].x - touch / 2.0, corners[i].y - touch / 2.0, touch, touch);
     }
+    // Each side's touch area runs the length of the side between the corners'.
+    CGFloat spanW = MAX(0.0, r.size.width - touch);
+    CGFloat spanH = MAX(0.0, r.size.height - touch);
+    CGRect sideFrames[4] = {
+        CGRectMake(CGRectGetMinX(r) + touch / 2.0, CGRectGetMinY(r) - touch / 2.0, spanW, touch),
+        CGRectMake(CGRectGetMinX(r) + touch / 2.0, CGRectGetMaxY(r) - touch / 2.0, spanW, touch),
+        CGRectMake(CGRectGetMinX(r) - touch / 2.0, CGRectGetMinY(r) + touch / 2.0, touch, spanH),
+        CGRectMake(CGRectGetMaxX(r) - touch / 2.0, CGRectGetMinY(r) + touch / 2.0, touch, spanH),
+    };
+    for (NSInteger i = SPKCropGrabberTop; i < kSPKCropGrabberCount; i++) {
+        UIView *handle = _handles[(NSUInteger)i];
+        CGRect frame = sideFrames[i - SPKCropGrabberTop];
+        handle.frame = frame;
+        handle.hidden = (frame.size.width <= 0.0 || frame.size.height <= 0.0);
+        BOOL horizontal = (i == SPKCropGrabberTop || i == SPKCropGrabberBottom);
+        CALayer *bar = handle.layer.sublayers.firstObject;
+        CGSize barSize = horizontal ? CGSizeMake(kSPKCropEdgeBarLength, kSPKCropEdgeBarThickness)
+                                    : CGSizeMake(kSPKCropEdgeBarThickness, kSPKCropEdgeBarLength);
+        bar.frame = CGRectMake((frame.size.width - barSize.width) / 2.0, (frame.size.height - barSize.height) / 2.0,
+                               barSize.width, barSize.height);
+    }
+    [CATransaction commit];
 }
 
 #pragma mark - Grabber drag
 
 - (void)handlePan:(UIPanGestureRecognizer *)pan {
     CGPoint p = [pan locationInView:self];
-    NSInteger corner = pan.view.tag; // 0=TL 1=TR 2=BL 3=BR
-    if (_aspectMode == SPKCropAspectModeFreeform && _aspect == SPKCropAspectFreeform) {
-        [self freeformResizeToPoint:p corner:corner];
+    NSInteger grabber = pan.view.tag; // SPKCropGrabber
+    if (pan.state == UIGestureRecognizerStateBegan) {
+        _userAdjusted = YES;
+        [self setGridVisible:YES];
+    } else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ||
+               pan.state == UIGestureRecognizerStateFailed) {
+        [self setGridVisible:NO];
+    }
+    BOOL freeform = (_aspectMode == SPKCropAspectModeFreeform && _aspect == SPKCropAspectFreeform);
+    if (SPKCropGrabberIsCorner(grabber)) {
+        if (freeform)
+            [self freeformResizeToPoint:p corner:grabber];
+        else
+            [self ratioLockedResizeToPoint:p corner:grabber];
     } else {
-        [self ratioLockedResizeToPoint:p corner:corner];
+        if (freeform)
+            [self freeformResizeToPoint:p side:grabber];
+        else
+            [self ratioLockedResizeToPoint:p side:grabber];
     }
     [self syncScrollInsetForCropRect];
     [self updateOverlay];
@@ -536,10 +686,118 @@ static const CGFloat kSPKCropMinSide = 64.0;
     _cropRect = CGRectMake(newLeft, newTop, w, h);
 }
 
+// Freeform side: only that side moves, clamped like a corner.
+- (void)freeformResizeToPoint:(CGPoint)p side:(NSInteger)side {
+    CGRect contentRect = [_contentView convertRect:_contentView.bounds toView:self];
+    CGRect area = CGRectIntersection(contentRect, self.bounds);
+    if (CGRectIsNull(area) || CGRectIsEmpty(area))
+        area = self.bounds;
+    p.x = MIN(MAX(p.x, CGRectGetMinX(area)), CGRectGetMaxX(area));
+    p.y = MIN(MAX(p.y, CGRectGetMinY(area)), CGRectGetMaxY(area));
+
+    CGFloat left = CGRectGetMinX(_cropRect), right = CGRectGetMaxX(_cropRect);
+    CGFloat top = CGRectGetMinY(_cropRect), bottom = CGRectGetMaxY(_cropRect);
+    switch (side) {
+    case SPKCropGrabberTop:
+        top = MIN(p.y, bottom - kSPKCropMinSide);
+        break;
+    case SPKCropGrabberBottom:
+        bottom = MAX(p.y, top + kSPKCropMinSide);
+        break;
+    case SPKCropGrabberLeft:
+        left = MIN(p.x, right - kSPKCropMinSide);
+        break;
+    case SPKCropGrabberRight:
+        right = MAX(p.x, left + kSPKCropMinSide);
+        break;
+    default:
+        return;
+    }
+    _cropRect = CGRectMake(left, top, right - left, bottom - top);
+}
+
+// Fixed ratios (and Original): a side moves while the opposite side stays put,
+// and the box keeps its ratio by growing or shrinking evenly about the middle
+// of that opposite side. Bounded by the aspect's max-fit rect, like a corner.
+- (void)ratioLockedResizeToPoint:(CGPoint)p side:(NSInteger)side {
+    CGRect bounds = [self maxCropRectForCurrentAspect];
+    CGFloat ratio = [self effectiveAspectRatio];
+    if (ratio <= 0.0)
+        ratio = _cropRect.size.width / MAX(_cropRect.size.height, 1.0);
+    BOOL vertical = (side == SPKCropGrabberTop || side == SPKCropGrabberBottom);
+
+    CGFloat w, h;
+    if (vertical) {
+        CGFloat anchorY = (side == SPKCropGrabberTop) ? CGRectGetMaxY(_cropRect) : CGRectGetMinY(_cropRect);
+        CGFloat y = MIN(MAX(p.y, CGRectGetMinY(bounds)), CGRectGetMaxY(bounds));
+        h = fabs(anchorY - y);
+        w = h * ratio;
+    } else {
+        CGFloat anchorX = (side == SPKCropGrabberLeft) ? CGRectGetMaxX(_cropRect) : CGRectGetMinX(_cropRect);
+        CGFloat x = MIN(MAX(p.x, CGRectGetMinX(bounds)), CGRectGetMaxX(bounds));
+        w = fabs(anchorX - x);
+        h = w / ratio;
+    }
+    // Fit the bounds, then the minimum, keeping the ratio.
+    if (w > bounds.size.width) {
+        w = bounds.size.width;
+        h = w / ratio;
+    }
+    if (h > bounds.size.height) {
+        h = bounds.size.height;
+        w = h * ratio;
+    }
+    if (h < kSPKCropMinSide) {
+        h = kSPKCropMinSide;
+        w = h * ratio;
+    }
+    if (w < kSPKCropMinSide) {
+        w = kSPKCropMinSide;
+        h = w / ratio;
+    }
+
+    CGFloat x, y;
+    if (vertical) {
+        y = (side == SPKCropGrabberTop) ? CGRectGetMaxY(_cropRect) - h : CGRectGetMinY(_cropRect);
+        x = CGRectGetMidX(_cropRect) - w / 2.0;
+    } else {
+        x = (side == SPKCropGrabberLeft) ? CGRectGetMaxX(_cropRect) - w : CGRectGetMinX(_cropRect);
+        y = CGRectGetMidY(_cropRect) - h / 2.0;
+    }
+    // Growing about the middle can push the box past the bounds on one side;
+    // slide it back in.
+    x = MIN(MAX(x, CGRectGetMinX(bounds)), CGRectGetMaxX(bounds) - w);
+    y = MIN(MAX(y, CGRectGetMinY(bounds)), CGRectGetMaxY(bounds) - h);
+    _cropRect = CGRectMake(x, y, w, h);
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(__unused UIScrollView *)scrollView {
     return _contentView;
+}
+
+- (void)scrollViewWillBeginDragging:(__unused UIScrollView *)scrollView {
+    _userAdjusted = YES;
+    [self setGridVisible:YES];
+}
+
+- (void)scrollViewDidEndDragging:(__unused UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate)
+        [self setGridVisible:NO];
+}
+
+- (void)scrollViewDidEndDecelerating:(__unused UIScrollView *)scrollView {
+    [self setGridVisible:NO];
+}
+
+- (void)scrollViewWillBeginZooming:(__unused UIScrollView *)scrollView withView:(__unused UIView *)view {
+    _userAdjusted = YES;
+    [self setGridVisible:YES];
+}
+
+- (void)scrollViewDidEndZooming:(__unused UIScrollView *)scrollView withView:(__unused UIView *)view atScale:(__unused CGFloat)scale {
+    [self setGridVisible:NO];
 }
 
 #pragma mark - Output

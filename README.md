@@ -44,8 +44,8 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Confirm recorded video Instants before Instagram sends them. Photo Instants are not supported.
 - **Built-in editors**:
   - Trim any video down to a clip, a single still frame, or audio-only.
-  - Crop, pan/zoom, rotate, and flip a video's framing, applied in the same pass as the trim.
-  - A photo editor with crop / pan-zoom / rotate / flip.
+  - Crop, pan/zoom, straighten, rotate, and flip a video's framing, applied in the same pass as the trim.
+  - A photo editor with crop / pan-zoom / straighten / rotate / flip.
   - Reachable from the gallery, media preview, or an opt-in action button.
 - **Action buttons everywhere**:
   - Fully customizable action-button menus on feed, reels, stories, DMs, Instants, and profiles.

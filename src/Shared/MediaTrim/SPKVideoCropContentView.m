@@ -1,4 +1,5 @@
 #import "SPKVideoCropContentView.h"
+#import "SPKTrimCrop.h"
 
 @implementation SPKVideoCropContentView
 
@@ -7,6 +8,7 @@
     if (self) {
         _orientedSize = orientedSize;
         self.backgroundColor = [UIColor blackColor];
+        self.clipsToBounds = YES;
         _playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
         // This view is always given the picture's exact (rotated) aspect, so the
         // video fills it edge to edge with no letterboxing to reason about.
@@ -39,6 +41,11 @@
     if (self.mirrored) {
         t = CGAffineTransformConcat(t, CGAffineTransformMakeScale(-1.0, 1.0));
     }
+    if (fabs(self.straightenDegrees) >= SPKTrimCropStraightenEpsilon) {
+        CGFloat cover = SPKTrimCropStraightenCoverScale(rotated, self.straightenDegrees);
+        t = CGAffineTransformConcat(t, CGAffineTransformMakeRotation(self.straightenDegrees * (CGFloat)M_PI / 180.0));
+        t = CGAffineTransformConcat(t, CGAffineTransformMakeScale(cover, cover));
+    }
     _playerLayer.affineTransform = t;
     [CATransaction commit];
 }
@@ -46,6 +53,12 @@
 - (void)setRotationQuarters:(NSInteger)rotationQuarters {
     _rotationQuarters = ((rotationQuarters % 4) + 4) % 4;
     [self setNeedsLayout];
+}
+
+- (void)setStraightenDegrees:(CGFloat)straightenDegrees {
+    _straightenDegrees = straightenDegrees;
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)setMirrored:(BOOL)mirrored {
