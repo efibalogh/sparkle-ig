@@ -94,6 +94,7 @@ static const void *kSPKActionButtonIconWidthConstraintAssocKey = &kSPKActionButt
 static const void *kSPKActionButtonIconHeightConstraintAssocKey = &kSPKActionButtonIconHeightConstraintAssocKey;
 static const void *kSPKActionButtonMenuSignatureAssocKey = &kSPKActionButtonMenuSignatureAssocKey;
 static const void *kSPKActionButtonLastMenuActionAssocKey = &kSPKActionButtonLastMenuActionAssocKey;
+static const void *kSPKActionButtonMenuTransitionAssocKey = &kSPKActionButtonMenuTransitionAssocKey;
 static const void *kSPKActionButtonConfigurationObserverAssocKey = &kSPKActionButtonConfigurationObserverAssocKey;
 static NSDictionary<NSString *, NSString *> *SPKPendingRepostFeedback = nil;
 
@@ -164,6 +165,33 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
 @implementation SPKResolvedMediaEntry
 @end
 
+// The menu state is stored as a deadline, so a dismissal callback that never
+// arrives cannot leave the button frozen: an open menu holds it for at most
+// kSPKActionMenuOpenHold, a closing one for kSPKActionMenuCloseHold. The close
+// animation's completion normally clears it about 1.2s after it starts, so the
+// close hold must outlast that or a layout pass in the tail (swiping to the
+// next story right away) disturbs the morph.
+static const CFTimeInterval kSPKActionMenuOpenHold = 30.0;
+static const CFTimeInterval kSPKActionMenuCloseHold = 2.5;
+
+extern "C" BOOL SPKActionButtonMenuIsTransitioning(UIView *button) {
+    if (!button)
+        return NO;
+    NSNumber *deadline = objc_getAssociatedObject(button, kSPKActionButtonMenuTransitionAssocKey);
+    if (!deadline)
+        return NO;
+    if (CACurrentMediaTime() < deadline.doubleValue)
+        return YES;
+    objc_setAssociatedObject(button, kSPKActionButtonMenuTransitionAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    SPKLog(@"ActionButton", @"menu transition expired without a dismissal completion (tag=%ld)", (long)button.tag);
+    return NO;
+}
+
+static void SPKActionButtonSetMenuTransitionHold(UIView *button, CFTimeInterval hold) {
+    NSNumber *deadline = hold > 0.0 ? @(CACurrentMediaTime() + hold) : nil;
+    objc_setAssociatedObject(button, kSPKActionButtonMenuTransitionAssocKey, deadline, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @implementation SPKActionMenuButton
 
 - (void)setAlpha:(CGFloat)alpha {
@@ -208,6 +236,7 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     (void)interaction;
     (void)configuration;
     (void)animator;
+    SPKActionButtonSetMenuTransitionHold(self, kSPKActionMenuOpenHold);
 
     // Menu-open haptic (long-press, or tap when the button opens the menu as its primary
     // action). Lives here rather than on touch-down so it fires only when the menu actually
@@ -241,6 +270,7 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     [super contextMenuInteraction:interaction willEndForConfiguration:configuration animator:animator];
     (void)interaction;
     (void)configuration;
+    SPKActionButtonSetMenuTransitionHold(self, kSPKActionMenuCloseHold);
 
     SPKReapplyStoriesActionButtonDynamicRange(self);
     [animator addAnimations:^{
@@ -251,7 +281,10 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
         SPKActionMenuButton *strongSelf = self;
         if (!strongSelf)
             return;
+        SPKActionButtonSetMenuTransitionHold(strongSelf, 0.0);
         SPKReapplyStoriesActionButtonDynamicRange(strongSelf);
+        // Layout passes skipped during the morph; place the button again now.
+        [strongSelf.superview setNeedsLayout];
 
         SPKActionButtonContext *context = SPKActionButtonContextFromButton(strongSelf);
         NSString *lastAction = objc_getAssociatedObject(strongSelf, kSPKActionButtonLastMenuActionAssocKey);

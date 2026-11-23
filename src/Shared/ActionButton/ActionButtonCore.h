@@ -93,6 +93,10 @@ extern "C" {
 UIButton *SPKActionButtonWithTag(UIView *container, NSInteger tag);
 void SPKApplyButtonStyle(UIButton *button, SPKActionButtonSource source);
 BOOL SPKIsDirectVisualViewerAncestor(UIView *view);
+// YES from the moment an action button's menu starts presenting until its
+// dismissal animation completes. UIKit animates a stand-in for the button
+// meanwhile; hosts must not write its frame, alpha, hidden state or z-order.
+BOOL SPKActionButtonMenuIsTransitioning(UIView *button);
 void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context);
 SPKActionButtonContext *SPKActionButtonContextFromButton(UIButton *button);
 NSString *SPKActionButtonTitleForIdentifier(NSString *identifier);

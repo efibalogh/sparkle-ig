@@ -17,6 +17,7 @@
 extern "C" {
 #endif
 void SPKApplyButtonStyle(UIButton *button, NSInteger source);
+BOOL SPKActionButtonMenuIsTransitioning(UIView *button);
 #ifdef __cplusplus
 }
 #endif
@@ -148,7 +149,11 @@ static void SPKUpdateStoryButtonsAlpha(UIView *overlayView, CGFloat alpha) {
     for (UIView *subview in overlayView.subviews) {
         NSInteger tag = subview.tag;
         if (tag == kSPKStoriesActionButtonTag || tag == kSPKStorySeenButtonTag || tag == kSPKStoryMentionsButtonTag) {
-            subview.alpha = alpha;
+            // The action button's menu morph owns its alpha until it completes.
+            if (tag == kSPKStoriesActionButtonTag && SPKActionButtonMenuIsTransitioning(subview))
+                continue;
+            if (ABS(subview.alpha - alpha) > 0.001)
+                subview.alpha = alpha;
         }
     }
 }
