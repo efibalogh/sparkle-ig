@@ -425,7 +425,7 @@ static NSArray *SPKMessagesSettingsSections(void) {
     };
 
     // Only changes how manual seen behaves, so it locks with the other triggers.
-    SPKSetting *keepSeenLocally = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_MESSAGING_KEEP_SEEN_LOCALLY_TITLE") icon:SPKSettingsIcon(@"interface") defaultsKey:@"msgs_manual_seen_keep_local"];
+    SPKSetting *keepSeenLocally = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_MESSAGING_KEEP_SEEN_LOCALLY_TITLE") icon:SPKSettingsIcon(@"eye_off") defaultsKey:@"msgs_manual_seen_keep_local"];
     keepSeenLocally.helpText = SPKL(@"MESSAGES_MESSAGING_KEEP_SEEN_LOCALLY_HELP");
     keepSeenLocally.enabledProvider = ^BOOL {
         return [SPKUtils getBoolPref:@"msgs_manual_seen"];

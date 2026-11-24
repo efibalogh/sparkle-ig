@@ -63,6 +63,7 @@ SPK_NOTIF_CONST(kSPKNotificationAutoSaveSummary, "auto_save_summary");
 SPK_NOTIF_CONST(kSPKNotificationAutoSavePending, "auto_save_pending");
 SPK_NOTIF_CONST(kSPKNotificationDirectVisualMarkSeen, "direct_visual_mark_seen");
 SPK_NOTIF_CONST(kSPKNotificationThreadMessagesMarkSeen, "thread_messages_mark_seen");
+SPK_NOTIF_CONST(kSPKNotificationDirectSeenReceiptBlocked, "direct_seen_receipt_blocked");
 SPK_NOTIF_CONST(kSPKNotificationDirectThreadSeenRule, "direct_thread_seen_rule");
 SPK_NOTIF_CONST(kSPKNotificationDirectHiddenChat, "direct_hidden_chat");
 SPK_NOTIF_CONST(kSPKNotificationShareSheetPin, "share_sheet_pin");
@@ -265,6 +266,7 @@ NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(
                 kSPKNotificationStoryMarkSeen,
                 kSPKNotificationDirectVisualMarkSeen,
                 kSPKNotificationThreadMessagesMarkSeen,
+                kSPKNotificationDirectSeenReceiptBlocked,
                 kSPKNotificationInstantsMarkSeen,
             ],
             @"lists" : @[

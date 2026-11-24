@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Czy na pewno chcesz wysłać tę rolkę do czatu?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Wyślij rolkę";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Czy na pewno chcesz wysłać tę rolkę do %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram próbował wysłać je samodzielnie";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Zablokowano potwierdzenie wyświetlenia";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Oznaczono wiadomości jako odczytane";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nie można oznaczyć wiadomości jako wyświetlonych";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Oznacz jako odczytane";

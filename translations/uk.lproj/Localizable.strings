@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Ви впевнені, що хочете надіслати цей рілс у чат?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Надіслати рілс";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Ви впевнені, що хочете надіслати цей рілс %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram намагався надіслати її сам";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Позначку про перегляд заблоковано";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Повідомлення позначені як прочитані";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Не вдалося позначити як переглянуте";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Позначити як переглянуте";

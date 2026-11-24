@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "คุณแน่ใจหรือไม่ว่าต้องการส่งรีลนี้ไปยังแชท?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "ส่งรีล";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "คุณแน่ใจหรือไม่ว่าต้องการส่งรีลนี้ไปยัง %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram พยายามส่งเองโดยอัตโนมัติ";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "บล็อกการแจ้งว่าเห็นแล้ว";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "ทำเครื่องหมายข้อความว่าเห็นแล้ว";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "ไม่สามารถทำเครื่องหมายข้อความว่าเห็นแล้วได้";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "ทำเครื่องหมายว่าเห็นแล้ว";

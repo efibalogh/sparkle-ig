@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Bu reelsi sohbete göndermek istediğinden emin misin?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Reelsi Gönder";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bu reelsi %@ kullanıcısına göndermek istediğinden emin misin?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram bunu kendiliğinden göndermeye çalıştı";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Görüldü bildirimi engellendi";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Mesajlar görüldü olarak işaretlendi";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Görüldü olarak işaretlenemedi";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Görüldü olarak işaretle";

@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Are you sure you want to send this reel to the chat?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Send Reel";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Are you sure you want to send this reel to %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram tried to send one on its own";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Seen receipt blocked";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Marked messages as seen";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Unable to mark messages as seen";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Mark as Seen";

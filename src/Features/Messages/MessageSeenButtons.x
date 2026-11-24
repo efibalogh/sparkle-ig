@@ -18,6 +18,7 @@
 #import "../../Utils.h"
 #import "DeletedMessagesLog/SPKDeletedMessagesViewController.h"
 #import "DirectLocalSeen.h"
+#import "DirectSeenReceiptGuard.h"
 #import "MessageSeenButtons.h"
 #import "../../App/SPKPerfMeter.h"
 
@@ -212,6 +213,7 @@ static BOOL SPKMarkDirectThreadMessagesAsSeen(id controller) {
     }
 
     kSPKSeenAutoBypassCount++;
+    SPKDirectSeenReceiptGuardAllow(context.threadId);
     SPKDirectLocalSeenWillSendReceipt(context.threadId);
     @try {
         ((void (*)(id, SEL))objc_msgSend)(target, @selector(markLastMessageAsSeen));
@@ -1812,6 +1814,7 @@ void SPKInstallMessageSeenButtonHooksIfNeeded(void) {
                                                                           @"IGDirectThreadViewListAdapterDataSource"));
         SPKInstallDirectInboxSeenContextMenuHook();
         SPKInstallDirectLocalSeenHooksIfNeeded();
+        SPKInstallDirectSeenReceiptGuardIfNeeded();
 
         [[NSNotificationCenter defaultCenter] addObserverForName:SPKDirectLocalSeenDidChangeNotification
                                                           object:nil

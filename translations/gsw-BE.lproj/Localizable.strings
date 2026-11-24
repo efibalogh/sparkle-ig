@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Bisch sicher, dass du das Reel an dä Chat wottsch schicke?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Reel schicke";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bisch sicher, dass du das Reel an %@ wottsch schicke?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram het si sälber wöue schicke";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Gseh-Bestätigung blockiert";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Nachrichte als gseh markiert";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Cha Nachrichte nid als gseh markiere";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Als gseh markiere";

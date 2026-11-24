@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Möchtest du dieses Reel wirklich an den Chat senden?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Reel senden";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Möchtest du dieses Reel wirklich an %@ senden?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram wollte sie selbst senden";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Gesehen-Bestätigung blockiert";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Nachrichten als gesehen markiert";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Konnte nicht als gesehen markiert werden";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Als gesehen markieren";

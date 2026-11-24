@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "क्या आप निश्चित रूप से यह रील चैट में भेजना चाहते हैं?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "रील भेजें";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "क्या आप निश्चित रूप से यह रील %@ को भेजना चाहते हैं?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram ने इसे खुद भेजने की कोशिश की";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "देखे जाने की सूचना ब्लॉक की गई";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "संदेशों को पढ़ा हुआ चिह्नित किया";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "देखे जाने के रूप में चिह्नित करने में विफल";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "देखा गया के रूप में चिह्नित करें";

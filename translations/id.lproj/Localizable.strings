@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Apakah Anda yakin ingin mengirim reel ini ke obrolan?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Kirim Reel";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Apakah Anda yakin ingin mengirim reel ini ke %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram mencoba mengirimkannya sendiri";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Tanda dilihat diblokir";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Pesan ditandai sebagai dilihat";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Tidak dapat menandai pesan sebagai dilihat";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Tandai sebagai Dilihat";

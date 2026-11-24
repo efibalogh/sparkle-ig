@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Вы уверены, что хотите отправить этот рилс в чат?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Отправить рилс";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Вы уверены, что хотите отправить этот рилс %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram попытался отправить её сам";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Отметка о просмотре заблокирована";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Сообщения помечены как просмотренные";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Не удалось отметить как просмотренное";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Отметить как просмотренное";

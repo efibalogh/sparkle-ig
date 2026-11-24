@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Sigur doriți să trimiteți acest reel în chat?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Trimite reelul";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Sigur doriți să trimiteți acest reel către %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram a încercat să o trimită singur";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Confirmarea de vizionare a fost blocată";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Mesajele marcate ca vizualizate";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nu pot marca ca vizionat";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Marchează ca văzut";

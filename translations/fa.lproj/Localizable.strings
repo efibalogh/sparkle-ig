@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "آیا مطمئن هستید که می‌خواهید این ریل را به گفتگو ارسال کنید؟";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "ارسال ریل";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "آیا مطمئن هستید که می‌خواهید این ریل را به %@ ارسال کنید؟";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "اینستاگرام سعی کرد آن را خودش ارسال کند";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "رسید دیده‌شدن مسدود شد";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "پیام‌ها به‌عنوان دیده‌شده علامت خوردند";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "علامت‌گذاری پیام‌ها به‌عنوان دیده‌شده ممکن نیست";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "علامت‌گذاری به‌عنوان دیده‌شده";

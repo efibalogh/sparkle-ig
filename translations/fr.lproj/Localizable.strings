@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Êtes-vous sûr de vouloir envoyer ce reel à la discussion ?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Envoyer le reel";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Êtes-vous sûr de vouloir envoyer ce reel à %@ ?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram a tenté de l’envoyer de lui-même";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Confirmation de lecture bloquée";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Messages marqués comme vus";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Impossible de marquer comme vu";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Marquer comme vu";

@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Sigurado ka bang gusto mong ipadala ang reel na ito sa chat?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Ipadala ang Reel";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Sigurado ka bang gusto mong ipadala ang reel na ito kay %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Sinubukan itong ipadala ng Instagram nang kusa";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Na-block ang seen receipt";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Na-mark ang mga mensahe bilang seen";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Hindi ma-mark ang mga mensahe bilang seen";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Markahan bilang Nakita";

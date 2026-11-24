@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Είστε σίγουρος ότι θέλετε να στείλετε αυτό το reel στη συνομιλία;";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Αποστολή Reel";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Είστε σίγουρος ότι θέλετε να στείλετε αυτό το reel στον/στην %@;";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Το Instagram προσπάθησε να τη στείλει μόνο του";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Η επιβεβαίωση ανάγνωσης αποκλείστηκε";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Σημειώθηκαν τα μηνύματα ως διαβασμένα";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Δεν ήταν δυνατή η σήμανση ως αναγνωρισμένη";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Σήμανση ως αναγνωσμένο";

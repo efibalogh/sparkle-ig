@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "هل أنت متأكد من أنك تريد إرسال هذا الريل إلى الدردشة؟";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "إرسال الريل";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "هل أنت متأكد من أنك تريد إرسال هذا الريل إلى %@؟";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "حاول Instagram إرساله تلقائيًا";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "تم حظر إشعار المشاهدة";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "تم وضع علامة على الرسائل كمشاهدة";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "تعذر تحديد كمشاهد";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "وضع علامة كمقروءة";

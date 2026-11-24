@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Bạn có chắc chắn muốn gửi reel này đến đoạn chat không?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Gửi reel";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Bạn có chắc chắn muốn gửi reel này đến %@ không?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram đã cố tự gửi";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Đã chặn thông báo đã xem";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Đã đánh dấu tin nhắn là đã xem";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Không thể đánh dấu tin nhắn là đã xem";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Đánh dấu là đã xem";

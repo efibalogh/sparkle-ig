@@ -1860,6 +1860,8 @@
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_MESSAGE" = "Ar tikrai norite išsiųsti šį „Reel“ į pokalbį?";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_TITLE" = "Siųsti „Reel“";
 "MESSAGES_REEL_SEND_TO_THREAD_CONFIRM_USER_FORMAT" = "Ar tikrai norite išsiųsti šį „Reel“ %@?";
+"MESSAGES_SEEN_GUARD_BLOCKED_SUBTITLE" = "Instagram bandė jį išsiųsti pats";
+"MESSAGES_SEEN_GUARD_BLOCKED_TITLE" = "Matymo patvirtinimas užblokuotas";
 "MESSAGES_SEEN_MARKED_MESSAGES_TOAST" = "Žinutės pažymėtos kaip matytos";
 "MESSAGES_SEEN_MARK_MESSAGES_FAILED_TOAST" = "Nepavyko pažymėti žinučių kaip matytų";
 "MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL" = "Pažymėti kaip matytą";
