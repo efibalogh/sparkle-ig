@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Fixar pessoas na pesquisa";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Fixado na pesquisa";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Desafixado da pesquisa";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "Mostra pessoas como resultados de conta normais em vez de pesquisas populares, para que um toque abra o perfil e as pesquisas recentes listem cada pessoa uma única vez. As demais sugestões de palavras-chave continuam iguais.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "Restaurar Pesquisa de Contas";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Mostra os blocos da grade do Explorar como quadrados em vez do layout 3:4 mais alto. Abra o Explorar novamente para aplicar.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grade quadrada";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass e Desfoque";

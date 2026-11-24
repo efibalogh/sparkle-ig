@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Sematkan Orang di Pencarian";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Disematkan di pencarian";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Sematan dilepas dari pencarian";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "Menampilkan orang sebagai hasil akun biasa, bukan pencarian populer, sehingga satu ketukan membuka profil dan pencarian terbaru menampilkan setiap orang sekali saja. Saran kata kunci lainnya tetap sama.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "Pulihkan Pencarian Akun";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Menampilkan ubin grid Jelajahi sebagai persegi, bukan tata letak 3:4 yang lebih tinggi. Buka ulang Jelajahi untuk menerapkan.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grid Persegi";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Buram";

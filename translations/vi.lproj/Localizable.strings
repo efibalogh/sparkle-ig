@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Ghim người trong tìm kiếm";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Đã ghim trong tìm kiếm";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Đã bỏ ghim khỏi tìm kiếm";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "Hiển thị người dùng dưới dạng kết quả tài khoản thông thường thay vì tìm kiếm phổ biến, nhờ vậy chỉ cần một lần chạm là mở được hồ sơ và tìm kiếm gần đây chỉ hiển thị mỗi người một lần. Các gợi ý từ khóa khác vẫn giữ nguyên.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "Khôi phục tìm kiếm tài khoản";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Hiển thị các ô trong lưới Khám phá dạng hình vuông thay vì bố cục 3:4 cao hơn. Mở lại Khám phá để áp dụng.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Lưới vuông";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Làm mờ";

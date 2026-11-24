@@ -104,6 +104,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_share_sheet_pins" : @(NO),
         @"general_share_sheet_pinned" : @[],
         @"interface_search_pins" : @(NO),
+        @"interface_restore_account_search" : @(NO),
         @"interface_search_pinned" : @[],
         @"interface_search_pins_list_types" : @[],
         @"interface_search_pins_collapsed" : @(NO),

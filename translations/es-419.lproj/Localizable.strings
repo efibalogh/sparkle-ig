@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Fijar personas en la búsqueda";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Fijado en la búsqueda";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Dejó de estar fijado en la búsqueda";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "Muestra a las personas como resultados de cuentas normales en lugar de búsquedas populares, así un toque abre el perfil y en las búsquedas recientes cada persona aparece una sola vez. Las demás sugerencias de palabras clave no cambian.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "Restaurar búsqueda de cuentas";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Muestra los mosaicos de la cuadrícula de Explorar como cuadrados en lugar del diseño más alto 3:4. Vuelve a abrir Explorar para aplicarlo.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Cuadrícula cuadrada";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass y desenfoque";

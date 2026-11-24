@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Prisegti žmones paieškoje";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Prisegta paieškoje";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Atsegta iš paieškos";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "Žmones rodo kaip įprastus paskyrų rezultatus, o ne kaip populiarias paieškas, todėl vienu palietimu atidaromas profilis, o naujausiose paieškose kiekvienas žmogus rodomas tik kartą. Kitos raktažodžių siūlomos paieškos nesikeičia.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "Atkurti paskyrų paiešką";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Naršymo tinklelio langelius rodo kvadratais, o ne aukštesniu 3:4 išdėstymu. Norėdami pritaikyti, iš naujo atidarykite Naršymą.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Kvadratinis tinklelis";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ir suliejimas";

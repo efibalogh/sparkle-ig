@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Persone i de Suechi aahefte";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "I de Suechi aagheftet";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Us de Suechi glöst";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "Zeigt Persone als normali Kontoresultat aastatt als beliebti Suechen, damit en Tupf s Profil öffnet und Chürzlechi Suechi jedi Person nur einisch zeigt. Ander Stichwortvorschläg blibed.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "Kontosuech wiederherstelle";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Zeigt d Kachle im Entdecke-Raster als Quadrat statt im höchere 3:4-Layout. Mach Entdecke nomol uf, damit s gilt.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Quadratischs Raster";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass u Blur";

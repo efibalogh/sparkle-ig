@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "검색에서 사람 고정";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "검색에 고정됨";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "검색에서 고정 해제됨";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "사람을 인기 검색어 대신 일반 계정 결과로 표시하여 한 번의 탭으로 프로필을 열고, 최근 검색에는 각 사람이 한 번만 나타나도록 합니다. 다른 키워드 제안은 그대로 유지됩니다.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "계정 검색 복원";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "탐색 그리드 타일을 더 긴 3:4 레이아웃 대신 정사각형으로 표시합니다. 적용하려면 탐색을 다시 여세요.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "정사각형 그리드";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 및 흐림";

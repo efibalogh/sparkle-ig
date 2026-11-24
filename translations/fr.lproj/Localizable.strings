@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "Épingler des personnes dans la recherche";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "Épinglé dans la recherche";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "Désépinglé de la recherche";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "Affiche les personnes comme des résultats de compte normaux au lieu de recherches populaires, afin qu'un seul geste ouvre le profil et que les recherches récentes n'affichent chaque personne qu'une fois. Les autres suggestions de mots-clés restent inchangées.";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "Restaurer la recherche de comptes";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Affiche les vignettes de la grille Explorer en carrés au lieu de la mise en page 3:4 plus haute. Rouvrez Explorer pour appliquer.";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grille carrée";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass et flou";

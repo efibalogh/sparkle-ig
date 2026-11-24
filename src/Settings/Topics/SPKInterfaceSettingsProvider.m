@@ -156,6 +156,10 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
                                                           icon:SPKSettingsIcon(@"pin")
                                                    defaultsKey:@"interface_search_pins"],
                                SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE")
+                                                          icon:SPKSettingsIcon(@"user_circle")
+                                                   defaultsKey:@"interface_restore_account_search"],
+                               SPKL(@"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP")),
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_CAPTURE_HEADER"), @[

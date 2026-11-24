@@ -1148,6 +1148,8 @@
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TITLE" = "ปักหมุดบุคคลในการค้นหา";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_PINNED" = "ปักหมุดในการค้นหาแล้ว";
 "INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_TOAST_UNPINNED" = "เลิกปักหมุดจากการค้นหาแล้ว";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP" = "แสดงบุคคลเป็นผลลัพธ์บัญชีปกติแทนการค้นหายอดนิยม เพื่อให้แตะครั้งเดียวเปิดโปรไฟล์ได้ และการค้นหาล่าสุดจะแสดงแต่ละบุคคลเพียงครั้งเดียว คำแนะนำคำค้นหาอื่นยังคงอยู่";
+"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE" = "กู้คืนการค้นหาบัญชี";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "แสดงช่องในตารางสำรวจเป็นสี่เหลี่ยมจัตุรัสแทนเลย์เอาต์ 3:4 ที่สูงกว่า เปิดหน้าสำรวจใหม่เพื่อใช้";
 "INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "ตารางสี่เหลี่ยมจัตุรัส";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass และเบลอ";
