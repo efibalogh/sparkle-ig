@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "विश्लेषण विफल";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "प्रोफ़ाइल का विश्लेषण जारी है...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "विश्लेषण जारी है...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "हर 2 हफ़्ते";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "हर 3 दिन";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "हर दिन";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "हर हफ़्ते";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "जब आप Instagram खोलते हैं और आखिरी स्कैन चुने गए अंतराल से पुराना है, तो स्वतः रीफ़्रेश फिर से स्कैन करता है। इसके लिए पहले एक मैन्युअल स्कैन ज़रूरी है, और लो पावर मोड में यह रुक जाता है।";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "प्रोफाइल विश्लेषक को बदलाव मिले";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "प्रोफाइल विश्लेषक रीफ़्रेश हो रहा है...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "स्वतः रीफ़्रेश";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "परिवर्तन";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "यह सभी Profile Analyzer स्नैपशॉट, पहचाने गए बदलाव और देखी गई प्रोफ़ाइल का इतिहास स्थायी रूप से हटा देता है। इसे पूर्ववत नहीं किया जा सकता।";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "आप वापस फॉलो नहीं करते";

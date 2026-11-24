@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Analysis failed";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Analyzing profile...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Analyzing...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Every 2 Weeks";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Every 3 Days";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Every Day";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Every Week";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Auto Refresh scans again when you open Instagram and the last scan is older than the chosen interval. It needs one manual scan first and pauses in Low Power Mode.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Profile Analyzer found changes";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Refreshing Profile Analyzer...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Auto Refresh";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Changes";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "This permanently deletes all Profile Analyzer snapshots, detected changes, and visited-profile history. It cannot be undone.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "You Don't Follow Back";

@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Analyse fählgschlage";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Profil wird analysiert…";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Am Analysiere…";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Alli 2 Wuche";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Alli 3 Tag";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Jede Tag";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Jede Wuche";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Automatisch aktualisiere scannt nomau, wenn du Instagram öffnisch und dr letscht Scan elter isch as s gwählte Intervall. Es bruucht zersch en manuelle Scan und pausiert im Energiesparmodus.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Profile Analyzer hät Änderige gfunde";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Profile Analyzer wird aktualisiert...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Automatisch aktualisiere";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Änderige";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Das löscht dauerhaft aui Profile-Analyzer-Snapshots, erkannti Änderige und d'Historie vo bsuechte Profil. Das cha nid rückgängig gmacht wärde.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Du folgsch nid zrügg";

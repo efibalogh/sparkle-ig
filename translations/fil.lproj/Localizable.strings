@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Nabigo ang pagsusuri";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Sinusuri ang profile...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Sinusuri...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Tuwing 2 Linggo";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Tuwing 3 Araw";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Tuwing Araw";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Tuwing Linggo";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Ini-scan muli ng Awtomatikong Pag-refresh kapag binuksan mo ang Instagram at mas luma sa napiling agwat ang huling scan. Kailangan muna ng isang manual na scan at humihinto ito sa Low Power Mode.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Nakahanap ang Profile Analyzer ng mga pagbabago";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Nire-refresh ang Profile Analyzer...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Awtomatikong Pag-refresh";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Mga Pagbabago";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Permanenteng tinatanggal nito ang lahat ng snapshot ng Profile Analyzer, mga natukoy na pagbabago, at history ng mga binisitang profile. Hindi ito maaaring i-undo.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Hindi Ka Nila Sinusundan Pabalik";

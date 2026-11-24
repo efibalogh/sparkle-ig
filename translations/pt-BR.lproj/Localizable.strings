@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Análise falhou";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Analisando perfil...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Analisando...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "A cada 2 semanas";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "A cada 3 dias";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Todo dia";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Toda semana";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "A atualização automática faz uma nova digitalização ao abrir o Instagram, se a última for mais antiga que o intervalo escolhido. Ela exige uma digitalização manual antes e fica pausada no Modo de Baixo Consumo.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "O Analisador de Perfil encontrou alterações";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Atualizando o Analisador de Perfil...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Atualização automática";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Alterações";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Isto exclui permanentemente todos os instantâneos do Analisador de Perfil, as alterações detectadas e o histórico de perfis visitados. Não é possível desfazer.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Você não segue de volta";

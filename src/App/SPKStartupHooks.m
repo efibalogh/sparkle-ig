@@ -98,6 +98,7 @@ FOUNDATION_EXPORT void SPKInstallDisableScrollingReelsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallReelsAutoScrollDefaultHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFollowIndicatorHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfileAnalyzerVisitTrackerHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallProfileAnalyzerAutoRefreshIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableDMStorySeenHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableInstantsCreationHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsActionButtonHooksIfEnabled(void);
@@ -378,6 +379,9 @@ void SPKInstallProfileSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallProfileHighlightReorderHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileReelsSortModeHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileAnalyzerVisitTrackerHooksIfEnabled);
+    // Not a hook: re-scans the active account when its last scan is older than the
+    // chosen interval.
+    SPK_INSTALL(SPKInstallProfileAnalyzerAutoRefreshIfNeeded);
     SPK_INSTALL(SPKInstallStoryHighlightTrayTrackingHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
 }

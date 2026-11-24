@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Error en el análisis";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Analizando perfil...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Analizando...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Cada 2 semanas";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Cada 3 días";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Todos los días";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Cada semana";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "La actualización automática vuelve a escanear cuando abres Instagram y el último escaneo es más antiguo que el intervalo elegido. Necesita un escaneo manual previo y se pausa en modo de bajo consumo.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "El analizador de perfiles encontró cambios";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Actualizando el analizador de perfiles...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Actualización automática";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Cambios";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Esto elimina permanentemente todas las instantáneas del Analizador de perfil, los cambios detectados y el historial de perfiles visitados. No se puede deshacer.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "No te siguen de vuelta";

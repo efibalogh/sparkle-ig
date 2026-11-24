@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "تحلیل ناموفق بود";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "در حال تحلیل پروفایل...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "در حال تحلیل...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "هر ۲ هفته";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "هر ۳ روز";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "هر روز";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "هر هفته";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "به‌روزرسانی خودکار هر زمان که Instagram را باز کنید دوباره اسکن می‌کند، اگر آخرین اسکن قدیمی‌تر از بازه انتخاب‌شده باشد. ابتدا یک اسکن دستی لازم دارد و در حالت کم‌مصرف متوقف می‌شود.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "تحلیلگر پروفایل تغییراتی پیدا کرد";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "در حال به‌روزرسانی تحلیلگر پروفایل...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "به‌روزرسانی خودکار";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "تغییرات";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "این کار تمام تصویرهای لحظه‌ای ذخیره‌شدهٔ تحلیلگر پروفایل، تغییرات شناسایی‌شده و تاریخچهٔ پروفایل‌های بازدیدشده را برای همیشه حذف می‌کند. این عمل قابل بازگشت نیست.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "شما فالو متقابل نکرده‌اید";

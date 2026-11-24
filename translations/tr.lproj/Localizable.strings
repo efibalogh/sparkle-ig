@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Analiz başarısız";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Profil analiz ediliyor...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Analiz ediliyor...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "2 Haftada Bir";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "3 Günde Bir";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Her Gün";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Her Hafta";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Otomatik Yenileme, Instagram'ı açtığınızda ve son tarama seçilen aralıktan eski ise yeniden tarama yapar. Önce bir manuel tarama gerekir ve Düşük Güç Modu'nda duraklatılır.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Profil Analizcisi değişiklik buldu";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Profil Analizcisi yenileniyor...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Otomatik Yenileme";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Değişiklikler";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Bu işlem tüm Profil Analizörü anlık görüntülerini, algılanan değişiklikleri ve ziyaret edilen profil geçmişini kalıcı olarak siler. Geri alınamaz.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Bunu Takip Etmiyorsunuz";

@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Échec de l'analyse";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Analyse du profil en cours...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Analyse en cours...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Toutes les 2 semaines";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Tous les 3 jours";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Tous les jours";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Chaque semaine";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "L'actualisation automatique relance une analyse lorsque vous ouvrez Instagram et que la dernière analyse est plus ancienne que l'intervalle choisi. Une première analyse manuelle est requise, et elle est suspendue en mode économie d'énergie.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "L'analyseur de profil a détecté des changements";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Actualisation de l'analyseur de profil...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Actualisation automatique";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Modifications";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Cette action supprime définitivement tous les snapshots, changements détectés et l'historique des profils visités de l'Analyseur de profil. Elle est irréversible.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Vous ne le/la suivez pas en retour";

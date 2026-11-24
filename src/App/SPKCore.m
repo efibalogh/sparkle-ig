@@ -126,6 +126,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         // above for pre-mode-menu users (→ text + colorful). Everyone else
         // defaults to off / native gray.
         @"profile_analyzer_track_visits" : @(NO),
+        @"profile_analyzer_auto_refresh_hours" : @(0),
         @"feed_action_btn" : @(YES),
         @"feed_action_btn_default_action" : @"none",
         @"feed_header_button" : @(NO),

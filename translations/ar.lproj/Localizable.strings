@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "فشل التحليل";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "جاري تحليل الملف الشخصي...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "جاري التحليل...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "كل أسبوعين";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "كل 3 أيام";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "كل يوم";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "كل أسبوع";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "يفحص التحديث التلقائي مجدداً عند فتح Instagram إذا كان آخر فحص أقدم من الفترة المختارة. يتطلب فحصاً يدوياً واحداً أولاً ويتوقف في وضع الطاقة المنخفضة.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "وجد محلل الملف الشخصي تغييرات";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "جاري تحديث محلل الملف الشخصي...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "التحديث التلقائي";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "التغييرات";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "يحذف هذا نهائياً جميع لقطات Profile Analyzer والتغييرات المكتشفة وسجل الملفات الشخصية التي تمت زيارتها. لا يمكن التراجع عن ذلك.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "أنت لا تتابع بالمقابل";

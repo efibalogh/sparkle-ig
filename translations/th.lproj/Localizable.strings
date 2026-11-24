@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "การวิเคราะห์ล้มเหลว";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "กำลังวิเคราะห์โปรไฟล์...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "กำลังวิเคราะห์...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "ทุก 2 สัปดาห์";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "ทุก 3 วัน";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "ทุกวัน";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "ทุกสัปดาห์";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "รีเฟรชอัตโนมัติจะสแกนอีกครั้งเมื่อคุณเปิด Instagram และการสแกนครั้งล่าสุดเก่ากว่าช่วงเวลาที่เลือก ต้องสแกนด้วยตนเองหนึ่งครั้งก่อน และจะหยุดชั่วคราวในโหมดพลังงานต่ำ";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "ตัววิเคราะห์โปรไฟล์พบการเปลี่ยนแปลง";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "กำลังรีเฟรชตัววิเคราะห์โปรไฟล์...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "รีเฟรชอัตโนมัติ";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "การเปลี่ยนแปลง";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "การทำเช่นนี้จะลบสแนปช็อตของตัววิเคราะห์โปรไฟล์ทั้งหมด การเปลี่ยนแปลงที่ตรวจพบ และประวัติโปรไฟล์ที่เข้าชมอย่างถาวร ไม่สามารถยกเลิกได้";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "คุณไม่ได้ติดตามกลับ";

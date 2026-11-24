@@ -8,6 +8,7 @@
 #import "../../../Shared/UI/SPKSwitch.h"
 #import "../../../Utils.h"
 #import "../../../Shared/Avatars/SPKAvatarView.h"
+#import "SPKProfileAnalyzerAutoRefresh.h"
 #import "SPKProfileAnalyzerListViewController.h"
 #import "SPKProfileAnalyzerModels.h"
 #import "SPKProfileAnalyzerService.h"
@@ -585,6 +586,7 @@ static NSString *SPKPACompact(NSInteger n) {
 
 // Row identifiers for the non-category list rows.
 typedef NS_ENUM(NSInteger, SPKPAOptionRow) {
+    SPKPAOptionAutoRefresh,
     SPKPAOptionTrackVisits,
     SPKPAOptionVisitedProfiles,
     SPKPAOptionAbout,
@@ -614,7 +616,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 // The option rows present in the Options section (Visited Profiles only shows
 // when tracking is enabled).
 - (NSArray<NSNumber *> *)optionRows {
-    NSMutableArray *rows = [NSMutableArray arrayWithObject:@(SPKPAOptionTrackVisits)];
+    NSMutableArray *rows = [NSMutableArray arrayWithObjects:@(SPKPAOptionAutoRefresh), @(SPKPAOptionTrackVisits), nil];
     if (self.trackVisits)
         [rows addObject:@(SPKPAOptionVisitedProfiles)];
     [rows addObject:@(SPKPAOptionAbout)];
@@ -655,6 +657,12 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if ([self kindForSection:section] != SPKPASectionOptions)
+        return nil;
+    return SPKL(@"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT");
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SPKPASectionKind kind = [self kindForSection:indexPath.section];
 
@@ -679,7 +687,13 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 
     if (kind == SPKPASectionOptions) {
         SPKPAOptionRow opt = (SPKPAOptionRow)[[self optionRows][indexPath.row] integerValue];
-        if (opt == SPKPAOptionTrackVisits) {
+        if (opt == SPKPAOptionAutoRefresh) {
+            content.text = SPKL(@"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT");
+            content.image = [SPKAssetUtils instagramIconNamed:@"arrow_cw" pointSize:24.0 renderingMode:UIImageRenderingModeAlwaysTemplate];
+            content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
+            cell.accessoryView = [self autoRefreshMenuButton];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        } else if (opt == SPKPAOptionTrackVisits) {
             content.text = SPKL(@"PROFILE_PROFILE_ANALYZER_TRACK_VISITED_PROFILES_TEXT");
             content.image = [SPKAssetUtils instagramIconNamed:@"eye" pointSize:24.0 renderingMode:UIImageRenderingModeAlwaysTemplate];
             content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
@@ -778,6 +792,55 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 }
 
 #pragma mark - Options actions
+
+- (UIButton *)autoRefreshMenuButton {
+    NSInteger selected = [SPKProfileAnalyzerAutoRefresh intervalHours];
+    NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
+    __weak typeof(self) weakSelf = self;
+    for (NSNumber *choice in [SPKProfileAnalyzerAutoRefresh intervalChoices]) {
+        NSInteger hours = choice.integerValue;
+        UIAction *action = [UIAction actionWithTitle:[SPKProfileAnalyzerAutoRefresh titleForIntervalHours:hours]
+                                               image:nil
+                                          identifier:nil
+                                             handler:^(__unused UIAction *a) {
+                                                 [weakSelf autoRefreshPicked:hours];
+                                             }];
+        action.state = (hours == selected) ? UIMenuElementStateOn : UIMenuElementStateOff;
+        [actions addObject:action];
+    }
+
+    UIButtonConfiguration *config = [UIButtonConfiguration plainButtonConfiguration];
+    config.title = [SPKProfileAnalyzerAutoRefresh titleForIntervalHours:selected];
+    config.contentInsets = NSDirectionalEdgeInsetsMake(8, 8, 8, 0);
+    config.image = [UIImage systemImageNamed:@"chevron.up.chevron.down"];
+    config.imagePlacement = NSDirectionalRectEdgeTrailing;
+    config.imagePadding = 6.0;
+    config.preferredSymbolConfigurationForImage = [UIImageSymbolConfiguration configurationWithPointSize:10.0 weight:UIImageSymbolWeightBold];
+    UIFont *font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
+    config.titleTextAttributesTransformer = ^NSDictionary<NSAttributedStringKey, id> *(NSDictionary<NSAttributedStringKey, id> *attributes) {
+        NSMutableDictionary *updated = [attributes mutableCopy];
+        updated[NSFontAttributeName] = font;
+        return updated;
+    };
+
+    UIButton *button = [UIButton buttonWithConfiguration:config primaryAction:nil];
+    button.menu = [UIMenu menuWithTitle:@"" children:actions];
+    button.showsMenuAsPrimaryAction = YES;
+    button.tintColor = [SPKUtils SPKColor_InstagramSecondaryText];
+    [button sizeToFit];
+    return button;
+}
+
+- (void)autoRefreshPicked:(NSInteger)hours {
+    [SPKProfileAnalyzerAutoRefresh setIntervalHours:hours];
+    NSInteger optionsIndex = [[self activeSections] indexOfObject:@(SPKPASectionOptions)];
+    NSInteger row = [[self optionRows] indexOfObject:@(SPKPAOptionAutoRefresh)];
+    if (optionsIndex == NSNotFound || row == NSNotFound)
+        return;
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:optionsIndex]];
+    // Swapped in place: reloading the row re-sizes the table under the closing menu.
+    cell.accessoryView = [self autoRefreshMenuButton];
+}
 
 - (void)trackVisitsToggled:(SPKSwitch *)toggle {
     SPKPreferenceSetObject(@(toggle.isOn), @"profile_analyzer_track_visits");

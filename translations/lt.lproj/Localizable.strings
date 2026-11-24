@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Analizė nepavyko";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Analizuojamas profilis...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Analizuojama...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Kas 2 savaites";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Kas 3 dienas";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Kas dieną";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Kas savaitę";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Automatinis atnaujinimas nuskaito dar kartą, kai atidarote Instagram ir paskutinis nuskaitymas senesnis nei pasirinktas intervalas. Pirmiausia reikia atlikti vieną rankinį nuskaitymą, o įjungus Mažo energijos vartojimo režimą jis sustabdomas.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Profilio analizatorius rado pakeitimų";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Atnaujinamas profilio analizatorius...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Automatinis atnaujinimas";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Pakeitimai";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Tai visam laikui ištrina visas Profilio analizatoriaus momentines kopijas, aptiktus pakeitimus ir aplankytų profilių istoriją. To anuliuoti negalima.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Jūs nesekate atgal";

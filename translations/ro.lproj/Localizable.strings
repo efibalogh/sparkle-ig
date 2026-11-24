@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Analiza a eșuat";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Se analizează profilul...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Se analizează...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "La fiecare 2 săptămâni";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "La fiecare 3 zile";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Zilnic";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Săptămânal";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Reîmprospătarea automată scanează din nou când deschizi Instagram, dacă ultima scanare este mai veche decât intervalul ales. Necesită mai întâi o scanare manuală și se oprește în modul Economisire energie.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Analizatorul de profil a găsit modificări";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Se reîmprospătează analizatorul de profil...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Reîmprospătare automată";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Modificări";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Șterge definitiv toate instantaneele Profile Analyzer, modificările detectate și istoricul profilurilor vizitate. Acțiunea nu poate fi anulată.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Nu îi urmărești înapoi";

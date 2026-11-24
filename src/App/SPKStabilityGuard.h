@@ -4,6 +4,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT void SPKStabilityGuardBeginLaunch(void);
 FOUNDATION_EXPORT void SPKStabilityGuardMarkHooksFinished(void);
+// This launch has been marked stable. Posted once per process, on the main queue.
+FOUNDATION_EXPORT NSNotificationName const SPKStabilityGuardLaunchDidStabilizeNotification;
+FOUNDATION_EXPORT BOOL SPKStabilityGuardIsLaunchStable(void);
 FOUNDATION_EXPORT BOOL SPKStabilityGuardIsSafeStartupMode(void);
 FOUNDATION_EXPORT void SPKStabilityGuardReset(void);
 

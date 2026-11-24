@@ -551,6 +551,7 @@ can't be analyzed because a single scan would hit Instagram's rate limits.
 
 ### Analyzer
 - **Open Profile Analyzer**: Dashboard with your profile header (avatar, @username, and posts/followers/following — your identity shows even before the first scan), a Scan Now/Again button that intermittently surfaces when you last analyzed, and the insight categories below.
+- **Auto Refresh**: Scans again on its own when you open Instagram and your last scan is older than the interval you pick (**Every Day**, **Every 3 Days**, **Every Week**, **Every 2 Weeks**, or **Off**). Set per account under **Options**. It needs one manual scan first, waits until the launch has settled, pauses in Low Power Mode, and waits an hour before retrying a failed scan so it can't hammer Instagram's rate limits.
 - **Insights** (always available after a scan):
   - **Mutual Followers**: accounts you follow that also follow you.
   - **Not Following You Back**: accounts you follow that don't follow you.
@@ -571,7 +572,7 @@ can't be analyzed because a single scan would hit Instagram's rate limits.
 - **Refresh Profile Pictures**: Avatars self-heal: when a stored CDN URL has expired, Sparkle silently re-resolves a fresh one from Instagram, so simply reopening a list restores missing pictures. A list's **More** menu force-refreshes them all, and individual placeholders can be tapped to retry. Profile pictures are a shared cache managed under **Data & Settings › Storage**.
 
 ### Notifications
-- **Profile Analyzer**: A progress pill while an analysis runs and a pill + haptic when it finishes, set by the **Profile Analyzer** row under *Notifications › Events*. A failed analysis is always reported.
+- **Profile Analyzer**: A progress pill while an analysis runs and a pill + haptic when it finishes, set by the **Profile Analyzer** row under *Notifications › Events*. A failed analysis is always reported. An **Auto Refresh** shows a short notice when it starts and reports only if it found changes (for example *New Followers: 2*); tap either to open the analyzer.
 
 ---
 

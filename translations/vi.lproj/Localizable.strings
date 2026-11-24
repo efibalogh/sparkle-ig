@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Phân tích thất bại";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Đang phân tích trang cá nhân...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Đang phân tích...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Mỗi 2 tuần";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Mỗi 3 ngày";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Mỗi ngày";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Mỗi tuần";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Tự động làm mới sẽ quét lại khi bạn mở Instagram và lần quét gần nhất đã cũ hơn khoảng thời gian đã chọn. Cần quét thủ công một lần trước và sẽ tạm dừng khi bật Chế độ Nguồn điện yếu.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Bộ phân tích trang cá nhân đã phát hiện thay đổi";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Đang làm mới Bộ phân tích trang cá nhân...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Tự động làm mới";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Thay đổi";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Thao tác này sẽ xóa vĩnh viễn tất cả bản chụp của Trình phân tích hồ sơ, lịch sử thay đổi đã phát hiện và lịch sử các trang cá nhân đã ghé thăm. Thao tác này không thể hoàn tác.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Bạn không theo dõi lại";

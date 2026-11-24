@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Аналіз не вдався";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Аналізування профілю...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Аналізування...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Кожні 2 тижні";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Кожні 3 дні";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Щодня";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Щотижня";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Автоматичне оновлення повторно сканує при відкритті Instagram, якщо останнє сканування старіше за обраний інтервал. Спершу потрібне одне ручне сканування, а в режимі економії енергії оновлення призупиняється.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Аналізатор профілю знайшов зміни";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Оновлення аналізатора профілю...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Автоматичне оновлення";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Зміни";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Це назавжди видалить усі знімки Аналізатора профілю, виявлені зміни та історію відвіданих профілів. Цю дію неможливо скасувати.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Ви не стежите взаємно";

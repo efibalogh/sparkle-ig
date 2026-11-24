@@ -60,7 +60,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
 - **Fake location**:
   - Show friends on the Friends Map a place you pick on a map or by search instead of where you are, switch it from a button on the map itself, and keep a list of saved places. Only Instagram sees the fake location, so Maps and other apps keep the real one.
 - **Profile Analyzer**:
-  - Fetches your followers/following and surfaces mutuals, non-followbacks, and a durable change log (new/lost followers, profile updates) across scans.
+  - Fetches your followers/following and surfaces mutuals, non-followbacks, and a durable change log (new/lost followers, profile updates) across scans, with optional automatic refresh every day, 3 days, week or 2 weeks.
 - **Per-account settings**:
   - Each logged-in account keeps its own preferences, gallery scope, and download history, including account-scoped history clearing.
 - **Story viewer tools**:

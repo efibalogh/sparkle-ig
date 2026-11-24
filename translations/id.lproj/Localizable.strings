@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Analisis gagal";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Menganalisis profil...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Menganalisis...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Setiap 2 Minggu";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Setiap 3 Hari";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Setiap Hari";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Setiap Minggu";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Refresh Otomatis memindai lagi saat Anda membuka Instagram dan pemindaian terakhir lebih lama dari interval yang dipilih. Perlu satu pemindaian manual terlebih dahulu dan dijeda saat Mode Daya Rendah.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Profile Analyzer menemukan perubahan";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Menyegarkan Profile Analyzer...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Refresh Otomatis";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Perubahan";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Ini menghapus secara permanen semua snapshot Profile Analyzer, perubahan yang terdeteksi, dan riwayat profil yang dikunjungi. Tindakan ini tidak dapat dibatalkan.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Anda Tidak Mengikuti Balik";

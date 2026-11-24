@@ -2010,6 +2010,14 @@
 "PROFILE_PROFILE_ANALYZER_ANALYSIS_FAILED_TEXT" = "Αποτυχία ανάλυσης";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_PROFILE_TEXT" = "Ανάλυση προφίλ...";
 "PROFILE_PROFILE_ANALYZER_ANALYZING_TEXT" = "Ανάλυση...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_2_WEEKS_TEXT" = "Κάθε 2 Εβδομάδες";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_3_DAYS_TEXT" = "Κάθε 3 Μέρες";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_DAY_TEXT" = "Κάθε Μέρα";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_EVERY_WEEK_TEXT" = "Κάθε Εβδομάδα";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT" = "Η Αυτόματη Ανανέωση σαρώνει ξανά όταν ανοίγετε το Instagram και η τελευταία σάρωση είναι παλαιότερη από το επιλεγμένο διάστημα. Απαιτεί πρώτα μία χειροκίνητη σάρωση και τίθεται σε παύση στη Λειτουργία χαμηλής κατανάλωσης.";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOUND_CHANGES_TEXT" = "Ο Αναλυτής Προφίλ βρήκε αλλαγές";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_STARTED_TEXT" = "Ανανέωση Αναλυτή Προφίλ...";
+"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT" = "Αυτόματη Ανανέωση";
 "PROFILE_PROFILE_ANALYZER_CHANGES_TEXT" = "Αλλαγές";
 "PROFILE_PROFILE_ANALYZER_DELETES_STORED_SNAPSHOTS_CHANGE_HISTORY_VISITED_PROFILE_HISTORY_CANNOT_TEXT" = "Αυτό διαγράφει οριστικά όλα τα στιγμιότυπα του Αναλυτή προφίλ, τις καταγεγραμμένες αλλαγές και το ιστορικό επισκεπτόμενων προφίλ. Δεν είναι δυνατή η αναίρεση.";
 "PROFILE_PROFILE_ANALYZER_DON_T_FOLLOW_BACK_TEXT" = "Δεν τους Ακολουθείτε";
