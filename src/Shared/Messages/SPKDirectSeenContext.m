@@ -1192,6 +1192,63 @@ BOOL SPKDirectToggleCurrentThreadRule(SPKDirectThreadContext *context, NSString 
     return YES;
 }
 
+#pragma mark - Chat rows
+
+static NSString *SPKDirectListSubtitleForThreadEntry(NSDictionary *entry) {
+    NSString *participants = SPKDirectParticipantSubtitleForThreadEntry(entry);
+    if (participants)
+        return participants;
+    NSArray *users = [entry[@"users"] isKindOfClass:[NSArray class]] ? entry[@"users"] : @[];
+    NSMutableArray<NSString *> *parts = [NSMutableArray array];
+    for (NSDictionary *user in users) {
+        NSString *username = [user[@"username"] isKindOfClass:[NSString class]] ? user[@"username"] : nil;
+        if (username.length > 0)
+            [parts addObject:[@"@" stringByAppendingString:username]];
+    }
+    return [parts componentsJoinedByString:@", "];
+}
+
+SPKUserListItem *SPKDirectUserListItemForThreadEntry(NSDictionary *entry) {
+    SPKUserListItem *item = [SPKUserListItem new];
+    item.representedObject = entry;
+    NSString *displayName = SPKDirectDisplayNameForThreadEntry(entry) ?: SPKL(@"MESSAGES_DIRECT_AUTO_SAVE_UNKNOWN_CHAT_TEXT");
+
+    if ([entry[@"isGroup"] boolValue]) {
+        item.isGroup = YES;
+        item.title = displayName;
+        item.subtitle = SPKDirectListSubtitleForThreadEntry(entry);
+        // Shared cache key matches Deleted Messages' group photos; a synthetic
+        // "grp_" PK can't self-heal, but SPKAvatarView draws the group glyph.
+        NSString *threadId = [entry[@"threadId"] isKindOfClass:[NSString class]] ? entry[@"threadId"] : nil;
+        if (threadId.length)
+            item.pk = [@"grp_" stringByAppendingString:threadId];
+        item.avatarURLString = [entry[@"groupPhotoUrl"] isKindOfClass:[NSString class]] ? entry[@"groupPhotoUrl"] : nil;
+        return item;
+    }
+
+    NSArray *users = [entry[@"users"] isKindOfClass:[NSArray class]] ? entry[@"users"] : @[];
+    NSString *pk = nil, *username = nil, *fullName = nil, *profilePicUrl = nil;
+    for (NSDictionary *user in users) {
+        if (!pk.length && [user[@"pk"] isKindOfClass:[NSString class]])
+            pk = user[@"pk"];
+        if (!username.length && [user[@"username"] isKindOfClass:[NSString class]])
+            username = user[@"username"];
+        if (!fullName.length && [user[@"fullName"] isKindOfClass:[NSString class]])
+            fullName = user[@"fullName"];
+        if (!profilePicUrl.length && [user[@"profilePicUrl"] isKindOfClass:[NSString class]])
+            profilePicUrl = user[@"profilePicUrl"];
+        if (pk.length && username.length && fullName.length && profilePicUrl.length)
+            break;
+    }
+    if (!profilePicUrl.length && pk.length)
+        profilePicUrl = spkDirectUserResolverProfilePicURLStringForPK(pk);
+    item.title = username.length ? [@"@" stringByAppendingString:username] : displayName;
+    item.subtitle = username.length ? (fullName.length ? fullName : nil) : SPKDirectListSubtitleForThreadEntry(entry);
+    item.pk = pk;
+    item.avatarURLString = profilePicUrl;
+    return item;
+}
+
 #pragma mark - Manual-seen chats list
 
 @interface SPKDirectManualSeenThreadsViewController : SPKUserListViewController
@@ -1214,24 +1271,6 @@ BOOL SPKDirectToggleCurrentThreadRule(SPKDirectThreadContext *context, NSString 
     return self;
 }
 
-- (NSString *)displayNameForEntry:(NSDictionary *)entry {
-    return SPKDirectDisplayNameForThreadEntry(entry) ?: SPKL(@"MESSAGES_DIRECT_AUTO_SAVE_UNKNOWN_CHAT_TEXT");
-}
-
-- (NSString *)subtitleForEntry:(NSDictionary *)entry {
-    NSString *participants = SPKDirectParticipantSubtitleForThreadEntry(entry);
-    if (participants)
-        return participants;
-    NSArray *users = [entry[@"users"] isKindOfClass:[NSArray class]] ? entry[@"users"] : @[];
-    NSMutableArray<NSString *> *parts = [NSMutableArray array];
-    for (NSDictionary *user in users) {
-        NSString *username = [user[@"username"] isKindOfClass:[NSString class]] ? user[@"username"] : nil;
-        if (username.length > 0)
-            [parts addObject:[@"@" stringByAppendingString:username]];
-    }
-    return [parts componentsJoinedByString:@", "];
-}
-
 - (NSArray<SPKUserListItem *> *)buildItems {
     NSArray<NSDictionary *> *threads = [SPKDirectManualSeenThreadList(self.manualSeenEnabled) sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *a, NSDictionary *b) {
         NSNumber *aAdded = [a[@"addedAt"] respondsToSelector:@selector(compare:)] ? a[@"addedAt"] : @0;
@@ -1240,49 +1279,8 @@ BOOL SPKDirectToggleCurrentThreadRule(SPKDirectThreadContext *context, NSString 
     }];
 
     NSMutableArray<SPKUserListItem *> *items = [NSMutableArray array];
-    for (NSDictionary *entry in threads) {
-        SPKUserListItem *item = [SPKUserListItem new];
-        item.representedObject = entry;
-        BOOL isGroup = [entry[@"isGroup"] boolValue];
-
-        if (isGroup) {
-            item.isGroup = YES;
-            item.title = [self displayNameForEntry:entry];
-            item.subtitle = [self subtitleForEntry:entry];
-            // Shared cache key matches Deleted Messages' group photos; a synthetic
-            // "grp_" PK can't self-heal, but SPKAvatarView draws the group glyph.
-            NSString *threadId = [entry[@"threadId"] isKindOfClass:[NSString class]] ? entry[@"threadId"] : nil;
-            NSString *groupPhotoUrl = [entry[@"groupPhotoUrl"] isKindOfClass:[NSString class]] ? entry[@"groupPhotoUrl"] : nil;
-            if (threadId.length) {
-                item.pk = [@"grp_" stringByAppendingString:threadId];
-                item.avatarURLString = groupPhotoUrl;
-            } else {
-                item.avatarURLString = groupPhotoUrl;
-            }
-        } else {
-            NSArray *users = [entry[@"users"] isKindOfClass:[NSArray class]] ? entry[@"users"] : @[];
-            NSString *pk = nil, *username = nil, *fullName = nil, *profilePicUrl = nil;
-            for (NSDictionary *user in users) {
-                if (!pk.length && [user[@"pk"] isKindOfClass:[NSString class]])
-                    pk = user[@"pk"];
-                if (!username.length && [user[@"username"] isKindOfClass:[NSString class]])
-                    username = user[@"username"];
-                if (!fullName.length && [user[@"fullName"] isKindOfClass:[NSString class]])
-                    fullName = user[@"fullName"];
-                if (!profilePicUrl.length && [user[@"profilePicUrl"] isKindOfClass:[NSString class]])
-                    profilePicUrl = user[@"profilePicUrl"];
-                if (pk.length && username.length && fullName.length && profilePicUrl.length)
-                    break;
-            }
-            if (!profilePicUrl.length && pk.length)
-                profilePicUrl = spkDirectUserResolverProfilePicURLStringForPK(pk);
-            item.title = username.length ? [@"@" stringByAppendingString:username] : [self displayNameForEntry:entry];
-            item.subtitle = username.length ? (fullName.length ? fullName : nil) : [self subtitleForEntry:entry];
-            item.pk = pk;
-            item.avatarURLString = profilePicUrl;
-        }
-        [items addObject:item];
-    }
+    for (NSDictionary *entry in threads)
+        [items addObject:SPKDirectUserListItemForThreadEntry(entry)];
     return items;
 }
 
@@ -1299,7 +1297,7 @@ BOOL SPKDirectToggleCurrentThreadRule(SPKDirectThreadContext *context, NSString 
     NSString *threadId = [entry[@"threadId"] isKindOfClass:[NSString class]] ? entry[@"threadId"] : nil;
     if (threadId.length == 0)
         return;
-    NSString *threadName = [self displayNameForEntry:entry];
+    NSString *threadName = SPKDirectDisplayNameForThreadEntry(entry) ?: SPKL(@"MESSAGES_DIRECT_AUTO_SAVE_UNKNOWN_CHAT_TEXT");
     SPKDirectRemoveManualSeenThreadId(threadId, self.manualSeenEnabled);
     SPKNotify(kSPKNotificationDirectThreadSeenRule,
               [NSString stringWithFormat:SPKL(@"COMMON_REMOVED_VALUE_FORMAT"), threadName],

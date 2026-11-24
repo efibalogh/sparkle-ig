@@ -7,6 +7,7 @@
 #import "../../InstagramHeaders.h"
 #import "../../Shared/Messages/SPKDirectAutoSave.h"
 #import "../../Shared/Messages/SPKDirectInboxMenu.h"
+#import "../../Shared/Messages/SPKDirectLocalSeen.h"
 #import "../../Shared/Messages/SPKDirectSeenContext.h"
 #import "../../Shared/Messages/SPKPresenceTracking.h"
 #import "../../Shared/Stories/SPKStoryContext.h"
@@ -16,6 +17,7 @@
 #import "../../Tweak.h"
 #import "../../Utils.h"
 #import "DeletedMessagesLog/SPKDeletedMessagesViewController.h"
+#import "DirectLocalSeen.h"
 #import "MessageSeenButtons.h"
 #import "../../App/SPKPerfMeter.h"
 
@@ -42,6 +44,8 @@ static NSString *SPKDirectActiveMarkSeenThreadId = nil;
 
 static id SPKKVCObject(id target, NSString *key);
 static id SPKFindDirectMarkSeenTarget(id root, NSMutableSet<NSValue *> *visited);
+static UIColor *SPKThreadSeenButtonTint(UIViewController *controller);
+static NSString *SPKThreadSeenButtonIcon(UIViewController *controller);
 
 static inline BOOL SPKDirectManualSeenRulesEnabled(void) {
     return [SPKUtils getBoolPref:@"msgs_manual_seen"] || SPKDirectManualSeenThreadCount(NO) > 0;
@@ -208,8 +212,10 @@ static BOOL SPKMarkDirectThreadMessagesAsSeen(id controller) {
     }
 
     kSPKSeenAutoBypassCount++;
+    SPKDirectLocalSeenWillSendReceipt(context.threadId);
     @try {
         ((void (*)(id, SEL))objc_msgSend)(target, @selector(markLastMessageAsSeen));
+        SPKDirectLocalSeenDidSendReceipt(context.threadId);
         SPKLog(@"General", @"[Sparkle MessagesSeen] Marked via target=%@<%p> controller=%@<%p>",
                NSStringFromClass([target class]),
                target,
@@ -1080,8 +1086,8 @@ static void SPKInstallThreadSeenBubble(UIViewController *controller, BOOL refres
         // bubbleEffect in SPKApplyThreadSeenBubbleMaterial), so it redacts on
         // capture and morphs with the button (iOS 26 menu glass animation).
         inner = [[SPKChromeButton alloc] initWithSymbol:@"" pointSize:24.0 diameter:size];
-        [inner setIconResource:kSPKSeenMessagesBarIconResource pointSize:24.0];
-        inner.iconTint = UIColor.labelColor;
+        [inner setIconResource:SPKThreadSeenButtonIcon(controller) pointSize:24.0];
+        inner.iconTint = SPKThreadSeenButtonTint(controller);
         inner.bubbleColor = UIColor.clearColor;
         inner.showsMenuAsPrimaryAction = NO;
         inner.clipsToBounds = NO;
@@ -1260,11 +1266,11 @@ static void SPKApplyThreadSeenHeaderGlass(SPKChromeButton *button) {
 
 static SPKChromeButton *SPKMakeThreadSeenButton(UIViewController *controller) {
     SPKChromeButton *button = [[SPKChromeButton alloc] initWithSymbol:@"" pointSize:24.0 diameter:44.0];
-    [button setIconResource:kSPKSeenMessagesBarIconResource pointSize:24.0];
+    [button setIconResource:SPKThreadSeenButtonIcon(controller) pointSize:24.0];
     button.accessibilityIdentifier = @"spk-seen-btn";
     button.accessibilityLabel = SPKL(@"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL");
     button.bubbleColor = UIColor.clearColor;
-    button.iconTint = UIColor.labelColor;
+    button.iconTint = SPKThreadSeenButtonTint(controller);
     button.menu = SPKDirectSeenButtonMenu(controller);
     button.showsMenuAsPrimaryAction = NO;
     button.menuWillDisplayHandler = ^{ SPKPlayButtonTappedHaptic(); };
@@ -1413,7 +1419,7 @@ static UIBarButtonItem *SPKThreadHeaderSeenItem(UIViewController *controller) {
         // its own circle (a custom view gets padded into a capsule).
         __weak UIViewController *weakController = controller;
         UIAction *tap = [UIAction actionWithTitle:SPKL(@"MESSAGES_THREAD_SEEN_BUTTON_ACCESSIBILITY_LABEL")
-                                            image:[SPKAssetUtils instagramIconNamed:kSPKSeenMessagesBarIconResource
+                                            image:[SPKAssetUtils instagramIconNamed:SPKThreadSeenButtonIcon(controller)
                                                                           pointSize:24.0
                                                                       renderingMode:UIImageRenderingModeAlwaysTemplate]
                                        identifier:nil
@@ -1422,7 +1428,7 @@ static UIBarButtonItem *SPKThreadHeaderSeenItem(UIViewController *controller) {
                                           }];
         seenButton = [[UIBarButtonItem alloc] initWithPrimaryAction:tap];
         seenButton.menu = SPKDirectSeenButtonMenu(controller);
-        seenButton.tintColor = UIColor.labelColor;
+        seenButton.tintColor = SPKThreadSeenButtonTint(controller);
         ((void (*)(id, SEL, BOOL))objc_msgSend)(seenButton, sharesBackground, NO);
     } else {
         // The button draws the glass itself, so the capture redaction covers it.
@@ -1439,6 +1445,65 @@ static UIBarButtonItem *SPKThreadHeaderSeenItem(UIViewController *controller) {
     objc_setAssociatedObject(controller, kSPKThreadSeenHeaderItemKey, seenButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     objc_setAssociatedObject(controller, kSPKThreadSeenHeaderItemModeKey, mode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return seenButton;
+}
+
+// The chat reads as seen here but its sender has no receipt yet (Keep Seen
+// Locally): the eye is crossed out and dimmed until there is nothing left to send.
+static BOOL SPKThreadSeenReceiptPending(UIViewController *controller) {
+    if (!controller || !SPKDirectLocalSeenEnabled())
+        return NO;
+    NSString *threadId = objc_getAssociatedObject(controller, kSPKDirectThreadIdAssocKey);
+    return threadId.length > 0 && SPKDirectLocalSeenAppliesToThreadId(threadId) &&
+           SPKDirectLocalSeenReceiptPending([SPKUtils currentUserPK], threadId);
+}
+
+static NSString *SPKThreadSeenButtonIcon(UIViewController *controller) {
+    return SPKThreadSeenReceiptPending(controller) ? @"eye_off" : kSPKSeenMessagesBarIconResource;
+}
+
+// Opaque on purpose: glass blends a see-through tint into the circle around the
+// glyph, so the dimmed eye is a grey that matches the label colour at 60% instead.
+static UIColor *SPKThreadSeenDimmedTint(void) {
+    static UIColor *color;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        color = [UIColor colorWithDynamicProvider:^UIColor *(UITraitCollection *traits) {
+            return traits.userInterfaceStyle == UIUserInterfaceStyleDark ? [UIColor colorWithWhite:0.6 alpha:1.0] : [UIColor colorWithWhite:0.4 alpha:1.0];
+        }];
+    });
+    return color;
+}
+
+static UIColor *SPKThreadSeenButtonTint(UIViewController *controller) {
+    return SPKThreadSeenReceiptPending(controller) ? SPKThreadSeenDimmedTint() : UIColor.labelColor;
+}
+
+// Every form the eye takes: the header item (a plain glass item, or a chrome
+// button while Hide UI on Capture is on), the side column button and the bubble.
+static void SPKRefreshThreadSeenButtonTint(UIViewController *controller) {
+    if (!controller)
+        return;
+    NSString *icon = SPKThreadSeenButtonIcon(controller);
+    UIColor *tint = SPKThreadSeenButtonTint(controller);
+    NSMutableArray<SPKChromeButton *> *buttons = [NSMutableArray array];
+    UIBarButtonItem *item = objc_getAssociatedObject(controller, kSPKThreadSeenHeaderItemKey);
+    if ([item.customView isKindOfClass:SPKChromeButton.class]) {
+        [buttons addObject:(SPKChromeButton *)item.customView];
+    } else if (item) {
+        item.image = [SPKAssetUtils instagramIconNamed:icon pointSize:24.0 renderingMode:UIImageRenderingModeAlwaysTemplate];
+        item.tintColor = tint;
+    }
+    SPKChromeButton *columnButton = objc_getAssociatedObject(controller, kSPKThreadSeenColumnButtonKey);
+    if (columnButton)
+        [buttons addObject:columnButton];
+    UIView *bubble = controller.isViewLoaded ? SPKThreadSeenBubbleContainer(controller) : nil;
+    SPKChromeButton *bubbleButton = SPKThreadSeenBubbleInnerButton(bubble);
+    if (bubbleButton)
+        [buttons addObject:bubbleButton];
+    for (SPKChromeButton *button in buttons) {
+        [button setIconResource:icon pointSize:24.0];
+        button.iconTint = tint;
+    }
 }
 
 %group SPKMessageSeenButtonHooks
@@ -1504,6 +1569,7 @@ static UIBarButtonItem *SPKThreadHeaderSeenItem(UIViewController *controller) {
     // from the settings sheet can reconcile it (the top→bottom case needs this
     // even though no bubble exists yet).
     SPKThreadSeenBubbleActiveVC = self;
+    SPKRefreshThreadSeenButtonTint(self);
     if (SPKThreadSeenBubbleEnabled()) {
         // Fresh appearance always starts at the home position.
         UIView *existing = SPKThreadSeenBubbleContainer(self);
@@ -1620,6 +1686,11 @@ if (SPKMarkDirectThreadMessagesAsSeen(self)) {
 
 - (void)viewWillDisappear:(BOOL)animated {
     %orig;
+    // Leaving the chat: everything on screen was read, even when Instagram never
+    // asked to mark it seen while it was open.
+    NSString *localSeenThreadId = objc_getAssociatedObject(self, kSPKDirectThreadIdAssocKey);
+    if (localSeenThreadId.length > 0 && SPKDirectLocalSeenEnabled() && SPKDirectLocalSeenAppliesToThreadId(localSeenThreadId))
+        SPKDirectLocalSeenNoteThreadViewed(localSeenThreadId);
     objc_setAssociatedObject(self, kSPKThreadSeenLeavingKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     SPKRemoveThreadSeenColumnButton(self);
 }
@@ -1663,6 +1734,7 @@ if (SPKMarkDirectThreadMessagesAsSeen(self)) {
         if (kSPKSeenAutoBypassCount > 0) {
             return %orig;
         }
+        SPKDirectLocalSeenNoteThreadViewed(SPKDirectActiveThreadContext().threadId);
         return false;
     }
 
@@ -1678,6 +1750,7 @@ if (SPKMarkDirectThreadMessagesAsSeen(self)) {
         if (kSPKSeenAutoBypassCount > 0) {
             return %orig;
         }
+        SPKDirectLocalSeenNoteThreadViewed(SPKDirectActiveThreadContext().threadId);
         return false;
     }
 
@@ -1738,6 +1811,18 @@ void SPKInstallMessageSeenButtonHooksIfNeeded(void) {
               IGDirectThreadViewListAdapterDataSource = SPKResolveIGClass(@"IGDirectThreadViewListAdapterDataSource.IGDirectThreadViewListAdapterDataSource",
                                                                           @"IGDirectThreadViewListAdapterDataSource"));
         SPKInstallDirectInboxSeenContextMenuHook();
+        SPKInstallDirectLocalSeenHooksIfNeeded();
+
+        [[NSNotificationCenter defaultCenter] addObserverForName:SPKDirectLocalSeenDidChangeNotification
+                                                          object:nil
+                                                           queue:[NSOperationQueue mainQueue]
+                                                      usingBlock:^(NSNotification *note) {
+            UIViewController *active = SPKThreadSeenBubbleActiveVC;
+            NSString *threadId = note.userInfo[@"threadId"];
+            // No chat: every chat's state was cleared.
+            if (active && (!threadId || [objc_getAssociatedObject(active, kSPKDirectThreadIdAssocKey) isEqual:threadId]))
+                SPKRefreshThreadSeenButtonTint(active);
+        }];
 
         // Reconcile the currently open thread when placement changes live.
         [[NSNotificationCenter defaultCenter] addObserverForName:SPKMessageSeenButtonPositionDidChangeNotification

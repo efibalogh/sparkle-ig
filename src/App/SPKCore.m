@@ -302,6 +302,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"reels_disable_tab_refresh" : @(NO),
         @"stories_stop_auto_advance" : @(NO),
         @"stories_advance_on_manual_seen" : @(NO),
+        @"msgs_manual_seen_keep_local" : @(NO),
         @"msgs_seen_on_send" : @(NO),
         @"msgs_seen_on_reply" : @(NO),
         @"msgs_seen_on_reaction" : @(NO),

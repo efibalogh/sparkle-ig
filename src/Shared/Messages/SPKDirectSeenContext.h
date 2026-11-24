@@ -3,6 +3,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class SPKUserListItem;
+
 @interface SPKDirectThreadContext : NSObject
 @property (nonatomic, copy, nullable) NSString *threadId;
 @property (nonatomic, copy, nullable) NSString *threadName;
@@ -35,6 +37,10 @@ NSString *_Nullable SPKDirectDisplayNameForThreadContext(SPKDirectThreadContext 
 /// Row-tap behaviour shared by every DM thread list: a 1:1 opens the partner's profile,
 /// a group does nothing (it has no single profile to open, and its name is not a handle).
 void SPKDirectOpenProfileForThreadEntry(NSDictionary *_Nullable entry);
+
+/// The row every DM thread list shows for a chat: avatar, handle and name for a 1:1,
+/// the group's title and roster for a group. `representedObject` is the entry.
+SPKUserListItem *SPKDirectUserListItemForThreadEntry(NSDictionary *entry);
 
 /// "N participants" for a group thread; nil for a 1:1 or when the roster is unknown.
 /// Instagram's stored roster excludes the current user, so the count adds you back.
