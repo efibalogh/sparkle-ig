@@ -168,6 +168,140 @@ static NSString *SPKNetworkFormValue(NSArray<NSArray<NSString *> *> *pairs, NSAr
     return nil;
 }
 
+// MARK: - Redaction
+
+// Captures get copied, exported and screenshotted to share with others, so the
+// credentials and device identifiers that ride along with every request are removed
+// as they are recorded. Nothing secret is ever held, and every way out of the log is
+// covered at once. The cURL copy loses its session as a result and cannot be replayed
+// as is.
+static NSString *const kSPKNetworkRedacted = @"<redacted>";
+
+static BOOL SPKNetworkIsSensitiveHeader(NSString *name) {
+    static NSSet<NSString *> *names;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        names = [NSSet setWithArray:@[
+            @"authorization", @"cookie", @"set-cookie", @"proxy-authorization",
+            @"ig-intended-user-id", @"ig-u-ds-user-id", @"ig-u-rur", @"ig-u-ig-direct-region-hint", @"ig-u-shbid", @"ig-u-shbts",
+            @"x-mid", @"x-ig-www-claim", @"x-ig-set-www-claim", @"x-cloud-trust-token",
+            @"x-ig-device-id", @"x-ig-family-device-id", @"x-ig-android-id", @"x-pigeon-session-id",
+            @"x-fb-client-ip-forwarded", @"x-fb-client-ip", @"x-forwarded-for",
+        ]];
+    });
+    NSString *lower = name.lowercaseString;
+    // Responses hand out fresh credentials as ig-set-authorization, ig-set-x-mid, ...
+    return [names containsObject:lower] || [lower hasPrefix:@"ig-set-"];
+}
+
+static NSDictionary<NSString *, NSString *> *SPKNetworkRedactedHeaders(NSDictionary<NSString *, NSString *> *headers) {
+    NSMutableDictionary<NSString *, NSString *> *out = [headers mutableCopy];
+    for (NSString *name in headers) {
+        if (SPKNetworkIsSensitiveHeader(name))
+            out[name] = kSPKNetworkRedacted;
+    }
+    return out;
+}
+
+// Body and query fields that carry credentials or identify the device.
+static NSString *const kSPKNetworkSensitiveFieldPattern =
+    @"_?uuid|_?uid|device_id|android_id|phone_id|family_device_id|guid|adid|advertising_id|"
+    @"access_token|authorization|password|enc_password|sessionid|session_id|csrftoken|ds_user_id|"
+    @"mid|machine_id|www_claim|nonce|two_factor_identifier|verification_code";
+
+static BOOL SPKNetworkIsSensitiveField(NSString *name) {
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *pattern = [NSString stringWithFormat:@"^(?:%@)$", kSPKNetworkSensitiveFieldPattern];
+        regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
+    });
+    return name.length > 0 && [regex firstMatchInString:name options:0 range:NSMakeRange(0, name.length)] != nil;
+}
+
+/// Blanks sensitive fields in JSON text, including JSON escaped inside a JSON string
+/// (signed_body payloads and GraphQL variables).
+static NSString *SPKNetworkRedactedText(NSString *text) {
+    static NSRegularExpression *plain, *escaped;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *plainPattern = [NSString stringWithFormat:@"(\"(?:%@)\"\\s*:\\s*)(\"(?:[^\"\\\\]|\\\\.)*\"|-?[0-9]+)", kSPKNetworkSensitiveFieldPattern];
+        NSString *escapedPattern = [NSString stringWithFormat:@"(\\\\\"(?:%@)\\\\\"\\s*:\\s*)(\\\\\"[^\"\\\\]*\\\\\"|-?[0-9]+)", kSPKNetworkSensitiveFieldPattern];
+        plain = [NSRegularExpression regularExpressionWithPattern:plainPattern options:NSRegularExpressionCaseInsensitive error:nil];
+        escaped = [NSRegularExpression regularExpressionWithPattern:escapedPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    });
+    if (text.length == 0 || [text rangeOfString:@":"].location == NSNotFound)
+        return text;
+    NSString *out = [plain stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, text.length)
+                                               withTemplate:[NSString stringWithFormat:@"$1\"%@\"", kSPKNetworkRedacted]];
+    return [escaped stringByReplacingMatchesInString:out options:0 range:NSMakeRange(0, out.length)
+                                        withTemplate:[NSString stringWithFormat:@"$1\\\\\"%@\\\\\"", kSPKNetworkRedacted]];
+}
+
+static NSString *SPKNetworkFormEncode(NSString *value) {
+    static NSCharacterSet *allowed;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSMutableCharacterSet *set = [NSMutableCharacterSet alphanumericCharacterSet];
+        [set addCharactersInString:@"-._*"];
+        allowed = [set copy];
+    });
+    return [value stringByAddingPercentEncodingWithAllowedCharacters:allowed] ?: value;
+}
+
+/// A urlencoded form keeps its encoding: sensitive fields are blanked, and any other
+/// value is decoded, redacted as text and re-encoded only when that changed it.
+static NSString *SPKNetworkRedactedForm(NSString *body) {
+    NSMutableArray<NSString *> *components = [NSMutableArray array];
+    for (NSString *component in [body componentsSeparatedByString:@"&"]) {
+        NSRange equals = [component rangeOfString:@"="];
+        if (equals.location == NSNotFound) {
+            [components addObject:component];
+            continue;
+        }
+        NSString *rawKey = [component substringToIndex:equals.location];
+        NSString *rawValue = [component substringFromIndex:NSMaxRange(equals)];
+        if (SPKNetworkIsSensitiveField(SPKNetworkPercentDecode(rawKey))) {
+            [components addObject:[NSString stringWithFormat:@"%@=%@", rawKey, SPKNetworkFormEncode(kSPKNetworkRedacted)]];
+            continue;
+        }
+        NSString *value = SPKNetworkPercentDecode(rawValue);
+        NSString *redacted = SPKNetworkRedactedText(value);
+        [components addObject:[redacted isEqualToString:value] ? component : [NSString stringWithFormat:@"%@=%@", rawKey, SPKNetworkFormEncode(redacted)]];
+    }
+    return [components componentsJoinedByString:@"&"];
+}
+
+static NSData *SPKNetworkRedactedBody(NSData *body) {
+    if (body.length == 0)
+        return body;
+    NSString *text = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+    if (!text)
+        return body; // binary (multipart, thrift): shown only as a byte count
+    NSString *redacted = SPKNetworkFormPairs(text) ? SPKNetworkRedactedForm(text) : SPKNetworkRedactedText(text);
+    return redacted == text ? body : [redacted dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+static NSURL *SPKNetworkRedactedURL(NSURL *url) {
+    if (!url.query.length)
+        return url;
+    NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+    BOOL changed = NO;
+    NSMutableArray<NSURLQueryItem *> *items = [NSMutableArray array];
+    for (NSURLQueryItem *item in components.queryItems) {
+        if (SPKNetworkIsSensitiveField(item.name)) {
+            [items addObject:[NSURLQueryItem queryItemWithName:item.name value:kSPKNetworkRedacted]];
+            changed = YES;
+        } else {
+            [items addObject:item];
+        }
+    }
+    if (!changed)
+        return url;
+    components.queryItems = items;
+    return components.URL ?: url;
+}
+
 static BOOL SPKNetworkIsMediaHost(NSString *host) {
     host = host.lowercaseString;
     return [host hasSuffix:@"fbcdn.net"] || [host hasSuffix:@"cdninstagram.com"] || [host hasSuffix:@"fbsbx.com"];
@@ -263,7 +397,8 @@ NSString *SPKNetworkInterceptorReadableBody(NSData *data) {
     os_unfair_lock_lock(&spkNetworkLock);
     NSData *copy = [_responseBody copy];
     os_unfair_lock_unlock(&spkNetworkLock);
-    return copy;
+    // Kept raw while it streams in, since a field can straddle two chunks.
+    return SPKNetworkRedactedBody(copy);
 }
 
 - (NSString *)displayTitle {
@@ -301,9 +436,9 @@ NSString *SPKNetworkInterceptorReadableBody(NSData *data) {
     id url = SPKNetworkKV(request, @"URL");
     if ([url isKindOfClass:NSString.class])
         url = [NSURL URLWithString:url];
-    self.URL = [url isKindOfClass:NSURL.class] ? url : nil;
+    self.URL = [url isKindOfClass:NSURL.class] ? SPKNetworkRedactedURL(url) : nil;
     self.method = SPKNetworkMethodName(SPKNetworkKV(request, @"HTTPMethod"));
-    self.requestHeaders = SPKNetworkStringDictionary(SPKNetworkKV(request, @"allHTTPHeaderFields"));
+    self.requestHeaders = SPKNetworkRedactedHeaders(SPKNetworkStringDictionary(SPKNetworkKV(request, @"allHTTPHeaderFields")));
 
     id surface = SPKNetworkKV(policy, @"surface");
     self.surface = [surface isKindOfClass:NSString.class] && [surface length] > 0 ? surface : nil;
@@ -324,7 +459,7 @@ NSString *SPKNetworkInterceptorReadableBody(NSData *data) {
                 self.requestBodyNote = [NSString stringWithFormat:@"%lu bytes", (unsigned long)bodyData.length];
                 bodyData = [bodyData subdataWithRange:NSMakeRange(0, kSPKNetworkMaxRequestBody)];
             }
-            self.requestBody = bodyData;
+            self.requestBody = SPKNetworkRedactedBody(bodyData);
         } else {
             id file = SPKNetworkKV(body, @"fileURLFileURL") ?: SPKNetworkKV(body, @"tailingFileURLTailingFileURL");
             if ([file isKindOfClass:NSURL.class])
@@ -363,10 +498,10 @@ NSString *SPKNetworkInterceptorReadableBody(NSData *data) {
         return;
     NSHTTPURLResponse *http = response;
     self.statusCode = http.statusCode;
-    self.responseHeaders = SPKNetworkStringDictionary(http.allHeaderFields);
+    self.responseHeaders = SPKNetworkRedactedHeaders(SPKNetworkStringDictionary(http.allHeaderFields));
     self.MIMEType = http.MIMEType;
     if (!self.URL)
-        self.URL = http.URL;
+        self.URL = SPKNetworkRedactedURL(http.URL);
     if (SPKNetworkIsMediaMIME(http.MIMEType))
         self.kind = SPKNetworkEntryKindMedia;
     if (self.kind == SPKNetworkEntryKindMedia || !SPKNetworkIsTextualMIME(http.MIMEType))
