@@ -9,6 +9,7 @@
 #import "../../Shared/MediaPreview/SPKFullScreenImageViewController.h"
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../Utils.h"
+#import "../../Features/General/HideMuse.h"
 #import "../../Features/General/KeepOtherAudioPlaying.h"
 #import "../SPKActionSectionIconPickerViewController.h"
 #import "../SPKAppIconCatalog.h"
@@ -43,6 +44,30 @@ static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
                                                            defaultsKey:@"general_action_btn_show_date"],
                                        SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_HELP"))];
     return rows;
+}
+
+// Muse surfaces only exist on newer builds, so the page is left out where
+// neither does (410).
+static SPKSetting *SPKHideMuseSetting(void) {
+    SPKSetting *setting = SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"GENERAL_MUSE_TITLE")
+                                                                        subtitle:@""
+                                                                            icon:SPKSettingsIcon(@"muse")
+                                                                     navSections:@[
+                                                                         SPKTopicSection(SPKL(@"GENERAL_MUSE_TITLE"), @[
+                                                                             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE")
+                                                                                                                    defaultsKey:@"general_hide_muse_share_sheet"],
+                                                                                                SPKL(@"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP")),
+                                                                             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE")
+                                                                                                                    defaultsKey:@"general_hide_muse_profile_button"],
+                                                                                                SPKL(@"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP"))
+                                                                         ],
+                                                                                         nil)
+                                                                     ]],
+                                             SPKL(@"GENERAL_RECOMMENDATIONS_MUSE_HELP"));
+    setting.hiddenProvider = ^BOOL {
+        return !SPKHideMuseShareSheetIsAvailable() && !SPKHideMuseProfileButtonIsAvailable();
+    };
+    return setting;
 }
 
 static SPKSetting *SPKKeepOtherAudioPlayingSetting(void) {
@@ -249,6 +274,7 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                                            nil)
                                                        ]],
                                SPKL(@"GENERAL_RECOMMENDATIONS_META_AI_HELP")),
+            SPKHideMuseSetting(),
             SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"GENERAL_ADS_SUGGESTED_USERS_TITLE")
                                                           subtitle:@""
                                                               icon:SPKSettingsIcon(@"users")

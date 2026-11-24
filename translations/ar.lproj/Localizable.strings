@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "عرض التاريخ في القائمة";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "يعرض صاحب المنشور وتاريخ النشر فوق معاينة الصورة الموسّعة.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "عرض معلومات الوسائط";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "يزيل زر Muse الموجود بجانب زر القائمة أعلى ملفك الشخصي.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "إخفاء زر الملف الشخصي";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "يزيل وجهة Muse من ورقة المشاركة، لتعود الخيارات التي تليها إلى الظهور.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "إخفاء في ورقة المشاركة";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "أخفِ المنشورات المموّلة في التغذية والقصص وReels والاستكشاف، إضافة إلى عروض التسوق في Reels.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "التوصيات";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "أخفِ نقاط دخول Meta AI، واجهة تلو الأخرى.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "إخفاء نقاط دخول Muse، واجهة تلو الأخرى.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "أخفِ الحسابات المقترحة أينما أدرجها Instagram، واجهة تلو الأخرى.";
 "GENERAL_REPOST_TAPPED_TOAST" = "تم النقر على زر إعادة النشر";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "تم نسخ الرابط";

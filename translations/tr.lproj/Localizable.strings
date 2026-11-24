@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Menüde Tarihi Göster";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Büyütülmüş fotoğraf önizlemesinin üzerine yazarı ve paylaşım tarihini bindirir.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Medya Bilgisini Göster";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Profilinin üstündeki menü düğmesinin yanındaki Muse düğmesini kaldırır.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Profil Düğmesini Gizle";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Muse hedefini paylaşım sayfasından kaldırır, böylece ondan sonraki seçenekler yeniden görünür.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Paylaşım Sayfasında Gizle";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Akıştaki, hikayelerdeki, reels'lerdeki ve Keşfet'teki sponsorlu gönderileri, reels alışveriş istemleriyle birlikte gizle.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Öneriler";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Meta AI giriş noktalarını bölüm bölüm gizle.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Muse giriş noktalarını bölüm bölüm gizle.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Instagram'ın araya eklediği önerilen hesapları, bölüm bölüm gizle.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Yeniden paylaş düğmesine dokundu";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Bağlantı kopyalandı";

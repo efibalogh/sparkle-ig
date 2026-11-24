@@ -4,6 +4,7 @@
 #import <objc/runtime.h>
 
 #import "../App/SPKFlexLoader.h"
+#import "../Features/General/HideMuse.h"
 #import "../Shared/MediaPreview/SPKFullScreenImageViewController.h"
 #import "SPKPreferences.h"
 
@@ -71,6 +72,14 @@ BOOL SPKPrefIsAvailable(NSString *key) {
 
     if ([key isEqualToString:kSPKPrefInstantsDisableCameraControl]) {
         return SPKDeviceHasCameraControl();
+    }
+
+    // Muse doesn't exist on 410
+    if ([key isEqualToString:@"general_hide_muse_share_sheet"]) {
+        return SPKHideMuseShareSheetIsAvailable();
+    }
+    if ([key isEqualToString:@"general_hide_muse_profile_button"]) {
+        return SPKHideMuseProfileButtonIsAvailable();
     }
 
     if ([key hasPrefix:@"tools_flex_"]) {

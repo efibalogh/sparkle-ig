@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Показати дату в меню";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Накладає автора й дату допису на збільшений перегляд фото.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Показати інформацію про медіа";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Прибирає кнопку Muse поруч із кнопкою меню вгорі вашого профілю.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Сховати кнопку в профілі";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Прибирає Muse з меню «Поділитися», щоб наступні варіанти знову було видно.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Сховати в меню «Поділитися»";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Приховуйте рекламні дописи у стрічці, історіях, reels і Цікавому разом із торговими підказками в reels.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Рекомендації";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Приховуйте точки входу Meta AI, розділ за розділом.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Приховує точки входу в Muse, розділ за розділом.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Приховуйте рекомендовані акаунти всюди, де Instagram їх вставляє, розділ за розділом.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Натиснута кнопка повторної публікації";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Скопійовано посилання";

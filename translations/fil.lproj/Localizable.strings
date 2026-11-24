@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Ipakita ang Petsa sa Menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Ina-overlay ang may-akda at petsa ng post sa expanded photo preview.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Ipakita ang Impormasyon ng Media";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Inaalis ang Muse button sa tabi ng menu button sa itaas ng iyong profile.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Itago ang Button sa Profile";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Inaalis ang Muse na destinasyon sa share sheet, para muling makita ang mga opsyong kasunod nito.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Itago sa Share Sheet";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Itago ang mga sponsored post sa feed, stories, reels, at Explore, kasama ang mga reels shopping prompt.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Mga Rekomendasyon";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Itago ang mga Meta AI entry point, surface kada surface.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Itago ang mga entry point ng Muse, bawat bahagi.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Itago ang mga iminumungkahing account saan man ito ilagay ng Instagram, surface kada surface.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Na-tap ang repost button";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Kinopya ang link";

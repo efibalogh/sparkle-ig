@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "メニューに日付を表示";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "拡大した写真プレビューに投稿者と投稿日を重ねて表示します。";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "メディア情報を表示";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "プロフィール上部のメニューボタンの隣にあるMuseボタンを削除します。";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "プロフィールボタンを非表示";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "シェアシートからMuseの共有先を削除し、その後ろの選択肢が再び表示されるようにします。";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "シェアシートで非表示";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "フィード、ストーリーズ、リール、発見タブのスポンサー付き投稿と、リールのショッピング表示を非表示にします。";
 "GENERAL_RECOMMENDATIONS_HEADER" = "推奨事項";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "各画面ごとにMeta AIの入口を非表示にします。";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "各画面ごとにMuseの入口を非表示にします。";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Instagramがおすすめアカウントを挿入するすべての画面で、それらを非表示にします。";
 "GENERAL_REPOST_TAPPED_TOAST" = "リポスト ボタンをタップしました";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "リンクをコピーしました";

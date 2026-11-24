@@ -47,6 +47,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 ### Recommendations
 - **Ads**: Per-surface ad hiding: Feed, Stories, Reels, Explore, plus Reels shopping CTA. Ad filtering preserves native feed loading indicators, including on short or initially empty lists.
 - **Meta AI**: Hide Meta AI in Direct, Explore & Search, Comments, Creation Tools, and global AI chrome. Creation Tools also removes the Meta AI effects button from the story camera's tools menu and the Restyle button from the editor shown after a capture. Hiding it in Explore & Search also restores the plain search glyph in the search bar (replacing the gen-AI search icon). Global AI chrome also removes the Meta AI destination from the share sheet's external share row.
+- **Muse**: Hide Muse in the share sheet (the destination that pushes the other options out of view) and the Muse button next to the menu button on your profile. Not shown on Instagram 410, which has neither.
 - **Suggested Users**: Hide suggested-user surfaces: Feed, Reels, Direct, Search, Profile, Activity, follow lists, and subscriptions.
   - **Hide Profile Suggestions**: Keeps suggested accounts closed on profiles, including after you follow someone, until you tap the suggestions button. With **Show Suggestions Button** (Profile) off, the button is removed as well.
 

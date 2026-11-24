@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Εμφάνιση Ημερομηνίας στο Μενού";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Εμφανίζει τον δημιουργό και την ημερομηνία δημοσίευσης πάνω στη μεγεθυμένη προεπισκόπηση φωτογραφίας.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Εμφάνιση Πληροφοριών Πολυμέσων";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Αφαιρεί το κουμπί Muse δίπλα στο κουμπί μενού στο πάνω μέρος του προφίλ σας.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Απόκρυψη κουμπιού προφίλ";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Αφαιρεί τον προορισμό Muse από το φύλλο κοινοποίησης, ώστε οι επόμενες επιλογές να εμφανίζονται ξανά.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Απόκρυψη στο φύλλο κοινοποίησης";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Κρύψε τις χορηγούμενες δημοσιεύσεις στη ροή, τις ιστορίες, τα reels και την Εξερεύνηση, μαζί με τις προτροπές αγορών στα reels.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Προτάσεις";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Κρύψε τα σημεία εισόδου του Meta AI, ενότητα προς ενότητα.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Απόκρυψη σημείων εισόδου Muse, ενότητα προς ενότητα.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Κρύψε τους προτεινόμενους λογαριασμούς όπου τους παρεμβάλλει το Instagram, ενότητα προς ενότητα.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Πατήθηκε το κουμπί αναδημοσίευσης";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Αντιγράφηκε ο σύνδεσμος";

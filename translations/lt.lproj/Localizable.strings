@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Rodyti datą meniu";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Išplėstoje nuotraukos peržiūroje rodomas autorius ir įrašo data.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Rodyti medijos informaciją";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Pašalina Muse mygtuką šalia meniu mygtuko jūsų profilio viršuje.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Slėpti profilio mygtuką";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Pašalina Muse paskirtį iš bendrinimo lapo, kad po jos esančios parinktys vėl būtų matomos.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Slėpti bendrinimo lape";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Slėpia remiamus įrašus sraute, Stories, Reels ir naršyme, taip pat Reels apsipirkimo raginimus.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Rekomendacijos";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Slėpia Meta AI įėjimo taškus kiekviename paviršiuje atskirai.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Slėpti Muse įėjimo taškus, kiekvienoje vietoje atskirai.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Slėpia siūlomas paskyras visur, kur Instagram jas įterpia, kiekviename paviršiuje atskirai.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Palietėte pakartotinio paskelbimo mygtuką";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Nuoroda nukopijuota";

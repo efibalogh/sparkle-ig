@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Tampilkan Tanggal di Menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Menampilkan overlay penulis dan tanggal postingan pada pratinjau foto yang diperluas.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Tampilkan Info Media";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Menghapus tombol Muse di samping tombol menu di bagian atas profil Anda.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Sembunyikan Tombol Profil";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Menghapus tujuan Muse dari lembar bagikan, sehingga opsi setelahnya kembali terlihat.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Sembunyikan di Lembar Bagikan";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Sembunyikan postingan bersponsor di feed, story, reels, dan Explore, beserta ajakan belanja reels.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Rekomendasi";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Sembunyikan titik akses Meta AI, di setiap tampilan.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Sembunyikan titik masuk Muse, per bagian.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Sembunyikan akun yang disarankan di mana pun Instagram menampilkannya, di setiap tampilan.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Tombol repost diketuk";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Tautan disalin";

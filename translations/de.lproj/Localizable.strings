@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Datum im Menü anzeigen";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Blendet Autor und Beitragsdatum über der vergrößerten Fotovorschau ein.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Medien-Infos anzeigen";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Entfernt den Muse-Button neben dem Menü-Button oben in deinem Profil.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Profil-Button ausblenden";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Entfernt das Muse-Ziel aus dem Teilen-Menü, sodass die folgenden Optionen wieder sichtbar sind.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Im Teilen-Menü ausblenden";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Blende gesponserte Beiträge in Feed, Storys, Reels und Erkunden aus, zusammen mit Shopping-Hinweisen in Reels.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Empfehlungen";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Blende Meta-AI-Einstiegspunkte aus, Bereich für Bereich.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Blendet Muse-Einstiegspunkte aus, Bereich für Bereich.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Blende vorgeschlagene Konten überall dort aus, wo Instagram sie einfügt, Bereich für Bereich.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Repost-Schaltfläche angetippt";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Link kopiert";

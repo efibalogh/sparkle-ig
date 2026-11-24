@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "نمایش تاریخ در منو";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "نویسنده و تاریخ انتشار پست را روی پیش‌نمایش بزرگ‌شده عکس می‌گذارد.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "نمایش اطلاعات رسانه";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "دکمه Muse کنار دکمه منو در بالای نمایه شما را حذف می‌کند.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "پنهان کردن دکمه نمایه";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "مقصد Muse را از برگه اشتراک‌گذاری حذف می‌کند تا گزینه‌های بعدی دوباره دیده شوند.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "پنهان کردن در برگه اشتراک‌گذاری";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "پست‌های اسپانسری را در فید، استوری‌ها، ریلز و اکسپلور، همراه با پیشنهادهای خرید در ریلز، پنهان کنید.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "پیشنهادها";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "نقاط ورود هوش مصنوعی متا را، بخش به بخش، پنهان کنید.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "نقاط ورود Muse را بخش به بخش پنهان می‌کند.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "اکانت‌های پیشنهادی را هرجا که اینستاگرام آن‌ها را وارد می‌کند، بخش به بخش، پنهان کنید.";
 "GENERAL_REPOST_TAPPED_TOAST" = "دکمه ریپست لمس شد";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "لینک کپی شد";

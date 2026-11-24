@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "मेनू में दिनांक दिखाएं";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "बड़े किए गए फ़ोटो पूर्वावलोकन पर लेखक और पोस्ट की तारीख दिखाता है।";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "मीडिया जानकारी दिखाएं";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "आपकी प्रोफ़ाइल के ऊपर मेनू बटन के पास वाला Muse बटन हटाता है।";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "प्रोफ़ाइल बटन छिपाएँ";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "शेयर शीट से Muse गंतव्य हटाता है, ताकि उसके बाद के विकल्प फिर से दिखाई दें।";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "शेयर शीट में छिपाएँ";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "फीड, स्टोरी, Reels और Explore में प्रायोजित पोस्ट छिपाएं, साथ ही Reels के शॉपिंग प्रॉम्प्ट भी।";
 "GENERAL_RECOMMENDATIONS_HEADER" = "सिफारिशें";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Meta AI के प्रवेश बिंदु हर सतह पर छिपाएं।";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Muse के प्रवेश बिंदु, हर हिस्से में अलग से छिपाएँ।";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Instagram जहां भी सुझाए गए खाते डालता है, उन्हें हर सतह पर छिपाएं।";
 "GENERAL_REPOST_TAPPED_TOAST" = "रीपोस्ट बटन दबाया गया";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "लिंक कॉपी किया गया";

@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "메뉴에서 날짜 표시";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "확대된 사진 미리보기에 작성자와 게시 날짜를 표시합니다.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "미디어 정보 표시";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "프로필 상단의 메뉴 버튼 옆에 있는 Muse 버튼을 제거합니다.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "프로필 버튼 숨기기";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "공유 시트에서 Muse 대상을 제거하여 그 뒤의 옵션이 다시 보이도록 합니다.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "공유 시트에서 숨기기";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "피드, 스토리, 릴스, 탐색 탭의 광고 게시물과 릴스 쇼핑 안내를 숨깁니다.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "추천";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "화면별로 Meta AI 진입점을 숨깁니다.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "화면별로 Muse 진입점을 숨깁니다.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Instagram이 추천 계정을 표시하는 모든 화면에서 화면별로 이를 숨깁니다.";
 "GENERAL_REPOST_TAPPED_TOAST" = "공유 버튼 탭됨";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "링크 복사됨";

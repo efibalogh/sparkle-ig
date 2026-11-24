@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Datum im Menü Zeige";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Legt dr Autor u s'Poscht-Datum über d'erwyterti Foti-Vorschau.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Medie-Info Zeige";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Nimmt de Muse-Chnopf näbem Menü-Chnopf obe i dim Profil use.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Profil-Chnopf usblände";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Nimmt s Muse-Ziel us em Teilen-Menü use, damit d Optione dernoo wieder sichtbar sind.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Im Teilen-Menü usblände";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Versteck gsponserti Posts im Feed, bi Stories, Reels u Explore, zäme mit Reels-Shopping-Hinwys.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Empfählige";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Versteck Meta AI-Yschtiegspunkt, Bereich für Bereich.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Blendet Muse-Iigäng us, Bereich für Bereich.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Versteck vorgschlageni Accounts überau, wo Instagram si yblendet, Bereich für Bereich.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Repost-Chnopf tippt";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Link kopiert";

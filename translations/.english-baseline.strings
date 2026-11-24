@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Show Date in Menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Overlays the author and post date on the expanded photo preview.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Show Media Info";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Removes the Muse button next to the menu button at the top of your profile.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Hide Profile Button";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Removes the Muse destination from the share sheet, so the options after it move back into view.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Hide in Share Sheet";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Hide sponsored posts in the feed, stories, reels, and Explore, along with reels shopping prompts.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Recommendations";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Hide Meta AI entry points, surface by surface.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Hide Muse entry points, surface by surface.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Hide suggested accounts wherever Instagram injects them, surface by surface.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Tapped repost button";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Copied link";

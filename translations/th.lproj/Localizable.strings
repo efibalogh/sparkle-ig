@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "แสดงวันที่ในเมนู";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "แสดงผู้เขียนและวันที่โพสต์ซ้อนทับบนตัวอย่างรูปภาพที่ขยาย";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "แสดงข้อมูลสื่อ";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "นำปุ่ม Muse ที่อยู่ข้างปุ่มเมนูด้านบนโปรไฟล์ของคุณออก";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "ซ่อนปุ่มในโปรไฟล์";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "นำปลายทาง Muse ออกจากแผ่นแชร์ เพื่อให้ตัวเลือกถัดไปกลับมามองเห็นได้";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "ซ่อนในแผ่นแชร์";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "ซ่อนโพสต์ที่ได้รับการสนับสนุนในฟีด สตอรี รีล และสำรวจ รวมถึงคำแนะนำช้อปปิ้งในรีล";
 "GENERAL_RECOMMENDATIONS_HEADER" = "คำแนะนำ";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "ซ่อนจุดเข้าถึง Meta AI ในแต่ละหน้าจอ";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "ซ่อนจุดเข้าใช้งาน Muse แยกตามแต่ละส่วน";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "ซ่อนบัญชีที่แนะนำในทุกจุดที่ Instagram แทรกไว้ ทีละหน้าจอ";
 "GENERAL_REPOST_TAPPED_TOAST" = "แตะปุ่มรีโพสต์แล้ว";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "คัดลอกลิงก์แล้ว";

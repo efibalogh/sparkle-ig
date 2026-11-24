@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Mostra data nel menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Sovrappone autore e data di pubblicazione all'anteprima ingrandita della foto.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Mostra Info Media";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Rimuove il pulsante Muse accanto al pulsante del menu in cima al tuo profilo.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Nascondi pulsante del profilo";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Rimuove la destinazione Muse dal foglio di condivisione, così le opzioni successive tornano visibili.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Nascondi nel foglio di condivisione";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Nascondi i post sponsorizzati in feed, storie, reel ed Esplora, insieme agli inviti allo shopping nei reel.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Consigli";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Nascondi i punti di accesso a Meta AI, sezione per sezione.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Nasconde i punti di accesso a Muse, sezione per sezione.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Nascondi gli account suggeriti ovunque Instagram li inserisca, sezione per sezione.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Pulsante di ripubblicazione toccato";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Collegamento copiato";

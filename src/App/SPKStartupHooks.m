@@ -47,6 +47,7 @@ FOUNDATION_EXPORT void SPKInstallStoryAdBlockingHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFeedFilteringHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFeedFilteringFeedHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallNoSuggestedUsersHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallHideMuseHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallLikeConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakFeedHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakStoryHooksIfNeeded(void);
@@ -408,6 +409,8 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallSearchPinsHooksIfNeeded);
     SPK_INSTALL(SPKInstallRestoreAccountSearchHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);
+    // Installed regardless of the toggles: both are read at call time.
+    SPK_INSTALL(SPKInstallHideMuseHooksIfNeeded);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
     SPK_INSTALL(SPKInstallOpenLinkFromClipboardHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideExploreGridHooksIfEnabled);

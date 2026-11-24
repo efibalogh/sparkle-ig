@@ -258,6 +258,8 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_hide_meta_ai_comments" : @(NO),
         @"general_hide_meta_ai_creation" : @(NO),
         @"general_hide_meta_ai_global" : @(NO),
+        @"general_hide_muse_share_sheet" : @(NO),
+        @"general_hide_muse_profile_button" : @(NO),
         @"general_hide_suggested_users_feed" : @(NO),
         @"general_hide_suggested_users_reels" : @(NO),
         @"general_hide_suggested_users_msgs" : @(NO),

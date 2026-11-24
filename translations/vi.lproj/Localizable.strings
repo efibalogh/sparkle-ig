@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Hiện ngày trong menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Hiển thị đè tác giả và ngày đăng trên bản xem trước ảnh mở rộng.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Hiện thông tin phương tiện";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Xóa nút Muse bên cạnh nút menu ở đầu trang cá nhân của bạn.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Ẩn nút trên trang cá nhân";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Xóa đích Muse khỏi bảng chia sẻ để các tùy chọn phía sau hiển thị trở lại.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Ẩn trong bảng chia sẻ";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Ẩn bài viết tài trợ trên Bảng tin, Tin, Reels và Khám phá, cùng với gợi ý mua sắm trên Reels.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Gợi ý";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Ẩn các điểm truy cập Meta AI theo từng giao diện.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Ẩn các điểm truy cập Muse, theo từng khu vực.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Ẩn các tài khoản được gợi ý ở bất kỳ vị trí nào Instagram chèn vào, theo từng vị trí.";
 "GENERAL_REPOST_TAPPED_TOAST" = "Đã nhấn nút đăng lại";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Đã sao chép liên kết";

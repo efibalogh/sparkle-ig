@@ -967,9 +967,15 @@
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE" = "Afișează dată în meniu";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_HELP" = "Suprapune autorul și data postării peste previzualizarea mărită a pozei.";
 "GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE" = "Afișează info media";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_HELP" = "Elimină butonul Muse de lângă butonul de meniu din partea de sus a profilului tău.";
+"GENERAL_MUSE_HIDE_PROFILE_BUTTON_TITLE" = "Ascunde butonul din profil";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_HELP" = "Elimină destinația Muse din foaia de partajare, astfel încât opțiunile de după ea să fie din nou vizibile.";
+"GENERAL_MUSE_HIDE_SHARE_SHEET_TITLE" = "Ascunde în foaia de partajare";
+"GENERAL_MUSE_TITLE" = "Muse";
 "GENERAL_RECOMMENDATIONS_ADS_HELP" = "Ascunde postările sponsorizate din feed, povești, reels și Explorează, împreună cu îndemnurile la cumpărături din reels.";
 "GENERAL_RECOMMENDATIONS_HEADER" = "Recomandări";
 "GENERAL_RECOMMENDATIONS_META_AI_HELP" = "Ascunde punctele de intrare Meta AI, secțiune cu secțiune.";
+"GENERAL_RECOMMENDATIONS_MUSE_HELP" = "Ascunde punctele de acces Muse, secțiune cu secțiune.";
 "GENERAL_RECOMMENDATIONS_SUGGESTED_USERS_HELP" = "Ascunde conturile sugerate oriunde le inserează Instagram, secțiune cu secțiune.";
 "GENERAL_REPOST_TAPPED_TOAST" = "A apăsat butonul repost";
 "GENERAL_SHARE_LONG_PRESS_COPY_COPIED_LINK_TEXT" = "Link copiat";

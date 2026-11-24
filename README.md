@@ -68,7 +68,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
 - **Playback controls**:
   - A floating panel for stories and reels with playback speed (0.5x to 2x), scrubbing, 5 second skips, and pause, remembered per video, per session, or always.
 - **Privacy & focus**:
-  - Hide ads, Meta AI, and suggested content.
+  - Hide ads, Meta AI, Muse, and suggested content.
   - Disable seen receipts, typing status, screenshot detection, and view-once limits.
   - Unlock native message previews from the inbox long-press menu on supported Instagram versions.
   - Block doom-scrolling.
