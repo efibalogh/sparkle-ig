@@ -1477,7 +1477,16 @@ static BOOL SPKSettingsRowEnabled(SPKSetting *row) {
         return;
     }
     [UIView performWithoutAnimation:^{
-        ((UITableViewCell *)cell).accessoryView = [self menuButtonForRow:row enabled:button.enabled];
+        UITableViewCell *tableCell = (UITableViewCell *)cell;
+        tableCell.accessoryView = [self menuButtonForRow:row enabled:button.enabled];
+        // A row whose icon follows its selection draws it only when the cell is
+        // configured, so swap it here too.
+        UIImage *icon = row.iconProvider ? row.iconProvider() : nil;
+        if (icon && [tableCell.contentConfiguration isKindOfClass:[UIListContentConfiguration class]]) {
+            UIListContentConfiguration *config = [(UIListContentConfiguration *)tableCell.contentConfiguration copy];
+            config.image = icon;
+            tableCell.contentConfiguration = config;
+        }
         [cell layoutIfNeeded];
     }];
 }
