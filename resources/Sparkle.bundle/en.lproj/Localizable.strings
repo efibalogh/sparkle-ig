@@ -1912,10 +1912,10 @@
 "MESSAGES_MESSAGING_MANUALLY_MARK_SEEN_HELP" = "Prevents automatic seen receipts and adds an eye button to mark chats as seen.";
 "MESSAGES_MESSAGING_MANUALLY_MARK_SEEN_TITLE" = "Manually Mark Seen";
 "MESSAGES_MESSAGING_MARK_SEEN_ON_HELP" = "Chooses what marks a chat as seen while Manually Mark Seen is on: sending a message, replying, reacting or typing.";
-"MESSAGES_MESSAGING_MARK_SEEN_ON_TITLE" = "Mark Seen On";
 "MESSAGES_MESSAGING_MARK_SEEN_ON_REACTION_HELP" = "Marks a chat as seen when you react.";
 "MESSAGES_MESSAGING_MARK_SEEN_ON_REPLY_HELP" = "Marks a chat as seen when you reply.";
 "MESSAGES_MESSAGING_MARK_SEEN_ON_SEND_HELP" = "Marks a chat as seen when you send a message.";
+"MESSAGES_MESSAGING_MARK_SEEN_ON_TITLE" = "Mark Seen On";
 "MESSAGES_MESSAGING_MARK_SEEN_ON_TYPING_HELP" = "Marks a chat as seen when you start typing a reply.";
 "MESSAGES_MESSAGING_RESET_LOCAL_SEEN_CONFIRM" = "All chats you've read locally will appear unread again. This can't be undone.";
 "MESSAGES_MESSAGING_RESET_LOCAL_SEEN_TITLE" = "Reset Local Seen";
