@@ -714,6 +714,14 @@
 - (instancetype)initWithSearchableItem:(id)item sectionType:(NSString *)sectionType subtitle:(NSString *)subtitle;
 @end
 
+// Swift as IGSearchModels.IGKeywordSearchModel on newer builds. An account keyword
+// carries the person it stands for in user.
+@interface IGKeywordSearchModel : NSObject
+@property (nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) BOOL isEcho;
+@property (nonatomic, readonly) id user;
+@end
+
 // IGSearchViewModels.IGSearchRecentSearchesHorizontalViewModel: recents as a carousel.
 @interface IGSearchRecentSearchesHorizontalViewModel : NSObject
 @property (nonatomic, readonly) NSArray *items;
