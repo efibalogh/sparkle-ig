@@ -32,6 +32,9 @@ NSArray<NSDictionary *> *SPKPresenceUserList(void);
 BOOL SPKPresenceListContainsUser(NSString *_Nullable pk);
 /// Resolves mode + list into the actual decision for `pk`.
 BOOL SPKPresenceAppliesToUser(NSString *_Nullable pk);
+/// YES when "All Users" is on or the tracked list is non-empty. Hot paths bail
+/// out early when nobody could be notified.
+BOOL SPKPresenceHasAnyTarget(void);
 void SPKPresenceToggleForPK(NSString *pk, NSString *_Nullable username, NSString *_Nullable fullName, NSString *_Nullable profilePicUrl);
 UIViewController *SPKPresenceListViewController(void);
 /// One-line state for the Messages settings row ("Off", "3 Tracked").

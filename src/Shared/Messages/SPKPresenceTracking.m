@@ -134,6 +134,10 @@ BOOL SPKPresenceAppliesToUser(NSString *pk) {
     return SPKAutoSaveFilterApplies(SPKPresenceFilterConfig(), pk);
 }
 
+BOOL SPKPresenceHasAnyTarget(void) {
+    return SPKPresenceAllUsersMode() || SPKPresenceUserList().count > 0;
+}
+
 NSString *SPKPresenceSettingsSummary(void) {
     if (!SPKPresenceNotificationsEnabled())
         return SPKL(@"MENU_OFF");
@@ -1029,6 +1033,11 @@ void SPKPresenceHandleDirectThreadUpdates(id applicator, id updates, NSString *o
     }
     if (!SPKPresenceNotificationsEnabled() || ownerPK.length == 0)
         return;
+    // Inbox sync replays a watermark per thread and per reader. With read
+    // notifications off or nobody tracked, nothing below can notify, so skip the
+    // parse entirely instead of filtering each event one by one.
+    if (![SPKUtils getBoolPref:kSPKPresenceNotifyReadKey] || !SPKPresenceHasAnyTarget())
+        return;
     NSArray<NSDictionary *> *ownerMessages = SPKPresenceOwnerMessagesFromUpdates(updates, ownerPK);
     NSArray<NSDictionary *> *events = SPKPresenceReadEvents(updates);
     if (ownerMessages.count == 0 && events.count == 0)
@@ -1044,9 +1053,6 @@ void SPKPresenceHandleDirectThreadUpdates(id applicator, id updates, NSString *o
             NSMutableDictionary *cursors = SPKPresenceReadCursors();
             NSString *previousID = cursors[cursorKey];
 
-            SPKLog(@"Presence", @"[Sparkle Presence] raw read watermark owner=%@ thread=%@ reader=%@ message=%@ prior=%@",
-                   ownerPK, threadID, readerPK, messageID, previousID ?: @"unknown");
-
             BOOL ordered = NO;
             NSComparisonResult advance = previousID.length > 0
                                              ? SPKPresenceCompareMessageIDs(messageID, previousID, &ordered)
@@ -1055,6 +1061,8 @@ void SPKPresenceHandleDirectThreadUpdates(id applicator, id updates, NSString *o
                                            (!ordered && advance == NSOrderedSame)))
                 continue;
             cursors[cursorKey] = messageID;
+            SPKLog(@"Presence", @"[Sparkle Presence] read watermark advanced owner=%@ thread=%@ reader=%@ message=%@ prior=%@",
+                   ownerPK, threadID, readerPK, messageID, previousID ?: @"unknown");
 
             NSString *activeOwnerPK = [SPKUtils currentUserPK];
             if (activeOwnerPK.length > 0 && ![activeOwnerPK isEqualToString:ownerPK]) {

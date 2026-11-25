@@ -150,6 +150,10 @@ static void SPKPresenceHandleTypingStore(id store,
                                          NSString *source) {
     if (!SPKPresenceNotificationsEnabled())
         return;
+    // The store is republished on every thread load during inbox sync. Skip the
+    // walk when typing notifications are off or nobody is tracked.
+    if (![SPKUtils getBoolPref:@"msgs_presence_notify_typing"] || !SPKPresenceHasAnyTarget())
+        return;
 
     NSMutableDictionary<NSString *, NSDictionary *> *active = [NSMutableDictionary dictionary];
     SPKPresenceCollectTypingStatuses(store, active, 0, nil);
@@ -159,12 +163,14 @@ static void SPKPresenceHandleTypingStore(id store,
     SPKPresenceCollectTypingStatuses(updatedStatuses, active, 0, updatedThreadID);
 
     NSUInteger threadCount = [store isKindOfClass:NSDictionary.class] ? [(NSDictionary *)store count] : 0;
-    SPKLog(@"Presence", @"[Sparkle Presence] typing snapshot source=%@ threads=%lu typing=%lu updatedThread=%@ updatedClass=%@",
-           source ?: @"unknown",
-           (unsigned long)threadCount,
-           (unsigned long)active.count,
-           updatedThreadID ?: @"none",
-           updatedStatuses ? NSStringFromClass([updatedStatuses class]) : @"nil");
+    if (active.count > 0) {
+        SPKLog(@"Presence", @"[Sparkle Presence] typing snapshot source=%@ threads=%lu typing=%lu updatedThread=%@ updatedClass=%@",
+               source ?: @"unknown",
+               (unsigned long)threadCount,
+               (unsigned long)active.count,
+               updatedThreadID ?: @"none",
+               updatedStatuses ? NSStringFromClass([updatedStatuses class]) : @"nil");
+    }
     SPKPresenceHandleTypingSnapshot(active);
 }
 
