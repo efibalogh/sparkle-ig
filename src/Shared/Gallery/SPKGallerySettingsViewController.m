@@ -79,7 +79,6 @@ static SPKSetting *SPKGallerySearchChangePasscodeSetting(void) {
 @end
 
 static NSString *const kFavoritesAtTopKey = @"gallery_show_favorites_top";
-static NSString *const kGalleryLongPressTabKey = @"gallery_quick_access_tab";
 static NSString *const kGalleryQuickAccessDisabledValue = @"none";
 
 @interface SPKGalleryStorageStats : NSObject

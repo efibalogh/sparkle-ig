@@ -538,6 +538,66 @@ static void SPKEnsureSavedTabDestination(IGTabBarController *controller) {
     SPKOpenSavedInFallbackNavigationController(controller, navigationController);
 }
 
+static IGTabBarController *SPKLiveTabBarController(void) {
+    for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+        if (![scene isKindOfClass:[UIWindowScene class]])
+            continue;
+        for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+            IGTabBarController *controller = SPKFindTabBarController(window.rootViewController);
+            if (controller)
+                return controller;
+        }
+    }
+    return SPKFindTabBarController(UIApplication.sharedApplication.keyWindow.rootViewController);
+}
+
+// Pushes Instagram's Saved home onto the tab that is showing, for shortcuts
+// (a tab hold, the feed header button). Same route as the Saved tab: the tab's
+// own intent handler where one is installed, the internal URL where it is not
+// (IG 410). Unlike the tab, the stack is left as it is, so Back returns to
+// whatever the tab was showing.
+extern "C" BOOL SPKOpenInstagramSavedHome(void) {
+    IGTabBarController *controller = SPKLiveTabBarController();
+    UIViewController *selected = controller.selectedViewController;
+    UINavigationController *navigationController = [selected isKindOfClass:[UINavigationController class]]
+                                                       ? (UINavigationController *)selected
+                                                       : selected.navigationController;
+    if (!navigationController)
+        return NO;
+    if (SPKIsSavedViewController(navigationController.topViewController))
+        return YES;
+
+    id<FBIntentHandler> handler = [navigationController respondsToSelector:@selector(fb_intentHandler)]
+                                      ? [navigationController fb_intentHandler]
+                                      : nil;
+    id target = [handler respondsToSelector:@selector(handleIntent:)] ? SPKMakeSavedIntentTarget() : nil;
+    if (target) {
+        ((void (*)(id, SEL, id))objc_msgSend)(handler, @selector(handleIntent:), target);
+        return YES;
+    }
+
+    id userSession = [SPKUtils getIvarForObj:controller name:"_userSession"];
+    Class urlHandlerClass = NSClassFromString(@"IGURLHandler");
+    SEL openSelector = NSSelectorFromString(@"openInternalURL:presentationConfig:controller:animated:userSession:annotation:");
+    if (![urlHandlerClass respondsToSelector:openSelector])
+        return NO;
+    // A Saved tab would otherwise take the route over and switch tabs instead.
+    // The bypass stays up after a route that opened, which may land after this
+    // returns, and lapses on its own; a route that did not open ends it now.
+    SPKBeginSavedTabRoutingBypass();
+    BOOL opened = ((BOOL (*)(id, SEL, id, id, id, BOOL, id, id))objc_msgSend)(urlHandlerClass,
+                                                                              openSelector,
+                                                                              [NSURL URLWithString:@"instagram://saved"],
+                                                                              nil,
+                                                                              navigationController,
+                                                                              YES,
+                                                                              userSession,
+                                                                              nil);
+    if (!opened)
+        SPKEndSavedTabRoutingBypass();
+    return opened;
+}
+
 // Shared bookkeeping for the -_setSelectedTabBarSurface: overloads. The shorter
 // one forwards to the longer on newer builds, so the work is keyed to the
 // outermost call and runs exactly once per selection.
@@ -872,7 +932,7 @@ static UITabBarController *SPKNativeSystemTabBarController(UIViewController *con
 
 // The native descriptor takes its artwork from the carrier's button, which
 // already draws Saved, but its title from the surface, so the UITab would still
-// read as the borrowed tab (it is what VoiceOver and the large-text HUD say).
+// read as the borrowed tab to VoiceOver and the large-text HUD.
 extern "C" void SPKNavigationDecorateNativeTabs(id controller) {
     if (SPKStabilityGuardIsSafeStartupMode() || !SPKNativeTabBarIsActive(controller) || !SPKHasSavedTabDestination())
         return;
@@ -892,13 +952,29 @@ extern "C" void SPKNavigationDecorateNativeTabs(id controller) {
     }
     if (!nativeIdentifier)
         return;
-    for (id tab in ((NSArray * (*)(id, SEL)) objc_msgSend)(system, tabsSelector)) {
-        if (![tab respondsToSelector:@selector(identifier)] || ![[tab identifier] isEqual:nativeIdentifier])
+    NSArray *tabs = ((NSArray * (*)(id, SEL)) objc_msgSend)(system, tabsSelector);
+    id carrierTab = nil;
+    BOOL siblingsShowTitles = NO;
+    for (id tab in tabs) {
+        if (![tab respondsToSelector:@selector(identifier)] || ![tab respondsToSelector:@selector(title)])
             continue;
-        if ([tab respondsToSelector:@selector(setTitle:)] && ![[tab title] isEqualToString:SPKSavedTabAccessibilityLabel()])
-            [tab setTitle:SPKSavedTabAccessibilityLabel()];
-        break;
+        if ([[tab identifier] isEqual:nativeIdentifier])
+            carrierTab = tab;
+        else if ([[tab title] length] > 0)
+            siblingsShowTitles = YES;
     }
+    if (!carrierTab)
+        return;
+    NSString *label = SPKSavedTabAccessibilityLabel();
+    // Instagram leaves its tab titles empty so the bar shows icons only, and
+    // UIKit draws any non-empty title under the icon. Only give Saved a title
+    // when the other tabs carry one too; otherwise keep the bar icon-only and
+    // name the tab through its accessibility label.
+    NSString *title = siblingsShowTitles ? label : @"";
+    if ([carrierTab respondsToSelector:@selector(setTitle:)] && ![[carrierTab title] ?: @"" isEqualToString:title])
+        [carrierTab setTitle:title];
+    if ([carrierTab respondsToSelector:@selector(setAccessibilityLabel:)] && ![[carrierTab accessibilityLabel] isEqualToString:label])
+        [carrierTab setAccessibilityLabel:label];
 }
 
 extern "C" BOOL SPKNavigationProfileTabCarriesSaved(void) {

@@ -3,9 +3,26 @@
 
 #import "../../Features/Feed/HeaderActionButton.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
+#import "../SPKNewBadges.h"
 #import "../SPKTopicSettingsSupport.h"
 
 static NSString *const kSPKFeedActionButtonEnabledKey = @"feed_action_btn";
+
+// One switch per destination the header button can open, from the list tab
+// holds share. Destinations added after the button shipped carry the NEW pill.
+static NSArray<SPKSetting *> *SPKFeedHeaderDestinationSwitches(void) {
+    NSSet<NSString *> *original = [NSSet setWithArray:@[ @"gallery", @"analyzer", @"deleted", @"downloads", @"settings" ]];
+    NSMutableArray<SPKSetting *> *switches = [NSMutableArray array];
+    for (SPKHeaderDestination *destination in SPKHeaderButtonAllDestinations()) {
+        SPKSetting *row = [SPKSetting switchCellWithTitle:destination.title
+                                                     icon:SPKSettingsIcon(destination.iconName)
+                                              defaultsKey:destination.prefKey];
+        if (![original containsObject:destination.identifier])
+            SPKSettingMarkedNew(row, @"v1.7.0");
+        [switches addObject:row];
+    }
+    return switches;
+}
 
 @implementation SPKFeedSettingsProvider
 
@@ -30,24 +47,7 @@ static NSString *const kSPKFeedActionButtonEnabledKey = @"feed_action_btn";
                                            subtitle:@""
                                                icon:SPKSettingsIcon(@"sliders")
                                         navSections:@[
-                                            SPKTopicSection(SPKL(@"FEED_DESTINATIONS_HEADER"), @[
-                                                [SPKSetting switchCellWithTitle:SPKL(@"DATA_GENERAL_GALLERY_TITLE")
-                                                                               icon:SPKSettingsIcon(@"sparkle_gallery")
-                                                                        defaultsKey:@"feed_header_button_dest_gallery"],
-                                                [SPKSetting switchCellWithTitle:SPKL(@"DATA_GENERAL_PROFILE_ANALYZER_TITLE")
-                                                                               icon:SPKSettingsIcon(@"profile_analyzer")
-                                                                        defaultsKey:@"feed_header_button_dest_analyzer"],
-                                                [SPKSetting switchCellWithTitle:SPKL(@"ALERT_ACTION_DELETED_MESSAGES")
-                                                                               icon:SPKSettingsIcon(@"channels")
-                                                                        defaultsKey:@"feed_header_button_dest_deleted"],
-                                                [SPKSetting switchCellWithTitle:SPKL(@"DOWNLOADS_GENERAL_DOWNLOADS_TITLE")
-                                                                               icon:SPKSettingsIcon(@"download")
-                                                                        defaultsKey:@"feed_header_button_dest_downloads"],
-                                                [SPKSetting switchCellWithTitle:SPKL(@"FEED_DESTINATIONS_SPARKLE_SETTINGS_TITLE")
-                                                                               icon:SPKSettingsIcon(@"settings")
-                                                                        defaultsKey:@"feed_header_button_dest_settings"],
-                                            ],
-                                                            nil)
+                                            SPKTopicSection(SPKL(@"FEED_DESTINATIONS_HEADER"), SPKFeedHeaderDestinationSwitches(), nil)
                                         ]],
                                SPKL(@"FEED_HEADER_SHORTCUT_CONFIGURE_DESTINATIONS_HELP")),
         ],

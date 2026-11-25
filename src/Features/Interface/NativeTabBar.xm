@@ -7,6 +7,7 @@
 #import "../../Settings/SPKPreferenceAvailability.h"
 #import "../../Settings/SPKPreferences.h"
 #import "SPKNativeTabBar.h"
+#import "../../Shared/Navigation/SPKTabConfiguration.h"
 #import "../../Shared/UI/SPKReplayedLongPressGesture.h"
 #import "../../Shared/i18n/SPKStrings.h"
 #import "../../Utils.h"
@@ -108,12 +109,33 @@ static void SPKForceNativeTabBar(id controller) {
            (unsigned long)expanded.count, (unsigned long)compact.count);
 }
 
+// Whether Instagram turned the system bar on by itself, read before Sparkle's
+// force runs. Whether the bar is in use cannot answer it: a bar Sparkle forced
+// keeps running until the restart after the switch is turned off.
+static BOOL sSPKInstagramChoseSystemTabBar = NO;
+static BOOL sSPKSystemTabBarChoiceRecorded = NO;
+static BOOL sSPKSystemTabBarForceInstalled = NO;
+
+BOOL SPKSystemTabBarChosenByInstagram(void) {
+    if (sSPKSystemTabBarChoiceRecorded)
+        return sSPKInstagramChoseSystemTabBar;
+    // Sparkle did not force the bar this launch, so a running one is Instagram's.
+    return !sSPKSystemTabBarForceInstalled && SPKSystemTabBarInUse();
+}
+
 static void (*orig_initializeViewControllers)(id, SEL);
 static void hook_initializeViewControllers(id self, SEL _cmd) {
     Ivar done = SPKNativeTabBarIvar(self, "_didInitializeViewControllers");
     BOOL alreadyInitialized = SPKNativeTabBarIvarIsBool(done) && *((uint8_t *)(__bridge void *)self + ivar_getOffset(done)) != 0;
-    if (!alreadyInitialized && SPKNativeTabBarPreferenceEnabled())
-        SPKForceNativeTabBar(self);
+    if (!alreadyInitialized) {
+        sSPKInstagramChoseSystemTabBar = SPKNativeTabBarIsActive(self);
+        sSPKSystemTabBarChoiceRecorded = YES;
+        BOOL force = SPKNativeTabBarPreferenceEnabled();
+        SPKLog(kSPKNativeTabBarLogCategory, @"initializing tab bar: instagramChoseSystemBar=%d sparkleForce=%d",
+               sSPKInstagramChoseSystemTabBar, force);
+        if (force)
+            SPKForceNativeTabBar(self);
+    }
     orig_initializeViewControllers(self, _cmd);
 }
 
@@ -145,6 +167,14 @@ static id SPKNativeTabBarLiveController(void) {
         }
     }
     return nil;
+}
+
+void SPKNativeTabBarRebuildTabs(void) {
+    IGTabBarController *controller = SPKNativeTabBarLiveController();
+    if (!SPKNativeTabBarIsActive(controller) || ![controller respondsToSelector:@selector(_installOrUpdateNativeTabBarController)])
+        return;
+    BOOL updated = [controller _installOrUpdateNativeTabBarController];
+    SPKLog(kSPKNativeTabBarLogCategory, @"rebuilt native tabs for new holds: %d", updated);
 }
 
 // Instagram's regular-width order includes the Activity (subtype 4) and Create
@@ -387,15 +417,15 @@ static void hook_setTabBarVisibilityHidden(id self, SEL _cmd, BOOL hidden, BOOL 
 // on the custom bar's buttons never see a touch. The coordinator only attaches
 // a hold to tabs whose descriptor names a long-press action (Instagram's own:
 // Home and Profile), asks the controller whether a tab can be held, and then
-// reports the press phases. Two Sparkle holds ride on that: the Settings and
-// Gallery shortcuts on their host tabs, which take precedence as they do on
-// the custom bar, and the Explore hold (search, plus the clipboard link and
-// username shortcuts that hook the custom bar's Explore handler), replayed
-// into that handler with a stand-in recognizer.
+// reports the press phases. Sparkle's holds ride on that: a tab's own hold
+// setting (a destination, or None to silence Instagram's), which takes
+// precedence as it does on the custom bar, and the Explore hold (search, plus
+// the Search tab's clipboard holds, which hook the custom bar's Explore
+// handler), replayed into that handler with a stand-in recognizer.
 
-extern "C" NSInteger SPKNativeTabShortcutForSurface(id controller, id surface);
-extern "C" NSString *SPKNativeTabShortcutActionName(NSInteger shortcut);
-extern "C" void SPKPerformNativeTabShortcut(id controller, NSInteger shortcut);
+extern "C" NSString *SPKNativeTabHoldForSurface(id controller, id surface);
+extern "C" NSString *SPKNativeTabHoldActionName(NSString *hold);
+extern "C" void SPKPerformNativeTabHold(id controller, NSString *hold);
 
 static id SPKNativeTabBarSurfaceForIdentifier(id controller, id identifier) {
     if (!identifier || ![controller respondsToSelector:@selector(_surfaceForNativeIdentifier:)])
@@ -413,26 +443,32 @@ static BOOL SPKNativeTabBarSurfaceIsExplore(id controller, id surface) {
 
 // Foldables get the native bar from Instagram itself, with no Sparkle pref
 // involved, so the hold is offered whenever something Sparkle owns wants it:
-// the forced bar (to keep search on hold) or the clipboard link shortcut.
+// the forced bar (to keep search on hold) or a clipboard hold on Search.
 static BOOL SPKNativeTabBarExploreHoldWanted(void) {
-    return SPKNativeTabBarPreferenceEnabled() || [SPKUtils getBoolPref:@"interface_open_clipboard_link"];
+    return SPKNativeTabBarPreferenceEnabled() || SPKSearchTabClipboardHold() != nil;
 }
 
 typedef NS_ENUM(NSInteger, SPKNativeTabHold) {
     SPKNativeTabHoldInstagram = 0,
     SPKNativeTabHoldShortcut,
     SPKNativeTabHoldExplore,
+    SPKNativeTabHoldBlocked,
 };
 
-static SPKNativeTabHold SPKNativeTabHoldForSurface(id controller, id surface, NSInteger *shortcut) {
-    if (!surface || SPKStabilityGuardIsSafeStartupMode() || !SPKNativeTabBarIsActive(controller))
+static SPKNativeTabHold SPKNativeTabHoldKindForSurface(id controller, id surface, NSString **shortcut) {
+    if (!surface || !SPKNativeTabBarIsActive(controller))
         return SPKNativeTabHoldInstagram;
-    NSInteger found = SPKNativeTabShortcutForSurface(controller, surface);
-    if (found != 0) {
+    // Safe mode is answered inside: a Settings hold survives it.
+    NSString *hold = SPKNativeTabHoldForSurface(controller, surface);
+    if ([hold isEqualToString:@"none"])
+        return SPKNativeTabHoldBlocked;
+    if (![hold isEqualToString:@"default"]) {
         if (shortcut)
-            *shortcut = found;
+            *shortcut = hold;
         return SPKNativeTabHoldShortcut;
     }
+    if (SPKStabilityGuardIsSafeStartupMode())
+        return SPKNativeTabHoldInstagram;
     if (SPKNativeTabBarExploreHoldWanted() && SPKNativeTabBarSurfaceIsExplore(controller, surface))
         return SPKNativeTabHoldExplore;
     return SPKNativeTabHoldInstagram;
@@ -456,10 +492,12 @@ static UIGestureRecognizerState SPKNativeTabBarGestureStateForPhase(NSInteger ph
 
 static NSString *(*orig_longPressActionName)(id, SEL, id);
 static NSString *hook_longPressActionName(id self, SEL _cmd, id surface) {
-    NSInteger shortcut = 0;
-    switch (SPKNativeTabHoldForSurface(self, surface, &shortcut)) {
+    NSString *shortcut = nil;
+    switch (SPKNativeTabHoldKindForSurface(self, surface, &shortcut)) {
     case SPKNativeTabHoldShortcut:
-        return SPKNativeTabShortcutActionName(shortcut);
+        return SPKNativeTabHoldActionName(shortcut);
+    case SPKNativeTabHoldBlocked:
+        return nil;
     case SPKNativeTabHoldExplore: {
         NSString *name = orig_longPressActionName(self, _cmd, surface);
         return name.length > 0 ? name : SPKL(@"INTERFACE_NATIVE_TAB_BAR_EXPLORE_HOLD_ACCESSIBILITY_ACTION");
@@ -472,21 +510,50 @@ static NSString *hook_longPressActionName(id self, SEL _cmd, id surface) {
 
 static BOOL (*orig_canLongPress)(id, SEL, id, id);
 static BOOL hook_canLongPress(id self, SEL _cmd, id coordinator, id identifier) {
-    if (SPKNativeTabHoldForSurface(self, SPKNativeTabBarSurfaceForIdentifier(self, identifier), NULL) != SPKNativeTabHoldInstagram)
+    switch (SPKNativeTabHoldKindForSurface(self, SPKNativeTabBarSurfaceForIdentifier(self, identifier), NULL)) {
+    case SPKNativeTabHoldShortcut:
+    case SPKNativeTabHoldExplore:
         return YES;
+    case SPKNativeTabHoldBlocked:
+        return NO;
+    case SPKNativeTabHoldInstagram:
+        break;
+    }
     return orig_canLongPress(self, _cmd, coordinator, identifier);
+}
+
+// UIKit also treats a held tab's release as a tap on it, which the
+// coordinator then performs: holding another tab switches to it, and holding
+// the selected one pops it to its root. Either way the screen the hold just
+// opened is gone (seen on 457 with Instagram Saved). While a Sparkle hold is
+// down, and briefly after it lifts, the coordinator's actions are refused.
+static NSTimeInterval sSPKNativeTabHoldRefusesActionsUntil = 0;
+
+static void (*orig_shouldPerform)(void);
+static BOOL hook_shouldPerform(id self, SEL _cmd, id coordinator, id action) {
+    if (NSDate.timeIntervalSinceReferenceDate < sSPKNativeTabHoldRefusesActionsUntil) {
+        SPKLog(kSPKNativeTabBarLogCategory, @"tab hold: refused the release tap %@", action);
+        return NO;
+    }
+    return ((BOOL (*)(id, SEL, id, id))orig_shouldPerform)(self, _cmd, coordinator, action);
 }
 
 static void (*orig_didUpdateLongPress)(id, SEL, id, id, NSInteger);
 static void hook_didUpdateLongPress(id self, SEL _cmd, id coordinator, id identifier, NSInteger phase) {
-    NSInteger shortcut = 0;
-    switch (SPKNativeTabHoldForSurface(self, SPKNativeTabBarSurfaceForIdentifier(self, identifier), &shortcut)) {
+    NSString *shortcut = nil;
+    switch (SPKNativeTabHoldKindForSurface(self, SPKNativeTabBarSurfaceForIdentifier(self, identifier), &shortcut)) {
+    case SPKNativeTabHoldBlocked:
+        return;
     case SPKNativeTabHoldShortcut:
         // The press belongs to Sparkle, so the tab's own hold action (the
         // account switcher on Profile) never sees any of its phases. Phase 0 is
         // the press being recognized; the later ones belong to the same press.
-        if (phase == 0)
-            SPKPerformNativeTabShortcut(self, shortcut);
+        if (phase == 0) {
+            sSPKNativeTabHoldRefusesActionsUntil = NSDate.timeIntervalSinceReferenceDate + 30;
+            SPKPerformNativeTabHold(self, shortcut);
+        } else if (phase >= 2) {
+            sSPKNativeTabHoldRefusesActionsUntil = NSDate.timeIntervalSinceReferenceDate + 0.4;
+        }
         return;
     case SPKNativeTabHoldExplore: {
         SPKReplayedLongPressGesture *gesture = [[SPKReplayedLongPressGesture alloc] initWithTarget:nil action:NULL];
@@ -549,6 +616,8 @@ void SPKInstallNativeTabBarCoordinatorHooks(void) {
             MSHookMessageEx(controllerClass, actionName, (IMP)hook_longPressActionName, (IMP *)&orig_longPressActionName);
             MSHookMessageEx(controllerClass, canLongPress, (IMP)hook_canLongPress, (IMP *)&orig_canLongPress);
             MSHookMessageEx(controllerClass, didUpdate, (IMP)hook_didUpdateLongPress, (IMP *)&orig_didUpdateLongPress);
+            SPKNativeTabBarHookIfPresent(controllerClass, @"nativeTabBarControllerCoordinator:shouldPerform:", (IMP)hook_shouldPerform,
+                                         (IMP *)&orig_shouldPerform);
         }
     });
 }
@@ -564,6 +633,7 @@ extern "C" void SPKInstallNativeTabBarHooksIfEnabled(void) {
     dispatch_once(&onceToken, ^{
         if (!SPKNativeTabBarPreferenceEnabled())
             return;
+        sSPKSystemTabBarForceInstalled = YES;
         Class controllerClass = objc_getClass("IGTabBarController");
         SEL initializeSelector = NSSelectorFromString(@"_initializeViewControllers");
         if (!controllerClass || !class_getInstanceMethod(controllerClass, initializeSelector) ||

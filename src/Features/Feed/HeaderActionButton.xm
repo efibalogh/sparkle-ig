@@ -9,6 +9,7 @@
 #import "../../InstagramHeaders.h"
 #import "../../Shared/Account/SPKAccountManager.h"
 #import "../../Shared/Downloads/SPKDownloadService.h"
+#import "../../Shared/Navigation/SPKDestinations.h"
 #import "../../Shared/Navigation/SPKTabConfiguration.h"
 #import "../../Shared/Gallery/SPKGalleryViewController.h"
 #import "../../Shared/UI/SPKChrome.h"
@@ -24,11 +25,6 @@ NSString *const kSPKHeaderButtonDefaultActionKey = @"feed_header_button_default"
 NSString *const kSPKHeaderButtonDefaultActionMenu = @"menu";
 
 // Destination identifiers double as the suffix of their per-destination pref key.
-static NSString *const kSPKHeaderDestSettings = @"settings";
-static NSString *const kSPKHeaderDestAnalyzer = @"analyzer";
-static NSString *const kSPKHeaderDestGallery = @"gallery";
-static NSString *const kSPKHeaderDestDeleted = @"deleted";
-static NSString *const kSPKHeaderDestDownloads = @"downloads";
 
 // IG-bundle icon name for the button's "Open Menu" glyph (same one every other
 // Sparkle action button uses for its menu default).
@@ -84,42 +80,22 @@ static const void *kSPKHeaderGlassViewKey = &kSPKHeaderGlassViewKey;
 }
 @end
 
+// The destinations come from the shared list that tab holds also use; the
+// header keeps its own on/off switch for each.
 NSArray<SPKHeaderDestination *> *SPKHeaderButtonAllDestinations(void) {
     static NSArray<SPKHeaderDestination *> *destinations;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        destinations = @[
-            [SPKHeaderDestination destinationWithIdentifier:kSPKHeaderDestGallery
-                                                      title:SPKL(@"DATA_GENERAL_GALLERY_TITLE")
-                                                   iconName:@"sparkle_gallery"
-                                                    present:^(UIWindow *window) {
-                                                        [SPKGalleryViewController presentGallery];
-                                                    }],
-            [SPKHeaderDestination destinationWithIdentifier:kSPKHeaderDestAnalyzer
-                                                      title:SPKL(@"DATA_GENERAL_PROFILE_ANALYZER_TITLE")
-                                                   iconName:@"profile_analyzer"
-                                                    present:^(UIWindow *window) {
-                                                        [SPKProfileAnalyzerViewController presentFromTop];
-                                                    }],
-            [SPKHeaderDestination destinationWithIdentifier:kSPKHeaderDestDeleted
-                                                      title:SPKL(@"ALERT_ACTION_DELETED_MESSAGES")
-                                                   iconName:@"channels"
-                                                    present:^(UIWindow *window) {
-                                                        [SPKDeletedMessagesViewController presentFromViewController:nil];
-                                                    }],
-            [SPKHeaderDestination destinationWithIdentifier:kSPKHeaderDestDownloads
-                                                      title:SPKL(@"DOWNLOADS_GENERAL_DOWNLOADS_TITLE")
-                                                   iconName:@"download"
-                                                    present:^(UIWindow *window) {
-                                                        [SPKDownloadService presentDownloadsHistorySheet];
-                                                    }],
-            [SPKHeaderDestination destinationWithIdentifier:kSPKHeaderDestSettings
-                                                      title:SPKL(@"FEED_DESTINATIONS_SPARKLE_SETTINGS_TITLE")
-                                                   iconName:@"settings"
-                                                    present:^(UIWindow *window) {
-                                                        [SPKUtils showSettingsVC:window];
-                                                    }],
-        ];
+        NSMutableArray<SPKHeaderDestination *> *built = [NSMutableArray array];
+        for (SPKDestination *shared in SPKDestinationsForPlacement(SPKDestinationPlacementHeaderButton)) {
+            [built addObject:[SPKHeaderDestination destinationWithIdentifier:shared.identifier
+                                                                       title:shared.title
+                                                                    iconName:shared.iconName
+                                                                     present:^(UIWindow *window) {
+                                                                         [shared openFromWindow:window];
+                                                                     }]];
+        }
+        destinations = built;
     });
     return destinations;
 }

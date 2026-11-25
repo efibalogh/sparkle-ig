@@ -137,10 +137,6 @@ static NSDictionary *SPKDiagnosticsSection(void) {
     NSMutableArray *sections = [NSMutableArray arrayWithArray:@[
         SPKTopicSection(SPKL(@"TOOLS_FLEX_HEADER"), @[ flexOpen, flexGesture, flexLaunch, flexFocus ], flexFooter),
         SPKTopicSection(SPKL(@"TOOLS_TWEAK_HEADER"), @[
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE")
-                                    defaultsKey:@"tools_settings_shortcut"
-                                requiresRestart:YES],
-                               SPKL(@"TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_TWEAK_SHORTCUT_HAPTICS_TITLE")
                                     defaultsKey:@"tools_shortcut_haptics"],
                                SPKL(@"TOOLS_TWEAK_SHORTCUT_HAPTICS_HELP")),

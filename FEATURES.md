@@ -84,21 +84,40 @@ marked **(restart)** and prompt for a relaunch when changed.
 ### Notifications
 How Sparkle's notifications look, and one banner and haptic setting per group of notifications. See **Notifications** below.
 
-### Tabs
-- **Tab Editor**: A single screen for the whole tab bar, with a live preview of the bar you are building. Every change is staged and committed together with one Apply action and restart prompt. **(restart)**
-  - The preview draws the bar you actually have. Where the system tab bar stands as a column on the trailing edge (as on a foldable iPhone), it shows that column: the status area, the slot the Feed Header Button docks into, and the tab platter with its selection lens. In regular width it adds the Activity and Create tabs Instagram puts on the system bar there, marked as added by Instagram; Activity follows the Feed tab. The column preview takes the window's shape, portrait when folded and landscape when open, so it reads as a miniature of the screen. Everywhere else the preview is the bottom bar, as before.
-  - **Default**: Instagram picks the order; you can still hide tabs and choose where the app opens.
-  - **Custom**: drag the handles to arrange Feed, Reels/Saved, Messages, Explore, and Profile in any order.
-  - **Classic**: Instagram's legacy layout, with Messages in the feed header and Create back as a tab. Messages is not listed in this layout: it is the header link there, reachable by tapping it or by swiping, so there is no tab to hide. Not offered where the tab bar runs down the side of the screen (as on a foldable iPhone), which cannot take its shape; a Classic setting carried over there behaves as Default. With the System Tab Bar on a regular iPhone it works as usual.
-  - Tap any tab to show or hide it, and drag its handle to move it. The last visible tab cannot be hidden.
-  - **Launch Tab**: open Instagram on any visible destination. Left on Default, a custom layout opens on its first tab instead of always landing on Feed.
-  - **Swipe Between Tabs**: follow Instagram, force on, or force off. Unavailable whenever the system tab bar is in use (System Tab Bar, or a foldable where Instagram uses it by itself), which has no swipe between tabs.
-  - **Saved** is its own entry in the list (on the system tab bar too, title included), and it is offered in the **Custom layout only**: Default and Classic are Instagram's own arrangements, which it changes between releases. Instagram has no Saved surface of its own, so Saved borrows the slot of a hidden tab: turn one of the five Instagram tabs off and Saved can be switched on, then dragged anywhere in the bar. That keeps the bar at five tabs maximum. The whole tab bar setup is shared by every account on the device.
-  - **Single Tab Mode** is its own section, always listed and greyed out until it applies.
-    - **Hide Tab Bar** takes the bar away once the configuration leaves a single tab, for a clean single-surface interface. It is offered only where Sparkle Settings stays reachable without the tab bar long-press: with **Messages** (long-press the new message button) or with **Feed** while the **Feed Header Button** is on. Any other single tab keeps the bar, so you cannot hide your way out of Sparkle.
-    - **Messages Header Button** adds the Sparkle shortcut to the left of the Messages navigation bar, for when Messages is the tab that is left.
-  - Leaving the editor keeps your changes staged instead of prompting: come back and they are still there, with Apply waiting. **Discard Changes** puts everything back to the configuration in use, and **Reset to Instagram Default** stages the stock layout. Neither writes anything until you apply.
-- Settings access is safeguarded elsewhere too: if Quick Settings Access is on but the Home tab is hidden (or taken by the Gallery shortcut), the long-press to open Sparkle Settings automatically moves to another visible tab.
+### Tab Bar
+One page for the whole tab bar, with a live preview of the bar you are building: its tabs, what holding each tab opens, and how the bar is drawn. Every change is staged and committed together with one Apply action. The restart prompt only appears when something that needs it changed; hold shortcuts alone apply right away.
+
+#### Tabs
+- The preview draws the bar you actually have. Where the system tab bar stands as a column on the trailing edge (as on a foldable iPhone), it shows that column: the status area, the slot the Feed Header Button docks into, and the tab platter with its selection lens. In regular width it adds the Activity and Create tabs Instagram puts on the system bar there, marked as added by Instagram; Activity follows the Feed tab. The column preview takes the window's shape, portrait when folded and landscape when open, so it reads as a miniature of the screen. Everywhere else the preview is the bottom bar. **(restart)**
+- **Default**: Instagram picks the order; you can still hide tabs and choose where the app opens.
+- **Custom**: drag the handles to arrange Feed, Reels/Saved, Messages, Explore, and Profile in any order.
+- **Classic**: Instagram's legacy layout, with Messages in the feed header and Create back as a tab. Messages is not listed in this layout: it is the header link there, reachable by tapping it or by swiping, so there is no tab to hide. Not offered on foldable iPhones, folded or unfolded; a Classic setting carried over there behaves as Default. With the System Tab Bar on a regular iPhone it works as usual.
+- Tap any tab to show or hide it, and drag its handle to move it. The last visible tab cannot be hidden.
+- **Saved** is its own entry in the list (on the system tab bar too), and it is offered in the **Custom layout only**: Default and Classic are Instagram's own arrangements, which it changes between releases. Instagram has no Saved surface of its own, so Saved borrows the slot of a hidden tab: turn one of the five Instagram tabs off and Saved can be switched on, then dragged anywhere in the bar. That keeps the bar at five tabs maximum. The whole tab bar setup is shared by every account on the device.
+
+#### Long-Press Shortcuts
+- One row per tab on the bar (Saved included, Classic's Messages header link excluded), each with what holding that tab opens. Works on Instagram's own bar and on the system tab bar. Shared by every account on the device. No restart.
+- **Instagram Default** keeps Instagram's own hold, such as switching accounts on Profile or search on Explore. **None** turns the hold off.
+- **Sparkle screens**: Gallery, Profile Analyzer, Deleted Messages, Downloads, Saved Instants, Sparkle Settings.
+- **Instagram screens**: Saved, opened on top of the tab you are on.
+- **Open Clipboard Link** and **Open Clipboard Link or Username**: open a copied Instagram link from any tab. Post and reel links open on their own page with the same native single-post push as the Gallery, instead of landing in the main feed. Story and highlight links (`instagram.com/stories/...`, `instagram.com/s/...`) open the story viewer directly, on the linked story when the link names one; a story older than 24 hours opens the account's profile and looks for it in the highlights. The second one also opens a copied username, with or without the `@`, as a profile. On Search (its default), a clipboard with nothing to open, or a username with no account, opens Instagram's search as usual. On any other tab, a notice says there was nothing to open.
+- Out of the box, Home opens Sparkle Settings, the Messages slot (Create in Classic) opens the Gallery and Search opens the clipboard link. The old Quick Settings Access, Quick Gallery Access, Open Clipboard Link and Open Clipboard Username settings carry over.
+- With Disable All on (or in safe mode) only a hold set to Sparkle Settings keeps working, so the way back in is never lost. Disable All also puts the tab bar back to Instagram's, so if the tab holding Settings (or Saved) is no longer on the bar, the first tab shown takes the Settings hold. If no tab opens Settings, the section says so: holding the menu button at the top of your profile still does.
+
+#### Behavior
+- **Launch Tab**: open Instagram on any visible destination. Left on Default, a custom layout opens on its first tab instead of always landing on Feed.
+- **Swipe Between Tabs**: follow Instagram, force on, or force off. Unavailable whenever the system tab bar is in use (System Tab Bar, or a foldable where Instagram uses it by itself), which has no swipe between tabs.
+
+#### Appearance
+- **System Tab Bar**: Replaces Instagram's own tab bar with the real iOS tab bar (`UITabBarController`) that Instagram builds for foldable iPhones. Instagram picks its tabs and checks they fit the system bar; if they don't, it keeps its own bar. Tab hiding and order, the hold shortcuts and the Explore hold (search and the clipboard shortcuts) all carry over. Swiping between tabs is not available on the system bar, Tab Bar Behavior does not apply to it, and it always draws its own glass, so Liquid Glass Off (Interface > Appearance) does not change it. Where Instagram already uses the system bar by itself (foldables), this whole section and the Swipe Between Tabs row are left off the page, since nothing in them applies. Shown on Instagram versions that include the system bar (451 and later). **(restart)**
+- **Tab Bar Behavior**: Controls how the floating Liquid Glass tab bar behaves while scrolling. Greyed out while the system tab bar is in use. **(restart)**
+- **Pill-Shaped Tab Bar** *(iOS 18 and lower, in place of System Tab Bar)*: Forces the iOS 26-style floating pill tab bar on or off. **(restart)** Until you flip it, Instagram decides. Shape only, no glass material on this device. The glass *material* is iOS 26+ only, but the floating pill *shape* comes from Instagram's tab bar experiment gates, which work on any iOS.
+
+#### Single Tab Mode
+- Always listed and greyed out until it applies.
+- **Hide Tab Bar** takes the bar away once the configuration leaves a single tab, for a clean single-surface interface. It is offered only where Sparkle Settings stays reachable without the tab bar: with **Messages** (long-press the new message button) or with **Feed** while the **Feed Header Button** is on. Any other single tab keeps the bar, so you cannot hide your way out of Sparkle.
+- **Messages Header Button** adds the Sparkle shortcut to the left of the Messages navigation bar, for when Messages is the tab that is left.
+- Leaving the page keeps your changes staged instead of prompting: come back and they are still there, with Apply waiting. **Discard Changes** puts everything back to the configuration in use, and **Reset to Instagram Default** stages the stock layout and holds, and the behavior and appearance rows the page shows. Neither writes anything until you apply.
 
 ### Appearance
 - **App Font**: Replaces Instagram's typeface with a font you import. **(restart)**
@@ -115,6 +134,8 @@ How Sparkle's notifications look, and one banner and haptic setting per group of
   - The keyboard keeps the system's look: iOS draws it outside Instagram, so it can't be recolored.
   - Shared by every account on the device, since colors are created before Instagram knows which account is signed in.
 - **Black Glass**: Keeps Liquid Glass pure black like the background instead. Shown only while OLED Dark Mode is on, on iOS 26 and later. It does not reach the system tab bar, which keeps its own glass; the page says so while that bar is in use. **(restart)**
+- **Liquid Glass** *(iOS 26+)*: **Default**, **On** or **Off**. Default leaves it to Instagram's own rollout for the account; On or Off forces Instagram's native Liquid Glass UI that way and sticks even if Instagram later changes the rollout. **(restart)** Forcing it pins every part of Instagram's rollout to the same state, so the look no longer varies between launches: on gives glass navigation buttons, glass profile tabs and the blurred header background; off turns all of that off, along with the floating tab bar and the glass on navigation buttons on Sparkle's own screens.
+- **Scroll Edge Effect** *(iOS 26+)*: How content meets the top bar as you scroll. **Off** lets Instagram disable UIKit's edge effect, as it does by default, **Default** follows iOS (soft on iOS 26, hard on iOS 27), **Soft** forces the progressive blur, and **Hard** forces the solid edge with a dividing line, shown only while content is scrolled under the bar. Bottom toolbars and the tab bar keep the iOS effect. While the edge is soft or off, the media preview's "x of n" counter sits in a glass bubble so it stays readable over bright media. Styles apply live; switching to Off needs a restart. Replaces the Progressive Blur toggle (on becomes Soft). Requires iOS 26 (relies on `UIScrollEdgeEffect`).
 
 ### Explore & Search
 - **Hide Explore Posts Grid**: Hides the suggested-post grid on Explore. This follows the active account when **Per-Account Settings** is enabled.
@@ -123,22 +144,9 @@ How Sparkle's notifications look, and one banner and haptic setting per group of
 - **Hide Recent Searches** *(restart)*: Hides existing recent searches and stops search bars from saving new queries.
 - **Pin People in Search**: Hold a person in search to pin or unpin them. Pinned people get their own **Pinned** section above your recent searches, with no limit and a pin count in its title, and are left out of Recent so nobody appears twice. Opening a pinned person no longer leaves an extra keyword entry for them in Recent, and isn't added to Instagram's search history. Pins are kept by Sparkle, so they survive Instagram trimming, syncing or clearing its history. Tap **Reorder** on the section, then hold and drag to change the order. Tap the **Pinned** header to fold the section away and tap again to open it; the choice is remembered. Per account.
 - **Restore Account Search**: Shows people as normal account results instead of popular searches (keyword rows named after the person that open a results page first). One tap opens the profile again, and Recent lists each person once instead of adding a keyword entry beside them. Keyword suggestions for topics, hashtags and places stay.
-- **Open Clipboard Link**: Long-press the Explore tab to open an Instagram URL from the clipboard. Post and reel links open on their own page with the same native single-post push as the Gallery, instead of landing in the main feed, and never disturb the tab destination when Saved borrows a tab slot. Story and highlight links (`instagram.com/stories/...`, `instagram.com/s/...`) open the story viewer directly, on the linked story when the link names one. A link to a story older than 24 hours opens the account's profile and looks for the story in its highlights instead.
-  - **Open Clipboard Username** (off by default): a copied username, with or without the `@`, opens that profile directly. If no account has that name, a notification says so and Instagram's search opens as usual.
 
 ### Capture
 - **Hide UI on Capture**: Redacts Sparkle overlay buttons and labels (action button, seen/mentions buttons, poll vote-count badges, etc.) from screenshots, screen recordings, and mirroring.
-
-### Liquid Glass *(iOS 26+)*
-- **Liquid Glass**: **Default**, **On** or **Off**. Default leaves it to Instagram's own rollout for the account; On or Off forces Instagram's native Liquid Glass UI that way and sticks even if Instagram later changes the rollout. **(restart)** Forcing it pins every part of Instagram's rollout to the same state, so the look no longer varies between launches: on gives glass navigation buttons, glass profile tabs and the blurred header background; off turns all of that off, along with the floating tab bar and the glass on navigation buttons on Sparkle's own screens.
-- **Scroll Edge Effect**: How content meets the top bar as you scroll. **Off** lets Instagram disable UIKit's edge effect, as it does by default, **Default** follows iOS (soft on iOS 26, hard on iOS 27), **Soft** forces the progressive blur, and **Hard** forces the solid edge with a dividing line, shown only while content is scrolled under the bar. Bottom toolbars and the tab bar keep the iOS effect. While the edge is soft or off, the media preview's "x of n" counter sits in a glass bubble so it stays readable over bright media. Styles apply live; switching to Off needs a restart. Replaces the Progressive Blur toggle (on becomes Soft). Requires iOS 26 (relies on `UIScrollEdgeEffect`).
-- **System Tab Bar**: Replaces Instagram's own tab bar with the real iOS tab bar (`UITabBarController`) that Instagram builds for foldable iPhones. Instagram picks its tabs and checks they fit the system bar; if they don't, it keeps its own bar. Tab Editor hiding and order, the Explore hold (search and the clipboard shortcuts), the Settings tab hold and the Gallery tab hold all carry over. Swiping between tabs is not available on the system bar, Tab Bar Behavior does not apply to it, and it always draws its own glass, so Liquid Glass Off does not change it. Where Instagram already uses the system bar by itself (foldables), the switch is greyed out and the section footer explains why. Shown on Instagram versions that include the system bar (451 and later). **(restart)**
-- **Tab Bar Behavior**: Controls how the floating Liquid Glass tab bar behaves while scrolling. Greyed out while the system tab bar is in use.
-
-### Tab Bar *(iOS 18 and lower)*
-On systems without Liquid Glass, the tab bar section is replaced by a focused toggle. The glass *material* is iOS 26+ only, but the floating pill *shape* comes from Instagram's tab bar experiment gates, which work on any iOS.
-- **Pill-Shaped Tab Bar**: Forces the iOS 26-style floating pill tab bar on or off. **(restart)** Until you flip it, Instagram decides. Shape only, no glass material on this device.
-- **Tab Bar Behavior**: Controls how the pill tab bar behaves while scrolling (Default / Fixed / Hide on scroll).
 
 ---
 
@@ -154,7 +162,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 ### Header Shortcut
 - **Feed Header Button** **(restart)**: Adds a Sparkle button to the home feed header, to the left of the notifications heart. In the classic tab layout (create button moved to the bottom bar) it docks on the far left instead, and it scrolls/fades away with Instagram's own header buttons. Where Instagram moves its create and notifications buttons into the side column (as on a foldable iPhone), the button follows them there as its own glass circle under their group, so it hides from captures as a whole.
 - **Default Tap Action**: Tap runs the chosen action — **Open Menu** (default, button shows the Sparkle glyph) or jump straight to one destination (button mirrors that destination's icon). A long-press always opens the menu.
-- **Destinations**: A sub-page to pick which sheets the button can open — **Sparkle Settings**, **Profile Analyzer**, **Gallery**, **Deleted Messages**, **Downloads**. Enable one for a direct tap or several to choose from the long-press menu. Changes apply when you return to the feed (no restart).
+- **Destinations**: A sub-page to pick which screens the button can open: **Gallery**, **Profile Analyzer**, **Deleted Messages**, **Downloads**, **Saved Instants**, **Sparkle Settings**, and Instagram's **Saved**. It is the same list the tab hold shortcuts use. Enable one for a direct tap or several to choose from the long-press menu. Changes apply when you return to the feed (no restart).
 
 ### Layout
 - **Main Feed**: `For You` or `Following`. Following mode forces the chronological feed, keeps pagination and cold starts on that source, and removes the For You picker entry. **(restart)**
@@ -427,7 +435,7 @@ logs, and Profile Analyzer data live locally under `Documents/Sparkle/`.
 
 ### Access
 - **Open Gallery**: Opens the Gallery from settings.
-- **Quick Gallery Access**: Choose a tab whose long-press opens the Gallery (or `None`).
+- The tab long-press that opens the Gallery is set in Interface > Tab Bar.
 
 ### Browsing
 - **Show Favorites at Top**: Pins favorites within the current sort/folder.
@@ -618,8 +626,7 @@ Settings from before this change carry over: a group stays on unless every notif
 - **Open FLEX Now**, **Three-finger Hold**, **Open on App Launch**, **Open on App Focus**. Requires `libFLEX.dylib` to be bundled (build the ipa with `--flex` flag or install `libFLEX.dylib` if jailbroken).
 
 ### Tweak
-- **Quick Settings Access**: Long-press the Home tab to open Sparkle Settings. **(restart)** If the Home tab is hidden or claimed by the Gallery shortcut, the long-press automatically falls back to another visible tab so Settings is always reachable. Additionally, you can long-press the new message composer button in DMs to open Sparkle Settings (when the tab bar is hidden).
-- **Shortcut Haptics**: Light haptic feedback when opening Settings / Gallery.
+- **Shortcut Haptics**: Haptic feedback when a tab hold or the profile menu shortcut opens something. A clipboard hold taps only once something opens.
 - **Show Settings on App Launch**.
 - **Disable All Settings**: Master kill switch; only Settings access remains. **(restart)**
 - **Show Onboarding**: Replays the first-run introduction sheet at any time.

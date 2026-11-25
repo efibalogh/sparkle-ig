@@ -1069,8 +1069,15 @@ static NSSet<NSString *> *SPKMasterDisableBypassKeys(void) {
     dispatch_once(&onceToken, ^{
         keys = [NSSet setWithArray:@[
             @"tools_disable_all",
-            @"tools_settings_shortcut",
-            @"gallery_quick_access_tab",
+            // Tab holds: a hold set to Settings must keep working while
+            // everything else is off. The hook honors only that one then.
+            @"interface_tab_hold_feed",
+            @"interface_tab_hold_clips",
+            @"interface_tab_hold_direct",
+            @"interface_tab_hold_create",
+            @"interface_tab_hold_search",
+            @"interface_tab_hold_profile",
+            @"interface_tab_hold_saved",
             @"tools_open_settings_on_launch",
             @"app_first_run",
         ]];
@@ -1154,13 +1161,19 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"interface_hide_create_tab",
             @"interface_hide_tab_bar_in_messages_only",
             @"interface_saved_tab_carrier",
-            // The Settings quick-access long-press is attached to tab-bar buttons
-            // as they're built during early launch — before the account session
-            // resolves — so a per-account effective key resolves against the
-            // wrong PK and the gesture sticks to whatever account owned the bar at
-            // launch. Kept global so it's reliable and matches the (global)
-            // gallery quick-access shortcut.
-            @"tools_settings_shortcut",
+            // Tab holds are attached to tab-bar buttons as they're built during
+            // early launch, before the account session resolves, so a
+            // per-account key would resolve against the wrong PK. They belong to
+            // the bar, which every account shares.
+            @"interface_tab_hold_feed",
+            @"interface_tab_hold_clips",
+            @"interface_tab_hold_direct",
+            @"interface_tab_hold_create",
+            @"interface_tab_hold_search",
+            @"interface_tab_hold_profile",
+            @"interface_tab_hold_saved",
+            @"interface_tab_holds_migrated",
+            @"interface_clipboard_hold_migrated",
             // Suppressing the TestFlight popup runs early in %ctor before the account
             // session resolves, and is inherently an application/install-wide setting.
             @"tools_hide_testflight_popup",
@@ -1305,10 +1318,6 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
 }
 
 // MARK: Misc
-+ (BOOL)tabOrderSetTo:(NSString *)ordering {
-    return [[[NSUserDefaults standardUserDefaults] stringForKey:@"interface_nav_order"] isEqualToString:ordering];
-};
-
 + (NSString *)IGVersionString {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 };

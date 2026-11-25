@@ -26,10 +26,8 @@
                                          action:^(void) {
                                              [SPKGalleryViewController presentGallery];
                                          }],
-            SPKSettingWithHelp(SPKSettingApplySelectedMenuIcon([SPKSetting menuCellWithTitle:SPKL(@"GALLERY_ACCESS_QUICK_GALLERY_ACCESS_TITLE") icon:SPKSettingsIcon(@"circle_off") menu:SPKGalleryShortcutTargetMenu()], SPKSettingsIcon(@"circle_off")),
-                               SPKL(@"GALLERY_ACCESS_QUICK_ACCESS_HELP"))
         ],
-                        nil),
+                        SPKL(@"GALLERY_ACCESS_TAB_SHORTCUT_FOOTER")),
         SPKTopicSection(SPKL(@"DATA_GENERAL_SETTINGS_TITLE"), @[
             gallerySettings
         ],

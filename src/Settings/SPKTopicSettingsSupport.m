@@ -553,33 +553,3 @@ SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void) {
     return setting;
 }
 
-UIMenu *SPKGalleryShortcutTargetMenu(void) {
-    NSString *const kGalleryLongPressTabKey = @"gallery_quick_access_tab";
-    NSString *const kGalleryQuickAccessDisabledValue = @"none";
-
-    NSMutableArray<UIMenuElement *> *commands = [NSMutableArray array];
-
-    NSArray<NSDictionary *> *items = @[
-        @{@"title" : SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_NONE_TEXT"), @"value" : kGalleryQuickAccessDisabledValue, @"icon" : @"circle_off"},
-        @{@"title" : SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_HOME_TEXT"), @"value" : @"mainfeed-tab", @"icon" : @"home"},
-        @{@"title" : SPKL(@"REELS_TITLE"), @"value" : @"reels-tab", @"icon" : @"reels"}
-    ];
-
-    NSMutableArray *allItems = [items mutableCopy];
-    if ([SPKUtils tabOrderSetTo:@"classic"]) {
-        [allItems addObject:@{@"title" : SPKL(@"TAB_CREATE"), @"value" : @"camera-tab", @"icon" : @"plus"}];
-    } else {
-        [allItems addObject:@{@"title" : SPKL(@"MESSAGES_CONFIRMATION_MESSAGES_TITLE"), @"value" : @"direct-inbox-tab", @"icon" : @"messages"}];
-    }
-    [allItems addObject:@{@"title" : SPKL(@"PROFILE_TITLE"), @"value" : @"profile-tab", @"icon" : @"user_circle"}];
-
-    for (NSDictionary *item in allItems) {
-        NSString *title = item[@"title"];
-        NSString *value = item[@"value"];
-        NSString *iconName = item[@"icon"];
-
-        [commands addObject:SPKMenuCommand(title, iconName, nil, kGalleryLongPressTabKey, value, YES)];
-    }
-
-    return [UIMenu menuWithChildren:commands];
-}

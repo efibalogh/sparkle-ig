@@ -13,19 +13,6 @@
 #import "SPKNotificationSettingsProvider.h"
 #import "../../Features/Interface/SPKNativeTabBar.h"
 
-FOUNDATION_EXPORT BOOL SPKLiquidGlassInstagramEnabled(void);
-
-// Whether the glass interface is active this launch: the forced mode when one
-// is picked, otherwise what Instagram itself gives this account.
-static BOOL SPKLiquidGlassSwitchIsOn(void) {
-    NSString *mode = [SPKUtils getStringPref:kSPKPrefInterfaceLiquidGlassMode];
-    if ([mode isEqualToString:@"on"])
-        return YES;
-    if ([mode isEqualToString:@"off"])
-        return NO;
-    return SPKLiquidGlassInstagramEnabled();
-}
-
 // Opens the Notifications page with its live preview; search still indexes its rows.
 static SPKSetting *SPKNotificationsNavigationSetting(void) {
     SPKSetting *setting = [SPKSetting navigationCellWithTitle:SPKL(@"INTERFACE_NOTIFICATIONS_HEADER")
@@ -38,14 +25,52 @@ static SPKSetting *SPKNotificationsNavigationSetting(void) {
     return setting;
 }
 
-// Why the system tab bar ignores some of this page, said once under the group
-// it affects. Nil while Instagram's own bar is in use.
-static NSString *SPKSystemTabBarGlassFooter(void) {
-    if (!SPKSystemTabBarInUse())
-        return nil;
-    if (![SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar])
-        return SPKL(@"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_BUILT_IN_FOOTER");
-    return SPKL(@"INTERFACE_LIQUID_GLASS_SYSTEM_TAB_BAR_FOOTER");
+// The Liquid Glass symbol only exists from iOS 27, so iOS 26 falls back to
+// Instagram's opacity glyph.
+static UIImage *SPKLiquidGlassSettingsIcon(void) {
+    return SPKSettingsSystemIcon(@"capsule.on.rectangle.liquid.glass", SPKSettingsCellIconPointSize, UIImageSymbolWeightSemibold)
+               ?: SPKSettingsIcon(@"liquid_glass");
+}
+
+// The Tab Bar page is the staged Tab Editor, which is not built from settings
+// rows, so search gets stand-ins: each opens the editor itself.
+static NSArray *SPKTabBarSearchSections(UIViewController *editor) {
+    SPKSetting * (^entry)(NSString *, NSString *) = ^SPKSetting *(NSString *title, NSString *iconName) {
+        return [SPKSetting navigationCellWithTitle:title
+                                          subtitle:nil
+                                              icon:iconName ? SPKSettingsIcon(iconName) : nil
+                                    viewController:editor];
+    };
+    NSMutableArray *rows = [NSMutableArray arrayWithArray:@[
+        entry(SPKL(@"INTERFACE_TABS_HEADER"), @"edit"),
+        entry(SPKL(@"INTERFACE_TAB_BAR_SHORTCUTS_HEADER"), @"settings"),
+        entry(SPKL(@"SETTINGS_TAB_EDITOR_LAUNCH_TAB_TEXT"), @"home"),
+    ]];
+    // Mirrors the page: where Instagram runs the system bar by itself, the
+    // swipe and appearance rows are not on it.
+    if (SPKTabEditorInstagramOwnsSystemTabBar())
+        return @[ SPKTopicSection(SPKL(@"INTERFACE_TAB_BAR_TITLE"), rows, nil) ];
+    [rows addObject:entry(SPKL(@"SETTINGS_TAB_EDITOR_SWIPE_BETWEEN_TABS_TEXT"), @"left_right")];
+    [rows addObject:entry(SPKL(@"INTERFACE_TAB_BAR_BEHAVIOR_TITLE"), nil)];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0"))
+        [rows addObject:entry(SPKL(@"INTERFACE_NATIVE_TAB_BAR_TITLE"), nil)];
+    else
+        [rows addObject:entry(SPKL(@"INTERFACE_TAB_BAR_PILL_SHAPED_TITLE"), nil)];
+    return @[ SPKTopicSection(SPKL(@"INTERFACE_TAB_BAR_TITLE"), rows, nil) ];
+}
+
+static SPKSetting *SPKTabBarNavigationSetting(void) {
+    SPKTabEditorViewController *editor = [[SPKTabEditorViewController alloc] init];
+    SPKSetting *setting = [SPKSetting navigationCellWithTitle:SPKL(@"INTERFACE_TAB_BAR_TITLE")
+                                                     subtitle:nil
+                                                         icon:SPKSettingsIcon(@"layout")
+                                               viewController:editor];
+    __weak SPKTabEditorViewController *weakEditor = editor;
+    setting.searchSectionsProvider = ^NSArray * {
+        return weakEditor ? SPKTabBarSearchSections(weakEditor) : @[];
+    };
+    setting.addedContentItems = @[ SPKTabEditorNewItemHolds, SPKTabEditorNewItemSystemTabBar ];
+    return SPKSettingWithHelp(setting, SPKL(@"INTERFACE_TAB_BAR_HELP"));
 }
 
 static NSString *SPKSystemTabBarBlackGlassFooter(void) {
@@ -63,12 +88,8 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
             SPKSettingWithHelp(SPKNotificationsNavigationSetting(), SPKL(@"INTERFACE_NOTIFICATIONS_HELP"))
         ],
                         nil),
-        SPKTopicSection(SPKL(@"INTERFACE_TABS_HEADER"), @[
-            SPKSettingWithHelp([SPKSetting navigationCellWithTitle:SPKL(@"INTERFACE_TABS_TAB_EDITOR_TITLE")
-                                                          subtitle:nil
-                                                              icon:SPKSettingsIcon(@"edit")
-                                                    viewController:[[SPKTabEditorViewController alloc] init]],
-                               SPKL(@"INTERFACE_TABS_TAB_EDITOR_HELP")),
+        SPKTopicSection(SPKL(@"INTERFACE_TAB_BAR_HEADER"), @[
+            SPKTabBarNavigationSetting(),
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_APPEARANCE_HEADER"), @[
@@ -103,6 +124,31 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
                 };
                 blackGlass;
             }),
+            ({
+                // Full Liquid Glass: real glass material and progressive blur.
+                // Hidden below iOS 26, where only the tab bar's pill shape is
+                // offered (on the Tab Bar page).
+                SPKSetting *liquidGlass = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_CAPTURE_LIQUID_GLASS_TITLE")
+                                                                   icon:SPKLiquidGlassSettingsIcon()
+                                                                   menu:SPKLiquidGlassModeMenu()];
+                liquidGlass.defaultsKey = kSPKPrefInterfaceLiquidGlassMode;
+                liquidGlass.helpText = SPKL(@"INTERFACE_LIQUID_GLASS_HELP");
+                liquidGlass.hiddenProvider = ^BOOL {
+                    return !SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0");
+                };
+                liquidGlass;
+            }),
+            ({
+                SPKSetting *scrollEdgeStyle = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_TITLE")
+                                                                       icon:SPKSettingsSystemIcon(@"square.topthird.inset.filled", SPKSettingsCellIconPointSize, UIImageSymbolWeightRegular)
+                                                                       menu:SPKScrollEdgeStyleMenu()];
+                scrollEdgeStyle.defaultsKey = kSPKPrefInterfaceScrollEdgeStyle;
+                scrollEdgeStyle.helpText = SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_HELP");
+                scrollEdgeStyle.hiddenProvider = ^BOOL {
+                    return !SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0");
+                };
+                scrollEdgeStyle;
+            }),
         ],
                         SPKSystemTabBarBlackGlassFooter()),
         SPKTopicSection(SPKL(@"INTERFACE_EXPLORE_SEARCH_HEADER"), @[
@@ -121,24 +167,6 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
                                                           icon:SPKSettingsIcon(@"grid_square")
                                                    defaultsKey:@"interface_explore_square_grid"],
                                SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP")),
-            ({
-                SPKSetting *clipboardLink = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE")
-                                                                                          icon:SPKSettingsIcon(@"link")
-                                                                                   defaultsKey:@"interface_open_clipboard_link"],
-                                                               SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP"));
-                clipboardLink.reloadsTableOnSwitchChange = YES;
-                clipboardLink;
-            }),
-            ({
-                SPKSetting *clipboardUsername = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_TITLE")
-                                                                                              icon:SPKSettingsIcon(@"mention")
-                                                                                       defaultsKey:@"interface_open_clipboard_username"],
-                                                                   SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_HELP"));
-                clipboardUsername.hiddenProvider = ^BOOL {
-                    return ![SPKUtils getBoolPref:@"interface_open_clipboard_link"];
-                };
-                clipboardUsername;
-            }),
         ],
                         nil),
 
@@ -178,80 +206,6 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
         ],
                         nil)
     ]];
-
-    {
-        // Tab Bar Behavior is shared by both presentations: it configures the
-        // scroll behavior of the (pill/glass) tab bar and is enabled whenever
-        // the Liquid Glass pref is on.
-        SPKSetting *(^tabBarBehaviorCell)(void) = ^SPKSetting * {
-            SPKSetting *tabBarBehavior = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE")
-                                                                  icon:nil
-                                                                  menu:SPKLiquidGlassTabBarStateMenu()];
-            tabBarBehavior.defaultsKey = kSPKPrefInterfaceLiquidGlassTabBarMode;
-            tabBarBehavior.enabledProvider = ^BOOL {
-                // The system tab bar is not Instagram's floating bar, so the
-                // scroll behavior it configures does not reach it. Asked of the
-                // running bar: foldables pick the system bar by themselves.
-                if (SPKSystemTabBarInUse())
-                    return NO;
-                return SPKLiquidGlassSwitchIsOn();
-            };
-            tabBarBehavior.helpText = SPKL(@"INTERFACE_TAB_BAR_BEHAVIOR_HELP");
-            return tabBarBehavior;
-        };
-
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0")) {
-            // Full Liquid Glass: real glass material, progressive blur, tab bar.
-            SPKSetting *liquidGlass = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_CAPTURE_LIQUID_GLASS_TITLE")
-                                                               icon:nil
-                                                               menu:SPKLiquidGlassModeMenu()];
-            liquidGlass.defaultsKey = kSPKPrefInterfaceLiquidGlassMode;
-            liquidGlass.helpText = SPKL(@"INTERFACE_LIQUID_GLASS_HELP");
-            SPKSetting *scrollEdgeStyle = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_TITLE")
-                                                                   icon:nil
-                                                                   menu:SPKScrollEdgeStyleMenu()];
-            scrollEdgeStyle.defaultsKey = kSPKPrefInterfaceScrollEdgeStyle;
-            scrollEdgeStyle.helpText = SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_HELP");
-            SPKSetting *nativeTabBar = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_NATIVE_TAB_BAR_TITLE")
-                                                                                     icon:nil
-                                                                              defaultsKey:kSPKPrefInterfaceNativeTabBar
-                                                                          requiresRestart:YES],
-                                                          SPKL(@"INTERFACE_NATIVE_TAB_BAR_HELP"));
-            nativeTabBar.hiddenProvider = ^BOOL {
-                return !SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar);
-            };
-            nativeTabBar.reloadsTableOnSwitchChange = YES;
-            SPKSettingMarkedNew(nativeTabBar, @"v1.7.0");
-            // Where Instagram runs the system bar by itself, the switch has
-            // nothing to force or give back.
-            nativeTabBar.enabledProvider = ^BOOL {
-                return !SPKSystemTabBarInUse() || [SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar];
-            };
-
-            [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_HEADER"), @[
-                          liquidGlass,
-                          scrollEdgeStyle,
-                          nativeTabBar,
-                          tabBarBehaviorCell(),
-                      ],
-                                                SPKSystemTabBarGlassFooter())];
-        } else {
-            // Pre-iOS 26 can't render the glass material, but the same tab bar
-            // experiment gates still reshape the bar into the floating pill.
-            // Expose that as a focused toggle sharing the Liquid Glass pref.
-            SPKSetting *pillTabBar = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE")
-                                                              icon:nil
-                                                              menu:SPKLiquidGlassModeMenu()];
-            pillTabBar.defaultsKey = kSPKPrefInterfaceLiquidGlassMode;
-            pillTabBar.helpText = SPKL(@"INTERFACE_PILL_TAB_BAR_HELP");
-
-            [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_TAB_BAR_HEADER"), @[
-                          pillTabBar,
-                          tabBarBehaviorCell(),
-                      ],
-                                                nil)];
-        }
-    }
 
     return SPKTopicNavigationSetting(SPKL(@"INTERFACE_TITLE"), @"interface", 24.0, sections);
 }

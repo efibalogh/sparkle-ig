@@ -63,6 +63,8 @@ NSDictionary<NSString *, NSString *> *SPKNewBadgeItemVersions(void) {
     // in `addedContentItems` so the dot leads there.
     return @{
         @"profile_analyzer_auto_refresh" : @"v1.7.0",
+        @"tab_bar_hold_shortcuts" : @"v1.7.0",
+        @"interface_native_tab_bar" : @"v1.7.0",
         SPKNewBadgeActionItemIdentifier(SPKActionButtonSourceStories, kSPKActionCopyLink) : @"v1.7.0",
     };
 }

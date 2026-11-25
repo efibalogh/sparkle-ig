@@ -34,8 +34,6 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"interface_hide_profile_tab" : @(NO),
         @"interface_hide_tab_bar_in_messages_only" : @(NO),
         @"interface_show_header_button_in_messages_only" : @(YES),
-        @"interface_open_clipboard_link" : @(YES),
-        @"interface_open_clipboard_username" : @(NO),
         // Family name of the imported app-wide font; empty means the default face.
         // Bootstrap rather than feature defaults: the font hooks install in %ctor.
         @"interface_custom_font" : @"",
@@ -47,9 +45,16 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         // Keeps installed language packs level with the release they came from. Device-global for
         // the same reason the language is: one pack directory serves every account.
         @"language_pack_auto_update" : @(YES),
-        @"tools_settings_shortcut" : @(YES),
+        // What holding each tab opens. Messages and Create share a slot, so both
+        // carry the Gallery hold and whichever owns the slot uses it.
+        @"interface_tab_hold_feed" : @"settings",
+        @"interface_tab_hold_clips" : @"default",
+        @"interface_tab_hold_direct" : @"gallery",
+        @"interface_tab_hold_create" : @"gallery",
+        @"interface_tab_hold_search" : @"clipboard_link",
+        @"interface_tab_hold_profile" : @"default",
+        @"interface_tab_hold_saved" : @"default",
         @"tools_shortcut_haptics" : @(YES),
-        @"gallery_quick_access_tab" : @"direct-inbox-tab",
         @"tools_open_settings_on_launch" : @(NO),
         // NEW pills on settings rows: until_seen, keep (until the next feature release) or off.
         @"tools_settings_new_badges" : @"until_seen",

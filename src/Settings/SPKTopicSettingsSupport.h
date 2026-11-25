@@ -56,7 +56,6 @@ UIMenu *SPKAutoSaveVideoQualityMenu(void);
 UIMenu *SPKAutoSavePhotoQualityMenu(void);
 UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, NSString *subjectPlural);
 UIMenu *SPKStoryAutoSaveFilterModeMenu(void);
-UIMenu *SPKGalleryShortcutTargetMenu(void);
 SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void);
 
 /// The view controller a settings row should present from: the topmost presented

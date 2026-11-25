@@ -104,7 +104,6 @@ FOUNDATION_EXPORT Class _Nullable SPKDirectObjCInboxClass(void);
 + (NSString *)getStringPref:(NSString *)key;
 
 // Misc
-+ (BOOL)tabOrderSetTo:(NSString *)ordering;
 + (NSString *)IGVersionString;
 
 // Session / user

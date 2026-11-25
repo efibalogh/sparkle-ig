@@ -59,9 +59,12 @@ NSArray<NSString *> *SPKTabSavedCarrierPreference(void);
 BOOL SPKTabOccupiesBarSlot(NSString *identifier, NSString *layout);
 NSArray<NSString *> *SPKNormalizeTabOrder(id _Nullable value);
 NSString *SPKNormalizedTabLayout(id _Nullable value);
+/// Whether Classic can be offered. Never on a foldable iPhone: folded, its tab
+/// bar can come up in Classic's shape and looks broken, and unfolded the bar
+/// runs down a side column that cannot take that shape at all.
+BOOL SPKTabClassicLayoutAvailable(void);
 /// The layout the tab bar is built with: the stored one, except that Classic
-/// falls back to Default where the tab bar runs down a side column (a foldable
-/// iPhone's layout), which cannot take its shape.
+/// falls back to Default where it is not available.
 NSString *SPKEffectiveTabLayout(void);
 NSString *SPKNormalizedSavedCarrier(id _Nullable value);
 
@@ -99,9 +102,29 @@ NSString *_Nullable SPKTabIdentifierForLaunchPreference(NSString *value);
 /// its carrier. Nil when no destination is visible.
 NSString *_Nullable SPKEffectiveLaunchTabIdentifierFromPreferences(void);
 
+/// What holding a tab does. Each tab stores one value: Instagram's own hold
+/// (the account switcher on Profile, search on Explore), nothing at all, or a
+/// destination identifier from SPKDestinations. Saved is keyed separately from
+/// the tab whose slot it borrows, so the hold follows what the slot shows.
+FOUNDATION_EXPORT NSString *const SPKTabHoldInstagramDefault;
+FOUNDATION_EXPORT NSString *const SPKTabHoldNone;
+/// Every identifier a hold can be stored for: the five destinations, Create and Saved.
+NSArray<NSString *> *SPKTabHoldableIdentifiers(void);
+NSString *SPKTabHoldPreferenceKey(NSString *identifier);
+/// The stored hold for a tab, normalized: SPKTabHoldInstagramDefault,
+/// SPKTabHoldNone, or an identifier of a destination that can be held.
+NSString *SPKTabHoldValue(NSString *identifier);
+/// Whether Instagram gives this tab a hold of its own.
+BOOL SPKTabHasInstagramHold(NSString *identifier);
+
 /// Migrates legacy order presets and the old Reels-only Saved toggle, then
 /// normalizes persisted custom arrays. Safe to call repeatedly.
 void SPKMigrateTabConfigurationIfNeeded(void);
+/// The Search tab's clipboard hold (`SPKDestinationClipboardLink` or
+/// `SPKDestinationClipboardLinkOrUsername`), or nil when Search holds anything
+/// else. Search runs these through Instagram's own search hold, so a clipboard
+/// with nothing to open still opens search.
+NSString *_Nullable SPKSearchTabClipboardHold(void);
 
 #ifdef __cplusplus
 }
