@@ -396,7 +396,7 @@ NSDictionary<NSString *, id> *SPKNotificationDefaultPreferences(void) {
         kSPKNotificationPillDurationKey : @(kSPKNotificationDefaultPillDuration),
         kSPKNotificationProgressSubtitleStyleKey : @"both",
         kSPKNotificationPillPositionKey : @"top",
-        kSPKNotificationStyleKey : @"pill",
+        kSPKNotificationStyleKey : @"instagram",
         kSPKNotificationErrorHapticKey : @YES,
     } mutableCopy];
     for (NSString *group in SPKNotificationGroupMembership())

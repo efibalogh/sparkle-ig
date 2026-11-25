@@ -340,9 +340,26 @@ static NSDictionary *SPKFeatureDefaults(void) {
     return defaults;
 }
 
+// New installs default to the Instagram notification style; installs from before
+// that change keep the pill they have been seeing. Runs once, before the migrations
+// stamp their ledger, which together with the onboarding stamp marks an install
+// that has launched Sparkle before. Pinning the global value covers every account,
+// since a per-account read falls back to it.
+static void SPKKeepPillNotificationStyleForExistingInstalls(void) {
+    static NSString *const doneKey = @"app_notifs_style_default_settled";
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:doneKey])
+        return;
+    BOOL existingInstall = [defaults objectForKey:@"app_first_run"] != nil || [defaults objectForKey:SPKPreferenceMigrationsCompletedKey] != nil;
+    if (existingInstall && [defaults objectForKey:kSPKNotificationStyleKey] == nil)
+        [defaults setObject:@"pill" forKey:kSPKNotificationStyleKey];
+    [defaults setBool:YES forKey:doneKey];
+}
+
 void SPKCoreRegisterBootstrapDefaults(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        SPKKeepPillNotificationStyleForExistingInstalls();
         // Before any registration, so renamed keys see only stored values.
         SPKRunPendingPreferenceMigrations();
         [[NSUserDefaults standardUserDefaults] registerDefaults:SPKBootstrapDefaults()];
