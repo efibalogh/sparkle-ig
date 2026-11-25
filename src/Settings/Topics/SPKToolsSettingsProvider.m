@@ -80,7 +80,9 @@ static NSDictionary *SPKSettingsLockSection(void) {
 }
 
 static NSDictionary *SPKDiagnosticsSection(void) {
-    SPKSetting *debugButton = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_TITLE") defaultsKey:kSPKPrefToolsDebugButton],
+    SPKSetting *debugButton = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_TITLE")
+                                                                             icon:SPKSettingsIcon(@"beaker")
+                                                                      defaultsKey:kSPKPrefToolsDebugButton],
                                                  SPKL(@"TOOLS_DEBUG_BUTTON_HELP"));
     debugButton.switchChangeHandler = ^(BOOL isOn) {
         SPKPreferenceSetObject(@(isOn), kSPKPrefToolsDebugButton);
