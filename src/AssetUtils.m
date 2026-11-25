@@ -1,6 +1,8 @@
 #import "AssetUtils.h"
 
 #import <math.h>
+#import <objc/message.h>
+#import <objc/runtime.h>
 
 typedef NSDictionary<NSString *, id> SPKAssetDescriptor;
 
@@ -254,6 +256,10 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"reactions" : @{@"candidates" : @[ @"ig_icon_reactions_outline_24" ]},
             @"reels" : @{@"candidates" : @[ @"ig_icon_reels_pano_prism_outline_24", @"ig_icon_reels_prism_outline_24", @"ig_icon_reels_pano_outline_24", @"ig_icon_reels_outline_24" ]},
             @"reels_filled" : @{@"candidates" : @[ @"ig_icon_reels_pano_prism_filled_24", @"ig_icon_reels_prism_filled_24", @"ig_icon_reels_filled_24", @"ig_icon_reels_filled_24" ]},
+            // Instagram's newer tall reels glyph. Only reached through
+            // SPKAssetEffectiveInternalName while Instagram itself shows it.
+            @"reels_tall" : @{@"candidates" : @[ @"ig_icon_reels_tall_ufi_outline_24" ], @"alias" : @"reels"},
+            @"reels_tall_filled" : @{@"candidates" : @[ @"ig_icon_reels_tall_ufi_filled_24" ], @"alias" : @"reels_filled"},
             @"reels_gallery" : @{
                 @"candidates" : @[ @"ig_icon_reels_gallery_outline_24" ],
                 @"alias" : @"reels"
@@ -362,6 +368,38 @@ static SPKAssetDescriptor *SPKAssetResolvedDescriptor(NSString *name) {
         }
     }
     return descriptor;
+}
+
+// Instagram swaps its reels glyph for a taller one behind a server gate on
+// IGDSLauncherConfig. Following that gate keeps Sparkle's reels icons matching
+// whatever the host app shows, and falls back on its own if the gate is
+// removed or the build predates it.
+static BOOL SPKAssetInstagramShowsTallReelsIcon(void) {
+    Class configClass = objc_getClass("IGDSLauncherConfig");
+    SEL sharedSelector = NSSelectorFromString(@"sharedConfig");
+    SEL gateSelector = NSSelectorFromString(@"isReelsTallIconEnabled");
+    if (!configClass || ![configClass respondsToSelector:sharedSelector] ||
+        ![configClass instancesRespondToSelector:gateSelector]) {
+        return NO;
+    }
+    id config = ((id (*)(id, SEL))objc_msgSend)(configClass, sharedSelector);
+    if (![config respondsToSelector:gateSelector]) {
+        return NO;
+    }
+    return ((BOOL (*)(id, SEL))objc_msgSend)(config, gateSelector);
+}
+
+// Maps a normalized logical name to the one actually resolved. Applied before
+// the cache keys are built, so a change of the gate never serves a stale glyph.
+static NSString *SPKAssetEffectiveInternalName(NSString *normalizedName) {
+    BOOL outline = [normalizedName isEqualToString:@"reels"];
+    if (!outline && ![normalizedName isEqualToString:@"reels_filled"]) {
+        return normalizedName;
+    }
+    if (!SPKAssetInstagramShowsTallReelsIcon()) {
+        return normalizedName;
+    }
+    return outline ? @"reels_tall" : @"reels_tall_filled";
 }
 
 static CGFloat SPKAssetResolvedPointSize(NSString *name, CGFloat pointSize) {
@@ -496,7 +534,7 @@ static NSCache<NSString *, id> *SPKAssetIconNameCache(void) {
 }
 
 static NSString *SPKAssetResolvedIconCandidateName(NSString *name, CGFloat pointSize, SPKAssetCatalogSource source) {
-    NSString *normalizedName = SPKAssetNormalizeInternalName(name);
+    NSString *normalizedName = SPKAssetEffectiveInternalName(SPKAssetNormalizeInternalName(name));
     if (normalizedName.length == 0) {
         return nil;
     }
@@ -548,7 +586,7 @@ static NSCache<NSString *, id> *SPKAssetIconCache(void) {
 }
 
 static UIImage *SPKAssetLookupInstagramIcon(NSString *name, CGFloat pointSize, SPKAssetCatalogSource source, UIImageRenderingMode renderingMode) {
-    NSString *normalizedName = SPKAssetNormalizeInternalName(name);
+    NSString *normalizedName = SPKAssetEffectiveInternalName(SPKAssetNormalizeInternalName(name));
     if (normalizedName.length == 0) {
         return nil;
     }
