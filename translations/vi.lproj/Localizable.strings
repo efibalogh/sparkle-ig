@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Hàng tháng";
 "MENU_MUTE_UNMUTE" = "Tắt/Bật tiếng";
 "MENU_NEVER" = "Không bao giờ";
+"MENU_NEW_BADGES_KEEP" = "Đến bản cập nhật tiếp theo";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Cho đến khi xem";
 "MENU_NOTIFICATION_MODE_ALL" = "Biểu ngữ và rung";
 "MENU_NOTIFICATION_MODE_BANNER" = "Chỉ biểu ngữ";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Chỉ rung";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Chia sẻ ảnh đại diện";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Tên người dùng (Username)";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Xem ảnh đại diện";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Có cài đặt mới";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Mới";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "MỚI";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Giới thiệu về phần này";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Áp dụng các thay đổi Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Tìm kiếm tất cả cài đặt";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ẩn Tin nổi bật gần đây";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Ẩn các tài khoản Instagram gợi ý bạn theo dõi khỏi khay và khỏi danh sách tự động phát sau story cuối cùng.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ẩn tài khoản được đề xuất";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Nhấn giữ một tài khoản trong danh sách nhắc đến để sao chép tên người dùng. Yêu cầu bật Hiện nhắc đến trong tin.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Nhấn giữ để sao chép tên người dùng";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Hiển thị số lượng tài khoản duy nhất được nhắc đến trên nút lượt nhắc trong Tin. Yêu cầu bật Hiển thị lượt nhắc trong Tin.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Huy hiệu đếm lượt nhắc";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Thêm nút tìm kiếm vào danh sách người xem tin của bạn để tìm theo tên, lọc theo mối quan hệ theo dõi và gắn sao cho người xem.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Vô hiệu hóa mọi tính năng của Sparkle ngoại trừ phím tắt vào Cài đặt. Dùng tùy chọn này để kiểm tra xem Sparkle có gây ra sự cố văng ứng dụng hay không. Yêu cầu khởi động lại.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Tắt tất cả cài đặt";
 "TOOLS_TWEAK_HEADER" = "Tinh chỉnh";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Các cài đặt được thêm trong phiên bản này sẽ giữ nhãn MỚI trong bao lâu. Trang nào có cài đặt như vậy sẽ hiện một chấm.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Hiện nhãn MỚI";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Mở Cài đặt Sparkle khi nhấn giữ thẻ Trang chủ, hoặc thẻ hiển thị tiếp theo nếu Trang chủ bị ẩn. Yêu cầu khởi chạy lại ứng dụng.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Truy cập nhanh Cài đặt";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Xóa bộ đếm khởi chạy thất bại và các hạn chế hook tạm thời. Dùng tùy chọn này nếu các tính năng dường như tự động bị tắt.";

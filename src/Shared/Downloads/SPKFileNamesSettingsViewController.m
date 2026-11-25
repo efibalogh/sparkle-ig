@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../../Settings/SPKNewBadges.h"
 #import "SPKFileNamesSettingsViewController.h"
 
 #import "../../Settings/SPKAppIconCatalog.h"
@@ -313,6 +314,7 @@ static void SPKFileNamesFitTableHeader(UITableView *tableView) {
     };
     row.helpText = SPKL(@"DOWNLOADS_FILE_NAMES_HELP");
     row.searchKeywords = @"file name filename rename username date timestamp photos share files";
+    SPKSettingMarkedNewWithID(row, @"v1.7.0", @"downloads_file_names_page");
     row.searchSectionsProvider = ^NSArray * {
         return [SPKFileNamesSettingsViewController searchSections];
     };

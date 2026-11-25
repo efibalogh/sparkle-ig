@@ -416,7 +416,7 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
 #pragma mark - Long-press → copy username
 
 - (void)spk_rowLongPressed:(UILongPressGestureRecognizer *)gesture {
-    if (gesture.state != UIGestureRecognizerStateBegan)
+    if (gesture.state != UIGestureRecognizerStateBegan || ![SPKUtils getBoolPref:@"stories_mentions_copy_username"])
         return;
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
     if (!indexPath || indexPath.row < 0 || indexPath.row >= (NSInteger)self.mentions.count)

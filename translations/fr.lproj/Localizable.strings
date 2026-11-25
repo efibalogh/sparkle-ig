@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Mensuel";
 "MENU_MUTE_UNMUTE" = "Couper le son/Rétablir le son";
 "MENU_NEVER" = "Jamais";
+"MENU_NEW_BADGES_KEEP" = "Jusqu'à la prochaine mise à jour";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Jusqu'à consultation";
 "MENU_NOTIFICATION_MODE_ALL" = "Bannière et haptique";
 "MENU_NOTIFICATION_MODE_BANNER" = "Bannière seule";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Haptique seule";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Partager la photo";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Nom d'utilisateur";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Afficher la photo";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Contient de nouveaux réglages";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Nouveau";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NOUVEAU";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "À propos de cette section";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Appliquer les modifications de Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Chercher tous les paramètres";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Masquer les ajouts récents à la une";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Retire les comptes qu'Instagram vous suggère de suivre, de la barre et de la lecture après la dernière story.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Masquer les comptes suggérés";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Appuyez longuement sur un compte dans la liste des mentions pour copier son nom d'utilisateur. Nécessite l'option Afficher les mentions dans les stories.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Appui long pour copier le nom d'utilisateur";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Affiche le nombre de comptes mentionnés uniques sur le bouton des mentions de la story. Nécessite « Afficher les mentions de la Story ».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Badge du nombre de mentions";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Ajoute un bouton de recherche à la liste des vues de votre story pour chercher par nom, filtrer selon chaque sens de la relation d'abonnement et mettre des spectateurs en favori.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Désactive toutes les fonctionnalités Sparkle sauf le raccourci vers les réglages. Utilisez cette option pour déterminer si Sparkle provoque un plantage. Nécessite un redémarrage.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Désactiver tous les paramètres";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Durée pendant laquelle les réglages ajoutés dans cette version conservent leur étiquette NOUVEAU. Les pages qui en contiennent un affichent un point.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Afficher les étiquettes NOUVEAU";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Ouvre les réglages Sparkle par un appui long sur l'onglet Accueil, ou sur l'onglet visible suivant si Accueil est masqué. Nécessite un redémarrage.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Accès rapide aux paramètres";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Efface les compteurs de lancements échoués et la suppression temporaire des hooks. À utiliser si des fonctionnalités semblent désactivées d'elles-mêmes.";

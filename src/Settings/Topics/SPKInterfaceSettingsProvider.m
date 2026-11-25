@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKInterfaceSettingsProvider.h"
 #import "../../Shared/Fonts/SPKFontManager.h"
 #import "../../Shared/UI/SPKChrome.h"
@@ -156,10 +157,10 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
                                                           icon:SPKSettingsIcon(@"pin")
                                                    defaultsKey:@"interface_search_pins"],
                                SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE")
+            SPKSettingMarkedNew(SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_TITLE")
                                                           icon:SPKSettingsIcon(@"user_circle")
                                                    defaultsKey:@"interface_restore_account_search"],
-                               SPKL(@"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP")),
+                               SPKL(@"INTERFACE_EXPLORE_SEARCH_RESTORE_ACCOUNT_SEARCH_HELP")), @"v1.7.0"),
         ],
                         nil),
         SPKTopicSection(SPKL(@"INTERFACE_CAPTURE_HEADER"), @[
@@ -220,6 +221,7 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
                 return !SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar);
             };
             nativeTabBar.reloadsTableOnSwitchChange = YES;
+            SPKSettingMarkedNew(nativeTabBar, @"v1.7.0");
             // Where Instagram runs the system bar by itself, the switch has
             // nothing to force or give back.
             nativeTabBar.enabledProvider = ^BOOL {

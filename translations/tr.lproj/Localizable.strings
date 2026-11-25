@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Aylık";
 "MENU_MUTE_UNMUTE" = "Sessiz/Ses Aç";
 "MENU_NEVER" = "Hiçbir Zaman";
+"MENU_NEW_BADGES_KEEP" = "Bir sonraki güncellemeye kadar";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Görülene kadar";
 "MENU_NOTIFICATION_MODE_ALL" = "Bildirim ve titreşim";
 "MENU_NOTIFICATION_MODE_BANNER" = "Yalnızca bildirim";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Yalnızca titreşim";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Resmi Paylaş";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Kullanıcı Adı";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Resmi Görüntüle";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Yeni ayarlar içeriyor";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Yeni";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "YENİ";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Bu bölüm hakkında";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Liquid Glass Değişikliklerini Uygula";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Tüm Ayarları Ara";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Son Öne Çıkanları Gizle";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Instagram'ın takip etmeni önerdiği hesapları hem çubuktan hem de son hikayeden sonraki oynatmadan kaldırır.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Önerilen Hesapları Gizle";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Bahsedilenler listesindeki bir hesaba uzun basarak kullanıcı adını kopyalayın. Hikâye Bahsetmelerini Göster ayarını gerektirir.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Kullanıcı adını kopyalamak için basılı tut";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Hikaye bahsetmeler düğmesinde benzersiz bahsedilen hesap sayısını gösterir. “Hikaye Bahsetmelerini Göster” gerektirir.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Bahsetme Sayısı Rozeti";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Hikayenin görüntüleyen listesine, ada göre aramak, takip ilişkisinin her iki yönüne göre süzmek ve görüntüleyenleri yıldızlamak için bir arama düğmesi ekler.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Ayarlar kısayolu dışındaki tüm Sparkle özelliklerini devre dışı bırakır. Sparkle'ın çökmeye neden olup olmadığını belirlemek için kullanın. Yeniden başlatma gerektirir.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Tüm Ayarları Devre Dışı Bırak";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Bu sürümde eklenen ayarların YENİ etiketini ne kadar süre koruyacağı. Bu tür ayar içeren sayfalarda nokta gösterilir.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "YENİ etiketlerini göster";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Ana Sayfa sekmesine, Ana Sayfa gizliyse görünen sonraki sekmeye uzun basıldığında Sparkle Ayarları'nı açar. Yeniden başlatma gerektirir.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Hızlı Ayarlar Erişimi";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Başarısız başlatma sayaçlarını ve geçici hook bastırmasını temizler. Özellikler kendiliğinden kapanmış görünüyorsa kullan.";

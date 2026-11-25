@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Mensualmente";
 "MENU_MUTE_UNMUTE" = "Silenciar/Activar Sonido";
 "MENU_NEVER" = "Nunca";
+"MENU_NEW_BADGES_KEEP" = "Hasta la próxima actualización";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Hasta verlo";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner y háptica";
 "MENU_NOTIFICATION_MODE_BANNER" = "Solo banner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Solo háptica";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Compartir imagen";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Nombre de usuario";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Ver foto";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Contiene ajustes nuevos";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Nuevo";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NUEVO";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Acerca de esta sección";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Aplicar cambios de Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Buscar en toda la configuración";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ocultar destacadas recientes";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Quita las cuentas que Instagram te sugiere seguir, tanto de la barra como de la reproducción después de la última historia.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ocultar cuentas sugeridas";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Mantén pulsada una cuenta en la lista de menciones para copiar su nombre de usuario. Requiere Mostrar menciones en historias.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Mantener pulsado para copiar nombre de usuario";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Muestra el número de cuentas mencionadas únicas en el botón de menciones de la historia. Requiere «Mostrar menciones de historia».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Insignia de recuento de menciones";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Añade un botón de búsqueda a la lista de espectadores de tu historia para buscar por nombre, filtrar por cada lado de la relación de seguimiento y destacar espectadores.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Desactiva todas las funciones de Sparkle excepto el acceso directo a los ajustes. Úsalo para determinar si Sparkle causa un fallo. Requiere reiniciar.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Desactivar todos los ajustes";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Cuánto tiempo conservan las opciones añadidas en esta versión la etiqueta NUEVO. Las páginas que contienen alguna muestran un punto.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Mostrar etiquetas NUEVO";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Abre los ajustes de Sparkle con una pulsación larga en la pestaña Inicio, o en la siguiente pestaña visible si Inicio está oculta. Requiere reiniciar.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Acceso rápido a ajustes";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Borra los contadores de inicios fallidos y la supresión temporal de hooks. Úsalo si parece que algunas funciones se han desactivado solas.";

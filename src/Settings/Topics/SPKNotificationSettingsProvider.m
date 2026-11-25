@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKNotificationSettingsProvider.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
@@ -429,6 +430,7 @@ static const NSTimeInterval kSPKPreviewDownloadTick = 1.0 / 20.0;
                                                                      subtitle:@""
                                                                          menu:SPKInstagramToastDesignMenu()],
                                                 SPKL(@"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP"));
+    SPKSettingMarkedNewWithID(pillToasts, @"v1.7.0", @"notifs_instagram_toast_design");
     pillToasts.hiddenProvider = ^BOOL {
         return !instagramStyle() || !SPKPrefIsAvailable(@"notifs_instagram_toast_design");
     };

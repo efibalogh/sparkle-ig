@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "ماهانه";
 "MENU_MUTE_UNMUTE" = "بی‌صدا/فعال کردن صدا";
 "MENU_NEVER" = "هرگز";
+"MENU_NEW_BADGES_KEEP" = "تا به‌روزرسانی بعدی";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "تا دیده شدن";
 "MENU_NOTIFICATION_MODE_ALL" = "بنر و لرزش";
 "MENU_NOTIFICATION_MODE_BANNER" = "فقط بنر";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "فقط لرزش";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "اشتراک‌گذاری عکس";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "نام کاربری";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "مشاهده عکس";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "شامل تنظیمات جدید است";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "جدید";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "جدید";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "درباره این بخش";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "اعمال تغییرات Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "جستجو در همه تنظیمات";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "پنهان کردن هایلایت‌های اخیر";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "حساب‌هایی را که اینستاگرام برای دنبال کردن پیشنهاد می‌کند از سینی و از پخش پس از آخرین استوری حذف می‌کند.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "پنهان کردن حساب‌های پیشنهادی";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "برای کپی کردن نام کاربری یک حساب در فهرست منشن‌ها، آن را لمس طولانی کنید. نیازمند «نمایش منشن‌های استوری» است.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "نگه داشتن برای کپی نام کاربری";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "تعداد حساب‌های منحصربه‌فرد اشاره‌شده را روی دکمه اشاره‌های استوری نشان می‌دهد. نیازمند فعال بودن نمایش اشاره‌های استوری است.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "نشان تعداد اشاره‌ها";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "یک دکمه جستجو به فهرست بینندگان استوری شما اضافه می‌کند تا بتوانید بر اساس نام جستجو کنید، بر اساس هر طرف رابطه دنبال کردن فیلتر کنید و بینندگان را ستاره‌دار کنید.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "تمام ویژگی‌های Sparkle به‌جز میانبر تنظیمات را غیرفعال می‌کند. از این برای تشخیص این‌که آیا Sparkle باعث کرش می‌شود استفاده کنید. نیاز به راه‌اندازی مجدد دارد.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "غیرفعال کردن همه تنظیمات";
 "TOOLS_TWEAK_HEADER" = "تیوک";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "مدتی که تنظیماتی که در این نسخه اضافه شده‌اند، برچسب جدید را نگه می‌دارند. صفحاتی که شامل آن‌ها هستند نقطه نشان می‌دهند.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "نمایش برچسب‌های جدید";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "با لمس طولانی تب خانه، یا تب قابل‌مشاهده بعدی هنگامی که خانه پنهان است، تنظیمات Sparkle را باز می‌کند. نیاز به راه‌اندازی مجدد دارد.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "دسترسی سریع به تنظیمات";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "شمارنده‌های راه‌اندازی ناموفق و سرکوب موقت هوک را پاک می‌کند. اگر ویژگی‌ها به‌طور خودکار خاموش به‌نظر می‌رسند از این استفاده کنید.";

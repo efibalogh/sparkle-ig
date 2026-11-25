@@ -1,4 +1,5 @@
 #import "SPKGeneralSettingsProvider.h"
+#import "../SPKNewBadges.h"
 #import "SPKStrings.h"
 
 #import <AVKit/AVKit.h>
@@ -67,7 +68,7 @@ static SPKSetting *SPKHideMuseSetting(void) {
     setting.hiddenProvider = ^BOOL {
         return !SPKHideMuseShareSheetIsAvailable() && !SPKHideMuseProfileButtonIsAvailable();
     };
-    return setting;
+    return SPKSettingMarkedNewWithID(setting, @"v1.7.0", @"general_muse_page");
 }
 
 static SPKSetting *SPKKeepOtherAudioPlayingSetting(void) {
@@ -75,6 +76,7 @@ static SPKSetting *SPKKeepOtherAudioPlayingSetting(void) {
     SPKSetting *setting = [SPKSetting switchCellWithTitle:SPKL(@"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_TITLE")
                                                      icon:SPKSettingsIcon(@"music")
                                               defaultsKey:@"general_keep_other_audio_playing"];
+    SPKSettingMarkedNew(setting, @"v1.7.0");
     setting.helpText = available ? SPKL(@"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_HELP")
                                  : SPKL(@"GENERAL_APP_KEEP_OTHER_AUDIO_PLAYING_UNAVAILABLE_HELP");
     // Builds without the movie-mode switch never interrupt other audio on launch.
@@ -330,10 +332,10 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                SPKL(@"GENERAL_COMMENTS_SWIPE_CLOSE_COMMENTS_HELP")),
             SPKSettingWithHelp(SPKSettingApplySelectedMenuIcon([SPKSetting menuCellWithTitle:SPKL(@"GENERAL_COMMENTS_SWIPE_DIRECTION_TITLE") icon:SPKSettingsIcon(@"left_right") menu:SPKSwipeCloseCommentsDirectionMenu()], SPKSettingsIcon(@"left_right")),
                                SPKL(@"GENERAL_COMMENTS_SWIPE_DIRECTION_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE")
+            SPKSettingMarkedNew(SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_TITLE")
                                                           icon:SPKSettingsIcon(@"arrow_down")
                                                    defaultsKey:@"general_comments_swipe_close_fully"],
-                               SPKL(@"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP")),
+                               SPKL(@"GENERAL_COMMENTS_SWIPE_CLOSE_FULLY_HELP")), @"v1.7.0"),
         ],
                         nil),
         SPKTopicSection(@"", @[

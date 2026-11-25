@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Lunar";
 "MENU_MUTE_UNMUTE" = "Mut/demut";
 "MENU_NEVER" = "Niciodată";
+"MENU_NEW_BADGES_KEEP" = "Până la următoarea actualizare";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Până la vizualizare";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner și haptic";
 "MENU_NOTIFICATION_MODE_BANNER" = "Doar banner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Doar haptic";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Partajează fotografia";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Nume de utilizator";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Vizualizează fotografie";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Conține setări noi";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Nou";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NOU";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Despre această secțiune";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Aplicați modificările Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Caută în toate setările";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ascunde highlights recente";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Elimină conturile pe care Instagram îți sugerează să le urmărești, atât din bară, cât și din redarea de după ultima poveste.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ascunde conturile sugerate";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Ține apăsat pe un cont din lista de mențiuni pentru a copia numele de utilizator. Necesită Afișează mențiunile din Stories.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Ține apăsat pentru a copia numele de utilizator";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Afișează numărul de conturi menționate unice pe butonul de mențiuni al poveștii. Necesită „Arată mențiuni poveste”.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Insignă cu numărul de mențiuni";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Adaugă un buton de căutare în lista celor care ți-au văzut povestea, pentru a căuta după nume, a filtra după fiecare parte a relației de urmărire și a marca vizitatori cu stea.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Dezactivează toate funcțiile Sparkle, cu excepția scurtăturii către Setări. Folosește această opțiune pentru a determina dacă Sparkle provoacă o blocare. Necesită repornire.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Dezactivează toate setările";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Cât timp păstrează setările adăugate în această versiune eticheta NOU. Paginile care conțin una afișează un punct.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Afișează etichetele NOU";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Deschide setările Sparkle la o apăsare lungă pe fila Acasă, sau pe următoarea filă vizibilă dacă Acasă este ascunsă. Necesită repornire.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Acces rapid setări";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Șterge contoarele de porniri eșuate și suprimarea temporară a hook-urilor. Folosește-l dacă unele funcții par să se fi dezactivat singure.";

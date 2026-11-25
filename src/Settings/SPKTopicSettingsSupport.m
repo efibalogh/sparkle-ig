@@ -1,4 +1,5 @@
 #import "SPKSettingsInfoSheetViewController.h"
+#import "SPKNewBadges.h"
 #import "SPKStrings.h"
 #import "SPKTopicSettingsSupport.h"
 #import "../Features/Feed/HeaderActionButton.h"
@@ -218,10 +219,12 @@ SPKSetting *SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSource 
     SPKEditActionsListViewController *controller = [[SPKEditActionsListViewController alloc] initWithSource:source topicTitle:topicTitle];
     (void)supportedActions;
     (void)defaultSections;
-    return [SPKSetting navigationCellWithTitle:SPKL(@"SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE")
-                                      subtitle:@""
-                                          icon:SPKSettingsIcon(@"slider")
-                                viewController:controller];
+    SPKSetting *setting = [SPKSetting navigationCellWithTitle:SPKL(@"SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE")
+                                                     subtitle:@""
+                                                         icon:SPKSettingsIcon(@"slider")
+                                               viewController:controller];
+    setting.addedContentItems = SPKNewBadgeActionItemsForSource(source);
+    return setting;
 }
 
 UIMenu *SPKReelsTapControlMenu(void) {
@@ -394,6 +397,14 @@ UIMenu *SPKSwipeCloseCommentsDirectionMenu(void) {
         SPKMenuCommand(SPKL(@"MENU_BOTH"), @"left_right", nil, kSPKSwipeCloseCommentsDirectionKey, @"both", NO),
         SPKMenuCommand(SPKL(@"MENU_LEFT"), @"arrow_left", nil, kSPKSwipeCloseCommentsDirectionKey, @"left", NO),
         SPKMenuCommand(SPKL(@"MENU_RIGHT"), @"arrow_right", nil, kSPKSwipeCloseCommentsDirectionKey, @"right", NO)
+    ]];
+}
+
+UIMenu *SPKSettingsNewBadgesMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_NEW_BADGES_UNTIL_SEEN"), nil, nil, @"tools_settings_new_badges", @"until_seen", NO),
+        SPKMenuCommand(SPKL(@"MENU_NEW_BADGES_KEEP"), nil, nil, @"tools_settings_new_badges", @"keep", NO),
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"tools_settings_new_badges", @"off", NO)
     ]];
 }
 

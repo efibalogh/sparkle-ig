@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "รายเดือน";
 "MENU_MUTE_UNMUTE" = "ปิด/เปิดเสียง";
 "MENU_NEVER" = "ไม่เคย";
+"MENU_NEW_BADGES_KEEP" = "จนถึงการอัปเดตครั้งถัดไป";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "จนกว่าจะเห็น";
 "MENU_NOTIFICATION_MODE_ALL" = "แบนเนอร์และการสั่น";
 "MENU_NOTIFICATION_MODE_BANNER" = "แบนเนอร์อย่างเดียว";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "การสั่นอย่างเดียว";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "แชร์รูปภาพ";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "ชื่อผู้ใช้";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "ดูรูปภาพ";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "มีการตั้งค่าใหม่";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "ใหม่";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "ใหม่";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "เกี่ยวกับส่วนนี้";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "ใช้การเปลี่ยนแปลง Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "ค้นหาการตั้งค่าทั้งหมด";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "ซ่อนไฮไลต์ล่าสุด";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "ลบบัญชีที่ Instagram แนะนำให้คุณติดตามออกจากแถบและจากการเล่นต่อหลังสตอรี่สุดท้าย";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "ซ่อนบัญชีที่แนะนำ";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "กดค้างที่บัญชีในรายการการกล่าวถึงเพื่อคัดลอกชื่อผู้ใช้ ต้องเปิดใช้ แสดงการกล่าวถึงในสตอรี่";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "กดค้างเพื่อคัดลอกชื่อผู้ใช้";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "แสดงจำนวนบัญชีที่ถูกกล่าวถึงแบบไม่ซ้ำกันบนปุ่มการกล่าวถึงในสตอรี่ ต้องเปิดใช้งานแสดงการกล่าวถึงในสตอรี่";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "ป้ายจำนวนการกล่าวถึง";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "เพิ่มปุ่มค้นหาในรายชื่อผู้ชมสตอรี่ของคุณ เพื่อค้นหาตามชื่อ กรองตามความสัมพันธ์การติดตามทั้งสองฝั่ง และติดดาวผู้ชม";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "ปิดใช้งานทุกฟีเจอร์ของ Sparkle ยกเว้นทางลัดไปยังการตั้งค่า ใช้เพื่อตรวจสอบว่า Sparkle เป็นสาเหตุของการขัดข้องหรือไม่ ต้องรีสตาร์ทแอป";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "ปิดใช้งานการตั้งค่าทั้งหมด";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "การตั้งค่าที่เพิ่มในเวอร์ชันนี้จะคงป้ายใหม่ไว้นานเท่าใด หน้าที่มีการตั้งค่าเหล่านี้จะแสดงจุด";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "แสดงป้ายใหม่";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "เปิดการตั้งค่า Sparkle เมื่อกดค้างที่แท็บหน้าแรก หรือแท็บถัดไปที่มองเห็นได้เมื่อซ่อนแท็บหน้าแรกไว้ ต้องรีสตาร์ทแอป";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "การเข้าถึงการตั้งค่าด่วน";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "ล้างตัวนับการเปิดแอปที่ล้มเหลวและการระงับฮุกชั่วคราว ใช้เมื่อฟีเจอร์ดูเหมือนจะปิดตัวเองโดยไม่ทราบสาเหตุ";

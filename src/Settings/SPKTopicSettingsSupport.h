@@ -41,6 +41,8 @@ UIMenu *SPKStoryManualSeenModeMenu(void);
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
 UIMenu *SPKLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);
+/// When NEW pills on settings rows go away: once seen, at the next release, or never shown.
+UIMenu *SPKSettingsNewBadgesMenu(void);
 UIMenu *SPKNotificationProgressSubtitleStyleMenu(void);
 UIMenu *SPKNotificationStyleMenu(void);
 UIMenu *SPKInstagramToastDesignMenu(void);

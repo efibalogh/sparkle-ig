@@ -18,6 +18,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "../UI/SPKNotificationCenter.h"
 #import "../UI/SPKFont.h"
+#import "../../Settings/SPKNewBadges.h"
 
 #pragma mark - Helpers
 
@@ -348,6 +349,9 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
 @property (nonatomic, assign) BOOL lastHasHiddenPill;
 @property (nonatomic, assign) BOOL lastHasActiveJobs;
+/// Whether the settings behind the gear have NEW rows; measured once per appearance.
+@property (nonatomic, assign) BOOL settingsHasNew;
+@property (nonatomic, assign) BOOL lastSettingsHasNew;
 @property (nonatomic, assign) BOOL hasSetInitialTopBarStates;
 @end
 
@@ -419,6 +423,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
     }
     // Catch an in-app account switch that didn't fire while this view was up.
     [[SPKAccountManager shared] refreshCurrentAccount];
+    self.settingsHasNew = SPKNewBadgeSectionsContainNew([SPKDownloadsSettingsViewController searchSections]);
     [self reload];
 }
 
@@ -492,17 +497,23 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
     if (self.hasSetInitialTopBarStates &&
         hasHiddenPill == self.lastHasHiddenPill &&
-        hasActiveJobs == self.lastHasActiveJobs) {
+        hasActiveJobs == self.lastHasActiveJobs &&
+        self.settingsHasNew == self.lastSettingsHasNew) {
         return;
     }
 
     self.lastHasHiddenPill = hasHiddenPill;
     self.lastHasActiveJobs = hasActiveJobs;
+    self.lastSettingsHasNew = self.settingsHasNew;
     self.hasSetInitialTopBarStates = YES;
 
     UIMenu *menu = [self moreMenu];
     UIBarButtonItem *moreItem = SPKMediaChromeTopBarMenuButtonItem(@"more", menu, SPKL(@"MESSAGES_DELETED_MESSAGES_MORE_TEXT"));
     UIBarButtonItem *settingsItem = SPKMediaChromeTopBarButtonItem(@"settings", self, @selector(pushSettings));
+    if (self.settingsHasNew) {
+        settingsItem.image = SPKNewBadgeIconWithDot(settingsItem.image, [SPKUtils SPKColor_InstagramPrimaryText], self.traitCollection);
+        settingsItem.accessibilityValue = SPKNewBadgeAccessibilityText(SPKNewBadgeStateContainsNew);
+    }
     if (hasHiddenPill) {
         UIBarButtonItem *showProgressItem = SPKMediaChromeTopBarButtonItem(@"play_filled", self, @selector(showProgressTapped));
         SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[ showProgressItem, settingsItem, moreItem ]);

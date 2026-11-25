@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "毎月";
 "MENU_MUTE_UNMUTE" = "ミュート/ミュート解除";
 "MENU_NEVER" = "しない";
+"MENU_NEW_BADGES_KEEP" = "次のアップデートまで";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "確認するまで";
 "MENU_NOTIFICATION_MODE_ALL" = "バナーとハプティクス";
 "MENU_NOTIFICATION_MODE_BANNER" = "バナーのみ";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "ハプティクスのみ";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "写真をシェア";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "ユーザーネーム";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "写真を表示";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "新しい設定を含む";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "新着";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "新着";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "このセクションについて";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Liquid Glassの変更を適用";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "すべての設定を検索";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "最近のハイライトを非表示";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Instagramがフォローを勧めるアカウントを、トレイと、最後のストーリーズの後に自動再生される表示の両方から取り除きます。";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "おすすめアカウントを非表示";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "メンション一覧のアカウントを長押しするとユーザー名をコピーします。「ストーリーメンションを表示」が必要です。";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "長押しでユーザー名をコピー";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "ストーリーズのメンションボタンに、重複を除いたメンション先アカウント数を表示します。 「ストーリーメンションを表示」が必要です。";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "メンション数バッジ";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "自分のストーリーズの閲覧者リストに検索ボタンを追加し、名前で検索したり、フォロー関係のどちらか一方で絞り込んだり、閲覧者にスターを付けたりできます。";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "設定へのショートカットを除くすべてのSparkle機能を無効にします。Sparkleがクラッシュの原因かどうかを判断するために使用してください。再起動が必要です.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "すべての設定を無効化";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "このバージョンで追加された設定が新着ラベルを表示する期間です。新着の設定を含むページには点が表示されます。";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "新着ラベルを表示";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "ホームタブを長押しするとSparkle設定を開きます。ホームが非表示の場合は、次に表示されているタブで動作します。再起動が必要です。";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "クイック設定アクセス";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "起動失敗のカウンターと一時的なフックの抑止をクリアします。機能が勝手にオフになっているように見える場合に使用してください。";

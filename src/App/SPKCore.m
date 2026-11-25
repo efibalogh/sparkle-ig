@@ -51,6 +51,8 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"tools_shortcut_haptics" : @(YES),
         @"gallery_quick_access_tab" : @"direct-inbox-tab",
         @"tools_open_settings_on_launch" : @(NO),
+        // NEW pills on settings rows: until_seen, keep (until the next feature release) or off.
+        @"tools_settings_new_badges" : @"until_seen",
         @"tools_disable_all" : @(NO),
 #if SPK_DEV
         @"tools_perf_meter" : @(NO),
@@ -163,6 +165,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"stories_hide_join_trending" : @(NO),
         @"stories_mentions_btn" : @(NO),
         @"stories_mentions_count_badge" : @(YES),
+        @"stories_mentions_copy_username" : @(YES),
         @"stories_unlock_preview" : @(NO),
         @"stories_hide_ig_plus_button" : @(NO),
         @"stories_search_viewer_list" : @(NO),

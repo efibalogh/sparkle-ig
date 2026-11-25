@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "شهري";
 "MENU_MUTE_UNMUTE" = "كتم/إلغاء الكتم";
 "MENU_NEVER" = "أبداً";
+"MENU_NEW_BADGES_KEEP" = "حتى التحديث التالي";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "حتى المشاهدة";
 "MENU_NOTIFICATION_MODE_ALL" = "لافتة واهتزاز";
 "MENU_NOTIFICATION_MODE_BANNER" = "لافتة فقط";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "اهتزاز فقط";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "مشاركة الصورة";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "أسم المستخدم";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "إظهار الصورة";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "يحتوي على إعدادات جديدة";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "جديد";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "جديد";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "حول هذا القسم";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "تطبيق تغييرات Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "البحث في جميع الإعدادات";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "إخفاء الأبرز المضافة مؤخراً";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "يزيل الحسابات التي يقترح Instagram متابعتها من الشريط ومن التشغيل بعد آخر قصة.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "إخفاء الحسابات المقترحة";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "اضغط مطولاً على حساب في قائمة الإشارات لنسخ اسم المستخدم الخاص به. يتطلب تفعيل إظهار الإشارات في القصص.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "اضغط مطولاً لنسخ اسم المستخدم";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "تعرض عدد الحسابات المذكورة الفريدة على زر إشارات القصة. يتطلب «عرض إشارات القصة».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "شارة عدد الإشارات";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "يضيف زر بحث إلى قائمة مشاهدي قصتك للبحث بالاسم والتصفية حسب أي من طرفي علاقة المتابعة وتمييز المشاهدين بنجمة.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "يعطل كل ميزات Sparkle باستثناء الاختصار إلى الإعدادات. استخدمه لتحديد ما إذا كان Sparkle يسبب تعطيلاً. يتطلب إعادة التشغيل.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "تعطيل جميع الإعدادات";
 "TOOLS_TWEAK_HEADER" = "الأداة";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "المدة التي تحتفظ فيها الإعدادات المضافة في هذا الإصدار بتسمية جديد. تعرض الصفحات التي تحتوي على إعداد جديد نقطة.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "إظهار تسميات جديد";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "يفتح إعدادات Sparkle بضغطة مطولة على تبويب الرئيسية، أو على التبويب الظاهر التالي إن كانت الرئيسية مخفية. يتطلب إعادة تشغيل.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "وصول سريع للإعدادات";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "يمسح عدادات الإقلاع الفاشل وتعطيل الخطافات المؤقت. استخدمه إذا بدت الميزات وقد أُوقفت من تلقاء نفسها.";

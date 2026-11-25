@@ -13,6 +13,7 @@
 #import "../App/SPKCore.h"
 #import "SPKOnboardingViewController.h"
 #import "SPKLanguagePicker.h"
+#import "SPKNewBadges.h"
 #import "SPKPreferenceAvailability.h"
 #import "SPKSettingsInfoSheetViewController.h"
 #import "SPKWhatsNewViewController.h"
@@ -69,6 +70,9 @@ static double SPKNormalizedStepperValue(SPKSetting *row, double value) {
 @property (nonatomic) BOOL hasPendingRestartChanges;
 @property (nonatomic) BOOL didAttemptOnboarding;
 @property (nonatomic) BOOL showsLanguageSelector;
+/// NEW-badged rows displayed during this visit, marked seen when the page goes away
+/// so the pill stays put while the user is still looking at it.
+@property (nonatomic, strong) NSMutableArray<SPKSetting *> *displayedNewRows;
 
 @end
 
@@ -403,6 +407,18 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
                                              selector:@selector(spk_accessoryTextDidChange:)
                                                  name:SPKSettingAccessoryTextDidChangeNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(spk_newBadgesDidChange:)
+                                                 name:SPKNewBadgesDidChangeNotification
+                                               object:nil];
+}
+
+// Another page marked rows seen: drop this page's dots that pointed at them. The
+// page that marked them keeps its pills until it is next shown.
+- (void)spk_newBadgesDidChange:(NSNotification *)notification {
+    if (notification.object == self || !self.isViewLoaded)
+        return;
+    [self.tableView reloadData];
 }
 
 - (void)spk_accessoryTextDidChange:(NSNotification *)notification {
@@ -434,6 +450,17 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self presentIntroSheetsIfNeeded];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // Pushing a page, popping this one or closing settings all count as leaving it.
+    // Runs before the page underneath reloads in its viewWillAppear on a pop.
+    if (self.displayedNewRows.count) {
+        NSArray<SPKSetting *> *rows = [self.displayedNewRows copy];
+        [self.displayedNewRows removeAllObjects];
+        SPKNewBadgesMarkSeen(rows, self);
+    }
 }
 
 // Intro sheets shown when the user opens Sparkle settings. Only the root settings
@@ -782,6 +809,17 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     }
     }
 
+    SPKNewBadgeState badgeState = SPKNewBadgeStateForSetting(row);
+    if (badgeState != SPKNewBadgeStateNone && row.title.length) {
+        UIFont *titleFont = cellContentConfig.textProperties.font ?: [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightRegular];
+        UIColor *titleColor = cellContentConfig.textProperties.color ?: [SPKUtils SPKColor_InstagramPrimaryText];
+        cellContentConfig.attributedText = SPKNewBadgeAttributedTitle(row.title, titleFont, titleColor, badgeState, tableView.traitCollection);
+        NSMutableArray<NSString *> *spoken = [NSMutableArray arrayWithObjects:row.title, SPKNewBadgeAccessibilityText(badgeState), nil];
+        if (cellContentConfig.secondaryText.length)
+            [spoken addObject:cellContentConfig.secondaryText];
+        cell.accessibilityLabel = [spoken componentsJoinedByString:@", "];
+    }
+
     cell.contentConfiguration = cellContentConfig;
     cell.showsReorderControl = NO;
     cell.shouldIndentWhileEditing = NO;
@@ -1004,6 +1042,21 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
 }
 
 // MARK: - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section >= (NSInteger)self.sections.count)
+        return;
+    NSArray *rows = self.sections[indexPath.section][@"rows"];
+    SPKSetting *row = indexPath.row < (NSInteger)rows.count ? rows[indexPath.row] : nil;
+    if (![row isKindOfClass:[SPKSetting class]] || row.addedInVersion.length == 0)
+        return;
+    if (SPKNewBadgeStateForSetting(row) != SPKNewBadgeStateRow)
+        return;
+    if (!self.displayedNewRows)
+        self.displayedNewRows = [NSMutableArray array];
+    if (![self.displayedNewRows containsObject:row])
+        [self.displayedNewRows addObject:row];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     SPKSetting *row = self.sections[indexPath.section][@"rows"][indexPath.row];

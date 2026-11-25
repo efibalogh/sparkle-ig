@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKToolsSettingsProvider.h"
 #include <UIKit/UIKit.h>
 
@@ -92,6 +93,7 @@ static NSDictionary *SPKDiagnosticsSection(void) {
                                                                 subtitle:@""
                                                                     icon:SPKSettingsIcon(@"web")
                                                           viewController:[SPKNetworkInterceptorViewController new]];
+    SPKSettingMarkedNewWithID(networkInterceptor, @"v1.7.0", @"tools_network_interceptor_page");
     NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObjects:debugButton, SPKSettingWithHelp(networkInterceptor, SPKL(@"TOOLS_DIAGNOSTICS_NETWORK_INTERCEPTOR_HELP")), nil];
 #if SPK_DEV
     [rows addObject:SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP"))];
@@ -163,6 +165,10 @@ static NSDictionary *SPKDiagnosticsSection(void) {
                                              [SPKWhatsNewViewController presentFromViewController:nil onFinish:nil];
                                          }],
                                SPKL(@"TOOLS_TWEAK_SHOW_WHATS_NEW_HELP")),
+            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"TOOLS_TWEAK_NEW_BADGES_TITLE")
+                                                    subtitle:@""
+                                                        menu:SPKSettingsNewBadgesMenu()],
+                               SPKL(@"TOOLS_TWEAK_NEW_BADGES_HELP")),
         ],
                         nil),
 

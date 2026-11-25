@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Щомісячно";
 "MENU_MUTE_UNMUTE" = "Вимкнути звук/Ввімкнути звук";
 "MENU_NEVER" = "Ніколи";
+"MENU_NEW_BADGES_KEEP" = "До наступного оновлення";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Доки не переглянуто";
 "MENU_NOTIFICATION_MODE_ALL" = "Банер і вібрація";
 "MENU_NOTIFICATION_MODE_BANNER" = "Лише банер";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Лише вібрація";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Поділитися зображенням";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Ім'я користувача";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Переглянути фото";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Містить нові налаштування";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Нове";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "НОВЕ";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Про цей розділ";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Застосувати зміни Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Пошук у всіх параметрах";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Приховати нещодавні хайлайти";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Прибирає акаунти, на які Instagram пропонує підписатися, з панелі та з відтворення після останньої історії.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Приховати рекомендовані акаунти";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Утримуйте обліковий запис у списку згадувань, щоб скопіювати його ім'я користувача. Потрібна опція «Показувати згадки в історіях».";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Утримувати, щоб скопіювати ім'я користувача";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Показує кількість унікальних згаданих облікових записів на кнопці згадок в історії. Потребує «Показати упомянення в історії».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Лічильник згадок";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Додає кнопку пошуку до списку тих, хто переглянув вашу історію, щоб шукати за іменем, фільтрувати за обома сторонами підписки та позначати глядачів зірочкою.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Вимикає всі функції Sparkle, крім ярлика до Параметрів. Використовуйте це, щоб визначити, чи спричиняє Sparkle збій. Потрібен перезапуск.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Вимкнути всі налаштування";
 "TOOLS_TWEAK_HEADER" = "Твік";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Як довго налаштування, додані в цій версії, матимуть мітку НОВЕ. Сторінки, які містять такі налаштування, показують крапку.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Показувати мітки НОВЕ";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Відкриває налаштування Sparkle довгим натисканням вкладки Головна або наступної видимої вкладки, якщо Головну приховано. Потрібен перезапуск.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Швидкий доступ до налаштувань";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Очищає лічильники невдалих запусків і тимчасове придушення хуків. Використовуйте, якщо функції наче вимкнулися самі.";

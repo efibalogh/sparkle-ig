@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Bulanan";
 "MENU_MUTE_UNMUTE" = "Bisukan/Batalkan Bisukan";
 "MENU_NEVER" = "Tidak Pernah";
+"MENU_NEW_BADGES_KEEP" = "Sampai Pembaruan Berikutnya";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Sampai dilihat";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner dan haptik";
 "MENU_NOTIFICATION_MODE_BANNER" = "Hanya banner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Hanya haptik";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Bagikan Foto";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Nama Pengguna";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Lihat Foto";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Berisi pengaturan baru";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Baru";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "BARU";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Tentang bagian ini";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Terapkan perubahan Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Cari Semua Pengaturan";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Sembunyikan Sorotan Terbaru";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Menghapus akun yang disarankan Instagram untuk Anda ikuti, dari tray dan dari pemutaran setelah story terakhir.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Sembunyikan Akun yang Disarankan";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Tahan lama akun di daftar sebutan untuk menyalin nama penggunanya. Memerlukan Tampilkan Sebutan Story.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Tahan untuk menyalin nama pengguna";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Menampilkan jumlah akun unik yang disebut pada tombol sebutan story. Membutuhkan Tampilkan Sebutan Story.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Lencana Jumlah Sebutan";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Menambahkan tombol cari di daftar penonton storymu untuk mencari berdasarkan nama, menyaring berdasarkan salah satu sisi hubungan follow, dan menandai bintang penonton.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Menonaktifkan semua fitur Sparkle kecuali pintasan ke Pengaturan. Gunakan ini untuk menentukan apakah Sparkle penyebab crash. Membutuhkan mulai ulang.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Nonaktifkan Semua Pengaturan";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Berapa lama pengaturan yang ditambahkan di versi ini mempertahankan label BARU. Halaman yang memuatnya menampilkan titik.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Tampilkan Label BARU";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Membuka Pengaturan Sparkle dengan menekan lama tab Beranda, atau tab terlihat berikutnya saat Beranda disembunyikan. Membutuhkan mulai ulang.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Akses Cepat Pengaturan";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Menghapus penghitung kegagalan peluncuran dan penekanan hook sementara. Gunakan jika fitur tampak nonaktif dengan sendirinya.";

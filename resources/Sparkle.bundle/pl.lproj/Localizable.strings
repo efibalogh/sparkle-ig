@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Miesięcznie";
 "MENU_MUTE_UNMUTE" = "Wycisz/Włącz dźwięk";
 "MENU_NEVER" = "Nigdy";
+"MENU_NEW_BADGES_KEEP" = "Do następnej aktualizacji";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Do momentu obejrzenia";
 "MENU_NOTIFICATION_MODE_ALL" = "Baner i haptyka";
 "MENU_NOTIFICATION_MODE_BANNER" = "Tylko baner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Tylko haptyka";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Udostępnij obraz";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Nazwa użytkownika";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Wyświetl zdjęcie";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Zawiera nowe ustawienia";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Nowe";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NOWE";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "O tej sekcji";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Zastosuj zmiany Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Szukaj we wszystkich ustawieniach";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ukryj ostatnie wyróżnione relacje";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Usuwa konta, które Instagram proponuje obserwować, z zasobnika i z odtwarzania po ostatniej relacji.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ukryj proponowane konta";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Przytrzymaj konto na liście wzmianek, aby skopiować jego nazwę użytkownika. Wymaga opcji Pokazuj wzmianki w relacjach.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Przytrzymaj, aby skopiować nazwę użytkownika";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Pokazuje liczbę unikalnych wspomnianych kont na przycisku wzmianek w relacjach. Wymaga opcji Pokazuj wzmianki w relacjach.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Odznaka liczby wzmianek";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Dodaje przycisk wyszukiwania do listy wyświetlających Twoją relację, aby szukać po nazwie, filtrować według relacji obserwowania i oznaczać gwiazdką.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Wyłącza wszystkie funkcje Sparkle oprócz skrótu do Ustawień. Użyj tego, aby sprawdzić, czy to Sparkle powoduje awarię. Wymaga ponownego uruchomienia.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Wyłącz wszystkie ustawienia";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Jak długo ustawienia dodane w tej wersji zachowują etykietę NOWE. Strony, które zawierają takie ustawienie, pokazują kropkę.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Pokazuj etykiety NOWE";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Otwiera ustawienia Sparkle po przytrzymaniu zakładki Strona główna lub następnej widocznej zakładki, gdy Strona główna jest ukryta. Wymaga restartu.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Szybki dostęp do ustawień";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Czyści liczniki nieudanych uruchomień i tymczasowe wstrzymanie hooków. Użyj tego, jeśli funkcje pozornie same się wyłączają.";

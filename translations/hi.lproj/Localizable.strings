@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "मासिक";
 "MENU_MUTE_UNMUTE" = "म्यूट/अनम्यूट";
 "MENU_NEVER" = "कभी नहीं";
+"MENU_NEW_BADGES_KEEP" = "अगले अपडेट तक";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "देखे जाने तक";
 "MENU_NOTIFICATION_MODE_ALL" = "बैनर और हैप्टिक";
 "MENU_NOTIFICATION_MODE_BANNER" = "केवल बैनर";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "केवल हैप्टिक";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "चित्र साझा करें";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "यूजरनेम";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "तस्वीर देखें";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "नई सेटिंग्स शामिल हैं";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "नया";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "नया";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "इस अनुभाग के बारे में";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Liquid Glass परिवर्तन लागू करें";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "सभी सेटिंग्स में खोजें";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "हाल के हाइलाइट्स छिपाएं";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Instagram जिन अकाउंट को फ़ॉलो करने का सुझाव देता है, उन्हें ट्रे से और आख़िरी स्टोरी के बाद चलने से हटाता है।";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "सुझाए गए अकाउंट छिपाएं";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "मेंशन सूची में किसी खाते को देर तक दबाने पर उसका यूज़रनेम कॉपी होता है। इसके लिए स्टोरी मेंशन दिखाएँ चालू होना ज़रूरी है।";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "यूज़रनेम कॉपी करने के लिए दबाए रखें";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "स्टोरी मेंशन बटन पर उल्लिखित अलग-अलग खातों की संख्या दिखाता है। इसके लिए “Story उल्लेख दिखाएं” चालू होना ज़रूरी है।";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "मेंशन गिनती बैज";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "आपकी स्टोरी की व्यूअर सूची में एक खोज बटन जोड़ता है, जिससे नाम से खोजा जा सके, फ़ॉलो संबंध के किसी भी पक्ष से छाना जा सके, और व्यूअर को स्टार किया जा सके।";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Settings के शॉर्टकट को छोड़कर हर Sparkle फ़ीचर बंद कर देता है। यह जानने के लिए इसका उपयोग करें कि क्रैश Sparkle की वजह से है या नहीं। रीस्टार्ट आवश्यक है।";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "सभी सेटिंग्स अक्षम करें";
 "TOOLS_TWEAK_HEADER" = "ट्वीक";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "इस संस्करण में जोड़ी गई सेटिंग्स कितने समय तक अपना नया लेबल रखेंगी। जिन पेजों पर ऐसी कोई सेटिंग होती है, वहाँ एक बिंदु दिखता है।";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "नया लेबल दिखाएँ";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Home टैब को देर तक दबाने पर Sparkle Settings खोलता है, या Home छिपा हो तो अगले दिखने वाले टैब पर। रीस्टार्ट आवश्यक है।";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "त्वरित सेटिंग्स पहुंच";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "विफल लॉन्च के काउंटर और अस्थायी हुक रोक हटाता है। अगर फ़ीचर अपने आप बंद होते दिखें तो इसका उपयोग करें।";

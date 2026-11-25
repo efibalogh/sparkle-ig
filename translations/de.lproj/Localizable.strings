@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Monatlich";
 "MENU_MUTE_UNMUTE" = "Stummschalten/Lautmachen";
 "MENU_NEVER" = "Niemals";
+"MENU_NEW_BADGES_KEEP" = "Bis zum nächsten Update";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Bis gesehen";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner und Haptik";
 "MENU_NOTIFICATION_MODE_BANNER" = "Nur Banner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Nur Haptik";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Bild teilen";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Benutzername";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Bild anzeigen";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Enthält neue Einstellungen";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Neu";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NEU";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Über diesen Abschnitt";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Liquid Glass-Änderungen anwenden";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Alle Einstellungen durchsuchen";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Kürzlich hinzugefügte Highlights ausblenden";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Entfernt Konten, die Instagram dir zum Folgen vorschlägt, aus der Leiste und aus der Wiedergabe nach der letzten Story.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Vorgeschlagene Konten ausblenden";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Halte ein Konto in der Erwähnungsliste gedrückt, um seinen Benutzernamen zu kopieren. Erfordert „Story-Erwähnungen anzeigen“.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Halten, um Benutzernamen zu kopieren";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Zeigt die Anzahl der eindeutig erwähnten Konten auf der Story-Erwähnungsschaltfläche an. Erfordert „Story-Erwähnungen anzeigen“.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Erwähnungszähler";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Fügt der Zuschauerliste deiner Story einen Suchbutton hinzu, um nach Namen zu suchen, nach beiden Seiten der Folgebeziehung zu filtern und Zuschauer mit einem Stern zu markieren.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Deaktiviert jede Sparkle-Funktion außer der Verknüpfung zu den Einstellungen. Verwende dies, um festzustellen, ob Sparkle einen Absturz verursacht. Erfordert einen Neustart.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Alle Einstellungen deaktivieren";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Wie lange Einstellungen, die in dieser Version hinzugekommen sind, das Label NEU behalten. Seiten mit einer solchen Einstellung zeigen einen Punkt.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "NEU-Labels anzeigen";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Öffnet die Sparkle-Einstellungen bei langem Drücken auf den Home-Tab oder auf den nächsten sichtbaren Tab, wenn Home ausgeblendet ist. Erfordert einen Neustart.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Schneller Einstellungen-Zugriff";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Setzt die Zähler fehlgeschlagener Starts und die vorübergehende Hook-Unterdrückung zurück. Nutze dies, wenn Funktionen von selbst deaktiviert scheinen.";

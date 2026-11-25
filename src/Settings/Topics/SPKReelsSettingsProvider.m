@@ -1,4 +1,5 @@
 #import "SPKReelsSettingsProvider.h"
+#import "../SPKNewBadges.h"
 #import "SPKStrings.h"
 
 #import "../../Features/Reels/HideReelsHeader.h"
@@ -27,10 +28,10 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                          icon:SPKSettingsIcon(@"play")
                                          menu:SPKReelsTapControlMenu()],
                                SPKL(@"REELS_BEHAVIOR_TAP_CONTROLS_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE")
+            SPKSettingMarkedNew(SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE")
                                            icon:SPKSettingsIcon(@"pause")
                                     defaultsKey:@"reels_hold_to_pause"],
-                               SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP")),
+                               SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP")), @"v1.7.0"),
             ({
                 SPKSetting *playbackControls = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE")
                                                                                              icon:SPKSettingsPlaybackIcon()

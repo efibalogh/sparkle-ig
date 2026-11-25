@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKMessagesSettingsProvider.h"
 
 #import "../../Features/Messages/AccurateActiveStatus.h"
@@ -427,6 +428,7 @@ static NSArray *SPKMessagesSettingsSections(void) {
     // Only changes how manual seen behaves, so it locks with the other triggers.
     SPKSetting *keepSeenLocally = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_MESSAGING_KEEP_SEEN_LOCALLY_TITLE") icon:SPKSettingsIcon(@"eye_off") defaultsKey:@"msgs_manual_seen_keep_local"];
     keepSeenLocally.helpText = SPKL(@"MESSAGES_MESSAGING_KEEP_SEEN_LOCALLY_HELP");
+    SPKSettingMarkedNew(keepSeenLocally, @"v1.7.0");
     keepSeenLocally.enabledProvider = ^BOOL {
         return [SPKUtils getBoolPref:@"msgs_manual_seen"];
     };
@@ -438,6 +440,7 @@ static NSArray *SPKMessagesSettingsSections(void) {
                                                              icon:SPKSettingsIcon(@"history")
                                                    viewController:SPKDirectLocalSeenListViewController()];
     locallySeen.helpText = SPKL(@"MESSAGES_MESSAGING_LOCALLY_SEEN_HELP");
+    SPKSettingMarkedNewWithID(locallySeen, @"v1.7.0", @"msgs_locally_seen_list");
     locallySeen.accessoryTextProvider = ^NSString * {
         return [NSString stringWithFormat:@"%lu", (unsigned long)SPKDirectLocalSeenPendingCount([SPKUtils currentUserPK])];
     };

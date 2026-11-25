@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Mensile";
 "MENU_MUTE_UNMUTE" = "Muta/Smuta";
 "MENU_NEVER" = "Mai";
+"MENU_NEW_BADGES_KEEP" = "Fino al prossimo aggiornamento";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Fino alla visualizzazione";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner e aptica";
 "MENU_NOTIFICATION_MODE_BANNER" = "Solo banner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Solo aptica";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Condividi Foto";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Nome utente";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Visualizza foto";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Contiene nuove impostazioni";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Nuovo";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NUOVO";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Informazioni su questa sezione";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Applica modifiche Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Cerca in tutte le impostazioni";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Nascondi In Evidenza Recenti";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Rimuove gli account che Instagram ti suggerisce di seguire, sia dalla barra sia dalla riproduzione dopo l'ultima storia.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Nascondi Account Suggeriti";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Tieni premuto un account nell'elenco delle menzioni per copiarne il nome utente. Richiede Mostra menzioni nelle storie.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Tieni premuto per copiare il nome utente";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Mostra il numero di account menzionati univoci sul pulsante delle menzioni della storia. Richiede «Mostra Menzioni Storia».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Badge conteggio menzioni";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Aggiunge un pulsante di ricerca all'elenco di chi ha visto la tua storia per cercare per nome, filtrare per entrambi i lati della relazione di follow e mettere una stella agli spettatori.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Disabilita tutte le funzioni di Sparkle tranne la scorciatoia per le Impostazioni. Usalo per determinare se Sparkle causa un crash. Richiede un riavvio.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Disabilita Tutte le Impostazioni";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Per quanto tempo le impostazioni aggiunte in questa versione mantengono l'etichetta NUOVO. Le pagine che ne contengono una mostrano un puntino.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Mostra etichette NUOVO";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Apre le impostazioni di Sparkle tenendo premuta la scheda Home, o la scheda visibile successiva se Home è nascosta. Richiede un riavvio.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Accesso Rapido Impostazioni";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Azzera i contatori degli avvii falliti e la sospensione temporanea degli hook. Usalo se alcune funzioni sembrano essersi disattivate da sole.";

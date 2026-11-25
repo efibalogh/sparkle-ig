@@ -224,8 +224,9 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Story Tools
 - **Search Viewer List**: Adds a search button to your own story's viewer list. Tapping it fetches the complete viewer list and opens a sheet where you can search by username or name; use a native top-bar menu to filter by who you follow, who you do not follow, people who do not follow you, or starred viewers; and star viewers for persistent quick lookup. Starred viewers follow the per-account setting scope. A fully Sparkle-native alternative to the Instagram Plus viewer search.
-- **Show Story Mentions**: Adds a mentions button listing mentioned users. Each account appears once no matter how many mention stickers point at it, and the story's own author is left out of the list. Tapping a user opens their real profile over the story viewer instead of closing it, so swiping back or tapping the back button returns you straight to the story. The follow button beside each account is Instagram's own control, showing Follow, Following, Requested, or Follow back. Long-pressing an account copies its username.
+- **Show Story Mentions**: Adds a mentions button listing mentioned users. Each account appears once no matter how many mention stickers point at it, and the story's own author is left out of the list. Tapping a user opens their real profile over the story viewer instead of closing it, so swiping back or tapping the back button returns you straight to the story. The follow button beside each account is Instagram's own control, showing Follow, Following, Requested, or Follow back.
 - **Mention Count Badge**: Shows the number of unique mentioned accounts on the story mentions button. Requires Show Story Mentions. The badge is redacted along with the button when Hide UI on Capture is on.
+- **Hold to Copy Username**: Long-press an account in the mentions list to copy its username. Requires Show Story Mentions.
 - **Show Poll Vote Counts**: Shows vote counts next to poll options.
 
 ---
@@ -623,6 +624,7 @@ Settings from before this change carry over: a group stays on unless every notif
 - **Disable All Settings**: Master kill switch; only Settings access remains. **(restart)**
 - **Show Onboarding**: Replays the first-run introduction sheet at any time.
 - **Show What's New**: Replays this release's What's New sheet at any time.
+- **Show NEW Labels**: Settings added in this version carry a NEW label, and the pages that contain one show a dot. Choose Until Seen (the label clears after you have seen the row), Until Next Update (it stays for the whole release), or Off.
 - **Reset Safe Startup Mode**: Clears Sparkle's failed-launch counters and re-enables feature hooks after the launch failsafe kicked in.
 
 ### Diagnostics

@@ -1,4 +1,5 @@
 #import "SPKProfileAnalyzerSettingsProvider.h"
+#import "../SPKNewBadges.h"
 #import "SPKStrings.h"
 #import <UIKit/UIKit.h>
 
@@ -17,6 +18,7 @@
                                                          icon:SPKSettingsIcon(@"profile_analyzer")
                                                viewController:[SPKProfileAnalyzerViewController new]];
     setting.searchKeywords = @"profile analyzer followers following mutual unfollow tracker visited stalkers";
+    setting.addedContentItems = @[ @"profile_analyzer_auto_refresh" ];
     return SPKSettingApplyIconTint(setting, [SPKUtils SPKColor_InstagramPrimaryText]);
 }
 

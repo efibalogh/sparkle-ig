@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Μηνιαίως";
 "MENU_MUTE_UNMUTE" = "Απενεργοποίηση/Ενεργοποίηση Ήχου";
 "MENU_NEVER" = "Ποτέ";
+"MENU_NEW_BADGES_KEEP" = "Έως την επόμενη ενημέρωση";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Έως ότου το δείτε";
 "MENU_NOTIFICATION_MODE_ALL" = "Πανό και απτική";
 "MENU_NOTIFICATION_MODE_BANNER" = "Μόνο πανό";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Μόνο απτική";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Κοινοποίηση Εικόνας";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Όνομα χρήστη";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Προβολή Φωτογραφίας";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Περιέχει νέες ρυθμίσεις";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Νέο";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "ΝΕΟ";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Σχετικά με αυτήν την ενότητα";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Εφαρμογή αλλαγών Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Αναζήτηση όλων των ρυθμίσεων";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Απόκρυψη Πρόσφατων Επισημάνσεων";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Αφαιρεί τους λογαριασμούς που σου προτείνει το Instagram να ακολουθήσεις από τη γραμμή και από την αναπαραγωγή μετά την τελευταία ιστορία.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Απόκρυψη Προτεινόμενων Λογαριασμών";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Πατήστε παρατεταμένα έναν λογαριασμό στη λίστα αναφορών για να αντιγράψετε το όνομα χρήστη του. Απαιτεί την ενεργοποίηση της επιλογής Εμφάνιση αναφορών σε ιστορίες.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Πατήστε παρατεταμένα για αντιγραφή ονόματος χρήστη";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Εμφανίζει τον αριθμό των μοναδικών λογαριασμών που αναφέρονται, στο κουμπί αναφορών της ιστορίας. Απαιτεί «Εμφάνιση Αναφορών Ιστορίας».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Σήμα αριθμού αναφορών";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Προσθέτει κουμπί αναζήτησης στη λίστα θεατών της ιστορίας σου για αναζήτηση με όνομα, φιλτράρισμα και από τις δύο πλευρές της σχέσης παρακολούθησης και σήμανση θεατών με αστέρι.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Απενεργοποιεί κάθε λειτουργία του Sparkle εκτός από τη συντόμευση προς τις Ρυθμίσεις. Χρησιμοποιήστε το για να διαπιστώσετε αν το Sparkle προκαλεί κατάρρευση. Απαιτεί επανεκκίνηση.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Απενεργοποίηση Όλων των Ρυθμίσεων";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Για πόσο διάστημα οι ρυθμίσεις που προστέθηκαν σε αυτή την έκδοση διατηρούν την ετικέτα ΝΕΟ. Οι σελίδες που περιέχουν μία εμφανίζουν μια κουκκίδα.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Εμφάνιση ετικετών ΝΕΟ";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Ανοίγει τις ρυθμίσεις Sparkle με παρατεταμένο πάτημα στην καρτέλα Αρχική, ή στην επόμενη ορατή καρτέλα αν η Αρχική είναι κρυμμένη. Απαιτεί επανεκκίνηση.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Γρήγορη Πρόσβαση Ρυθμίσεων";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Καθαρίζει τους μετρητές αποτυχημένων εκκινήσεων και την προσωρινή καταστολή hooks. Χρησιμοποίησέ το αν κάποιες λειτουργίες φαίνονται να απενεργοποιήθηκαν μόνες τους.";

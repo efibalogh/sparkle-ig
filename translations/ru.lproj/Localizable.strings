@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Ежемесячно";
 "MENU_MUTE_UNMUTE" = "Отключение звука/включение звука";
 "MENU_NEVER" = "Никогда";
+"MENU_NEW_BADGES_KEEP" = "До следующего обновления";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "До просмотра";
 "MENU_NOTIFICATION_MODE_ALL" = "Баннер и вибрация";
 "MENU_NOTIFICATION_MODE_BANNER" = "Только баннер";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Только вибрация";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Поделиться фото";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Имя пользователя";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Просмотреть фото";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Содержит новые настройки";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Новое";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "НОВОЕ";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Об этом разделе";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Применить изменения Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Поиск по всем настройкам";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Скрыть недавно добавленное в актуальное";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Убирает аккаунты, на которые Instagram предлагает подписаться, из панели и из воспроизведения после последней истории.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Скрыть рекомендуемые аккаунты";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Удерживайте аккаунт в списке упоминаний, чтобы скопировать его имя пользователя. Требуется параметр «Показывать упоминания в историях».";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Удерживать, чтобы скопировать имя пользователя";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Показывает количество уникальных упомянутых аккаунтов на кнопке упоминаний в истории. Требует «Показать упоминания в истории».";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Счётчик упоминаний";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Добавляет кнопку поиска в список просмотревших вашу историю, чтобы искать по имени, фильтровать по обеим сторонам подписки и отмечать зрителей звёздочкой.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Отключает все функции Sparkle, кроме ярлыка к настройкам. Используйте это, чтобы определить, вызывает ли Sparkle сбой. Требуется перезапуск.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Отключить все настройки";
 "TOOLS_TWEAK_HEADER" = "Твик";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Как долго настройки, добавленные в этой версии, сохраняют метку НОВОЕ. Страницы, на которых есть такие настройки, показывают точку.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Показывать метки НОВОЕ";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Открывает настройки Sparkle долгим нажатием вкладки Главная или следующей видимой вкладки, если Главная скрыта. Требуется перезапуск.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Быстрый доступ к настройкам";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Сбрасывает счётчики неудачных запусков и временное отключение хуков. Используйте, если функции словно выключились сами.";

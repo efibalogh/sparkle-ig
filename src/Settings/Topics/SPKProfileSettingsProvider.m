@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKProfileSettingsProvider.h"
 
 #import "../../AssetUtils.h"
@@ -160,7 +161,7 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                 reorder.enabledProvider = ^BOOL {
                     return available;
                 };
-                reorder;
+                SPKSettingMarkedNew(reorder, @"v1.7.0");
             })
         ],
                         nil),
@@ -169,14 +170,14 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                                            icon:SPKSettingsIcon(@"grid_square")
                                     defaultsKey:@"profile_square_grid"],
                                SPKL(@"PROFILE_TABS_SQUARE_GRID_HELP")),
-            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_GRID_FILTER_TITLE")
+            SPKSettingMarkedNewWithID(SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_GRID_FILTER_TITLE")
                                                         icon:SPKSettingsIcon(@"filter")
                                                         menu:SPKProfileGridFilterModeMenu()],
-                               SPKL(@"PROFILE_TABS_GRID_FILTER_HELP")),
-            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_REELS_SORT_TITLE")
+                               SPKL(@"PROFILE_TABS_GRID_FILTER_HELP")), @"v1.7.0", @"profile_grid_filter_mode"),
+            SPKSettingMarkedNewWithID(SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_REELS_SORT_TITLE")
                                                         icon:SPKSettingsIcon(@"sort")
                                                         menu:SPKProfileReelsSortModeMenu()],
-                               SPKL(@"PROFILE_TABS_REELS_SORT_HELP")),
+                               SPKL(@"PROFILE_TABS_REELS_SORT_HELP")), @"v1.7.0", @"profile_reels_sort_mode"),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SAVED_TAB_TITLE")
                                                           icon:SPKSettingsIcon(@"save")
                                                    defaultsKey:@"profile_saved_tab"],

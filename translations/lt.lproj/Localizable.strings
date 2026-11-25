@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Kas mėnesį";
 "MENU_MUTE_UNMUTE" = "Nutildyti / įjungti garsą";
 "MENU_NEVER" = "Niekada";
+"MENU_NEW_BADGES_KEEP" = "Iki kito atnaujinimo";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Iki peržiūrėta";
 "MENU_NOTIFICATION_MODE_ALL" = "Juosta ir haptika";
 "MENU_NOTIFICATION_MODE_BANNER" = "Tik juosta";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Tik haptika";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Bendrinti nuotrauką";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Vartotojo vardas";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Peržiūrėti nuotrauką";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Yra naujų nustatymų";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Naujas";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NAUJA";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Apie šį skyrių";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Taikyti Liquid Glass pakeitimus";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Ieškoti visuose nustatymuose";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Slėpti naujausias akimirkas";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Pašalina paskyras, kurias Instagram siūlo sekti, iš juostos ir automatinio leidimo po paskutinio Stories įrašo.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Slėpti siūlomas paskyras";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Ilgai paspauskite paskyrą paminėjimų sąraše, kad nukopijuotumėte jos naudotojo vardą. Reikia įjungti „Rodyti Stories paminėjimus“.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Laikyti, kad nukopijuotumėte naudotojo vardą";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Rodo unikalių paminėtų paskyrų skaičių ant Stories paminėjimų mygtuko. Reikia įjungti Stories paminėjimų rodymą.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Paminėjimų skaičiaus ženklelis";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Prideda paieškos mygtuką į jūsų Stories peržiūrėjusiųjų sąrašą su paieška pagal vardą, filtravimu pagal sekimo ryšį ir žymėjimu.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Išjungia visas Sparkle funkcijas, išskyrus nuorodą į Nustatymai. Naudokite tai, kad nustatytumėte, ar Sparkle sukelia strigtį. Reikia paleisti iš naujo.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Išjungti visus nustatymus";
 "TOOLS_TWEAK_HEADER" = "Priedas";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Kiek laiko šioje versijoje pridėti nustatymai išlaiko žymę „NAUJA“. Puslapiai, kuriuose yra tokių nustatymų, rodo tašką.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Rodyti žymes „NAUJA“";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Atidaro Sparkle Nustatymai ilgai paspaudus pradžios skirtuką arba kitą matomą skirtuką, kai pradžia paslėpta. Reikia paleisti iš naujo.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Greita prieiga prie Nustatymai";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Išvalo nepavykusių paleidimų skaitiklius ir laikiną kabliukų slopinimą. Naudokite tai, jei funkcijos atrodo išsijungusios savaime.";

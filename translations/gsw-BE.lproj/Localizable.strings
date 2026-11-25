@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Monatlech";
 "MENU_MUTE_UNMUTE" = "Stumm/Nid Stumm";
 "MENU_NEVER" = "Nie";
+"MENU_NEW_BADGES_KEEP" = "Bis zum nöchste Update";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Bis gseh";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner und Haptik";
 "MENU_NOTIFICATION_MODE_BANNER" = "Nume Banner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Nume Haptik";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Biud teile";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Username";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Biud aluege";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Het neui Iischtellige";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Neu";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NEU";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Über dëse Abschnitt";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Liquid-Glass-Änderige übernäh";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Aui Ystellige sueche";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Neui Highlights verstecke";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Entfernt Konten, wo Instagram dir zum Folge vorschlaht, us dr Läiste und vom Abspiele nach dr letschte Story.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Vorgschlageni Konten verstecke";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Lang drücke uf es Konto i dr Erwähnige-Lischt, zum de Benutzername cho kopiere. Bruucht Story-Erwähnige azeige.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Lang drücke zum Benutzername kopiere";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Zeigt d'Aazahl vo eizigartige erwähnte Accounts uf em Story-Erwähnige-Chnopf. Bruucht Story-Erwähnige zeige.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Erwähnigs-Zähler-Badge";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Fügt e Sueche-Chnopf zu dyner Story-Viewer-Lischte dezue, zum nach Name z'sueche, nach beidne Syte vor Follow-Beziehig z'filtere, und Viewer z'markiere.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Deaktiviert jedi Sparkle-Funktion usser dr Kürzu zu de Ystellige. Bruuchs, zum ussifinde, öb Sparkle en Absturz verursacht. Bruucht en Neustart.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Aui Ystellige deaktiviere";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Wie lang Iischtellige, wo in dere Version neu dezuecho sind, s NEU-Label behalte. Syte mit sonere Iischtellig zeige es blaus Pünktli.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "NEU-Labels anzeigen";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Mached d'Sparkle-Ystellige uf bi eme Lang-Drück uf dr Home-Tab, oder em nächste sichtbare Tab, wenn Home verstecket isch. Bruucht en Neustart.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Schnäue Ystellige-Zuegriff";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Leert d'Fählgschlagene-Start-Zähler und d'temporäri Hook-Unterdrückig. Bruuchs, wenn Funktione vo sich us usgschautet schyne.";

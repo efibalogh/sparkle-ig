@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Mensal";
 "MENU_MUTE_UNMUTE" = "Mutar/Desmutar";
 "MENU_NEVER" = "Nunca";
+"MENU_NEW_BADGES_KEEP" = "Até a próxima atualização";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Até ver";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner e háptico";
 "MENU_NOTIFICATION_MODE_BANNER" = "Só banner";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Só háptico";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Compartilhar Imagem";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Nome de usuário";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "Ver Foto";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Contém configurações novas";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "Novo";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NOVO";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "Sobre esta seção";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Aplicar alterações do Liquid Glass";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Pesquisar em todas as configurações";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Ocultar Destaques Recentes";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Remove as contas que o Instagram sugere que você siga, tanto da barra quanto da reprodução após o último story.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Ocultar Contas Sugeridas";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Mantenha pressionada uma conta na lista de menções para copiar o nome de usuário. Requer Mostrar menções em stories.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Manter pressionado para copiar o nome de usuário";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Mostra o número de contas mencionadas únicas no botão de menções do story. Requer “Mostrar Menções de Story”.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Selo de contagem de menções";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Adiciona um botão de busca à lista de quem viu seu story para procurar por nome, filtrar por cada lado da relação de seguir e marcar pessoas com estrela.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Desativa todos os recursos do Sparkle, exceto o atalho para as Configurações. Use isto para determinar se o Sparkle está causando uma falha. Requer reiniciar.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Desabilitar Todas as Configurações";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "Por quanto tempo as configurações adicionadas nesta versão mantêm o rótulo NOVO. Páginas que contêm uma mostram um ponto.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Mostrar rótulos NOVO";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Abre as configurações do Sparkle com um toque longo na aba Início, ou na próxima aba visível se Início estiver oculta. Requer reiniciar.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Acesso Rápido a Configurações";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Limpa os contadores de inicializações falhas e a suspensão temporária de hooks. Use se alguns recursos parecerem ter se desativado sozinhos.";

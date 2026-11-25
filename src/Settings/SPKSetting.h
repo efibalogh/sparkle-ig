@@ -36,6 +36,17 @@ FOUNDATION_EXPORT NSNotificationName const SPKSettingAccessoryTextDidChangeNotif
 /// title reads twice. Leave it nil on those rows: they are simply absent.
 @property (nonatomic, copy, nullable) NSString *helpText;
 
+/// The Sparkle version that introduced this row, such as `v1.7.0`. Set through
+/// `SPKSettingMarkedNew` (SPKNewBadges.h). While that version's release is the
+/// installed one, the row carries a NEW pill and the topic rows above it a dot.
+@property (nonatomic, copy, nullable) NSString *addedInVersion;
+/// Stable identity for the row's seen state. Falls back to `defaultsKey`.
+@property (nonatomic, copy, nullable) NSString *addedBadgeIdentifier;
+/// New items inside the custom page this navigation row opens, which the settings
+/// tree can't see into (a dashboard, an editor). Identifiers registered in
+/// `SPKNewBadgeItemVersions()`; the row shows a dot while any is unseen.
+@property (nonatomic, copy, nullable) NSArray<NSString *> *addedContentItems;
+
 @property (nonatomic, strong, nullable) UIImage *icon;
 @property (nonatomic, strong, nullable) UIColor *iconTintColor;
 @property (nonatomic, copy, nullable) UIImage * (^iconProvider)(void);

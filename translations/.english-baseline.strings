@@ -1462,6 +1462,8 @@
 "MENU_MONTHLY" = "Monthly";
 "MENU_MUTE_UNMUTE" = "Mute/Unmute";
 "MENU_NEVER" = "Never";
+"MENU_NEW_BADGES_KEEP" = "Until Next Update";
+"MENU_NEW_BADGES_UNTIL_SEEN" = "Until Seen";
 "MENU_NOTIFICATION_MODE_ALL" = "Banner and Haptic";
 "MENU_NOTIFICATION_MODE_BANNER" = "Banner Only";
 "MENU_NOTIFICATION_MODE_HAPTIC" = "Haptic Only";
@@ -1760,10 +1762,10 @@
 "MESSAGES_GENERAL_ADVANCE_AFTER_MANUAL_SEEN_TITLE" = "Advance After Manual Seen";
 "MESSAGES_GENERAL_ALSO_SHOW_CHAT_MEDIA_TITLE" = "Also Show on Chat Media";
 "MESSAGES_GENERAL_LAST_ACTIVE_TITLE" = "Last Active";
-"MESSAGES_GENERAL_MARK_SEEN_MESSAGE_REPLY_TITLE" = "Mark Seen on Message Reply";
-"MESSAGES_GENERAL_MARK_SEEN_MESSAGE_SEND_TITLE" = "Mark Seen on Message Send";
-"MESSAGES_GENERAL_MARK_SEEN_REACTION_TITLE" = "Mark Seen on Reaction";
-"MESSAGES_GENERAL_MARK_SEEN_TYPING_TITLE" = "Mark Seen on Typing";
+"MESSAGES_GENERAL_MARK_SEEN_MESSAGE_REPLY_TITLE" = "Reply";
+"MESSAGES_GENERAL_MARK_SEEN_MESSAGE_SEND_TITLE" = "Send";
+"MESSAGES_GENERAL_MARK_SEEN_REACTION_TITLE" = "Reaction";
+"MESSAGES_GENERAL_MARK_SEEN_TYPING_TITLE" = "Typing";
 "MESSAGES_GENERAL_SEEN_BUTTON_POSITION_TITLE" = "Seen Button Position";
 "MESSAGES_GIF_TITLE_LOOKUP_PLACEHOLDER" = "Looking up GIF title...";
 "MESSAGES_GIF_TITLE_TAP_TO_COPY_SUBTITLE" = "Tap to copy";
@@ -2215,6 +2217,9 @@
 "SETTINGS_PROFILE_SHARE_PICTURE_TEXT" = "Share Picture";
 "SETTINGS_PROFILE_USERNAME_TEXT" = "Username";
 "SETTINGS_PROFILE_VIEW_PICTURE_TEXT" = "View Picture";
+"SETTINGS_ROW_CONTAINS_NEW_ACCESSIBILITY" = "Contains new settings";
+"SETTINGS_ROW_NEW_BADGE_ACCESSIBILITY" = "New";
+"SETTINGS_ROW_NEW_BADGE_TEXT" = "NEW";
 "SETTINGS_SECTION_INFO_ACCESSIBILITY_LABEL" = "About this section";
 "SETTINGS_SETTINGS_APPLY_LIQUID_GLASS_CHANGES_TEXT" = "Apply Liquid Glass changes";
 "SETTINGS_SETTINGS_SEARCH_SETTINGS_TEXT" = "Search All Settings";
@@ -2380,6 +2385,8 @@
 "STORIES_OTHER_HIDE_RECENT_HIGHLIGHTS_TITLE" = "Hide Recent Highlights";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_HELP" = "Removes accounts Instagram suggests you follow from the tray, and from playing past the last story.";
 "STORIES_OTHER_HIDE_SUGGESTED_ACCOUNTS_TITLE" = "Hide Suggested Accounts";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP" = "Long-press an account in the mentions list to copy its username. Requires Show Story Mentions.";
+"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE" = "Hold to Copy Username";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP" = "Shows the number of unique mentioned accounts on the story mentions button. Requires Show Story Mentions.";
 "STORIES_OTHER_MENTIONS_COUNT_BADGE_TITLE" = "Mention Count Badge";
 "STORIES_OTHER_SEARCH_VIEWER_LIST_HELP" = "Adds a search button to your story's viewer list to search by name, filter by either side of the follow relationship, and star viewers.";
@@ -2587,6 +2594,8 @@
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_HELP" = "Disables every Sparkle feature except the shortcut to Settings. Use this to determine whether Sparkle is causing a crash. Requires a restart.";
 "TOOLS_TWEAK_DISABLE_ALL_SETTINGS_TITLE" = "Disable All Settings";
 "TOOLS_TWEAK_HEADER" = "Tweak";
+"TOOLS_TWEAK_NEW_BADGES_HELP" = "How long settings added in this version keep their NEW label. Pages that contain one show a dot.";
+"TOOLS_TWEAK_NEW_BADGES_TITLE" = "Show NEW Labels";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP" = "Opens Sparkle Settings on a long press of the Home tab, or the next visible tab when Home is hidden. Requires a restart.";
 "TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE" = "Quick Settings Access";
 "TOOLS_TWEAK_RESET_SAFE_STARTUP_MODE_HELP" = "Clears failed-launch counters and temporary hook suppression. Use it if features appear to be switched off on their own.";

@@ -7,6 +7,7 @@
 #import "../../../Shared/UI/SPKProgressPillButton.h"
 #import "../../../Shared/UI/SPKSwitch.h"
 #import "../../../Utils.h"
+#import "../../../Settings/SPKNewBadges.h"
 #import "../../../Shared/Avatars/SPKAvatarView.h"
 #import "SPKProfileAnalyzerAutoRefresh.h"
 #import "SPKProfileAnalyzerListViewController.h"
@@ -166,7 +167,11 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
 #pragma mark - Main VC
 
+// Registered in SPKNewBadgeItemVersions(); the Profile Analyzer settings row points here.
+static NSString *const kSPKPAAutoRefreshBadgeItem = @"profile_analyzer_auto_refresh";
+
 @interface SPKProfileAnalyzerViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic) BOOL autoRefreshBadgeShown;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *headerContainer;
 @property (nonatomic, strong) SPKPAIdentityHeader *header;
@@ -252,6 +257,10 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.autoRefreshBadgeShown) {
+        self.autoRefreshBadgeShown = NO;
+        SPKNewBadgesMarkItemsSeen(@[ kSPKPAAutoRefreshBadgeItem ], self);
+    }
     [self stopButtonCycle]; // don't tick while off-screen (restarts on re-appear)
 }
 
@@ -689,6 +698,13 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
         SPKPAOptionRow opt = (SPKPAOptionRow)[[self optionRows][indexPath.row] integerValue];
         if (opt == SPKPAOptionAutoRefresh) {
             content.text = SPKL(@"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT");
+            if (SPKNewBadgeItemIsNew(kSPKPAAutoRefreshBadgeItem)) {
+                UIFont *font = content.textProperties.font ?: [SPKFont fontForStyle:SPKFontStyleBody];
+                content.attributedText = SPKNewBadgeAttributedTitle(content.text, font, content.textProperties.color, SPKNewBadgeStateRow, tableView.traitCollection);
+                cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@", SPKL(@"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT"), SPKNewBadgeAccessibilityText(SPKNewBadgeStateRow)];
+                // Seen once shown; the pill stays until the dashboard is left.
+                self.autoRefreshBadgeShown = YES;
+            }
             content.image = [SPKAssetUtils instagramIconNamed:@"arrow_cw" pointSize:24.0 renderingMode:UIImageRenderingModeAlwaysTemplate];
             content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
             cell.accessoryView = [self autoRefreshMenuButton];
