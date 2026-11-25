@@ -40,6 +40,8 @@ static void SPKRegisterPollViewWithOverlay(UIView *pollView) {
 #define kSPKPollBadgeMarginRight -6.0
 // Set to 0.0 to center vertically, or a positive/negative value to offset from the center
 #define kSPKPollBadgeCenterYOffset -18.0
+// Minimum space between the badge's bottom and the top of the percentage digits
+#define kSPKPollBadgePercentGap 3.0
 
 // ─── Badge View ─────────────────────────────────────────────────────
 
@@ -136,7 +138,7 @@ static id SPKKVCMaybe(id object, NSString *key) {
     }
 }
 
-static NSArray *SPKArrayIvar(id object, const char *name) {
+static id SPKObjectIvar(id object, const char *name) {
     if (!object || !name)
         return nil;
     for (Class cls = [object class]; cls && cls != [NSObject class]; cls = class_getSuperclass(cls)) {
@@ -144,13 +146,58 @@ static NSArray *SPKArrayIvar(id object, const char *name) {
         if (!ivar)
             continue;
         @try {
-            id value = object_getIvar(object, ivar);
-            return [value isKindOfClass:[NSArray class]] ? value : nil;
+            return object_getIvar(object, ivar);
         } @catch (__unused NSException *exception) {
             return nil;
         }
     }
     return nil;
+}
+
+static NSArray *SPKArrayIvar(id object, const char *name) {
+    id value = SPKObjectIvar(object, name);
+    return [value isKindOfClass:[NSArray class]] ? value : nil;
+}
+
+// ─── Percentage Geometry ────────────────────────────────────────────
+
+// Where the top of the percentage digits (and the separate "%" glyph) sits
+// in `targetView` space, or NAN when the option has no percentage labels.
+//
+// Derived from the option's vertical centre and the labels' fonts only, never
+// from the labels' current frame, text or visibility. The percentage is
+// hidden before voting and fades in when returning to a story; reading the
+// live label would put the badge in one spot first and move it once the
+// digits appear. Uses the cap height rather than the line box, since the
+// line spacing above the digits is free for the badge to overlap.
+static CGFloat SPKStoryPollPercentGlyphTop(UIView *optionView, CGRect optionFrame, UIView *targetView) {
+    CGFloat top = NAN;
+    for (const char *contentIvar : {"_contentView", "_filledContentView"}) {
+        UIView *contentView = SPKObjectIvar(optionView, contentIvar);
+        if (![contentView isKindOfClass:[UIView class]])
+            continue;
+        for (const char *labelIvar : {"_percentageLabel", "_percentSymbolLabel"}) {
+            UILabel *label = SPKObjectIvar(contentView, labelIvar);
+            if (![label isKindOfClass:[UILabel class]] || !label.font)
+                continue;
+            UIFont *font = label.font;
+            // The percentage line is centred on the option; the digits' top is
+            // this far above that centre, in the label's own units.
+            CGFloat offset = font.ascender - font.capHeight - font.lineHeight / 2.0;
+            // Account for any scale between the label and the target (the
+            // sticker is displayed with a transform).
+            CGPoint origin = [label convertPoint:CGPointZero toView:targetView];
+            CGPoint unit = [label convertPoint:CGPointMake(0.0, 1.0) toView:targetView];
+            CGFloat scale = hypot(unit.x - origin.x, unit.y - origin.y);
+            if (scale <= 0.0 || !isfinite(scale))
+                scale = 1.0;
+            CGFloat candidate = CGRectGetMidY(optionFrame) + offset * scale;
+            top = isnan(top) ? candidate : MIN(top, candidate);
+        }
+        if (!isnan(top))
+            break;
+    }
+    return top;
 }
 
 // ─── Label & String Handling ────────────────────────────────────────
@@ -313,6 +360,14 @@ static void SPKApplyStoryPollVoteCounts(UIView *pollView, NSArray<UIView *> *opt
 
         CGFloat badgeX = CGRectGetMaxX(optionFrame) - badgeSize.width - kSPKPollBadgeMarginRight;
         CGFloat badgeY = CGRectGetMidY(optionFrame) - (badgeSize.height / 2.0) + kSPKPollBadgeCenterYOffset;
+
+        // The badge may grow out of the sticker but must never cover the
+        // percentage. Shorter, rounder poll options put the digits close to
+        // the top edge, so lift the badge until it clears them. Taller
+        // options already clear and keep the original position.
+        CGFloat percentTop = SPKStoryPollPercentGlyphTop(optionView, optionFrame, pollView);
+        if (!isnan(percentTop))
+            badgeY = MIN(badgeY, percentTop - kSPKPollBadgePercentGap - badgeSize.height);
 
         badge.frame = CGRectMake(badgeX, badgeY, badgeSize.width, badgeSize.height);
         // Rounding goes on the pill INSIDE the secure canvas, never on the
