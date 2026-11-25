@@ -434,6 +434,11 @@ static const NSTimeInterval kSPKPreviewDownloadTick = 1.0 / 20.0;
     pillToasts.hiddenProvider = ^BOOL {
         return !instagramStyle() || !SPKPrefIsAvailable(@"notifs_instagram_toast_design");
     };
+    // The Style menu isn't new. It carries the label because the new Pill Toasts row
+    // sits behind it, hidden until the Instagram style is chosen; sharing the ID
+    // means seeing either clears both. Not where the design can't run at all.
+    if (SPKPrefIsAvailable(@"notifs_instagram_toast_design"))
+        SPKSettingMarkedNewWithID(style, @"v1.7.0", @"notifs_instagram_toast_design");
 
     SPKSetting *progress = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_DOWNLOAD_PROGRESS_TITLE")
                                                                    subtitle:@""
