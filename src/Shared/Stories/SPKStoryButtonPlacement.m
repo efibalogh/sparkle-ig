@@ -8,6 +8,14 @@
 
 static const void *kSPKStoryFloatingBarKey = &kSPKStoryFloatingBarKey;
 static const void *kSPKStoryFloatingBarScanKey = &kSPKStoryFloatingBarScanKey;
+static const void *kSPKStoryFloatingBarOnStorySinceKey = &kSPKStoryFloatingBarOnStorySinceKey;
+static const void *kSPKStoryFoldedRowYKey = &kSPKStoryFoldedRowYKey;
+static const void *kSPKStorySettleRelayoutKey = &kSPKStorySettleRelayoutKey;
+
+// How long the floating bar has to stay over the story before the row climbs
+// over it. On every story change Instagram lays the bar out over the story for
+// a frame or two before handing its buttons to the side column.
+static const CFTimeInterval kSPKStoryFloatingBarSettleDelay = 0.1;
 
 // Instagram's flag for "the footer moved out of the overlay", set on a folded
 // foldable where it shows a floating bar instead (send/like over the composer,
@@ -95,7 +103,24 @@ static CGFloat SPKStoryFloatingBarTop(UIView *overlayView) {
             continue;
         top = isnan(top) ? CGRectGetMinY(frame) : MIN(top, CGRectGetMinY(frame));
     }
-    return top;
+    if (isnan(top)) {
+        objc_setAssociatedObject(overlayView, kSPKStoryFloatingBarOnStorySinceKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        return NAN;
+    }
+
+    // Only a bar that stays over the story counts; one passing through on its
+    // way to the side column would pull the row up for a frame.
+    CFTimeInterval now = CACurrentMediaTime();
+    NSNumber *since = objc_getAssociatedObject(overlayView, kSPKStoryFloatingBarOnStorySinceKey);
+    if (!since) {
+        objc_setAssociatedObject(overlayView, kSPKStoryFloatingBarOnStorySinceKey, @(now), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        __weak UIView *weakOverlay = overlayView;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((kSPKStoryFloatingBarSettleDelay + 0.02) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakOverlay setNeedsLayout];
+        });
+        return NAN;
+    }
+    return now - since.doubleValue >= kSPKStoryFloatingBarSettleDelay ? top : NAN;
 }
 
 // Vertical center, in the overlay's space, of the lowest visible floating bar
@@ -206,15 +231,68 @@ static CGFloat SPKStoryCommentsTop(UIView *overlayView) {
     return top;
 }
 
+// Whether the overlay sits flat and fully inside its window. While swiping
+// between users the story turns like a cube, so geometry converted from the
+// side column or the floating bar (window-level views shared by every story)
+// lands in the wrong place, and the incoming story stops at a row far too
+// high. The column and the bar only count once the overlay has settled; one
+// more layout pass is asked for when it has.
+static BOOL SPKStoryOverlayIsSettled(UIView *overlayView) {
+    UIWindow *window = overlayView.window;
+    if (!window)
+        return NO;
+    CGRect bounds = overlayView.bounds;
+    CGRect rect = [overlayView convertRect:bounds toView:nil];
+    CGRect windowBounds = window.bounds;
+    return ABS(CGRectGetWidth(rect) - CGRectGetWidth(bounds)) < 1.0 &&
+           ABS(CGRectGetHeight(rect) - CGRectGetHeight(bounds)) < 1.0 &&
+           CGRectGetMinX(rect) > CGRectGetMinX(windowBounds) - 1.0 &&
+           CGRectGetMaxX(rect) < CGRectGetMaxX(windowBounds) + 1.0;
+}
+
+static void SPKStoryScheduleSettleRelayout(UIView *overlayView) {
+    if ([objc_getAssociatedObject(overlayView, kSPKStorySettleRelayoutKey) boolValue])
+        return;
+    objc_setAssociatedObject(overlayView, kSPKStorySettleRelayoutKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    __weak UIView *weakOverlay = overlayView;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIView *overlay = weakOverlay;
+        if (!overlay)
+            return;
+        objc_setAssociatedObject(overlay, kSPKStorySettleRelayoutKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [overlay setNeedsLayout];
+    });
+}
+
 // Folded foldable: the like and send buttons live in the floating bar, so the
 // row sits on the media's bottom edge and only climbs over what is visible
 // right now (the composer, the comments preview, the floating bar).
 static CGFloat SPKStoryFoldedButtonY(UIView *overlayView, UIView *mediaView, UIView *footerContainer, CGFloat size) {
+    // Holding a story to pause it fades the footer out. Keep the row where it
+    // was instead of dropping it to the media's edge and back on release.
+    NSMutableDictionary<NSNumber *, NSNumber *> *rowY = objc_getAssociatedObject(overlayView, kSPKStoryFoldedRowYKey);
+    BOOL footerFaded = footerContainer && (footerContainer.hidden || footerContainer.alpha < 0.01);
+    if (footerFaded && rowY[@(size)])
+        return rowY[@(size)].doubleValue;
+
     // Line the row up with the lowest button of the column beside the story;
     // without one, inset a little further than the unfolded row does.
     CGFloat bottomLimit = mediaView ? CGRectGetMaxY(mediaView.frame) - 7.0 : CGRectGetHeight(overlayView.bounds) - 12.0;
     CGFloat y = bottomLimit - size - 14.0;
-    CGFloat columnMidY = SPKStoryColumnBarBottomButtonMidY(overlayView);
+
+    BOOL settled = SPKStoryOverlayIsSettled(overlayView);
+    if (!settled) {
+        SPKStoryScheduleSettleRelayout(overlayView);
+        NSNumber *held = rowY[@(size)];
+        if (held)
+            return held.doubleValue;
+    }
+
+    // The column's lowest button sits beside the media's bottom edge; one
+    // reported far above it is mid-animation, not a place to line up with.
+    CGFloat columnMidY = settled ? SPKStoryColumnBarBottomButtonMidY(overlayView) : NAN;
+    if (!isnan(columnMidY) && columnMidY < bottomLimit - 3.0 * size)
+        columnMidY = NAN;
     if (!isnan(columnMidY))
         y = MIN(columnMidY - size / 2.0, bottomLimit - size);
 
@@ -226,9 +304,16 @@ static CGFloat SPKStoryFoldedButtonY(UIView *overlayView, UIView *mediaView, UIV
     if (!isnan(commentsTop) && y + size > commentsTop - 2.0)
         y = commentsTop - 2.0 - size;
 
-    CGFloat floatingBarTop = SPKStoryFloatingBarTop(overlayView);
+    CGFloat floatingBarTop = settled ? SPKStoryFloatingBarTop(overlayView) : NAN;
     if (!isnan(floatingBarTop) && y + size > floatingBarTop - 10.0)
         y = floatingBarTop - 10.0 - size;
+    if (!footerFaded && settled) {
+        if (!rowY) {
+            rowY = [NSMutableDictionary dictionary];
+            objc_setAssociatedObject(overlayView, kSPKStoryFoldedRowYKey, rowY, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        rowY[@(size)] = @(y);
+    }
     return y;
 }
 

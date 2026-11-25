@@ -390,20 +390,23 @@ UIView *SPKActiveStoryOverlayForInteractions(void) {
         SPKUpdateStorySeenButtonIcon(seenButton);
     }
 
+    // The row is placed from the shared trailing frame, the same one the
+    // action button uses, rather than from the action button's current frame:
+    // that one is updated from other layout passes, and while its menu morphs
+    // UIKit hides it, so copying it left the row a pass behind or jumping into
+    // the action button's slot.
     UIButton *storyActionButton = (UIButton *)[overlayView viewWithTag:kSPKStoriesActionButtonTag];
-    BOOL actionVisible = [storyActionButton isKindOfClass:[UIButton class]] && !storyActionButton.hidden && storyActionButton.superview == overlayView && CGRectGetWidth(storyActionButton.frame) > 0.0 && CGRectGetHeight(storyActionButton.frame) > 0.0;
+    BOOL actionVisible = [storyActionButton isKindOfClass:[UIButton class]] && storyActionButton.superview == overlayView &&
+                         (!storyActionButton.hidden || SPKActionButtonMenuIsTransitioning(storyActionButton));
     CGRect baseFrame = SPKStorySeenBaseFrame(overlayView);
     CGFloat size = CGRectGetWidth(baseFrame);
-    if (actionVisible) {
-        size = CGRectGetWidth(storyActionButton.frame);
-    }
     if (size <= 0.0)
         size = 44.0;
 
     CGFloat spacingReduction = 2.0;
-    CGFloat y = actionVisible ? CGRectGetMinY(storyActionButton.frame) : CGRectGetMinY(baseFrame);
+    CGFloat y = CGRectGetMinY(baseFrame);
     CGFloat nextX = actionVisible
-                        ? (CGRectGetMinX(storyActionButton.frame) - size + spacingReduction)
+                        ? (CGRectGetMinX(baseFrame) - size + spacingReduction)
                         : CGRectGetMinX(baseFrame);
 
     if (showSeenButton && seenButton) {
