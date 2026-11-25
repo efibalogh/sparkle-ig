@@ -306,8 +306,7 @@ static UIMenu *SPKDebugNetworkMenu(void) {
                               identifier:nil
                                  options:0
                                 children:children];
-    if (@available(iOS 15.0, *))
-        menu.subtitle = recording ? SPKL(@"TOOLS_DEBUG_BUTTON_MENU_NETWORK_RECORDING") : nil;
+    menu.subtitle = recording ? SPKL(@"TOOLS_DEBUG_BUTTON_MENU_NETWORK_RECORDING") : nil;
     return menu;
 }
 

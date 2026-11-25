@@ -340,8 +340,7 @@ NSString *SPKNetworkInterceptorReadableBody(NSData *data) {
     id object = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingFragmentsAllowed error:nil];
     if (object && ([object isKindOfClass:NSDictionary.class] || [object isKindOfClass:NSArray.class])) {
         NSJSONWritingOptions options = NSJSONWritingPrettyPrinted | NSJSONWritingSortedKeys;
-        if (@available(iOS 13.0, *))
-            options |= NSJSONWritingWithoutEscapingSlashes;
+        options |= NSJSONWritingWithoutEscapingSlashes;
         NSData *pretty = [NSJSONSerialization dataWithJSONObject:object options:options error:nil];
         NSString *string = pretty ? [[NSString alloc] initWithData:pretty encoding:NSUTF8StringEncoding] : nil;
         if (string)

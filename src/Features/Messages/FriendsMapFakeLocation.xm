@@ -141,8 +141,7 @@ static NSArray<UIMenuElement *> *SPKFakeLocationMapMenuElements(UIView *source) 
                                              });
                                          }];
     toggle.state = active ? UIMenuElementStateOn : UIMenuElementStateOff;
-    if (@available(iOS 15.0, *))
-        toggle.subtitle = current.name;
+    toggle.subtitle = current.name;
 
     UIAction *choose = [UIAction actionWithTitle:SPKL(@"MESSAGES_FAKE_LOCATION_PICKER_TITLE")
                                            image:[SPKAssetUtils menuIconNamed:@"map_pin"]

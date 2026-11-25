@@ -161,11 +161,9 @@ typedef NS_ENUM(NSInteger, SPKGalleryPickerViewMode) {
     UIWindow *presenterWindow = presenter.viewIfLoaded.window;
 
     UIWindow *window = nil;
-    if (@available(iOS 13.0, *)) {
-        UIWindowScene *scene = presenterWindow.windowScene;
-        if (scene) {
-            window = [[UIWindow alloc] initWithWindowScene:scene];
-        }
+    UIWindowScene *scene = presenterWindow.windowScene;
+    if (scene) {
+        window = [[UIWindow alloc] initWithWindowScene:scene];
     }
     if (!window) {
         CGRect frame = CGRectGetWidth(presenterWindow.bounds) > 0.0 ? presenterWindow.bounds : UIScreen.mainScreen.bounds;
