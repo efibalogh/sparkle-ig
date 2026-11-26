@@ -2,6 +2,42 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AUTO_SAVE_FILTER_LIST_EXCLUDED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld excluși</string>
+			<key>one</key>
+			<string>%ld exclus</string>
+			<key>other</key>
+			<string>%ld de excluși</string>
+		</dict>
+	</dict>
+	<key>AUTO_SAVE_FILTER_LIST_SELECTED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld selectați</string>
+			<key>one</key>
+			<string>%ld selectat</string>
+			<key>other</key>
+			<string>%ld de selectați</string>
+		</dict>
+	</dict>
 	<key>COMMON_FILE_COUNT</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -124,10 +160,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld eșuat</string>
 			<key>few</key>
 			<string>%ld eșuate</string>
+			<key>one</key>
+			<string>%ld eșuat</string>
 			<key>other</key>
 			<string>%ld eșuate</string>
 		</dict>
@@ -142,10 +178,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld element salvat</string>
 			<key>few</key>
 			<string>%ld elemente salvate</string>
+			<key>one</key>
+			<string>%ld element salvat</string>
 			<key>other</key>
 			<string>%ld de elemente salvate</string>
 		</dict>

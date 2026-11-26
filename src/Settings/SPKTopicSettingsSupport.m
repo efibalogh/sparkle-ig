@@ -524,16 +524,16 @@ UIMenu *SPKAutoSavePhotoQualityMenu(void) {
 }
 
 // Every auto-save surface offers the same All/Selected choice over its own pref; only
-// the subject noun differs ("Users" for stories/instants, "Chats" for DMs).
-UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, NSString *subjectPlural) {
+// the subject differs (users for stories/instants, chats for DMs).
+UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, SPKAutoSaveFilterSubject subject) {
     return [UIMenu menuWithChildren:@[
-        SPKMenuCommand([NSString stringWithFormat:@"All %@", subjectPlural], nil, nil, filterModeKey, @"all", NO),
-        SPKMenuCommand([NSString stringWithFormat:SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_SELECTED_VALUE_FORMAT"), subjectPlural], nil, nil, filterModeKey, @"selected", NO)
+        SPKMenuCommand(SPKAutoSaveFilterModeTitle(subject, YES), nil, nil, filterModeKey, @"all", NO),
+        SPKMenuCommand(SPKAutoSaveFilterModeTitle(subject, NO), nil, nil, filterModeKey, @"selected", NO)
     ]];
 }
 
 UIMenu *SPKStoryAutoSaveFilterModeMenu(void) {
-    return SPKAutoSaveFilterModeMenu(@"stories_auto_save_filter_mode", SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_USERS_TEXT"));
+    return SPKAutoSaveFilterModeMenu(@"stories_auto_save_filter_mode", SPKAutoSaveFilterSubjectUsers);
 }
 
 SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void) {

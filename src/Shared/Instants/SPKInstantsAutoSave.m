@@ -31,7 +31,7 @@ SPKAutoSaveFilterConfig *SPKInstantsAutoSaveFilterConfig(void) {
         config.includedKey = @"instants_auto_save_included";
         config.identityField = @"username";
         config.sortField = @"username";
-        config.subjectPlural = SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_USERS_TEXT");
+        config.subject = SPKAutoSaveFilterSubjectUsers;
         config.ruleNotificationIdentifier = kSPKNotificationInstantsAutoSaveUserRule;
     });
     return config;

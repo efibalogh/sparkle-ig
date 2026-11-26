@@ -2,6 +2,7 @@
 
 #import "../Shared/ActionButton/ActionButtonCore.h"
 #import "../Shared/ActionButton/SPKActionMenuSection.h"
+#import "../Shared/AutoSave/SPKAutoSaveFilter.h"
 #import "SPKSetting.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -54,7 +55,7 @@ UIMenu *SPKMediaPhotoQualityMenu(void);
 UIMenu *SPKAutoSaveDestinationMenu(void);
 UIMenu *SPKAutoSaveVideoQualityMenu(void);
 UIMenu *SPKAutoSavePhotoQualityMenu(void);
-UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, NSString *subjectPlural);
+UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, SPKAutoSaveFilterSubject subject);
 UIMenu *SPKStoryAutoSaveFilterModeMenu(void);
 SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void);
 

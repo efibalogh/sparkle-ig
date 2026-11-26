@@ -2,6 +2,54 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AUTO_SAVE_FILTER_LIST_EXCLUDED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld مستثنين</string>
+			<key>many</key>
+			<string>%ld مستثنى</string>
+			<key>one</key>
+			<string>%ld مستثنى</string>
+			<key>other</key>
+			<string>%ld مستثنى</string>
+			<key>two</key>
+			<string>%ld مستثنى</string>
+			<key>zero</key>
+			<string>%ld مستثنى</string>
+		</dict>
+	</dict>
+	<key>AUTO_SAVE_FILTER_LIST_SELECTED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld محدّدين</string>
+			<key>many</key>
+			<string>%ld محدّد</string>
+			<key>one</key>
+			<string>%ld محدّد</string>
+			<key>other</key>
+			<string>%ld محدّد</string>
+			<key>two</key>
+			<string>%ld محدّد</string>
+			<key>zero</key>
+			<string>%ld محدّد</string>
+		</dict>
+	</dict>
 	<key>COMMON_FILE_COUNT</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -180,17 +228,17 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>zero</key>
-			<string>فشل %ld</string>
-			<key>one</key>
-			<string>فشل %ld</string>
-			<key>two</key>
-			<string>فشل %ld</string>
 			<key>few</key>
 			<string>فشل %ld</string>
 			<key>many</key>
 			<string>فشل %ld</string>
+			<key>one</key>
+			<string>فشل %ld</string>
 			<key>other</key>
+			<string>فشل %ld</string>
+			<key>two</key>
+			<string>فشل %ld</string>
+			<key>zero</key>
 			<string>فشل %ld</string>
 		</dict>
 	</dict>
@@ -204,17 +252,17 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>zero</key>
-			<string>تم حفظ %ld عنصر</string>
-			<key>one</key>
-			<string>تم حفظ %ld عنصر</string>
-			<key>two</key>
-			<string>تم حفظ %ld عنصرين</string>
 			<key>few</key>
 			<string>تم حفظ %ld عناصر</string>
 			<key>many</key>
 			<string>تم حفظ %ld عنصرًا</string>
+			<key>one</key>
+			<string>تم حفظ %ld عنصر</string>
 			<key>other</key>
+			<string>تم حفظ %ld عنصر</string>
+			<key>two</key>
+			<string>تم حفظ %ld عنصرين</string>
+			<key>zero</key>
 			<string>تم حفظ %ld عنصر</string>
 		</dict>
 	</dict>
@@ -228,17 +276,17 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>zero</key>
-			<string>%ld قصة</string>
-			<key>one</key>
-			<string>%ld قصة</string>
-			<key>two</key>
-			<string>%ld قصتان</string>
 			<key>few</key>
 			<string>%ld قصص</string>
 			<key>many</key>
 			<string>%ld قصة</string>
+			<key>one</key>
+			<string>%ld قصة</string>
 			<key>other</key>
+			<string>%ld قصة</string>
+			<key>two</key>
+			<string>%ld قصتان</string>
+			<key>zero</key>
 			<string>%ld قصة</string>
 		</dict>
 	</dict>

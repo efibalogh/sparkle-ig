@@ -433,9 +433,13 @@ metadata, search, and an optional passcode/biometric lock. Media saved through
 the action buttons or media preview lands here. Gallery data, deleted-message
 logs, and Profile Analyzer data live locally under `Documents/Sparkle/`.
 
-### Access
-- **Open Gallery**: Opens the Gallery from settings.
+### Home
+- **Open Gallery**: Opens the Gallery. Its subtitle shows the file count and total size; the row shows a padlock while the passcode lock is set.
 - The tab long-press that opens the Gallery is set in Interface > Tab Bar.
+- **Auto-Save**: Shows which surfaces save to the Gallery on their own (Stories, Messages, Instants), **Off** when none do, or **To Photos** when auto-save goes to the Photos app instead. Opens the Downloads > Auto-Save page, where each surface is set up.
+- **Import Media**: Opens the importer (see Importing), importing to the Gallery root.
+- **Back Up Gallery**: Opens Data > Backup & Transfer > Export with only the Gallery checked; settings and other data can still be added before exporting.
+- **Gallery Settings**: The settings below. The gear inside the Gallery opens the same page.
 
 ### Browsing
 - **Show Favorites at Top**: Pins favorites within the current sort/folder.
@@ -461,7 +465,7 @@ logs, and Profile Analyzer data live locally under `Documents/Sparkle/`.
 - **Edit & Save (action button)**: The photo counterpart to Trim & Save: an opt-in, image-only action for any action-button menu. It fetches the photo at your **Photo Quality** setting (asking first when that is **Always Ask**), opens the editor, then offers a Done menu of destinations (**Photos / Gallery / Share / Copy**).
 
 ### Importing
-- **Import Media**: Bring media into the Gallery from the Files app — images, GIFs, videos, and audio — with full editable metadata. Picked files land in a queue you can review before committing: each row previews the file (tap the thumbnail for a full-screen preview) and opens a details form to set its **display name**, **username**, **source**, **date**, and, under **Advanced**, the user/media IDs, shortcode, permalink, pixel size, and duration. **Paste link to autofill** fills the form from a copied Instagram link. A **Shared details** row applies the same values to every queued file that you haven't edited individually, so a batch from one account only needs filling in once. Files are imported into the Gallery folder you opened Settings from.
+- **Import Media**: Bring media into the Gallery from the Files app — images, GIFs, videos, and audio — with full editable metadata. Picked files land in a queue you can review before committing: each row previews the file (tap the thumbnail for a full-screen preview) and opens a details form to set its **display name**, **username**, **source**, **date**, and, under **Advanced**, the user/media IDs, shortcode, permalink, pixel size, and duration. **Paste link to autofill** fills the form from a copied Instagram link. A **Shared details** row applies the same values to every queued file that you haven't edited individually, so a batch from one account only needs filling in once. Files are imported into the Gallery folder you opened Gallery Settings from, or the Gallery root from the Gallery home page.
 - **Queue persistence**: The queue survives leaving the screen and app relaunches — picked files are staged on disk, so a half-filled batch is never lost. Entries are cleared as they import, or via swipe / **Clear Queue**.
 - **Regram Media Vault import**: Coming from Regram? Pick your exported folder, `MediaVault.zip`, or the full `Regram-Data.zip` and Sparkle reads the vault's database directly, enqueueing every file with its metadata already filled in — source, username, dates, dimensions, and favorites — mapped onto Sparkle's own sources. Everything stays editable before import. (ZIP64 archives, which is what macOS and the Files app produce, are supported.)
 

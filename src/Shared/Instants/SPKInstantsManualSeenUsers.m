@@ -28,7 +28,7 @@ SPKAutoSaveFilterConfig *SPKInstantsManualSeenUsersConfig(void) {
         config.includedKey = @"instants_manual_seen_included";
         config.identityField = @"pk";
         config.sortField = @"username";
-        config.subjectPlural = SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_USERS_TEXT");
+        config.subject = SPKAutoSaveFilterSubjectUsers;
         config.ruleNotificationIdentifier = kSPKNotificationInstantsMarkSeen;
         // Excluded / Included, the wording the Stories and Messages manual-seen lists use,
         // rather than auto-save's Selected.

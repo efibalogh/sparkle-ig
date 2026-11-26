@@ -2,6 +2,46 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AUTO_SAVE_FILTER_LIST_EXCLUDED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld išskirti</string>
+			<key>many</key>
+			<string>%ld išskirta</string>
+			<key>one</key>
+			<string>%ld išskirtas</string>
+			<key>other</key>
+			<string>%ld išskirti</string>
+		</dict>
+	</dict>
+	<key>AUTO_SAVE_FILTER_LIST_SELECTED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld pasirinkti</string>
+			<key>many</key>
+			<string>%ld pasirinkta</string>
+			<key>one</key>
+			<string>%ld pasirinktas</string>
+			<key>other</key>
+			<string>%ld pasirinkti</string>
+		</dict>
+	</dict>
 	<key>COMMON_FILE_COUNT</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -152,11 +192,11 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld nepavyko</string>
 			<key>few</key>
 			<string>%ld nepavyko</string>
 			<key>many</key>
+			<string>%ld nepavyko</string>
+			<key>one</key>
 			<string>%ld nepavyko</string>
 			<key>other</key>
 			<string>%ld nepavyko</string>
@@ -172,12 +212,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>Įrašytas %ld elementas</string>
 			<key>few</key>
 			<string>Įrašyti %ld elementai</string>
 			<key>many</key>
 			<string>Įrašyta %ld elemento</string>
+			<key>one</key>
+			<string>Įrašytas %ld elementas</string>
 			<key>other</key>
 			<string>Įrašyta %ld elementų</string>
 		</dict>
@@ -192,12 +232,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld istorija</string>
 			<key>few</key>
 			<string>%ld istorijos</string>
 			<key>many</key>
 			<string>%ld istorijos</string>
+			<key>one</key>
+			<string>%ld istorija</string>
 			<key>other</key>
 			<string>%ld istorijų</string>
 		</dict>

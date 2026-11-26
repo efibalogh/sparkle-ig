@@ -582,8 +582,9 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     cellContentConfig.text = row.title;
 
     // Subtitle
-    if (row.subtitle.length) {
-        cellContentConfig.secondaryText = row.subtitle;
+    NSString *subtitle = row.subtitleProvider ? row.subtitleProvider() : row.subtitle;
+    if (subtitle.length) {
+        cellContentConfig.secondaryText = subtitle;
         cellContentConfig.textToSecondaryTextVerticalPadding = 4.5;
     }
 
@@ -724,7 +725,7 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     case SPKTableCellButton: {
         NSString *accessoryText = SPKSettingsAccessoryText(row);
         BOOL prominentAccessory = row.accessoryTextProminentProvider && row.accessoryTextProminentProvider();
-        if (rowEnabled && accessoryText.length > 0 && (row.subtitle.length > 0 || prominentAccessory)) {
+        if (rowEnabled && accessoryText.length > 0 && (subtitle.length > 0 || prominentAccessory)) {
             cell.accessoryView = SPKSettingsAccessoryLabelView(accessoryText, prominentAccessory);
             break;
         }

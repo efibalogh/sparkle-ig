@@ -33,7 +33,7 @@ SPKAutoSaveFilterConfig *SPKDirectAutoSaveFilterConfig(void) {
         config.includedKey = @"msgs_auto_save_included";
         config.identityField = @"threadId";
         config.sortField = @"threadName";
-        config.subjectPlural = @"Chats";
+        config.subject = SPKAutoSaveFilterSubjectChats;
         config.ruleNotificationIdentifier = kSPKNotificationDirectAutoSaveThreadRule;
     });
     return config;

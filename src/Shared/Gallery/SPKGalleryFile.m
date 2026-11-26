@@ -1583,3 +1583,56 @@ static UIImage *SPKGalleryAudioPlaceholderImage(void) {
 }
 
 @end
+
+@interface SPKGalleryStorageStats ()
+@property (nonatomic, readwrite) NSInteger totalFiles;
+@property (nonatomic, readwrite) NSInteger imageCount;
+@property (nonatomic, readwrite) NSInteger videoCount;
+@property (nonatomic, readwrite) NSInteger audioCount;
+@property (nonatomic, readwrite) long long totalSize;
+@end
+
+@implementation SPKGalleryStorageStats
+
++ (instancetype)currentStats {
+    SPKGalleryStorageStats *stats = [SPKGalleryStorageStats new];
+    NSManagedObjectContext *ctx = [SPKGalleryCoreDataStack shared].viewContext;
+    if (!ctx)
+        return stats;
+
+    NSExpressionDescription *count = [NSExpressionDescription new];
+    count.name = @"count";
+    count.expression = [NSExpression expressionForFunction:@"count:" arguments:@[ [NSExpression expressionForKeyPath:@"mediaType"] ]];
+    count.expressionResultType = NSInteger64AttributeType;
+
+    NSExpressionDescription *size = [NSExpressionDescription new];
+    size.name = @"size";
+    size.expression = [NSExpression expressionForFunction:@"sum:" arguments:@[ [NSExpression expressionForKeyPath:@"fileSize"] ]];
+    size.expressionResultType = NSInteger64AttributeType;
+
+    NSFetchRequest *req = [[NSFetchRequest alloc] initWithEntityName:@"SPKGalleryFile"];
+    req.resultType = NSDictionaryResultType;
+    req.propertiesToGroupBy = @[ @"mediaType" ];
+    req.propertiesToFetch = @[ @"mediaType", count, size ];
+
+    NSArray<NSDictionary *> *rows = [ctx executeFetchRequest:req error:nil] ?: @[];
+    for (NSDictionary *row in rows) {
+        NSInteger rowCount = [row[@"count"] integerValue];
+        stats.totalFiles += rowCount;
+        stats.totalSize += [row[@"size"] longLongValue];
+        switch ((SPKGalleryMediaType)[row[@"mediaType"] integerValue]) {
+        case SPKGalleryMediaTypeAudio:
+            stats.audioCount += rowCount;
+            break;
+        case SPKGalleryMediaTypeVideo:
+            stats.videoCount += rowCount;
+            break;
+        default:
+            stats.imageCount += rowCount;
+            break;
+        }
+    }
+    return stats;
+}
+
+@end

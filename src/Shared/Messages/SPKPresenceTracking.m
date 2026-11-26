@@ -102,7 +102,7 @@ SPKAutoSaveFilterConfig *SPKPresenceFilterConfig(void) {
         config.includedKey = @"msgs_presence_included";
         config.identityField = @"pk";
         config.sortField = @"username";
-        config.subjectPlural = SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_USERS_TEXT");
+        config.subject = SPKAutoSaveFilterSubjectUsers;
         config.ruleNotificationIdentifier = kSPKNotificationPresenceUserRule;
         config.alwaysAccountScopedLists = YES;
     });

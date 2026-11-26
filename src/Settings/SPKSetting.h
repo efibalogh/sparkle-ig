@@ -51,6 +51,10 @@ FOUNDATION_EXPORT NSNotificationName const SPKSettingAccessoryTextDidChangeNotif
 @property (nonatomic, strong, nullable) UIColor *iconTintColor;
 @property (nonatomic, copy, nullable) UIImage * (^iconProvider)(void);
 @property (nonatomic, copy, nullable) NSString * (^accessoryTextProvider)(void);
+/// Read each time the row's cell is configured, in place of `subtitle`, for a
+/// subtitle that changes while the page stays open (a live count). Settings search
+/// still matches the static `subtitle`.
+@property (nonatomic, copy, nullable) NSString * (^subtitleProvider)(void);
 /// When it returns YES, a button row's accessory text is drawn as a filled accent capsule
 /// (a call to action such as "Update") instead of plain secondary text.
 @property (nonatomic, copy, nullable) BOOL (^accessoryTextProminentProvider)(void);

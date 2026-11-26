@@ -199,4 +199,16 @@ typedef NS_ENUM(int16_t, SPKGallerySource) {
 
 @end
 
+/// File counts and total size of the whole Gallery, computed by one grouped
+/// aggregate query in the store, so no file object is loaded. Cheap enough to
+/// run every time a settings page appears.
+@interface SPKGalleryStorageStats : NSObject
+@property (nonatomic, readonly) NSInteger totalFiles;
+@property (nonatomic, readonly) NSInteger imageCount;
+@property (nonatomic, readonly) NSInteger videoCount;
+@property (nonatomic, readonly) NSInteger audioCount;
+@property (nonatomic, readonly) long long totalSize;
++ (instancetype)currentStats;
+@end
+
 NS_ASSUME_NONNULL_END

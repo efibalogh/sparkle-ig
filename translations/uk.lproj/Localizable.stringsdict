@@ -2,6 +2,46 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AUTO_SAVE_FILTER_LIST_EXCLUDED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld виключених</string>
+			<key>many</key>
+			<string>%ld виключених</string>
+			<key>one</key>
+			<string>%ld виключений</string>
+			<key>other</key>
+			<string>%ld виключених</string>
+		</dict>
+	</dict>
+	<key>AUTO_SAVE_FILTER_LIST_SELECTED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld вибраних</string>
+			<key>many</key>
+			<string>%ld вибраних</string>
+			<key>one</key>
+			<string>%ld вибраний</string>
+			<key>other</key>
+			<string>%ld вибраних</string>
+		</dict>
+	</dict>
 	<key>COMMON_FILE_COUNT</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -148,12 +188,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld не вдалося</string>
 			<key>few</key>
 			<string>%ld не вдалися</string>
 			<key>many</key>
 			<string>%ld не вдалися</string>
+			<key>one</key>
+			<string>%ld не вдалося</string>
 			<key>other</key>
 			<string>%ld не вдалися</string>
 		</dict>
@@ -168,12 +208,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>Збережено %ld об'єкт</string>
 			<key>few</key>
 			<string>Збережено %ld об'єкти</string>
 			<key>many</key>
 			<string>Збережено %ld об'єктів</string>
+			<key>one</key>
+			<string>Збережено %ld об'єкт</string>
 			<key>other</key>
 			<string>Збережено %ld об'єкта</string>
 		</dict>
@@ -188,12 +228,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld історія</string>
 			<key>few</key>
 			<string>%ld історії</string>
 			<key>many</key>
 			<string>%ld історій</string>
+			<key>one</key>
+			<string>%ld історія</string>
 			<key>other</key>
 			<string>%ld історії</string>
 		</dict>
