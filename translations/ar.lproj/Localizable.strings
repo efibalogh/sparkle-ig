@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "يفتح نموذجًا على GitHub. تأتي تقارير الأخطاء مع طراز جهازك وإصدارات Sparkle وInstagram وiOS معبّأة مسبقًا. يلزم حساب GitHub لإرسال التقرير.";
+"ABOUT_FEEDBACK_HEADER" = "الملاحظات";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "شيء ما في Sparkle لا يعمل بشكل صحيح";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "الإبلاغ عن خطأ";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "اقترح ميزة جديدة أو تحسينًا";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "طلب ميزة";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "تبرع إلى waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "معرف الحزمة";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "سجل التغييرات";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "تحديث صور الملفات الشخصية";
 "ALERT_ACTION_RENAME_FOLDER" = "إعادة تسمية المجلد";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "استبدال الأصلي";
+"ALERT_ACTION_REPORT_BUG" = "الإبلاغ عن خطأ";
 "ALERT_ACTION_RESET" = "إعادة تعيين";
 "ALERT_ACTION_RESTART" = "إعادة تشغيل";
 "ALERT_ACTION_RETRY" = "إعادة محاولة";

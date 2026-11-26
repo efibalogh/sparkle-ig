@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Öffnet es Formular uf GitHub. Fehlerberichte si mit em Gerätemodäll und dr Sparkle-, Instagram- und iOS-Version scho uusgfüllt. Zum Abschicke bruucht's es GitHub-Konto.";
+"ABOUT_FEEDBACK_HEADER" = "Rückmäudig";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Öppis i Sparkle funktioniert nid richtig";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Fehler melde";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Schlag e neui Funktion oder e Verbesserig vor";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Funktion wünsche";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Spände a waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle-ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Änderige";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Profilbiuder aktualisiere";
 "ALERT_ACTION_RENAME_FOLDER" = "Ordner umbenenne";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Original ersetze";
+"ALERT_ACTION_REPORT_BUG" = "Fehler melde";
 "ALERT_ACTION_RESET" = "Zruggsetze";
 "ALERT_ACTION_RESTART" = "Neu starte";
 "ALERT_ACTION_RETRY" = "Nomau probiere";

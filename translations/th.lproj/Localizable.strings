@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "เปิดแบบฟอร์มบน GitHub รายงานข้อบกพร่องจะมีรุ่นอุปกรณ์และเวอร์ชัน Sparkle, Instagram และ iOS กรอกไว้ให้แล้ว การส่งต้องมีบัญชี GitHub";
+"ABOUT_FEEDBACK_HEADER" = "ความคิดเห็น";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "มีบางอย่างใน Sparkle ที่ทำงานไม่ถูกต้อง";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "รายงานข้อบกพร่อง";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "เสนอฟีเจอร์ใหม่หรือการปรับปรุง";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "ขอฟีเจอร์";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "บริจาคให้ waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "บันทึกการเปลี่ยนแปลง";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "รีเฟรชรูปโปรไฟล์";
 "ALERT_ACTION_RENAME_FOLDER" = "เปลี่ยนชื่อโฟลเดอร์";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "แทนที่ต้นฉบับ";
+"ALERT_ACTION_REPORT_BUG" = "รายงานข้อบกพร่อง";
 "ALERT_ACTION_RESET" = "รีเซ็ต";
 "ALERT_ACTION_RESTART" = "รีสตาร์ท";
 "ALERT_ACTION_RETRY" = "ลองใหม่";

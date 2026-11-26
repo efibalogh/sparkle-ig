@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "GitHub üzerinde bir form açar. Hata raporlarında cihaz modeliniz ile Sparkle, Instagram ve iOS sürümleriniz önceden doldurulur. Göndermek için bir GitHub hesabı gerekir.";
+"ABOUT_FEEDBACK_HEADER" = "Geri Bildirim";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Sparkle içinde bir şey düzgün çalışmıyor";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Hata Bildir";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Yeni bir özellik veya iyileştirme öner";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Özellik İste";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Waffle'a Bağış Yap";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle Kimliği";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Değişiklik Günlüğü";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Profil Resimlerini Yenile";
 "ALERT_ACTION_RENAME_FOLDER" = "Klasörü Yeniden Adlandır";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Orijinalini Değiştir";
+"ALERT_ACTION_REPORT_BUG" = "Hata Bildir";
 "ALERT_ACTION_RESET" = "Sıfırla";
 "ALERT_ACTION_RESTART" = "Yeniden Başlat";
 "ALERT_ACTION_RETRY" = "Yeniden Dene";

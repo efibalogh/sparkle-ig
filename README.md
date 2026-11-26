@@ -15,7 +15,7 @@
 > [!NOTE]
 > - To open Sparkle's settings, see [Opening Sparkle Settings](#opening-sparkle-settings).
 > - IPA releases go out on the [Telegram channel](https://t.me/sparkle_ig); for questions and help join the [chat group](https://t.me/+f-Xo21HnfCY3NmE0).
-> - Feature request or bug report? [Open an issue](https://github.com/efibalogh/sparkle-ig/issues/new/choose).
+> - Feature request or bug report? [Open an issue](https://github.com/efibalogh/sparkle-ig/issues/new/choose), or use **Report a Bug** / **Request a Feature** in Sparkle Settings > About, which fills in your versions and device for you.
 
 ## What is Sparkle?
 

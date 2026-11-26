@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Ανοίγει μια φόρμα στο GitHub. Οι αναφορές σφαλμάτων συμπληρώνονται ήδη με το μοντέλο της συσκευής σας και τις εκδόσεις των Sparkle, Instagram και iOS. Για την υποβολή χρειάζεται λογαριασμός GitHub.";
+"ABOUT_FEEDBACK_HEADER" = "Σχόλια";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Κάτι στο Sparkle δεν λειτουργεί σωστά";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Αναφορά σφάλματος";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Προτείνετε μια νέα δυνατότητα ή βελτίωση";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Αίτημα δυνατότητας";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Δωρεά στο waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Αρχείο αλλαγών";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Ανανέωση Εικόνων Προφίλ";
 "ALERT_ACTION_RENAME_FOLDER" = "Μετονομασία Φακέλου";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Αντικατάσταση Αρχικού";
+"ALERT_ACTION_REPORT_BUG" = "Αναφορά σφάλματος";
 "ALERT_ACTION_RESET" = "Επαναφορά";
 "ALERT_ACTION_RESTART" = "Επανεκκίνηση";
 "ALERT_ACTION_RETRY" = "Προσπάθεια ξανά";

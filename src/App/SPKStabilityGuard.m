@@ -17,6 +17,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "../Shared/Links/SPKIssueReport.h"
 #import "../Shared/UI/SPKIGAlertPresenter.h"
 #import "../Utils.h"
 
@@ -131,6 +132,11 @@ void SPKStabilityGuardPresentSafeModeAlertIfNeeded(void) {
                                                                                style:SPKIGAlertActionStyleDefault
                                                                              handler:^{
                                                                                  [SPKUtils showSettingsForTopicTitle:@"Tools"];
+                                                                             }],
+                                                   [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_REPORT_BUG")
+                                                                               style:SPKIGAlertActionStyleDefault
+                                                                             handler:^{
+                                                                                 SPKIssueReportOpenBugForm();
                                                                              }],
                                                    [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_NOT_NOW")
                                                                                style:SPKIGAlertActionStyleCancel

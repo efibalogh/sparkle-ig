@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Opens a form on GitHub. Bug reports come with your device model and your Sparkle, Instagram and iOS versions already filled in. A GitHub account is needed to submit.";
+"ABOUT_FEEDBACK_HEADER" = "Feedback";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Something in Sparkle isn't working right";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Report a Bug";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Suggest a new feature or an improvement";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Request a Feature";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Donate to waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Changelog";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Refresh Profile Pictures";
 "ALERT_ACTION_RENAME_FOLDER" = "Rename Folder";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Replace Original";
+"ALERT_ACTION_REPORT_BUG" = "Report a Bug";
 "ALERT_ACTION_RESET" = "Reset";
 "ALERT_ACTION_RESTART" = "Restart";
 "ALERT_ACTION_RETRY" = "Retry";

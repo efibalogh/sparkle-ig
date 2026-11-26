@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Відкриває форму на GitHub. У звіт про помилку вже підставлено модель пристрою та версії Sparkle, Instagram і iOS. Для надсилання потрібен обліковий запис GitHub.";
+"ABOUT_FEEDBACK_HEADER" = "Зворотний зв’язок";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "У Sparkle щось працює не так";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Повідомити про помилку";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Запропонуйте нову функцію або покращення";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Запитати функцію";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Пожертвувати на waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Список змін";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Оновити фотографії профілю";
 "ALERT_ACTION_RENAME_FOLDER" = "Перейменувати папку";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Замінити оригінал";
+"ALERT_ACTION_REPORT_BUG" = "Повідомити про помилку";
 "ALERT_ACTION_RESET" = "Скинути";
 "ALERT_ACTION_RESTART" = "Перезавантажити";
 "ALERT_ACTION_RETRY" = "Повторити";

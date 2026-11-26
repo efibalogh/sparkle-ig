@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "فرمی در GitHub باز می‌شود. گزارش‌های خطا با مدل دستگاه و نسخه‌های Sparkle، Instagram و iOS از پیش پر شده‌اند. برای ارسال، به حساب GitHub نیاز است.";
+"ABOUT_FEEDBACK_HEADER" = "بازخورد";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "چیزی در Sparkle درست کار نمی‌کند";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "گزارش خطا";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "یک قابلیت جدید یا بهبود پیشنهاد دهید";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "درخواست قابلیت";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "اهدا به waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "شناسه Bundle";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "تغییرات نسخه‌ها";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "به‌روزرسانی عکس‌های پروفایل";
 "ALERT_ACTION_RENAME_FOLDER" = "تغییر نام پوشه";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "جایگزینی نسخه اصلی";
+"ALERT_ACTION_REPORT_BUG" = "گزارش خطا";
 "ALERT_ACTION_RESET" = "بازنشانی";
 "ALERT_ACTION_RESTART" = "راه‌اندازی مجدد";
 "ALERT_ACTION_RETRY" = "تلاش مجدد";

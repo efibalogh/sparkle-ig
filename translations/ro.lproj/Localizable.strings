@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Deschide un formular pe GitHub. Rapoartele de erori includ deja modelul dispozitivului și versiunile Sparkle, Instagram și iOS. Pentru a trimite este nevoie de un cont GitHub.";
+"ABOUT_FEEDBACK_HEADER" = "Feedback";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Ceva din Sparkle nu funcționează corect";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Raportează o eroare";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Sugerează o funcție nouă sau o îmbunătățire";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Solicită o funcție";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Donează pentru waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "ID pachet";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Jurnal de modificări";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Reîmprospătează fotografiile de profil";
 "ALERT_ACTION_RENAME_FOLDER" = "Redenumește folderul";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Înlocuiește original";
+"ALERT_ACTION_REPORT_BUG" = "Raportează o eroare";
 "ALERT_ACTION_RESET" = "Resetează";
 "ALERT_ACTION_RESTART" = "Repornește";
 "ALERT_ACTION_RETRY" = "Încearcă din nou";

@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Atidaroma forma GitHub svetainėje. Klaidų pranešimuose jau įrašytas jūsų įrenginio modelis ir Sparkle, Instagram bei iOS versijos. Pateikti reikia GitHub paskyros.";
+"ABOUT_FEEDBACK_HEADER" = "Atsiliepimai";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Sparkle kažkas veikia netinkamai";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Pranešti apie klaidą";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Pasiūlykite naują funkciją ar patobulinimą";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Prašyti funkcijos";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Paaukoti waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Paketo ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Pakeitimų žurnalas";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Atnaujinti profilio nuotraukas";
 "ALERT_ACTION_RENAME_FOLDER" = "Pervadinti aplanką";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Pakeisti originalą";
+"ALERT_ACTION_REPORT_BUG" = "Pranešti apie klaidą";
 "ALERT_ACTION_RESET" = "Atstatyti";
 "ALERT_ACTION_RESTART" = "Paleisti iš naujo";
 "ALERT_ACTION_RETRY" = "Bandyti dar kartą";

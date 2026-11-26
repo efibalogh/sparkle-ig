@@ -1072,7 +1072,11 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     }
 
     if (row.type == SPKTableCellLink) {
-        [[UIApplication sharedApplication] openURL:row.url options:@{} completionHandler:nil];
+        // A link row with an action opens the link itself (e.g. in an in-app browser).
+        if (row.action)
+            row.action();
+        else
+            [[UIApplication sharedApplication] openURL:row.url options:@{} completionHandler:nil];
     } else if (row.type == SPKTableCellButton) {
         if (row.action != nil) {
             row.action();

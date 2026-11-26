@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Nagbubukas ng form sa GitHub. Kasama na sa mga ulat ng bug ang modelo ng iyong device at ang mga bersyon ng Sparkle, Instagram, at iOS. Kailangan ng GitHub account para maipadala.";
+"ABOUT_FEEDBACK_HEADER" = "Puna";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "May hindi gumagana nang maayos sa Sparkle";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Mag-ulat ng Bug";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Magmungkahi ng bagong feature o pagpapabuti";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Humiling ng Feature";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Mag-donate kay waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "ID ng Bundle";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Talaan ng mga Pagbabago";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "I-refresh ang Mga Profile Picture";
 "ALERT_ACTION_RENAME_FOLDER" = "Palitan ang Pangalan ng Folder";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Palitan ang Orihinal";
+"ALERT_ACTION_REPORT_BUG" = "Mag-ulat ng Bug";
 "ALERT_ACTION_RESET" = "I-reset";
 "ALERT_ACTION_RESTART" = "I-restart";
 "ALERT_ACTION_RETRY" = "Subukan Muli";

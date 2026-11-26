@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Mở biểu mẫu trên GitHub. Báo cáo lỗi đã điền sẵn model thiết bị cùng phiên bản Sparkle, Instagram và iOS. Cần có tài khoản GitHub để gửi.";
+"ABOUT_FEEDBACK_HEADER" = "Phản hồi";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Có gì đó trong Sparkle hoạt động không đúng";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Báo lỗi";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Đề xuất tính năng mới hoặc cải tiến";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Yêu cầu tính năng";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Ủng hộ cho waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Nhật ký thay đổi";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Làm mới ảnh đại diện";
 "ALERT_ACTION_RENAME_FOLDER" = "Đổi tên thư mục";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Thay thế bản gốc";
+"ALERT_ACTION_REPORT_BUG" = "Báo lỗi";
 "ALERT_ACTION_RESET" = "Đặt lại";
 "ALERT_ACTION_RESTART" = "Khởi chạy lại";
 "ALERT_ACTION_RETRY" = "Thử lại";

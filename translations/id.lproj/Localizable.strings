@@ -12,6 +12,12 @@
 "ABOUT_CREDITS_N3D1117_INSTASANE_TITLE" = "@n3d1117 • InstaSane";
 "ABOUT_CREDITS_RYUK_RYUKGRAM_TITLE" = "Ryuk • RyukGram";
 "ABOUT_CREDITS_SOCUUL_SCINSTA_TITLE" = "SoCuul • SCInsta";
+"ABOUT_FEEDBACK_FOOTER" = "Membuka formulir di GitHub. Laporan bug sudah berisi model perangkat Anda serta versi Sparkle, Instagram, dan iOS. Untuk mengirim, diperlukan akun GitHub.";
+"ABOUT_FEEDBACK_HEADER" = "Masukan";
+"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE" = "Ada yang tidak berfungsi dengan benar di Sparkle";
+"ABOUT_FEEDBACK_REPORT_BUG_TITLE" = "Laporkan Bug";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE" = "Usulkan fitur baru atau peningkatan";
+"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE" = "Minta Fitur";
 "ABOUT_GENERAL_DONATE_WAFFLE_TITLE" = "Donasi ke waffle";
 "ABOUT_INFORMATION_BUNDLE_ID_TITLE" = "Bundle ID";
 "ABOUT_INFORMATION_CHANGELOG_TITLE" = "Log Perubahan";
@@ -204,6 +210,7 @@
 "ALERT_ACTION_REFRESH_PROFILE_PICTURES" = "Segarkan Foto Profil";
 "ALERT_ACTION_RENAME_FOLDER" = "Ganti Nama Folder";
 "ALERT_ACTION_REPLACE_ORIGINAL" = "Ganti yang Asli";
+"ALERT_ACTION_REPORT_BUG" = "Laporkan Bug";
 "ALERT_ACTION_RESET" = "Setel Ulang";
 "ALERT_ACTION_RESTART" = "Mulai Ulang";
 "ALERT_ACTION_RETRY" = "Coba Lagi";

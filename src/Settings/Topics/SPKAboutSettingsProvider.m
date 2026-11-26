@@ -2,10 +2,12 @@
 #import "SPKAboutSettingsProvider.h"
 
 #import "../../AssetUtils.h"
+#import "../../Shared/Links/SPKIssueReport.h"
 #import "../../Shared/Updates/SPKChangelogViewController.h"
 #import "../../Shared/Updates/SPKUpdateChecker.h"
 #import "../../Tweak.h"
 #import "../../Utils.h"
+#import "../SPKNewBadges.h"
 #import "../SPKTopicSettingsSupport.h"
 #import "../../Shared/UI/SPKFont.h"
 
@@ -31,6 +33,14 @@ static SPKSetting *SPKSparkleVersionCell(void) {
         return ![SPKUpdateChecker isChecking] && [SPKUpdateChecker updateAvailable];
     };
     return version;
+}
+
+/// Styled as a link, but opened in an in-app Safari view: handed to the system, the
+/// GitHub app claims the link and drops the prefilled form fields.
+static SPKSetting *SPKFeedbackLinkCell(NSString *title, NSString *subtitle, NSString *icon, NSString *url, void (^open)(void)) {
+    SPKSetting *row = [SPKSetting linkCellWithTitle:title subtitle:subtitle icon:SPKSettingsIcon(icon) url:url];
+    row.action = open;
+    return row;
 }
 
 #if SPK_DEV
@@ -92,6 +102,23 @@ static NSDictionary *SPKUpdatesDevSection(void) {
                                  viewController:[SPKChangelogViewController new]],
         ],
                         nil),
+        SPKTopicSection(SPKL(@"ABOUT_FEEDBACK_HEADER"), @[
+            SPKSettingMarkedNewWithID(SPKFeedbackLinkCell(SPKL(@"ABOUT_FEEDBACK_REPORT_BUG_TITLE"),
+                                                          SPKL(@"ABOUT_FEEDBACK_REPORT_BUG_SUBTITLE"),
+                                                          @"flag", SPKIssueReportBugURLString(),
+                                                          ^{
+                                                              SPKIssueReportOpenBugForm();
+                                                          }),
+                                      @"v1.7.0", @"about_feedback_report_bug"),
+            SPKSettingMarkedNewWithID(SPKFeedbackLinkCell(SPKL(@"ABOUT_FEEDBACK_REQUEST_FEATURE_TITLE"),
+                                                          SPKL(@"ABOUT_FEEDBACK_REQUEST_FEATURE_SUBTITLE"),
+                                                          @"comment", SPKIssueReportFeatureURLString(),
+                                                          ^{
+                                                              SPKIssueReportOpenFeatureForm();
+                                                          }),
+                                      @"v1.7.0", @"about_feedback_request_feature")
+        ],
+                        SPKL(@"ABOUT_FEEDBACK_FOOTER")),
         SPKTopicSection(@"", @[
             [SPKSetting linkCellWithTitle:SPKL(@"ABOUT_INFORMATION_WAFFLE_TITLE")
                                  subtitle:SPKL(@"ABOUT_INFORMATION_SPARKLE_DEVELOPER_SUBTITLE")
