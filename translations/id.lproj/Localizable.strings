@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Lebar";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "Tidak ada yang bisa diimpor";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Bukan vault Regram";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Pilih folder ekspor Regram atau MediaVault.zip.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Pilih ekspor Media Vault atau cadangan Regram.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "Vault Regram tidak memiliki media.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "File tetap berada di aplikasi File; hanya antrean impor yang dihapus.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Konfirmasi Kode Sandi";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Ketuk thumbnail untuk pratinjau. Ketuk baris untuk menambahkan atribusinya sendiri.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Antrean · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Membaca ekspor Regram...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "Ekspor Regram ini dilindungi kata sandi. Masukkan kata sandi yang Anda pilih saat mengekspornya.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Kata sandi";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Ekspor Terenkripsi";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Buka";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "Kata sandi itu tidak dapat membuka ekspor. Coba lagi.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "Hapus semua %@?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ disimpan ke galerimu";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "Gulir ke tombol impor";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Pengaturan direset";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "Tidak dapat mendekompresi arsip cadangan.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "Ekspor berisi file yang lebih besar dari 4 GB, yang belum didukung.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "Arsip ini dilindungi kata sandi.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "Ekspor berisi jalur yang terlalu panjang untuk zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "Ekspor terlalu besar untuk penulis zip ini.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "Ekspor berisi terlalu banyak file untuk penulis zip ini.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "Tidak dapat membaca %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "Zip ini menggunakan metode kompresi yang tidak didukung.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "Zip ini menggunakan metode enkripsi yang tidak didukung.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "Kata sandi salah.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Tahan Jelajahi untuk membuka nama pengguna yang disalin";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Konfirmasi sebelum feed dimuat ulang";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Konfirmasi sebelum mengirim reel ke obrolan";

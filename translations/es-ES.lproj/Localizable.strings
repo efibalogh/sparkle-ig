@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Ancho";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "Nada para importar";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "No es una bóveda de Regram";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Elige una carpeta de exportación de Regram o MediaVault.zip.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Elige una exportación del almacén de contenido de Regram o de copia de seguridad.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "La bóveda de Regram no tenía contenido.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "Se quedan en la aplicación Archivos; solo se borra la cola de importación.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Confirmar código de acceso";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Toca una miniatura para obtener vista previa. Toca una fila para agregar su propia atribución.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Cola · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Leyendo exportación de Regram...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "Esta exportación de Regram está protegida con contraseña. Introduce la contraseña que elegiste al exportarla.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Contraseña";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Exportación cifrada";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Desbloquear";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "Esa contraseña no desbloqueó la exportación. Inténtalo de nuevo.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "¿Eliminar todos los %@?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ guardados en tu galería";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "Desplázate hasta el botón de importación";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Ajustes restablecidos";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "No se ha podido descomprimir el archivo de copia de seguridad.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "La exportación contiene un archivo de más de 4 GB, algo que aún no se admite.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "Este archivo está protegido con contraseña.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "La exportación contiene una ruta demasiado larga para el zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "La exportación es demasiado grande para este escritor de zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "La exportación contiene demasiados archivos para este escritor de zip.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "No se ha podido leer %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "Este zip usa un método de compresión no admitido.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "Este zip usa un método de cifrado no compatible.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "La contraseña es incorrecta.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Mantén pulsado Explorar para abrir un nombre de usuario copiado";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Confirmar antes de actualizar el feed";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Confirmar antes de enviar un reel a un chat";

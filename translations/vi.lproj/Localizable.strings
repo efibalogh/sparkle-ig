@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Chiều rộng";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "Không có gì để nhập";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Không phải kho lưu trữ Regram";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Chọn thư mục xuất Regram hoặc tệp MediaVault.zip.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Chọn kho phương tiện hoặc bản xuất sao lưu của Regram.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "Kho lưu trữ Regram không có phương tiện nào.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "Tệp vẫn ở trong ứng dụng Tệp; chỉ có hàng chờ nhập là được xóa.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Xác nhận mật mã";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Nhấn vào hình thu nhỏ để xem trước. Nhấn vào hàng để thêm nguồn trích dẫn riêng.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Hàng chờ · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Đang đọc bản xuất Regram...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "Bản xuất Regram này được bảo vệ bằng mật khẩu. Nhập mật khẩu bạn đã đặt khi xuất.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Mật khẩu";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Bản xuất được mã hóa";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Mở khóa";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "Mật khẩu này không mở khóa được bản xuất. Hãy thử lại.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "Xóa tất cả %@?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "Đã lưu %@ vào thư viện của bạn";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "Cuộn đến nút nhập";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Đã đặt lại cài đặt";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "Không thể giải nén tệp lưu trữ sao lưu.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "Tệp xuất chứa dữ liệu vượt quá 4 GB, hiện chưa được hỗ trợ.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "Kho nén này được bảo vệ bằng mật khẩu.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "Tệp xuất chứa đường dẫn quá dài đối với định dạng zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "Bản xuất quá lớn đối với bộ ghi zip này.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "Tệp xuất chứa quá nhiều tệp đối với trình ghi zip này.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "Không thể đọc %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "Tệp zip này sử dụng phương thức nén không được hỗ trợ.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "Tệp zip này dùng phương thức mã hóa không được hỗ trợ.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "Mật khẩu không đúng.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Nhấn giữ Khám phá để mở tên người dùng đã sao chép";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Xác nhận trước khi làm mới bảng tin";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Xác nhận trước khi gửi thước phim vào đoạn chat";

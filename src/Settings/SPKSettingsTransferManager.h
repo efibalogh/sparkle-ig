@@ -5,6 +5,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Error code (domain `SparkleSettingsTransfer`) for an archive past an expansion limit.
 FOUNDATION_EXPORT const NSInteger SPKZipExpandLimitErrorCode;
+/// Error code for an encrypted archive expanded without a password.
+FOUNDATION_EXPORT const NSInteger SPKZipPasswordRequiredErrorCode;
+/// Error code for an encrypted archive whose password does not match.
+FOUNDATION_EXPORT const NSInteger SPKZipWrongPasswordErrorCode;
 
 @interface SPKSettingsTransferManager : NSObject
 
@@ -26,6 +30,13 @@ FOUNDATION_EXPORT const NSInteger SPKZipExpandLimitErrorCode;
 + (nullable NSString *)expandZipArchiveAtURL:(NSURL *)archiveURL
                     maximumUncompressedBytes:(unsigned long long)maximumBytes
                               maximumEntries:(NSUInteger)maximumEntries
+                                       error:(NSError **)error;
+
+/// Same as `expandZipArchiveAtURL:error:`, also decrypting WinZip AES (method 99) entries with
+/// `password`. Fails with `SPKZipPasswordRequiredErrorCode` when an entry is encrypted and no
+/// password was given, or `SPKZipWrongPasswordErrorCode` when it does not match.
++ (nullable NSString *)expandZipArchiveAtURL:(NSURL *)archiveURL
+                                    password:(nullable NSString *)password
                                        error:(NSError **)error;
 
 /// Writes every file under `directory` into a STORED `.zip` at `zipPath`. The

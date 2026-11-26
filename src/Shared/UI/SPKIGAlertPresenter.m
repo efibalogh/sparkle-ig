@@ -312,6 +312,7 @@ static void SPKIGPresentUIKitTextInputAlert(UIViewController *presenter,
                                             NSString *placeholder,
                                             NSString *initialText,
                                             BOOL autocapitalized,
+                                            BOOL secure,
                                             NSString *confirmTitle,
                                             NSString *cancelTitle,
                                             SPKIGAlertActionStyle confirmStyle,
@@ -328,6 +329,11 @@ static void SPKIGPresentUIKitTextInputAlert(UIViewController *presenter,
         field.placeholder = placeholder;
         field.text = initialText;
         field.autocapitalizationType = autocapitalized ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
+        if (secure) {
+            field.secureTextEntry = YES;
+            field.autocorrectionType = UITextAutocorrectionTypeNo;
+            field.textContentType = UITextContentTypePassword;
+        }
     }];
     [alert addAction:[UIAlertAction actionWithTitle:cancelTitle
                                               style:UIAlertActionStyleCancel
@@ -344,7 +350,7 @@ static void SPKIGPresentUIKitTextInputAlert(UIViewController *presenter,
     [resolvedPresenter presentViewController:alert animated:YES completion:nil];
 }
 
-static UIView *SPKIGCreateInputView(NSString *placeholder, NSString *initialText, BOOL autocapitalized, UITextField **textFieldOut) {
+static UIView *SPKIGCreateInputView(NSString *placeholder, NSString *initialText, BOOL autocapitalized, BOOL secure, UITextField **textFieldOut) {
     Class formFieldContainerClass = NSClassFromString(@"IGDSFormField");
     UIView *inputView = nil;
     UITextField *textField = nil;
@@ -393,6 +399,11 @@ static UIView *SPKIGCreateInputView(NSString *placeholder, NSString *initialText
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     textField.autocapitalizationType = autocapitalized ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
     textField.returnKeyType = UIReturnKeyDone;
+    if (secure) {
+        textField.secureTextEntry = YES;
+        textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        textField.textContentType = UITextContentTypePassword;
+    }
     textField.borderStyle = UITextBorderStyleNone;
     textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 12.0, 1.0)];
     textField.leftViewMode = UITextFieldViewModeAlways;
@@ -912,8 +923,34 @@ static void SPKIGInstallAlertHooksIfNeeded(Class alertClass) {
                                    confirmStyle:(SPKIGAlertActionStyle)confirmStyle
                                    confirmBlock:(SPKIGAlertTextHandler)confirmBlock
                                     cancelBlock:(SPKIGAlertActionHandler)cancelBlock {
+    return [self presentTextInputAlertFromViewController:presenter
+                                                   title:title
+                                                 message:message
+                                             placeholder:placeholder
+                                             initialText:initialText
+                                         autocapitalized:autocapitalized
+                                         secureTextEntry:NO
+                                            confirmTitle:confirmTitle
+                                             cancelTitle:cancelTitle
+                                            confirmStyle:confirmStyle
+                                            confirmBlock:confirmBlock
+                                             cancelBlock:cancelBlock];
+}
+
++ (BOOL)presentTextInputAlertFromViewController:(UIViewController *)presenter
+                                          title:(NSString *)title
+                                        message:(NSString *)message
+                                    placeholder:(NSString *)placeholder
+                                    initialText:(NSString *)initialText
+                                autocapitalized:(BOOL)autocapitalized
+                                secureTextEntry:(BOOL)secure
+                                   confirmTitle:(NSString *)confirmTitle
+                                    cancelTitle:(NSString *)cancelTitle
+                                   confirmStyle:(SPKIGAlertActionStyle)confirmStyle
+                                   confirmBlock:(SPKIGAlertTextHandler)confirmBlock
+                                    cancelBlock:(SPKIGAlertActionHandler)cancelBlock {
     __block UITextField *textField = nil;
-    UIView *inputView = SPKIGCreateInputView(placeholder, initialText, autocapitalized, &textField);
+    UIView *inputView = SPKIGCreateInputView(placeholder, initialText, autocapitalized, secure, &textField);
 
     Class actionClass = NSClassFromString(@"IGCustomAlertAction");
     Class alertClass = NSClassFromString(@"IGDSAlertDialogView");
@@ -922,7 +959,7 @@ static void SPKIGInstallAlertHooksIfNeeded(Class alertClass) {
     SEL alertSelector = NSSelectorFromString(@"initWithStyle:titleText:descriptionText:actions:showHorizontalButtons:");
 
     if (!inputView || !textField || !actionClass || !alertClass || ![actionClass respondsToSelector:actionSelector] || ![alertClass instancesRespondToSelector:alertSelector]) {
-        SPKIGPresentUIKitTextInputAlert(presenter, title, message, placeholder, initialText, autocapitalized, confirmTitle, cancelTitle, confirmStyle, confirmBlock, cancelBlock);
+        SPKIGPresentUIKitTextInputAlert(presenter, title, message, placeholder, initialText, autocapitalized, secure, confirmTitle, cancelTitle, confirmStyle, confirmBlock, cancelBlock);
         return NO;
     }
 
@@ -945,7 +982,7 @@ static void SPKIGInstallAlertHooksIfNeeded(Class alertClass) {
                                                                                   confirmBlock(textField.text);
                                                                           });
     if (!cancelAction || !confirmAction) {
-        SPKIGPresentUIKitTextInputAlert(presenter, title, message, placeholder, initialText, autocapitalized, confirmTitle, cancelTitle, confirmStyle, confirmBlock, cancelBlock);
+        SPKIGPresentUIKitTextInputAlert(presenter, title, message, placeholder, initialText, autocapitalized, secure, confirmTitle, cancelTitle, confirmStyle, confirmBlock, cancelBlock);
         return NO;
     }
 
@@ -959,7 +996,7 @@ static void SPKIGInstallAlertHooksIfNeeded(Class alertClass) {
                                                                          @[ confirmAction, cancelAction ],
                                                                          NO);
     if (![alertView respondsToSelector:@selector(show)]) {
-        SPKIGPresentUIKitTextInputAlert(presenter, title, message, placeholder, initialText, autocapitalized, confirmTitle, cancelTitle, confirmStyle, confirmBlock, cancelBlock);
+        SPKIGPresentUIKitTextInputAlert(presenter, title, message, placeholder, initialText, autocapitalized, secure, confirmTitle, cancelTitle, confirmStyle, confirmBlock, cancelBlock);
         return NO;
     }
 

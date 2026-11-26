@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "चौड़ाई";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "आयात करने के लिए कुछ नहीं";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Regram वॉल्ट नहीं है";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Regram निर्यात फोल्डर या MediaVault.zip चुनें।";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Regram मीडिया तिजोरी या बैकअप निर्यात चुनें।";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "ReGram वॉल्ट में कोई मीडिया नहीं था।";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "वे फ़ाइलें ऐप में रहती हैं; केवल आयात कतार साफ़ की जाती है।";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "पासकोड की पुष्टि करें";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "पूर्वावलोकन के लिए एक थंबनेल पर टैप करें। इसकी अपनी attribution जोड़ने के लिए एक पंक्ति पर टैप करें।";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "कतार · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Regram export पढ़ा जा रहा है...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "यह Regram निर्यात पासवर्ड से सुरक्षित है। निर्यात करते समय आपने जो पासवर्ड चुना था, वह दर्ज करें।";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "पासवर्ड";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "एन्क्रिप्टेड निर्यात";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "अनलॉक करें";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "यह पासवर्ड निर्यात को अनलॉक नहीं कर पाया। फिर से कोशिश करें।";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "सभी %@ हटाएं?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ आपकी गैलरी में सहेजी गईं";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "आयात बटन तक स्क्रॉल करें";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "सेटिंग्स रीसेट की गईं";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "बैकअप संग्रह को अनज़िप नहीं किया जा सका।";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "निर्यात में 4 GB से बड़ी फ़ाइल है, जो अभी समर्थित नहीं है।";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "यह आर्काइव पासवर्ड से सुरक्षित है।";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "निर्यात में एक पथ है जो ज़िप के लिए बहुत लंबा है।";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "निर्यात इस ज़िप राइटर के लिए बहुत बड़ा है।";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "निर्यात में इस ज़िप राइटर के लिए बहुत अधिक फ़ाइलें हैं।";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "%@ नहीं पढ़ा जा सका।";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "यह ज़िप एक असमर्थित संपीड़न विधि का उपयोग करता है।";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "इस zip में असमर्थित एन्क्रिप्शन विधि का उपयोग हुआ है।";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "पासवर्ड गलत है।";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "कॉपी किया गया यूज़रनेम खोलने के लिए एक्सप्लोर को दबाकर रखें";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "फ़ीड रीफ़्रेश होने से पहले पुष्टि करें";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "किसी चैट में रील भेजने से पहले पुष्टि करें";

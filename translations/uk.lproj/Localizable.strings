@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Ширина";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "Нічого імпортувати";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Не сховище Regram";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Виберіть папку експорту Regram або MediaVault.zip.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Виберіть експорт Regram: медіасховище або резервну копію.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "Сховище Regram не містило медіа.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "Вони залишаються в додатку Файли; очищується лише черга імпорту.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Підтвердити пароль";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Торкніться мініатюри для перегляду. Торкніться рядка, щоб додати своє атрибуцію.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Черга · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Читання експорту Regram...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "Цей експорт Regram захищено паролем. Введіть пароль, який ви задали під час експорту.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Пароль";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Зашифрований експорт";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Розблокувати";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "Цей пароль не розблокував експорт. Спробуйте ще раз.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "Видалити всі %@?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ збережено до вашої галереї";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "Прокрутіть до кнопки імпорту";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Налаштування скинуто";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "Не вдалося розпакувати архів резервної копії.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "Експорт містить файл понад 4 ГБ, що поки не підтримується.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "Цей архів захищено паролем.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "Експорт містить надто довгий для zip шлях.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "Експорт завеликий для цього zip-архіватора.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "Експорт містить забагато файлів для цього zip-архіватора.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "Не вдалося прочитати %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "У цьому zip використано непідтримуваний метод стиснення.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "Цей zip використовує непідтримуваний метод шифрування.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "Пароль неправильний.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Утримуйте «Огляд», щоб відкрити скопійоване ім'я користувача";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Підтвердження перед оновленням стрічки";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Підтвердження перед надсиланням Reels у чат";

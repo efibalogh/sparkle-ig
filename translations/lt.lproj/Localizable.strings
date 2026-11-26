@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Plotis";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "Nėra ką importuoti";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Ne „Regram“ saugykla";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Pasirinkite „Regram“ eksporto aplanką arba „MediaVault.zip“.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Pasirinkite Regram Media Vault arba atsarginės kopijos eksportą.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "„Regram“ saugykloje nebuvo medijos.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "Jie lieka programoje „Failai“; išvaloma tik importavimo eilė.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Patvirtinkite kodą";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Palieskite miniatiūrą, kad peržiūrėtumėte. Palieskite eilutę, kad pridėtumėte atskirą autorystę.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Eilė · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Skaitomas „Regram“ eksportas…";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "Šis Regram eksportas apsaugotas slaptažodžiu. Įveskite slaptažodį, kurį pasirinkote eksportuodami.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Slaptažodis";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Šifruotas eksportas";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Atrakinti";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "Šis slaptažodis neatrakino eksporto. Bandykite dar kartą.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "Pašalinti visus %@?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ įrašyta į jūsų galeriją";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "Slinkti iki importavimo mygtuko";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Nustatymai atkurti";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "Nepavyko išskleisti atsarginės kopijos archyvo.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "Eksportavime yra failas, didesnis nei 4 GB, kuris dar nepalaikomas.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "Šis archyvas apsaugotas slaptažodžiu.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "Eksportavime yra kelias, per ilgas zip formatui.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "Eksportavimas per didelis šiam zip kūrėjui.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "Eksportavime per daug failų šiam zip kūrėjui.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "Nepavyko perskaityti %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "Šis zip naudoja nepalaikomą glaudinimo metodą.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "Šis zip naudoja nepalaikomą šifravimo metodą.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "Slaptažodis neteisingas.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Palaikykite Naršyti, kad atidarytumėte nukopijuotą naudotojo vardą";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Patvirtinti prieš atnaujinant kanalą";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Patvirtinti prieš siunčiant reel į pokalbį";

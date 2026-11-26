@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "العرض";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "لا شيء للاستيراد";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "ليس خزنة Regram";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "اختر مجلد تصدير Regram أو MediaVault.zip.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "اختر تصدير Regram Media Vault أو نسخة احتياطية.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "لم تحتوي خزانة Regram على وسائط.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "تبقى في تطبيق الملفات؛ يتم مسح قائمة الاستيراد فقط.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "تأكيد رمز المرور";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "اضغط على الصورة المصغرة لمعاينة. اضغط على صف لإضافة نسبها.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "قائمة الانتظار · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "جاري قراءة تصدير ReGram...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "هذا التصدير من Regram محمي بكلمة مرور. أدخل كلمة المرور التي اخترتها عند التصدير.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "كلمة المرور";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "تصدير مشفّر";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "فتح";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "كلمة المرور هذه لم تفتح التصدير. حاول مرة أخرى.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "إزالة جميع %@؟";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "تم حفظ %@ في معرضك";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "مرّر للوصول إلى زر الاستيراد";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "تمت إعادة تعيين الإعدادات";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "تعذر فك ضغط أرشيف النسخة الاحتياطية.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "يحتوي التصدير على ملف أكبر من 4 غيغابايت، وهو غير مدعوم بعد.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "هذا الأرشيف محمي بكلمة مرور.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "يحتوي التصدير على مسار طويل جدًا بالنسبة لملف zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "التصدير كبير جدًا على كاتب ملفات zip هذا.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "يحتوي التصدير على ملفات أكثر مما يدعمه كاتب ملفات zip هذا.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "تعذر قراءة %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "يستخدم ملف zip هذا طريقة ضغط غير مدعومة.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "يستخدم ملف zip هذا طريقة تشفير غير مدعومة.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "كلمة المرور غير صحيحة.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "اضغط مطولاً على استكشاف لفتح اسم مستخدم منسوخ";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "التأكيد قبل تحديث الموجز";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "التأكيد قبل إرسال ريل إلى دردشة";

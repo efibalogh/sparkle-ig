@@ -384,6 +384,19 @@ void SPKGalleryApplyImportHeuristicsFromFilename(NSString *fileName, SPKGalleryS
         }
         [parts removeObjectAtIndex:0];
     }
+    // Files the user imported into Regram keep their original name behind an import stamp:
+    // `<epoch>_<UUID>_<original name>`. Drop the UUID so it is not read as a username. When the
+    // original name is itself a saved-media name, its own leading epoch is the real save time and
+    // wins over the stamp. Only a millisecond (13-digit) epoch counts there: a 10-digit user pk
+    // would also parse as seconds.
+    if (hasLeadEpoch && parts.count > 1 && [[NSUUID alloc] initWithUUIDString:parts.firstObject]) {
+        [parts removeObjectAtIndex:0];
+        NSDate *originalEpochDate = (parts.count > 1 && parts.firstObject.length == 13) ? SPKParseEpochDateFromString(parts.firstObject) : nil;
+        if (originalEpochDate) {
+            m.importCapturedDate = originalEpochDate;
+            [parts removeObjectAtIndex:0];
+        }
+    }
     if (parts.count == 0) {
         return;
     }

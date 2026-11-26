@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Πλάτος";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "Τίποτα για εισαγωγή";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Δεν είναι θάλαμος Regram";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Επιλέξτε έναν φάκελο εξαγωγής Regram ή MediaVault.zip.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Επίλεξε ένα εξαγόμενο αρχείο Regram Media Vault ή αντίγραφο ασφαλείας.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "Ο θησαυρός Regram δεν είχε πολυμέσα.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "Παραμένουν στην εφαρμογή Αρχεία· διαγράφεται μόνο η ουρά εισαγωγής.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Επιβεβαίωση Κωδικού Πρόσβασης";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Αγγίξτε μια μικρογραφία για προεπισκόπηση. Αγγίξτε μια σειρά για να προσθέσετε τη δική της απόδοση.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Ουρά · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Ανάγνωση εξαγωγής Regram...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "Αυτή η εξαγωγή Regram προστατεύεται με κωδικό πρόσβασης. Εισάγετε τον κωδικό που επιλέξατε κατά την εξαγωγή.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Κωδικός πρόσβασης";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Κρυπτογραφημένη εξαγωγή";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Ξεκλείδωμα";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "Ο κωδικός πρόσβασης δεν ξεκλείδωσε την εξαγωγή. Δοκιμάστε ξανά.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "Αφαίρεση όλων %@;";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ αποθηκεύτηκαν στη συλλογή σας";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "Κάντε κύλιση προς το κουμπί εισαγωγής";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Έγινε επαναφορά ρυθμίσεων";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "Δεν ήταν δυνατή η αποσυμπίεση του αρχείου αντιγράφου.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "Η εξαγωγή περιέχει αρχείο μεγαλύτερο από 4 GB, κάτι που δεν υποστηρίζεται ακόμη.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "Αυτό το αρχείο είναι προστατευμένο με κωδικό πρόσβασης.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "Η εξαγωγή περιέχει διαδρομή πολύ μεγάλη για zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "Η εξαγωγή είναι πολύ μεγάλη για αυτόν τον εγγραφέα zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "Η εξαγωγή περιέχει πάρα πολλά αρχεία για αυτόν τον εγγραφέα zip.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "Δεν ήταν δυνατή η ανάγνωση του %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "Αυτό το zip χρησιμοποιεί μη υποστηριζόμενη μέθοδο συμπίεσης.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "Αυτό το zip χρησιμοποιεί μέθοδο κρυπτογράφησης που δεν υποστηρίζεται.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "Ο κωδικός πρόσβασης είναι λανθασμένος.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Πάτα παρατεταμένα την Εξερεύνηση για να ανοίξεις ένα αντιγραμμένο όνομα χρήστη";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Επιβεβαίωση πριν την ανανέωση της ροής";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Επιβεβαίωση πριν την αποστολή ενός reel σε συνομιλία";

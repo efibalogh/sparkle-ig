@@ -832,7 +832,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Width";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "Nothing to import";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Not a Regram vault";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Pick a Regram export folder or MediaVault.zip.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Pick a Regram Media Vault or backup export.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "The Regram vault had no media.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "They stay in the Files app; only the import queue is cleared.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Confirm Passcode";
@@ -947,6 +947,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Tap a thumbnail to preview. Tap a row to add its own attribution.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Queue · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Reading Regram export...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "This Regram export is password protected. Enter the password you chose when exporting it.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Password";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Encrypted Export";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Unlock";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "That password did not unlock the export. Try again.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "Remove all %@?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ saved to your gallery";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "Scroll to import button";
@@ -2388,11 +2393,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Settings reset";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "Could not decompress the backup archive.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "Export contains a file larger than 4 GB, which is not supported yet.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "This archive is password protected.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "Export contains a path that is too long for zip.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "Export is too large for this zip writer.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "Export contains too many files for this zip writer.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "Could not read %@.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "This zip uses an unsupported compression method.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "This zip uses an unsupported encryption method.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "The password is incorrect.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Long press Explore to open a copied username";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Confirm before the feed refreshes";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Confirm before sending a reel to a chat";

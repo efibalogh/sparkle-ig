@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "Genişlik";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "İçe aktarılacak hiçbir şey yok";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "Regram kasası değil";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Regram dışa aktarma klasörü veya MediaVault.zip seçin.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "Bir Regram Medya Kasası veya yedek dışa aktarımı seçin.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "Regram kasası hiçbir medya içermiyordu.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "Dosyalar uygulamasında kalırlar; yalnızca içe aktarma kuyruğu temizlenir.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "Parolayı Onayla";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "Önizlemek için bir küçük resme dokunun. Kendi atıfını eklemek için bir satıra dokunun.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "Kuyruk · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "Regram dışa aktarması okunuyor...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "Bu Regram dışa aktarımı parola korumalı. Dışa aktarırken seçtiğiniz parolayı girin.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "Parola";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "Şifreli Dışa Aktarım";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "Kilidi Aç";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "Bu parola dışa aktarımın kilidini açmadı. Tekrar deneyin.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "Tüm %@ kaldırılsın mı?";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ galeriye kaydedildi";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "İthal düğmesine kaydır";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "Ayarlar sıfırlandı";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "Yedek arşivi açılamadı.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "Dışa aktarma 4 GB'tan büyük bir dosya içeriyor, bu henüz desteklenmiyor.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "Bu arşiv parola korumalı.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "Dışa aktarma zip için fazla uzun bir yol içeriyor.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "Dışa aktarma bu zip yazıcısı için çok büyük.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "Dışa aktarma bu zip yazıcısı için çok fazla dosya içeriyor.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "%@ okunamadı.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "Bu zip desteklenmeyen bir sıkıştırma yöntemi kullanıyor.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "Bu zip desteklenmeyen bir şifreleme yöntemi kullanıyor.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "Parola yanlış.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "Kopyalanan bir kullanıcı adını açmak için Keşfet'e basılı tut";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "Akış yenilenmeden önce onay iste";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "Bir sohbete reel göndermeden önce onay iste";

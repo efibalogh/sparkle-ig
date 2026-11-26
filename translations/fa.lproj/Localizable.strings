@@ -769,7 +769,7 @@
 "GALLERY_GALLERY_IMPORT_METADATA_FORM_WIDTH_TEXT" = "عرض";
 "GALLERY_GALLERY_IMPORT_NOTHING_IMPORT_TEXT" = "چیزی برای وارد کردن نیست";
 "GALLERY_GALLERY_IMPORT_NOT_REGRAM_VAULT_TEXT" = "یک Regram vault نیست";
-"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "یک پوشهٔ خروجی Regram یا فایل MediaVault.zip انتخاب کن.";
+"GALLERY_GALLERY_IMPORT_PICK_REGRAM_EXPORT_FOLDER_MEDIAVAULT_ZIP_TEXT" = "یک خروجی Media Vault یا پشتیبان Regram را انتخاب کنید.";
 "GALLERY_GALLERY_IMPORT_REGRAM_VAULT_HAD_NO_MEDIA_TEXT" = "این Regram vault مدیایی نداشت.";
 "GALLERY_GALLERY_IMPORT_THEY_STAY_FILES_APP_ONLY_IMPORT_QUEUE_CLEARED_TEXT" = "آن‌ها در اپ Files باقی می‌مانند؛ فقط صف وارد کردن پاک می‌شود.";
 "GALLERY_GALLERY_LOCK_CONFIRM_PASSCODE_TEXT" = "تأیید رمز عبور";
@@ -884,6 +884,11 @@
 "GALLERY_IMPORT_QUEUE_FOOTER" = "برای پیش‌نمایش، روی بندانگشتی ضربه بزنید. برای افزودن اسناد اختصاصی، روی یک ردیف ضربه بزنید.";
 "GALLERY_IMPORT_QUEUE_HEADER_FORMAT" = "صف · %@";
 "GALLERY_IMPORT_READING_EXPORT_PROGRESS" = "در حال خواندن خروجی ReGram...";
+"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE" = "این خروجی Regram با گذرواژه محافظت شده است. گذرواژه‌ای را که هنگام خروجی گرفتن انتخاب کردید وارد کنید.";
+"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER" = "گذرواژه";
+"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE" = "خروجی رمزگذاری‌شده";
+"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION" = "باز کردن قفل";
+"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE" = "این گذرواژه خروجی را باز نکرد. دوباره امتحان کنید.";
 "GALLERY_IMPORT_REMOVE_ALL_QUESTION_FORMAT" = "همه %@ حذف شوند؟";
 "GALLERY_IMPORT_SAVED_TO_GALLERY_FORMAT" = "%@ در گالری شما ذخیره شد";
 "GALLERY_IMPORT_SCROLL_TO_BUTTON_ACCESSIBILITY_LABEL" = "پیمایش به دکمه درون‌ریزی";
@@ -2325,11 +2330,14 @@
 "SETTINGS_TRANSFER_SETTINGS_RESET_TOAST" = "تنظیمات بازنشانی شد";
 "SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR" = "امکان از حالت فشرده خارج کردن آرشیو پشتیبان وجود نداشت.";
 "SETTINGS_TRANSFER_ZIP_FILE_TOO_LARGE_ERROR" = "خروجی حاوی فایلی بزرگ‌تر از ۴ گیگابایت است که هنوز پشتیبانی نمی‌شود.";
+"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR" = "این آرشیو با گذرواژه محافظت شده است.";
 "SETTINGS_TRANSFER_ZIP_PATH_TOO_LONG_ERROR" = "خروجی حاوی مسیری است که برای زیپ خیلی طولانی است.";
 "SETTINGS_TRANSFER_ZIP_TOO_LARGE_ERROR" = "خروجی برای این ابزار نوشتن زیپ خیلی بزرگ است.";
 "SETTINGS_TRANSFER_ZIP_TOO_MANY_FILES_ERROR" = "خروجی حاوی فایل‌های بیش از حد برای این ابزار نوشتن زیپ است.";
 "SETTINGS_TRANSFER_ZIP_UNREADABLE_FILE_FORMAT" = "امکان خواندن %@ وجود نداشت.";
 "SETTINGS_TRANSFER_ZIP_UNSUPPORTED_COMPRESSION_ERROR" = "این فایل زیپ از روش فشرده‌سازی پشتیبانی‌نشده‌ای استفاده می‌کند.";
+"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR" = "این zip از روش رمزگذاری پشتیبانی‌نشده استفاده می‌کند.";
+"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR" = "گذرواژه نادرست است.";
 "SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT" = "روی اکسپلور نگه دارید تا نام کاربری کپی‌شده باز شود";
 "SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT" = "تأیید پیش از تازه‌سازی فید";
 "SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT" = "تأیید پیش از ارسال ریل به گفتگو";
