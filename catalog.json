@@ -5,208 +5,208 @@
       "code": "ar",
       "name": "Arabic",
       "endonym": "العربية",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-ar.zip",
-      "sha256": "55efaef7b98abd7530b82123cbc13c0910df8e49656a4cfec07fb4611149f64c",
-      "bytes": 60106,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-ar.zip",
+      "sha256": "a119b1451db130561394cc5be058ed038c0d8dae587f59541f348166ad38510f",
+      "bytes": 66319,
+      "coverage": 98
     },
     {
       "code": "de",
       "name": "German",
       "endonym": "Deutsch",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-de.zip",
-      "sha256": "ee2b78c9e7e00d1fa243bb3535c602f89b5bf4be4d39075d2c907100e25b1250",
-      "bytes": 59063,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-de.zip",
+      "sha256": "cd98ac1d61ad026723a82fc607ca3b204268064520dc2c5fccdca06e2804b592",
+      "bytes": 65044,
+      "coverage": 98
     },
     {
       "code": "el",
       "name": "Greek",
       "endonym": "Ελληνικά",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-el.zip",
-      "sha256": "caf4a77812b82fb5dcd224b4c1580cc52a29cad9bbcdb229041e0a74839b7279",
-      "bytes": 70167,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-el.zip",
+      "sha256": "18cb7126dd2c3dc5ee7317d735b7cf81606a989d8a2ae8235f068d04c6e1badd",
+      "bytes": 77429,
+      "coverage": 98
     },
     {
       "code": "es-419",
       "name": "Spanish (Latin America)",
       "endonym": "Español (Latinoamérica)",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-es-419.zip",
-      "sha256": "de84c22883b1b375ba4089d8fd6c7524939de7639d8f63f963be2fcaf3adab9e",
-      "bytes": 57238,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-es-419.zip",
+      "sha256": "9d13c149a6d78d35fa78304dce0f27f8472a6e03fd373977b743c74be153ee62",
+      "bytes": 63046,
+      "coverage": 98
     },
     {
       "code": "es-ES",
       "name": "Spanish",
       "endonym": "Español",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-es-ES.zip",
-      "sha256": "7bd479378278c0b73cff5ddaefc642890063f2ec8d6e402d5d90f441171af4a0",
-      "bytes": 57250,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-es-ES.zip",
+      "sha256": "d0de8c4ac489cef4dfa2cffa72c5afb9a0c205cb557dd5b792bcce7f20e9156b",
+      "bytes": 63039,
+      "coverage": 98
     },
     {
       "code": "fa",
       "name": "Persian",
       "endonym": "فارسی",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-fa.zip",
-      "sha256": "bcf0de1ebd51bafec062a43f6948d324ced35e9bc79291e11ecdcea8c1d97ded",
-      "bytes": 60996,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-fa.zip",
+      "sha256": "838880a5d9e81906afdb9d39942505ba7b82bd2350d8b8bb21166d2a86a6ae7d",
+      "bytes": 67248,
+      "coverage": 98
     },
     {
       "code": "fil",
       "name": "Filipino",
       "endonym": "Filipino",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-fil.zip",
-      "sha256": "cb53dc6fb1e163e9b42141df5365b3fd22387cbf4510c1af05cb79d7bee8f4ef",
-      "bytes": 57585,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-fil.zip",
+      "sha256": "57ace5e5f3f46ffbec7d022a7fe82eafad4aad0001891c45617ad39c46b8ae96",
+      "bytes": 63479,
+      "coverage": 98
     },
     {
       "code": "fr",
       "name": "French",
       "endonym": "Français",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-fr.zip",
-      "sha256": "83e4c191be4358d6c896929ac57e4f6c654cbf403d3a2a183c32e9326fe63f1d",
-      "bytes": 58814,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-fr.zip",
+      "sha256": "893b15a94298c5f502a92636d38cec86180b89dc091209389c6b97e262988dd2",
+      "bytes": 64837,
+      "coverage": 98
     },
     {
       "code": "gsw-BE",
       "name": "Swiss German (Bern)",
       "endonym": "Bärndütsch",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-gsw-BE.zip",
-      "sha256": "2650fc4ebac4e1f7877c0d6d1e6a871b46d87d0c67cf9eb4ee6a0b1a604c357e",
-      "bytes": 58396,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-gsw-BE.zip",
+      "sha256": "a9edd32dc991d340df3653c38cca767dbe02cccfb157d99591566cfd10ebf889",
+      "bytes": 64411,
+      "coverage": 98
     },
     {
       "code": "hi",
       "name": "Hindi",
       "endonym": "हिन्दी",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-hi.zip",
-      "sha256": "bfd04bb98663ea3e5c2b8098e4a8e7ce8740b50638ec53fd225b68685759c8af",
-      "bytes": 66775,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-hi.zip",
+      "sha256": "d98da38067e1b567a7a9ae8356e832cbe2d64599039dea04980ec3120ad69d1e",
+      "bytes": 73801,
+      "coverage": 98
     },
     {
       "code": "id",
       "name": "Indonesian",
       "endonym": "Bahasa Indonesia",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-id.zip",
-      "sha256": "cbc33d7dfcdefd9373afa91379eb2cf6ec5747ffc3981281c90feb55f660db94",
-      "bytes": 53890,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-id.zip",
+      "sha256": "ede3e30b40c4db74cc5f5f3b4aed32aa2ac9d2f1bda92046128221694549ab78",
+      "bytes": 59377,
+      "coverage": 98
     },
     {
       "code": "it",
       "name": "Italian",
       "endonym": "Italiano",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-it.zip",
-      "sha256": "df8cd2ce446480e99d83a5a5ef7f268ed4b8bbb78dbc176a7a3e80827bb4cf4c",
-      "bytes": 57185,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-it.zip",
+      "sha256": "c5ebbabf030467507e7794709c3fb2e0697ce9fb9339f1e38b0b5bd4dc548594",
+      "bytes": 62961,
+      "coverage": 98
     },
     {
       "code": "ko",
       "name": "Korean",
       "endonym": "한국어",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-ko.zip",
-      "sha256": "c47ed2666da509eb53f5e331be1486dd21ce94fd0b93ea40682c01e5bea34b5b",
-      "bytes": 56097,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-ko.zip",
+      "sha256": "9f8225691e42d20496acde43086e2ab4e3696b88ceced76c98922ae6f307889f",
+      "bytes": 61803,
+      "coverage": 98
     },
     {
       "code": "lt",
       "name": "Lithuanian",
       "endonym": "Lietuvių",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-lt.zip",
-      "sha256": "b3557b1d0a156cacf38e0ad6ead23ad49c4de75e36955490d1d71cd0109f5857",
-      "bytes": 58231,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-lt.zip",
+      "sha256": "53f7a5a5ab605671aace4288ce0aae1f4a99df74260f8907f49734ff0d0288a1",
+      "bytes": 64226,
+      "coverage": 98
     },
     {
       "code": "pt-BR",
       "name": "Portuguese (Brazil)",
       "endonym": "Português (Brasil)",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-pt-BR.zip",
-      "sha256": "8fb8c6e156355e904277dda74f795867e41eae83e770411f8b14d4875cb7da00",
-      "bytes": 57341,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-pt-BR.zip",
+      "sha256": "0b5fbb0b84b1db9979fe276a72e948fdb75d6a80980df4a9fe3d8506d7be6b6d",
+      "bytes": 63250,
+      "coverage": 98
     },
     {
       "code": "ro",
       "name": "Romanian",
       "endonym": "Română",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-ro.zip",
-      "sha256": "9db134607767a432de910d03d7a1d3a0db5c761fc60317d90f91a48c7d0432a0",
-      "bytes": 58680,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-ro.zip",
+      "sha256": "5be703b9ac0376848107fd84083057363633fd10cf37475a79557a38ee3165a8",
+      "bytes": 64481,
+      "coverage": 98
     },
     {
       "code": "ru",
       "name": "Russian",
       "endonym": "Русский",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-ru.zip",
-      "sha256": "8a5dac3fa92786ee65fb58fbcf524c465b41e17aeacdeacc7c4baa7423b38adb",
-      "bytes": 65828,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-ru.zip",
+      "sha256": "3d8b2a969da4db53e04d092818947cba50543e784d6cf1648471f3b4e2584667",
+      "bytes": 72877,
+      "coverage": 98
     },
     {
       "code": "th",
       "name": "Thai",
       "endonym": "ไทย",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-th.zip",
-      "sha256": "d8bcb919e5260570f8589c2267af98219b08cc75a3fd286b0c5e93f635b03476",
-      "bytes": 62184,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-th.zip",
+      "sha256": "7a3141c0f78f571b6493b7ac53c89444c7e13bd31a953245c4d6dd02f6c05080",
+      "bytes": 68596,
+      "coverage": 98
     },
     {
       "code": "tr",
       "name": "Turkish",
       "endonym": "Türkçe",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-tr.zip",
-      "sha256": "3f67eb5d037fc9f34d780d91642b29ac5a44a94d9fe6ffa5f63e2cf8a4e3cec8",
-      "bytes": 57546,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-tr.zip",
+      "sha256": "dcbc5d1d581f9a64826584d6035cfce39b4c7dc604da655eaa054a9d10e160fd",
+      "bytes": 63264,
+      "coverage": 98
     },
     {
       "code": "uk",
       "name": "Ukrainian",
       "endonym": "Українська",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-uk.zip",
-      "sha256": "e8ad78be631d45792263c904af097f9414030248939b44dd57eaed23ceec9a86",
-      "bytes": 65779,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-uk.zip",
+      "sha256": "a42d397b34bcf2f58013e54fc08e8dd693d7283dd8d3463ca3e8c552e8b51cea",
+      "bytes": 72735,
+      "coverage": 98
     },
     {
       "code": "vi",
       "name": "Vietnamese",
       "endonym": "Tiếng Việt",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-vi.zip",
-      "sha256": "ab16d5b1ecdfd4a46a86bd4c8c9e3fdeebbfc591f70350295714e04d124df80a",
-      "bytes": 56972,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-vi.zip",
+      "sha256": "73c94fff9df66e2374f722beb832ebc8848a0625ad5ec9164952c33c5844c0ac",
+      "bytes": 62626,
+      "coverage": 98
     },
     {
       "code": "zh-Hans",
       "name": "Chinese (Simplified)",
       "endonym": "简体中文",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-zh-Hans.zip",
-      "sha256": "3e1b8d97bda9ff8e3f4f719304d30fa9257d6b7af8b00f00ea346a2728b49004",
-      "bytes": 55146,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-zh-Hans.zip",
+      "sha256": "789354bd6ebd243a6dd03c0277670ee1859c2d440ec464bb64d13590baebdf1e",
+      "bytes": 60824,
+      "coverage": 98
     },
     {
       "code": "zh-Hant",
       "name": "Chinese (Traditional)",
       "endonym": "繁體中文",
-      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.6.1/Sparkle-zh-Hant.zip",
-      "sha256": "07412f2e3c125e8fbc8c043eb1ee07bc4401162cb2a366926ffac90072435ce0",
-      "bytes": 55638,
-      "coverage": 100
+      "url": "https://github.com/efibalogh/sparkle-ig/releases/download/v1.7.0/Sparkle-zh-Hant.zip",
+      "sha256": "022c4ae43a40fa8d3a5b97c2e84c04c1616843b818e50c0cc100f7b1771d4710",
+      "bytes": 61281,
+      "coverage": 98
     }
   ]
 }
