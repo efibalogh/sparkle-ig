@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "账户";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "列出每个账户各自保留的内容，以及所有账户共享的内容。";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "为每个已登录账户提供独立的 Sparkle 设置。新识别的账户会以你当前的设置为起点。需要重启。";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS 只为应用提供一个图标。";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "下载的视频和音频的编码方式。";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "你保存的位置。使用虚拟位置和当前使用的位置按账号分别保存。";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "主动态（为您推荐或正在关注）和禁用视频自动播放。";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "图库的所有设置，包括布局、排序和锁定。哪个账号拥有哪些媒体，在图库设置中设定。";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "液态玻璃、OLED 深色模式、应用字体、滚动边缘效果和捕获时隐藏 UI。";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "每个已登录的账号都可以保留自己的 Sparkle 设置。在你为某个账号更改设置之前，它会使用共享的值。\n\n以下设置对所有账号保持一致。其中大多数会在 Instagram 知道当前打开的是哪个账号之前完成设置。";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "静音启动 Reels、防止无限滚动、无限滚动限制和禁用 Reels 滚动。";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "标签顺序、隐藏标签、标签长按、启动标签、左右滑动切换标签以及系统标签栏。";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "禁用所有设置和修复重复通知。";
 "GENERAL_ADS_HEADER" = "广告";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "在评论中隐藏";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "在创意工具中隐藏";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "缓存已清除";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "正在清除缓存...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "已释放 %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "每个 Instagram 账户都可以保留自己的 Sparkle 设置。在你为某个账户更改设置前，它会使用当前的共享值。\n\n以下设置在所有账户之间保持共享：\n•  应用图标\n•  外观和 Liquid Glass\n•  标签栏顺序和可见性\n•  快速访问快捷方式（设置和 Gallery）\n•  主动态模式（为你推荐/关注）\n•  禁用视频自动播放\n•  Reels 无尽滚动和限制\n•  捕获时隐藏 UI\n•  下载编码设置\n•  Gallery 视图、排序和锁定\n•  修复重复通知\n•  全部禁用（主开关）\n\nGallery 媒体所有权在 Gallery 设置中单独配置。";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "选择单次点击执行的操作。长按总是打开已启用的目标菜单。";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "始终安装";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "测量主线程被阻止的时间长度，这就是\"卡顿\"的真实含义，并计算当前窗口中活动的视图控制器、视图和手势识别器的数量。\n\n当您导航时上升且从不下降的数字表示泄漏：屏幕或识别器正在堆积，每一个都在继续工作。在每次运行前启动新测量，以便轮次进行比较。\n\n每个在布局期间运行的 Sparkle 钩子都经过计时，所以最昂贵的钩子命名吃主线程的那个。打开计量器，浏览直到感觉缓慢，然后回来读取它。完整排名每 15 秒进入日志。";

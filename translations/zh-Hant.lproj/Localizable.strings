@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "帳號";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "列出各帳號各自保留的內容，以及所有帳號共用的內容。";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "讓每個已登入的帳號擁有各自的 Sparkle 設定。新出現的帳號會以你目前的設定為起點。需要重新啟動。";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS 只會為 App 提供一個圖示。";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "下載的影片和音訊的編碼方式。";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "你儲存的地點。使用虛擬位置與目前使用的地點會依帳號分別保存。";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "主要動態消息（為你推薦或追蹤中）和停用影片自動播放。";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "所有圖庫設定，包括版面、排序和鎖定。哪個帳號擁有哪些媒體，請在圖庫設定中設定。";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "液態玻璃、OLED 深色模式、App 字型、捲動邊緣效果，以及擷取畫面時隱藏介面。";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "每個已登入的帳號都可以保留自己的 Sparkle 設定。在你為某個帳號變更設定之前，它會使用共用的值。\n\n以下設定對所有帳號都相同。其中大多數會在 Instagram 知道目前開啟的是哪個帳號之前就設定好。";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "靜音啟動 Reels、防止無限捲動、無限捲動上限和停用 Reels 捲動。";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "分頁順序、隱藏的分頁、分頁長按、啟動分頁、在分頁間滑動，以及系統分頁列。";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "停用所有設定和修正重複通知。";
 "GENERAL_ADS_HEADER" = "廣告";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "在留言中隱藏";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "在建立工具中隱藏";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "已清除快取";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "正在清除快取...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "已釋放 %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "每個已登入的帳號都可以保留自己的 Sparkle 設定。在你為某個帳號變更設定之前，會使用目前的共用值。\n\n以下項目會在所有帳號之間共用：\n•  App 圖示\n•  外觀與 Liquid Glass\n•  分頁列順序與顯示\n•  快速存取捷徑（設定與圖庫）\n•  主要動態模式（為你推薦 / 追蹤中）\n•  停用影片自動播放\n•  Reels 無限捲動與限制\n•  擷取時隱藏介面\n•  下載編碼設定\n•  圖庫檢視、排序與鎖定\n•  修正重複通知\n•  停用全部（總開關）\n\n圖庫媒體的擁有權是在「圖庫設定」中另外設定的。";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "選擇單擊時要執行的動作。長按一律會開啟已啟用目的地的選單。";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "一律安裝";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "測量主執行緒被阻塞的時間長度——這正是「卡頓」的真正意義——同時計算目前視窗中存活的視圖控制器、視圖與手勢辨識器數量。\n\n數字若隨著你的操作不斷攀升卻從未回落，就代表發生了洩漏：畫面或辨識器持續堆積，而且每一個都仍在運作。每次測試前請重新開始一次測量，以便各回合能互相比較。\n\n每個在版面配置期間執行的 Sparkle hook 都會被計時，因此可以透過「最耗資源 Hook」欄位得知哪一個正在拖垮主執行緒。開啟計量器，瀏覽到感覺卡頓為止，再回來查看結果。完整排行榜每 15 秒會寫入一次記錄。";

@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "アカウント";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "各アカウントが個別に保持する情報と、すべてのアカウントで共有される情報の一覧を表示します。";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "ログイン中の各アカウントに独自のSparkle設定を持たせます。新しく検出したアカウントは現在の設定から始まります。再起動が必要です。";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS ではアプリのアイコンが 1 つだけになります。";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "ダウンロードした動画と音声のエンコード方法です。";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "保存した場所です。偽の位置情報を使用と使用中の場所は、アカウントごとに保持されます。";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "メインフィード（あなたへのおすすめ / フォロー中）と動画自動再生を無効化。";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "レイアウト、並び順、ロックを含むすべてのギャラリー設定です。どのアカウントがどのメディアを所有するかは、ギャラリー設定で指定します。";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass、OLEDダークモード、アプリのフォント、スクロール端エフェクト、キャプチャ時に UI を非表示。";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "ログイン中の各アカウントは、独自の Sparkle 設定を保持できます。アカウントの設定を変更するまでは、共有の値を使用します。\n\n以下の設定はすべてのアカウントで共通です。そのほとんどは、Instagram が開いているアカウントを把握する前に設定されます。";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "リールをミュートで開始、ドゥームスクローリングを防止、ドゥームスクローリングリミット、リールのスクロールを無効化。";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "タブの順序、非表示のタブ、タブの長押し、起動時のタブ、タブ間のスワイプ、システムタブバー。";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "すべての設定を無効化と重複通知を修正。";
 "GENERAL_ADS_HEADER" = "広告";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "コメント内で非表示";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "作成ツール内で非表示";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "キャッシュがクリアされました";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "キャッシュを消去中...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@を解放しました";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "ログインしている各アカウントで、それぞれ独自のSparkle設定を保持できます。アカウントごとに設定を変更するまでは、現在の共有値が使用されます。\n\nこれらはすべてのアカウント間で共有されたままです：\n•  アプリアイコン\n•  外観とLiquid Glass\n•  タブバーの順序と可視性\n•  クイックアクセスショートカット（設定とギャラリー）\n•  メインフィードモード（For You / Following）\n•  動画自動再生を無効化\n•  Reelsドゥームスクロール＆制限\n•  キャプチャ時にUIを非表示\n•  ダウンロードエンコード設定\n•  ギャラリービュー、ソート＆ロック\n•  重複通知を修正\n•  すべて無効化（マスタースイッチ）\n\nギャラリーメディアの所有権はギャラリー設定で個別に設定されます。";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "シングルタップで何を実行するかを選択します。長押しで常に有効な宛先のメニューが開きます。";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "常にインストール済み";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "メインスレッドがブロックされている時間を測定します。これが「遅い」ことの実態で、現在のウィンドウで生きているビューコントローラー、ビュー、ジェスチャーレコグナイザーをカウントします。\n\nナビゲート中に増加し、戻らない数字はリークです: スクリーンまたはレコグナイザーが積み重なり、それぞれが継続して処理されています。各実行前に新しい測定を開始して、ラウンドを比較してください。\n\nレイアウト中に実行されるすべてのSparkleフックは時間が計測されるため、「最も高コストなフック」はメインスレッドを消費しているものの名前です。メーターをオンにしてブラウズし、遅く感じるまで待ってから戻って読んでください。完全なランキングは15秒ごとにログに出力されます。";

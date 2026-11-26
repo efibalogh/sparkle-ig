@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Mga Account";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Nakalista kung ano ang iniingatan ng bawat account para lang sa sarili nito at kung ano ang shared sa lahat ng ito.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Binibigyan ang bawat naka-login na account ng sarili nitong Sparkle settings. Ang bagong makikitang account ay magsisimula sa iyong kasalukuyang settings. Kailangan ng restart.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "Binibigyan ng iOS ang app ng iisang icon.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Paano naka-encode ang mga na-download na video at audio.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Ang mga lugar na sine-save mo. Ang Gumamit ng Pekeng Lokasyon at ang lugar na ginagamit ay nananatili kada account.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Pangunahing Feed (Para Sa Iyo o Sinusundan) at I-disable ang Autoplay ng Video.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Lahat ng setting ng Galerya, kasama ang layout, pagsasaayos, at lock nito. Kung aling account ang may-ari ng aling media ay itinatakda sa Mga Setting ng Gallery.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, OLED Dark Mode, font ng app, Epekto ng Scroll sa Gilid, at Itago ang UI sa Capture.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Maaaring magkaroon ng sarili nitong mga setting ng Sparkle ang bawat naka-log in na account. Hangga't hindi mo binabago ang isang setting para sa isang account, ginagamit nito ang shared na halaga.\n\nPareho ang mga setting sa ibaba para sa bawat account. Karamihan sa mga ito ay naka-set up bago malaman ng Instagram kung aling account ang bukas.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Simulan ang Reels nang Naka-mute, Pigilan ang Doom Scrolling, Limitasyon sa Doom Scrolling, at I-disable ang Pag-scroll ng Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Pagkakasunod-sunod ng tab, mga nakatagong tab, tab holds, tab sa paglunsad, pag-swipe sa pagitan ng mga tab, at Tab Bar ng System.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "I-disable ang Lahat ng Setting at Ayusin ang Duplicate Notifications.";
 "GENERAL_ADS_HEADER" = "Mga Ad";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Itago sa Comments";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Itago sa Creation Tools";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Nalinis ang cache";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Nililinis ang cache...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Nabakante ang %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Ang bawat naka-login na account ay maaaring magkaroon ng sariling Sparkle settings. Hangga't hindi mo pa binabago ang isang setting para sa isang account, gagamitin nito ang kasalukuyang shared value.\n\nMananatiling shared ang mga ito sa lahat ng account:\n•  App icon\n•  Appearance at Liquid Glass\n•  Order at visibility ng tab bar\n•  Quick access shortcuts (Settings at Gallery)\n•  Mode ng main feed (For You / Following)\n•  I-disable ang video autoplay\n•  Doom scroll at limitasyon ng Reels\n•  Itago ang UI sa capture\n•  Mga setting ng download encoding\n•  View, sort, at lock ng Gallery\n•  Ayusin ang duplicate notifications\n•  I-disable Lahat (master switch)\n\nHiwalay na kino-configure ang ownership ng media ng Gallery sa Gallery Settings.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Piliin kung ano ang ginagawa ng isang tap. Palaging binubuksan ng long press ang menu ng mga naka-enable na destinasyon.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Palaging naka-install";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Sinusukat kung gaano katagal na-block ang main thread, na siyang aktwal na kahulugan ng \"laggy,\" at binibilang ang mga view controller, view, at gesture recognizer na aktibo sa kasalukuyang window.\n\nAng mga bilang na tumataas habang nagna-navigate ka at hindi na bumababa ay tanda ng leak: nagtatambak ang mga screen o recognizer at bawat isa sa kanila ay patuloy na gumagana. Magsimula ng bagong pagsukat bago ang bawat round para ma-compare ang mga ito.\n\nSinusukat ang oras ng bawat Sparkle hook na tumatakbo habang nag-la-layout, kaya ang Most Expensive Hook ang nagbibigay ng pangalan sa nakakain ng pinakamaraming oras sa main thread. Buksan ang meter, mag-browse hanggang sa maramdamang mabagal, pagkatapos ay bumalik at basahin ito. Napupunta sa log ang buong ranking tuwing 15 segundo.";

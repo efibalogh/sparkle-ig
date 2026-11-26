@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Comptes";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Indique ce que chaque compte garde pour lui et ce qui reste partagé entre tous.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Donne à chaque compte connecté ses propres réglages Sparkle. Un compte vu pour la première fois part de vos réglages actuels. Nécessite un redémarrage.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS attribue à l'app une seule icône.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Encodage des vidéos et des audios téléchargés.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Vos lieux enregistrés. L'utilisation d'une fausse position et le lieu actif sont propres à chaque compte.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Fil principal (Pour toi ou Suivis) et Désactiver la lecture automatique vidéo.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Tous les réglages de la galerie, y compris la mise en page, le tri et le verrouillage. Le compte propriétaire de chaque média se définit dans les paramètres de la galerie.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, Mode sombre OLED, la police de l'app, Effet de bord de défilement et Masquer l'interface lors de la capture.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Chaque compte connecté peut avoir ses propres réglages Sparkle. Tant que vous ne modifiez pas un réglage pour un compte, il utilise la valeur partagée.\n\nLes réglages ci-dessous restent identiques pour tous les comptes. La plupart sont appliqués avant qu'Instagram ne sache quel compte est ouvert.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Démarrer les Reels sans son, Prévenir le défilement infini, Limite de défilement infini et Désactiver le défilement des Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Ordre des onglets, onglets masqués, appui prolongé sur les onglets, onglet de lancement, balayage entre les onglets et la Barre d'onglets système.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Désactiver tous les paramètres et Corriger les notifications en doublon.";
 "GENERAL_ADS_HEADER" = "Publicités";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Masquer dans les commentaires";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Masquer dans les outils de création";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache vidé";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Vidage du cache...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ libérés";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Chaque compte connecté peut conserver ses propres paramètres Sparkle. Tant que vous ne modifiez pas un paramètre pour un compte, celui-ci utilise la valeur actuellement partagée.\n\nCes éléments restent partagés entre tous les comptes :\n•  Icône d'application\n•  Apparence et Liquid Glass\n•  Ordre et visibilité de la barre d'onglets\n•  Raccourcis d'accès rapide (Paramètres et Galerie)\n•  Mode flux principal (Pour vous / Suivis)\n•  Désactiver la lecture automatique des vidéos\n•  Reels doom scroll et limites\n•  Masquer l'interface lors de la capture\n•  Paramètres d'encodage du téléchargement\n•  Affichage, tri et verrouillage de la galerie\n•  Corriger les notifications en double\n•  Désactiver tout (commutateur maître)\n\nLa propriété des médias de la galerie est configurée séparément dans les paramètres de la Galerie.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Choisissez ce qu'un simple appui fait. Un appui long ouvre toujours le menu des destinations activées.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Toujours installé";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Mesure la durée pendant laquelle le thread principal est bloqué, ce qui est ce que « ralenti » signifie réellement, et compte les view controllers, vues et reconnaissance de gestes vivants dans la fenêtre actuelle.\n\nLes nombres qui montent au fur et à mesure que tu navigues et ne redescendent jamais sont une fuite : les écrans ou les reconnaissances s'accumulent et chacun d'eux continue à faire du travail. Commence une nouvelle mesure avant chaque passage pour que les tours se comparent.\n\nChaque hook Sparkle qui s'exécute lors de la mise en page est chronométré, donc le hook le plus onéreux nomme celui qui mange le thread principal. Active le compteur, navigue jusqu'à ce que cela se ressente lent, puis reviens et lis-le. Le classement complet va au journal toutes les 15 secondes.";

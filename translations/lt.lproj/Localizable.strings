@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Paskyros";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Nurodoma, ką kiekviena paskyra saugo atskirai, o kas lieka bendra visoms paskyroms.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Suteikia kiekvienai prisijungusiai paskyrai atskirus Sparkle nustatymus. Nauja aptikta paskyra pradedama nuo dabartinių jūsų nustatymų. Reikia paleisti iš naujo.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS programai suteikia tik vieną piktogramą.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Kaip koduojami atsisiųsti vaizdo ir garso įrašai.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Jūsų išsaugotos vietos. Naudoti netikrą vietą ir dabartinė vieta kiekvienai paskyrai saugomos atskirai.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Pagrindinis srautas (Jums arba Stebimi) ir Išjungti automatinį vaizdo leidimą.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Visi Galerijos nustatymai, įskaitant išdėstymą, rūšiavimą ir užraktą. Kuri paskyra kuriai laikmenai priklauso, nustatoma Galerijos nustatymuose.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, OLED tamsusis režimas, programos šriftas, Slinkimo krašto efektas ir Slėpti sąsają fiksuojant.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Kiekviena prisijungusi paskyra gali turėti savus Sparkle nustatymus. Kol nepakeisite nustatymo paskyrai, ji naudoja bendrą reikšmę.\n\nŽemiau esantys nustatymai visoms paskyroms yra vienodi. Dauguma jų nustatomi dar prieš tai, kai Instagram sužino, kuri paskyra atidaryta.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Paleisti Reels nutildytus, Neleisti slinkimo be pabaigos, Slinkimo be pabaigos riba ir Išjungti Reels slinkimą.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Skirtukų tvarka, paslėpti skirtukai, skirtukų laikymas, paleidimo skirtukas, perbraukimas tarp skirtukų ir Sistemos skirtukų juosta.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Išjungti visus nustatymus ir Taisyti pasikartojančius pranešimus.";
 "GENERAL_ADS_HEADER" = "Reklamos";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Slėpti komentaruose";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Slėpti kūrimo įrankiuose";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Talpykla išvalyta";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Valoma talpykla...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Atlaisvinta %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Kiekviena prisijungusi paskyra gali turėti savo Sparkle nustatymus. Kol nepakeisite nustatymo konkrečiai paskyrai, ji naudos dabartinę bendrą reikšmę.\n\nŠie nustatymai lieka bendri visoms paskyroms:\n•  Programos piktograma\n•  Išvaizda ir Liquid Glass\n•  Skirtukų juostos tvarka ir matomumas\n•  Greitos prieigos nuorodos (Nustatymai ir Galerija)\n•  Pagrindinio srauto režimas (Jums / Stebimi)\n•  Automatinio vaizdo įrašų leidimo išjungimas\n•  Reels slinkimas be sustojimo ir ribos\n•  Sąsajos slėpimas fiksuojant\n•  Atsisiuntimo koduotės nustatymai\n•  Galerijos rodinys, rikiavimas ir užraktas\n•  Pasikartojančių pranešimų taisymas\n•  Išjungti viską (pagrindinis jungiklis)\n\nGalerijos medijos priklausomybė konfigūruojama atskirai galerijos nustatymuose.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Pasirinkite, ką atlieka vienas palietimas. Ilgas paspaudimas visada atveria įjungtų krypčių meniu.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Visada įdiegta";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Matuoja, kiek laiko blokuojama pagrindinė gija, kas iš tikrųjų ir yra \"strigimas\", bei skaičiuoja dabartiniame lange veikiančius rodinių valdiklius, rodinius ir gestų atpažintuvus.\n\nSkaičiai, kurie naršant auga ir niekada nesumažėja, rodo nuotėkį: ekranai ar atpažintuvai kaupiasi ir kiekvienas toliau atlieka darbą. Prieš kiekvieną bandymą pradėkite naują matavimą, kad rezultatus galėtumėte palyginti.\n\nKiekvienas Sparkle kabliukas, veikiantis maketavimo metu, yra chronometruojamas, todėl brangiausias kabliukas įvardija tą, kuris apkrauna pagrindinę giją. Įjunkite matuoklį, naršykite, kol pradės strigti, tada grįžkite ir perskaitykite. Visas reitingas į žurnalą įrašomas kas 15 sekundžių.";

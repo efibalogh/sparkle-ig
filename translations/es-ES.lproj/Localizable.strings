@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Cuentas";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Enumera qué guarda cada cuenta por separado y qué se comparte entre todas.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Da a cada cuenta con sesión iniciada sus propios ajustes de Sparkle. Una cuenta vista por primera vez parte de tus ajustes actuales. Requiere reiniciar.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS asigna a la app un único icono.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Cómo se codifican los vídeos y el audio descargados.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Tus lugares guardados. Usar ubicación falsa y el lugar en uso se mantienen por cuenta.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Feed principal (Para Ti o Siguiendo) y Desactivar reproducción automática de vídeo.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Todos los ajustes de Galería, incluidos el diseño, la ordenación y el bloqueo. Qué cuenta es propietaria de cada medio se define en Ajustes de Galería.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, Modo oscuro OLED, la tipografía de la app, Efecto de borde de desplazamiento y Ocultar IU en captura.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Cada cuenta con sesión iniciada puede tener sus propios ajustes de Sparkle. Hasta que cambies un ajuste para una cuenta, usará el valor compartido.\n\nLos ajustes siguientes son los mismos para todas las cuentas. La mayoría se configuran antes de que Instagram sepa qué cuenta está abierta.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Iniciar Reels sin sonido, Prevenir desplazamiento infinito, Límite de desplazamiento infinito y Desactivar deslizamiento de Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Orden de pestañas, pestañas ocultas, mantener pulsada una pestaña, la pestaña de inicio, deslizar entre pestañas y la Barra de pestañas del sistema.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Desactivar todos los ajustes y Reparar notificaciones duplicadas.";
 "GENERAL_ADS_HEADER" = "Anuncios";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Ocultar en comentarios";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Ocultar en herramientas de creación";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Caché borrada";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Borrando la caché...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Se han liberado %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Cada cuenta con sesión iniciada puede mantener sus propios ajustes de Sparkle. Hasta que cambies un ajuste para una cuenta, esta usa el valor compartido actual.\n\nEstas opciones se mantienen compartidas entre todas las cuentas:\n•  Icono de la app\n•  Apariencia y Liquid Glass\n•  Orden y visibilidad de la barra de pestañas\n•  Atajos de acceso rápido (Ajustes y Galería)\n•  Modo de feed principal (Para ti / Seguidos)\n•  Desactivar reproducción automática de vídeos\n•  Límites de desplazamiento infinito de Reels\n•  Ocultar interfaz al capturar\n•  Ajustes de codificación de descargas\n•  Vista, ordenación y bloqueo de galería\n•  Corregir notificaciones duplicadas\n•  Desactivar todo (interruptor maestro)\n\nLa propiedad de los medios de la Galería se configura por separado en los ajustes de Galería.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Elige qué hace un solo toque. La presión larga siempre abre el menú de destinos habilitados.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Siempre instalado";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Mide cuánto tiempo se bloquea el hilo principal, que es lo que realmente significa \"lento\", y cuenta los controladores de vista, vistas y reconocedores de gestos activos en la ventana actual.\n\nLos números que suben mientras navegas y nunca vuelven a bajar son una fuga: las pantallas o reconocedores se están acumulando y cada uno sigue funcionando. Inicia una nueva medición antes de cada ejecución para que las rondas se comparen.\n\nCada gancho de Sparkle que se ejecuta durante la maquetación está cronometrado, por lo que Hook más costoso nombra el que consume el hilo principal. Activa el medidor, navega hasta que se sienta lento, luego regresa y léelo. La clasificación completa va al registro cada 15 segundos.";

@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Conturi";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Enumeră ce păstrează fiecare cont doar pentru sine și ce rămâne comun tuturor.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Oferă fiecărui cont conectat propriile setări Sparkle. Un cont văzut pentru prima dată pornește de la setările tale actuale. Necesită repornire.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS îi oferă aplicației o singură pictogramă.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Cum sunt codificate videoclipurile și audio descărcate.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Locurile tale salvate. Folosește locație falsă și locul folosit se păstrează per cont.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Feed principal (Pentru tine sau Urmărire) și Dezactivare redare automată video.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Toate setările Galeriei, inclusiv aspectul, sortarea și blocarea. Ce cont deține ce conținut se setează în Setări Galerie.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, Mod întunecat OLED, fontul aplicației, Efect de margine la derulare și Ascunde UI la captură.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Fiecare cont conectat își poate păstra propriile setări Sparkle. Până schimbi o setare pentru un cont, acesta folosește valoarea comună.\n\nSetările de mai jos rămân aceleași pentru toate conturile. Majoritatea sunt configurate înainte ca Instagram să știe ce cont este deschis.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Pornește Reels fără sunet, Prevenire derulare nesfârșită, Limita derulării nesfârșite și Dezactivează derularea Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Ordinea filelor, filele ascunse, ținerea filelor apăsate, fila de lansare, glisarea între file și Bară file de sistem.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Dezactivează toate setările și Repară notificări duplicate.";
 "GENERAL_ADS_HEADER" = "Anunțuri";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Ascunde în comentarii";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Ascunde în instrumente de creare";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache șters";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Se golește memoria cache...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "S-au eliberat %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Fiecare cont conectat își poate păstra propriile setări Sparkle. Până când schimbi o setare pentru un cont, acesta folosește valoarea partajată curentă.\n\nAcestea rămân partajate între toate conturile:\n•  Pictograma aplicației\n•  Aspect și Liquid Glass\n•  Ordinea și vizibilitatea barei de file\n•  Comenzi rapide de acces (Setări și Galerie)\n•  Modul feedului principal (Pentru tine / Urmărești)\n•  Dezactivează redarea automată a videoclipurilor\n•  Derulare nesfârșită și limite pentru Reels\n•  Ascunde interfața la captură\n•  Setări de codificare a descărcărilor\n•  Vizualizarea, sortarea și blocarea Galeriei\n•  Remediază notificările duplicate\n•  Dezactivează tot (comutator principal)\n\nProprietatea fișierelor media din Galerie este configurată separat în Setările Galeriei.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Alegeți ce face o singură atingere. Apăsarea lungă deschide întotdeauna meniul destinațiilor activate.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Întotdeauna instalat";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Măsoară cât timp firul principal este blocat, ceea ce este de fapt \"lag\", și numără controlerele de vizualizare, vederile și recunoaștitorii de gesturi vii în fereastra actuală.\n\nNumerele care cresc pe măsură ce navighezi și nu scad niciodată sunt o scurgere: ecranele sau recunoaștitorii se acumulează și fiecare din ei continuă să lucreze. Pornește o nouă măsurare înainte de fiecare rulare, deci rundele se compară.\n\nFiecare cârlig Sparkle care rulează în timpul aspectului este cronometrat, deci cel mai scump hook denumește pe cel care consumă firul principal. Pornește contorul, răsfoiți până se simte lent, apoi reveniți și citiți-l. Clasamentul complet se scrie în jurnal la fiecare 15 secunde.";

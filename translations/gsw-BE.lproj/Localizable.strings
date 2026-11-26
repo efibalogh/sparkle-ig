@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Accounts";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Zeigt uuf, was jede Account für sich behautet u was für aui gmeinsam blybt.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Git jedem yglogte Account sini eigete Sparkle-Ystellige. En neu gseh Account startet mit dyne aktuelle Ystellige. Bruucht en Neustart.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS git dr App nume ei Symbol.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Wie heruntergladeni Videos und Audio kodiert werde.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Dini gspycherte Oort. Falsche Standort bruuche und dr aktuelli Oort blyben pro Konto.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Haupt-Feed (Für Dich oder Gfolgt) und Video-Autoplay usschaute.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Alli Galerie-Ystellige, inklusive Layout, Sortierig und Sperre. Wäm welli Medie ghöre, wird in Galerie-Ystellige gsetzt.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, OLED-Dunkelmodus, d App-Schriftart, Scroll-Edge-Effekt und UI bi dr Ufnahm verstecke.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Jedes aagmeldete Konto cha sini ei ige Sparkle-Ystellige ha. Bis du ne Ystellig für es Konto ändersch, bruucht s dr gteilt Wert.\n\nD Ystellige unte blyben für alli Konte gliich. Di meischte werde iigrichtet, bevor Instagram weiss, wellies Konto offe isch.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Reels stumm starte, Doomscrolling verhindere, Doomscrolling-Limit und Reels-Scrolle usschaute.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "D Reihefolg vo Tab, versteckti Tab, Tab halte, dr Start-Tab, zwüsche Tab wische und d System-Tab-Balke.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Aui Ystellige deaktiviere und Doppleti Benachrichtigige fixe.";
 "GENERAL_ADS_HEADER" = "Wärbig";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "I Kommentar Verstecke";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "I Erstellig-Tools Verstecke";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache glöscht";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Cache wird glärt...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ freigmacht";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Jedes yglogte Konto cha sini eigete Sparkle-Yschtellige ha. Bis du e Yschtellig für es Konto änderisch, wird dr aktuelle gmeinsame Wärt bruucht.\n\nDie da blybe gmeinsam für aui Konte:\n•  App-Icon\n•  Ussgseh & Liquid Glass\n•  Tab-Balke-Reihefolg & Sichtbarkeit\n•  Schnäuzuegriff-Kürzu (Yschtellige & Galerie)\n•  Haupt-Feed-Modus (Für Dich / Following)\n•  Video-Autoplay usschaute\n•  Reels Doomscrolling & Limits\n•  UI bi dr Ufnahm verstecke\n•  Download-Kodierigs-Yschtellige\n•  Galerie-Aasicht, Sortierig & Sperri\n•  Doppleti Benachrichtigige fixe\n•  Aues usschaute (Haupt-Schalter)\n\nS Bsitzverhautnis vo Galerie-Medie wird separat i de Galerie-Yschtellige konfiguriert.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Wähl, was en einzelne Tipp macht. Lang drücke macht geng s Menü vo de ygschautete Ziel uf.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Geng installiert";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Misst, wie lang dr Main-Thread blockiert isch — was \"laggy\" eigentlech bedütet — und zäutet d'View-Controller, Views und Gesture-Recognizer, wo im aktuelle Fenster lebe.\n\nZahle, wo bim Navigiere geng höcher gö und nie wider abenäh, sy en Leck: Screens oder Recognizer staple sich uf, und jede vo ihne schaffet witer. Start e nöii Mässig vor jedem Durchgang, so dass d'Rundi vergliichbar sy.\n\nJede Sparkle-Hook, wo während em Layout lauft, wird zytet, drum nennt Tüürschti Hook dr, wo dr Main-Thread am meischte frisst. Schalt dr Mässer aa, stöber ume, bis sich's langsam aafüehlt, chum drno zrügg und lis's. D'ganzi Rangliste geit aui 15 Sekunde is Log.";

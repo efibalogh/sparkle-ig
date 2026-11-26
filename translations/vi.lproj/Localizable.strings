@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Tài khoản";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Liệt kê những gì từng tài khoản giữ riêng và những gì được chia sẻ chung giữa tất cả tài khoản.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Cung cấp cài đặt Sparkle riêng cho từng tài khoản đã đăng nhập. Tài khoản mới sẽ bắt đầu từ cài đặt hiện tại của bạn. Yêu cầu khởi động lại ứng dụng.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS chỉ cho ứng dụng một biểu tượng duy nhất.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Cách mã hóa video và âm thanh đã tải xuống.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Các địa điểm bạn đã lưu. Dùng vị trí giả và địa điểm đang dùng được lưu riêng cho từng tài khoản.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Bảng tin chính (Dành cho bạn hoặc Đang theo dõi) và Tắt tự động phát video.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Mọi cài đặt Thư viện, gồm bố cục, sắp xếp và khóa. Tài khoản nào sở hữu nội dung nào được đặt trong Cài đặt Thư viện.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, Chế độ tối OLED, phông chữ ứng dụng, Hiệu ứng mép cuộn và Ẩn giao diện khi chụp/quay.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Mỗi tài khoản đã đăng nhập có thể giữ cài đặt Sparkle riêng. Cho đến khi bạn thay đổi một cài đặt cho tài khoản, tài khoản đó sẽ dùng giá trị chung.\n\nCác cài đặt bên dưới giữ nguyên cho mọi tài khoản. Hầu hết được thiết lập trước khi Instagram biết tài khoản nào đang mở.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Bắt đầu Reels ở chế độ tắt tiếng, Ngăn lướt vô định, Giới hạn thời gian lướt liên tục và Tắt cuộn Reel.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Thứ tự thẻ, thẻ đã ẩn, giữ thẻ, thẻ mở khi khởi động, vuốt giữa các thẻ và Thanh thẻ hệ thống.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Tắt tất cả cài đặt và Sửa lỗi thông báo trùng lặp.";
 "GENERAL_ADS_HEADER" = "Quảng cáo";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Ẩn trong bình luận";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Ẩn trong công cụ sáng tạo";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Đã xóa bộ nhớ đệm";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Đang xóa bộ nhớ đệm...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Đã giải phóng %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Mỗi tài khoản đã đăng nhập có thể giữ cài đặt Sparkle riêng. Cho đến khi bạn thay đổi cài đặt cho một tài khoản, tài khoản đó sẽ dùng giá trị dùng chung hiện tại.\n\nCác cài đặt này luôn dùng chung trên tất cả tài khoản:\n•  Biểu tượng ứng dụng\n•  Giao diện & Liquid Glass\n•  Thứ tự & hiển thị thanh thẻ\n•  Lối tắt truy cập nhanh (Cài đặt & Thư viện)\n•  Chế độ bảng tin chính (Dành cho bạn / Đang theo dõi)\n•  Tắt tự động phát video\n•  Cuộn vô tận & giới hạn Reels\n•  Ẩn giao diện khi quay/chụp\n•  Cài đặt mã hóa tải xuống\n•  Chế độ xem, sắp xếp & khóa Thư viện\n•  Sửa thông báo trùng lặp\n•  Tắt tất cả (công tắc chính)\n\nQuyền sở hữu phương tiện trong Thư viện được cấu hình riêng trong Cài đặt thư viện.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Chọn thao tác khi chạm một lần. Nhấn giữ luôn mở menu các điểm đến được bật.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Luôn được cài đặt";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Đo thời gian main thread bị chặn, đây chính là bản chất của hiện tượng \"giật lag\", đồng thời đếm số lượng view controller, view và gesture recognizer đang hoạt động trong cửa sổ hiện tại.\n\nNếu các số liệu tăng lên khi bạn điều hướng mà không giảm xuống thì đó là rò rỉ bộ nhớ (leak): các màn hình hoặc bộ nhận diện thao tác đang dồn lại và tiếp tục xử lý ngầm. Hãy bắt đầu đo mới trước mỗi lượt thử để dễ so sánh.\n\nMọi hook của Sparkle chạy trong quá trình sắp xếp giao diện (layout) đều được tính thời gian, do đó Most Expensive Hook sẽ chỉ ra hook chiếm dụng main thread nhiều nhất. Bật công cụ đo, lướt ứng dụng cho đến khi thấy chậm, sau đó quay lại kiểm tra. Bảng xếp hạng đầy đủ sẽ được ghi vào nhật ký mỗi 15 giây.";

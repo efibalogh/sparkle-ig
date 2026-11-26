@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Accounts";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Lists what each account keeps to itself and what stays shared across all of them.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Gives each logged-in account its own Sparkle settings. A newly seen account starts from your current settings. Requires a restart.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS gives the app a single icon.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "How downloaded videos and audio are encoded.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Your saved places. Use Fake Location and the place in use stay per account.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Main Feed (For You or Following) and Disable Video Autoplay.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Every Gallery setting, including its layout, sorting and lock. Which account owns which media is set in Gallery Settings.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, OLED Dark Mode, the app font, Scroll Edge Effect and Hide UI on Capture.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Each logged-in account can keep its own Sparkle settings. Until you change a setting for an account, it uses the shared value.\n\nThe settings below stay the same for every account. Most of them are set up before Instagram knows which account is open.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Start Reels Muted, Prevent Doom Scrolling, Doom Scrolling Limit and Disable Scrolling Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Tab order, hidden tabs, tab holds, the launch tab, swiping between tabs and the System Tab Bar.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Disable All Settings and Fix Duplicate Notifications.";
 "GENERAL_ADS_HEADER" = "Ads";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Hide in Comments";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Hide in Creation Tools";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache cleared";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Clearing cache...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Freed %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Each logged-in account can keep its own Sparkle settings. Until you change a setting for an account, it uses the current shared value.\n\nThese stay shared across all accounts:\n•  App icon\n•  Appearance & Liquid Glass\n•  Tab bar order & visibility\n•  Quick access shortcuts (Settings & Gallery)\n•  Main feed mode (For You / Following)\n•  Disable video autoplay\n•  Reels doom scroll & limits\n•  Hide UI on capture\n•  Download encoding settings\n•  Gallery view, sort & lock\n•  Fix duplicate notifications\n•  Disable All (master switch)\n\nGallery media ownership is configured separately in Gallery Settings.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Choose what a single tap does. Long press always opens the menu of enabled destinations.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Always installed";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Measures how long the main thread is blocked, which is what \"laggy\" actually is, and counts the view controllers, views and gesture recognizers alive in the current window.\n\nNumbers that climb as you navigate and never drop back are a leak: screens or recognizers are piling up and every one of them keeps doing work. Start a new measurement before each run so rounds compare.\n\nEvery Sparkle hook that runs during layout is timed, so Most Expensive Hook names the one eating the main thread. Turn the meter on, browse until it feels slow, then come back and read it. The full ranking goes to the log every 15 seconds.";

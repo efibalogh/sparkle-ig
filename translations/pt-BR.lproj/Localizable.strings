@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Contas";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Lista o que cada conta guarda para si e o que permanece compartilhado entre todas.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Dá a cada conta conectada suas próprias configurações do Sparkle. Uma conta vista pela primeira vez parte das suas configurações atuais. Requer reiniciar.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "O iOS dá ao app um único ícone.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Como os vídeos e áudios baixados são codificados.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Seus lugares salvos. Usar Localização Falsa e o local em uso ficam definidos por conta.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Feed Principal (Para Você ou Seguindo) e Desabilitar Reprodução Automática de Vídeo.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Todas as configurações da Galeria, incluindo layout, ordenação e bloqueio. Quem é o dono de cada mídia é definido em Configurações da Galeria.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, Modo escuro OLED, a fonte do app, Efeito de borda de rolagem e Ocultar UI ao Capturar.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Cada conta conectada pode manter suas próprias configurações do Sparkle. Até você alterar uma configuração para uma conta, ela usa o valor compartilhado.\n\nAs configurações abaixo permanecem iguais para todas as contas. A maioria é definida antes que o Instagram saiba qual conta está aberta.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Iniciar Reels sem som, Prevenir Doom Scrolling, Limite de Doom Scrolling e Desativar Deslizamento de Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Ordem das abas, abas ocultas, segurar abas, a aba de inicialização, deslizar entre abas e a Barra de Abas do Sistema.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Desabilitar Todas as Configurações e Corrigir Notificações Duplicadas.";
 "GENERAL_ADS_HEADER" = "Anúncios";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Ocultar em Comentários";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Ocultar em Ferramentas de Criação";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache limpo";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Limpando cache...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ liberados";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Cada conta conectada pode manter suas próprias configurações do Sparkle. Até você alterar uma configuração para uma conta, ela usa o valor compartilhado atual.\n\nEstas opções continuam compartilhadas entre todas as contas:\n•  Ícone do app\n•  Aparência e Liquid Glass\n•  Ordem e visibilidade da barra de abas\n•  Atalhos de acesso rápido (Configurações e Gallery)\n•  Modo do feed principal (Para você / Seguindo)\n•  Desativar reprodução automática de vídeos\n•  Doom scroll e limites dos Reels\n•  Ocultar interface ao capturar\n•  Configurações de codificação de downloads\n•  Visualização, ordenação e bloqueio da Gallery\n•  Corrigir notificações duplicadas\n•  Desativar tudo (interruptor principal)\n\nA propriedade das mídias da Gallery é configurada separadamente nas Configurações da Gallery.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Escolha o que um toque único faz. O toque longo sempre abre o menu dos destinos ativados.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Sempre instalado";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Mede por quanto tempo a thread principal está bloqueada, o que é realmente \"lag\", e conta os controladores de exibição, visualizações e reconhecedores de gesto vivos na janela atual.\n\nNúmeros que aumentam conforme você navega e nunca caem são um vazamento: telas ou reconhecedores se acumulam e cada um continua funcionando. Inicie uma nova medição antes de cada execução para que as rodadas se comparem.\n\nTodo hook do Sparkle que executa durante o layout é cronometrado, então o Hook Mais Caro nomeia o que está comendo a thread principal. Ative o medidor, navegue até parecer lento e volte para lê-lo. A classificação completa vai para o log a cada 15 segundos.";

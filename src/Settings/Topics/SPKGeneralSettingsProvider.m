@@ -8,7 +8,6 @@
 #import "../../Shared/Account/SPKAccountManager.h"
 #import "../../Shared/ActionButton/ActionButtonCore.h"
 #import "../../Shared/MediaPreview/SPKFullScreenImageViewController.h"
-#import "../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../Utils.h"
 #import "../../Features/General/HideMuse.h"
 #import "../../Features/General/KeepOtherAudioPlaying.h"
@@ -16,6 +15,7 @@
 #import "../SPKAppIconCatalog.h"
 #import "../SPKAppIconPickerViewController.h"
 #import "../SPKPreferenceAvailability.h"
+#import "../SPKSettingsInfoSheetViewController.h"
 #import "../SPKTopicSettingsSupport.h"
 
 // Media Preview & Menu rows. Built rather than declared inline because the Live Text
@@ -146,18 +146,36 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
     return setting;
 }
 
+// One entry of the per-account explainer: a settings page and the settings on
+// it that every account shares. An entry with no title is a plain note.
+static SPKSetting *SPKPerAccountSharedEntry(NSString *title, UIImage *icon, NSString *help) {
+    SPKSetting *entry = [SPKSetting buttonCellWithTitle:title subtitle:nil icon:icon action:^{}];
+    entry.helpText = help;
+    return entry;
+}
+
 + (SPKSetting *)perAccountInfoSetting {
     return SPKSettingWithHelp([SPKSetting buttonCellWithTitle:SPKL(@"ALERT_ACTION_HOW_WORKS")
                                                      subtitle:nil
                                                          icon:SPKSettingsIcon(@"info")
                                                        action:^{
-                                                           NSString *message =
-                                                               SPKL(@"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT");
-
-                                                           [SPKIGAlertPresenter presentAlertFromViewController:topMostController()
-                                                                                                         title:SPKL(@"GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE")
-                                                                                                       message:message
-                                                                                                       actions:@[ [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_OK") style:SPKIGAlertActionStyleCancel handler:nil] ]];
+                                                           // Mirrors the shared keys in SPKPrefIsGlobalKey (Utils.m). Keep the
+                                                           // two in step; install-wide internals and dev tools are left out.
+                                                           NSArray<SPKSetting *> *entries = @[
+                                                               SPKPerAccountSharedEntry(@"", nil, SPKL(@"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"GENERAL_GENERAL_APP_ICON_TITLE"), SPKSettingsIcon(@"app"), SPKL(@"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"INTERFACE_TITLE"), SPKSettingsIcon(@"interface"), SPKL(@"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"INTERFACE_TAB_BAR_TITLE"), SPKSettingsIcon(@"layout"), SPKL(@"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"FEED_TITLE"), SPKSettingsIcon(@"feed"), SPKL(@"GENERAL_ACCOUNTS_SHARED_FEED_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"REELS_TITLE"), SPKSettingsIcon(@"reels"), SPKL(@"GENERAL_ACCOUNTS_SHARED_REELS_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_ENCODING_SETTINGS_TITLE"), SPKSettingsIcon(@"settings"), SPKL(@"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"GALLERY_TITLE"), SPKSettingsIcon(@"sparkle_gallery"), SPKL(@"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"MESSAGES_FAKE_LOCATION_TITLE"), SPKSettingsIcon(@"location"), SPKL(@"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT")),
+                                                               SPKPerAccountSharedEntry(SPKL(@"TOOLS_TITLE"), SPKSettingsIcon(@"toolbox"), SPKL(@"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT")),
+                                                           ];
+                                                           [SPKSettingsInfoSheetViewController presentFromViewController:topMostController()
+                                                                                                                   title:SPKL(@"GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE")
+                                                                                                                    rows:entries];
                                                        }],
                               SPKL(@"GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP"));
 }

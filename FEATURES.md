@@ -75,7 +75,7 @@ marked **(restart)** and prompt for a relaunch when changed.
 ### Accounts
 - **Per-Account Settings**:
   - Gives each logged-in Instagram account its own Sparkle preferences. A newly seen account inherits your current settings until you change something. Switching accounts in-app applies the right set immediately. **(restart)**
-  - Some settings stay shared accross accounts. A **How It Works** button lists the shared features in-app.
+  - Some settings stay shared across accounts. **How It Works** opens a sheet listing them by settings page.
 
 ---
 

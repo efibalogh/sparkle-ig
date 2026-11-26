@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "계정";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "각 계정에서만 유지되는 항목과 모든 계정에서 공유되는 항목을 안내합니다.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "로그인한 각 계정마다 별도의 Sparkle 설정을 사용합니다. 새로 인식된 계정은 현재 설정에서 시작합니다. 다시 시작해야 적용됩니다.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS는 앱에 아이콘을 하나만 지정합니다.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "다운로드한 동영상과 오디오의 인코딩 방식입니다.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "저장된 위치입니다. 가짜 위치 사용과 사용 중인 위치는 계정별로 유지됩니다.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "메인 피드(발견 또는 팔로우 중)와 비디오 자동재생 비활성화.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "레이아웃, 정렬, 잠금을 포함한 모든 갤러리 설정입니다. 어떤 계정이 어떤 미디어를 소유하는지는 갤러리 설정에서 정합니다.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, OLED 다크 모드, 앱 글꼴, 스크롤 가장자리 효과, 캡처 시 UI 숨기기.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "로그인한 각 계정은 자체 Sparkle 설정을 가질 수 있습니다. 계정의 설정을 변경하기 전까지는 공유 값을 사용합니다.\n\n아래 설정은 모든 계정에 동일하게 적용됩니다. 대부분은 Instagram이 현재 어떤 계정이 열려 있는지 알기 전에 설정됩니다.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "릴스 음소거로 시작, 무한 스크롤 방지, 무한 스크롤 제한, 릴 스크롤 비활성화.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "탭 순서, 숨긴 탭, 탭 길게 누르기, 실행 탭, 탭 간 스와이프, 시스템 탭 바.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "모든 설정 비활성화 및 중복 알림 수정.";
 "GENERAL_ADS_HEADER" = "광고";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "댓글에서 숨기기";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "콘텐츠 제작 도구에서 숨기기";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "캐시 지워짐";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "캐시 지우는 중...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ 확보됨";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "각 로그인 계정은 고유한 Sparkle 설정을 사용할 수 있습니다. 계정에 설정을 변경할 때까지 현재 공유 값을 사용합니다.\n\n다음 항목은 모든 계정에서 공유됩니다:\n•  앱 아이콘\n•  모양 및 Liquid Glass\n•  탭 바 순서 및 표시\n•  빠른 액세스 바로가기(설정 및 Gallery)\n•  메인 피드 모드(For You/Following)\n•  동영상 자동 재생 비활성화\n•  Reels 끝없는 스크롤 및 제한\n•  캡처 시 UI 숨기기\n•  다운로드 인코딩 설정\n•  Gallery 보기, 정렬 및 잠금\n•  중복 알림 수정\n•  모두 비활성화(마스터 스위치)\n\nGallery 미디어 소유권은 Gallery 설정에서 별도로 구성됩니다.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "한 번의 탭이 수행할 작업을 선택합니다. 길게 누르면 항상 활성화된 대상의 메뉴가 열립니다.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "항상 설치됨";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "메인 스레드가 차단된 시간을 측정하며, 이것이 실제 \"끊김\"이고 현재 창에서 살아있는 뷰 컨트롤러, 뷰 및 제스처 인식기를 계산합니다.\n\n탐색할 때 올라가고 다시 떨어지지 않는 숫자는 누수입니다: 화면 또는 인식기가 쌓이고 있으며 각각은 계속 작업을 수행합니다. 각 실행 전에 새 측정을 시작하여 라운드를 비교합니다.\n\n레이아웃 중에 실행되는 모든 Sparkle 훅이 시간이 지정되므로 가장 비싼 훅이 메인 스레드를 먹는 것이 무엇인지 나타냅니다. 미터를 켜고 느리게 느껴질 때까지 탐색한 다음 돌아와서 읽습니다. 전체 순위는 15초마다 로그로 이동합니다.";

@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Hesaplar";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Her hesabın kendine sakladıklarını ve tümü arasında paylaşılan kalanları listeler.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Oturum açmış her hesaba kendi Sparkle ayarlarını verir. İlk kez görülen bir hesap mevcut ayarlarınla başlar. Yeniden başlatma gerektirir.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS, uygulamaya tek bir simge verir.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "İndirilen videoların ve seslerin nasıl kodlanacağı.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Kayıtlı yerleriniz. Sahte konum kullan ve kullanılan yer hesap başına ayrı tutulur.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Ana Akış (Sizin İçin veya Takip Ediyorum) ve Video Otomatik Oynatmayı Devre Dışı Bırak.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Galeri'nin tüm ayarları; düzen, sıralama ve kilit dahil. Hangi medyanın hangi hesaba ait olduğu Galeri Ayarları'nda belirlenir.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, OLED Karanlık Mod, uygulama fontu, Kaydırma Kenarı Efekti ve Yakalamada UI'yi Gizle.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Giriş yapmış her hesap kendi Sparkle ayarlarını tutabilir. Bir hesap için bir ayarı değiştirene kadar paylaşılan değeri kullanır.\n\nAşağıdaki ayarlar her hesap için aynı kalır. Çoğu, Instagram'ın hangi hesabın açık olduğunu bilmeden önce ayarlanır.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Reels'i Sessiz Başlat, Sonsuz Kaydırmayı Önle, Sonsuz Kaydırma Sınırı ve Reels Kaydırmayı Devre Dışı Bırak.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Sekme sırası, gizli sekmeler, sekme tutma, açılış sekmesi, sekmeler arasında kaydırma ve Sistem Sekme Çubuğu.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Tüm Ayarları Devre Dışı Bırak ve Yinelenen Bildirimleri Düzelt.";
 "GENERAL_ADS_HEADER" = "Reklamlar";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Yorumlarda Gizle";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Oluşturma Araçlarında Gizle";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Önbellek temizlendi";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Önbellek temizleniyor...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ boşaltıldı";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Her giriş yapılmış hesap kendi Sparkle ayarlarını tutabilir. Bir hesap için bir ayarı değiştirene kadar mevcut paylaşılan değeri kullanır.\n\nBunlar tüm hesaplar arasında paylaşılmaya devam eder:\n•  Uygulama simgesi\n•  Görünüm ve Liquid Glass\n•  Sekme çubuğu sırası ve görünürlüğü\n•  Hızlı erişim kısayolları (Ayarlar ve Galeri)\n•  Ana akış modu (Senin İçin / Takip Ettiklerin)\n•  Video otomatik oynatmayı devre dışı bırak\n•  Reels kaydırması ve limitleri\n•  Yakalama sırasında arayüzü gizle\n•  İndirme kodlama ayarları\n•  Galeri görünümü, sıralaması ve kilidi\n•  Yinelenen bildirimleri düzelt\n•  Tümünü Devre Dışı Bırak (ana anahtar)\n\nGaleri medyasının sahipliği Galeri Ayarları'ndan ayrı olarak yapılandırılır.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Tek bir dokunuşun ne yapacağını seç. Uzun basış her zaman etkin hedeflerin menüsünü açar.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Her zaman yüklü";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Ana iş parçacığının ne kadar süre engellendiğini ölçer; bu aslında \"donuk\" olmanın tanımıdır ve mevcut pencerede canlı olan görünüm denetleyicilerini, görünümleri ve hareket tanıyıcılarını sayar.\n\nNavige ederken yükselen ve hiçbir zaman düşmeyen sayılar sızıntıdır: ekranlar veya tanıyıcılar yığılıyor ve her biri çalışmaya devam ediyor. Her çalıştırmadan önce yeni bir ölçüm başlatın, böylece turlar karşılaştırılabilir.\n\nDüzen sırasında çalışan her Sparkle kancası zamanlanır, bu nedenle En Pahalı Kanca ana iş parçacığını tüketeni gösterir. Ölçeri açın, yavaş hissettiğinize kadar göz atın, sonra geri gelin ve okuyun. Tam sıralama her 15 saniyede bir günlüğe gider.";

@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Account";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Elenca cosa ogni account tiene per sé e cosa resta condiviso tra tutti.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Dà a ogni account connesso le proprie impostazioni di Sparkle. Un account visto per la prima volta parte dalle tue impostazioni attuali. Richiede un riavvio.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS assegna all'app un'unica icona.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Come vengono codificati i video e l'audio scaricati.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "I tuoi luoghi salvati. Usa posizione falsa e il luogo in uso sono impostati per account.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Feed Principale (Per te o Seguito) e Disabilita Riproduzione Automatica Video.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Tutte le impostazioni della Galleria, incluse disposizione, ordinamento e blocco. Quale account possiede quali contenuti si imposta in Impostazioni Raccolta.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, Modalità scura OLED, il font dell'app, Effetto bordo di scorrimento e Nascondi UI su Cattura.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Ogni account connesso può mantenere le proprie impostazioni di Sparkle. Finché non modifichi un'impostazione per un account, usa il valore condiviso.\n\nLe impostazioni qui sotto restano uguali per tutti gli account. La maggior parte viene configurata prima che Instagram sappia quale account è aperto.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Avvia i reel senza audio, Previeni Scorrimento Infinito, Limite Scorrimento Infinito e Disabilita Scorrimento Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Ordine delle schede, schede nascoste, pressione prolungata sulle schede, la scheda di avvio, lo scorrimento tra le schede e la Barra Schede di Sistema.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Disabilita Tutte le Impostazioni e Correggi Notifiche Duplicate.";
 "GENERAL_ADS_HEADER" = "Annunci";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Nascondi nei Commenti";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Nascondi negli Strumenti Creazione";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache eliminata";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Svuotamento cache...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Liberati %@";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Ogni account Instagram può avere le proprie impostazioni di Sparkle. Finché non modifichi un'impostazione per un account, viene usato il valore condiviso attuale.\n\nQuesti elementi restano condivisi tra tutti gli account:\n•  Icona app\n•  Aspetto e Liquid Glass\n•  Ordine e visibilità della barra delle schede\n•  Scorciatoie di accesso rapido (Impostazioni e Gallery)\n•  Modalità feed principale (Per te / Seguiti)\n•  Disabilita riproduzione automatica video\n•  Scorrimento infinito e limiti dei Reels\n•  Nascondi UI durante la cattura\n•  Impostazioni di codifica dei download\n•  Vista, ordinamento e blocco della Gallery\n•  Correggi notifiche duplicate\n•  Disabilita tutto (interruttore principale)\n\nLa proprietà dei media della Gallery è configurata separatamente nelle Impostazioni Gallery.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Scegli cosa fa un singolo tap. La pressione lunga apre sempre il menu di destinazioni abilitate.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Sempre installato";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Misura per quanto tempo il thread principale è bloccato, che è quello che \"laggy\" in realtà significa, e conta i controller di visualizzazione, le viste e i riconoscimenti di gesti attivi nella finestra corrente.\n\nI numeri che salgono mentre navighi e non scendono mai sono una perdita: le schermate o i riconoscimenti si stanno accumulando e ogni singolo continua a fare il lavoro. Avvia una nuova misurazione prima di ogni esecuzione in modo che i turni si confrontino.\n\nOgni hook di Sparkle che viene eseguito durante il layout è cronometrato, quindi Most Expensive Hook nomina quello che sta mangiando il thread principale. Attiva il misuratore, sfoglia fino a quando non senti lentezza, quindi torna indietro e leggilo. La classifica completa va al registro ogni 15 secondi.";

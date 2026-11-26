@@ -916,6 +916,16 @@
 "GENERAL_ACCOUNTS_HEADER" = "Akun";
 "GENERAL_ACCOUNTS_HOW_IT_WORKS_HELP" = "Menampilkan apa yang disimpan sendiri oleh masing-masing akun dan apa yang tetap dibagikan di semuanya.";
 "GENERAL_ACCOUNTS_PER_ACCOUNT_SETTINGS_HELP" = "Memberikan pengaturan Sparkle tersendiri untuk setiap akun yang masuk. Akun yang baru terdeteksi akan dimulai dari pengaturanmu saat ini. Memerlukan mulai ulang.";
+"GENERAL_ACCOUNTS_SHARED_APP_ICON_TEXT" = "iOS memberi aplikasi ini satu ikon.";
+"GENERAL_ACCOUNTS_SHARED_ENCODING_TEXT" = "Cara video dan audio yang diunduh dienkode.";
+"GENERAL_ACCOUNTS_SHARED_FAKE_LOCATION_TEXT" = "Tempat-tempat yang Anda simpan. Gunakan Lokasi Palsu dan lokasi yang sedang dipakai tetap terpisah per akun.";
+"GENERAL_ACCOUNTS_SHARED_FEED_TEXT" = "Feed Utama (Untuk Anda atau Mengikuti) dan Nonaktifkan Putar Otomatis Video.";
+"GENERAL_ACCOUNTS_SHARED_GALLERY_TEXT" = "Semua pengaturan Galeri, termasuk tata letak, pengurutan, dan kuncinya. Akun mana yang memiliki media mana diatur di Pengaturan Galeri.";
+"GENERAL_ACCOUNTS_SHARED_INTERFACE_TEXT" = "Liquid Glass, Mode Gelap OLED, Font Aplikasi, Efek Tepi Gulir, dan Sembunyikan UI saat Menangkap Layar.";
+"GENERAL_ACCOUNTS_SHARED_INTRO_TEXT" = "Setiap akun yang sudah masuk dapat menyimpan pengaturan Sparkle-nya sendiri. Sampai Anda mengubah pengaturan untuk sebuah akun, akun itu memakai nilai bersama.\n\nPengaturan di bawah ini tetap sama untuk setiap akun. Sebagian besar diatur sebelum Instagram tahu akun mana yang sedang dibuka.";
+"GENERAL_ACCOUNTS_SHARED_REELS_TEXT" = "Mulai Reels Tanpa Suara, Cegah Doom Scrolling, Batas Doom Scrolling, dan Nonaktifkan Gulir Reels.";
+"GENERAL_ACCOUNTS_SHARED_TAB_BAR_TEXT" = "Urutan tab, tab tersembunyi, tahan tab, tab saat peluncuran, geser antar-tab, dan Bilah Tab Sistem.";
+"GENERAL_ACCOUNTS_SHARED_TOOLS_TEXT" = "Nonaktifkan Semua Pengaturan dan Perbaiki Notifikasi Ganda.";
 "GENERAL_ADS_HEADER" = "Iklan";
 "GENERAL_ADS_HIDE_COMMENTS_TITLE" = "Sembunyikan di Komentar";
 "GENERAL_ADS_HIDE_CREATION_TOOLS_TITLE" = "Sembunyikan di Alat Pembuatan";
@@ -2210,7 +2220,6 @@
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache dibersihkan";
 "SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Membersihkan cache...";
 "SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ dikosongkan";
-"SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Setiap akun yang login dapat memiliki pengaturan Sparkle-nya sendiri. Sampai Anda mengubah pengaturan untuk sebuah akun, akun tersebut menggunakan nilai bersama saat ini.\n\nBerikut yang tetap dibagikan di semua akun:\n•  Ikon aplikasi\n•  Tampilan & Liquid Glass\n•  Urutan & visibilitas bilah tab\n•  Pintasan akses cepat (Pengaturan & Galeri)\n•  Mode feed utama (Untuk Anda / Mengikuti)\n•  Nonaktifkan putar otomatis video\n•  Doom scroll & batas Reels\n•  Sembunyikan UI saat mengambil gambar\n•  Pengaturan encoding unduhan\n•  Tampilan, urutan & kunci Galeri\n•  Perbaiki notifikasi duplikat\n•  Nonaktifkan Semua (saklar utama)\n\nKepemilikan media Galeri dikonfigurasi secara terpisah di Pengaturan Galeri.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Pilih apa yang dilakukan ketukan tunggal. Tekan lama selalu membuka menu tujuan yang diaktifkan.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Selalu terpasang";
 "SETTINGS_HOOK_BISECT_MEASURES_LONG_MAIN_THREAD_BLOCKED_WHAT_LAGGY_ACTUALLY_COUNTS_TEXT" = "Mengukur berapa lama thread utama terblokir, yang sebenarnya adalah arti dari \"lag\", dan menghitung view controller, view, dan gesture recognizer yang masih aktif di window saat ini.\n\nAngka yang terus naik saat Anda bernavigasi dan tidak pernah turun kembali menandakan kebocoran: layar atau recognizer menumpuk dan masing-masing terus melakukan pekerjaan. Mulai pengukuran baru sebelum setiap percobaan agar hasilnya bisa dibandingkan.\n\nSetiap hook Sparkle yang berjalan selama layout diukur waktunya, sehingga Most Expensive Hook menyebutkan mana yang paling banyak memakan thread utama. Nyalakan meter, jelajahi sampai terasa lambat, lalu kembali dan baca hasilnya. Peringkat lengkap dikirim ke log setiap 15 detik.";
