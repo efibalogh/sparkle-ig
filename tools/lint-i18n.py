@@ -67,10 +67,13 @@ DEV_ONLY_SOURCE_GUARD = "#if SPK_DEV"
 # English a native reviewer of a shipped catalog chose to keep. Checked per key, so
 # the same words left untranslated anywhere else still count against the catalog.
 REVIEWED_ENGLISH = {
-    "pl": {"ABOUT_INFORMATION_BUNDLE_ID_TITLE", "FONT_STYLE_ULTRA_LIGHT"},
+    "pl": {"ABOUT_INFORMATION_BUNDLE_ID_TITLE", "FONT_STYLE_ULTRA_LIGHT", "TOOLS_NOTIFICATION_SUPPORT_BUNDLE_ID_TITLE"},
 }
-# Contributor handles name people, and format specifiers are not words.
-NEUTRAL_STRIP_RE = re.compile(r"@[\w.]+|" + PLACEHOLDER_RE.pattern)
+# Contributor handles name people, format specifiers are not words, a dotted
+# identifier such as com.burbn.instagram is never translated, and Apple's own
+# product and signing names stay in Latin script in its localized docs.
+NEUTRAL_STRIP_RE = re.compile(r"@[\w.]+|\b[a-z][\w-]*(?:\.[a-z][\w-]*)+\b|\bApp Store\b|\bAd Hoc\b|" + PLACEHOLDER_RE.pattern)
+IDENTIFIER_RE = re.compile(r"\b[a-z][\w-]*(?:\.[a-z][\w-]*)+\b")
 # Hyphenated compounds count as one token: German glues "Instagram-Plus-Button"
 # into a single legitimate word, and feature names like "view-once" are kept
 # verbatim on purpose, so splitting on the hyphen invents English runs that are
@@ -83,7 +86,7 @@ FORBIDDEN_UI_SHORTHAND_RE = re.compile(r"(?<!%)\bDMs?\b", re.IGNORECASE)
 
 
 def carryover_words(text):
-    return CARRYOVER_WORD_RE.findall(CARRYOVER_ESCAPE_RE.sub(" ", text))
+    return CARRYOVER_WORD_RE.findall(CARRYOVER_ESCAPE_RE.sub(" ", IDENTIFIER_RE.sub(" ", text)))
 # A translated value must not repeat a long verbatim run of the English source. That
 # is the signature of a templated pass that swapped only the leading verb phrase and
 # left the rest of the sentence in English.

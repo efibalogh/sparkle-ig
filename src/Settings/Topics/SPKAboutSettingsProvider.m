@@ -1,5 +1,6 @@
 #import "SPKStrings.h"
 #import "SPKAboutSettingsProvider.h"
+#import "../../Features/Tools/SPKNotificationSupport.h"
 
 #import "../../AssetUtils.h"
 #import "../../Shared/Links/SPKIssueReport.h"
@@ -91,7 +92,7 @@ static NSDictionary *SPKUpdatesDevSection(void) {
                                    subtitle:[SPKUtils IGVersionString]
                                        icon:SPKSettingsIcon(@"app")],
             [SPKSetting staticCellWithTitle:SPKL(@"ABOUT_INFORMATION_BUNDLE_ID_TITLE")
-                                   subtitle:[[NSBundle mainBundle] bundleIdentifier]
+                                   subtitle:[SPKNotificationSupport installBundleIdentifier]
                                        icon:SPKSettingsIcon(@"key")]
         ],
                         nil),

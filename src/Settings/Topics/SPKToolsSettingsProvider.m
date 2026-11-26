@@ -16,6 +16,7 @@
 #import "../SPKSettingsViewController.h"
 #import "../SPKTopicSettingsSupport.h"
 #import "../../Features/Tools/SPKNetworkInterceptorViewController.h"
+#import "../../Features/Tools/SPKNotificationSupportViewController.h"
 #if SPK_DEV
 #import "SPKHookBisectSettingsProvider.h"
 #import "../../Features/Interface/SPKLiquidGlassGatesViewController.h"
@@ -94,7 +95,15 @@ static NSDictionary *SPKDiagnosticsSection(void) {
                                                                     icon:SPKSettingsIcon(@"web")
                                                           viewController:[SPKNetworkInterceptorViewController new]];
     SPKSettingMarkedNewWithID(networkInterceptor, @"v1.7.0", @"tools_network_interceptor_page");
-    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObjects:debugButton, SPKSettingWithHelp(networkInterceptor, SPKL(@"TOOLS_DIAGNOSTICS_NETWORK_INTERCEPTOR_HELP")), nil];
+    SPKSetting *notificationSupport = [SPKSetting navigationCellWithTitle:SPKL(@"TOOLS_NOTIFICATION_SUPPORT_TITLE")
+                                                                   subtitle:@""
+                                                                       icon:SPKSettingsIcon(@"notification")
+                                                             viewController:[SPKNotificationSupportViewController new]];
+    SPKSettingMarkedNewWithID(notificationSupport, @"v1.7.0", @"tools_notification_support_page");
+    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObjects:debugButton,
+                                                                          SPKSettingWithHelp(networkInterceptor, SPKL(@"TOOLS_DIAGNOSTICS_NETWORK_INTERCEPTOR_HELP")),
+                                                                          SPKSettingWithHelp(notificationSupport, SPKL(@"TOOLS_NOTIFICATION_SUPPORT_HELP")),
+                                                                          nil];
 #if SPK_DEV
     [rows addObject:SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP"))];
     SPKSetting *liquidGlassGates = [SPKSetting buttonCellWithTitle:SPKL(@"DEV_LG_GATES_TITLE")
