@@ -17,7 +17,7 @@
         {
           "class": "DepictionTableTextView",
           "title": "Version",
-          "text": "1.6.1"
+          "text": "1.7.0"
         },
         {
           "class": "DepictionTableTextView",
@@ -27,12 +27,12 @@
         {
           "class": "DepictionTableTextView",
           "title": "Size",
-          "text": "8.7 MB"
+          "text": "8.8 MB"
         },
         {
           "class": "DepictionTableTextView",
           "title": "Released",
-          "text": "2026-11-06"
+          "text": "2026-11-27"
         },
         {
           "class": "DepictionSeparatorView"
@@ -67,6 +67,24 @@
       "class": "DepictionStackView",
       "tabname": "Changelog",
       "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "v1.7.0",
+          "useBoldText": true
+        },
+        {
+          "class": "DepictionLabelView",
+          "text": "2026-11-27",
+          "textColor": "#8E8E93",
+          "fontSize": 12
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "## ✨ What's new?\n\n- Works with Instagram 457\n- **Built for iPhone Duo**: Sparkle fits the folded screen and its side column, and makes use of all the extra room when you unfold it\n\n**Tab bar**\n- All the tab bar settings now live on one page. Interface > Tab Bar takes you straight to the Tab Editor\n- **Hold any tab** to open something of your choice: a Sparkle screen, your Saved posts, a link or username you copied. If you used Quick Settings Access, Quick Gallery Access or the Explore clipboard shortcut, they've moved here and your choices are kept\n- **System Tab Bar**: switch to the real iOS tab bar, the one Instagram uses on foldable iPhones. Your tab order, hidden tabs and hold shortcuts all still work\n\n**Search & Interface**\n- **Restore Account Search**: when you search for someone, you get their account again instead of a keyword you have to tap through first\n- Sparkle's screens now grow with your system text size\n- New settings have a **NEW** label so you can spot what changed. You can turn the labels off in Tools > Show NEW Labels\n\n**Downloads & Gallery**\n- **File Names**: choose how saved and shared files are named, using things like the username and the date of the post, instead of random IDs. A live preview shows what you'll get\n- The Gallery settings page got a makeover: see how many files you have and how much space they use, check your Auto-Save setup, and import or back up your Gallery from one place\n- Save Gallery items to Photos one at a time or in bulk, and they keep their file names\n- Audio saved from an audio page can open that page again\n- Bulk saves from the media preview now use your photo quality and 4K settings\n\n**Editors**\n- The photo, trim and crop editors have been rebuilt from the ground up\n- Straighten photos and videos by up to 45 degrees\n- Drag any edge of the crop box, not just the corners\n- Trimming is much more precise: times down to a tenth of a second, frame by frame steps, pinch to zoom the timeline, and tap the video to play or pause\n- If you try to leave with unsaved changes, the editor asks first\n\n**Messages**\n- **Keep Seen Locally** now works for chats too. Chats you read show as seen only on your device, and the other person never gets a seen receipt\n- **Mark Seen On**: pick what counts as seeing a chat when you reply, react, send a message or start typing\n\n**Profile**\n- **Posts Tab Filter**: filter reels out of profile grids so you only see photos and carousels\n- **Reorder Highlights** on your own profile: hold one, tap reorder, and drag it where you want it\n- **Reels Tab Sort**: keep the \"most viewed\" sort on profiles, get rid of it, or leave it up to Instagram\n- **Profile Analyzer** can now refresh on its own, from every day to every two weeks\n\n**Stories & Reels**\n- **Copy Story Link** from the action button works on any story, even Close Friends ones where Instagram hides the share button\n- Hold someone in a story's mentions list to copy their username\n- **Hold to Pause** brings back pausing reels by holding them, instead of the new playback menu Instagram is rolling out\n\n**Other**\n- **Keep Other Audio Playing**: your music or podcast no longer stops when you open Instagram. On by default\n- **Hide Muse** from the share sheet and your profile¹\n- Disabling Camera Control for Instants works on iPhone 18 Pro and iPhone Duo\n- **Pill Toasts**: choose whether Instagram-style notifications use Instagram's new pill shape (iOS 26 and later)\n- New installs now start with the Instagram notification style. If you're updating, nothing changes\n- **Notification Support** in Tools checks whether you'll get Instagram's push notifications on your install, and if not, what to do about it\n- **Report a Bug** and **Request a Feature** in About, with your device and versions already filled in\n- **Network Interceptor** in Tools, for anyone who wants to dig into Instagram's network traffic\n\n## 🛠 Fixes & Improvements\n\n- Lots of fixes for the latest Instagram: the reels action button, playback controls, story actions, manual seen, Confirm Like on reels and the media picker all work again\n- The download and GIF options are back in the message menu, so you can save voice messages again\n- **Unlock Message Preview** works again, so holding a chat in your inbox shows its messages without marking them seen\n- The Instants buttons now show up for everyone, including accounts with Instagram's newer header\n- The reels action button now works on photo posts too\n- On iPad, story actions now apply to the story you're actually watching\n- Poll vote counts no longer overlap the percentages\n- Opening a post or profile from Sparkle no longer throws your Home feed back to the top\n- Regram Media Vault imports work with Regram 7.1 and 7.2¹, including password-protected exports. Regram folders and smart folders come over as Gallery folders\n- Instagram can no longer switch your custom app icon back\n- Audio saves are named after the artist and saved as audio, not as a silent video\n- Adding people to your lists is more reliable, and you can paste a profile link\n- The Instants shutter button is no longer turned off by default\n- On Instagram 410, Confirm Feed Refresh no longer asks every time you open the app\n- With Per-Account Settings on, the settings Sparkle reads at launch now come from the account you last used\n- **How It Works** under Per-Account Settings now shows exactly which settings every account shares\n- Manually Mark Seen now catches any seen receipt that slips past it and lets you know\n- **Account Privacy** is gone. Instagram now verifies account eligibility for these features server-side\n\n¹ Couldn't be tested before release. If it doesn't work for you, please open an issue.\n"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
         {
           "class": "DepictionSubheaderView",
           "title": "v1.6.1",
