@@ -17,6 +17,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "../Shared/Links/SPKIssueReport.h"
 #import "../Shared/UI/SPKIGAlertPresenter.h"
 #import "../Utils.h"
 
@@ -86,6 +87,13 @@ void SPKStabilityGuardBeginLaunch(void) {
     });
 }
 
+NSNotificationName const SPKStabilityGuardLaunchDidStabilizeNotification = @"SPKStabilityGuardLaunchDidStabilizeNotification";
+static BOOL sSPKLaunchStable = NO;
+
+BOOL SPKStabilityGuardIsLaunchStable(void) {
+    return sSPKLaunchStable;
+}
+
 void SPKStabilityGuardMarkHooksFinished(void) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kSPKStabilityLaunchStartedAtKey];
@@ -94,6 +102,8 @@ void SPKStabilityGuardMarkHooksFinished(void) {
     [defaults setDouble:SPKNow() forKey:kSPKStabilityLaunchCompletedAtKey];
     [defaults synchronize];
     SPKLog(@"Stability", @"Launch marked stable");
+    sSPKLaunchStable = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:SPKStabilityGuardLaunchDidStabilizeNotification object:nil];
 }
 
 BOOL SPKStabilityGuardIsSafeStartupMode(void) {
@@ -122,6 +132,11 @@ void SPKStabilityGuardPresentSafeModeAlertIfNeeded(void) {
                                                                                style:SPKIGAlertActionStyleDefault
                                                                              handler:^{
                                                                                  [SPKUtils showSettingsForTopicTitle:@"Tools"];
+                                                                             }],
+                                                   [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_REPORT_BUG")
+                                                                               style:SPKIGAlertActionStyleDefault
+                                                                             handler:^{
+                                                                                 SPKIssueReportOpenBugForm();
                                                                              }],
                                                    [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_NOT_NOW")
                                                                                style:SPKIGAlertActionStyleCancel

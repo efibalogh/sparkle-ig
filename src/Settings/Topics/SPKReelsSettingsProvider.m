@@ -1,4 +1,5 @@
 #import "SPKReelsSettingsProvider.h"
+#import "../SPKNewBadges.h"
 #import "SPKStrings.h"
 
 #import "../../Features/Reels/HideReelsHeader.h"
@@ -27,6 +28,10 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                          icon:SPKSettingsIcon(@"play")
                                          menu:SPKReelsTapControlMenu()],
                                SPKL(@"REELS_BEHAVIOR_TAP_CONTROLS_HELP")),
+            SPKSettingMarkedNew(SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_TITLE")
+                                           icon:SPKSettingsIcon(@"pause")
+                                    defaultsKey:@"reels_hold_to_pause"],
+                               SPKL(@"REELS_BEHAVIOR_HOLD_TO_PAUSE_HELP")), @"v1.7.0"),
             ({
                 SPKSetting *playbackControls = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE")
                                                                                              icon:SPKSettingsPlaybackIcon()
@@ -97,6 +102,7 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                SPKL(@"REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP")),
             SPKSettingWithHelp([SPKSetting stepperCellWithTitle:SPKL(@"REELS_LIMITS_DOOM_SCROLLING_LIMIT_TITLE")
                                         subtitle:SPKL(@"REELS_LIMITS_ONLY_LOADS_SUBTITLE")
+                                            icon:SPKSettingsIcon(@"circle_off")
                                      defaultsKey:@"reels_doom_scroll_limit"
                                              min:1
                                              max:100

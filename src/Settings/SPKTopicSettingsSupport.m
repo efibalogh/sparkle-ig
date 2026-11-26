@@ -1,4 +1,5 @@
 #import "SPKSettingsInfoSheetViewController.h"
+#import "SPKNewBadges.h"
 #import "SPKStrings.h"
 #import "SPKTopicSettingsSupport.h"
 #import "../Features/Feed/HeaderActionButton.h"
@@ -218,10 +219,12 @@ SPKSetting *SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSource 
     SPKEditActionsListViewController *controller = [[SPKEditActionsListViewController alloc] initWithSource:source topicTitle:topicTitle];
     (void)supportedActions;
     (void)defaultSections;
-    return [SPKSetting navigationCellWithTitle:SPKL(@"SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE")
-                                      subtitle:@""
-                                          icon:SPKSettingsIcon(@"slider")
-                                viewController:controller];
+    SPKSetting *setting = [SPKSetting navigationCellWithTitle:SPKL(@"SPKTOPICSETTINGSSUPPORT_GENERAL_CONFIGURE_ACTIONS_TITLE")
+                                                     subtitle:@""
+                                                         icon:SPKSettingsIcon(@"slider")
+                                               viewController:controller];
+    setting.addedContentItems = SPKNewBadgeActionItemsForSource(source);
+    return setting;
 }
 
 UIMenu *SPKReelsTapControlMenu(void) {
@@ -248,6 +251,34 @@ UIMenu *SPKReelsAutoScrollDefaultMenu(void) {
                      children:@[
                          SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, @"reels_auto_scroll_default", @"on", NO),
                          SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"reels_auto_scroll_default", @"off", NO)
+                     ]]
+    ]];
+}
+
+UIMenu *SPKProfileGridFilterModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"profile_grid_filter", @"off", NO),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"PROFILE_TABS_GRID_FILTER_ALL_OPTION"), nil, nil, @"profile_grid_filter", @"all", NO),
+                         SPKMenuCommand(SPKL(@"PROFILE_TABS_GRID_FILTER_POSTS_ONLY_OPTION"), nil, nil, @"profile_grid_filter", @"posts", NO)
+                     ]]
+    ]];
+}
+
+UIMenu *SPKProfileReelsSortModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"profile_reels_sort_mode", @"default", NO),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, @"profile_reels_sort_mode", @"on", NO),
+                         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"profile_reels_sort_mode", @"off", NO)
                      ]]
     ]];
 }
@@ -282,20 +313,6 @@ UIMenu *SPKLinkOpeningModeMenu(void) {
     ]];
 }
 
-#if SPK_DEV
-UIMenu *SPKAccountPrivacySimulationMenu(void) {
-    NSString *key = @"dev_account_privacy_simulate";
-    return [UIMenu menuWithChildren:@[
-        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, key, @"off", NO),
-        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_SLOW"), nil, nil, key, @"slow", NO),
-        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_LOAD_FAILS"), nil, nil, key, @"read_failed", NO),
-        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_REFUSED_REASON"), nil, nil, key, @"write_refused", NO),
-        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_REFUSED_SILENT"), nil, nil, key, @"write_refused_silent", NO),
-        SPKMenuCommand(SPKL(@"ACCOUNT_PRIVACY_DEV_SIMULATE_SAVE_FAILS"), nil, nil, key, @"write_failed", NO)
-    ]];
-}
-#endif
-
 UIMenu *SPKSeenButtonPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), @"arrow_up", nil, @"msgs_seen_button_position", @"top", NO),
@@ -316,6 +333,20 @@ UIMenu *SPKLastActiveFormatMenu(void) {
         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"msgs_last_active_format", @"off", NO),
         SPKMenuCommand(SPKL(@"MENU_SMART"), nil, nil, @"msgs_last_active_format", @"smart", NO),
         SPKMenuCommand(SPKL(@"MENU_DATE_TIME"), nil, nil, @"msgs_last_active_format", @"datetime", NO)
+    ]];
+}
+
+UIMenu *SPKLiquidGlassModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, kSPKPrefInterfaceLiquidGlassMode, @"follow", YES),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, kSPKPrefInterfaceLiquidGlassMode, @"on", YES),
+                         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, kSPKPrefInterfaceLiquidGlassMode, @"off", YES)
+                     ]]
     ]];
 }
 
@@ -369,6 +400,14 @@ UIMenu *SPKSwipeCloseCommentsDirectionMenu(void) {
     ]];
 }
 
+UIMenu *SPKSettingsNewBadgesMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_NEW_BADGES_UNTIL_SEEN"), nil, nil, @"tools_settings_new_badges", @"until_seen", NO),
+        SPKMenuCommand(SPKL(@"MENU_NEW_BADGES_KEEP"), nil, nil, @"tools_settings_new_badges", @"keep", NO),
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"tools_settings_new_badges", @"off", NO)
+    ]];
+}
+
 UIMenu *SPKCacheAutoClearMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_NEVER"), nil, nil, @"general_cache_auto_clear", @"never", NO),
@@ -392,6 +431,20 @@ UIMenu *SPKNotificationStyleMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_STYLE_PILL"), nil, nil, kSPKNotificationStyleKey, @"pill", NO),
         SPKMenuCommand(SPKL(@"MENU_NOTIFICATION_STYLE_INSTAGRAM"), nil, nil, kSPKNotificationStyleKey, @"instagram", NO)
+    ]];
+}
+
+UIMenu *SPKInstagramToastDesignMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"notifs_instagram_toast_design", @"default", YES),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_ON"), nil, nil, @"notifs_instagram_toast_design", @"on", YES),
+                         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, @"notifs_instagram_toast_design", @"off", YES)
+                     ]]
     ]];
 }
 
@@ -471,16 +524,16 @@ UIMenu *SPKAutoSavePhotoQualityMenu(void) {
 }
 
 // Every auto-save surface offers the same All/Selected choice over its own pref; only
-// the subject noun differs ("Users" for stories/instants, "Chats" for DMs).
-UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, NSString *subjectPlural) {
+// the subject differs (users for stories/instants, chats for DMs).
+UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, SPKAutoSaveFilterSubject subject) {
     return [UIMenu menuWithChildren:@[
-        SPKMenuCommand([NSString stringWithFormat:@"All %@", subjectPlural], nil, nil, filterModeKey, @"all", NO),
-        SPKMenuCommand([NSString stringWithFormat:SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_SELECTED_VALUE_FORMAT"), subjectPlural], nil, nil, filterModeKey, @"selected", NO)
+        SPKMenuCommand(SPKAutoSaveFilterModeTitle(subject, YES), nil, nil, filterModeKey, @"all", NO),
+        SPKMenuCommand(SPKAutoSaveFilterModeTitle(subject, NO), nil, nil, filterModeKey, @"selected", NO)
     ]];
 }
 
 UIMenu *SPKStoryAutoSaveFilterModeMenu(void) {
-    return SPKAutoSaveFilterModeMenu(@"stories_auto_save_filter_mode", SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_USERS_TEXT"));
+    return SPKAutoSaveFilterModeMenu(@"stories_auto_save_filter_mode", SPKAutoSaveFilterSubjectUsers);
 }
 
 SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void) {
@@ -500,33 +553,3 @@ SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void) {
     return setting;
 }
 
-UIMenu *SPKGalleryShortcutTargetMenu(void) {
-    NSString *const kGalleryLongPressTabKey = @"gallery_quick_access_tab";
-    NSString *const kGalleryQuickAccessDisabledValue = @"none";
-
-    NSMutableArray<UIMenuElement *> *commands = [NSMutableArray array];
-
-    NSArray<NSDictionary *> *items = @[
-        @{@"title" : SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_NONE_TEXT"), @"value" : kGalleryQuickAccessDisabledValue, @"icon" : @"circle_off"},
-        @{@"title" : SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_HOME_TEXT"), @"value" : @"mainfeed-tab", @"icon" : @"home"},
-        @{@"title" : SPKL(@"REELS_TITLE"), @"value" : @"reels-tab", @"icon" : @"reels"}
-    ];
-
-    NSMutableArray *allItems = [items mutableCopy];
-    if ([SPKUtils tabOrderSetTo:@"classic"]) {
-        [allItems addObject:@{@"title" : SPKL(@"TAB_CREATE"), @"value" : @"camera-tab", @"icon" : @"plus"}];
-    } else {
-        [allItems addObject:@{@"title" : SPKL(@"MESSAGES_CONFIRMATION_MESSAGES_TITLE"), @"value" : @"direct-inbox-tab", @"icon" : @"messages"}];
-    }
-    [allItems addObject:@{@"title" : SPKL(@"PROFILE_TITLE"), @"value" : @"profile-tab", @"icon" : @"user_circle"}];
-
-    for (NSDictionary *item in allItems) {
-        NSString *title = item[@"title"];
-        NSString *value = item[@"value"];
-        NSString *iconName = item[@"icon"];
-
-        [commands addObject:SPKMenuCommand(title, iconName, nil, kGalleryLongPressTabKey, value, YES)];
-    }
-
-    return [UIMenu menuWithChildren:commands];
-}

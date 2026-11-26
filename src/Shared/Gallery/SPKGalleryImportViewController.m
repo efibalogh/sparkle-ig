@@ -4,9 +4,11 @@
 
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
+#import "../../Settings/SPKSettingsTransferManager.h"
 #import "../MediaPreview/SPKFullScreenMediaPlayer.h"
 #import "../UI/SPKMediaChrome.h"
 #import "../UI/SPKGlassButton.h"
+#import "../UI/SPKIGAlertPresenter.h"
 #import "../UI/SPKNotificationPillView.h"
 #import "SPKGalleryCoreDataStack.h"
 #import "SPKGalleryFile.h"
@@ -14,6 +16,7 @@
 #import "SPKGallerySaveMetadata.h"
 #import "SPKRegramImporter.h"
 #import <CoreServices/CoreServices.h>
+#import "../UI/SPKFont.h"
 
 typedef NS_ENUM(NSInteger, SPKGalleryImportMainSection) {
     SPKGalleryImportMainSectionShared = 0,
@@ -59,6 +62,10 @@ static UIColor *SPKImportAmberColor(void) {
 @property (nonatomic) BOOL userEdited;
 /// Carried over from a Regram vault import; applied to the saved gallery file.
 @property (nonatomic) BOOL isFavorite;
+/// The Regram folder the file was filed in ("Trips/Rome"), recreated under the import destination.
+@property (nonatomic, copy, nullable) NSString *sourceFolderPath;
+/// The source came from a Regram vault's database, so even Other is a real answer worth showing.
+@property (nonatomic) BOOL sourceFromVault;
 @end
 
 @implementation SPKGalleryImportQueuedFile
@@ -114,14 +121,14 @@ static UIColor *SPKImportAmberColor(void) {
 
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:_titleLabel];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.text = SPKL(@"GALLERY_IMPORT_SHARED_DETAILS_TITLE");
         [self.contentView addSubview:_titleLabel];
 
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _subtitleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_subtitleLabel];
         _subtitleLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _subtitleLabel.numberOfLines = 1;
         _subtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -222,7 +229,7 @@ static UIColor *SPKImportAmberColor(void) {
 
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:_titleLabel];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.numberOfLines = 1;
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -236,7 +243,7 @@ static UIColor *SPKImportAmberColor(void) {
 
         _technicalLabel = [[UILabel alloc] init];
         _technicalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _technicalLabel.font = [UIFont systemFontOfSize:12.0];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:_technicalLabel];
         _technicalLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _technicalLabel.numberOfLines = 1;
         _technicalLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -270,7 +277,7 @@ static UIColor *SPKImportAmberColor(void) {
             [_placeholderGlyph.centerYAnchor constraintEqualToAnchor:_thumbnailView.centerYAnchor],
 
             [_titleLabel.leadingAnchor constraintEqualToAnchor:_thumbnailView.trailingAnchor constant:12.0],
-            [_titleLabel.topAnchor constraintEqualToAnchor:_thumbnailView.topAnchor constant:-1.0],
+            [_titleLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:9.0],
             [_titleLabel.trailingAnchor constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor],
 
             [_rowTypeIcon.leadingAnchor constraintEqualToAnchor:_titleLabel.leadingAnchor],
@@ -301,7 +308,7 @@ static UIColor *SPKImportAmberColor(void) {
     pill.clipsToBounds = YES;
     UILabel *label = [[UILabel alloc] init];
     label.translatesAutoresizingMaskIntoConstraints = NO;
-    label.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold] to:label];
     label.numberOfLines = 1;
     [pill addSubview:label];
     [NSLayoutConstraint activateConstraints:@[
@@ -468,6 +475,8 @@ static UIColor *SPKImportAmberColor(void) {
             @"fileSize": @(item.fileSize),
             @"isFavorite": @(item.isFavorite),
             @"userEdited": @(item.userEdited),
+            @"sourceFolderPath": item.sourceFolderPath ?: @"",
+            @"sourceFromVault": @(item.sourceFromVault),
             @"metadata": [item.metadata spk_dictionaryRepresentation] ?: @{},
         }];
     }
@@ -512,6 +521,9 @@ static UIColor *SPKImportAmberColor(void) {
         item.fileSize = [entry[@"fileSize"] longLongValue];
         item.isFavorite = [entry[@"isFavorite"] boolValue];
         item.userEdited = [entry[@"userEdited"] boolValue];
+        NSString *sourceFolderPath = entry[@"sourceFolderPath"];
+        item.sourceFolderPath = [sourceFolderPath isKindOfClass:[NSString class]] && sourceFolderPath.length ? sourceFolderPath : nil;
+        item.sourceFromVault = [entry[@"sourceFromVault"] boolValue];
         item.metadata = [SPKGallerySaveMetadata spk_metadataFromDictionary:entry[@"metadata"]];
         [self.queuedFiles addObject:item];
     }
@@ -529,6 +541,13 @@ static UIColor *SPKImportAmberColor(void) {
             [fm removeItemAtPath:[dir stringByAppendingPathComponent:name] error:nil];
         }
     }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    // Row heights follow the text size, so a text size change needs new heights.
+    if (![previousTraitCollection.preferredContentSizeCategory isEqualToString:self.traitCollection.preferredContentSizeCategory])
+        [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -574,7 +593,7 @@ static UIColor *SPKImportAmberColor(void) {
     UILabel *title = [[UILabel alloc] init];
     title.translatesAutoresizingMaskIntoConstraints = NO;
     title.text = SPKL(@"GALLERY_IMPORT_EMPTY_TITLE");
-    title.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium] to:title];
     title.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     title.textAlignment = NSTextAlignmentCenter;
     [container addSubview:title];
@@ -582,7 +601,7 @@ static UIColor *SPKImportAmberColor(void) {
     UILabel *subtitle = [[UILabel alloc] init];
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
     subtitle.text = SPKL(@"GALLERY_IMPORT_EMPTY_SUBTITLE");
-    subtitle.font = [UIFont systemFontOfSize:14.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:subtitle];
     subtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     subtitle.numberOfLines = 0;
     subtitle.textAlignment = NSTextAlignmentCenter;
@@ -658,10 +677,7 @@ static UIColor *SPKImportAmberColor(void) {
 }
 
 - (void)refreshOverflowMenu {
-    UIButton *button = (UIButton *)self.overflowBarButtonItem.customView;
-    if ([button isKindOfClass:[UIButton class]]) {
-        button.menu = [self buildOverflowMenu];
-    }
+    self.overflowBarButtonItem.menu = [self buildOverflowMenu];
 }
 
 #pragma mark - Import action
@@ -833,7 +849,9 @@ static UIColor *SPKImportAmberColor(void) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SPKImportRowHeight;
+    // The fixed row plus whatever the user's text size adds to its three lines.
+    return SPKImportRowHeight + [SPKFont lineGrowthForStyle:SPKFontStyleCallout] + [SPKFont lineGrowthForStyle:SPKFontStyleCaption1] +
+           [SPKFont lineGrowthForStyle:SPKFontStyleCaption2];
 }
 
 #pragma mark - Shared summary
@@ -868,10 +886,11 @@ static UIColor *SPKImportAmberColor(void) {
     return [parts componentsJoinedByString:@" · "];
 }
 
-// The source pill only shows when a source was actually identified (not the default "Other"),
-// so plain screenshots stay quiet instead of flashing a meaningless label.
+// The source pill only shows when a source was actually identified, so plain screenshots stay quiet
+// instead of flashing a meaningless "Other". A Regram vault row always has one: its Other is
+// Regram's own answer.
 - (nullable NSString *)sourceLabelForItem:(SPKGalleryImportQueuedFile *)item {
-    if ((SPKGallerySource)item.metadata.source == SPKGallerySourceOther) {
+    if ((SPKGallerySource)item.metadata.source == SPKGallerySourceOther && !item.sourceFromVault) {
         return nil;
     }
     return [SPKGalleryFile labelForSource:(SPKGallerySource)item.metadata.source];
@@ -1192,6 +1211,12 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
 // Folders and zips are read off the main thread (unzip + SQLite + copying many files). A Regram
 // Media Vault becomes queued items with its DB metadata pre-filled; anything else is ignored.
 - (void)ingestContainerURLs:(NSArray<NSURL *> *)urls {
+    [self ingestContainerURLs:urls password:nil];
+}
+
+// `password` unlocks encrypted Regram exports. Exports that need one (or a different one) are held
+// back and, once the rest are queued, the user is asked for it and only those are read again.
+- (void)ingestContainerURLs:(NSArray<NSURL *> *)urls password:(nullable NSString *)password {
     // Cancelling stops reading at the next row and queues nothing; the files
     // already copied for the rows read so far are removed.
     __block atomic_bool cancelled = false;
@@ -1202,11 +1227,19 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSMutableArray<SPKGalleryImportQueuedFile *> *newItems = [NSMutableArray array];
+        NSMutableArray<NSURL *> *lockedURLs = [NSMutableArray array];
+        BOOL wrongPassword = NO;
         NSUInteger vaults = 0;
         for (NSURL *url in urls) {
             if (atomic_load(&cancelled))
                 break;
-            NSArray<NSDictionary *> *rows = [SPKRegramImporter vaultRowsFromPickedURL:url];
+            NSError *readError = nil;
+            NSArray<NSDictionary *> *rows = [SPKRegramImporter vaultRowsFromPickedURL:url password:password error:&readError];
+            if ([SPKRegramImporter isPasswordError:readError]) {
+                [lockedURLs addObject:url];
+                wrongPassword = wrongPassword || readError.code == SPKZipWrongPasswordErrorCode;
+                continue;
+            }
             if (rows.count == 0) {
                 continue;  // not a Regram vault, skip (folders of loose media aren't supported here)
             }
@@ -1248,6 +1281,17 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
             if (!self) {
                 return;
             }
+            if (lockedURLs.count > 0) {
+                if (newItems.count > 0) {
+                    [self.queuedFiles addObjectsFromArray:newItems];
+                    [self persistQueue];
+                    [self.tableView reloadData];
+                    [self updateImportButton];
+                }
+                [pill dismiss];
+                [self promptForPasswordForURLs:lockedURLs wrongPassword:wrongPassword];
+                return;
+            }
             if (newItems.count > 0) {
                 [self.queuedFiles addObjectsFromArray:newItems];
                 [self persistQueue];
@@ -1263,6 +1307,54 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
             }
         });
     });
+}
+
+- (void)promptForPasswordForURLs:(NSArray<NSURL *> *)urls wrongPassword:(BOOL)wrongPassword {
+    __weak typeof(self) weakSelf = self;
+    [SPKIGAlertPresenter presentTextInputAlertFromViewController:self
+                                                           title:SPKL(@"GALLERY_IMPORT_REGRAM_PASSWORD_TITLE")
+                                                         message:wrongPassword ? SPKL(@"GALLERY_IMPORT_REGRAM_PASSWORD_WRONG_MESSAGE") : SPKL(@"GALLERY_IMPORT_REGRAM_PASSWORD_MESSAGE")
+                                                     placeholder:SPKL(@"GALLERY_IMPORT_REGRAM_PASSWORD_PLACEHOLDER")
+                                                     initialText:nil
+                                                 autocapitalized:NO
+                                                 secureTextEntry:YES
+                                                    confirmTitle:SPKL(@"GALLERY_IMPORT_REGRAM_PASSWORD_UNLOCK_ACTION")
+                                                     cancelTitle:SPKL(@"ALERT_ACTION_CANCEL")
+                                                    confirmStyle:SPKIGAlertActionStyleDefault
+                                                    confirmBlock:^(NSString *text) {
+                                                        __strong typeof(weakSelf) self = weakSelf;
+                                                        if (!self) {
+                                                            return;
+                                                        }
+                                                        if (text.length == 0) {
+                                                            [self promptForPasswordForURLs:urls wrongPassword:NO];
+                                                            return;
+                                                        }
+                                                        [self ingestContainerURLs:urls password:text];
+                                                    }
+                                                     cancelBlock:nil];
+}
+
+// The gallery folder a queued file lands in: the import destination, plus the Regram folder the file
+// was filed in when it came from a vault (Gallery folders are "/A/B" paths that appear once a file
+// references them).
+- (NSString *)folderPathForItem:(SPKGalleryImportQueuedFile *)item {
+    NSString *base = self.destinationFolderPath.length ? self.destinationFolderPath : nil;
+    if (item.sourceFolderPath.length == 0) {
+        return base;
+    }
+    NSMutableArray<NSString *> *components = [NSMutableArray array];
+    for (NSString *component in [item.sourceFolderPath componentsSeparatedByString:@"/"]) {
+        NSString *trimmed = [component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if (trimmed.length) {
+            [components addObject:trimmed];
+        }
+    }
+    if (components.count == 0) {
+        return base;
+    }
+    NSString *suffix = [components componentsJoinedByString:@"/"];
+    return base ? [base stringByAppendingFormat:@"/%@", suffix] : [@"/" stringByAppendingString:suffix];
 }
 
 // Copies a Regram vault row's media into the import temp dir and builds a queued item with its DB
@@ -1288,6 +1380,8 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
     item.fileSize = (long long)[[fm attributesOfItemAtPath:tempPath error:nil] fileSize];
     item.metadata = [SPKRegramImporter metadataForRow:row];
     item.isFavorite = [SPKRegramImporter isFavoriteRow:row];
+    item.sourceFolderPath = [SPKRegramImporter folderPathForRow:row];
+    item.sourceFromVault = YES;
     item.userEdited = YES;  // DB metadata is authoritative — don't let shared defaults overwrite it
     return item;
 }
@@ -1435,7 +1529,7 @@ static const NSInteger kSPKImportThumbnailMaxAttempts = 2;
         SPKGalleryFile *saved = [SPKGalleryFile saveFileToGallery:item.tempFileURL
                                                            source:(SPKGallerySource)item.metadata.source
                                                         mediaType:mediaType
-                                                       folderPath:self.destinationFolderPath
+                                                       folderPath:[self folderPathForItem:item]
                                                          metadata:item.metadata
                                                             error:&err];
         if (saved) {

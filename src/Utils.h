@@ -104,7 +104,6 @@ FOUNDATION_EXPORT Class _Nullable SPKDirectObjCInboxClass(void);
 + (NSString *)getStringPref:(NSString *)key;
 
 // Misc
-+ (BOOL)tabOrderSetTo:(NSString *)ordering;
 + (NSString *)IGVersionString;
 
 // Session / user
@@ -200,6 +199,9 @@ FOUNDATION_EXPORT Class _Nullable SPKDirectObjCInboxClass(void);
 + (BOOL)openURL:(NSURL *)url;
 + (void)dismissPresentedViewControllers;
 + (nullable NSString *)sanitizedInstagramUsername:(nullable NSString *)rawUsername;
+/// Username from text a person typed or pasted: accepts a profile link, strips
+/// invisible characters, skips the metadata deny-list. nil when not a username.
++ (nullable NSString *)usernameFromUserInput:(nullable NSString *)input;
 + (BOOL)openInstagramProfileForUsername:(NSString *)username;
 + (BOOL)openInstagramProfileForUsername:(NSString *)username fromViewController:(nullable UIViewController *)presentingVC;
 + (BOOL)openInstagramProfileForUser:(nullable id)user pk:(nullable NSString *)pk username:(nullable NSString *)username fromViewController:(nullable UIViewController *)presentingVC;

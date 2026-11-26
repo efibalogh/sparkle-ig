@@ -62,6 +62,56 @@ static void SPKApplyProfileHeaderControlsInTree(UIView *view, BOOL hideThreads, 
     }
 }
 
+// Where the profile's buttons are navigation bar items (a side column beside a
+// vertical tab bar), hiding the button view leaves its glass circle behind, so
+// the Threads item itself comes out of the navigation item. Kept with its index
+// to put it back when the setting is turned off.
+static const void *kSPKProfileRemovedThreadsItemKey = &kSPKProfileRemovedThreadsItemKey;
+static const void *kSPKProfileRemovedThreadsIndexKey = &kSPKProfileRemovedThreadsIndexKey;
+
+static BOOL SPKProfileBarItemIsThreads(UIBarButtonItem *item) {
+    UIView *custom = item.customView;
+    if (!custom)
+        return NO;
+    NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:custom];
+    for (NSUInteger i = 0; i < queue.count && i < 40; i++) {
+        if ([queue[i].accessibilityIdentifier isEqualToString:@"profile-app-switch-button"])
+            return YES;
+        [queue addObjectsFromArray:queue[i].subviews];
+    }
+    return NO;
+}
+
+static void SPKApplyProfileThreadsBarItem(UINavigationItem *navigationItem, BOOL hide) {
+    if (!navigationItem)
+        return;
+    NSArray<UIBarButtonItem *> *items = navigationItem.rightBarButtonItems ?: @[];
+    if (hide) {
+        NSUInteger index = [items indexOfObjectPassingTest:^BOOL(UIBarButtonItem *item, __unused NSUInteger idx, __unused BOOL *stop) {
+            return SPKProfileBarItemIsThreads(item);
+        }];
+        if (index == NSNotFound)
+            return;
+        objc_setAssociatedObject(navigationItem, kSPKProfileRemovedThreadsItemKey, items[index], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(navigationItem, kSPKProfileRemovedThreadsIndexKey, @(index), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        NSMutableArray<UIBarButtonItem *> *remaining = [items mutableCopy];
+        [remaining removeObjectAtIndex:index];
+        navigationItem.rightBarButtonItems = remaining;
+        return;
+    }
+    UIBarButtonItem *removed = objc_getAssociatedObject(navigationItem, kSPKProfileRemovedThreadsItemKey);
+    if (!removed)
+        return;
+    NSUInteger index = [objc_getAssociatedObject(navigationItem, kSPKProfileRemovedThreadsIndexKey) unsignedIntegerValue];
+    objc_setAssociatedObject(navigationItem, kSPKProfileRemovedThreadsItemKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(navigationItem, kSPKProfileRemovedThreadsIndexKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if ([items containsObject:removed])
+        return;
+    NSMutableArray<UIBarButtonItem *> *restored = [items mutableCopy];
+    [restored insertObject:removed atIndex:MIN(index, restored.count)];
+    navigationItem.rightBarButtonItems = restored;
+}
+
 // Applied only when a profile is on screen — never on the per-view, app-wide layout path
 static void SPKApplyProfileHeaderControls(UIViewController *vc) {
     BOOL hideThreads = [SPKUtils getBoolPref:@"profile_hide_threads_btn"];
@@ -71,6 +121,7 @@ static void SPKApplyProfileHeaderControls(UIViewController *vc) {
     if (hideThreads || hideNotes)
         sSPKProfileControlsEverApplied = YES;
 
+    SPKApplyProfileThreadsBarItem(vc.navigationItem, hideThreads);
     SPKApplyProfileHeaderControlsInTree(vc.view, hideThreads, hideNotes, 0);
     UIView *navBar = vc.navigationController.navigationBar;
     if (navBar)

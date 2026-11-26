@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKStoriesSettingsProvider.h"
 
 #import "../../Features/Stories/StoryAudioToggle.h"
@@ -253,6 +254,11 @@ static NSArray *SPKStoriesSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"users")
                                     defaultsKey:@"stories_mentions_count_badge"],
                                SPKL(@"STORIES_OTHER_MENTIONS_COUNT_BADGE_HELP")),
+            SPKSettingMarkedNew(SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_MENTIONS_COPY_USERNAME_TITLE")
+                                                                              icon:SPKSettingsIcon(@"copy")
+                                                                       defaultsKey:@"stories_mentions_copy_username"],
+                                                   SPKL(@"STORIES_OTHER_MENTIONS_COPY_USERNAME_HELP")),
+                                @"v1.7.0"),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_OTHER_SHOW_POLL_VOTE_COUNTS_TITLE")
                                            icon:SPKSettingsIcon(@"poll")
                                     defaultsKey:@"stories_poll_vote_counts"],

@@ -15,6 +15,10 @@ FOUNDATION_EXPORT NSString *SPKFileNameForMedia(NSURL *originalURL, SPKGalleryMe
 
 /// Best-effort parse of tweak/Sparkle-style basenames, e.g. \c 1778088045602_username_story_20260210001603 — fills save-time epoch, posted-time compact date, user pk, username, and source slug when \a metadata fields are still empty (or source is Other).
 FOUNDATION_EXPORT void SPKGalleryApplyImportHeuristicsFromFilename(NSString *fileName, SPKGallerySaveMetadata *metadata);
+/// Reads the save time and posted date back out of a name built by `SPKFileNameForMedia`
+/// (`<epochMs>_..._<yyyyMMddHHmmss>`). Returns NO, leaving both outputs untouched, for any
+/// other layout. Pure parsing: unlike the import heuristics it never looks anything up.
+FOUNDATION_EXPORT BOOL SPKGalleryParseSparkleFilenameDates(NSString *_Nullable fileName, NSDate *_Nullable *_Nullable savedDate, NSDate *_Nullable *_Nullable postedDate);
 
 typedef NS_ENUM(int16_t, SPKGallerySource) {
     SPKGallerySourceOther = 0,
@@ -193,6 +197,18 @@ typedef NS_ENUM(int16_t, SPKGallerySource) {
 /// Returns the symbol name for the given source.
 + (NSString *)symbolNameForSource:(SPKGallerySource)source;
 
+@end
+
+/// File counts and total size of the whole Gallery, computed by one grouped
+/// aggregate query in the store, so no file object is loaded. Cheap enough to
+/// run every time a settings page appears.
+@interface SPKGalleryStorageStats : NSObject
+@property (nonatomic, readonly) NSInteger totalFiles;
+@property (nonatomic, readonly) NSInteger imageCount;
+@property (nonatomic, readonly) NSInteger videoCount;
+@property (nonatomic, readonly) NSInteger audioCount;
+@property (nonatomic, readonly) long long totalSize;
++ (instancetype)currentStats;
 @end
 
 NS_ASSUME_NONNULL_END

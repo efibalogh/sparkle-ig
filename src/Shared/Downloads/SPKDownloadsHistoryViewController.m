@@ -17,6 +17,8 @@
 #import "SPKDownloadsSettingsViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "../UI/SPKNotificationCenter.h"
+#import "../UI/SPKFont.h"
+#import "../../Settings/SPKNewBadges.h"
 
 #pragma mark - Helpers
 
@@ -134,7 +136,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
         // Title
         _titleLabel = [UILabel new];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:_titleLabel];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.numberOfLines = 1;
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -150,7 +152,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
         // Technical label
         _technicalLabel = [UILabel new];
         _technicalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _technicalLabel.font = [UIFont systemFontOfSize:12];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:_technicalLabel];
         _technicalLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _technicalLabel.numberOfLines = 1;
         _technicalLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -166,7 +168,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
         _pillLabel = [UILabel new];
         _pillLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _pillLabel.font = [UIFont systemFontOfSize:11 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold] to:_pillLabel];
         _pillLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _pillLabel.numberOfLines = 1;
         [_pillBackground addSubview:_pillLabel];
@@ -174,7 +176,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
         // Date label
         _dateLabel = [UILabel new];
         _dateLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _dateLabel.font = [UIFont systemFontOfSize:11];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2] to:_dateLabel];
         _dateLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
         _dateLabel.numberOfLines = 1;
         _dateLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -198,8 +200,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
             [_titleLabel.leadingAnchor constraintEqualToAnchor:_thumbnailView.trailingAnchor
                                                       constant:12],
-            [_titleLabel.topAnchor constraintEqualToAnchor:_thumbnailView.topAnchor
-                                                  constant:-1],
+            [_titleLabel.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:9.0],
             [_titleLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.contentView.trailingAnchor
                                                                  constant:-16],
 
@@ -261,7 +262,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
         _compactLabel = [UILabel new];
         _compactLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _compactLabel.font = [UIFont systemFontOfSize:13];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_compactLabel];
         _compactLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         _compactLabel.numberOfLines = 1;
         _compactLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -312,7 +313,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
     self.rowTypeIcon.hidden = NO;
     self.rowTypeIconWidth.constant = 14;
     self.titleLabel.text = nil;
-    self.titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:self.titleLabel];
     self.titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.technicalLabel.text = nil;
     self.pillLabel.text = nil;
@@ -348,10 +349,20 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
 @property (nonatomic, assign) BOOL lastHasHiddenPill;
 @property (nonatomic, assign) BOOL lastHasActiveJobs;
+/// Whether the settings behind the gear have NEW rows; measured once per appearance.
+@property (nonatomic, assign) BOOL settingsHasNew;
+@property (nonatomic, assign) BOOL lastSettingsHasNew;
 @property (nonatomic, assign) BOOL hasSetInitialTopBarStates;
 @end
 
 @implementation SPKDownloadsHistoryViewController
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    // Row heights follow the text size, so a text size change needs new heights.
+    if (![previousTraitCollection.preferredContentSizeCategory isEqualToString:self.traitCollection.preferredContentSizeCategory])
+        [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -389,8 +400,8 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
     [NSLayoutConstraint activateConstraints:@[
         [self.chipBar.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
-        [self.chipBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.chipBar.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.chipBar.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [self.chipBar.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
         [self.chipBar.heightAnchor constraintEqualToConstant:50],
 
         [self.tableView.topAnchor constraintEqualToAnchor:self.chipBar.bottomAnchor],
@@ -412,6 +423,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
     }
     // Catch an in-app account switch that didn't fire while this view was up.
     [[SPKAccountManager shared] refreshCurrentAccount];
+    self.settingsHasNew = SPKNewBadgeSectionsContainNew([SPKDownloadsSettingsViewController searchSections]);
     [self reload];
 }
 
@@ -485,17 +497,23 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
     if (self.hasSetInitialTopBarStates &&
         hasHiddenPill == self.lastHasHiddenPill &&
-        hasActiveJobs == self.lastHasActiveJobs) {
+        hasActiveJobs == self.lastHasActiveJobs &&
+        self.settingsHasNew == self.lastSettingsHasNew) {
         return;
     }
 
     self.lastHasHiddenPill = hasHiddenPill;
     self.lastHasActiveJobs = hasActiveJobs;
+    self.lastSettingsHasNew = self.settingsHasNew;
     self.hasSetInitialTopBarStates = YES;
 
     UIMenu *menu = [self moreMenu];
     UIBarButtonItem *moreItem = SPKMediaChromeTopBarMenuButtonItem(@"more", menu, SPKL(@"MESSAGES_DELETED_MESSAGES_MORE_TEXT"));
     UIBarButtonItem *settingsItem = SPKMediaChromeTopBarButtonItem(@"settings", self, @selector(pushSettings));
+    if (self.settingsHasNew) {
+        settingsItem.image = SPKNewBadgeIconWithDot(settingsItem.image, [SPKUtils SPKColor_InstagramPrimaryText], self.traitCollection);
+        settingsItem.accessibilityValue = SPKNewBadgeAccessibilityText(SPKNewBadgeStateContainsNew);
+    }
     if (hasHiddenPill) {
         UIBarButtonItem *showProgressItem = SPKMediaChromeTopBarButtonItem(@"play_filled", self, @selector(showProgressTapped));
         SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[ showProgressItem, settingsItem, moreItem ]);
@@ -550,7 +568,7 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
     self.emptyStateTitle = [UILabel new];
     self.emptyStateTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateTitle.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:self.emptyStateTitle];
     self.emptyStateTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.emptyStateTitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateTitle.numberOfLines = 0;
@@ -558,19 +576,19 @@ typedef NS_ENUM(NSUInteger, SPKDownloadsHistoryRowKind) {
 
     self.emptyStateSubtitle = [UILabel new];
     self.emptyStateSubtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateSubtitle.font = [UIFont systemFontOfSize:14];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.emptyStateSubtitle];
     self.emptyStateSubtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.emptyStateSubtitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateSubtitle.numberOfLines = 0;
     [self.emptyStateView addSubview:self.emptyStateSubtitle];
 
     [NSLayoutConstraint activateConstraints:@[
-        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [self.emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor
                                                           constant:-30],
-        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor
+        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
                                                                        constant:40],
-        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor
+        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor
                                                                      constant:-40],
 
         [self.emptyStateIcon.topAnchor constraintEqualToAnchor:self.emptyStateView.topAnchor],
@@ -821,7 +839,11 @@ static void SPKApplyStatusBadge(SPKDownloadHistoryCell *cell, SPKDownloadState s
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     (void)tableView;
-    return self.rows[indexPath.row].kind == SPKDownloadsHistoryRowKindChild ? 52 : 72;
+    // Fixed design heights plus whatever the user's text size adds to each line.
+    if (self.rows[indexPath.row].kind == SPKDownloadsHistoryRowKindChild)
+        return 52.0 + [SPKFont lineGrowthForStyle:SPKFontStyleFootnote];
+    return 72.0 + [SPKFont lineGrowthForStyle:SPKFontStyleCallout] + [SPKFont lineGrowthForStyle:SPKFontStyleCaption1] +
+           [SPKFont lineGrowthForStyle:SPKFontStyleCaption2];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

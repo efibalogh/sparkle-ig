@@ -2,6 +2,7 @@
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
 #import "../UI/SPKChipGlass.h"
+#import "../UI/SPKFont.h"
 
 static CGFloat const kChipBarHeight = 52.0;
 static CGFloat const kChipHeight = 34.0;
@@ -40,8 +41,9 @@ static CGFloat const kChipHorizontalInset = 14.0;
         [_scroll addSubview:_stack];
 
         [NSLayoutConstraint activateConstraints:@[
-            [_scroll.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-            [_scroll.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+            // Clear of a side column, like the grid below it.
+            [_scroll.leadingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],
+            [_scroll.trailingAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor],
             [_scroll.topAnchor constraintEqualToAnchor:self.topAnchor],
             [_scroll.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
 
@@ -86,7 +88,7 @@ static CGFloat const kChipHorizontalInset = 14.0;
 - (UIButton *)chipForName:(NSString *)name count:(NSInteger)count index:(NSInteger)index {
     UIButton *chip = [UIButton buttonWithType:UIButtonTypeSystem];
     chip.tag = index;
-    chip.titleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold] to:chip.titleLabel];
 
     NSString *title = count > 0
                           ? [NSString stringWithFormat:@"%@  •  %ld", name, (long)count]
@@ -111,7 +113,7 @@ static CGFloat const kChipHorizontalInset = 14.0;
     chip.layer.cornerCurve = kCACornerCurveContinuous;
     // Folder chips aren't a selection — clear glass capsules on iOS 26, solid
     // fill otherwise.
-    if (!SPKChipApplyGlass(chip, NO, kChipHeight / 2.0, nil)) {
+    if (!SPKChipApplyStaticGlass(chip, kChipHeight / 2.0)) {
         chip.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
     }
 

@@ -27,6 +27,12 @@ UIView *SPKChromeGlassMirrorMakeBubble(NSString *accessibilityIdentifier);
 // as the action menu closes.
 void SPKChromeGlassMirrorAttach(UIView *glassView, UIButton *button);
 
+// Gives `glassView` the system glass material and attaches it behind `button`'s
+// icon, for buttons with no IG bubble beside them to mirror (their own glass
+// circle in the side column or in a navigation bar). Write-guarded, so it can run
+// on every layout pass.
+void SPKChromeGlassMirrorUseSystemGlass(UIView *glassView, UIButton *button);
+
 // Mirrors the strongest IG bubble found under `chromeView` onto `glassView`: copies
 // its effect and hairline ring, and sets `glassView.alpha` to the bubble's (that
 // alpha is what fades the bubble in as the header bar appears).

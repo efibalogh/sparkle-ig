@@ -27,6 +27,9 @@ static const NSTimeInterval kSPKOpenPostCaptureWindow = 2.5;
 static void (^spk_openPostOnDismiss)(void) = nil;
 static NSDate *spk_openPostWindowExpiry = nil;
 static __weak UIViewController *spk_openPostPresenter = nil;
+// The page the pending route pushes: the single-post page for instagram://media,
+// the audio page for an /reels/audio/<id>/ link.
+static Class spk_openPostCaptureClass = Nil;
 static void (^spk_openPostFallback)(void) = nil;
 // Separate from the expiry: the window closing is what stops the hook acting on a
 // stale push, but the fallback has to be able to run *because* the window closed.
@@ -37,6 +40,8 @@ static BOOL spk_openPostPending = NO;
 // window lapsed seconds later. Without the hook we must not arm at all.
 static BOOL spk_openPostHooksInstalled = NO;
 
+void SPKOpenPostArmRouterHomeGuard(void);
+
 static BOOL SPKOpenPostWindowIsArmed(void) {
     return spk_openPostPending && spk_openPostWindowExpiry != nil && spk_openPostWindowExpiry.timeIntervalSinceNow > 0;
 }
@@ -45,6 +50,7 @@ static void SPKOpenPostDisarm(void) {
     spk_openPostPending = NO;
     spk_openPostWindowExpiry = nil;
     spk_openPostPresenter = nil;
+    spk_openPostCaptureClass = Nil;
     spk_openPostFallback = nil;
     spk_openPostOnDismiss = nil;
 }
@@ -55,34 +61,51 @@ static void SPKOpenPostFallbackIfStillArmed(void) {
     if (!spk_openPostPending)
         return;
     void (^fallback)(void) = spk_openPostFallback;
-    SPKLog(@"OpenPost", @"no single-feed push captured within %.1fs, falling back", kSPKOpenPostCaptureWindow);
+    SPKLog(@"OpenPost", @"no page push captured within %.1fs, falling back", kSPKOpenPostCaptureWindow);
     SPKOpenPostDisarm();
     if (fallback)
         fallback();
+}
+
+// Only routes that push a page of their own can be caught. A post's web permalink
+// resolves through continueUserActivity: into the main feed instead, so it has
+// nothing to redirect and keeps the legacy behaviour; the authenticated
+// instagram://media route pushes the single-post page. An audio page link
+// (/reels/audio/<id>/) pushes the audio page from either route.
+static Class SPKOpenPostCaptureClassForURL(NSURL *url) {
+    NSString *scheme = url.scheme.lowercaseString ?: @"";
+    if ([scheme isEqualToString:@"instagram"] && [url.host.lowercaseString isEqualToString:@"media"])
+        return objc_getClass("IGSingleFeedViewController");
+    if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) {
+        NSMutableArray<NSString *> *segments = [NSMutableArray array];
+        for (NSString *segment in [url.path componentsSeparatedByString:@"/"]) {
+            if (segment.length > 0)
+                [segments addObject:segment.lowercaseString];
+        }
+        if (segments.count >= 3 && [segments[0] isEqualToString:@"reels"] && [segments[1] isEqualToString:@"audio"])
+            return objc_getClass("IGAudioPageViewController");
+    }
+    return Nil;
 }
 
 BOOL SPKOpenPostPushMediaURL(NSURL *url, UIViewController *presentingVC, void (^fallback)(void), void (^onDismiss)(void)) {
     if (!url || !presentingVC) {
         return NO;
     }
-    // Only the authenticated in-app route pushes a page we can catch. A web
-    // permalink resolves through continueUserActivity: into the main feed instead,
-    // so it has nothing to redirect and must keep the legacy behaviour.
-    if (![url.scheme.lowercaseString isEqualToString:@"instagram"] ||
-        ![url.host.lowercaseString isEqualToString:@"media"]) {
-        return NO;
-    }
-    if (!objc_getClass("IGSingleFeedViewController")) {
+    Class captureClass = SPKOpenPostCaptureClassForURL(url);
+    if (!captureClass) {
         return NO;
     }
     if (!spk_openPostHooksInstalled) {
         return NO;
     }
     spk_openPostPresenter = presentingVC;
+    spk_openPostCaptureClass = captureClass;
     spk_openPostFallback = [fallback copy];
     spk_openPostOnDismiss = [onDismiss copy];
     spk_openPostWindowExpiry = [NSDate dateWithTimeIntervalSinceNow:kSPKOpenPostCaptureWindow];
     spk_openPostPending = YES;
+    SPKOpenPostArmRouterHomeGuard();
 
     // Presented UI stays up: the push we are about to intercept never becomes
     // visible, so there is nothing to reveal.
@@ -116,7 +139,8 @@ BOOL SPKOpenPostPushMediaURL(NSURL *url, UIViewController *presentingVC, void (^
         %orig;
         return;
     }
-    if (![viewController isKindOfClass:objc_getClass("IGSingleFeedViewController")]) {
+    if (!spk_openPostCaptureClass || ![viewController isKindOfClass:spk_openPostCaptureClass]) {
+        SPKLog(@"OpenPost", @"armed, ignoring push of %@", NSStringFromClass(viewController.class));
         %orig;
         return;
     }
@@ -212,37 +236,165 @@ static BOOL SPKOpenPostPresentsPendingPresenter(UIViewController *presented) {
 
 %end
 
-// On IG 410 the media route first takes you "home": it focuses the tab bar, which
-// scrolls the feed to the top when Home is the current tab, then re-selects Home
-// as a tab bar action, which reaches this handler with every argument nil and
-// clears injected posts, scrolls again and runs a Home-button refresh. The post
-// then opens over a feed that was reset behind it, which only shows once you go
-// back. Inside the armed window both are ours, not the user's, so both are
-// dropped. Newer builds route media links without either call, and a real tap is
-// never inside the window.
-%group SPKOpenPostHomeTapGuard
+// Instagram's router takes you "home" before it navigates to a deep link: it
+// focuses the tab bar, which scrolls the feed to the top when Home is the current
+// tab, then re-selects Home as a tab bar action, which reaches the feed's home tap
+// handler with every argument nil and clears injected posts, scrolls again and
+// runs a Home-button refresh. Sparkle's own opens (a post pushed onto a native
+// host, a profile link from the clipboard) never show the feed, so that reset
+// happens unseen and only shows once you go back. Inside the guard window the
+// calls are the router's, not the user's, so they are dropped.
+//
+// 410 has one feed controller. Newer builds split it into the Home tab's Swift
+// wrapper and ObjC/Swift feed twins, each with its own entry point, so every one
+// of them is guarded. The window is never armed for a post permalink, the one
+// route that lands in the feed and needs the home tap, so inside it every home
+// tap is the router's, including one carrying the profile link as its deeplinkURL.
 
-%hook IGMainFeedViewController
+static const NSTimeInterval kSPKRouterHomeGuardWindow = 2.0;
+static NSDate *spk_routerHomeGuardExpiry = nil;
 
-- (void)handleTapOnHomeTabWithHoistedMediaID:(id)mediaID hoistedMediaShortcode:(id)shortcode deeplinkURL:(id)url {
-    if (SPKOpenPostWindowIsArmed()) {
-        SPKLog(@"OpenPost", @"dropping the router's home tab tap while a post push is pending");
-        return;
-    }
-    %orig;
+void SPKOpenPostArmRouterHomeGuard(void) {
+    spk_routerHomeGuardExpiry = [NSDate dateWithTimeIntervalSinceNow:kSPKRouterHomeGuardWindow];
 }
 
-- (void)scrollToTopAnimated:(BOOL)animated {
-    if (SPKOpenPostWindowIsArmed()) {
-        SPKLog(@"OpenPost", @"dropping the router's feed scroll to top while a post push is pending");
-        return;
-    }
-    %orig;
+static BOOL SPKRouterHomeGuardIsArmed(void) {
+    if (SPKOpenPostWindowIsArmed())
+        return YES;
+    return spk_routerHomeGuardExpiry != nil && spk_routerHomeGuardExpiry.timeIntervalSinceNow > 0;
 }
 
-%end
+typedef NS_ENUM(NSUInteger, SPKRouterHomeGuardSlot) {
+    SPKRouterHomeGuardSlotHomeTap,
+    SPKRouterHomeGuardSlotResetTap,
+    SPKRouterHomeGuardSlotScrollToTop,
+    SPKRouterHomeGuardSlotTappedTabBar,
+    SPKRouterHomeGuardSlotHomeButtonScroll,
+    SPKRouterHomeGuardSlotRefresh,
+    SPKRouterHomeGuardSlotCount,
+};
 
-%end
+static const char *const kSPKRouterHomeGuardClassNames[] = {
+    "IGMainFeedViewController",
+    "IGMainFeedViewController_objc",
+    "_TtC15IGMainFeedSwift30IGMainFeedViewController_swift",
+    "_TtC14IGHomeMainFeed28IGHomeMainFeedViewController",
+};
+#define SPK_ROUTER_HOME_GUARD_CLASS_COUNT (sizeof(kSPKRouterHomeGuardClassNames) / sizeof(kSPKRouterHomeGuardClassNames[0]))
+
+static IMP spk_routerHomeGuardOrig[SPK_ROUTER_HOME_GUARD_CLASS_COUNT][SPKRouterHomeGuardSlotCount];
+static Class spk_routerHomeGuardClasses[SPK_ROUTER_HOME_GUARD_CLASS_COUNT];
+
+// The hooked class, not the receiver's: a subclass instance must call the
+// original of the class whose implementation was replaced.
+static IMP SPKRouterHomeGuardOrig(id self, SPKRouterHomeGuardSlot slot) {
+    for (Class cls = object_getClass(self); cls; cls = class_getSuperclass(cls)) {
+        for (NSUInteger i = 0; i < SPK_ROUTER_HOME_GUARD_CLASS_COUNT; i++) {
+            if (spk_routerHomeGuardClasses[i] == cls && spk_routerHomeGuardOrig[i][slot])
+                return spk_routerHomeGuardOrig[i][slot];
+        }
+    }
+    return NULL;
+}
+
+static void spk_guardHomeTap(id self, SEL _cmd, id mediaID, id shortcode, id url) {
+    if (SPKRouterHomeGuardIsArmed()) {
+        SPKLog(@"OpenPost", @"dropping the router's home tab tap on %@", NSStringFromClass([self class]));
+        return;
+    }
+    IMP orig = SPKRouterHomeGuardOrig(self, SPKRouterHomeGuardSlotHomeTap);
+    if (orig)
+        ((void (*)(id, SEL, id, id, id))orig)(self, _cmd, mediaID, shortcode, url);
+}
+
+static void spk_guardResetTap(id self, SEL _cmd, BOOL reset) {
+    if (SPKRouterHomeGuardIsArmed()) {
+        SPKLog(@"OpenPost", @"dropping the router's home tab reset on %@", NSStringFromClass([self class]));
+        return;
+    }
+    IMP orig = SPKRouterHomeGuardOrig(self, SPKRouterHomeGuardSlotResetTap);
+    if (orig)
+        ((void (*)(id, SEL, BOOL))orig)(self, _cmd, reset);
+}
+
+static void spk_guardScrollToTop(id self, SEL _cmd, BOOL animated) {
+    if (SPKRouterHomeGuardIsArmed()) {
+        SPKLog(@"OpenPost", @"dropping the router's feed scroll to top on %@", NSStringFromClass([self class]));
+        return;
+    }
+    IMP orig = SPKRouterHomeGuardOrig(self, SPKRouterHomeGuardSlotScrollToTop);
+    if (orig)
+        ((void (*)(id, SEL, BOOL))orig)(self, _cmd, animated);
+}
+
+// Home-button refresh reason; the other reasons (pull, warm start) are not the router's.
+static const long long kSPKRouterHomeGuardRefreshReason = 5;
+
+static void spk_guardRefresh(id self, SEL _cmd, long long reason, BOOL animated) {
+    if (reason == kSPKRouterHomeGuardRefreshReason && SPKRouterHomeGuardIsArmed()) {
+        SPKLog(@"OpenPost", @"dropping the router's home refresh on %@", NSStringFromClass([self class]));
+        return;
+    }
+    IMP orig = SPKRouterHomeGuardOrig(self, SPKRouterHomeGuardSlotRefresh);
+    if (orig)
+        ((void (*)(id, SEL, long long, BOOL))orig)(self, _cmd, reason, animated);
+}
+
+static void spk_guardVoid(id self, SEL _cmd, SPKRouterHomeGuardSlot slot) {
+    if (SPKRouterHomeGuardIsArmed()) {
+        SPKLog(@"OpenPost", @"dropping the router's %@ on %@", NSStringFromSelector(_cmd), NSStringFromClass([self class]));
+        return;
+    }
+    IMP orig = SPKRouterHomeGuardOrig(self, slot);
+    if (orig)
+        ((void (*)(id, SEL))orig)(self, _cmd);
+}
+
+static void spk_guardTappedTabBar(id self, SEL _cmd) {
+    spk_guardVoid(self, _cmd, SPKRouterHomeGuardSlotTappedTabBar);
+}
+
+static void spk_guardHomeButtonScroll(id self, SEL _cmd) {
+    spk_guardVoid(self, _cmd, SPKRouterHomeGuardSlotHomeButtonScroll);
+}
+
+// Only methods the class implements itself: hooking an inherited one would add
+// an override that shadows a guarded superclass for no gain.
+static BOOL SPKClassImplementsSelector(Class cls, SEL selector) {
+    unsigned int count = 0;
+    Method *methods = class_copyMethodList(cls, &count);
+    BOOL found = NO;
+    for (unsigned int i = 0; i < count && !found; i++) {
+        found = method_getName(methods[i]) == selector;
+    }
+    free(methods);
+    return found;
+}
+
+static void SPKInstallRouterHomeGuard(void) {
+    struct {
+        SEL selector;
+        IMP replacement;
+    } const slots[SPKRouterHomeGuardSlotCount] = {
+        [SPKRouterHomeGuardSlotHomeTap] = {@selector(handleTapOnHomeTabWithHoistedMediaID:hoistedMediaShortcode:deeplinkURL:), (IMP)spk_guardHomeTap},
+        [SPKRouterHomeGuardSlotResetTap] = {NSSelectorFromString(@"handleTapOnHomeTabWithResetInjectedMedias:"), (IMP)spk_guardResetTap},
+        [SPKRouterHomeGuardSlotScrollToTop] = {@selector(scrollToTopAnimated:), (IMP)spk_guardScrollToTop},
+        [SPKRouterHomeGuardSlotTappedTabBar] = {NSSelectorFromString(@"scrollToTopOnTappedTabBar"), (IMP)spk_guardTappedTabBar},
+        [SPKRouterHomeGuardSlotHomeButtonScroll] = {NSSelectorFromString(@"handleScrollToTopOnHomeButtonOrIconTapWithManualScroll"), (IMP)spk_guardHomeButtonScroll},
+        [SPKRouterHomeGuardSlotRefresh] = {NSSelectorFromString(@"refreshFeedWithFetchReason:animated:"), (IMP)spk_guardRefresh},
+    };
+    for (NSUInteger i = 0; i < SPK_ROUTER_HOME_GUARD_CLASS_COUNT; i++) {
+        Class cls = objc_getClass(kSPKRouterHomeGuardClassNames[i]);
+        if (!cls)
+            continue;
+        spk_routerHomeGuardClasses[i] = cls;
+        for (NSUInteger slot = 0; slot < SPKRouterHomeGuardSlotCount; slot++) {
+            if (!SPKClassImplementsSelector(cls, slots[slot].selector))
+                continue;
+            MSHookMessageEx(cls, slots[slot].selector, slots[slot].replacement, &spk_routerHomeGuardOrig[i][slot]);
+        }
+    }
+}
 
 void SPKInstallOpenPostNativePushHooksIfNeeded(void) {
     static dispatch_once_t onceToken;
@@ -253,11 +405,6 @@ void SPKInstallOpenPostNativePushHooksIfNeeded(void) {
         } else {
             SPKLog(@"OpenPost", @"IGNavigationController missing, open post keeps the legacy route");
         }
-        Class legacyFeed = objc_getClass("IGMainFeedViewController");
-        if (spk_openPostHooksInstalled && legacyFeed &&
-            class_getInstanceMethod(legacyFeed, @selector(handleTapOnHomeTabWithHoistedMediaID:hoistedMediaShortcode:deeplinkURL:)) &&
-            class_getInstanceMethod(legacyFeed, @selector(scrollToTopAnimated:))) {
-            %init(SPKOpenPostHomeTapGuard);
-        }
+        SPKInstallRouterHomeGuard();
     });
 }

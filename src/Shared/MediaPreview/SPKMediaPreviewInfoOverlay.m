@@ -1,4 +1,5 @@
 #import "SPKMediaPreviewInfoOverlay.h"
+#import "../UI/SPKFont.h"
 
 @interface SPKMediaPreviewInfoOverlay ()
 @property (nonatomic, strong) UIStackView *stack;
@@ -14,11 +15,11 @@
         self.userInteractionEnabled = NO;
 
         _titleLabel = [self makeLabel];
-        _titleLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_titleLabel];
         _titleLabel.textColor = [UIColor whiteColor];
 
         _subtitleLabel = [self makeLabel];
-        _subtitleLabel.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:_subtitleLabel];
         _subtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.75];
 
         _stack = [[UIStackView alloc]

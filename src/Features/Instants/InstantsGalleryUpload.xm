@@ -25,6 +25,7 @@
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
+#import "InstantsHeaderItems.h"
 #import "InstantsModeViews.h"
 
 // One Sparkle button for the whole Instants camera screen: uploading a photo from
@@ -863,6 +864,61 @@ static UIMenu *SPKInstantsCameraButtonMenu(void) {
 }
 @end
 
+// MARK: - Shared Builders
+
+BOOL SPKInstantsWindowWantsGalleryButton(UIWindow *window) {
+    return SPKInstantsWindowShowsCreationView(window) && !SPKInstantsWindowShowsSnapView(window);
+}
+
+UIView *SPKInstantsNewGalleryButtonHost(void) {
+    UIView *host = [[UIView alloc] init];
+    host.clipsToBounds = NO;
+
+    SPKChromeCanvas *canvas = [[SPKChromeCanvas alloc] init];
+    canvas.userInteractionEnabled = YES;
+    [host addSubview:canvas];
+    SPKInstantsPinEdges(canvas, host);
+
+    SPKInstantsGalleryButton *button = [SPKInstantsGalleryButton buttonWithType:UIButtonTypeSystem];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    // The whole point of the merged button is its menu, so the menu *is* the tap.
+    button.showsMenuAsPrimaryAction = YES;
+    button.menu = SPKInstantsCameraButtonMenu();
+    button.adjustsImageWhenHighlighted = YES;
+    button.tintColor = [UIColor whiteColor];
+    button.accessibilityLabel = SPKL(@"ABOUT_INFORMATION_SPARKLE_TITLE");
+    [button addTarget:[SPKInstantsGalleryButtonTarget shared]
+                  action:@selector(buttonTapped:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [canvas.contentContainer addSubview:button];
+    SPKInstantsPinEdges(button, canvas.contentContainer);
+    objc_setAssociatedObject(host, kSPKInstantsGalleryButtonKey, button, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return host;
+}
+
+UIButton *SPKInstantsGalleryButtonInHost(UIView *host) {
+    UIButton *button = objc_getAssociatedObject(host, kSPKInstantsGalleryButtonKey);
+    return [button isKindOfClass:UIButton.class] ? button : nil;
+}
+
+void SPKInstantsRefreshGalleryButtonHost(UIView *host) {
+    UIButton *button = objc_getAssociatedObject(host, kSPKInstantsGalleryButtonKey);
+    if (![button isKindOfClass:UIButton.class])
+        return;
+    // The glyph follows the global "Open Menu Icon" choice, like every other Sparkle
+    // button whose tap opens a menu. Re-applied whenever that choice changes, so the
+    // setting takes effect without recreating the button (or restarting).
+    NSString *iconName = SPKActionButtonOpenMenuIconName();
+    NSString *appliedIconName = objc_getAssociatedObject(button, kSPKInstantsGalleryIconKey);
+    if (![appliedIconName isEqualToString:iconName]) {
+        UIImage *image = [SPKAssetUtils instagramIconNamed:iconName
+                                                 pointSize:24.0
+                                             renderingMode:UIImageRenderingModeAlwaysTemplate];
+        [button setImage:image forState:UIControlStateNormal];
+        objc_setAssociatedObject(button, kSPKInstantsGalleryIconKey, iconName, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+}
+
 static BOOL SPKInstantsGalleryFrameMatches(UIView *view, CGRect frame) {
     if (![view isKindOfClass:UIView.class] || view.hidden || !view.superview)
         return NO;
@@ -940,45 +996,12 @@ static void SPKInstantsInstallGalleryButton(UIView *header) {
 
     if (![button isKindOfClass:SPKInstantsGalleryButton.class]) {
         [host removeFromSuperview];
-        host = [[UIView alloc] init];
+        host = SPKInstantsNewGalleryButtonHost();
         host.tag = kSPKInstantsGalleryButtonTag;
         host.translatesAutoresizingMaskIntoConstraints = YES;
-        host.clipsToBounds = NO;
-
-        SPKChromeCanvas *canvas = [[SPKChromeCanvas alloc] init];
-        canvas.userInteractionEnabled = YES;
-        [host addSubview:canvas];
-        SPKInstantsPinEdges(canvas, host);
-
-        button = [SPKInstantsGalleryButton buttonWithType:UIButtonTypeSystem];
-        button.translatesAutoresizingMaskIntoConstraints = NO;
-        // The whole point of the merged button is its menu, so the menu *is* the tap.
-        button.showsMenuAsPrimaryAction = YES;
-        button.menu = SPKInstantsCameraButtonMenu();
-        button.adjustsImageWhenHighlighted = YES;
-        button.tintColor = [UIColor whiteColor];
-        button.accessibilityLabel = SPKL(@"ABOUT_INFORMATION_SPARKLE_TITLE");
-        [button addTarget:[SPKInstantsGalleryButtonTarget shared]
-                      action:@selector(buttonTapped:)
-            forControlEvents:UIControlEventTouchUpInside];
-        [canvas.contentContainer addSubview:button];
-        SPKInstantsPinEdges(button, canvas.contentContainer);
-        objc_setAssociatedObject(host, kSPKInstantsGalleryButtonKey, button, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [header addSubview:host];
     }
-
-    // The glyph follows the global "Open Menu Icon" choice, like every other Sparkle
-    // button whose tap opens a menu. Re-applied whenever that choice changes, so the
-    // setting takes effect without recreating the button (or restarting).
-    NSString *iconName = SPKActionButtonOpenMenuIconName();
-    NSString *appliedIconName = objc_getAssociatedObject(button, kSPKInstantsGalleryIconKey);
-    if (![appliedIconName isEqualToString:iconName]) {
-        UIImage *image = [SPKAssetUtils instagramIconNamed:iconName
-                                                 pointSize:24.0
-                                             renderingMode:UIImageRenderingModeAlwaysTemplate];
-        [button setImage:image forState:UIControlStateNormal];
-        objc_setAssociatedObject(button, kSPKInstantsGalleryIconKey, iconName, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    }
+    SPKInstantsRefreshGalleryButtonHost(host);
 
     UIView *anchor = SPKInstantsHeaderArchiveButton(header) ?: SPKInstantsGalleryFallbackRightAnchor(header, host);
     CGRect frame = SPKInstantsGalleryButtonFrame(header, host);
@@ -1021,6 +1044,8 @@ static void replaced_creationViewLayoutSubviews(id self, SEL _cmd) {
         UIView *header = SPKInstantsVisibleHeaderInWindow(SPKInstantsWindowForView(creationView));
         if (header)
             SPKInstantsInstallGalleryButton(header);
+        else
+            SPKInstantsNavigationBarItemsSetNeedsUpdate();
     }
 }
 

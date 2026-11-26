@@ -32,7 +32,7 @@
 
     SPKSetting *filterMode = [SPKSetting menuCellWithTitle:SPKL(@"AUTO_SAVE_AUTO_SAVE_SURFACE_SETTINGS_FILTER_MODE_TITLE")
                                                       icon:SPKSettingsIcon(@"filter")
-                                                      menu:SPKAutoSaveFilterModeMenu(filter.filterModeKey, filter.subjectPlural)];
+                                                      menu:SPKAutoSaveFilterModeMenu(filter.filterModeKey, filter.subject)];
     filterMode.enabledProvider = autoSaveEnabled;
 
     SPKSetting *list = [SPKSetting navigationCellWithTitle:SPKAutoSaveFilterListTitle(filter)

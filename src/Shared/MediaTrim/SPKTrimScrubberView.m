@@ -15,7 +15,6 @@ typedef NS_ENUM(NSInteger, SPKTrimDragTarget) {
     SPKTrimDragTargetLeftHandle,
     SPKTrimDragTargetRightHandle,
     SPKTrimDragTargetPlayhead,
-    SPKTrimDragTargetSelection, // slides the whole selection along the timeline
     SPKTrimDragTargetScroll,    // pans the visible window on a zoomed track
 };
 
@@ -33,7 +32,10 @@ static CGFloat SPKTrimFineScrubRate(CGFloat verticalDistance) {
     return 0.1;
 }
 
-static NSInteger const kSPKTrimWaveformBars = 96;
+// Sampled finely enough that a zoomed-in track still has detail; drawing groups
+// the samples into bars a few points wide.
+static NSInteger const kSPKTrimWaveformSamples = 720;
+static CGFloat const kSPKTrimWaveformBarStep = 4.0;
 
 #pragma mark - Waveform view
 
@@ -41,6 +43,9 @@ static NSInteger const kSPKTrimWaveformBars = 96;
 // Lives inside the track container in place of the filmstrip for audio trims.
 @interface SPKTrimWaveformView : UIView
 @property (nonatomic, copy, nullable) NSArray<NSNumber *> *samples;
+/// The slice of the clip on screen, as fractions of its length.
+@property (nonatomic, assign) CGFloat visibleStartFraction;
+@property (nonatomic, assign) CGFloat visibleSpanFraction;
 @end
 
 @implementation SPKTrimWaveformView
@@ -61,13 +66,25 @@ static NSInteger const kSPKTrimWaveformBars = 96;
 
     CGFloat w = self.bounds.size.width;
     CGFloat h = self.bounds.size.height;
-    NSInteger n = (NSInteger)samples.count;
+    NSInteger total = (NSInteger)samples.count;
+    CGFloat spanFraction = self.visibleSpanFraction > 0.0 ? self.visibleSpanFraction : 1.0;
+    CGFloat startFraction = MAX(0.0, MIN(self.visibleStartFraction, 1.0 - spanFraction));
+    NSInteger n = MAX((NSInteger)1, (NSInteger)floor(w / kSPKTrimWaveformBarStep));
     CGFloat step = w / (CGFloat)n;
     CGFloat barW = MAX(1.0, step - 1.5);
     CGFloat maxBarH = MAX(2.0, h - 6.0);
 
     for (NSInteger i = 0; i < n; i++) {
-        CGFloat amp = MAX(0.0, MIN(1.0, samples[i].doubleValue));
+        // Each bar shows the loudest sample in its slice of the visible window.
+        CGFloat from = (startFraction + spanFraction * (CGFloat)i / (CGFloat)n) * (CGFloat)total;
+        CGFloat to = (startFraction + spanFraction * (CGFloat)(i + 1) / (CGFloat)n) * (CGFloat)total;
+        NSInteger first = MAX((NSInteger)0, MIN(total - 1, (NSInteger)floor(from)));
+        NSInteger last = MAX(first, MIN(total - 1, (NSInteger)ceil(to) - 1));
+        double peak = 0.0;
+        for (NSInteger k = first; k <= last; k++) {
+            peak = MAX(peak, samples[k].doubleValue);
+        }
+        CGFloat amp = MAX(0.0, MIN(1.0, peak));
         CGFloat barH = MAX(2.0, amp * maxBarH);
         CGFloat x = i * step + (step - barW) / 2.0;
         CGFloat y = (h - barH) / 2.0;
@@ -235,6 +252,14 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
 @property (nonatomic, assign) NSTimeInterval dragOffsetTime;
 @property (nonatomic, assign) NSTimeInterval dragVisibleStart;
 @property (nonatomic, strong) UISelectionFeedbackGenerator *rateFeedback;
+// What a frame step moves: the last thing dragged.
+@property (nonatomic, assign) SPKTrimDragTarget stepTarget;
+// The exact time of the handle being moved, shown above it.
+@property (nonatomic, strong) UIView *timeBubble;
+@property (nonatomic, strong) UILabel *timeBubbleLabel;
+@property (nonatomic, assign) NSTimeInterval pinchStartSpan;
+@property (nonatomic, assign) NSTimeInterval pinchAnchorTime;
+@property (nonatomic, assign) CGFloat pinchAnchorFraction;
 @end
 
 @implementation SPKTrimScrubberView
@@ -243,6 +268,7 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
     self = [super initWithFrame:frame];
     if (self) {
         _minimumDuration = 0.3;
+        _stepTarget = SPKTrimDragTargetPlayhead;
         _thumbnailViews = [NSMutableArray array];
         _thumbnailImages = [NSMutableArray array];
         [self setupViews];
@@ -322,6 +348,18 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
     markerLine.tag = 7001;
     [_frameMarkerView addSubview:markerLine];
     [self addSubview:_frameMarkerView];
+
+    _timeBubble = [[UIView alloc] init];
+    _timeBubble.backgroundColor = [UIColor colorWithWhite:0.12 alpha:0.92];
+    _timeBubble.layer.cornerCurve = kCACornerCurveContinuous;
+    _timeBubble.userInteractionEnabled = NO;
+    _timeBubble.alpha = 0.0;
+    _timeBubbleLabel = [[UILabel alloc] init];
+    _timeBubbleLabel.textColor = [UIColor whiteColor];
+    _timeBubbleLabel.font = [UIFont monospacedDigitSystemFontOfSize:12.0 weight:UIFontWeightSemibold];
+    _timeBubbleLabel.textAlignment = NSTextAlignmentCenter;
+    [_timeBubble addSubview:_timeBubbleLabel];
+    [self addSubview:_timeBubble];
 }
 
 - (UIView *)makeHandleWithAccent:(UIColor *)accent {
@@ -340,7 +378,11 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
 
 - (void)setupGestures {
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    // Two fingers belong to the pinch.
+    pan.maximumNumberOfTouches = 1;
     [self addGestureRecognizer:pan];
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+    [self addGestureRecognizer:pinch];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tap];
 }
@@ -423,7 +465,7 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
         return;
     self.waveformMode = YES;
     __weak typeof(self) weakSelf = self;
-    SPKTrimSampleWaveform(asset, kSPKTrimWaveformBars, ^(NSArray<NSNumber *> *samples) {
+    SPKTrimSampleWaveform(asset, kSPKTrimWaveformSamples, ^(NSArray<NSNumber *> *samples) {
         weakSelf.waveformView.samples = samples;
     });
 }
@@ -543,6 +585,7 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
     if (_waveformMode) {
         // Fills the track container's local space (0..contentWidth).
         _waveformView.frame = _filmstripContainer.bounds;
+        [self updateWaveformWindow];
     } else {
         [self ensureThumbnailViews];
         NSInteger count = self.thumbnailViews.count;
@@ -562,6 +605,19 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
 }
 
 #pragma mark - Visible window
+
+- (void)updateWaveformWindow {
+    if (!_waveformMode || _duration <= 0.0)
+        return;
+    CGFloat start = (CGFloat)(_visibleStart / _duration);
+    CGFloat span = (CGFloat)([self visibleSpan] / _duration);
+    if (fabs(start - _waveformView.visibleStartFraction) > 0.0001 ||
+        fabs(span - _waveformView.visibleSpanFraction) > 0.0001) {
+        _waveformView.visibleStartFraction = start;
+        _waveformView.visibleSpanFraction = span;
+        [_waveformView setNeedsDisplay];
+    }
+}
 
 // On a long source with a short ceiling (a 6s Instant cut from a 5 minute clip)
 // the selection is a couple of percent of the track and impossible to place. The
@@ -684,6 +740,7 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
         t = MAX(_startTime, MIN(t, _endTime));
     }
     self.playheadTime = t;
+    _stepTarget = SPKTrimDragTargetPlayhead;
     if ([self.delegate respondsToSelector:@selector(trimScrubber:didScrubToTime:)]) {
         [self.delegate trimScrubber:self didScrubToTime:t];
     }
@@ -712,6 +769,11 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
     if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged) {
         [self updateAdjustedPositionForPoint:p];
         [self applyDrag];
+        if (_dragTarget == SPKTrimDragTargetLeftHandle || _dragTarget == SPKTrimDragTargetRightHandle ||
+            _dragTarget == SPKTrimDragTargetPlayhead) {
+            _stepTarget = _dragTarget;
+            [self showTimeBubbleForTarget:_dragTarget];
+        }
     }
 
     if (pan.state == UIGestureRecognizerStateEnded ||
@@ -723,6 +785,7 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
             [self reloadThumbnailsForVisibleWindow];
         }
         _dragTarget = SPKTrimDragTargetNone;
+        [self scheduleTimeBubbleHide];
         if ([self.delegate respondsToSelector:@selector(trimScrubberDidEndInteraction:)]) {
             [self.delegate trimScrubberDidEndInteraction:self];
         }
@@ -742,14 +805,10 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
         return (distLeft <= distRight) ? SPKTrimDragTargetLeftHandle : SPKTrimDragTargetRightHandle;
     }
     if (p.x > startX && p.x < endX) {
-        // Inside the selection: right on the playhead scrubs it, anywhere else
-        // slides the whole selection. Under a duration ceiling that is the only
-        // way to move a full-width selection along the clip, and a tap still
-        // scrubs, so the playhead loses nothing.
-        if (fabs(p.x - [self xForTime:_playheadTime]) <= kSPKTrimGrabThreshold / 2.0) {
-            return SPKTrimDragTargetPlayhead;
-        }
-        return SPKTrimDragTargetSelection;
+        // Inside the selection a drag scrubs: the playhead jumps to the finger
+        // and follows it. (Under a duration ceiling the selection still moves
+        // along the clip, by dragging a handle: the other one follows.)
+        return SPKTrimDragTargetPlayhead;
     }
     // Outside the selection on a zoomed track, dragging pans the timeline: the
     // rest of the clip is off screen and reaching it matters more than extending
@@ -771,8 +830,6 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
         return (fabs(p.x - [self xForTime:_startTime]) <= kSPKTrimGrabThreshold) ? t - _startTime : 0.0;
     case SPKTrimDragTargetRightHandle:
         return (fabs(p.x - [self xForTime:_endTime]) <= kSPKTrimGrabThreshold) ? t - _endTime : 0.0;
-    case SPKTrimDragTargetSelection:
-        return t - _startTime;
     default:
         return 0.0;
     }
@@ -859,28 +916,6 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
         }
         break;
     }
-    case SPKTrimDragTargetSelection: {
-        NSTimeInterval width = _endTime - _startTime;
-        NSTimeInterval start = MAX(0.0, MIN(t, _duration - width));
-        if ([self isZoomed]) {
-            // Keep the far edge on screen too, so the selection never slides out
-            // the trailing side of the window.
-            start = MIN(start, _visibleStart + [self visibleSpan] - width);
-            start = MAX(start, _visibleStart);
-        }
-        _startTime = start;
-        _endTime = start + width;
-        _playheadTime = _startTime;
-        [self layoutSelection];
-        [self layoutPlayhead];
-        if ([self.delegate respondsToSelector:@selector(trimScrubber:didChangeStartTime:)]) {
-            [self.delegate trimScrubber:self didChangeStartTime:_startTime];
-        }
-        if ([self.delegate respondsToSelector:@selector(trimScrubber:didChangeEndTime:)]) {
-            [self.delegate trimScrubber:self didChangeEndTime:_endTime];
-        }
-        break;
-    }
     case SPKTrimDragTargetScroll: {
         CGFloat w = [self contentWidth];
         if (w <= 0.0)
@@ -896,6 +931,170 @@ static void SPKTrimSampleWaveform(AVAsset *asset, NSInteger targetCount,
         break;
     }
     case SPKTrimDragTargetNone:
+        break;
+    }
+}
+
+#pragma mark - Time bubble
+
+static NSString *SPKTrimBubbleTime(NSTimeInterval seconds) {
+    if (seconds < 0.0 || !isfinite(seconds))
+        seconds = 0.0;
+    NSInteger tenths = (NSInteger)llround(seconds * 10.0);
+    return [NSString stringWithFormat:@"%ld:%02ld.%ld", (long)(tenths / 600), (long)((tenths / 10) % 60), (long)(tenths % 10)];
+}
+
+/// Shows the exact time of `target` above it while it moves.
+- (void)showTimeBubbleForTarget:(SPKTrimDragTarget)target {
+    NSTimeInterval t;
+    switch (target) {
+    case SPKTrimDragTargetLeftHandle:
+        t = _startTime;
+        break;
+    case SPKTrimDragTargetRightHandle:
+        t = _endTime;
+        break;
+    case SPKTrimDragTargetPlayhead:
+        t = _playheadTime;
+        break;
+    default:
+        return;
+    }
+    _timeBubbleLabel.text = SPKTrimBubbleTime(t);
+    CGSize textSize = [_timeBubbleLabel sizeThatFits:CGSizeMake(200.0, 30.0)];
+    CGFloat w = ceil(textSize.width) + 16.0;
+    CGFloat h = 22.0;
+    CGFloat x = [self xForTime:t];
+    // The handles sit outside the selection, so their bubbles centre on the
+    // handle itself rather than on the selection edge.
+    if (target == SPKTrimDragTargetLeftHandle)
+        x -= kSPKTrimHandleWidth / 2.0;
+    else if (target == SPKTrimDragTargetRightHandle)
+        x += kSPKTrimHandleWidth / 2.0;
+    x = MAX(w / 2.0, MIN(x, self.bounds.size.width - w / 2.0));
+    _timeBubble.frame = CGRectMake(round(x - w / 2.0), -h - 8.0, w, h);
+    _timeBubble.layer.cornerRadius = h / 2.0;
+    _timeBubbleLabel.frame = _timeBubble.bounds;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideTimeBubble) object:nil];
+    if (_timeBubble.alpha < 1.0) {
+        [UIView animateWithDuration:0.12
+                         animations:^{
+                             self.timeBubble.alpha = 1.0;
+                         }];
+    }
+}
+
+- (void)scheduleTimeBubbleHide {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideTimeBubble) object:nil];
+    [self performSelector:@selector(hideTimeBubble) withObject:nil afterDelay:0.9];
+}
+
+- (void)hideTimeBubble {
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.timeBubble.alpha = 0.0;
+                     }];
+}
+
+#pragma mark - Frame step
+
+- (void)stepActiveTargetBy:(NSTimeInterval)delta {
+    if (_duration <= 0.0)
+        return;
+    NSTimeInterval previousVisibleStart = _visibleStart;
+    SPKTrimDragTarget target = _frameOnlyMode ? SPKTrimDragTargetPlayhead : _stepTarget;
+    switch (target) {
+    case SPKTrimDragTargetLeftHandle: {
+        NSTimeInterval maxStart = MAX(0.0, _endTime - _minimumDuration);
+        _startTime = MAX(0.0, MIN(_startTime + delta, maxStart));
+        if (_maximumDuration > 0.0 && (_endTime - _startTime) > _maximumDuration) {
+            _endTime = MIN(_duration, _startTime + _maximumDuration);
+            if ([self.delegate respondsToSelector:@selector(trimScrubber:didChangeEndTime:)])
+                [self.delegate trimScrubber:self didChangeEndTime:_endTime];
+        }
+        _playheadTime = _startTime;
+        [self scrollVisibleWindowToTime:_startTime centered:NO];
+        if ([self.delegate respondsToSelector:@selector(trimScrubber:didChangeStartTime:)])
+            [self.delegate trimScrubber:self didChangeStartTime:_startTime];
+        break;
+    }
+    case SPKTrimDragTargetRightHandle: {
+        NSTimeInterval minEnd = MIN(_duration, _startTime + _minimumDuration);
+        _endTime = MIN(_duration, MAX(_endTime + delta, minEnd));
+        if (_maximumDuration > 0.0 && (_endTime - _startTime) > _maximumDuration) {
+            _startTime = MAX(0.0, _endTime - _maximumDuration);
+            if ([self.delegate respondsToSelector:@selector(trimScrubber:didChangeStartTime:)])
+                [self.delegate trimScrubber:self didChangeStartTime:_startTime];
+        }
+        _playheadTime = _endTime;
+        [self scrollVisibleWindowToTime:_endTime centered:NO];
+        if ([self.delegate respondsToSelector:@selector(trimScrubber:didChangeEndTime:)])
+            [self.delegate trimScrubber:self didChangeEndTime:_endTime];
+        break;
+    }
+    default: {
+        NSTimeInterval t = _playheadTime + delta;
+        t = _frameOnlyMode ? MAX(0.0, MIN(t, _duration)) : MAX(_startTime, MIN(t, _endTime));
+        _playheadTime = t;
+        [self scrollVisibleWindowToTime:t centered:NO];
+        if ([self.delegate respondsToSelector:@selector(trimScrubber:didScrubToTime:)])
+            [self.delegate trimScrubber:self didScrubToTime:t];
+        target = SPKTrimDragTargetPlayhead;
+        break;
+    }
+    }
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+    if (fabs(_visibleStart - previousVisibleStart) > 0.001)
+        [self reloadThumbnailsForVisibleWindow];
+    [self showTimeBubbleForTarget:target];
+    [self scheduleTimeBubbleHide];
+}
+
+#pragma mark - Pinch zoom
+
+/// The closest the track zooms in: a second of clip across the whole width, or
+/// less for clips that are themselves very short.
+- (NSTimeInterval)minimumVisibleSpan {
+    return MIN(_duration, MAX(1.0, _minimumDuration * 2.0));
+}
+
+- (void)handlePinch:(UIPinchGestureRecognizer *)pinch {
+    if (_duration <= 0.0)
+        return;
+    CGFloat width = [self contentWidth];
+    if (width <= 0.0)
+        return;
+    switch (pinch.state) {
+    case UIGestureRecognizerStateBegan: {
+        _pinchStartSpan = [self visibleSpan];
+        CGFloat x = [pinch locationInView:self].x;
+        _pinchAnchorFraction = MAX(0.0, MIN(1.0, (x - [self contentOriginX]) / width));
+        _pinchAnchorTime = _visibleStart + _pinchAnchorFraction * _pinchStartSpan;
+        if ([self.delegate respondsToSelector:@selector(trimScrubberDidBeginInteraction:)])
+            [self.delegate trimScrubberDidBeginInteraction:self];
+        break;
+    }
+    case UIGestureRecognizerStateChanged: {
+        NSTimeInterval span = _pinchStartSpan / MAX(pinch.scale, 0.01);
+        span = MAX([self minimumVisibleSpan], MIN(span, _duration));
+        // A whole-clip span is stored as 0, which the window treats as unzoomed.
+        _visibleSpan = (span >= _duration - 0.001) ? 0.0 : span;
+        // Keep the moment under the fingers where it was.
+        _visibleStart = _pinchAnchorTime - _pinchAnchorFraction * [self visibleSpan];
+        [self clampVisibleStart];
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+        break;
+    }
+    case UIGestureRecognizerStateEnded:
+    case UIGestureRecognizerStateCancelled:
+    case UIGestureRecognizerStateFailed:
+        [self reloadThumbnailsForVisibleWindow];
+        if ([self.delegate respondsToSelector:@selector(trimScrubberDidEndInteraction:)])
+            [self.delegate trimScrubberDidEndInteraction:self];
+        break;
+    default:
         break;
     }
 }

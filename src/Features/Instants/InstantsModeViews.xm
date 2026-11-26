@@ -1,4 +1,5 @@
 #import "InstantsModeViews.h"
+#import "InstantsHeaderItems.h"
 #import "../../App/SPKPerfMeter.h"
 #import "../../Utils.h"
 #import <objc/runtime.h>
@@ -114,6 +115,10 @@ static void SPKInstantsModeViewDidMoveToWindow(SPKInstantsModeViewKind kind, id 
     // Recorded whether the view arrived or left. A departed view simply fails the window match
     // at query time, and the table holds it weakly, so nothing needs removing here.
     [sKindViews[kind] addObject:(UIView *)self];
+    // A snap or camera page coming or going changes which Sparkle items the navigation
+    // bar header shows; the header view variant re-checks in its own layout pass.
+    if (kind != SPKInstantsModeViewKindHeader)
+        SPKInstantsNavigationBarItemsSetNeedsUpdate();
 }
 
 static void replaced_snapViewDidMoveToWindow(id self, SEL _cmd) {

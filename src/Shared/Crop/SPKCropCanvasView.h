@@ -40,6 +40,10 @@ FOUNDATION_EXPORT CGFloat SPKCropAspectRatio(SPKCropAspect aspect);
 /// and lays its three 44pt buttons out equally; the caller positions it.
 FOUNDATION_EXPORT UIView *SPKCropMakeToolRow(id target, SEL rotateLeft, SEL flip, SEL rotateRight);
 
+/// The same three tools as bar button items, for an editor's native toolbar
+/// (Liquid Glass on iOS 26, moved into the side column on iPhone Duo).
+FOUNDATION_EXPORT NSArray<UIBarButtonItem *> *SPKCropMakeToolBarItems(id target, SEL rotateLeft, SEL flip, SEL rotateRight);
+
 /// The pan/zoom crop surface: a scroll view hosting arbitrary content, a dimming
 /// overlay punched through by the crop rect, and corner grabbers. Content-agnostic
 /// on purpose — `SPKPhotoEditorViewController` hosts a `UIImageView` in it and the
@@ -73,6 +77,15 @@ FOUNDATION_EXPORT UIView *SPKCropMakeToolRow(id target, SEL rotateLeft, SEL flip
 /// The current selection as a rect in content coordinates, normalized to 0..1.
 /// `CGRectZero` before the first layout pass.
 @property (nonatomic, readonly) CGRect normalizedCropRect;
+
+/// YES once the user has panned, zoomed or dragged a grabber; cleared by
+/// `-resetCrop`. Lets the host tell an untouched crop from an edited one.
+@property (nonatomic, readonly) BOOL userAdjusted;
+
+/// Fades the rule-of-thirds guides in or out. The canvas shows them on its own
+/// while a handle or the content is dragged; hosts show them while another
+/// control (the straighten ruler) changes the framing.
+- (void)setGridVisible:(BOOL)visible;
 
 /// Re-fits the crop rect and zoom for the current aspect, discarding any pan.
 - (void)resetCrop;

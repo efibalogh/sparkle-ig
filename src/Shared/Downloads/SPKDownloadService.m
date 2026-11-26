@@ -13,6 +13,10 @@
 @interface SPKDownloadService ()
 @property (nonatomic, strong) SPKDownloadScheduler *scheduler;
 @property (nonatomic, strong) SPKDownloadPresenter *presenter;
+// The cancel confirmation on screen, if any. A pill can be tapped again before the
+// first alert appears (taps arrive faster than an alert presents), and every tap
+// would otherwise stack another alert.
+@property (nonatomic, weak) UIViewController *cancelConfirmation;
 @end
 
 @implementation SPKDownloadService
@@ -206,6 +210,9 @@
             return;
         }
 
+        if (self.cancelConfirmation.presentingViewController)
+            return;
+
         UIViewController *presenterHost = topMostController();
         if (!presenterHost)
             return;
@@ -248,6 +255,8 @@
                                                       title:SPKL(@"DOWNLOADS_DOWNLOAD_SERVICE_CANCEL_DOWNLOAD_TEXT")
                                                     message:activeCount > 1 ? SPKL(@"DOWNLOADS_DOWNLOAD_SERVICE_CANCEL_CURRENT_DOWNLOAD_ACTIVE_DOWNLOADS_CONFIRMATION_MESSAGE") : SPKL(@"DOWNLOADS_DOWNLOAD_SERVICE_CANCEL_DOWNLOAD_CONFIRMATION_MESSAGE")
                                                     actions:actions];
+        // Weak: it clears itself once the alert is dismissed and released.
+        self.cancelConfirmation = presenterHost.presentedViewController;
     });
 }
 

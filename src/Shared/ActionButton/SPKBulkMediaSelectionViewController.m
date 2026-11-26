@@ -1,3 +1,4 @@
+#import "../UI/SPKSafeAreaLayout.h"
 #import "SPKBulkMediaSelectionViewController.h"
 #import "SPKStrings.h"
 
@@ -200,6 +201,7 @@ static NSCache<NSURL *, UIImage *> *SPKBulkSelectionThumbnailCache(void) {
     layout.minimumInteritemSpacing = 8.0;
     layout.minimumLineSpacing = 8.0;
     layout.sectionInset = UIEdgeInsetsMake(12.0, 12.0, 12.0, 12.0);
+    SPKFlowLayoutUseSafeArea(layout);
 
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -386,10 +388,11 @@ static NSCache<NSURL *, UIImage *> *SPKBulkSelectionThumbnailCache(void) {
                     layout:(UICollectionViewLayout *)collectionViewLayout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
-    CGFloat columns = collectionView.bounds.size.width > 540.0 ? 4.0 : 3.0;
+    CGFloat usable = SPKCollectionViewUsableWidth(collectionView);
+    CGFloat columns = (CGFloat)SPKAdaptiveColumnCount(3, usable);
     CGFloat insets = layout.sectionInset.left + layout.sectionInset.right;
     CGFloat spacing = layout.minimumInteritemSpacing * (columns - 1.0);
-    CGFloat available = collectionView.bounds.size.width - insets - spacing;
+    CGFloat available = usable - insets - spacing;
     CGFloat side = floor(available / columns);
     return CGSizeMake(side, side);
 }

@@ -94,6 +94,10 @@ static void SPKEnsureSecureCanvas(UIView *button) {
 
     // 1. Create secure text field
     field = [UITextField new];
+    // Marked before it turns secure: the Instants screenshot bypass would
+    // otherwise switch it off, and the eye and action buttons in the Instants
+    // viewer would show in screenshots.
+    SPKChromeMarkSecureFieldOwned(field);
     field.secureTextEntry = YES;
     field.userInteractionEnabled = NO;
     field.backgroundColor = [UIColor clearColor];

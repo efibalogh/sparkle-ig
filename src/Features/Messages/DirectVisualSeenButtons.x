@@ -11,6 +11,7 @@
 #import "../../Tweak.h"
 #import "../../Utils.h"
 #import "../../App/SPKPerfMeter.h"
+#import "DirectSeenReceiptGuard.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -454,6 +455,10 @@ static void SPKMarkDirectVisualMessageAsSeen(UIViewController *controller) {
 
     BOOL dispatched = NO;
 
+    // Marking a visual message seen sends a read receipt for its chat, which the
+    // receipt guard drops unless Sparkle announces it first. A nil chat id still
+    // lets the receipt through.
+    SPKDirectSeenReceiptGuardAllow(SPKDirectThreadContextFromSource(controller).threadId);
     SPKPendingDirectVisualMessageToMarkSeen = message;
     @try {
         for (id responder in orderedResponders) {

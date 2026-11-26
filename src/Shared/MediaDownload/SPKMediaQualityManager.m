@@ -28,6 +28,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import "../UI/SPKFont.h"
 
 typedef NS_ENUM(NSInteger, SPKMediaOptionKind) {
     SPKMediaOptionKindPhotoProgressive = 0,
@@ -1527,12 +1528,12 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
 
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:_titleLabel];
     _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
 
     _subtitleLabel = [[UILabel alloc] init];
     _subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _subtitleLabel.font = [UIFont systemFontOfSize:12.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:_subtitleLabel];
     _subtitleLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _subtitleLabel.numberOfLines = 2;
 
@@ -1545,7 +1546,7 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
 
     _pillLabel = [[UILabel alloc] init];
     _pillLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _pillLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+    _pillLabel.font = [SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold];
     _pillLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _pillLabel.numberOfLines = 1;
     [_pillBackground addSubview:_pillLabel];
@@ -1671,7 +1672,7 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
     footerLabel.translatesAutoresizingMaskIntoConstraints = NO;
     footerLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     footerLabel.numberOfLines = 0;
-    footerLabel.font = [UIFont systemFontOfSize:13.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:footerLabel];
     footerLabel.text = self.footerText;
 
     UIView *card = [[UIView alloc] init];

@@ -22,8 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Photos-style trim bar: a filmstrip of thumbnails with two draggable in/out
 /// handles, a dimmed region outside the selection, and a draggable playhead.
 /// Dragging inside the selection slides it along the clip, and dragging away
-/// from the track vertically slows every drag down for fine placement.
-/// Toggling `frameOnlyMode` collapses the UI to a frame-picker marker.
+/// from the track vertically slows every drag down for fine placement. A pinch
+/// zooms the track in on part of the clip, and the handle being moved shows its
+/// exact time above it. Toggling `frameOnlyMode` collapses the UI to a
+/// frame-picker marker.
 @interface SPKTrimScrubberView : UIView
 
 @property (nonatomic, weak) id<SPKTrimScrubberViewDelegate> delegate;
@@ -61,6 +63,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// Kicks off async waveform sampling for the audio track and switches the track
 /// into waveform mode. Use instead of `loadThumbnailsForAsset:` for audio.
 - (void)loadWaveformForAsset:(AVAsset *)asset;
+
+/// Moves whatever was last dragged (the in point, the out point, or the
+/// playhead / frame marker) by `delta` seconds, with the same limits as a drag,
+/// and tells the delegate. The playhead is the default target.
+- (void)stepActiveTargetBy:(NSTimeInterval)delta;
 
 /// Sets both handles at once (e.g. to initialize the full range).
 - (void)setStartTime:(NSTimeInterval)start endTime:(NSTimeInterval)end;

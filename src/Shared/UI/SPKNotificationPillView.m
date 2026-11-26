@@ -8,6 +8,7 @@
 #import <objc/runtime.h>
 #import <CoreText/CoreText.h>
 #import <os/log.h>
+#import "SPKFont.h"
 
 FOUNDATION_EXPORT void SPKLogMessage(NSString *category, os_log_type_t type, NSString *format, ...) NS_FORMAT_FUNCTION(3, 4);
 
@@ -52,6 +53,17 @@ static CGFloat const kDynamicMaxWidth = 360.0;
 static CGFloat const kRingLineWidth = 2.5;
 static CGFloat const kDynamicPillHeight = 52.0;
 static CGFloat const kDynamicTallHeight = 64.0;
+
+// The pill's own heights at the user's text size: the fixed design height plus
+// what the text size adds to each line it holds. The Instagram skin keeps the
+// fixed constants, since Instagram's toast view sizes itself.
+static CGFloat SPKPillHeight(void) {
+    return kDynamicPillHeight + [SPKFont lineGrowthForStyle:SPKFontStyleFootnote];
+}
+
+static CGFloat SPKPillTallHeight(void) {
+    return kDynamicTallHeight + [SPKFont lineGrowthForStyle:SPKFontStyleFootnote] + [SPKFont lineGrowthForStyle:SPKFontStyleCaption2];
+}
 static CGFloat const kIconBadgeSize = 28.0;
 static CGFloat const kEntranceTranslateY = -24.0;
 static CGFloat const kEntranceScale = 0.88;
@@ -121,15 +133,21 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 @property (nonatomic, assign) CGSize instagramContentSize;
 @property (nonatomic, strong) UIView *instagramTintView;
 @property (nonatomic, strong) UIVisualEffect *instagramUntintedEffect;
+// The fresh toast's background, hidden by Sparkle while a replaced toast hands over.
+@property (nonatomic, weak) UIVisualEffectView *instagramHandoffBackground;
 @property (nonatomic, assign) BOOL instagramShowsSubtitle;
 @property (nonatomic, strong) UILabel *instagramLiveSubtitleLabel;
 @property (nonatomic, copy) NSString *instagramLiveSubtitleText;
 @property (nonatomic, assign) BOOL instagramLiveSubtitleNeedsStyle;
 @property (nonatomic, assign) CGSize instagramLiveSubtitleStyledSize;
+// Parts dropped from the progress line so it fits on one line. Only grows while a
+// download runs, so the line never flips between its long and short forms.
+@property (nonatomic, assign) NSUInteger instagramProgressLineDrops;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
 - (void)applyCurrentVisualStyleAnimated:(BOOL)animated;
 - (void)spk_applyProgressModeInfoIcon;
+- (void)spk_setPillHeight:(CGFloat)height;
 - (CGFloat)spk_subtitleRowLayoutHeight;
 - (CGFloat)spk_progressBarHeightMatchingSubtitle;
 - (float)sanitizedProgressValue:(float)progress;
@@ -149,6 +167,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 - (void)spk_layoutInstagramProgressRing;
 - (void)spk_applyInstagramToneTint;
 - (void)spk_layoutInstagramToastOwnTint;
+- (UIVisualEffectView *)spk_instagramToastLiveMaterial;
 - (BOOL)spk_instagramRightButtonContainsTap;
 @end
 
@@ -161,7 +180,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     [pill applyCurrentVisualStyleAnimated:NO];
     pill.translatesAutoresizingMaskIntoConstraints = NO;
 
-    pill.heightConstraint = [pill.heightAnchor constraintEqualToConstant:kDynamicPillHeight];
+    pill.heightConstraint = [pill.heightAnchor constraintEqualToConstant:SPKPillHeight()];
     pill.widthConstraint = [pill.widthAnchor constraintEqualToConstant:kDynamicMinWidth];
     [NSLayoutConstraint activateConstraints:@[
         pill.widthConstraint,
@@ -295,13 +314,13 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.text = SPKL(@"MEDIA_TRIM_TRIM_ENTRY_DOWNLOADING_TEXT");
     _titleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.98];
-    _titleLabel.font = [UIFont systemFontOfSize:13.5 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold] to:_titleLabel];
     _titleLabel.numberOfLines = 1;
     _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 
     _subtitleLabel = [[UILabel alloc] init];
     _subtitleLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-    _subtitleLabel.font = [UIFont monospacedDigitSystemFontOfSize:11.5 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium] to:_subtitleLabel];
     _subtitleLabel.numberOfLines = 1;
     _subtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _subtitleLabel.hidden = YES;
@@ -584,7 +603,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     [UIView animateWithDuration:0.25
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          applyColors();
                      }
@@ -597,7 +616,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 }
 
 - (CGFloat)spk_subtitleRowLayoutHeight {
-    UIFont *font = self.subtitleLabel.font ?: [UIFont systemFontOfSize:11.5 weight:UIFontWeightMedium];
+    UIFont *font = self.subtitleLabel.font ?: [SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium];
     return ceil(font.lineHeight);
 }
 
@@ -605,6 +624,15 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     CGFloat line = [self spk_subtitleRowLayoutHeight];
     CGFloat third = line / 3.0;
     return MAX(2.0, ceil(third));
+}
+
+// The pill's own height for its state. Instagram's toast is sized by what Instagram
+// measures instead (see -spk_syncInstagramSkin): resetting it here, even when a sync
+// put it back a moment later, made the toast bounce on every progress tick.
+- (void)spk_setPillHeight:(CGFloat)height {
+    if (self.instagramSkin)
+        return;
+    self.heightConstraint.constant = height;
 }
 
 - (void)spk_applyProgressModeInfoIcon {
@@ -682,7 +710,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     self.progressView.progress = 0.0f;
 
     [self setCloseButtonVisible:self.cancellable];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:self.cancellable];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:self.cancellable]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.text hasButton:self.cancellable];
     self.progressRingLayer.strokeEnd = 0.0;
 
@@ -724,7 +752,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     [self updateToastWidthForTitle:self.titleLabel.text subtitle:subtitle];
 
     // A toast has no button; the one from a previous progress state is hidden below.
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:NO];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:NO]];
     [self setProgressVisible:NO];
     [self setCloseButtonVisible:NO];
 
@@ -738,7 +766,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     [UIView animateWithDuration:0.24
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self layoutIfNeeded];
                      }
@@ -849,7 +877,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     self.subtitleLabel.text = subtitle;
     [self spk_setSubtitleHidden:(subtitle.length == 0)];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:subtitle hasButton:!self.closeButton.hidden];
     [self spk_syncInstagramSkin];
 }
@@ -883,7 +911,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
         [self spk_stopIndeterminateSpin];
         self.usesAutomaticProgressSubtitle = YES;
         [self spk_applyAutomaticProgressSubtitleIfNeeded];
-        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
         [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.text hasButton:!self.closeButton.hidden];
         [self spk_syncInstagramSkin];
         [self layoutIfNeeded];
@@ -894,7 +922,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     self.usesAutomaticProgressSubtitle = NO;
     self.subtitleLabel.text = nil;
     [self spk_setSubtitleHidden:YES];
-    self.heightConstraint.constant = kDynamicPillHeight;
+    [self spk_setPillHeight:SPKPillHeight()];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:nil hasButton:!self.closeButton.hidden];
 
     [self setProgressVisible:YES];
@@ -949,7 +977,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
         self.subtitleLabel.text = [self spk_progressSubtitleForProgress:self.currentProgress];
         [self spk_setSubtitleHidden:(self.subtitleLabel.text.length == 0)];
         [self setCloseButtonVisible:self.cancellable];
-        self.heightConstraint.constant = [self spk_dynamicHeightForButton:self.cancellable];
+        [self spk_setPillHeight:[self spk_dynamicHeightForButton:self.cancellable]];
         [self setProgressVisible:YES];
 
         [self spk_applyProgressModeInfoIcon];
@@ -1001,7 +1029,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
     }
 
     [self setCloseButtonVisible:self.cancellable];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:self.cancellable];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:self.cancellable]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.text hasButton:self.cancellable];
 
     [self setProgressVisible:YES];
@@ -1012,7 +1040,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     [UIView animateWithDuration:0.2
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self layoutIfNeeded];
                      }
@@ -1054,7 +1082,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
                         [self updateToastWidthForTitle:self.titleLabel.text subtitle:subtitle];
                         [self setCloseButtonVisible:NO];
                         [self setProgressVisible:NO];
-                        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+                        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
                         [self layoutIfNeeded];
                     }
                     completion:nil];
@@ -1103,7 +1131,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
                         [self updateToastWidthForTitle:self.titleLabel.text subtitle:resolvedSubtitle];
                         [self setCloseButtonVisible:YES];
                         [self setProgressVisible:NO];
-                        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+                        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
                         [self layoutIfNeeded];
                     }
                     completion:nil];
@@ -1142,7 +1170,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
                         [self updateToastWidthForTitle:self.titleLabel.text subtitle:subtitle];
                         [self setCloseButtonVisible:NO];
                         [self setProgressVisible:NO];
-                        self.heightConstraint.constant = [self spk_dynamicHeightForButton:!self.closeButton.hidden];
+                        [self spk_setPillHeight:[self spk_dynamicHeightForButton:!self.closeButton.hidden]];
                         [self layoutIfNeeded];
                     }
                     completion:nil];
@@ -1347,7 +1375,7 @@ static CGFloat const kSPKPillCloseButtonHitSide = 44.0;
     if (self.mode != SPKNotificationPillModeProgress || self.isCompleted || self.isErrorState)
         return;
     [self setCloseButtonVisible:cancellable];
-    self.heightConstraint.constant = [self spk_dynamicHeightForButton:cancellable];
+    [self spk_setPillHeight:[self spk_dynamicHeightForButton:cancellable]];
     [self spk_updateDynamicWidthForTitle:self.titleLabel.text subtitle:self.subtitleLabel.hidden ? nil : self.subtitleLabel.text hasButton:cancellable];
     [self spk_syncInstagramSkin];
     [self layoutIfNeeded];
@@ -1359,9 +1387,29 @@ static CGFloat const kSPKPillCloseButtonHitSide = 44.0;
 // photo 1, ..., localImage 5, ..., alert 8 (the last one confirmed live on 447). The
 // local image case is the one that takes a plain UIImage icon.
 static unsigned long long const kSPKInstagramToastLocalImageSubtype = 5;
-static CGFloat const kSPKInstagramToastMaxWidth = 420.0;
-// Instagram presents its toast 8pt in from each screen edge (measured against a
-// native toast), against the pill's 12pt.
+// Width a notification can use: its host's safe area, so it stays clear of side
+// chrome (a status bar or side bar on a foldable). Equal to the screen width on a
+// portrait iPhone.
+static CGFloat SPKNotificationAvailableWidth(UIView *view) {
+    UIView *host = view.superview ?: view.window;
+    if (!host) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if (![scene isKindOfClass:UIWindowScene.class] || scene.activationState != UISceneActivationStateForegroundActive)
+                continue;
+            for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+                if (window.isKeyWindow)
+                    host = window;
+            }
+        }
+    }
+    if (!host)
+        return CGRectGetWidth(UIScreen.mainScreen.bounds);
+    return CGRectGetWidth(UIEdgeInsetsInsetRect(host.bounds, host.safeAreaInsets));
+}
+
+// Instagram presents its toast 8pt in from each edge of the safe area (measured
+// against native toasts on a phone and on an 850pt-wide unfolded screen, with no
+// width cap), against the pill's 12pt.
 static CGFloat const kSPKInstagramToastSideMargin = 8.0;
 static CGFloat const kSPKInstagramProgressRingWidth = 2.5;
 
@@ -1405,9 +1453,48 @@ static NSArray<UIView *> *SPKInstagramToastContentViews(UIView *toastView) {
     return views;
 }
 
+// Where a text line has to end: before the right-hand button, or at the padding.
+static CGFloat SPKInstagramToastTextLimit(UIView *toastView) {
+    CGFloat textLimit = CGRectGetWidth(toastView.bounds) - kSPKInstagramToastPadding;
+    for (NSString *name in @[ @"_rightButton", @"_rightStyledTextButton" ]) {
+        Ivar ivar = class_getInstanceVariable(object_getClass(toastView), name.UTF8String);
+        UIView *button = ivar ? object_getIvar(toastView, ivar) : nil;
+        if ([button isKindOfClass:UIView.class] && !button.hidden && button.superview && !CGRectIsEmpty(button.frame))
+            textLimit = MIN(textLimit, CGRectGetMinX([button.superview convertRect:button.frame toView:toastView]) - 12.0);
+    }
+    return textLimit;
+}
+
+static UIVisualEffectView *SPKInstagramToastBackgroundEffectView(UIView *toastView);
+
+// Instagram's toast redesign (gated server-side, read once into _isToastM2Enabled when
+// the view is built, 450+) rounds a toast into a pill only up to 60pt tall and gives a
+// taller one, any toast with a subtitle, the old 16pt corners. Sparkle's subtitled and
+// progress toasts would then turn from pill to rounded rectangle and back as their
+// subtitle comes and goes, so with the redesign on every height is a pill. Set inside
+// the toast's own layout, so a height change animating in a spring takes the corners
+// with it.
+static void SPKInstagramToastApplyPillCorners(UIView *toastView) {
+    Ivar ivar = class_getInstanceVariable(object_getClass(toastView), "_isToastM2Enabled");
+    if (!ivar)
+        return;
+    BOOL redesigned = *((BOOL *)((uint8_t *)(__bridge void *)toastView + ivar_getOffset(ivar)));
+    CGFloat height = CGRectGetHeight(toastView.bounds);
+    if (!redesigned || height < 1.0)
+        return;
+    CGFloat radius = height / 2.0;
+    if (fabs(toastView.layer.cornerRadius - radius) < 0.01)
+        return;
+    toastView.layer.cornerRadius = radius;
+    SPKInstagramToastBackgroundEffectView(toastView).layer.cornerRadius = radius;
+    if (toastView.layer.shadowPath)
+        toastView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:toastView.bounds cornerRadius:radius].CGPath;
+}
+
 static void SPKInstagramToastLayoutSubviews(UIView *self, SEL _cmd) {
     struct objc_super superInfo = {self, class_getSuperclass(object_getClass(self))};
     ((void (*)(struct objc_super *, SEL))objc_msgSendSuper)(&superInfo, _cmd);
+    SPKInstagramToastApplyPillCorners(self);
 
     NSArray<UIView *> *views = SPKInstagramToastContentViews(self);
     Ivar iconIvar = class_getInstanceVariable(object_getClass(self), "_localThumbnailImageView");
@@ -1427,13 +1514,7 @@ static void SPKInstagramToastLayoutSubviews(UIView *self, SEL _cmd) {
 
     // Text views are sized to their text, so they move whole. Only a line that would
     // now run into the right-hand button gives up the overlap.
-    CGFloat textLimit = CGRectGetWidth(self.bounds) - kSPKInstagramToastPadding;
-    for (NSString *name in @[ @"_rightButton", @"_rightStyledTextButton" ]) {
-        Ivar ivar = class_getInstanceVariable(object_getClass(self), name.UTF8String);
-        UIView *button = ivar ? object_getIvar(self, ivar) : nil;
-        if ([button isKindOfClass:UIView.class] && !button.hidden && button.superview && !CGRectIsEmpty(button.frame))
-            textLimit = MIN(textLimit, CGRectGetMinX([button.superview convertRect:button.frame toView:self]) - 12.0);
-    }
+    CGFloat textLimit = SPKInstagramToastTextLimit(self);
     for (UIView *view in views) {
         CGRect frame = view.frame;
         frame.origin.x += dx;
@@ -1475,6 +1556,48 @@ static Class SPKInstagramToastViewClass(void) {
     return subclass;
 }
 
+// The font Instagram rendered the subtitle in, read from its styled text: it follows the
+// user's text size, so it is never assumed.
+static UIFont *SPKInstagramToastSubtitleFont(UIView *toastView, UIColor **color) {
+    id subtitleView = SPKInstagramToastIvar(toastView, "_subtitleView");
+    @try {
+        NSAttributedString *styled = [[subtitleView valueForKey:@"styledString"] valueForKey:@"attributedString"];
+        if ([styled isKindOfClass:NSAttributedString.class] && styled.length > 0) {
+            NSDictionary *attributes = [styled attributesAtIndex:0 effectiveRange:NULL];
+            if (color && [attributes[NSForegroundColorAttributeName] isKindOfClass:UIColor.class])
+                *color = attributes[NSForegroundColorAttributeName];
+            if ([attributes[NSFontAttributeName] isKindOfClass:UIFont.class])
+                return attributes[NSFontAttributeName];
+        }
+    } @catch (__unused NSException *exception) {
+    }
+    return nil;
+}
+
+static UIFont *SPKInstagramMonospacedDigitFont(UIFont *font) {
+    UIFontDescriptor *descriptor = [font.fontDescriptor fontDescriptorByAddingAttributes:@{
+        UIFontDescriptorFeatureSettingsAttribute : @[ @{
+            UIFontFeatureTypeIdentifierKey : @(kNumberSpacingType),
+            UIFontFeatureSelectorIdentifierKey : @(kMonospacedNumbersSelector),
+        } ],
+    }];
+    return [UIFont fontWithDescriptor:descriptor size:font.pointSize];
+}
+
+// The progress line with `drops` parts taken out. The line is "primary • bytes • queue"
+// with the middle and last parts optional: the byte sizes go first, then the queue
+// position, and the first part (the percentage, or the sizes on their own) always stays.
+static NSString *SPKInstagramCompactProgressLine(NSString *line, NSUInteger drops) {
+    NSMutableArray<NSString *> *parts = [[line componentsSeparatedByString:@" • "] mutableCopy];
+    for (NSUInteger i = 0; i < drops && parts.count > 1; i++)
+        [parts removeObjectAtIndex:parts.count >= 3 ? 1 : parts.count - 1];
+    return [parts componentsJoinedByString:@" • "];
+}
+
+static NSUInteger SPKInstagramProgressLinePartCount(NSString *line) {
+    return [line componentsSeparatedByString:@" • "].count;
+}
+
 - (UIView *)spk_makeInstagramToastView {
     UIView *toastView = [[SPKInstagramToastViewClass() alloc] initWithFrame:CGRectZero];
     // Touches stay with the pill (tap, swipe to dismiss, press feedback); the right
@@ -1512,8 +1635,6 @@ static Class SPKInstagramToastViewClass(void) {
     [self spk_attachInstagramToastView:fresh];
     return old;
 }
-
-static UIVisualEffectView *SPKInstagramToastBackgroundEffectView(UIView *toastView);
 
 // What changes when a toast's content changes: Instagram's icon, title, subtitle and
 // button, plus the progress ring and live progress line Sparkle draws over them.
@@ -1564,6 +1685,7 @@ static NSArray<UIView *> *SPKInstagramToastFadingViews(UIView *toastView, NSArra
         view.alpha = 0.0;
     }
     freshBackground.hidden = YES;
+    self.instagramHandoffBackground = freshBackground;
     [UIView animateWithDuration:0.24
         delay:0
         options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
@@ -1576,6 +1698,8 @@ static NSArray<UIView *> *SPKInstagramToastFadingViews(UIView *toastView, NSArra
         }
         completion:^(__unused BOOL finished) {
             freshBackground.hidden = NO;
+            if (self.instagramHandoffBackground == freshBackground)
+                self.instagramHandoffBackground = nil;
             [oldTint removeFromSuperview];
             [old removeFromSuperview];
         }];
@@ -1723,16 +1847,19 @@ static UIUserInterfaceStyle SPKInstagramToastStyleForAppStyle(UIUserInterfaceSty
 
     BOOL running = [self spk_instagramProgressRunning];
     NSString *title = self.titleLabel.text ?: @"";
-    NSString *subtitle = self.subtitleLabel.hidden ? nil : self.subtitleLabel.text;
+    NSString *fullSubtitle = self.subtitleLabel.hidden ? nil : self.subtitleLabel.text;
     // A ticking percent / bytes line would re-lay out and resize the toast on every
     // update, and Instagram's digits aren't fixed width. Instagram lays out a stand-in
     // with the same shape once, and the live numbers are drawn over it.
+    BOOL liveLine = running && SPKInstagramTextHasDigits(fullSubtitle) && SPKInstagramToastIvar(self.instagramToastView, "_subtitleView");
+    if (!running)
+        self.instagramProgressLineDrops = 0;
+    __block NSString *subtitle = fullSubtitle;
     NSString *liveSubtitle = nil;
-    if (running && SPKInstagramTextHasDigits(subtitle) && SPKInstagramToastIvar(self.instagramToastView, "_subtitleView")) {
-        liveSubtitle = subtitle;
-        subtitle = SPKInstagramStableLayoutText(subtitle);
+    if (liveLine) {
+        liveSubtitle = SPKInstagramCompactProgressLine(fullSubtitle, self.instagramProgressLineDrops);
+        subtitle = SPKInstagramStableLayoutText(liveSubtitle);
     }
-    self.instagramLiveSubtitleText = liveSubtitle;
     // Stands in for the pill's close button, which a running pill shows unless
     // its work cannot be cancelled.
     NSString *buttonText = running && self.cancellable ? SPKL(@"ALERT_ACTION_CANCEL") : nil;
@@ -1775,7 +1902,18 @@ static UIUserInterfaceStyle SPKInstagramToastStyleForAppStyle(UIUserInterfaceSty
                 }
             }
         }
+        // At larger text sizes the whole progress line runs into the Cancel button.
+        // Instagram would wrap it, and the toast would jump between one and two lines
+        // as the numbers gain digits, so parts are dropped until it fits on one line.
+        while (liveLine && self.instagramProgressLineDrops + 1 < SPKInstagramProgressLinePartCount(fullSubtitle) &&
+               ![self spk_instagramProgressLineFits:subtitle title:title buttonText:buttonText]) {
+            self.instagramProgressLineDrops++;
+            liveSubtitle = SPKInstagramCompactProgressLine(fullSubtitle, self.instagramProgressLineDrops);
+            subtitle = SPKInstagramStableLayoutText(liveSubtitle);
+            [self spk_configureInstagramToastWithTitle:title subtitle:subtitle buttonText:buttonText signature:signatureForStyle(style)];
+        }
     }
+    self.instagramLiveSubtitleText = liveSubtitle;
     [self spk_layoutInstagramLiveSubtitle];
     [self spk_layoutInstagramProgressRing];
     if (replacedToast)
@@ -1793,7 +1931,7 @@ static UIUserInterfaceStyle SPKInstagramToastStyleForAppStyle(UIUserInterfaceSty
                               delay:0
              usingSpringWithDamping:0.72
               initialSpringVelocity:0.6
-                            options:UIViewAnimationOptionCurveEaseOut
+                            options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [self.superview layoutIfNeeded];
                          }
@@ -1805,15 +1943,50 @@ static BOOL SPKInstagramTextHasDigits(NSString *text) {
     return text.length > 0 && [text rangeOfCharacterFromSet:NSCharacterSet.decimalDigitCharacterSet].location != NSNotFound;
 }
 
-// Every number becomes the same wide stand-in, so the text Instagram measures only
-// changes when the wording does (a unit switch), never on a tick.
+
+// Every digit becomes the widest one, so the text Instagram measures keeps the live
+// text's shape and only changes when a number gains a digit or the wording changes,
+// never on a tick. A fixed wide stand-in per number would overstate a line like
+// "74% • 1.4 MB of 1.4 MB • 1 of 2" enough to wrap it beside the Cancel button,
+// and the toast would then be sized for two lines while showing one.
 static NSString *SPKInstagramStableLayoutText(NSString *text) {
-    static NSRegularExpression *numbers;
+    static NSRegularExpression *digits;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        numbers = [NSRegularExpression regularExpressionWithPattern:@"\\d+(?:[.,]\\d+)?" options:0 error:NULL];
+        digits = [NSRegularExpression regularExpressionWithPattern:@"\\d" options:0 error:NULL];
     });
-    return [numbers stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, text.length) withTemplate:@"000.0"];
+    return [digits stringByReplacingMatchesInString:text options:0 range:NSMakeRange(0, text.length) withTemplate:@"0"];
+}
+
+// A toast that is never shown, for asking Instagram's layout how tall a toast would be.
+static UIView *SPKInstagramMeasuringToast(void) {
+    static UIView *toast;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class toastClass = SPKInstagramToastViewClass();
+        if (toastClass)
+            toast = [[toastClass alloc] initWithFrame:CGRectZero];
+    });
+    return toast;
+}
+
+// Whether Instagram lays a progress line's stand-in out on one line. Instagram decides
+// where its subtitle wraps from its own metrics, which depend on the title and the
+// button as well as the text, so the answer comes from its layout: the toast measured
+// with the stand-in against the same toast with a one-character subtitle. A taller one
+// means the stand-in wrapped. Measured on a toast that is never shown, so the visible
+// one doesn't change while it is asked.
+- (BOOL)spk_instagramProgressLineFits:(NSString *)layoutLine title:(NSString *)title buttonText:(NSString *)buttonText {
+    UIView *probe = SPKInstagramMeasuringToast();
+    if (!probe || layoutLine.length == 0)
+        return YES;
+    probe.overrideUserInterfaceStyle = self.overrideUserInterfaceStyle;
+    CGSize fits = CGSizeMake(SPKNotificationAvailableWidth(self) - 2.0 * kSPKInstagramToastSideMargin, CGFLOAT_MAX);
+    [(IGActionableConfirmationToastView *)probe configureWithViewModel:[self spk_instagramToastModelWithTitle:title subtitle:@"0" buttonText:buttonText]];
+    CGFloat oneLine = [probe sizeThatFits:fits].height;
+    [(IGActionableConfirmationToastView *)probe configureWithViewModel:[self spk_instagramToastModelWithTitle:title subtitle:layoutLine buttonText:buttonText]];
+    CGFloat laidOut = [probe sizeThatFits:fits].height;
+    return oneLine < 1.0 || laidOut <= oneLine + 0.5;
 }
 
 // Draws the live progress line exactly where Instagram placed its stand-in, in the
@@ -1855,46 +2028,25 @@ static NSString *SPKInstagramStableLayoutText(NSString *text) {
     // The stand-in's frame is only current once Instagram has laid out its toast.
     [toastView layoutIfNeeded];
 
-    UIFont *font = nil;
     UIColor *color = nil;
-    @try {
-        NSAttributedString *styled = [[subtitleView valueForKey:@"styledString"] valueForKey:@"attributedString"];
-        if ([styled isKindOfClass:NSAttributedString.class] && styled.length > 0) {
-            NSDictionary *attributes = [styled attributesAtIndex:0 effectiveRange:NULL];
-            font = [attributes[NSFontAttributeName] isKindOfClass:UIFont.class] ? attributes[NSFontAttributeName] : nil;
-            color = [attributes[NSForegroundColorAttributeName] isKindOfClass:UIColor.class] ? attributes[NSForegroundColorAttributeName] : nil;
-        }
-    } @catch (__unused NSException *exception) {
-    }
-    font = font ?: [UIFont systemFontOfSize:13.0];
-    UIFontDescriptor *descriptor = [font.fontDescriptor fontDescriptorByAddingAttributes:@{
-        UIFontDescriptorFeatureSettingsAttribute : @[ @{
-            UIFontFeatureTypeIdentifierKey : @(kNumberSpacingType),
-            UIFontFeatureSelectorIdentifierKey : @(kMonospacedNumbersSelector),
-        } ],
-    }];
-    label.font = [UIFont fontWithDescriptor:descriptor size:font.pointSize];
+    UIFont *font = SPKInstagramToastSubtitleFont(toastView, &color) ?: [SPKFont fontForStyle:SPKFontStyleFootnote];
+    label.font = SPKInstagramMonospacedDigitFont(font);
     label.textColor = color ?: UIColor.secondaryLabelColor;
     label.text = text;
     label.hidden = NO;
     subtitleView.alpha = 0.0;
 
-    // The stand-in is measured with the widest numbers, so the live text fits its frame.
-    label.frame = [subtitleView convertRect:subtitleView.bounds toView:toastView];
+    // The stand-in is sized to its own text, which Instagram measures with proportional
+    // digits; the live line's fixed-width digits run a little wider. The live line takes
+    // the stand-in's position and height but all the room up to the button, so it only
+    // truncates when it genuinely runs out of space.
+    CGRect frame = [subtitleView convertRect:subtitleView.bounds toView:toastView];
+    frame.size.width = MAX(CGRectGetWidth(frame), SPKInstagramToastTextLimit(toastView) - CGRectGetMinX(frame));
+    label.frame = frame;
     [toastView bringSubviewToFront:label];
 }
 
-- (void)spk_configureInstagramToastWithTitle:(NSString *)title
-                                    subtitle:(NSString *)subtitle
-                                  buttonText:(NSString *)buttonText
-                                   signature:(NSString *)signature {
-    BOOL headlineChanged = self.instagramConfiguredSignature != nil &&
-                           ![[self.instagramConfiguredSignature componentsSeparatedByString:@"\n"].firstObject isEqualToString:title];
-    self.instagramConfiguredSignature = signature;
-    self.instagramShowsSubtitle = subtitle.length > 0;
-    self.instagramLiveSubtitleNeedsStyle = YES;
-    SPKLogMessage(@"Notify", OS_LOG_TYPE_DEBUG, @"Instagram toast configured: %@", [signature stringByReplacingOccurrencesOfString:@"\n" withString:@" | "]);
-
+- (id)spk_instagramToastModelWithTitle:(NSString *)title subtitle:(NSString *)subtitle buttonText:(NSString *)buttonText {
     id model = [NSClassFromString(@"IGActionableConfirmationToastViewModel") new];
     @try {
         [model setValue:@(kSPKInstagramToastLocalImageSubtype) forKey:@"subtype"];
@@ -1912,7 +2064,21 @@ static NSString *SPKInstagramStableLayoutText(NSString *text) {
     } @catch (NSException *exception) {
         SPKLogMessage(@"Notify", OS_LOG_TYPE_DEFAULT, @"Instagram toast model rejected a field: %@", exception.reason);
     }
+    return model;
+}
 
+- (void)spk_configureInstagramToastWithTitle:(NSString *)title
+                                    subtitle:(NSString *)subtitle
+                                  buttonText:(NSString *)buttonText
+                                   signature:(NSString *)signature {
+    BOOL headlineChanged = self.instagramConfiguredSignature != nil &&
+                           ![[self.instagramConfiguredSignature componentsSeparatedByString:@"\n"].firstObject isEqualToString:title];
+    self.instagramConfiguredSignature = signature;
+    self.instagramShowsSubtitle = subtitle.length > 0;
+    self.instagramLiveSubtitleNeedsStyle = YES;
+    SPKLogMessage(@"Notify", OS_LOG_TYPE_DEBUG, @"Instagram toast configured: %@", [signature stringByReplacingOccurrencesOfString:@"\n" withString:@" | "]);
+
+    id model = [self spk_instagramToastModelWithTitle:title subtitle:subtitle buttonText:buttonText];
     UIView *toastView = self.instagramToastView;
     void (^configure)(void) = ^{
         [(IGActionableConfirmationToastView *)toastView configureWithViewModel:model];
@@ -1933,7 +2099,7 @@ static NSString *SPKInstagramStableLayoutText(NSString *text) {
 
     [self spk_applyInstagramToneTint];
 
-    CGFloat maxWidth = MIN(kSPKInstagramToastMaxWidth, CGRectGetWidth(UIScreen.mainScreen.bounds) - 2.0 * kSPKInstagramToastSideMargin);
+    CGFloat maxWidth = SPKNotificationAvailableWidth(self) - 2.0 * kSPKInstagramToastSideMargin;
     CGSize size = [toastView sizeThatFits:CGSizeMake(maxWidth, CGFLOAT_MAX)];
     self.instagramContentSize = CGSizeMake(size.width >= 1.0 ? MIN(size.width, maxWidth) : maxWidth,
                                            size.height >= 1.0 ? size.height : kDynamicTallHeight);
@@ -1991,13 +2157,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     UIView *toastView = self.instagramToastView;
     if (!toastView)
         return;
-    UIVisualEffectView *background = SPKInstagramToastBackgroundEffectView(toastView);
-    // Older builds (410) draw the toast without a live material: the effect view is
-    // missing, hidden or empty, and the visible background is the toast itself. The
-    // tint then goes under the toast's own content instead.
-    if (background && (background.hidden || background.alpha < 0.01 || !background.effect ||
-                       CGRectGetWidth(background.bounds) < 1.0 || CGRectGetHeight(background.bounds) < 1.0))
-        background = nil;
+    UIVisualEffectView *background = [self spk_instagramToastLiveMaterial];
 
     if (![SPKUtils getBoolPref:kSPKNotificationPillGlowEnabledKey]) {
         [self.instagramTintView removeFromSuperview];
@@ -2068,12 +2228,47 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     tintView.backgroundColor = tint;
 }
 
+// The effect view that draws the toast's background, or nil when the toast draws it
+// itself. Older builds (410) keep an effect view that is missing, hidden or empty, and
+// the visible background is the toast. Liquid Glass is always the live material: a
+// fresh toast is configured before its first layout, when the glass is still zero
+// sized, and a replaced toast's glass is hidden by the handoff, not by Instagram.
+// Emptiness only counts once the toast itself has a size.
+- (UIVisualEffectView *)spk_instagramToastLiveMaterial {
+    UIView *toastView = self.instagramToastView;
+    UIVisualEffectView *background = SPKInstagramToastBackgroundEffectView(toastView);
+    if (!background || !background.effect)
+        return nil;
+    Class glassClass = NSClassFromString(@"UIGlassEffect");
+    if (glassClass && [background.effect isKindOfClass:glassClass])
+        return background;
+    if (background.alpha < 0.01 || (background.hidden && background != self.instagramHandoffBackground))
+        return nil;
+    BOOL toastLaidOut = CGRectGetWidth(toastView.bounds) >= 1.0 && CGRectGetHeight(toastView.bounds) >= 1.0;
+    if (toastLaidOut && (CGRectGetWidth(background.bounds) < 1.0 || CGRectGetHeight(background.bounds) < 1.0))
+        return nil;
+    return background;
+}
+
 // A tint hosted on the toast itself follows its size and rounding, which Instagram
-// only settles in its own layout.
+// only settles in its own layout. The material is only known for sure once the toast
+// has a size, so a tint placed for the wrong one before that is moved here.
 - (void)spk_layoutInstagramToastOwnTint {
     UIView *toastView = self.instagramToastView;
     UIView *tintView = self.instagramTintView;
-    if (!toastView || tintView.superview != toastView)
+    if (!toastView || !tintView.superview)
+        return;
+    if (CGRectGetWidth(toastView.bounds) >= 1.0) {
+        UIVisualEffectView *background = [self spk_instagramToastLiveMaterial];
+        BOOL glass = background && NSClassFromString(@"UIGlassEffect") &&
+                     [background.effect isKindOfClass:NSClassFromString(@"UIGlassEffect")];
+        UIView *host = glass ? nil : (background ? background.contentView : toastView);
+        if (tintView.superview != host) {
+            [self spk_applyInstagramToneTint];
+            tintView = self.instagramTintView;
+        }
+    }
+    if (tintView.superview != toastView)
         return;
     [toastView layoutIfNeeded];
     tintView.frame = toastView.bounds;
@@ -2225,7 +2420,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
 - (CGFloat)spk_dynamicHeightForButton:(BOOL)hasButton {
     if (self.subtitleLabel.hidden) {
         self.subtitleLabel.numberOfLines = 1;
-        return kDynamicPillHeight;
+        return SPKPillHeight();
     }
     // The Instagram style is laid out by Instagram's own toast view.
     if (self.instagramSkin) {
@@ -2233,7 +2428,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
         return kDynamicTallHeight;
     }
 
-    UIFont *font = self.subtitleLabel.font ?: [UIFont systemFontOfSize:11.5 weight:UIFontWeightMedium];
+    UIFont *font = self.subtitleLabel.font ?: [SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium];
     CGFloat subtitleWidth = ceil([self.subtitleLabel.text ?: @"" boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, font.lineHeight)
                                                                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                                            attributes:@{NSFontAttributeName : font}
@@ -2242,12 +2437,12 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     CGFloat fixedWidth = kHorizontalPad + kIconBadgeSize + 10.0 + kHorizontalPad;
     if (hasButton)
         fixedWidth += 24.0 + 13.0 + 10.0;
-    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, CGRectGetWidth(UIScreen.mainScreen.bounds) - 24.0);
+    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, SPKNotificationAvailableWidth(self) - 24.0);
     CGFloat widestText = MIN(kDynamicMaxWidth, screenMaxWidth) - fixedWidth;
 
     BOOL wraps = subtitleWidth > widestText + 0.5;
     self.subtitleLabel.numberOfLines = wraps ? 2 : 1;
-    return wraps ? kDynamicTallHeight + ceil(font.lineHeight) : kDynamicTallHeight;
+    return wraps ? SPKPillTallHeight() + ceil(font.lineHeight) : SPKPillTallHeight();
 }
 
 - (void)spk_updateDynamicWidthForTitle:(NSString *)title subtitle:(NSString *)subtitle hasButton:(BOOL)hasButton {
@@ -2255,8 +2450,8 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     if (!self.widthConstraint || self.instagramSkin)
         return;
 
-    UIFont *titleFont = self.titleLabel.font ?: [UIFont systemFontOfSize:13.5 weight:UIFontWeightSemibold];
-    UIFont *subtitleFont = self.subtitleLabel.font ?: [UIFont systemFontOfSize:11.5 weight:UIFontWeightMedium];
+    UIFont *titleFont = self.titleLabel.font ?: [SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold];
+    UIFont *subtitleFont = self.subtitleLabel.font ?: [SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption2 weight:UIFontWeightMedium];
 
     CGFloat titleWidth = 0.0;
     if (title.length > 0) {
@@ -2285,7 +2480,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
     }
 
     CGFloat targetWidth = ceil(textWidth) + fixedWidth;
-    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, CGRectGetWidth(UIScreen.mainScreen.bounds) - 24.0);
+    CGFloat screenMaxWidth = MAX(kDynamicMinWidth, SPKNotificationAvailableWidth(self) - 24.0);
     targetWidth = MIN(MIN(kDynamicMaxWidth, screenMaxWidth), MAX(kDynamicMinWidth, targetWidth));
 
     CGFloat newWidth = targetWidth;
@@ -2301,7 +2496,7 @@ static void SPKInstagramToastPlaceOwnTint(UIView *toastView, UIView *tintView) {
                           delay:0
          usingSpringWithDamping:0.72
           initialSpringVelocity:0.6
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self.superview layoutIfNeeded];
                      }

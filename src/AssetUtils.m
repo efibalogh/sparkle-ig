@@ -1,6 +1,8 @@
 #import "AssetUtils.h"
 
 #import <math.h>
+#import <objc/message.h>
+#import <objc/runtime.h>
 
 typedef NSDictionary<NSString *, id> SPKAssetDescriptor;
 
@@ -147,6 +149,7 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"copy" : @{@"candidates" : @[ @"ig_icon_copy_prism_outline_24", @"ig_icon_copy_outline_24" ]},
             @"copy_filled" : @{@"candidates" : @[ @"ig_icon_copy_prism_filled_24", @"ig_icon_copy_filled_24" ]},
             @"crop" : @{@"candidates" : @[ @"ig_icon_crop_outline_24" ]},
+            @"device_tablet" : @{@"candidates" : @[ @"ig_icon_device_tablet_outline_24" ]},
             @"donate" : @{@"candidates" : @[ @"ig_icon_donations_outline_44" ]},
             @"download" : @{@"candidates" : @[ @"ig_icon_download_outline_24" ]},
             @"download_filled" : @{@"candidates" : @[ @"ig_icon_download_filled_24" ]},
@@ -198,9 +201,11 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"instants_filled" : @{@"candidates" : @[ @"ig_icon_app_instants_filled_16" ]},
             @"key" : @{@"candidates" : @[ @"ig_icon_key_outline_24" ]},
             @"keyboard" : @{@"candidates" : @[ @"ig_icon_keyboard_prism_outline_24", @"ig_icon_keyboard_outline_24" ]},
+            @"layout" : @{@"candidates" : @[ @"ig_icon_layout_prism_outline_24", @"ig_icon_layout_outline_24" ]},
             @"left_right" : @{@"candidates" : @[ @"ig_icon_replace_outline_24", @"ig_icon_replace_2_outline_24" ]},
             @"link" : @{@"candidates" : @[ @"ig_icon_link_outline_24" ]},
             @"link_reels" : @{@"candidates" : @[ @"ig_icon_link_outline_44" ]},
+            @"liquid_glass" : @{@"candidates" : @[ @"ig_icon_adjustment_opacity_outline_24" ]},
             @"list" : @{@"candidates" : @[ @"ig_icon_edit_list_outline_24" ]},
             @"location" : @{@"candidates" : @[ @"ig_icon_location_outline_24" ]},
             @"location_add" : @{@"candidates" : @[ @"ig_icon_location_add_outline_24", @"ig_icon_location_outline_24" ]},
@@ -220,10 +225,12 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"messages_filled" : @{@"candidates" : @[ @"ig_icon_direct_prism_filled_24", @"ig_icon_direct_filled_24" ]},
             @"messages_off" : @{@"candidates" : @[ @"ig_icon_direct_off_prism_outline_24", @"ig_icon_direct_off_outline_24" ]},
             @"mirror" : @{@"candidates" : @[ @"ig_icon_mirror_outline_24" ]},
+            @"music" : @{@"candidates" : @[ @"ig_icon_music_outline_24" ]},
             @"music_reels" : @{@"candidates" : @[ @"ig_icon_music_outline_44" ]},
             @"meta_ai" : @{@"candidates" : @[ @"ig_icon_meta_ai_orbit_7_segment_outline_24", @"ig_icon_meta_gen_ai_outline_24" ]},
             @"moon" : @{@"candidates" : @[ @"ig_icon_moon_outline_24" ]},
             @"moon_filled" : @{@"candidates" : @[ @"ig_icon_moon_filled_24" ]},
+            @"muse" : @{@"candidates" : @[ @"ig_icon_app_muse_symbol_outline_24", @"ig_icon_hatch_symbol_outline_24" ]},
             @"more" : @{@"candidates" : @[ @"ig_icon_more_horizontal_outline_24" ]},
             @"notes" : @{@"candidates" : @[ @"ig_icon_content_note_outline_24", @"ig_icon_content_note_add_outline_24" ]},
             @"notification" : @{@"candidates" : @[ @"ig_icon_alert_pano_outline_24", @"ig_icon_alert_outline_24" ]},
@@ -252,6 +259,10 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"reactions" : @{@"candidates" : @[ @"ig_icon_reactions_outline_24" ]},
             @"reels" : @{@"candidates" : @[ @"ig_icon_reels_pano_prism_outline_24", @"ig_icon_reels_prism_outline_24", @"ig_icon_reels_pano_outline_24", @"ig_icon_reels_outline_24" ]},
             @"reels_filled" : @{@"candidates" : @[ @"ig_icon_reels_pano_prism_filled_24", @"ig_icon_reels_prism_filled_24", @"ig_icon_reels_filled_24", @"ig_icon_reels_filled_24" ]},
+            // Instagram's newer tall reels glyph. Only reached through
+            // SPKAssetEffectiveInternalName while Instagram itself shows it.
+            @"reels_tall" : @{@"candidates" : @[ @"ig_icon_reels_tall_ufi_outline_24" ], @"alias" : @"reels"},
+            @"reels_tall_filled" : @{@"candidates" : @[ @"ig_icon_reels_tall_ufi_filled_24" ], @"alias" : @"reels_filled"},
             @"reels_gallery" : @{
                 @"candidates" : @[ @"ig_icon_reels_gallery_outline_24" ],
                 @"alias" : @"reels"
@@ -281,15 +292,17 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"size_small" : @{@"candidates" : @[ @"ig_icon_fill_outline_24" ]},
             @"slider" : @{@"candidates" : @[ @"ig_icon_sliders_pano_outline_24", @"ig_icon_sliders_outline_24" ]},
             @"sort" : @{@"candidates" : @[ @"ig_icon_sort_pano_outline_24" ]},
-            @"subtract" : @{@"candidates" : @[ @"ig_icon_subtract_outline_24" ]},
             @"sparkle_gallery" : @{@"candidates" : @[ @"ig_icon_effect_page_prism_outline_24", @"ig_icon_effect_page_outline_24" ]},
             @"sticker" : @{@"candidates" : @[ @"ig_icon_sticker_prism_outline_24", @"ig_icon_sticker_pano_outline_24" ]},
             @"sticker_filled" : @{@"candidates" : @[ @"ig_icon_sticker_prism_filled_24", @"ig_icon_sticker_pano_filled_24" ]},
             @"story" : @{@"candidates" : @[ @"ig_icon_story_pano_outline_24", @"ig_icon_story_outline_24" ]},
             @"story_filled" : @{@"candidates" : @[ @"ig_icon_story_pano_filled_24", @"ig_icon_story_filled_24" ]},
             @"story_preview": @{@"candidates" : @[ @"eye-off_Outline_24" ]},
+            @"sparkles" : @{@"candidates" : @[ @"ig_icon_sparkles_outline_24" ]},
             @"star" : @{@"candidates" : @[ @"ig_icon_star_pano_outline_24", @"ig_icon_star_outline_24" ]},
             @"star_filled" : @{@"candidates" : @[ @"ig_icon_star_pano_filled_24", @"ig_icon_star_filled_24" ]},
+            @"stop_filled" : @{@"candidates" : @[ @"ig_icon_stop_filled_24" ]},
+            @"subtract" : @{@"candidates" : @[ @"ig_icon_subtract_outline_24" ]},
             @"text" : @{@"candidates" : @[ @"ig_icon_text_outline_24" ]},
             @"threads" : @{@"candidates" : @[ @"ig_icon_app_threads_pano_outline_24", @"ig_icon_app_threads_outline_24" ]},
             @"toolbox" : @{@"candidates" : @[ @"ig_icon_toolbox_outline_24" ]},
@@ -359,6 +372,38 @@ static SPKAssetDescriptor *SPKAssetResolvedDescriptor(NSString *name) {
         }
     }
     return descriptor;
+}
+
+// Instagram swaps its reels glyph for a taller one behind a server gate on
+// IGDSLauncherConfig. Following that gate keeps Sparkle's reels icons matching
+// whatever the host app shows, and falls back on its own if the gate is
+// removed or the build predates it.
+static BOOL SPKAssetInstagramShowsTallReelsIcon(void) {
+    Class configClass = objc_getClass("IGDSLauncherConfig");
+    SEL sharedSelector = NSSelectorFromString(@"sharedConfig");
+    SEL gateSelector = NSSelectorFromString(@"isReelsTallIconEnabled");
+    if (!configClass || ![configClass respondsToSelector:sharedSelector] ||
+        ![configClass instancesRespondToSelector:gateSelector]) {
+        return NO;
+    }
+    id config = ((id (*)(id, SEL))objc_msgSend)(configClass, sharedSelector);
+    if (![config respondsToSelector:gateSelector]) {
+        return NO;
+    }
+    return ((BOOL (*)(id, SEL))objc_msgSend)(config, gateSelector);
+}
+
+// Maps a normalized logical name to the one actually resolved. Applied before
+// the cache keys are built, so a change of the gate never serves a stale glyph.
+static NSString *SPKAssetEffectiveInternalName(NSString *normalizedName) {
+    BOOL outline = [normalizedName isEqualToString:@"reels"];
+    if (!outline && ![normalizedName isEqualToString:@"reels_filled"]) {
+        return normalizedName;
+    }
+    if (!SPKAssetInstagramShowsTallReelsIcon()) {
+        return normalizedName;
+    }
+    return outline ? @"reels_tall" : @"reels_tall_filled";
 }
 
 static CGFloat SPKAssetResolvedPointSize(NSString *name, CGFloat pointSize) {
@@ -493,7 +538,7 @@ static NSCache<NSString *, id> *SPKAssetIconNameCache(void) {
 }
 
 static NSString *SPKAssetResolvedIconCandidateName(NSString *name, CGFloat pointSize, SPKAssetCatalogSource source) {
-    NSString *normalizedName = SPKAssetNormalizeInternalName(name);
+    NSString *normalizedName = SPKAssetEffectiveInternalName(SPKAssetNormalizeInternalName(name));
     if (normalizedName.length == 0) {
         return nil;
     }
@@ -545,7 +590,7 @@ static NSCache<NSString *, id> *SPKAssetIconCache(void) {
 }
 
 static UIImage *SPKAssetLookupInstagramIcon(NSString *name, CGFloat pointSize, SPKAssetCatalogSource source, UIImageRenderingMode renderingMode) {
-    NSString *normalizedName = SPKAssetNormalizeInternalName(name);
+    NSString *normalizedName = SPKAssetEffectiveInternalName(SPKAssetNormalizeInternalName(name));
     if (normalizedName.length == 0) {
         return nil;
     }

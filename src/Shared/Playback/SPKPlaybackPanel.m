@@ -4,6 +4,7 @@
 #import "../../Utils.h"
 #import "../UI/SPKChipGlass.h"
 #import "../i18n/SPKStrings.h"
+#import "../UI/SPKFont.h"
 
 static CGFloat const kSPKPlaybackPanelWidth = 288.0;
 static CGFloat const kSPKPlaybackSpeedRowHeight = 40.0;
@@ -399,7 +400,7 @@ static NSString *SPKPlaybackTimeString(double seconds) {
 
 - (UILabel *)timeLabel {
     UILabel *label = [UILabel new];
-    label.font = [UIFont monospacedDigitSystemFontOfSize:12.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont monospacedDigitFontForStyle:SPKFontStyleCaption1 weight:UIFontWeightMedium] to:label];
     label.textColor = SPKPlaybackSecondaryColor(_style);
     label.translatesAutoresizingMaskIntoConstraints = NO;
     [label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
@@ -529,7 +530,7 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     configuration.image = SPKPlaybackSymbol(@"chevron.up.chevron.down", 11.0, UIImageSymbolWeightSemibold);
     configuration.imagePlacement = NSDirectionalRectEdgeTrailing;
     configuration.imagePadding = 5.0;
-    NSDictionary *attributes = @{NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:20.0 weight:UIFontWeightSemibold]};
+    NSDictionary *attributes = @{NSFontAttributeName : [SPKFont monospacedDigitFontForStyle:SPKFontStyleTitle3 weight:UIFontWeightSemibold]};
     configuration.attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attributes];
     _speedButton.configuration = configuration;
 }

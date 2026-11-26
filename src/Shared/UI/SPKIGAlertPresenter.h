@@ -54,6 +54,20 @@ typedef void (^SPKIGAlertTextHandler)(NSString *_Nullable text);
                                    confirmBlock:(SPKIGAlertTextHandler)confirmBlock
                                     cancelBlock:(nullable SPKIGAlertActionHandler)cancelBlock;
 
+/// Same, with a masked field when `secure` is YES (passwords).
++ (BOOL)presentTextInputAlertFromViewController:(nullable UIViewController *)presenter
+                                          title:(nullable NSString *)title
+                                        message:(nullable NSString *)message
+                                    placeholder:(nullable NSString *)placeholder
+                                    initialText:(nullable NSString *)initialText
+                                autocapitalized:(BOOL)autocapitalized
+                                secureTextEntry:(BOOL)secure
+                                   confirmTitle:(NSString *)confirmTitle
+                                    cancelTitle:(NSString *)cancelTitle
+                                   confirmStyle:(SPKIGAlertActionStyle)confirmStyle
+                                   confirmBlock:(SPKIGAlertTextHandler)confirmBlock
+                                    cancelBlock:(nullable SPKIGAlertActionHandler)cancelBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END

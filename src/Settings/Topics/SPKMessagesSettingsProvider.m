@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKMessagesSettingsProvider.h"
 
 #import "../../Features/Messages/AccurateActiveStatus.h"
@@ -8,6 +9,7 @@
 #import "../../Shared/Location/SPKFakeLocationSettingsViewController.h"
 #import "../../Shared/Messages/SPKDirectHiddenChats.h"
 #import "../../Shared/Messages/SPKDirectHiddenChatsLockManager.h"
+#import "../../Shared/Messages/SPKDirectLocalSeen.h"
 #import "../../Shared/Messages/SPKDirectSeenContext.h"
 #import "../../Shared/Messages/SPKPresenceTracking.h"
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
@@ -383,10 +385,6 @@ static NSArray *SPKMessagesSettingsSections(void) {
     SPKSetting *seenOnReply = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_GENERAL_MARK_SEEN_MESSAGE_REPLY_TITLE") icon:SPKSettingsIcon(@"reply") defaultsKey:@"msgs_seen_on_reply"];
     SPKSetting *seenOnReaction = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_GENERAL_MARK_SEEN_REACTION_TITLE") icon:SPKSettingsIcon(@"reactions") defaultsKey:@"msgs_seen_on_reaction"];
     SPKSetting *seenOnTyping = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_GENERAL_MARK_SEEN_TYPING_TITLE") icon:SPKSettingsIcon(@"keyboard") defaultsKey:@"msgs_seen_on_typing"];
-    seenOnSend.helpText = SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_SEND_HELP");
-    seenOnReply.helpText = SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_REPLY_HELP");
-    seenOnReaction.helpText = SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_REACTION_HELP");
-    seenOnTyping.helpText = SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_TYPING_HELP");
     seenOnSend.enabledProvider = ^BOOL {
         return [SPKUtils getBoolPref:@"msgs_manual_seen"];
     };
@@ -399,6 +397,21 @@ static NSArray *SPKMessagesSettingsSections(void) {
     seenOnTyping.enabledProvider = ^BOOL {
         return [SPKUtils getBoolPref:@"msgs_manual_seen"];
     };
+    // The four triggers share one page, each explained in its own footer.
+    SPKSetting *markSeenOn = [SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_TITLE")
+                                                        subtitle:@""
+                                                            icon:SPKSettingsIcon(@"circle_check")
+                                                     navSections:@[
+                                                         SPKTopicSection(@"", @[ seenOnSend ], SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_SEND_HELP")),
+                                                         SPKTopicSection(@"", @[ seenOnReply ], SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_REPLY_HELP")),
+                                                         SPKTopicSection(@"", @[ seenOnReaction ], SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_REACTION_HELP")),
+                                                         SPKTopicSection(@"", @[ seenOnTyping ], SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_TYPING_HELP")),
+                                                     ]];
+    markSeenOn.helpText = SPKL(@"MESSAGES_MESSAGING_MARK_SEEN_ON_HELP");
+    markSeenOn.enabledProvider = ^BOOL {
+        return [SPKUtils getBoolPref:@"msgs_manual_seen"];
+    };
+
 
     // Chooses where the manual-seen eye button lives: the top nav bar, or a
     // draggable bubble above the composer. Only meaningful while manual seen is on.
@@ -410,6 +423,26 @@ static NSArray *SPKMessagesSettingsSections(void) {
     seenButtonPosition.helpText = SPKL(@"MESSAGES_MESSAGING_SEEN_BUTTON_POSITION_HELP");
     seenButtonPosition.enabledProvider = ^BOOL {
         return [SPKUtils getBoolPref:@"msgs_manual_seen"];
+    };
+
+    // Only changes how manual seen behaves, so it locks with the other triggers.
+    SPKSetting *keepSeenLocally = [SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_MESSAGING_KEEP_SEEN_LOCALLY_TITLE") icon:SPKSettingsIcon(@"eye_off") defaultsKey:@"msgs_manual_seen_keep_local"];
+    keepSeenLocally.helpText = SPKL(@"MESSAGES_MESSAGING_KEEP_SEEN_LOCALLY_HELP");
+    SPKSettingMarkedNew(keepSeenLocally, @"v1.7.0");
+    keepSeenLocally.enabledProvider = ^BOOL {
+        return [SPKUtils getBoolPref:@"msgs_manual_seen"];
+    };
+
+    // Stays usable after Keep Seen Locally is switched off: chats read while it
+    // was on stay read here until they are reset from this list.
+    SPKSetting *locallySeen = [SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_MESSAGING_LOCALLY_SEEN_TITLE")
+                                                         subtitle:@""
+                                                             icon:SPKSettingsIcon(@"history")
+                                                   viewController:SPKDirectLocalSeenListViewController()];
+    locallySeen.helpText = SPKL(@"MESSAGES_MESSAGING_LOCALLY_SEEN_HELP");
+    SPKSettingMarkedNewWithID(locallySeen, @"v1.7.0", @"msgs_locally_seen_list");
+    locallySeen.accessoryTextProvider = ^NSString * {
+        return [NSString stringWithFormat:@"%lu", (unsigned long)SPKDirectLocalSeenPendingCount([SPKUtils currentUserPK])];
     };
 
     // Advancing after a manual seen only applies while visual manual seen is on.
@@ -494,12 +527,15 @@ static NSArray *SPKMessagesSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"eye")
                                     defaultsKey:@"msgs_manual_seen"],
                                SPKL(@"MESSAGES_MESSAGING_MANUALLY_MARK_SEEN_HELP")),
+            markSeenOn,
             seenButtonPosition,
-            seenOnSend,
-            seenOnReply,
-            seenOnReaction,
-            seenOnTyping,
             manualSeenList,
+        ],
+                        nil),
+        // Unnamed, so its help joins the Messaging info sheet above it.
+        SPKTopicSection(@"", @[
+            keepSeenLocally,
+            locallySeen,
         ],
                         nil),
         SPKTopicSection(@"", @[

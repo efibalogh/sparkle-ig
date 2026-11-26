@@ -61,6 +61,7 @@ NSString *const kSPKActionDownloadAllLinks = @"download_all_links";
 NSString *const kSPKActionExpand = @"expand";
 NSString *const kSPKActionViewThumbnail = @"view_thumbnail";
 NSString *const kSPKActionCopyCaption = @"copy_caption";
+NSString *const kSPKActionCopyLink = @"copy_link";
 NSString *const kSPKActionOpenTopicSettings = @"open_topic_settings";
 NSString *const kSPKActionDeletedMessagesLog = @"deleted_messages_log";
 NSString *const kSPKActionRepost = @"repost";
@@ -93,6 +94,7 @@ static const void *kSPKActionButtonIconWidthConstraintAssocKey = &kSPKActionButt
 static const void *kSPKActionButtonIconHeightConstraintAssocKey = &kSPKActionButtonIconHeightConstraintAssocKey;
 static const void *kSPKActionButtonMenuSignatureAssocKey = &kSPKActionButtonMenuSignatureAssocKey;
 static const void *kSPKActionButtonLastMenuActionAssocKey = &kSPKActionButtonLastMenuActionAssocKey;
+static const void *kSPKActionButtonMenuTransitionAssocKey = &kSPKActionButtonMenuTransitionAssocKey;
 static const void *kSPKActionButtonConfigurationObserverAssocKey = &kSPKActionButtonConfigurationObserverAssocKey;
 static NSDictionary<NSString *, NSString *> *SPKPendingRepostFeedback = nil;
 
@@ -163,6 +165,33 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
 @implementation SPKResolvedMediaEntry
 @end
 
+// The menu state is stored as a deadline, so a dismissal callback that never
+// arrives cannot leave the button frozen: an open menu holds it for at most
+// kSPKActionMenuOpenHold, a closing one for kSPKActionMenuCloseHold. The close
+// animation's completion normally clears it about 1.2s after it starts, so the
+// close hold must outlast that or a layout pass in the tail (swiping to the
+// next story right away) disturbs the morph.
+static const CFTimeInterval kSPKActionMenuOpenHold = 30.0;
+static const CFTimeInterval kSPKActionMenuCloseHold = 2.5;
+
+extern "C" BOOL SPKActionButtonMenuIsTransitioning(UIView *button) {
+    if (!button)
+        return NO;
+    NSNumber *deadline = objc_getAssociatedObject(button, kSPKActionButtonMenuTransitionAssocKey);
+    if (!deadline)
+        return NO;
+    if (CACurrentMediaTime() < deadline.doubleValue)
+        return YES;
+    objc_setAssociatedObject(button, kSPKActionButtonMenuTransitionAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    SPKLog(@"ActionButton", @"menu transition expired without a dismissal completion (tag=%ld)", (long)button.tag);
+    return NO;
+}
+
+static void SPKActionButtonSetMenuTransitionHold(UIView *button, CFTimeInterval hold) {
+    NSNumber *deadline = hold > 0.0 ? @(CACurrentMediaTime() + hold) : nil;
+    objc_setAssociatedObject(button, kSPKActionButtonMenuTransitionAssocKey, deadline, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @implementation SPKActionMenuButton
 
 - (void)setAlpha:(CGFloat)alpha {
@@ -207,6 +236,7 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     (void)interaction;
     (void)configuration;
     (void)animator;
+    SPKActionButtonSetMenuTransitionHold(self, kSPKActionMenuOpenHold);
 
     // Menu-open haptic (long-press, or tap when the button opens the menu as its primary
     // action). Lives here rather than on touch-down so it fires only when the menu actually
@@ -240,6 +270,7 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     [super contextMenuInteraction:interaction willEndForConfiguration:configuration animator:animator];
     (void)interaction;
     (void)configuration;
+    SPKActionButtonSetMenuTransitionHold(self, kSPKActionMenuCloseHold);
 
     SPKReapplyStoriesActionButtonDynamicRange(self);
     [animator addAnimations:^{
@@ -250,7 +281,10 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
         SPKActionMenuButton *strongSelf = self;
         if (!strongSelf)
             return;
+        SPKActionButtonSetMenuTransitionHold(strongSelf, 0.0);
         SPKReapplyStoriesActionButtonDynamicRange(strongSelf);
+        // Layout passes skipped during the morph; place the button again now.
+        [strongSelf.superview setNeedsLayout];
 
         SPKActionButtonContext *context = SPKActionButtonContextFromButton(strongSelf);
         NSString *lastAction = objc_getAssociatedObject(strongSelf, kSPKActionButtonLastMenuActionAssocKey);
@@ -1799,6 +1833,9 @@ static NSArray<SPKMediaItem *> *SPKPlayerItemsFromEntries(NSArray<SPKResolvedMed
             }
         }
         item.sourceMediaObject = metadataObject;
+        // The post itself, so the preview's bulk saves resolve exactly like this
+        // button's (post-level metadata, 4K lookup).
+        item.parentMediaObject = media;
         if (itemUsername.length > 0)
             item.title = itemUsername;
         [items addObject:item];
@@ -2342,6 +2379,11 @@ static BOOL SPKIsActionVisible(SPKActionButtonContext *context,
     if ([identifier isEqualToString:kSPKActionStoryMentionsSheet]) {
         return context.source == SPKActionButtonSourceStories && SPKStoryMediaHasMentions(media);
     }
+    if ([identifier isEqualToString:kSPKActionCopyLink]) {
+        // The link is built at tap time from the same metadata a Gallery save records,
+        // so the menu only needs to know there is a story on screen.
+        return context.source == SPKActionButtonSourceStories && media != nil;
+    }
     if (context.source == SPKActionButtonSourceProfile && [identifier isEqualToString:kSPKActionProfileCopyInfo]) {
         return media != nil;
     }
@@ -2738,6 +2780,30 @@ static BOOL SPKExecuteBulkChildAction(NSString *identifier,
     return YES;
 }
 
+BOOL SPKPerformBulkDownloadForMediaObjects(NSArray *mediaObjects,
+                                           SPKActionButtonSource source,
+                                           NSString *username,
+                                           id parentMedia,
+                                           NSString *identifier,
+                                           UIViewController *presenter,
+                                           UIView *anchorView,
+                                           SPKDownloadSourceSurface surface) {
+    if (mediaObjects.count == 0)
+        return NO;
+    // All or nothing: a batch that mixed this path with the caller's own would
+    // apply two different quality rules to one download.
+    NSMutableArray<SPKResolvedMediaEntry *> *entries = [NSMutableArray arrayWithCapacity:mediaObjects.count];
+    for (id mediaObject in mediaObjects) {
+        SPKResolvedMediaEntry *entry = SPKEntryFromMediaObject(mediaObject);
+        if (!entry || (!entry.photoURL && !entry.videoURL))
+            return NO;
+        [entries addObject:entry];
+    }
+    SPKDownloadDestination destination = [identifier isEqualToString:kSPKActionDownloadAllGallery] ? SPKDownloadDestinationGallery : SPKDownloadDestinationPhotos;
+    SPKPerformBatchDownloadWithQualityPrompt(entries, source, username, parentMedia, destination, identifier, presenter, anchorView, surface);
+    return YES;
+}
+
 static BOOL SPKExecuteCommonAction(NSString *identifier,
                                    SPKActionButtonContext *context,
                                    SPKResolvedMediaEntry *currentEntry,
@@ -3046,6 +3112,23 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
 
         [UIPasteboard generalPasteboard].string = caption;
         SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_CAPTION_COPIED_TEXT"), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+        return YES;
+    }
+
+    if ([identifier isEqualToString:kSPKActionCopyLink]) {
+        // Instagram hides its own share button on some stories (Close Friends, for
+        // one), but the web link still opens for anyone allowed to see the story.
+        // This is the link a Gallery save stores: the story permalink, or the
+        // highlight link when the story is being viewed from a highlight.
+        NSString *linkString = meta.sourceMediaURLString;
+        NSURL *link = linkString.length > 0 ? [NSURL URLWithString:linkString] : nil;
+        if (!link) {
+            SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINK_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
+            return YES;
+        }
+
+        [UIPasteboard generalPasteboard].string = link.absoluteString;
+        SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_STORY_LINK_COPIED_TEXT"), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
         return YES;
     }
 

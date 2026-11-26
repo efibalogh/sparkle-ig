@@ -17,6 +17,7 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         // follow (Instagram decides), on or off.
         @"interface_liquid_glass_mode" : @"follow",
         @"interface_liquid_glass_tabbar_mode" : @"default",
+        @"interface_native_tab_bar" : @NO,
         // off, default (follow iOS), soft or hard.
         @"interface_scroll_edge_style" : @"soft",
         @"interface_nav_order" : @"default",
@@ -33,8 +34,6 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"interface_hide_profile_tab" : @(NO),
         @"interface_hide_tab_bar_in_messages_only" : @(NO),
         @"interface_show_header_button_in_messages_only" : @(YES),
-        @"interface_open_clipboard_link" : @(YES),
-        @"interface_open_clipboard_username" : @(NO),
         // Family name of the imported app-wide font; empty means the default face.
         // Bootstrap rather than feature defaults: the font hooks install in %ctor.
         @"interface_custom_font" : @"",
@@ -46,17 +45,29 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         // Keeps installed language packs level with the release they came from. Device-global for
         // the same reason the language is: one pack directory serves every account.
         @"language_pack_auto_update" : @(YES),
-        @"tools_settings_shortcut" : @(YES),
+        // What holding each tab opens. Messages and Create share a slot, so both
+        // carry the Gallery hold and whichever owns the slot uses it.
+        @"interface_tab_hold_feed" : @"settings",
+        @"interface_tab_hold_clips" : @"default",
+        @"interface_tab_hold_direct" : @"gallery",
+        @"interface_tab_hold_create" : @"gallery",
+        @"interface_tab_hold_search" : @"clipboard_link",
+        @"interface_tab_hold_profile" : @"default",
+        @"interface_tab_hold_saved" : @"default",
         @"tools_shortcut_haptics" : @(YES),
-        @"gallery_quick_access_tab" : @"direct-inbox-tab",
         @"tools_open_settings_on_launch" : @(NO),
+        // NEW pills on settings rows: until_seen, keep (until the next feature release) or off.
+        @"tools_settings_new_badges" : @"until_seen",
         @"tools_disable_all" : @(NO),
 #if SPK_DEV
         @"tools_perf_meter" : @(NO),
         @"tools_perf_hud" : @(NO),
 #endif
+        @"tools_netlog_recording" : @(NO),
         @"app_safe_startup" : @(NO),
         @"general_hide_ads_stories" : @(YES),
+        // Read by the MobileConfig override as the user session starts.
+        @"general_keep_other_audio_playing" : @(YES),
         @"feed_mode" : @"default",
     };
 }
@@ -100,6 +111,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_share_sheet_pins" : @(NO),
         @"general_share_sheet_pinned" : @[],
         @"interface_search_pins" : @(NO),
+        @"interface_restore_account_search" : @(NO),
         @"interface_search_pinned" : @[],
         @"interface_search_pins_list_types" : @[],
         @"interface_search_pins_collapsed" : @(NO),
@@ -110,7 +122,10 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"profile_photo_zoom" : @(NO),
         @"profile_saved_tab" : @(NO),
         @"profile_square_grid" : @(NO),
+        @"profile_grid_filter" : @"off",
         @"profile_exact_follower_count" : @(NO),
+        @"profile_highlight_reorder" : @(NO),
+        @"profile_reels_sort_mode" : @"default",
         @"profile_follow_indicator" : @(NO),
         // The mode (`profile_follow_indicator_mode`) and colorful
         // (`profile_follow_indicator_colorful`) keys are intentionally left
@@ -118,6 +133,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         // above for pre-mode-menu users (→ text + colorful). Everyone else
         // defaults to off / native gray.
         @"profile_analyzer_track_visits" : @(NO),
+        @"profile_analyzer_auto_refresh_hours" : @(0),
         @"feed_action_btn" : @(YES),
         @"feed_action_btn_default_action" : @"none",
         @"feed_header_button" : @(NO),
@@ -154,6 +170,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"stories_hide_join_trending" : @(NO),
         @"stories_mentions_btn" : @(NO),
         @"stories_mentions_count_badge" : @(YES),
+        @"stories_mentions_copy_username" : @(YES),
         @"stories_unlock_preview" : @(NO),
         @"stories_hide_ig_plus_button" : @(NO),
         @"stories_search_viewer_list" : @(NO),
@@ -192,10 +209,11 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"downloads_autosave_keep_history" : @(NO),
         @"feed_disable_appicon_gesture" : @(NO),
         @"reels_tap_control" : @"default",
+        @"reels_hold_to_pause" : @(NO),
         @"reels_playback_controls" : @(NO),
         @"reels_playback_speed_scope" : @"session",
         @"reels_playback_saved_speed" : @(1.0),
-        @"instants_disable_creation" : @(YES),
+        @"instants_disable_creation" : @(NO),
         @"instants_confirm_capture" : @(NO),
         @"instants_disable_camera_control" : @(NO),
         @"instants_skip_camera_after_viewing" : @(NO),
@@ -212,6 +230,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"reels_disable_auto_unmute" : @(NO),
         @"reels_stop_looping" : @(NO),
         @"reels_auto_scroll_default" : @"default",
+        @"notifs_instagram_toast_design" : @"default",
         @"reels_doom_scroll_limit" : @(1),
         @"feed_disable_bg_refresh" : @(NO),
         @"general_cache_auto_clear" : @"never",
@@ -224,11 +243,17 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"downloads_history_limit" : @(100),
         @"downloads_photos_album_enabled" : @(NO),
         @"downloads_photos_album" : @"Sparkle",
+        @"downloads_filename_photos" : @(NO),
+        @"downloads_filename_share" : @(NO),
+        @"downloads_filename_parts" : @"username,posted_date",
+        @"downloads_filename_separator" : @"underscore",
+        @"downloads_filename_date_style" : @"readable",
         @"general_hide_ads_feed" : @(YES),
         @"general_hide_ads_stories" : @(YES),
         @"general_hide_ads_reels" : @(YES),
         @"general_hide_ads_explore" : @(YES),
         @"general_comments_swipe_close_direction" : @"both",
+        @"general_comments_swipe_close_fully" : @(YES),
         @"general_comments_copy_text" : @(YES),
         @"general_comments_media_actions" : @(YES),
         @"general_comments_gif_title" : @(NO),
@@ -242,6 +267,8 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"general_hide_meta_ai_comments" : @(NO),
         @"general_hide_meta_ai_creation" : @(NO),
         @"general_hide_meta_ai_global" : @(NO),
+        @"general_hide_muse_share_sheet" : @(NO),
+        @"general_hide_muse_profile_button" : @(NO),
         @"general_hide_suggested_users_feed" : @(NO),
         @"general_hide_suggested_users_reels" : @(NO),
         @"general_hide_suggested_users_msgs" : @(NO),
@@ -286,6 +313,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"reels_disable_tab_refresh" : @(NO),
         @"stories_stop_auto_advance" : @(NO),
         @"stories_advance_on_manual_seen" : @(NO),
+        @"msgs_manual_seen_keep_local" : @(NO),
         @"msgs_seen_on_send" : @(NO),
         @"msgs_seen_on_reply" : @(NO),
         @"msgs_seen_on_reaction" : @(NO),
@@ -317,9 +345,26 @@ static NSDictionary *SPKFeatureDefaults(void) {
     return defaults;
 }
 
+// New installs default to the Instagram notification style; installs from before
+// that change keep the pill they have been seeing. Runs once, before the migrations
+// stamp their ledger, which together with the onboarding stamp marks an install
+// that has launched Sparkle before. Pinning the global value covers every account,
+// since a per-account read falls back to it.
+static void SPKKeepPillNotificationStyleForExistingInstalls(void) {
+    static NSString *const doneKey = @"app_notifs_style_default_settled";
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:doneKey])
+        return;
+    BOOL existingInstall = [defaults objectForKey:@"app_first_run"] != nil || [defaults objectForKey:SPKPreferenceMigrationsCompletedKey] != nil;
+    if (existingInstall && [defaults objectForKey:kSPKNotificationStyleKey] == nil)
+        [defaults setObject:@"pill" forKey:kSPKNotificationStyleKey];
+    [defaults setBool:YES forKey:doneKey];
+}
+
 void SPKCoreRegisterBootstrapDefaults(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        SPKKeepPillNotificationStyleForExistingInstalls();
         // Before any registration, so renamed keys see only stored values.
         SPKRunPendingPreferenceMigrations();
         [[NSUserDefaults standardUserDefaults] registerDefaults:SPKBootstrapDefaults()];

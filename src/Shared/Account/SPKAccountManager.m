@@ -192,10 +192,24 @@ static BOOL SPKStringsEqual(NSString *a, NSString *b) {
         @"username" : resolvedUsername,
         @"lastSeen" : @([[NSDate date] timeIntervalSince1970])
     };
-    // Skip the write when nothing meaningful changed (avoids churn on every
-    // foreground/refresh).
-    if (existing && [existing[@"username"] isEqualToString:resolvedUsername])
-        return;
+    // lastSeen is what preferenceNamespacePK uses to pick the account before the
+    // session resolves, so it must move whenever the active account changes, not
+    // only when a username does. Skip the write only when this account is already
+    // the newest entry and its username is unchanged (every foreground/refresh).
+    if (existing && [existing[@"username"] isEqualToString:resolvedUsername]) {
+        double ownSeen = [existing[@"lastSeen"] doubleValue];
+        __block BOOL isNewest = YES;
+        [roster enumerateKeysAndObjectsUsingBlock:^(NSString *otherPK, id value, BOOL *stop) {
+            if ([otherPK isEqualToString:pk] || ![value isKindOfClass:[NSDictionary class]])
+                return;
+            if ([value[@"lastSeen"] doubleValue] >= ownSeen) {
+                isNewest = NO;
+                *stop = YES;
+            }
+        }];
+        if (isNewest)
+            return;
+    }
 
     roster[pk] = entry;
     [defaults setObject:roster forKey:kSPKAccountRosterDefaultsKey];

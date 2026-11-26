@@ -13,6 +13,7 @@
 
 #import "../Tweak.h"
 #import "../Utils.h"
+#import "../Shared/UI/SPKFont.h"
 
 NSString *const kSPKPerfMeterEnabledKey = @"tools_perf_meter";
 NSString *const kSPKPerfMeterHUDKey = @"tools_perf_hud";
@@ -392,7 +393,7 @@ void SPKPerfMeterSetHUDVisible(BOOL visible) {
 
         spkPerfHUDLabel = [UILabel new];
         spkPerfHUDLabel.numberOfLines = 0;
-        spkPerfHUDLabel.font = [UIFont monospacedDigitSystemFontOfSize:10 weight:UIFontWeightMedium];
+        [SPKFont apply:[SPKFont monospacedDigitFontForStyle:SPKFontStyleBadge weight:UIFontWeightMedium] to:spkPerfHUDLabel];
         spkPerfHUDLabel.textColor = UIColor.whiteColor;
         [spkPerfHUDWindow.rootViewController.view addSubview:spkPerfHUDLabel];
         spkPerfHUDWindow.hidden = NO;

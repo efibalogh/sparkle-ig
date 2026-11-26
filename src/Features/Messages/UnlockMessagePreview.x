@@ -56,13 +56,22 @@ static id SPKMessagePreviewController(id threadId, id session) {
         return nil;
 
     Class previewClass = NSClassFromString(@"_TtC39IGDirectLightweightThreadViewController39IGDirectLightweightThreadViewController");
-    SEL initializer = @selector(initWithUserSession:threadId:onLoadCompletion:);
-    if (!previewClass || ![previewClass instancesRespondToSelector:initializer])
+    if (!previewClass)
         return nil;
 
-    id preview = [[previewClass alloc] initWithUserSession:session
-                                                  threadId:threadId
+    // IG 455 added a thread-theme flag to the only initializer; earlier builds
+    // define the three-argument one. Each build has exactly one of the two.
+    id preview = nil;
+    if ([previewClass instancesRespondToSelector:@selector(initWithUserSession:threadId:shouldApplyThreadTheme:onLoadCompletion:)]) {
+        preview = [[previewClass alloc] initWithUserSession:session
+                                                   threadId:threadId
+                                     shouldApplyThreadTheme:YES
                                            onLoadCompletion:nil];
+    } else if ([previewClass instancesRespondToSelector:@selector(initWithUserSession:threadId:onLoadCompletion:)]) {
+        preview = [[previewClass alloc] initWithUserSession:session
+                                                   threadId:threadId
+                                            onLoadCompletion:nil];
+    }
     if (!preview)
         return nil;
 

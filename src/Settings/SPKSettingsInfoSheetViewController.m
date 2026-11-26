@@ -4,6 +4,7 @@
 #import "SPKStrings.h"
 #import "../Shared/UI/SPKMediaChrome.h"
 #import "../Utils.h"
+#import "../Shared/UI/SPKFont.h"
 
 static CGFloat const kSPKInfoSheetHorizontalInset = 24.0;
 static CGFloat const kSPKInfoSheetTopPadding = 20.0;
@@ -101,7 +102,7 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
     UILabel *bodyLabel = [UILabel new];
     bodyLabel.translatesAutoresizingMaskIntoConstraints = NO;
     bodyLabel.text = row.helpText;
-    bodyLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    bodyLabel.font = [SPKFont fontForStyle:SPKFontStyleFootnote];
     bodyLabel.adjustsFontForContentSizeCategory = YES;
     bodyLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     bodyLabel.numberOfLines = 0;
@@ -119,11 +120,10 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
         return container;
     }
 
-    UIFont *subheadline = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     UILabel *titleLabel = [UILabel new];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     titleLabel.text = row.title;
-    titleLabel.font = [UIFont systemFontOfSize:subheadline.pointSize weight:UIFontWeightSemibold];
+    titleLabel.font = [SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold];
     titleLabel.adjustsFontForContentSizeCategory = YES;
     titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     titleLabel.numberOfLines = 0;
@@ -176,9 +176,8 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
         width = CGRectGetWidth(UIScreen.mainScreen.bounds);
     }
 
-    UIFont *subheadline = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-    UIFont *titleFont = [UIFont systemFontOfSize:subheadline.pointSize weight:UIFontWeightSemibold];
-    UIFont *bodyFont = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    UIFont *titleFont = [SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold];
+    UIFont *bodyFont = [SPKFont fontForStyle:SPKFontStyleFootnote];
 
     CGFloat contentWidth = MAX(width - (kSPKInfoSheetHorizontalInset * 2.0), 1.0);
     CGFloat gutter = [self spk_reservesIconGutter] ? (kSPKInfoSheetIconSize + kSPKInfoSheetIconGutter) : 0.0;
@@ -244,8 +243,8 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
 
         [self.entryStack.topAnchor constraintEqualToAnchor:content.topAnchor constant:kSPKInfoSheetTopPadding],
         [self.entryStack.bottomAnchor constraintEqualToAnchor:content.bottomAnchor constant:-kSPKInfoSheetBottomPadding],
-        [self.entryStack.leadingAnchor constraintEqualToAnchor:scrollView.frameLayoutGuide.leadingAnchor constant:kSPKInfoSheetHorizontalInset],
-        [self.entryStack.trailingAnchor constraintEqualToAnchor:scrollView.frameLayoutGuide.trailingAnchor constant:-kSPKInfoSheetHorizontalInset]
+        [self.entryStack.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:kSPKInfoSheetHorizontalInset],
+        [self.entryStack.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-kSPKInfoSheetHorizontalInset]
     ]];
 }
 

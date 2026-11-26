@@ -2,6 +2,7 @@
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
 #import "SPKGalleryFile.h"
+#import "../UI/SPKFont.h"
 
 @interface SPKGalleryGridCell ()
 
@@ -78,7 +79,7 @@
 
         _durationLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _durationLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _durationLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2 weight:UIFontWeightSemibold] to:_durationLabel];
         _durationLabel.textColor = [UIColor whiteColor];
         _durationLabel.textAlignment = NSTextAlignmentRight;
         _durationLabel.hidden = YES;
@@ -94,7 +95,7 @@
 
         _usernameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _usernameLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2 weight:UIFontWeightSemibold] to:_usernameLabel];
         _usernameLabel.textColor = [UIColor whiteColor];
         _usernameLabel.textAlignment = NSTextAlignmentLeft;
         _usernameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -116,7 +117,7 @@
         [_folderStack addArrangedSubview:_folderIcon];
 
         _folderLabel = [[UILabel alloc] init];
-        _folderLabel.font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold] to:_folderLabel];
         _folderLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.9];
         _folderLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         [_folderStack addArrangedSubview:_folderLabel];

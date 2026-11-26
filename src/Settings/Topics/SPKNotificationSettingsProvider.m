@@ -1,16 +1,35 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKNotificationSettingsProvider.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
 #import "../SPKPreferenceAvailability.h"
 #import "../SPKSettingsViewController.h"
 #import "../SPKTopicSettingsSupport.h"
+#import "../../Shared/UI/SPKFont.h"
+
+// The table header that holds the preview. The pill inside it resizes itself (a
+// subtitle, a wrapped line, a larger text size), so the header reports every layout
+// pass and the page fits the header around it.
+@interface SPKNotificationPreviewHeaderView : UIView
+@property (nonatomic, copy) void (^layoutHandler)(void);
+@end
+
+@implementation SPKNotificationPreviewHeaderView
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (self.layoutHandler)
+        self.layoutHandler();
+}
+@end
 
 // The page carries a live sample of the chosen style above its rows, updated
 // whenever a row that changes the look does. Tapping it steps through the kinds of
 // notification Sparkle shows.
 @interface SPKNotificationSettingsViewController : SPKSettingsViewController
-@property (nonatomic, strong) UIView *previewHeader;
+@property (nonatomic, strong) SPKNotificationPreviewHeaderView *previewHeader;
+@property (nonatomic, weak) UILabel *previewHint;
+@property (nonatomic, assign) BOOL previewHeaderResizeScheduled;
 @property (nonatomic, strong) SPKNotificationPillView *previewPill;
 // What the current pill was built for; anything else is restyled in place.
 @property (nonatomic, copy) NSString *previewBuildSignature;
@@ -31,9 +50,17 @@
     return [super initWithTitle:SPKL(@"INTERFACE_NOTIFICATIONS_HEADER") sections:[SPKNotificationSettingsProvider sections] reduceMargin:NO];
 }
 
+// The header's height at the standard text size, and the spacing it keeps around the
+// pill and the hint when the pill grows past it.
+static const CGFloat kSPKPreviewHeaderMinHeight = 112.0;
+static const CGFloat kSPKPreviewPillTop = 14.0;
+static const CGFloat kSPKPreviewHintGap = 10.0;
+static const CGFloat kSPKPreviewHintBottom = 6.0;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 112.0)];
+    SPKNotificationPreviewHeaderView *header =
+        [[SPKNotificationPreviewHeaderView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), kSPKPreviewHeaderMinHeight)];
     header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     header.isAccessibilityElement = YES;
     header.accessibilityTraits = UIAccessibilityTraitButton;
@@ -44,20 +71,58 @@
     UILabel *hint = [UILabel new];
     hint.translatesAutoresizingMaskIntoConstraints = NO;
     hint.text = SPKL(@"NOTIFICATION_PREVIEW_TAP_HINT");
-    hint.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    hint.font = [SPKFont fontForStyle:SPKFontStyleFootnote];
     hint.adjustsFontForContentSizeCategory = YES;
     hint.textColor = UIColor.secondaryLabelColor;
     hint.textAlignment = NSTextAlignmentCenter;
     [header addSubview:hint];
     [NSLayoutConstraint activateConstraints:@[
-        [hint.centerXAnchor constraintEqualToAnchor:header.centerXAnchor],
-        [hint.bottomAnchor constraintEqualToAnchor:header.bottomAnchor constant:-6.0],
-        [hint.leadingAnchor constraintGreaterThanOrEqualToAnchor:header.leadingAnchor constant:16.0],
+        [hint.centerXAnchor constraintEqualToAnchor:header.safeAreaLayoutGuide.centerXAnchor],
+        [hint.bottomAnchor constraintEqualToAnchor:header.bottomAnchor constant:-kSPKPreviewHintBottom],
+        [hint.leadingAnchor constraintGreaterThanOrEqualToAnchor:header.safeAreaLayoutGuide.leadingAnchor constant:16.0],
     ]];
 
     self.previewHeader = header;
+    self.previewHint = hint;
+    __weak typeof(self) weakSelf = self;
+    header.layoutHandler = ^{
+        [weakSelf spk_fitPreviewHeaderToPill];
+    };
     self.tableView.tableHeaderView = header;
     [self spk_refreshPreview];
+}
+
+// Grows the header so the pill never covers the hint under it, and shrinks it back
+// (never below its standard height) when the pill does. A table header's height only
+// takes when the header is assigned again, which can't happen inside its own layout
+// pass, so the resize runs right after it.
+- (void)spk_fitPreviewHeaderToPill {
+    UIView *header = self.previewHeader;
+    SPKNotificationPillView *pill = self.previewPill;
+    if (!header || !pill || self.previewHeaderResizeScheduled)
+        return;
+    CGFloat hintHeight = ceil(self.previewHint.intrinsicContentSize.height);
+    CGFloat needed = MAX(kSPKPreviewHeaderMinHeight,
+                         ceil(kSPKPreviewPillTop + CGRectGetHeight(pill.bounds) + kSPKPreviewHintGap + hintHeight + kSPKPreviewHintBottom));
+    if (fabs(needed - CGRectGetHeight(header.frame)) < 0.5)
+        return;
+    self.previewHeaderResizeScheduled = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.previewHeaderResizeScheduled = NO;
+        if (self.tableView.tableHeaderView != header)
+            return;
+        CGRect frame = header.frame;
+        frame.size.height = needed;
+        [UIView animateWithDuration:0.3
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             header.frame = frame;
+                             self.tableView.tableHeaderView = header;
+                             [self.tableView layoutIfNeeded];
+                         }
+                         completion:nil];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -229,8 +294,8 @@ static const NSTimeInterval kSPKPreviewDownloadTick = 1.0 / 20.0;
     UIView *oldPill = self.previewPill;
     [self.previewHeader addSubview:pill];
     [NSLayoutConstraint activateConstraints:@[
-        [pill.centerXAnchor constraintEqualToAnchor:self.previewHeader.centerXAnchor],
-        [pill.topAnchor constraintEqualToAnchor:self.previewHeader.topAnchor constant:14.0],
+        [pill.centerXAnchor constraintEqualToAnchor:self.previewHeader.safeAreaLayoutGuide.centerXAnchor],
+        [pill.topAnchor constraintEqualToAnchor:self.previewHeader.topAnchor constant:kSPKPreviewPillTop],
     ]];
     if (![config[@"kind"] isEqualToString:@"toast"]) {
         [UIView performWithoutAnimation:^{
@@ -360,6 +425,21 @@ static const NSTimeInterval kSPKPreviewDownloadTick = 1.0 / 20.0;
         return instagramStyle() || !SPKPrefIsAvailable(kSPKNotificationPillLiquidGlassEnabledKey);
     };
 
+    // Part of the Instagram style: shown, and in force, only while that style is chosen.
+    SPKSetting *pillToasts = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_PILL_TOASTS_TITLE")
+                                                                     subtitle:@""
+                                                                         menu:SPKInstagramToastDesignMenu()],
+                                                SPKL(@"NOTIFICATION_APPEARANCE_PILL_TOASTS_HELP"));
+    SPKSettingMarkedNewWithID(pillToasts, @"v1.7.0", @"notifs_instagram_toast_design");
+    pillToasts.hiddenProvider = ^BOOL {
+        return !instagramStyle() || !SPKPrefIsAvailable(@"notifs_instagram_toast_design");
+    };
+    // The Style menu isn't new. It carries the label because the new Pill Toasts row
+    // sits behind it, hidden until the Instagram style is chosen; sharing the ID
+    // means seeing either clears both. Not where the design can't run at all.
+    if (SPKPrefIsAvailable(@"notifs_instagram_toast_design"))
+        SPKSettingMarkedNewWithID(style, @"v1.7.0", @"notifs_instagram_toast_design");
+
     SPKSetting *progress = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_DOWNLOAD_PROGRESS_TITLE")
                                                                    subtitle:@""
                                                                        menu:SPKNotificationProgressSubtitleStyleMenu()],
@@ -367,7 +447,7 @@ static const NSTimeInterval kSPKPreviewDownloadTick = 1.0 / 20.0;
 
     return @[
         SPKTopicSection(SPKL(@"NOTIFICATION_STYLE_HEADER"), @[ style ], nil),
-        SPKTopicSection(SPKL(@"NOTIFICATION_APPEARANCE_HEADER"), @[ glow, tint, liquidGlass ], nil),
+        SPKTopicSection(SPKL(@"NOTIFICATION_APPEARANCE_HEADER"), @[ glow, tint, liquidGlass, pillToasts ], nil),
         SPKTopicSection(SPKL(@"NOTIFICATION_BEHAVIOR_HEADER"), @[
             [SPKSetting menuCellWithTitle:SPKL(@"NOTIFICATION_APPEARANCE_POSITION_TITLE")
                                  subtitle:@""

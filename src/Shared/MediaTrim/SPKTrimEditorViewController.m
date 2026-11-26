@@ -4,31 +4,43 @@
 #import "../../Utils.h"
 #import "../Gallery/SPKGalleryFile.h"
 #import "../PhotoEdit/SPKPhotoEditorViewController.h"
-#import "../UI/SPKChipBar.h"
 #import "../UI/SPKMediaChrome.h"
+#import "../UI/SPKMediaEditorChrome.h"
 #import "SPKTrimScrubberView.h"
 #import "SPKVideoCropContentView.h"
 #import "SPKVideoCropViewController.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import "../UI/SPKFont.h"
 
-// Player-control glyphs use the host app's own IG assets (video-play-small /
-// video-pause) so they match Instagram's player exactly, falling back to known
-// ig_icon glyphs if those raster assets are unavailable (see AssetUtils.m).
+// Liquid Glass button configuration on iOS 26 (looked up at runtime: it is not in
+// the build SDK), or nil where it doesn't exist.
+static UIButtonConfiguration *SPKTrimGlassButtonConfiguration(void) {
+    Class configClass = [UIButtonConfiguration class];
+    SEL sel = NSSelectorFromString(@"glassButtonConfiguration");
+    if (![configClass respondsToSelector:sel])
+        return nil;
+    id config = ((id (*)(id, SEL))[configClass methodForSelector:sel])(configClass, sel);
+    return [config isKindOfClass:configClass] ? config : nil;
+}
+
+// Small control glyphs (frame steps, revert) from Instagram's own catalog.
 static UIImage *SPKTrimPlayerIcon(NSString *name, CGFloat pointSize) {
     return [SPKAssetUtils instagramIconNamed:name
                                    pointSize:pointSize
                                renderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
+// Minutes, seconds and tenths ("1:04.3"): whole seconds are too coarse to tell
+// which frame a handle is on.
 static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     if (seconds < 0.0 || !isfinite(seconds))
         seconds = 0.0;
-    NSInteger total = (NSInteger)llround(seconds);
-    return [NSString stringWithFormat:@"%ld:%02ld", (long)(total / 60), (long)(total % 60)];
+    NSInteger tenths = (NSInteger)llround(seconds * 10.0);
+    return [NSString stringWithFormat:@"%ld:%02ld.%ld", (long)(tenths / 600), (long)((tenths / 10) % 60), (long)(tenths % 10)];
 }
 
-@interface SPKTrimEditorViewController () <SPKTrimScrubberViewDelegate, SPKChipBarDelegate>
+@interface SPKTrimEditorViewController () <SPKTrimScrubberViewDelegate>
 @property (nonatomic, strong) SPKTrimConfiguration *configuration;
 @property (nonatomic, strong) AVURLAsset *asset;
 @property (nonatomic, strong) AVPlayer *player;
@@ -37,22 +49,29 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 
 @property (nonatomic, strong) UIView *playerContainer;
 @property (nonatomic, strong) UIImageView *audioArtworkView;
+@property (nonatomic, strong) UILabel *audioPlayHint;              // "Tap to play" under the artwork while paused
 @property (nonatomic, assign) BOOL waveformLoaded;
-@property (nonatomic, strong) UIButton *playPauseButton;
-@property (nonatomic, strong) UIButton *editFrameButton;            // shown in Frame Only mode, in the play/pause slot
+@property (nonatomic, strong) UIImageView *playOverlay;            // centred play glyph while paused; tap the pane to toggle
 @property (nonatomic, strong) UIButton *revertFrameButton;          // shown while an edit is locked in, to discard it
 @property (nonatomic, strong) UIImageView *editedFramePreview;      // covers the pane with the edited still
 @property (nonatomic, copy, nullable) NSURL *pendingEditedFrameURL; // set once the user edits the current frame
+@property (nonatomic, assign) NSTimeInterval editedFrameTime;       // the frame that edit was made from
 @property (nonatomic, strong) UIView *bottomContent;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) SPKTrimScrubberView *scrubber;
-@property (nonatomic, strong) SPKChipBar *modeChips;
+@property (nonatomic, strong) UIButton *stepBackButton;
+@property (nonatomic, strong) UIButton *stepForwardButton;
+@property (nonatomic, assign) NSTimeInterval frameDuration; // one video frame, or a tenth of a second for audio
+@property (nonatomic, assign) NSInteger selectedModeIndex;
 @property (nonatomic, copy) NSArray<NSNumber *> *availableModes;
 @property (nonatomic, strong) UIBarButtonItem *doneMenuItem;
-@property (nonatomic, strong) UIBarButtonItem *cropItem;
+@property (nonatomic, strong, nullable) UIBarButtonItem *toolItem; // Crop for a video, Edit Frame for a still
+@property (nonatomic, copy) NSArray<UIBarButtonItem *> *modeItems;
 @property (nonatomic, strong) UIBarButtonItem *doneItem;
 @property (nonatomic, copy, nullable) SPKTrimCrop *pendingCrop; // framing edit carried onto the result
 @property (nonatomic, assign) BOOL seedingLockedCrop;          // re-entry guard for the locked-ratio default
+@property (nonatomic, assign) BOOL userCropped;                // a crop came from the crop editor, not the default
+@property (nonatomic, assign) NSTimeInterval initialEndTime;   // where the selection started out, for change tracking
 @property (nonatomic, strong) UIView *cropPreviewHost;                  // clips the preview to the crop rect
 @property (nonatomic, strong) SPKVideoCropContentView *cropPreviewContent;
 @property (nonatomic, assign) CGSize orientedSize;
@@ -84,16 +103,9 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     }
     SPKTrimEditorViewController *editor = [[self alloc] initWithConfiguration:configuration];
     editor.completion = completion;
-    // Hosted in a navigation controller so the top bar and bottom toolbar are
-    // native components — they render as Liquid Glass on iOS 26 and as standard
-    // translucent bars on earlier systems, with no custom material code.
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editor];
-    nav.modalPresentationStyle = UIModalPresentationFullScreen;
-    // Media editor is always dark (like Photos), so its black background and
-    // light controls read correctly regardless of the system appearance — in
-    // light mode the label-colored controls would otherwise vanish on black.
-    nav.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-    [presenter presentViewController:nav animated:YES completion:nil];
+    // Native top bar and toolbar: Liquid Glass on iOS 26, moved into the side
+    // column on iPhone Duo, standard translucent bars on earlier systems.
+    SPKMediaEditorPresent(editor, presenter);
 }
 
 - (void)dealloc {
@@ -135,6 +147,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         [modes addObject:@(SPKTrimResultModeTrimmedAudio)];
     }
     _availableModes = [modes copy];
+    _frameDuration = 0.1;
 
     [self setupChrome];
     [self setupPlayerContainer];
@@ -144,9 +157,9 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // The mode picker is an in-content chip bar (see setupBottomContent), so the
-    // native bottom toolbar stays hidden.
-    [self.navigationController setToolbarHidden:YES animated:NO];
+    // Modes and tools live in the native toolbar; a single-mode trim with no
+    // tool has nothing to put there.
+    [self.navigationController setToolbarHidden:(self.toolbarItems.count == 0) animated:NO];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -184,29 +197,16 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         doneItem = SPKMediaChromeTopBarButtonItemWithStyle(@"check", self, @selector(doneTapped), UIBarButtonItemStyleDone, [SPKUtils SPKColor_InstagramBlue], SPKL(@"GALLERY_GALLERY_FILE_DETAILS_SAVE_TEXT"));
     }
     self.doneItem = doneItem;
-    if (_configuration.mediaKind == SPKTrimMediaKindVideo && _configuration.allowsCrop) {
-        // Framing lives on its own screen (like Frame Only's editor) so the trim
-        // controls keep the whole bottom of the display.
-        self.cropItem = SPKMediaChromeTopBarButtonItem(@"crop", self, @selector(cropTapped));
-        self.cropItem.accessibilityLabel = SPKL(@"MEDIA_TRIM_TRIM_EDITOR_CROP_TEXT");
+    // One tool slot for every mode: Crop for a video, Edit Frame (the photo
+    // editor on the chosen frame) for a still, disabled for audio. It never
+    // leaves the toolbar, so switching modes doesn't reflow it.
+    if ([self canCropVideo] || [self.availableModes containsObject:@(SPKTrimResultModeFrameOnly)]) {
+        self.toolItem = SPKMediaChromeBottomBarButtonItem(@"crop", SPKL(@"MEDIA_TRIM_TRIM_EDITOR_CROP_TEXT"), self, @selector(toolItemTapped));
     }
+    self.navigationItem.hidesBackButton = YES;
     SPKMediaChromeSetLeadingTopBarItems(self.navigationItem, @[ cancelItem ]);
-    [self refreshTrailingTopBarItems];
-}
-
-// Crop only has meaning for a trimmed *video*: a single frame is cropped by the
-// photo editor behind Edit Frame, and Audio Only has no picture. The button is
-// therefore added and removed with the mode, in its own group so iOS 26 renders
-// it as a separate glass bubble beside Save rather than merging the two.
-- (void)refreshTrailingTopBarItems {
-    if (!self.doneItem)
-        return;
-    BOOL cropApplies = (self.cropItem != nil && [self currentSelectedMode] == SPKTrimResultModeTrimmedVideo);
-    if (cropApplies) {
-        SPKMediaChromeSetTrailingTopBarItemGroups(self.navigationItem, @[ @[ self.cropItem ], @[ self.doneItem ] ]);
-    } else {
-        SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[ self.doneItem ]);
-    }
+    SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[ doneItem ]);
+    [self rebuildModeToolbarItems];
 }
 
 #pragma mark - Crop
@@ -219,6 +219,8 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     [self updatePlaybackControls];
     __weak typeof(self) weakSelf = self;
     [SPKVideoCropViewController presentForVideoURL:self.configuration.sourceURL
+                                      startSeconds:self.scrubber.startTime
+                                        endSeconds:self.scrubber.endTime
                                  lockedAspectRatio:self.configuration.lockedCropAspectRatio
                                        initialCrop:self.pendingCrop
                                              title:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_CROP_TEXT")
@@ -258,6 +260,8 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 }
 
 - (void)applyCrop:(SPKTrimCrop *)crop {
+    if (!self.seedingLockedCrop)
+        self.userCropped = (crop != nil && !crop.isIdentity);
     self.pendingCrop = (crop && !crop.isIdentity) ? crop : nil;
     // Cancelling the crop editor must not drop a locked ratio back to the
     // source's shape; fall back to the centred default instead of no crop.
@@ -265,15 +269,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         [self seedLockedAspectCropIfNeeded];
         return;
     }
-    // Tint the button while a crop is active, so the state is legible even when
-    // the framing change itself is subtle.
-    UIColor *tint = self.pendingCrop ? [SPKUtils SPKColor_InstagramBlue]
-                                     : ([SPKUtils SPKColor_InstagramPrimaryText] ?: [UIColor whiteColor]);
-    self.cropItem.tintColor = tint;
-    UIView *custom = self.cropItem.customView;
-    if ([custom isKindOfClass:[UIButton class]]) {
-        ((UIButton *)custom).tintColor = tint;
-    }
+    [self refreshToolItemTints];
     [self updateCropPreview];
 }
 
@@ -306,6 +302,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     }
     self.cropPreviewContent.rotationQuarters = crop.rotationQuarters;
     self.cropPreviewContent.mirrored = crop.mirrored;
+    self.cropPreviewContent.straightenDegrees = crop.straightenDegrees;
     self.playerLayer.player = nil;
     self.playerLayer.hidden = YES;
     self.cropPreviewContent.playerLayer.player = self.player;
@@ -349,8 +346,11 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 
     [NSLayoutConstraint activateConstraints:@[
         [_playerContainer.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
-        [_playerContainer.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [_playerContainer.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        // The safe area, like the filmstrip below, so the picture centres over
+        // the strip rather than the whole display (on iPhone Duo the side
+        // column takes the trailing edge).
+        [_playerContainer.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [_playerContainer.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
     ]];
 
     // While a frame edit is locked in, this covers the live picture with the
@@ -367,6 +367,31 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         [_editedFramePreview.leadingAnchor constraintEqualToAnchor:_playerContainer.leadingAnchor],
         [_editedFramePreview.trailingAnchor constraintEqualToAnchor:_playerContainer.trailingAnchor],
     ]];
+
+    // Tapping the picture plays and pauses it, like Instagram's own player, so
+    // the filmstrip keeps the full width.
+    _playOverlay = [[UIImageView alloc] initWithImage:[SPKAssetUtils instagramIconNamed:@"video-play"
+                                                                             pointSize:64.0
+                                                                         renderingMode:UIImageRenderingModeAlwaysOriginal]];
+    _playOverlay.translatesAutoresizingMaskIntoConstraints = NO;
+    _playOverlay.contentMode = UIViewContentModeScaleAspectFit;
+    _playOverlay.alpha = 0.0;
+    _playOverlay.isAccessibilityElement = NO;
+    [_playerContainer addSubview:_playOverlay];
+    [NSLayoutConstraint activateConstraints:@[
+        [_playOverlay.centerXAnchor constraintEqualToAnchor:_playerContainer.centerXAnchor],
+        [_playOverlay.centerYAnchor constraintEqualToAnchor:_playerContainer.centerYAnchor],
+        [_playOverlay.widthAnchor constraintEqualToConstant:64.0],
+        [_playOverlay.heightAnchor constraintEqualToConstant:64.0],
+    ]];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playerPaneTapped:)];
+    [_playerContainer addGestureRecognizer:tap];
+    _playerContainer.accessibilityTraits = UIAccessibilityTraitButton;
+}
+
+- (BOOL)accessibilityPerformMagicTap {
+    [self togglePlayback];
+    return YES;
 }
 
 - (void)setupBottomContent {
@@ -377,40 +402,40 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _timeLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText] ?: [UIColor whiteColor];
-    _timeLabel.font = [UIFont monospacedDigitSystemFontOfSize:13.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont monospacedDigitFontForStyle:SPKFontStyleFootnote weight:UIFontWeightMedium] to:_timeLabel];
     _timeLabel.textAlignment = NSTextAlignmentCenter;
     [_bottomContent addSubview:_timeLabel];
 
-    // Play/pause to the left of the filmstrip (Photos-style), not overlaid.
-    _playPauseButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    _playPauseButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _playPauseButton.tintColor = [SPKUtils SPKColor_InstagramPrimaryText] ?: [UIColor whiteColor];
-    [_playPauseButton setImage:SPKTrimPlayerIcon(@"video_play", 36.0) forState:UIControlStateNormal];
-    [_playPauseButton addTarget:self action:@selector(togglePlayback) forControlEvents:UIControlEventTouchUpInside];
-    _playPauseButton.accessibilityLabel = SPKL(@"MEDIA_TRIM_TRIM_EDITOR_PLAY_TEXT");
-    [_bottomContent addSubview:_playPauseButton];
-
-    // In Frame Only mode playback is meaningless, so the play/pause slot becomes
-    // an Edit button that opens the photo editor on the chosen frame.
-    _editFrameButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    _editFrameButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _editFrameButton.tintColor = [SPKUtils SPKColor_InstagramPrimaryText] ?: [UIColor whiteColor];
-    [_editFrameButton setImage:SPKTrimPlayerIcon(@"crop", 24.0) forState:UIControlStateNormal];
-    [_editFrameButton addTarget:self action:@selector(editFrameTapped) forControlEvents:UIControlEventTouchUpInside];
-    _editFrameButton.accessibilityLabel = SPKL(@"MEDIA_TRIM_TRIM_EDITOR_EDIT_FRAME_TEXT");
-    _editFrameButton.hidden = YES;
-    [_bottomContent addSubview:_editFrameButton];
-
     // Shown in place of the scrubber once a frame edit is locked in: discards the
     // edit and unlocks frame selection again.
-    _revertFrameButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    // A labelled capsule over the dimmed, locked filmstrip: the one thing to do
+    // with the strip while an edit pins the frame.
+    UIButtonConfiguration *revertConfig = SPKTrimGlassButtonConfiguration() ?: [UIButtonConfiguration grayButtonConfiguration];
+    revertConfig.cornerStyle = UIButtonConfigurationCornerStyleCapsule;
+    revertConfig.image = SPKTrimPlayerIcon(@"arrow_ccw", 18.0);
+    revertConfig.imagePadding = 6.0;
+    revertConfig.contentInsets = NSDirectionalEdgeInsetsMake(9.0, 14.0, 9.0, 16.0);
+    revertConfig.baseForegroundColor = [SPKUtils SPKColor_InstagramPrimaryText] ?: [UIColor whiteColor];
+    revertConfig.attributedTitle = [[NSAttributedString alloc]
+        initWithString:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_REVERT_EDIT_TEXT")
+            attributes:@{NSFontAttributeName : [SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightSemibold]}];
+    _revertFrameButton = [UIButton buttonWithConfiguration:revertConfig primaryAction:nil];
     _revertFrameButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _revertFrameButton.tintColor = [SPKUtils SPKColor_InstagramPrimaryText] ?: [UIColor whiteColor];
-    [_revertFrameButton setImage:SPKTrimPlayerIcon(@"arrow_ccw", 24.0) forState:UIControlStateNormal];
     [_revertFrameButton addTarget:self action:@selector(revertFrameTapped) forControlEvents:UIControlEventTouchUpInside];
-    _revertFrameButton.accessibilityLabel = SPKL(@"MEDIA_TRIM_TRIM_EDITOR_REVERT_EDIT_TEXT");
     _revertFrameButton.hidden = YES;
-    [_bottomContent addSubview:_revertFrameButton];
+
+    // Frame steps either side of the time readout. They move whatever was
+    // dragged last, so a handle can be placed on an exact frame.
+    _stepBackButton = [self makeStepButtonWithIcon:@"ig_icon_chevron_left_outline_24"
+                                             label:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_PREVIOUS_FRAME_ACCESSIBILITY_LABEL")
+                                            action:@selector(stepBackTapped)];
+    [_bottomContent addSubview:_stepBackButton];
+    // The 24pt outline pair by catalog name: the shared "chevron_right" entry
+    // prefers the small filled disclosure chevron used in lists.
+    _stepForwardButton = [self makeStepButtonWithIcon:@"ig_icon_chevron_right_outline_24"
+                                                label:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_NEXT_FRAME_ACCESSIBILITY_LABEL")
+                                               action:@selector(stepForwardTapped)];
+    [_bottomContent addSubview:_stepForwardButton];
 
     _scrubber = [[SPKTrimScrubberView alloc] init];
     _scrubber.translatesAutoresizingMaskIntoConstraints = NO;
@@ -418,6 +443,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     _scrubber.maximumDuration = _configuration.maximumDuration;
     _scrubber.delegate = self;
     [_bottomContent addSubview:_scrubber];
+    [_bottomContent addSubview:_revertFrameButton];
 
     [NSLayoutConstraint activateConstraints:@[
         [_bottomContent.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
@@ -427,84 +453,174 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         [_bottomContent.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor
                                                     constant:-8.0],
 
-        [_timeLabel.topAnchor constraintEqualToAnchor:_bottomContent.topAnchor],
-        [_timeLabel.centerXAnchor constraintEqualToAnchor:_bottomContent.centerXAnchor],
+        [_timeLabel.centerYAnchor constraintEqualToAnchor:_stepBackButton.centerYAnchor],
+        [_timeLabel.centerXAnchor constraintEqualToAnchor:_scrubber.centerXAnchor],
 
-        [_playPauseButton.leadingAnchor constraintEqualToAnchor:_bottomContent.leadingAnchor],
-        [_playPauseButton.centerYAnchor constraintEqualToAnchor:_scrubber.centerYAnchor],
-        [_playPauseButton.widthAnchor constraintEqualToConstant:40.0],
-        [_playPauseButton.heightAnchor constraintEqualToConstant:40.0],
+        [_stepBackButton.topAnchor constraintEqualToAnchor:_bottomContent.topAnchor],
+        [_stepBackButton.trailingAnchor constraintEqualToAnchor:_timeLabel.leadingAnchor constant:-12.0],
+        [_stepBackButton.widthAnchor constraintEqualToConstant:36.0],
+        [_stepBackButton.heightAnchor constraintEqualToConstant:32.0],
+        [_stepForwardButton.leadingAnchor constraintEqualToAnchor:_timeLabel.trailingAnchor constant:12.0],
+        [_stepForwardButton.centerYAnchor constraintEqualToAnchor:_stepBackButton.centerYAnchor],
+        [_stepForwardButton.widthAnchor constraintEqualToConstant:36.0],
+        [_stepForwardButton.heightAnchor constraintEqualToConstant:32.0],
 
-        [_editFrameButton.leadingAnchor constraintEqualToAnchor:_playPauseButton.leadingAnchor],
-        [_editFrameButton.centerYAnchor constraintEqualToAnchor:_playPauseButton.centerYAnchor],
-        [_editFrameButton.widthAnchor constraintEqualToAnchor:_playPauseButton.widthAnchor],
-        [_editFrameButton.heightAnchor constraintEqualToAnchor:_playPauseButton.heightAnchor],
+        [_revertFrameButton.centerXAnchor constraintEqualToAnchor:_scrubber.centerXAnchor],
+        [_revertFrameButton.centerYAnchor constraintEqualToAnchor:_scrubber.centerYAnchor],
 
-        [_revertFrameButton.trailingAnchor constraintEqualToAnchor:_bottomContent.trailingAnchor],
-        [_revertFrameButton.centerYAnchor constraintEqualToAnchor:_playPauseButton.centerYAnchor],
-
-        [_scrubber.topAnchor constraintEqualToAnchor:_timeLabel.bottomAnchor
-                                            constant:10.0],
-        [_scrubber.leadingAnchor constraintEqualToAnchor:_playPauseButton.trailingAnchor
-                                                constant:10.0],
+        // Room above the track for the time bubble over a moving handle.
+        [_scrubber.topAnchor constraintEqualToAnchor:_stepBackButton.bottomAnchor
+                                            constant:14.0],
+        [_scrubber.leadingAnchor constraintEqualToAnchor:_bottomContent.leadingAnchor],
         [_scrubber.trailingAnchor constraintEqualToAnchor:_bottomContent.trailingAnchor],
         [_scrubber.heightAnchor constraintEqualToConstant:52.0],
         [_scrubber.bottomAnchor constraintEqualToAnchor:_bottomContent.bottomAnchor],
     ]];
 
-    // The mode picker is a chip bar sitting above the controls (replacing the
-    // old segmented control). It is only shown when there is more than one mode.
-    // The chips fill the width equally and never scroll (distributesToFit), so all
-    // modes stay visible even on narrow screens.
+    // The video pane fills everything above the controls.
+    [_playerContainer.bottomAnchor constraintEqualToAnchor:_bottomContent.topAnchor constant:-8.0].active = YES;
+}
+
+- (UIButton *)makeStepButtonWithIcon:(NSString *)icon label:(NSString *)label action:(SEL)action {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    button.tintColor = [SPKUtils SPKColor_InstagramPrimaryText] ?: [UIColor whiteColor];
+    [button setImage:SPKTrimPlayerIcon(icon, 20.0) forState:UIControlStateNormal];
+    button.accessibilityLabel = label;
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
+// (Re)builds the native toolbar: the mode switch from `availableModes`, then
+// the tool slot. Called on setup and again if a mode is pruned after the asset
+// loads (a silent video drops Audio Only); a mode change only restyles the
+// items (refreshToolbarStateAnimated:), so the toolbar never reflows.
+- (void)rebuildModeToolbarItems {
+    NSMutableArray<NSArray<UIBarButtonItem *> *> *groups = [NSMutableArray array];
+    NSMutableArray<UIBarButtonItem *> *modeItems = [NSMutableArray array];
     if (self.availableModes.count > 1) {
-        _modeChips = [[SPKChipBar alloc] init];
-        _modeChips.translatesAutoresizingMaskIntoConstraints = NO;
-        _modeChips.delegate = self;
-        _modeChips.distributesToFit = YES;
-        [self rebuildModeChipItems];
-        _modeChips.selectedIndex = 0;
-        [self.view addSubview:_modeChips];
-        [NSLayoutConstraint activateConstraints:@[
-            [_modeChips.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
-            [_modeChips.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
-            [_modeChips.bottomAnchor constraintEqualToAnchor:_bottomContent.topAnchor
-                                                    constant:-4.0],
-            // Video pane fills the gap above the mode picker.
-            [_playerContainer.bottomAnchor constraintEqualToAnchor:_modeChips.topAnchor
-                                                          constant:-4.0],
-        ]];
-    } else {
-        // No mode row: the video pane pins directly above the controls.
-        [_playerContainer.bottomAnchor constraintEqualToAnchor:_bottomContent.topAnchor constant:-8.0].active = YES;
+        for (NSUInteger i = 0; i < self.availableModes.count; i++) {
+            SPKTrimResultMode mode = self.availableModes[i].integerValue;
+            NSString *icon = @"video";
+            if (mode == SPKTrimResultModeFrameOnly)
+                icon = @"photo";
+            else if (mode == SPKTrimResultModeTrimmedAudio)
+                icon = @"audio";
+            UIBarButtonItem *item = SPKMediaChromeBottomBarButtonItem(icon, [self titleForMode:mode], self, @selector(modeItemTapped:));
+            item.tag = (NSInteger)i;
+            [modeItems addObject:item];
+        }
+        [groups addObject:modeItems];
+    }
+    self.modeItems = modeItems;
+    if (self.toolItem)
+        [groups addObject:@[ self.toolItem ]];
+    [self refreshToolbarStateAnimated:NO];
+    self.toolbarItems = groups.count > 0 ? SPKMediaChromeBottomToolbarItemsWithGroups(groups) : nil;
+    if (self.isViewLoaded && self.view.window)
+        [self.navigationController setToolbarHidden:(groups.count == 0) animated:NO];
+    [self refreshModeTitle];
+}
+
+- (BOOL)canCropVideo {
+    return self.configuration.mediaKind == SPKTrimMediaKindVideo && self.configuration.allowsCrop;
+}
+
+// The selected mode in blue, and the tool slot set up for it.
+- (void)refreshToolbarStateAnimated:(BOOL)animated {
+    void (^changes)(void) = ^{
+        for (UIBarButtonItem *item in self.modeItems) {
+            SPKMediaEditorSetSwitchItemSelected(item, item.tag == self.selectedModeIndex);
+        }
+        [self refreshToolItemTints];
+    };
+    UIView *toolbar = self.navigationController.toolbar;
+    if (!animated || !toolbar) {
+        changes();
+        return;
+    }
+    [UIView transitionWithView:toolbar
+                      duration:0.2
+                       options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction
+                    animations:changes
+                    completion:nil];
+}
+
+- (void)toolItemTapped {
+    switch ([self currentSelectedMode]) {
+    case SPKTrimResultModeTrimmedVideo:
+        [self cropTapped];
+        break;
+    case SPKTrimResultModeFrameOnly:
+        [self editFrameTapped];
+        break;
+    case SPKTrimResultModeTrimmedAudio:
+        break;
     }
 }
 
-// (Re)builds the chip titles/icons from `availableModes` — called on setup and
-// again if a mode is pruned after the asset loads (e.g. a silent video drops the
-// Audio Only chip).
-- (void)rebuildModeChipItems {
-    if (!_modeChips)
+// Crop only has meaning for a trimmed *video*: a single frame is edited in the
+// photo editor behind Edit Frame, and Audio Only has no picture. The tool turns
+// blue while its edit is in effect, so the state is legible even when the
+// change itself is subtle.
+- (void)refreshToolItemTints {
+    UIBarButtonItem *tool = self.toolItem;
+    if (!tool)
         return;
-    NSMutableArray<NSString *> *titles = [NSMutableArray array];
-    NSMutableArray<NSString *> *symbols = [NSMutableArray array];
-    NSMutableArray<NSString *> *selectedSymbols = [NSMutableArray array];
-    for (NSNumber *modeNum in self.availableModes) {
-        SPKTrimResultMode mode = modeNum.integerValue;
-        if (mode == SPKTrimResultModeTrimmedVideo) {
-            [titles addObject:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_TRIM_VIDEO_TEXT")];
-            [symbols addObject:@"video"];
-            [selectedSymbols addObject:@"video_filled"];
-        } else if (mode == SPKTrimResultModeFrameOnly) {
-            [titles addObject:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_FRAME_ONLY_TEXT")];
-            [symbols addObject:@"photo"];
-            [selectedSymbols addObject:@"photo_filled"];
-        } else if (mode == SPKTrimResultModeTrimmedAudio) {
-            [titles addObject:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_AUDIO_ONLY_TEXT")];
-            [symbols addObject:@"audio"];
-            [selectedSymbols addObject:@"audio_filled"];
-        }
+    SPKTrimResultMode mode = [self currentSelectedMode];
+    BOOL applied = NO;
+    if (mode == SPKTrimResultModeFrameOnly) {
+        tool.enabled = YES;
+        tool.accessibilityLabel = SPKL(@"MEDIA_TRIM_TRIM_EDITOR_EDIT_FRAME_TEXT");
+        applied = (self.pendingEditedFrameURL != nil);
+    } else {
+        tool.enabled = (mode == SPKTrimResultModeTrimmedVideo && [self canCropVideo]);
+        tool.accessibilityLabel = SPKL(@"MEDIA_TRIM_TRIM_EDITOR_CROP_TEXT");
+        applied = (tool.enabled && self.pendingCrop != nil);
     }
-    [_modeChips setItems:titles symbols:symbols selectedSymbols:selectedSymbols];
+    tool.tintColor = applied ? [SPKUtils SPKColor_InstagramBlue] : ([SPKUtils SPKColor_InstagramPrimaryText] ?: [UIColor whiteColor]);
+}
+
+- (NSString *)titleForMode:(SPKTrimResultMode)mode {
+    switch (mode) {
+    case SPKTrimResultModeFrameOnly:
+        return SPKL(@"MEDIA_TRIM_TRIM_EDITOR_FRAME_ONLY_TEXT");
+    case SPKTrimResultModeTrimmedAudio:
+        return SPKL(@"MEDIA_TRIM_TRIM_EDITOR_AUDIO_ONLY_TEXT");
+    case SPKTrimResultModeTrimmedVideo:
+        return SPKL(@"MEDIA_TRIM_TRIM_EDITOR_TRIM_VIDEO_TEXT");
+    }
+    return @"";
+}
+
+// The toolbar shows glyphs only, so the title names the mode they select.
+- (void)refreshModeTitle {
+    if (self.availableModes.count > 1) {
+        self.title = [self titleForMode:[self currentSelectedMode]];
+    } else {
+        self.title = self.configuration.title.length > 0 ? self.configuration.title : SPKL(@"ALERT_ACTION_TRIM");
+    }
+}
+
+- (void)modeItemTapped:(UIBarButtonItem *)item {
+    NSInteger index = item.tag;
+    if (index == self.selectedModeIndex || index < 0 || index >= (NSInteger)self.availableModes.count)
+        return;
+    self.selectedModeIndex = index;
+    [[[UISelectionFeedbackGenerator alloc] init] selectionChanged];
+    [self refreshToolbarStateAnimated:YES];
+    [self refreshModeTitle];
+    // Crossfade the picture and the controls into the new mode. A layer
+    // transition runs in the render server, so the live video fades too rather
+    // than flashing black the way a view snapshot would.
+    for (UIView *view in @[ self.playerContainer, self.bottomContent ]) {
+        CATransition *fade = [CATransition animation];
+        fade.type = kCATransitionFade;
+        fade.duration = 0.25;
+        fade.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        [view.layer addAnimation:fade forKey:@"spk.modeFade"];
+    }
+    [self applyMode:index];
 }
 
 // Removes the Audio Only mode once the asset is known to have no audio track.
@@ -520,14 +636,11 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     [modes removeObject:@(SPKTrimResultModeTrimmedAudio)];
     self.availableModes = modes;
 
-    // If the currently-selected chip was after the removed one, clamp it.
-    if (_modeChips.selectedIndex >= (NSInteger)modes.count) {
-        _modeChips.selectedIndex = 0;
+    // If the selected mode was after the removed one, clamp it.
+    if (self.selectedModeIndex >= (NSInteger)modes.count) {
+        self.selectedModeIndex = 0;
     }
-    [self rebuildModeChipItems];
-    // Nothing but Trim Video left (only possible when single-frame is disabled):
-    // hide the lone chip.
-    _modeChips.hidden = (modes.count <= 1);
+    [self rebuildModeToolbarItems];
 }
 
 #pragma mark - Asset loading
@@ -580,6 +693,9 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     if (videoTrack) {
         CGSize rendered = CGSizeApplyAffineTransform(videoTrack.naturalSize, videoTrack.preferredTransform);
         self.orientedSize = CGSizeMake(fabs(rendered.width), fabs(rendered.height));
+        if (videoTrack.nominalFrameRate > 1.0) {
+            self.frameDuration = 1.0 / videoTrack.nominalFrameRate;
+        }
         [self seedLockedAspectCropIfNeeded];
     }
 
@@ -591,6 +707,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         initialEnd = MIN(duration, self.configuration.maximumDuration);
     }
     [self.scrubber setStartTime:0.0 endTime:initialEnd];
+    self.initialEndTime = initialEnd;
     self.scrubber.playheadTime = 0.0;
     if (isAudio) {
         // No video track — audio album-art in the pane + waveform in the scrubber.
@@ -635,6 +752,24 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         [art.heightAnchor constraintEqualToConstant:150.0],
     ]];
     _audioArtworkView = art;
+
+    // The artwork has no play glyph over it, so while paused a line under it
+    // says what a tap does.
+    UILabel *hint = [[UILabel alloc] init];
+    hint.translatesAutoresizingMaskIntoConstraints = NO;
+    hint.text = SPKL(@"MEDIA_TRIM_TRIM_EDITOR_TAP_TO_PLAY_HINT");
+    hint.textColor = [SPKUtils SPKColor_InstagramSecondaryText] ?: [UIColor lightGrayColor];
+    hint.textAlignment = NSTextAlignmentCenter;
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightMedium] to:hint];
+    hint.alpha = 0.0;
+    hint.isAccessibilityElement = NO; // the pane itself is the Play button
+    [self.playerContainer addSubview:hint];
+    [NSLayoutConstraint activateConstraints:@[
+        [hint.topAnchor constraintEqualToAnchor:art.bottomAnchor constant:12.0],
+        [hint.centerXAnchor constraintEqualToAnchor:self.playerContainer.centerXAnchor],
+        [hint.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.playerContainer.leadingAnchor constant:16.0],
+    ]];
+    _audioPlayHint = hint;
     return art;
 }
 
@@ -645,6 +780,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 - (void)setAudioPresentation:(BOOL)audio {
     self.playerLayer.hidden = audio;
     [self ensureAudioArtworkView].hidden = !audio;
+    self.audioPlayHint.hidden = !audio;
     // The cropped preview is a picture, so it goes away with the rest of the
     // picture; switching back to a video mode restores it (updateCropPreview).
     if (audio) {
@@ -696,31 +832,60 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     [self updatePlaybackControls];
 }
 
-// Swaps the play/pause glyph and disables the control in single-frame mode
-// (which has no playback).
+// The play glyph sits in the middle of the pane while paused and fades away
+// once playing. Frame Only has no playback, so neither the glyph nor the tap.
 - (void)updatePlaybackControls {
-    BOOL frameOnly = self.scrubber.isFrameOnlyMode;
-    // Frame Only swaps the (useless) play/pause for an Edit button.
-    self.playPauseButton.hidden = frameOnly;
-    self.editFrameButton.hidden = !frameOnly;
-
-    BOOL canPlay = self.playerReady && !frameOnly;
-    [self.playPauseButton setImage:SPKTrimPlayerIcon(self.isPlaying ? @"video_pause" : @"video_play", 36.0)
-                          forState:UIControlStateNormal];
-    self.playPauseButton.accessibilityLabel = self.isPlaying ? SPKL(@"MEDIA_TRIM_TRIM_EDITOR_PAUSE_TEXT") : SPKL(@"MEDIA_TRIM_TRIM_EDITOR_PLAY_TEXT");
-    self.playPauseButton.enabled = canPlay;
-    self.playPauseButton.alpha = canPlay ? 1.0 : 0.35;
+    BOOL canPlay = self.playerReady && !self.scrubber.isFrameOnlyMode;
+    self.playerContainer.isAccessibilityElement = canPlay;
+    self.playerContainer.accessibilityLabel = self.isPlaying ? SPKL(@"MEDIA_TRIM_TRIM_EDITOR_PAUSE_TEXT") : SPKL(@"MEDIA_TRIM_TRIM_EDITOR_PLAY_TEXT");
+    // Over the audio artwork a play glyph would sit on top of another glyph, so
+    // there the artwork itself shows the state: dimmed while paused.
+    BOOL audioArt = (self.audioArtworkView && !self.audioArtworkView.hidden);
+    BOOL paused = (canPlay && !self.isPlaying);
+    CGFloat overlayAlpha = (paused && !audioArt) ? 1.0 : 0.0;
+    CGFloat artAlpha = (audioArt && paused) ? 0.4 : 1.0;
+    CGFloat hintAlpha = (audioArt && paused) ? 1.0 : 0.0;
+    if (self.playOverlay.alpha != overlayAlpha || self.audioArtworkView.alpha != artAlpha || self.audioPlayHint.alpha != hintAlpha) {
+        [UIView animateWithDuration:0.2
+                              delay:0.0
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             self.playOverlay.alpha = overlayAlpha;
+                             self.playOverlay.transform = overlayAlpha > 0.0 ? CGAffineTransformIdentity : CGAffineTransformMakeScale(1.15, 1.15);
+                             self.audioArtworkView.alpha = artAlpha;
+                             self.audioPlayHint.alpha = hintAlpha;
+                         }
+                         completion:nil];
+    }
     [self updateFrameEditingUI];
 }
 
-// Reflects whether a frame edit is currently locked in: the edited still covers
-// the pane and the scrubber is hidden (so the frame can't be nudged away),
-// replaced by a Revert button. The Edit button stays available to refine further.
+- (void)playerPaneTapped:(UITapGestureRecognizer *)tap {
+    if (tap.state != UIGestureRecognizerStateEnded)
+        return;
+    [self togglePlayback];
+}
+
+// Reflects whether a frame edit is locked in (and showing: it belongs to Frame
+// Only, and waits there while another mode is up). The edited still covers the
+// pane, and the filmstrip stays in view but dimmed and locked so the frame
+// can't be nudged off the edit, with Revert Edit over it. Edit Frame stays
+// available to refine further.
+- (BOOL)showsFrameEdit {
+    return self.pendingEditedFrameURL != nil && self.scrubber.isFrameOnlyMode;
+}
+
 - (void)updateFrameEditingUI {
-    BOOL hasEdit = (self.pendingEditedFrameURL != nil);
+    BOOL hasEdit = [self showsFrameEdit];
     self.editedFramePreview.hidden = !hasEdit;
-    self.scrubber.hidden = hasEdit;
+    self.scrubber.userInteractionEnabled = !hasEdit;
+    self.scrubber.alpha = hasEdit ? 0.35 : 1.0;
+    self.scrubber.accessibilityElementsHidden = hasEdit;
     self.revertFrameButton.hidden = !hasEdit;
+    // A locked-in edit pins the frame, so stepping is off until it is reverted.
+    self.stepBackButton.hidden = hasEdit;
+    self.stepForwardButton.hidden = hasEdit;
+    [self refreshToolItemTints];
 }
 
 - (void)seekToTime:(NSTimeInterval)t {
@@ -747,12 +912,12 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     // The edit comes back here to be saved, so its confirm is not the final one.
     SPKPhotoEditorConfiguration *configuration = [SPKPhotoEditorConfiguration freeformConfiguration];
     configuration.intermediateConfirm = YES;
-    [SPKPhotoEditorViewController presentWithSourceImage:frame
-                                           configuration:configuration
-                                                    from:self
-                                              completion:^(UIImage *edited) {
-                                                  [weakSelf applyEditedFrame:edited];
-                                              }];
+    [SPKPhotoEditorViewController openFromEditor:self
+                                     sourceImage:frame
+                                   configuration:configuration
+                                      completion:^(UIImage *edited) {
+                                          [weakSelf applyEditedFrame:edited];
+                                      }];
 }
 
 // Discards the locked-in edit and returns to free frame selection.
@@ -789,12 +954,14 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     if (![data writeToURL:url options:NSDataWritingAtomic error:NULL])
         return;
     self.pendingEditedFrameURL = url;
+    self.editedFrameTime = self.scrubber.frameTime;
     self.editedFramePreview.image = edited;
     [self updateTimeLabel];
     [self updateFrameEditingUI];
 }
 
-// Discards a stashed edit (revert, or a mode change) and removes its temp file.
+// Discards a stashed edit (Revert Edit, or a new edit replacing it) and removes
+// its temp file.
 // Not called once the URL is handed to the result.
 - (void)clearPendingEditedFrame {
     if (self.pendingEditedFrameURL) {
@@ -806,18 +973,14 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 
 #pragma mark - Mode
 
-- (void)chipBar:(SPKChipBar *)bar didSelectIndex:(NSInteger)index {
-    [self applyMode:index];
-}
-
 - (void)applyMode:(NSInteger)index {
     SPKTrimResultMode mode = SPKTrimResultModeTrimmedVideo;
     if (index >= 0 && index < (NSInteger)self.availableModes.count) {
         mode = self.availableModes[index].integerValue;
     }
-    // A stashed frame edit only applies to the frame the user picked; leaving
-    // Frame Only (or switching modes) discards it.
-    [self clearPendingEditedFrame];
+    // A frame edit survives a trip to another mode: it applies only to a Frame
+    // Only result, and coming back returns to the frame it was made from (the
+    // other modes move the playhead). Only Revert Edit discards it.
     BOOL frameOnly = (mode == SPKTrimResultModeFrameOnly);
     BOOL audio = (mode == SPKTrimResultModeTrimmedAudio);
     // Audio Only reconfigures a video trim into the audio trimmer (waveform +
@@ -831,6 +994,8 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
         [self.player pause];
         self.isPlaying = NO;
         self.scrubber.frameOnlyMode = YES;
+        if (self.pendingEditedFrameURL)
+            self.scrubber.playheadTime = self.editedFrameTime;
         [self seekToTime:self.scrubber.frameTime];
     } else {
         self.scrubber.frameOnlyMode = NO;
@@ -839,15 +1004,14 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
     [self updatePlaybackControls];
     [self updateTimeLabel];
     [self refreshDoneMenu];
-    [self refreshTrailingTopBarItems];
     [self updateCropPreview];
 }
 
 - (void)updateTimeLabel {
     if (self.scrubber.isFrameOnlyMode) {
-        NSString *suffix = self.pendingEditedFrameURL ? SPKL(@"MEDIA_TRIM_TRIM_EDITOR_EDITED_TEXT") : @"";
-        self.timeLabel.text = [NSString stringWithFormat:SPKL(@"MEDIA_TRIM_TRIM_EDITOR_FRAME_VALUE_VALUE_FORMAT"),
-                                                         SPKTrimFormatTime(self.scrubber.frameTime), suffix];
+        NSString *format = self.pendingEditedFrameURL ? SPKL(@"MEDIA_TRIM_TRIM_EDITOR_FRAME_EDITED_VALUE_FORMAT")
+                                                      : SPKL(@"MEDIA_TRIM_TRIM_EDITOR_FRAME_VALUE_FORMAT");
+        self.timeLabel.text = [NSString stringWithFormat:format, SPKTrimFormatTime(self.scrubber.frameTime)];
         return;
     }
     NSTimeInterval dur = self.scrubber.endTime - self.scrubber.startTime;
@@ -889,9 +1053,40 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 
 #pragma mark - Actions
 
+- (void)stepBackTapped {
+    [self stepBy:-1];
+}
+
+- (void)stepForwardTapped {
+    [self stepBy:1];
+}
+
+- (void)stepBy:(NSInteger)frames {
+    if (!self.playerReady || [self showsFrameEdit])
+        return;
+    if (self.isPlaying) {
+        [self.player pause];
+        self.isPlaying = NO;
+        [self updatePlaybackControls];
+    }
+    [self.scrubber stepActiveTargetBy:(NSTimeInterval)frames * self.frameDuration];
+    [[[UISelectionFeedbackGenerator alloc] init] selectionChanged];
+}
+
+// A moved selection, a crop set in the crop editor, or an edited frame.
+- (BOOL)hasChanges {
+    if (!self.playerReady)
+        return NO;
+    BOOL rangeMoved = self.scrubber.startTime > 0.05 || fabs(self.scrubber.endTime - self.initialEndTime) > 0.05;
+    return rangeMoved || self.userCropped || self.pendingEditedFrameURL != nil;
+}
+
 - (void)cancelTapped {
-    [self.player pause];
-    [self finishWithResult:nil];
+    __weak typeof(self) weakSelf = self;
+    SPKMediaEditorConfirmDiscard(self, [self hasChanges], ^{
+        [weakSelf.player pause];
+        [weakSelf finishWithResult:nil];
+    });
 }
 
 // Confirming returns the trim parameters and dismisses immediately — the actual
@@ -939,7 +1134,7 @@ static NSString *SPKTrimFormatTime(NSTimeInterval seconds) {
 // The mode currently chosen in the chip bar (or the sole/implicit mode).
 - (SPKTrimResultMode)currentSelectedMode {
     if (self.availableModes.count > 1) {
-        NSInteger i = self.modeChips.selectedIndex;
+        NSInteger i = self.selectedModeIndex;
         if (i >= 0 && i < (NSInteger)self.availableModes.count) {
             return self.availableModes[i].integerValue;
         }

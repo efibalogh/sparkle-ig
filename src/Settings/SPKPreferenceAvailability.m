@@ -1,8 +1,10 @@
 #import "SPKPreferenceAvailability.h"
 
 #import <UIKit/UIKit.h>
+#import <objc/runtime.h>
 
 #import "../App/SPKFlexLoader.h"
+#import "../Features/General/HideMuse.h"
 #import "../Shared/MediaPreview/SPKFullScreenImageViewController.h"
 #import "SPKPreferences.h"
 
@@ -32,8 +34,35 @@ BOOL SPKPrefIsAvailable(NSString *key) {
         return SPKIsIOSVersionAtLeast(@"26.0");
     }
 
+    // Instagram's native UITabBarController tab bar exists from 451 on and is a
+    // Liquid Glass system bar, so it needs iOS 26 and a build that ships it.
+    if ([key isEqualToString:kSPKPrefInterfaceNativeTabBar]) {
+        static BOOL available;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            Class controllerClass = NSClassFromString(@"IGTabBarController");
+            available = SPKIsIOSVersionAtLeast(@"26.0") && controllerClass &&
+                        class_getInstanceVariable(controllerClass, "_usesNativeTabBarController") &&
+                        [controllerClass instancesRespondToSelector:NSSelectorFromString(@"_nativeTopologyIsSupportedWithExpandedSurfaces:compactSurfaces:")];
+        });
+        return available;
+    }
+
     if ([key isEqualToString:@"notifs_pill_liquid_glass"]) {
         return SPKIsIOSVersionAtLeast(@"26.0");
+    }
+
+    // Instagram's pill toast draws its background with Liquid Glass and has no older
+    // material, so forcing it before iOS 26 leaves toasts without a background. The
+    // gate it overrides exists from 450 on.
+    if ([key isEqualToString:@"notifs_instagram_toast_design"]) {
+        static BOOL available;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            available = SPKIsIOSVersionAtLeast(@"26.0") &&
+                        [NSClassFromString(@"IGDSLauncherConfig") instancesRespondToSelector:NSSelectorFromString(@"isToastM2Enabled")];
+        });
+        return available;
     }
 
     // Live Text needs VisionKit's image analyzer: iOS 16+ on supported hardware.
@@ -43,6 +72,14 @@ BOOL SPKPrefIsAvailable(NSString *key) {
 
     if ([key isEqualToString:kSPKPrefInstantsDisableCameraControl]) {
         return SPKDeviceHasCameraControl();
+    }
+
+    // Muse doesn't exist on 410
+    if ([key isEqualToString:@"general_hide_muse_share_sheet"]) {
+        return SPKHideMuseShareSheetIsAvailable();
+    }
+    if ([key isEqualToString:@"general_hide_muse_profile_button"]) {
+        return SPKHideMuseProfileButtonIsAvailable();
     }
 
     if ([key hasPrefix:@"tools_flex_"]) {

@@ -4,6 +4,7 @@
 
 #import "SPKUpdateChecker.h"
 #import "../../Utils.h"
+#import "../UI/SPKFont.h"
 
 // The page paints its own background, a shade off Sparkle's, so let the host show through. Its
 // footer links back to the repo's landing page, which has nothing for the app, and the page's
@@ -75,7 +76,7 @@ static NSString *const kSPKChangelogMarkJS =
     UILabel *failureLabel = [UILabel new];
     failureLabel.text = SPKL(@"CHANGELOG_LOAD_FAILED_TEXT");
     failureLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
-    failureLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout] to:failureLabel];
     failureLabel.textAlignment = NSTextAlignmentCenter;
     failureLabel.numberOfLines = 0;
     UIButton *retryButton = [self linkButtonWithTitle:SPKL(@"ALERT_ACTION_RETRY") action:@selector(retryTapped)];
@@ -104,7 +105,7 @@ static NSString *const kSPKChangelogMarkJS =
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[SPKUtils SPKColor_InstagramBlue] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:button];
     [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     [button.heightAnchor constraintGreaterThanOrEqualToConstant:36.0].active = YES;
     return button;

@@ -170,20 +170,34 @@ static void SPKInstallRefreshUtilityHooks(void) {
 %end
 
 // Implemented in FeedRefreshConfirm.x.
-BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController);
+BOOL SPKFeedConfirmHomeTabRefresh(UIViewController *feedController, dispatch_block_t replay);
+// Implemented in Navigation.xm.
+BOOL SPKNavigationIsApplyingLaunchTab(void);
+
+static UIViewController *spkSelectedTabTopController(id tabBarController) {
+    UIViewController *selected = nil;
+    if ([tabBarController respondsToSelector:@selector(selectedViewController)])
+        selected = [tabBarController valueForKey:@"selectedViewController"];
+    return [selected isKindOfClass:[UINavigationController class]]
+               ? [(UINavigationController *)selected topViewController]
+               : selected;
+}
 
 // The feed controller when the Home tab is re-tapped on the feed itself, nil
-// when the tap switches tabs or pops a pushed screen.
+// when the tap switches tabs or pops a pushed screen. The Home tab's top
+// screen is the feed itself, or a container holding it
+// (IGHomeFeedContentContainerViewController on foldables), so single-child
+// containers are looked through.
 static UIViewController *spkHomeTabFeedController(id tabBarController) {
-    UIViewController *selected = nil;
-    if ([tabBarController respondsToSelector:@selector(selectedViewController)]) {
-        selected = [tabBarController valueForKey:@"selectedViewController"];
+    UIViewController *current = spkSelectedTabTopController(tabBarController);
+    for (NSUInteger depth = 0; current && depth < 4; depth++) {
+        if ([NSStringFromClass([current class]) containsString:@"MainFeed"])
+            return current;
+        if (current.childViewControllers.count != 1)
+            return nil;
+        current = current.childViewControllers.firstObject;
     }
-
-    UIViewController *top = [selected isKindOfClass:[UINavigationController class]]
-                                ? [(UINavigationController *)selected topViewController]
-                                : selected;
-    return top && [NSStringFromClass([top class]) containsString:@"MainFeed"] ? top : nil;
+    return nil;
 }
 
 static void spkScrollFeedToTop(UIViewController *feedController) {
@@ -212,6 +226,13 @@ static void spkScrollFeedToTop(UIViewController *feedController) {
 %hook IGTabBarController
 
 - (void)_timelineButtonPressed {
+    // Sparkle applies the launch tab by pressing its button, which is not a
+    // re-tap of the feed, so it runs untouched.
+    if (SPKNavigationIsApplyingLaunchTab()) {
+        %orig;
+        return;
+    }
+
     BOOL disableRefresh = spkDisableHomeRefresh();
     if (!disableRefresh && ![SPKUtils getBoolPref:@"feed_confirm_refresh"]) {
         %orig;
@@ -226,7 +247,11 @@ static void spkScrollFeedToTop(UIViewController *feedController) {
 
     // Confirm Feed Refresh scrolls up, shows the spinner and asks. Without a
     // refresh control to drive it only scrolls up, so nothing refreshes unasked.
-    if (disableRefresh || !SPKFeedConfirmHomeTabRefresh(top))
+    // On the Pull to Tune feed this press runs untouched and the prompt comes
+    // after IG starts the logo.
+    if (disableRefresh || !SPKFeedConfirmHomeTabRefresh(top, ^{
+            %orig;
+        }))
         spkScrollFeedToTop(top);
 }
 
@@ -236,14 +261,7 @@ static void spkScrollFeedToTop(UIViewController *feedController) {
         return;
     }
 
-    UIViewController *selected = nil;
-    if ([self respondsToSelector:@selector(selectedViewController)]) {
-        selected = [self valueForKey:@"selectedViewController"];
-    }
-
-    UIViewController *top = [selected isKindOfClass:[UINavigationController class]]
-                                ? [(UINavigationController *)selected topViewController]
-                                : selected;
+    UIViewController *top = spkSelectedTabTopController(self);
     NSString *topClass = top ? NSStringFromClass([top class]) : @"";
     BOOL onReelsTab = [topClass containsString:@"Sundial"] ||
                       [topClass containsString:@"Reels"] ||

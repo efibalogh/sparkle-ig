@@ -24,7 +24,7 @@ static CGSize SPKTrimOrientedSize(AVAsset *asset) {
 
 // Builds the video composition that realizes a crop on the AVFoundation fallback
 // path. The transform is assembled in application order — orient, rotate, mirror,
-// then shift the crop origin to (0,0) — because every step but the first needs a
+// straighten, then shift the crop origin to (0,0) — because every step but the first needs a
 // translation to keep the picture in the positive quadrant AVFoundation renders.
 static AVVideoComposition *SPKTrimCropComposition(AVAsset *asset, SPKTrimCrop *crop) {
     AVAssetTrack *track = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject;
@@ -56,7 +56,18 @@ static AVVideoComposition *SPKTrimCropComposition(AVAsset *asset, SPKTrimCrop *c
         t = CGAffineTransformConcat(t, CGAffineTransformMakeTranslation(size.width, 0.0));
     }
 
-    // 4. move the crop rect's origin to the render origin.
+    // 4. straighten: turn about the frame's centre and scale up by the cover
+    //    factor, so the frame stays the same size with no empty corners.
+    if (fabs(crop.straightenDegrees) >= SPKTrimCropStraightenEpsilon) {
+        CGFloat scale = SPKTrimCropStraightenCoverScale(size, crop.straightenDegrees);
+        CGFloat radians = crop.straightenDegrees * (CGFloat)M_PI / 180.0;
+        t = CGAffineTransformConcat(t, CGAffineTransformMakeTranslation(-size.width / 2.0, -size.height / 2.0));
+        t = CGAffineTransformConcat(t, CGAffineTransformMakeRotation(radians));
+        t = CGAffineTransformConcat(t, CGAffineTransformMakeScale(scale, scale));
+        t = CGAffineTransformConcat(t, CGAffineTransformMakeTranslation(size.width / 2.0, size.height / 2.0));
+    }
+
+    // 5. move the crop rect's origin to the render origin.
     t = CGAffineTransformConcat(t, CGAffineTransformMakeTranslation(-pixels.origin.x, -pixels.origin.y));
 
     AVMutableVideoCompositionLayerInstruction *layer =

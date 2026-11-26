@@ -47,6 +47,11 @@ void SPKChromeEnableExtendedDynamicRangeContent(UIView *view) {
     }
 }
 
+void SPKChromeMarkSecureFieldOwned(UITextField *field) {
+    if (field)
+        objc_setAssociatedObject(field, &kSPKChromeOwnedSecureFieldKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 BOOL SPKChromeCanvasOwnsSecureField(UITextField *field) {
     if (!field)
         return NO;
@@ -119,7 +124,7 @@ static UIView *spkFindCanvasDeep(UIView *root, NSInteger depth) {
 
         _secureField = [UITextField new];
         // Tag so the Instants screenshot bypass leaves our own redaction alone.
-        objc_setAssociatedObject(_secureField, &kSPKChromeOwnedSecureFieldKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        SPKChromeMarkSecureFieldOwned(_secureField);
         _secureField.userInteractionEnabled = NO;
         _secureField.alpha = 1.0;
         _secureField.translatesAutoresizingMaskIntoConstraints = NO;

@@ -2,6 +2,7 @@
 
 #import "../Shared/ActionButton/ActionButtonCore.h"
 #import "../Shared/ActionButton/SPKActionMenuSection.h"
+#import "../Shared/AutoSave/SPKAutoSaveFilter.h"
 #import "SPKSetting.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,23 +27,26 @@ SPKSetting *SPKActionButtonDefaultActionNavigationSetting(SPKActionButtonSource 
 SPKSetting *SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSource source, NSString *topicTitle, NSArray<NSString *> *supportedActions, NSArray<SPKActionMenuSection *> *defaultSections);
 UIMenu *SPKReelsTapControlMenu(void);
 UIMenu *SPKReelsAutoScrollDefaultMenu(void);
+UIMenu *SPKProfileReelsSortModeMenu(void);
+UIMenu *SPKProfileGridFilterModeMenu(void);
 /// "Keep Speed For" choices for a playback controls scope key (`stories_playback_speed_scope`, ...).
 UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey);
 UIMenu *SPKMainFeedModeMenu(void);
 UIMenu *SPKSeenButtonPositionMenu(void);
 UIMenu *SPKHiddenChatsRevealResetMenu(void);
 UIMenu *SPKLastActiveFormatMenu(void);
+UIMenu *SPKLiquidGlassModeMenu(void);
 UIMenu *SPKLiquidGlassTabBarStateMenu(void);
 UIMenu *SPKScrollEdgeStyleMenu(void);
 UIMenu *SPKStoryManualSeenModeMenu(void);
-#if SPK_DEV
-UIMenu *SPKAccountPrivacySimulationMenu(void);
-#endif
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
 UIMenu *SPKLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);
+/// When NEW pills on settings rows go away: once seen, at the next release, or never shown.
+UIMenu *SPKSettingsNewBadgesMenu(void);
 UIMenu *SPKNotificationProgressSubtitleStyleMenu(void);
 UIMenu *SPKNotificationStyleMenu(void);
+UIMenu *SPKInstagramToastDesignMenu(void);
 UIMenu *SPKNotificationPillPositionMenu(void);
 /// Banner and Haptic / Banner Only / Haptic Only / Off for a notification group's mode key.
 UIMenu *SPKNotificationModeMenu(NSString *defaultsKey);
@@ -51,9 +55,8 @@ UIMenu *SPKMediaPhotoQualityMenu(void);
 UIMenu *SPKAutoSaveDestinationMenu(void);
 UIMenu *SPKAutoSaveVideoQualityMenu(void);
 UIMenu *SPKAutoSavePhotoQualityMenu(void);
-UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, NSString *subjectPlural);
+UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, SPKAutoSaveFilterSubject subject);
 UIMenu *SPKStoryAutoSaveFilterModeMenu(void);
-UIMenu *SPKGalleryShortcutTargetMenu(void);
 SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void);
 
 /// The view controller a settings row should present from: the topmost presented

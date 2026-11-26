@@ -59,13 +59,21 @@ vault mediavault otf ttf ttc crf explorer hook hooks push instant instants web m
 face touch s
 ryuk ryukgram socuul scinsta instasane zxpluginsinject
 """.split())
+# Keys for dev-build-only tooling (SPK_DEV). They live in the English catalog only:
+# release users never see them, so no other catalog carries or translates them, and
+# lookups fall back to English.
+DEV_ONLY_KEY_PREFIX = "DEV_"
+DEV_ONLY_SOURCE_GUARD = "#if SPK_DEV"
 # English a native reviewer of a shipped catalog chose to keep. Checked per key, so
 # the same words left untranslated anywhere else still count against the catalog.
 REVIEWED_ENGLISH = {
-    "pl": {"ABOUT_INFORMATION_BUNDLE_ID_TITLE", "FONT_STYLE_ULTRA_LIGHT"},
+    "pl": {"ABOUT_INFORMATION_BUNDLE_ID_TITLE", "FONT_STYLE_ULTRA_LIGHT", "TOOLS_NOTIFICATION_SUPPORT_BUNDLE_ID_TITLE"},
 }
-# Contributor handles name people, and format specifiers are not words.
-NEUTRAL_STRIP_RE = re.compile(r"@[\w.]+|" + PLACEHOLDER_RE.pattern)
+# Contributor handles name people, format specifiers are not words, a dotted
+# identifier such as com.burbn.instagram is never translated, and Apple's own
+# product and signing names stay in Latin script in its localized docs.
+NEUTRAL_STRIP_RE = re.compile(r"@[\w.]+|\b[a-z][\w-]*(?:\.[a-z][\w-]*)+\b|\bApp Store\b|\bAd Hoc\b|" + PLACEHOLDER_RE.pattern)
+IDENTIFIER_RE = re.compile(r"\b[a-z][\w-]*(?:\.[a-z][\w-]*)+\b")
 # Hyphenated compounds count as one token: German glues "Instagram-Plus-Button"
 # into a single legitimate word, and feature names like "view-once" are kept
 # verbatim on purpose, so splitting on the hyphen invents English runs that are
@@ -78,7 +86,7 @@ FORBIDDEN_UI_SHORTHAND_RE = re.compile(r"(?<!%)\bDMs?\b", re.IGNORECASE)
 
 
 def carryover_words(text):
-    return CARRYOVER_WORD_RE.findall(CARRYOVER_ESCAPE_RE.sub(" ", text))
+    return CARRYOVER_WORD_RE.findall(CARRYOVER_ESCAPE_RE.sub(" ", IDENTIFIER_RE.sub(" ", text)))
 # A translated value must not repeat a long verbatim run of the English source. That
 # is the signature of a templated pass that swapped only the leading verb phrase and
 # left the rest of the sentence in English.
@@ -287,6 +295,7 @@ def check_catalog(locale, values, plurals, english, english_plurals, shipped):
 
     translated = 0
     if locale != "en":
+        english = {key: value for key, value in english.items() if not key.startswith(DEV_ONLY_KEY_PREFIX)}
         # A key left verbatim in English is untranslated even though it parses, so
         # a freshly seeded catalog must not read as complete. Brand names and
         # technical tokens that no language changes do not count against it.
@@ -354,6 +363,11 @@ def main(only_locale: str | None = None, emit_table: bool = False) -> int:
             normal_uses[match.group(1) or match.group(2)] += 1
         for match in PLURAL_CALL_RE.finditer(text):
             plural_uses[match.group(1)] += 1
+        # A source wrapped in SPK_DEV from its first line is dev-build-only tooling:
+        # release users never see its text, so it is not checked for raw strings.
+        # Its key uses still count, like the DEV_ keys it may look up.
+        if text.lstrip().startswith(DEV_ONLY_SOURCE_GUARD):
+            continue
         for pattern, description in (
             (RAW_CHROME_RE, "raw user-facing chrome label"),
             (RAW_BULK_MENU_RE, "raw user-facing bulk-menu title"),
@@ -397,8 +411,9 @@ def main(only_locale: str | None = None, emit_table: bool = False) -> int:
         )
         errors.extend(catalog_errors)
         warnings.extend(catalog_warnings)
-        if english:
-            coverage.append((locale, math.floor(100 * translated / len(english))))
+        translatable = sum(1 for key in english if not key.startswith(DEV_ONLY_KEY_PREFIX))
+        if translatable:
+            coverage.append((locale, math.floor(100 * translated / translatable)))
 
     english = english or {}
     english_plurals = english_plurals or {}

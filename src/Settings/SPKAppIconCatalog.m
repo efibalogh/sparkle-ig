@@ -198,9 +198,22 @@ static UIImage *SPKAppIconImageNamed(NSString *name) {
     dispatch_async(dispatch_get_main_queue(), ^{
         // Best-effort: if the alternate icon can't be applied (e.g. the icon
         // asset isn't in this build) the stored pref still reflects the import.
-        [UIApplication.sharedApplication setAlternateIconName:desiredAlternateName
-                                            completionHandler:nil];
+        [self setSystemAlternateIconName:desiredAlternateName completion:nil];
     });
+}
+
+// Main thread only, like UIApplication's icon API. The guard hook runs inside
+// the UIApplication call, so the depth is still raised when it checks.
+static NSInteger sSPKOwnedIconWriteDepth;
+
++ (void)setSystemAlternateIconName:(NSString *)name completion:(void (^)(NSError *))completion {
+    sSPKOwnedIconWriteDepth++;
+    [UIApplication.sharedApplication setAlternateIconName:name completionHandler:completion];
+    sSPKOwnedIconWriteDepth--;
+}
+
++ (BOOL)isPerformingOwnedIconWrite {
+    return sSPKOwnedIconWriteDepth > 0;
 }
 
 + (SPKAppIconItem *)appIconWithIdentifier:(NSString *)identifier {

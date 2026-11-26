@@ -4,6 +4,7 @@
 #import "../Downloads/SPKDownloadDestinationWriter.h"
 #import "../Downloads/SPKDownloadHelpers.h"
 #import "../Downloads/SPKDownloadService.h"
+#import "../Downloads/SPKExportFileNaming.h"
 #import "../Gallery/SPKGalleryFile.h"
 #import "../Gallery/SPKGallerySaveMetadata.h"
 #import "../Gallery/SPKGalleryViewController.h"
@@ -391,7 +392,15 @@ static void SPKRecordTrimSaveToHistory(NSURL *_Nullable rendered,
 
     // Name the render with the standard scheme so Save Audio to Files / Share Audio carry
     // a proper filename instead of the temp UUID (Gallery renames on import anyway).
-    if (!result.preferredBasename.length) {
+    SPKDownloadDestination exportDestination = [destination isEqualToString:@"photos"] ? SPKDownloadDestinationPhotos
+                                               : ([destination isEqualToString:@"files"] || [destination isEqualToString:@"share"]) ? SPKDownloadDestinationShare
+                                                                                                                                    : SPKDownloadDestinationGallery;
+    NSString *customStem = SPKExportNamingAppliesToDestination(exportDestination)
+                               ? SPKExportFileNameStem(metadata, result.sourceURL.lastPathComponent)
+                               : nil;
+    if (customStem.length) {
+        result.preferredBasename = customStem;
+    } else if (!result.preferredBasename.length) {
         result.preferredBasename = [SPKFileNameForMedia(result.sourceURL, mediaType, metadata) stringByDeletingPathExtension];
     }
 
@@ -488,7 +497,18 @@ static void SPKRecordTrimSaveToHistory(NSURL *_Nullable rendered,
     // the whole save/route pipeline (Gallery copy/replace, destination menu, the
     // progress pill) runs unchanged.
     if (result.outputURL && [[NSFileManager defaultManager] fileExistsAtPath:result.outputURL.path]) {
-        onRendered(result.outputURL, nil);
+        // It was written under a temp name; give it the export name the other
+        // routes render to, or Photos and the share sheet show that temp name.
+        NSURL *output = result.outputURL;
+        if (result.preferredBasename.length) {
+            NSString *named = SPKExportUniquePath(NSTemporaryDirectory(), result.preferredBasename, output.pathExtension, output.path);
+            if ([named isEqualToString:output.path] ||
+                [[NSFileManager defaultManager] moveItemAtPath:output.path toPath:named error:nil]) {
+                output = [NSURL fileURLWithPath:named];
+                result.outputURL = output;
+            }
+        }
+        onRendered(output, nil);
         return;
     }
 

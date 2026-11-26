@@ -453,8 +453,8 @@ static BOOL SPKGalleryURLIsPostOrReel(NSURL *url) {
 
     // Preferred: keep this screen up and redirect Instagram's push onto a host
     // stack over it, so closing the post comes straight back here. Only the
-    // instagram://media route can be redirected; anything else takes the legacy
-    // path, which reveals the post by tearing this screen down.
+    // instagram://media route and audio page links can be redirected; anything
+    // else takes the legacy path, which reveals the page by tearing this screen down.
     if (presentingVC && SPKOpenPostPushMediaURL(url, presentingVC, legacyFallback, onDismiss))
         return YES;
 

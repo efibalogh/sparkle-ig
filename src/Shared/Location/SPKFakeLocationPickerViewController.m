@@ -6,6 +6,7 @@
 #import "../../Utils.h"
 #import "../UI/SPKMediaChrome.h"
 #import "../i18n/SPKStrings.h"
+#import "../UI/SPKFont.h"
 
 // Region shown when there is no place to start from and no known real location.
 static const CLLocationDistance kSPKFakeLocationPickerDefaultSpan = 2000.0;
@@ -217,12 +218,12 @@ static const CGFloat kSPKFakeLocationTrackingPlatterSize = 44.0;
     card.clipsToBounds = YES;
 
     UILabel *name = [UILabel new];
-    name.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:name];
     name.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     name.numberOfLines = 1;
 
     UILabel *address = [UILabel new];
-    address.font = [UIFont systemFontOfSize:14.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:address];
     address.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     address.numberOfLines = 2;
 

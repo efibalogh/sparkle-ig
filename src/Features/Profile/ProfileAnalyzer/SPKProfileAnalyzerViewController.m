@@ -7,12 +7,15 @@
 #import "../../../Shared/UI/SPKProgressPillButton.h"
 #import "../../../Shared/UI/SPKSwitch.h"
 #import "../../../Utils.h"
+#import "../../../Settings/SPKNewBadges.h"
 #import "../../../Shared/Avatars/SPKAvatarView.h"
+#import "SPKProfileAnalyzerAutoRefresh.h"
 #import "SPKProfileAnalyzerListViewController.h"
 #import "SPKProfileAnalyzerModels.h"
 #import "SPKProfileAnalyzerService.h"
 #import "SPKProfileAnalyzerStorage.h"
 #import "../../../App/SPKPerfMeter.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 #pragma mark - Category descriptor
 
@@ -61,14 +64,14 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
     _nameLabel = [UILabel new];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _nameLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightBold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleTitle3 weight:UIFontWeightBold] to:_nameLabel];
     _nameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     _nameLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_nameLabel];
 
     _usernameLabel = [UILabel new];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _usernameLabel.font = [UIFont systemFontOfSize:14.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:_usernameLabel];
     _usernameLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _usernameLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_usernameLabel];
@@ -109,7 +112,9 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
                                                 constant:24.0],
         [_statsRow.trailingAnchor constraintEqualToAnchor:self.trailingAnchor
                                                  constant:-24.0],
-        [_statsRow.heightAnchor constraintEqualToConstant:44.0],
+        // A number over a caption; grows by what the text size adds to both lines.
+        [_statsRow.heightAnchor constraintEqualToConstant:44.0 + [SPKFont lineGrowthForStyle:SPKFontStyleBody] +
+                                                          [SPKFont lineGrowthForStyle:SPKFontStyleCaption1]],
 
         [_scanButton.topAnchor constraintEqualToAnchor:_statsRow.bottomAnchor
                                               constant:16.0],
@@ -132,14 +137,14 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
     col.spacing = 1.0;
 
     UILabel *v = [UILabel new];
-    v.font = [UIFont systemFontOfSize:18.0 weight:UIFontWeightBold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightBold] to:v];
     v.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     v.textAlignment = NSTextAlignmentCenter;
     v.text = value;
     [col addArrangedSubview:v];
 
     UILabel *c = [UILabel new];
-    c.font = [UIFont systemFontOfSize:12.0];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:c];
     c.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     c.textAlignment = NSTextAlignmentCenter;
     c.text = caption;
@@ -162,7 +167,11 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
 #pragma mark - Main VC
 
+// Registered in SPKNewBadgeItemVersions(); the Profile Analyzer settings row points here.
+static NSString *const kSPKPAAutoRefreshBadgeItem = @"profile_analyzer_auto_refresh";
+
 @interface SPKProfileAnalyzerViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic) BOOL autoRefreshBadgeShown;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *headerContainer;
 @property (nonatomic, strong) SPKPAIdentityHeader *header;
@@ -248,6 +257,10 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.autoRefreshBadgeShown) {
+        self.autoRefreshBadgeShown = NO;
+        SPKNewBadgesMarkItemsSeen(@[ kSPKPAAutoRefreshBadgeItem ], self);
+    }
     [self stopButtonCycle]; // don't tick while off-screen (restarts on re-appear)
 }
 
@@ -255,6 +268,7 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
 - (void)buildTableHeader {
     self.headerContainer = [UIView new];
+    self.headerContainer.preservesSuperviewLayoutMargins = YES;
     self.header = [[SPKPAIdentityHeader alloc] init];
     self.header.translatesAutoresizingMaskIntoConstraints = NO;
     [self.headerContainer addSubview:self.header];
@@ -263,8 +277,11 @@ typedef NS_ENUM(NSInteger, SPKPACategory) {
 
     [NSLayoutConstraint activateConstraints:@[
         [self.header.topAnchor constraintEqualToAnchor:self.headerContainer.topAnchor],
-        [self.header.leadingAnchor constraintEqualToAnchor:self.headerContainer.leadingAnchor],
-        [self.header.trailingAnchor constraintEqualToAnchor:self.headerContainer.trailingAnchor],
+        // Line the scan button (16pt inside the header) up with the rows below,
+        // which sit on the table's layout margins. Those already absorb a side
+        // column's safe-area inset, so the header stays clear of it too.
+        [self.header.leadingAnchor constraintEqualToAnchor:self.headerContainer.layoutMarginsGuide.leadingAnchor constant:-16.0],
+        [self.header.trailingAnchor constraintEqualToAnchor:self.headerContainer.layoutMarginsGuide.trailingAnchor constant:16.0],
         [self.header.bottomAnchor constraintEqualToAnchor:self.headerContainer.bottomAnchor],
     ]];
 }
@@ -578,6 +595,7 @@ static NSString *SPKPACompact(NSInteger n) {
 
 // Row identifiers for the non-category list rows.
 typedef NS_ENUM(NSInteger, SPKPAOptionRow) {
+    SPKPAOptionAutoRefresh,
     SPKPAOptionTrackVisits,
     SPKPAOptionVisitedProfiles,
     SPKPAOptionAbout,
@@ -607,7 +625,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 // The option rows present in the Options section (Visited Profiles only shows
 // when tracking is enabled).
 - (NSArray<NSNumber *> *)optionRows {
-    NSMutableArray *rows = [NSMutableArray arrayWithObject:@(SPKPAOptionTrackVisits)];
+    NSMutableArray *rows = [NSMutableArray arrayWithObjects:@(SPKPAOptionAutoRefresh), @(SPKPAOptionTrackVisits), nil];
     if (self.trackVisits)
         [rows addObject:@(SPKPAOptionVisitedProfiles)];
     [rows addObject:@(SPKPAOptionAbout)];
@@ -648,6 +666,12 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if ([self kindForSection:section] != SPKPASectionOptions)
+        return nil;
+    return SPKL(@"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_FOOTER_TEXT");
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SPKPASectionKind kind = [self kindForSection:indexPath.section];
 
@@ -672,7 +696,20 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 
     if (kind == SPKPASectionOptions) {
         SPKPAOptionRow opt = (SPKPAOptionRow)[[self optionRows][indexPath.row] integerValue];
-        if (opt == SPKPAOptionTrackVisits) {
+        if (opt == SPKPAOptionAutoRefresh) {
+            content.text = SPKL(@"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT");
+            if (SPKNewBadgeItemIsNew(kSPKPAAutoRefreshBadgeItem)) {
+                UIFont *font = content.textProperties.font ?: [SPKFont fontForStyle:SPKFontStyleBody];
+                content.attributedText = SPKNewBadgeAttributedTitle(content.text, font, content.textProperties.color, SPKNewBadgeStateRow, tableView.traitCollection);
+                cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@", SPKL(@"PROFILE_PROFILE_ANALYZER_AUTO_REFRESH_TEXT"), SPKNewBadgeAccessibilityText(SPKNewBadgeStateRow)];
+                // Seen once shown; the pill stays until the dashboard is left.
+                self.autoRefreshBadgeShown = YES;
+            }
+            content.image = [SPKAssetUtils instagramIconNamed:@"arrow_cw" pointSize:24.0 renderingMode:UIImageRenderingModeAlwaysTemplate];
+            content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
+            cell.accessoryView = [self autoRefreshMenuButton];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        } else if (opt == SPKPAOptionTrackVisits) {
             content.text = SPKL(@"PROFILE_PROFILE_ANALYZER_TRACK_VISITED_PROFILES_TEXT");
             content.image = [SPKAssetUtils instagramIconNamed:@"eye" pointSize:24.0 renderingMode:UIImageRenderingModeAlwaysTemplate];
             content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
@@ -687,7 +724,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
             content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
             content.secondaryText = [NSString stringWithFormat:@"%lu", (unsigned long)self.visits.count];
             content.prefersSideBySideTextAndSecondaryText = YES;
-            content.secondaryTextProperties.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+            content.secondaryTextProperties.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else { // About
             content.text = SPKL(@"PROFILE_PROFILE_ANALYZER_ABOUT_PROFILE_ANALYZER_TEXT");
@@ -705,7 +742,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
     content.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
 
     content.prefersSideBySideTextAndSecondaryText = YES;
-    content.secondaryTextProperties.font = [UIFont systemFontOfSize:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize weight:UIFontWeightMedium];
+    content.secondaryTextProperties.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
 
     // With unseen changes the count is badged (blue pill) and shows how many are
     // NEW; opening the category marks them seen and the number reverts to the plain
@@ -728,7 +765,7 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 - (UIView *)badgeAccessoryWithCount:(NSInteger)count {
     UILabel *pill = [UILabel new];
     pill.text = [NSString stringWithFormat:@"%ld", (long)count];
-    pill.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:pill];
     pill.textColor = [UIColor whiteColor];
     pill.textAlignment = NSTextAlignmentCenter;
     pill.backgroundColor = [SPKUtils SPKColor_InstagramBlue] ?: [UIColor systemBlueColor];
@@ -771,6 +808,55 @@ typedef NS_ENUM(NSInteger, SPKPASectionKind) {
 }
 
 #pragma mark - Options actions
+
+- (UIButton *)autoRefreshMenuButton {
+    NSInteger selected = [SPKProfileAnalyzerAutoRefresh intervalHours];
+    NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
+    __weak typeof(self) weakSelf = self;
+    for (NSNumber *choice in [SPKProfileAnalyzerAutoRefresh intervalChoices]) {
+        NSInteger hours = choice.integerValue;
+        UIAction *action = [UIAction actionWithTitle:[SPKProfileAnalyzerAutoRefresh titleForIntervalHours:hours]
+                                               image:nil
+                                          identifier:nil
+                                             handler:^(__unused UIAction *a) {
+                                                 [weakSelf autoRefreshPicked:hours];
+                                             }];
+        action.state = (hours == selected) ? UIMenuElementStateOn : UIMenuElementStateOff;
+        [actions addObject:action];
+    }
+
+    UIButtonConfiguration *config = [UIButtonConfiguration plainButtonConfiguration];
+    config.title = [SPKProfileAnalyzerAutoRefresh titleForIntervalHours:selected];
+    config.contentInsets = NSDirectionalEdgeInsetsMake(8, 8, 8, 0);
+    config.image = [UIImage systemImageNamed:@"chevron.up.chevron.down"];
+    config.imagePlacement = NSDirectionalRectEdgeTrailing;
+    config.imagePadding = 6.0;
+    config.preferredSymbolConfigurationForImage = [UIImageSymbolConfiguration configurationWithPointSize:10.0 weight:UIImageSymbolWeightBold];
+    UIFont *font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium];
+    config.titleTextAttributesTransformer = ^NSDictionary<NSAttributedStringKey, id> *(NSDictionary<NSAttributedStringKey, id> *attributes) {
+        NSMutableDictionary *updated = [attributes mutableCopy];
+        updated[NSFontAttributeName] = font;
+        return updated;
+    };
+
+    UIButton *button = [UIButton buttonWithConfiguration:config primaryAction:nil];
+    button.menu = [UIMenu menuWithTitle:@"" children:actions];
+    button.showsMenuAsPrimaryAction = YES;
+    button.tintColor = [SPKUtils SPKColor_InstagramSecondaryText];
+    [button sizeToFit];
+    return button;
+}
+
+- (void)autoRefreshPicked:(NSInteger)hours {
+    [SPKProfileAnalyzerAutoRefresh setIntervalHours:hours];
+    NSInteger optionsIndex = [[self activeSections] indexOfObject:@(SPKPASectionOptions)];
+    NSInteger row = [[self optionRows] indexOfObject:@(SPKPAOptionAutoRefresh)];
+    if (optionsIndex == NSNotFound || row == NSNotFound)
+        return;
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:optionsIndex]];
+    // Swapped in place: reloading the row re-sizes the table under the closing menu.
+    cell.accessoryView = [self autoRefreshMenuButton];
+}
 
 - (void)trackVisitsToggled:(SPKSwitch *)toggle {
     SPKPreferenceSetObject(@(toggle.isOn), @"profile_analyzer_track_visits");

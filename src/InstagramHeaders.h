@@ -59,6 +59,7 @@
 - (void)_didPan:(UIPanGestureRecognizer *)pan; // target of _verticalPanGesture
 - (BOOL)disablePanToClose;
 - (BOOL)disableVerticalPan;
+- (unsigned long long)targetSheetState; // 0 closed, 1 partial, 2 expanded
 @end
 
 @interface IGMainFeedAppHeaderController : UIViewController
@@ -195,6 +196,14 @@
 - (void)setSelectedTabBarSurface:(IGMainAppSurfaceIntent *)surface animated:(BOOL)animated;
 - (void)_exploreButtonLongPressed:(id)gesture;
 - (void)_updateTabBarVisibilityForController:(id)controller;
+// Native UITabBarController path (451+), driven by IGNativeTabBarControllerCoordinator.
+- (NSArray *)_nativeOrderedSurfacesForHorizontalSizeClass:(UIUserInterfaceSizeClass)sizeClass;
+- (BOOL)_nativeTopologyIsSupportedWithExpandedSurfaces:(NSArray *)expandedSurfaces compactSurfaces:(NSArray *)compactSurfaces;
+- (BOOL)_installOrUpdateNativeTabBarController;
+- (id)_surfaceForNativeIdentifier:(id)identifier;
+- (NSString *)_nativeLongPressAccessibilityActionNameForSurface:(id)surface;
+- (BOOL)nativeTabBarControllerCoordinator:(id)coordinator canLongPressIdentifier:(id)identifier;
+- (void)nativeTabBarControllerCoordinator:(id)coordinator didUpdateLongPressIdentifier:(id)identifier phase:(NSInteger)phase;
 @end
 
 @interface IGTabBarViewControllerManager : NSObject
@@ -232,6 +241,8 @@
 @end
 
 @interface IGTallNavigationBarView : UIView
+- (NSArray<UIBarButtonItem *> *)rightBarButtonItems;
+- (void)setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)items;
 @end
 
 @interface UIView (RCTViewUnmounting)
@@ -703,6 +714,14 @@
 - (instancetype)initWithSearchableItem:(id)item sectionType:(NSString *)sectionType subtitle:(NSString *)subtitle;
 @end
 
+// Swift as IGSearchModels.IGKeywordSearchModel on newer builds. An account keyword
+// carries the person it stands for in user.
+@interface IGKeywordSearchModel : NSObject
+@property (nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) BOOL isEcho;
+@property (nonatomic, readonly) id user;
+@end
+
 // IGSearchViewModels.IGSearchRecentSearchesHorizontalViewModel: recents as a carousel.
 @interface IGSearchRecentSearchesHorizontalViewModel : NSObject
 @property (nonatomic, readonly) NSArray *items;
@@ -880,6 +899,7 @@
 
 @interface _TtC39IGDirectLightweightThreadViewController39IGDirectLightweightThreadViewController : UIViewController
 - (id)initWithUserSession:(id)session threadId:(id)threadId onLoadCompletion:(id)completion;
+- (id)initWithUserSession:(id)session threadId:(id)threadId shouldApplyThreadTheme:(BOOL)shouldApplyThreadTheme onLoadCompletion:(id)completion;
 - (void)setShouldHideHeader:(BOOL)shouldHideHeader;
 - (void)setBypassSeenStateUpdate:(BOOL)bypassSeenStateUpdate;
 - (void)setShouldSkipScrollToNewMessagesSeparator:(BOOL)shouldSkip;
@@ -1043,6 +1063,17 @@
 @property (readonly, nonatomic) long long refreshState;
 - (void)startLoadingAnimated:(BOOL)animated;
 - (void)finishLoading;
+@end
+
+// IG 456+ "Pull to Tune" home feed (server-gated): the feed controller hosts an
+// IGPullToTuneController.IGPullToTuneCoordinator, which owns the pull and calls
+// back into the controller to run the refresh.
+@interface IGMainFeedViewController_objc : UIViewController
+@property (readonly, nonatomic) IGRefreshControl *pullToTuneRefreshControl;
+@property (retain, nonatomic) id pullToTuneCoordinator;
+- (BOOL)pullToTuneIsEnabled;
+- (void)pullToTuneExecuteRefresh;
+- (void)pullToTuneDidStartRefresh;
 @end
 
 @interface IGDirectThreadViewDrawingViewController : UIViewController

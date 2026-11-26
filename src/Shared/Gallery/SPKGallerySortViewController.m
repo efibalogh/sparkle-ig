@@ -2,6 +2,7 @@
 #import "SPKGallerySortViewController.h"
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
+#import "../UI/SPKFont.h"
 
 static NSString *SPKGallerySortResourceSymbol(SPKGallerySortMode mode) {
     switch (mode) {
@@ -35,7 +36,8 @@ static NSString *SPKGallerySortResourceSymbol(SPKGallerySortMode mode) {
         _mode = mode;
         self.layer.cornerRadius = 12;
         self.contentEdgeInsets = UIEdgeInsetsMake(0, 12, 0, 12);
-        self.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:self.titleLabel];
+        self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         [self updateChipAppearance];
     }
     return self;
@@ -221,7 +223,7 @@ static NSString *SPKGallerySortResourceSymbol(SPKGallerySortMode mode) {
 - (UILabel *)sectionTitle:(NSString *)title {
     UILabel *label = [[UILabel alloc] init];
     label.text = title;
-    label.font = [UIFont systemFontOfSize:12 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1 weight:UIFontWeightSemibold] to:label];
     label.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     return label;
 }
@@ -231,8 +233,9 @@ static NSString *SPKGallerySortResourceSymbol(SPKGallerySortMode mode) {
     chip.tag = tag;
     chip.layer.cornerRadius = 12;
     chip.contentEdgeInsets = UIEdgeInsetsMake(0, 12, 0, 12);
-    chip.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:chip.titleLabel];
     chip.titleLabel.adjustsFontSizeToFitWidth = YES;
+    chip.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     chip.titleLabel.minimumScaleFactor = 0.78;
     [chip setTitle:title forState:UIControlStateNormal];
     [chip setImage:[SPKAssetUtils instagramIconNamed:icon pointSize:14.0] forState:UIControlStateNormal];

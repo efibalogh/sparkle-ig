@@ -203,11 +203,14 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     _playerBottomConstraint =
         [_playerViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
 
+    // Leading and trailing follow the safe area so a side bar or clock column
+    // (a foldable's vertical bar) never covers the video; zooming still grows
+    // it past them.
     [NSLayoutConstraint activateConstraints:@[
         _playerTopConstraint,
         _playerBottomConstraint,
-        [_playerViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [_playerViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [_playerViewController.view.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [_playerViewController.view.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
     ]];
 
     __weak typeof(self) weakSelf = self;
@@ -326,8 +329,8 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     [NSLayoutConstraint activateConstraints:@[
         _thumbnailTopConstraint,
         _thumbnailBottomConstraint,
-        [_thumbnailView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [_thumbnailView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [_thumbnailView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+        [_thumbnailView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
     ]];
 }
 

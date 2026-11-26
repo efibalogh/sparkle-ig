@@ -3,6 +3,9 @@
 
 #import "../../../AssetUtils.h"
 #import "../../../Shared/Avatars/SPKAvatarCache.h"
+#import "../../../Shared/Downloads/SPKExportFileNaming.h"
+#import "../../../Shared/Gallery/SPKGalleryFile.h"
+#import "../../../Shared/Gallery/SPKGallerySaveMetadata.h"
 #import "../../../Shared/MediaPreview/SPKFullScreenMediaPlayer.h"
 #import "../../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../../Shared/UI/SPKMediaChrome.h"
@@ -14,6 +17,7 @@
 #import "SPKDeletedMessagesFilter.h"
 #import "SPKDeletedMessagesStorage.h"
 #import "../../../Shared/UI/SPKNotificationCenter.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 @interface SPKDeletedMessagesUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, SPKDeletedMessagesChipBarDelegate, SPKDeletedMessageBubbleCellDelegate>
 @property (nonatomic, strong) SPKDeletedMessageGroup *group;
@@ -120,7 +124,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
         // far too early. It now only truncates at the real space available between
         // the back button and the trailing items.
         titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        titleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:titleLabel];
         titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -202,7 +206,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
 
     self.emptyStateTitle = [UILabel new];
     self.emptyStateTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateTitle.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:self.emptyStateTitle];
     self.emptyStateTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.emptyStateTitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateTitle.numberOfLines = 0;
@@ -210,19 +214,19 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
 
     self.emptyStateSubtitle = [UILabel new];
     self.emptyStateSubtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateSubtitle.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.emptyStateSubtitle];
     self.emptyStateSubtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.emptyStateSubtitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateSubtitle.numberOfLines = 0;
     [self.emptyStateView addSubview:self.emptyStateSubtitle];
 
     [NSLayoutConstraint activateConstraints:@[
-        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [self.emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor
                                                           constant:-30.0],
-        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor
+        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
                                                                        constant:40.0],
-        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor
+        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor
                                                                      constant:-40.0],
 
         [self.emptyStateIcon.topAnchor constraintEqualToAnchor:self.emptyStateView.topAnchor],
@@ -484,7 +488,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     // Name label.
     UILabel *nameLabel = [UILabel new];
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    nameLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightSemibold] to:nameLabel];
     nameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     nameLabel.numberOfLines = 1;
     NSString *displayName = self.group.senderFullName.length ? self.group.senderFullName
@@ -494,7 +498,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     // Username label.
     UILabel *usernameLabel = [UILabel new];
     usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    usernameLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:usernameLabel];
     usernameLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     usernameLabel.numberOfLines = 1;
     usernameLabel.hidden = (self.group.senderUsername.length == 0);
@@ -677,6 +681,18 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     });
 }
 
+// Who sent the media and when, so saving or sharing it (from the menu or the
+// preview) names the file after the sender instead of "Other".
+static SPKGallerySaveMetadata *SPKDeletedMessageSaveMetadata(SPKDeletedMessage *message) {
+    SPKGallerySaveMetadata *meta = [[SPKGallerySaveMetadata alloc] init];
+    meta.source = SPKGallerySourceDMs;
+    meta.sourceUsername = message.senderUsername;
+    meta.sourceUserPK = message.senderPk;
+    meta.importPostedDate = message.sentAt;
+    meta.importCapturedDate = message.capturedAt;
+    return meta;
+}
+
 #pragma mark - Bubble delegate
 
 - (void)bubbleCell:(SPKDeletedMessageBubbleCell *)cell didTapMediaForMessage:(SPKDeletedMessage *)message {
@@ -684,7 +700,7 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
     if (path.length) {
         // SPKFullScreenMediaPlayer detects audio/video/image by extension and
         // presents the right player — voice notes play here too.
-        [SPKFullScreenMediaPlayer showFileURL:[NSURL fileURLWithPath:path]];
+        [SPKFullScreenMediaPlayer showFileURL:[NSURL fileURLWithPath:path] metadata:SPKDeletedMessageSaveMetadata(message)];
         return;
     }
     // Visual CDN URLs are short-lived. Once recovery failed, do not send the
@@ -744,7 +760,10 @@ static SPKDeletedMessageKind SPKDMDetailChipKindForIndex(NSInteger index) {
                                                     image:[SPKAssetUtils menuIconNamed:@"share"]
                                                identifier:nil
                                                   handler:^(__unused UIAction *a) {
-                                                      UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[ mediaURL ] applicationActivities:nil];
+                                                      NSURL *shareURL = mediaURL.isFileURL
+                                                                            ? SPKExportShareableFileURL(mediaURL, SPKDeletedMessageSaveMetadata(message), SPKDownloadDestinationShare)
+                                                                            : mediaURL;
+                                                      UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[ shareURL ] applicationActivities:nil];
                                                       [weakSelf presentViewController:vc animated:YES completion:nil];
                                                   }];
         [children addObject:shareAction];

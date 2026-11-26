@@ -6,6 +6,7 @@
 #import "../../Shared/ActionButton/ActionButtonLookupUtils.h"
 #import "../../Shared/Instants/SPKInstantsManualSeenUsers.h"
 #import "../../Utils.h"
+#import "InstantsHeaderItems.h"
 #import "InstantsManualSeen.h"
 #import "InstantsResolver.h"
 
@@ -576,6 +577,7 @@ static void SPKInstantsManualSeenSetEyeDecision(SPKInstantsEyeDecision decision)
         return;
     sEyeDecision = decision;
     [sEyeButtonHost setNeedsLayout];
+    SPKInstantsNavigationBarItemsSetNeedsUpdate();
 }
 
 BOOL SPKInstantsManualSeenShouldShowEyeButton(void) {

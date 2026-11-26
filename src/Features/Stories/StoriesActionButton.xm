@@ -179,8 +179,11 @@ static SPKActionButtonContext *SPKStoriesActionContext(UIView *overlayView) {
     return context;
 }
 
+// Frame match used only for deciding whether to reposition. Deliberately ignores
+// hidden/alpha: during the iOS 26 menu morph UIKit hides the real button and
+// animates a snapshot, and that transient state must not read as "needs placing".
 static BOOL SPKStoriesActionFrameMatches(UIButton *button, CGRect frame) {
-    if (![button isKindOfClass:[UIButton class]] || button.hidden || !button.superview)
+    if (![button isKindOfClass:[UIButton class]] || !button.superview)
         return NO;
     return ABS(CGRectGetMinX(button.frame) - CGRectGetMinX(frame)) < 0.5 &&
            ABS(CGRectGetMinY(button.frame) - CGRectGetMinY(frame)) < 0.5 &&
@@ -201,6 +204,11 @@ static void SPKInstallStoriesActionButton(UIView *overlayView) {
     }
 
     UIButton *button = (UIButton *)[overlayView viewWithTag:kSPKStoriesActionButtonTag];
+    // While the menu opens or closes UIKit animates a stand-in for the button;
+    // touching the real one here makes it vanish until the animation ends. The
+    // dismissal completion asks for a fresh layout pass.
+    if (SPKActionButtonMenuIsTransitioning(button))
+        return;
     if (![SPKUtils getBoolPref:@"stories_action_btn"]) {
         [button removeFromSuperview];
         return;
@@ -216,8 +224,21 @@ static void SPKInstallStoriesActionButton(UIView *overlayView) {
     id currentMedia = SPKStoryMediaFromOverlay(overlayView);
     id lastMedia = button ? objc_getAssociatedObject(button, kSPKStoriesActionButtonMediaKey) : nil;
 
-    if (SPKStoriesActionFrameMatches(button, expectedFrame) && lastMedia == currentMedia)
+    // CRITICAL (iOS 26 menu morph): while the menu opens or closes UIKit hides the
+    // real button and animates a snapshot of it. Any write here (frame, hidden,
+    // reconfigure, subview order) fights that animation and the button vanishes
+    // until it ends. A placed, configured button showing the same media is left
+    // alone, apart from the z-order fix below, which skips a hidden button.
+    if (button && button.menu != nil && button.superview == overlayView &&
+        SPKStoriesActionFrameMatches(button, expectedFrame) && lastMedia == currentMedia) {
+        // Instagram adds its bottom gradient to the overlay again when it
+        // rebuilds the comments and footer area (returning to a story with
+        // comments), which then draws over the button and darkens it. Stay on
+        // top on every pass, like the other story buttons, except mid-morph.
+        if (!button.hidden && button.alpha > 0.01 && overlayView.subviews.lastObject != button)
+            [overlayView bringSubviewToFront:button];
         return;
+    }
 
     button = SPKActionButtonWithTag(overlayView, kSPKStoriesActionButtonTag);
     button.translatesAutoresizingMaskIntoConstraints = YES;

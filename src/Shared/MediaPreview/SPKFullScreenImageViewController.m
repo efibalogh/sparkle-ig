@@ -9,6 +9,7 @@
 #import "../../Utils.h"
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import "../UI/SPKFont.h"
 
 static CGFloat const kMaxZoom = 5.0;
 static CGFloat const kMinZoom = 1.0;
@@ -179,35 +180,40 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
 }
 
 - (UIEdgeInsets)effectiveMinZoomInsets {
-    UIEdgeInsets insets = self.hasDesiredContentInsets ? self.desiredContentInsets : UIEdgeInsetsZero;
-    if (UIEdgeInsetsEqualToEdgeInsets(insets, UIEdgeInsetsZero))
-        return UIEdgeInsetsZero;
+    UIEdgeInsets bars = self.hasDesiredContentInsets ? self.desiredContentInsets : UIEdgeInsetsZero;
+    // A side bar or clock column (a foldable's vertical bar) is a horizontal
+    // safe-area inset. The fitted image always stays clear of it; zooming in
+    // still uses the full screen.
+    UIEdgeInsets safe = self.view.safeAreaInsets;
+    UIEdgeInsets sides = UIEdgeInsetsMake(0.0, MAX(bars.left, safe.left), 0.0, MAX(bars.right, safe.right));
+    if (bars.top <= 0.0 && bars.bottom <= 0.0)
+        return sides;
 
     UIImage *image = _imageView.image;
     CGSize boundsSize = _scrollView.bounds.size;
+    UIEdgeInsets full = UIEdgeInsetsMake(bars.top, sides.left, bars.bottom, sides.right);
     if (!image || boundsSize.width <= 0 || boundsSize.height <= 0)
-        return insets;
+        return full;
 
     CGSize imageSize = image.size;
     if (imageSize.width <= 0 || imageSize.height <= 0)
-        return insets;
+        return full;
 
-    CGFloat availW = MAX(1.0, boundsSize.width - insets.left - insets.right);
-    CGFloat availH = MAX(1.0, boundsSize.height - insets.top - insets.bottom);
-    CGFloat ratioFull = MIN(boundsSize.width / imageSize.width,
-                            boundsSize.height / imageSize.height);
-    CGFloat ratioAvail = MIN(availW / imageSize.width, availH / imageSize.height);
+    CGFloat sideW = MAX(1.0, boundsSize.width - sides.left - sides.right);
+    CGFloat availH = MAX(1.0, boundsSize.height - bars.top - bars.bottom);
+    CGFloat ratioSides = MIN(sideW / imageSize.width, boundsSize.height / imageSize.height);
+    CGFloat ratioAvail = MIN(sideW / imageSize.width, availH / imageSize.height);
 
     // Only inset images the bars would actually cover. A width-constrained fit
     // (square/landscape photos) already sits clear of the top/bottom bars, so
     // the between-bars region doesn't shrink it any further (ratioAvail ==
-    // ratioFull). Insetting those would just shift/resize them and make them
-    // jump when the chrome toggles, so leave them full-bleed and centered.
+    // ratioSides). Insetting those would just shift/resize them and make them
+    // jump when the chrome toggles, so leave them centered between the sides.
     // Height-constrained fits (tall ~9:16 photos) would run under the bars, so
     // those do get inset.
-    if (ratioAvail >= ratioFull - 0.0001)
-        return UIEdgeInsetsZero;
-    return insets;
+    if (ratioAvail >= ratioSides - 0.0001)
+        return sides;
+    return full;
 }
 
 #pragma mark - Setup
@@ -290,7 +296,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
         ^NSDictionary<NSAttributedStringKey, id> *(NSDictionary<NSAttributedStringKey, id> *incoming) {
             NSMutableDictionary *attributes = [incoming mutableCopy] ?: [NSMutableDictionary dictionary];
             attributes[NSFontAttributeName] =
-                [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+                [SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold];
             return attributes;
         };
     if (!SPKLiveTextGlassAvailable()) {
@@ -482,7 +488,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
     _errorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _errorLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
-    _errorLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:_errorLabel];
     _errorLabel.textAlignment = NSTextAlignmentCenter;
     _errorLabel.numberOfLines = 0;
     [_errorView addSubview:_errorLabel];
@@ -491,7 +497,7 @@ static void SPKLiveTextPositionButton(UIButton *button, CGRect frame) {
     _retryButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_retryButton setTitle:SPKL(@"ALERT_ACTION_RETRY") forState:UIControlStateNormal];
     [_retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _retryButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_retryButton.titleLabel];
     _retryButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
     _retryButton.layer.cornerRadius = 18;
     [_retryButton addTarget:self action:@selector(retryLoading) forControlEvents:UIControlEventTouchUpInside];

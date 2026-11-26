@@ -140,6 +140,26 @@ void SPKChromeGlassMirrorAttach(UIView *glassView, UIButton *button) {
     }
 }
 
+void SPKChromeGlassMirrorUseSystemGlass(UIView *glassView, UIButton *button) {
+    static const void *kSystemGlassEffectKey = &kSystemGlassEffectKey;
+    if ([glassView isKindOfClass:[UIVisualEffectView class]]) {
+        UIVisualEffectView *bubble = (UIVisualEffectView *)glassView;
+        UIVisualEffect *effect = objc_getAssociatedObject(bubble, kSystemGlassEffectKey);
+        if (!effect) {
+            effect = [[NSClassFromString(@"UIGlassEffect") alloc] init];
+            if (effect)
+                objc_setAssociatedObject(bubble, kSystemGlassEffectKey, effect, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        if (effect && bubble.effect != effect)
+            bubble.effect = effect;
+        if (bubble.layer.borderWidth != 0.0)
+            bubble.layer.borderWidth = 0.0;
+        if (bubble.alpha != 1.0)
+            bubble.alpha = 1.0;
+    }
+    SPKChromeGlassMirrorAttach(glassView, button);
+}
+
 CGFloat SPKChromeGlassMirrorSync(UIView *glassView, UIView *chromeView) {
     if (chromeView) {
         [SPKChromeGlassRegisteredChrome() addObject:chromeView];

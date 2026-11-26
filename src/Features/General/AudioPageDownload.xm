@@ -123,6 +123,7 @@ static UIViewController *SPKAudioPageControllerForView(UIView *view) {
 static SPKAudioItem *SPKAudioPageItem(NSURL *url, SPKGallerySaveMetadata *metadata) {
     SPKAudioItem *item = [SPKAudioItem itemWithURL:url source:SPKAudioSourceAudioPage];
     item.artist = metadata.sourceUsername;
+    item.title = metadata.customName;
     item.mediaIdentifier = metadata.sourceMediaPK;
     item.sourceURLString = url.absoluteString;
     return item;
@@ -191,8 +192,23 @@ static NSDictionary *SPKAudioPageResolvedPayload(UIView *sourceView) {
 
     SPKGallerySaveMetadata *metadata = [[SPKGallerySaveMetadata alloc] init];
     metadata.source = (int16_t)SPKGallerySourceAudioPage;
-    NSString *rawArtist = SPKAudioPageStringForAsset(asset, @[ @"artistDisplayName", @"username", @"displayArtist", @"artist" ]);
-    metadata.sourceUsername = [SPKUtils sanitizedInstagramUsername:rawArtist];
+    // `artist` is the owning account (an IGUser on 410, a user fragment on newer
+    // builds); `artistDisplayName` is a display name ("Taylor Swift") for songs,
+    // which is not a username and must not become one.
+    id artist = SPKAudioPageCall(asset, @"artist");
+    NSString *username = [SPKUtils sanitizedInstagramUsername:SPKAudioPageStringForAsset(artist, @[ @"username" ])];
+    if (username.length > 0) {
+        metadata.sourceUsername = username;
+        metadata.sourceUserPK = SPKAudioPageStringForAsset(artist, @[ @"pk" ]);
+    } else {
+        NSString *rawArtist = SPKAudioPageStringForAsset(asset, @[ @"artistDisplayName", @"username", @"displayArtist" ]);
+        metadata.sourceUsername = [SPKUtils sanitizedInstagramUsername:rawArtist];
+        // A name that is not a handle still names the file; it is never used as
+        // profile attribution.
+        if (metadata.sourceUsername.length == 0 && rawArtist.length > 0)
+            metadata.importFileNameStem = rawArtist;
+    }
+    metadata.customName = SPKAudioPageStringForAsset(asset, @[ @"title", @"originalAudioTitle" ]);
     metadata.sourceMediaPK = SPKAudioPageStringForAsset(asset, @[ @"audioAssetId", @"pk", @"id" ]);
     return @{@"url" : url, @"metadata" : metadata};
 }

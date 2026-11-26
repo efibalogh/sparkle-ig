@@ -3,7 +3,10 @@
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
 #import "../UI/SPKChipBar.h"
+#import "../Crop/SPKCropControlsView.h"
+#import "../MediaTrim/SPKTrimCrop.h"
 #import "../UI/SPKMediaChrome.h"
+#import "../UI/SPKMediaEditorChrome.h"
 
 #pragma mark - Configuration
 
@@ -37,9 +40,33 @@
 
 @end
 
-static const CGFloat kSPKEditorControlsRow = 56.0;
+// Width of the controls column when they sit beside the photo.
+static const CGFloat kSPKEditorSideControlsWidth = 300.0;
 
 #pragma mark - Image helpers
+
+// Bakes a fine rotation into a bitmap of the same pixel size: the picture turns
+// about its centre and is scaled by the cover factor, so it fills the frame with
+// no empty corners. The crop is then taken from this straightened bitmap, which
+// is exactly what the canvas showed.
+static UIImage *SPKPhotoEditorStraightened(UIImage *image, CGFloat degrees) {
+    if (!image.CGImage || fabs(degrees) < SPKTrimCropStraightenEpsilon)
+        return image;
+    CGSize size = image.size;
+    CGFloat cover = SPKTrimCropStraightenCoverScale(size, degrees);
+    UIGraphicsImageRendererFormat *format = [UIGraphicsImageRendererFormat preferredFormat];
+    format.scale = image.scale;
+    format.opaque = YES;
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:size format:format];
+    UIImage *output = [renderer imageWithActions:^(UIGraphicsImageRendererContext *rendererContext) {
+        CGContextRef ctx = rendererContext.CGContext;
+        CGContextTranslateCTM(ctx, size.width / 2.0, size.height / 2.0);
+        CGContextRotateCTM(ctx, degrees * (CGFloat)M_PI / 180.0);
+        CGContextScaleCTM(ctx, cover, cover);
+        [image drawInRect:CGRectMake(-size.width / 2.0, -size.height / 2.0, size.width, size.height)];
+    }];
+    return output.CGImage ? output : image;
+}
 
 // Redraws to a straight (orientation-Up) bitmap so all crop math works in pixel
 // space without worrying about EXIF orientation.
@@ -98,11 +125,26 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
 @end
 
 @implementation SPKPhotoEditorViewController {
-    UIImage *_workingImage;      // normalized + baked rotations/flips
-    SPKCropCanvasView *_canvas;  // shared pan/zoom crop surface
-    UIImageView *_imageView;     // the canvas content
-    UIView *_bottomControls;     // rotate / flip row
-    SPKChipBar *_aspectChips;    // freeform only
+    UIImage *_workingImage;          // normalized + baked rotations/flips
+    CGFloat _straightenDegrees;      // fine rotation, applied on output
+    SPKCropCanvasView *_canvas;      // shared pan/zoom crop surface
+    UIView *_contentHost;            // the canvas content; clips the turned photo
+    UIImageView *_imageView;         // the photo, turned by the straighten angle
+    SPKCropControlsView *_controls;  // aspect chips or straighten ruler
+    SPKChipBar *_aspectChips;        // freeform only
+    SPKStraightenRulerView *_ruler;
+    NSArray<NSLayoutConstraint *> *_bottomLayout;
+    NSArray<NSLayoutConstraint *> *_sideLayout;
+    BOOL _usesSideLayout;
+    UIBarButtonItem *_cancelItem;
+    BOOL _orientationEdited;         // rotated or flipped since opening (or the last Reset)
+}
+
++ (instancetype)editorWithSourceImage:(UIImage *)image configuration:(SPKPhotoEditorConfiguration *)configuration {
+    SPKPhotoEditorViewController *editor = [[self alloc] init];
+    editor.configuration = configuration ?: [SPKPhotoEditorConfiguration freeformConfiguration];
+    editor.sourceImage = image;
+    return editor;
 }
 
 + (void)presentWithSourceImage:(UIImage *)image
@@ -111,17 +153,20 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
                     completion:(void (^)(UIImage *))completion {
     if (!image || !presenter)
         return;
-    SPKPhotoEditorViewController *editor = [[self alloc] init];
-    editor.configuration = configuration ?: [SPKPhotoEditorConfiguration freeformConfiguration];
-    editor.sourceImage = image;
+    SPKPhotoEditorViewController *editor = [self editorWithSourceImage:image configuration:configuration];
     editor.completion = completion;
-    // Hosted in a navigation controller so the top bar is a native component —
-    // Liquid Glass on iOS 26, standard translucent bar earlier. Always dark (like
-    // Photos / the trim editor) so black canvas + light controls read correctly.
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editor];
-    nav.modalPresentationStyle = UIModalPresentationFullScreen;
-    nav.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-    [presenter presentViewController:nav animated:YES completion:nil];
+    SPKMediaEditorPresent(editor, presenter);
+}
+
++ (void)openFromEditor:(UIViewController *)host
+           sourceImage:(UIImage *)image
+         configuration:(SPKPhotoEditorConfiguration *)configuration
+            completion:(void (^)(UIImage *))completion {
+    if (!image || !host)
+        return;
+    SPKPhotoEditorViewController *editor = [self editorWithSourceImage:image configuration:configuration];
+    editor.completion = completion;
+    SPKMediaEditorOpenFromEditor(editor, host);
 }
 
 + (void)presentWithSourceImage:(UIImage *)image
@@ -130,14 +175,9 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
          destinationCompletion:(void (^)(UIImage *, NSString *))destinationCompletion {
     if (!image || !presenter)
         return;
-    SPKPhotoEditorViewController *editor = [[self alloc] init];
-    editor.configuration = configuration ?: [SPKPhotoEditorConfiguration freeformConfiguration];
-    editor.sourceImage = image;
+    SPKPhotoEditorViewController *editor = [self editorWithSourceImage:image configuration:configuration];
     editor.destinationCompletion = destinationCompletion;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editor];
-    nav.modalPresentationStyle = UIModalPresentationFullScreen;
-    nav.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-    [presenter presentViewController:nav animated:YES completion:nil];
+    SPKMediaEditorPresent(editor, presenter);
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -155,9 +195,22 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
     _workingImage = SPKPhotoEditorNormalized(self.sourceImage);
 
     [self setupChrome];
-    [self setupCropContainer];
-    [self setupBottomControls];
-    [self setupAspectChipsIfNeeded];
+    [self setupCanvas];
+    [self setupControls];
+    [self setupLayouts];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // Rotate, flip and Reset live in the native toolbar: Liquid Glass on iOS 26,
+    // and on iPhone Duo the system moves it into the side column.
+    [self.navigationController setToolbarHidden:NO animated:NO];
+    SPKMediaEditorConfigureCancelItem(_cancelItem, self);
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self applyLayoutForSize:self.view.bounds.size];
 }
 
 #pragma mark - Chrome
@@ -165,6 +218,7 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
 - (void)setupChrome {
     UIBarButtonItem *cancelItem = SPKMediaChromeTopBarButtonItem(@"close", self, @selector(cancelTapped));
     cancelItem.accessibilityLabel = SPKL(@"ALERT_ACTION_CANCEL");
+    _cancelItem = cancelItem;
     // When the caller supplies destinations, Done is a menu (pick where to save
     // without dismissing first); otherwise it's a plain confirm that just returns
     // the edited image to the caller.
@@ -182,74 +236,89 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
             intermediate ? nil : [SPKUtils SPKColor_InstagramBlue],
             self.configuration.confirmButtonTitle ?: SPKL(@"SETTINGS_WHATS_NEW_DONE_TEXT"));
     }
+    self.navigationItem.hidesBackButton = YES;
     SPKMediaChromeSetLeadingTopBarItems(self.navigationItem, @[ cancelItem ]);
     SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[ doneItem ]);
 }
 
-- (void)setupCropContainer {
+- (void)setupCanvas {
     _canvas = [[SPKCropCanvasView alloc] initWithFrame:CGRectZero];
     _canvas.translatesAutoresizingMaskIntoConstraints = NO;
     _canvas.aspectMode = self.configuration.aspectMode;
     _canvas.lockedAspectRatio = 1.0;
-    _canvas.aspect = SPKCropAspectOriginal;
+    _canvas.aspect = SPKCropAspectFreeform;
     [self.view addSubview:_canvas];
-    [NSLayoutConstraint activateConstraints:@[
-        [_canvas.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
-        [_canvas.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [_canvas.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-    ]];
 
+    // The canvas zooms and pans its content view by its own transform, so the
+    // straighten turn goes on a child: the host keeps the photo's size and
+    // clips the turned photo to it.
+    _contentHost = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, _workingImage.size}];
+    _contentHost.clipsToBounds = YES;
+    _contentHost.backgroundColor = [UIColor blackColor];
     _imageView = [[UIImageView alloc] initWithImage:_workingImage];
-    _imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [_canvas setContentView:_imageView contentSize:_workingImage.size];
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    [_contentHost addSubview:_imageView];
+    [self layoutStraightenedImage];
+    [_canvas setContentView:_contentHost contentSize:_workingImage.size];
 }
 
-- (void)setupBottomControls {
-    _bottomControls = SPKCropMakeToolRow(self, @selector(rotateLeftTapped), @selector(flipTapped), @selector(rotateRightTapped));
-    [self.view addSubview:_bottomControls];
-
-    [NSLayoutConstraint activateConstraints:@[
-        [_bottomControls.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
-                                                      constant:48.0],
-        [_bottomControls.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor
-                                                       constant:-48.0],
-        [_bottomControls.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor
-                                                     constant:-8.0],
-        [_bottomControls.heightAnchor constraintEqualToConstant:kSPKEditorControlsRow],
-    ]];
-}
-
-- (void)setupAspectChipsIfNeeded {
-    if (self.configuration.aspectMode != SPKCropAspectModeFreeform) {
-        // No chip row: the crop pane pins directly above the controls.
-        [_canvas.bottomAnchor constraintEqualToAnchor:_bottomControls.topAnchor constant:-8.0].active = YES;
-        return;
-    }
-
-    _aspectChips = [[SPKChipBar alloc] init];
-    _aspectChips.translatesAutoresizingMaskIntoConstraints = NO;
+- (void)setupControls {
+    _controls = [[SPKCropControlsView alloc] initWithAspectChips:(self.configuration.aspectMode == SPKCropAspectModeFreeform)];
+    _controls.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_controls];
+    _aspectChips = _controls.aspectChips;
     _aspectChips.delegate = self;
-    // Content-sized (scrolling) rather than fill-equally: the fill-equally mode
-    // shrinks the wider "Original" chip's font to fit its share, leaving the
-    // shorter chips at full size. Content sizing keeps every chip's font uniform.
-    _aspectChips.distributesToFit = NO;
-    NSInteger aspectCount = SPKCropAspectPresetCount();
-    NSMutableArray<NSString *> *titles = [NSMutableArray arrayWithCapacity:(NSUInteger)aspectCount];
-    for (NSInteger i = 0; i < aspectCount; i++) {
-        [titles addObject:SPKCropAspectTitle(SPKCropAspectPresetAtIndex(i))];
-    }
-    [_aspectChips setItems:titles symbols:@[]];
-    _aspectChips.selectedIndex = 0; // Original (first)
-    [self.view addSubview:_aspectChips];
+    _ruler = _controls.ruler;
+    [_ruler addTarget:self action:@selector(rulerChanged) forControlEvents:UIControlEventValueChanged];
+    [_ruler addTarget:self action:@selector(rulerBegan) forControlEvents:UIControlEventEditingDidBegin];
+    [_ruler addTarget:self action:@selector(rulerEnded) forControlEvents:UIControlEventEditingDidEnd];
 
+    // Every tool is a glyph in the native toolbar: on iPhone Duo the toolbar
+    // becomes a vertical column, which only lays out icon items.
+    NSArray<UIBarButtonItem *> *tools = SPKCropMakeToolBarItems(self, @selector(rotateLeftTapped), @selector(flipTapped),
+                                                                 @selector(rotateRightTapped));
+    UIBarButtonItem *reset = SPKMediaChromeBottomBarButtonItem(@"arrow_ccw", SPKL(@"ALERT_ACTION_RESET"), self, @selector(resetTapped));
+    NSMutableArray<NSArray<UIBarButtonItem *> *> *groups = [NSMutableArray array];
+    if (_controls.switchItem)
+        [groups addObject:@[ _controls.switchItem ]];
+    [groups addObject:tools];
+    [groups addObject:@[ reset ]];
+    self.toolbarItems = SPKMediaChromeBottomToolbarItemsWithGroups(groups);
+}
+
+// Two arrangements, picked from the size classes: under the photo on a tall
+// display, in a column beside it on a short or wide one (landscape, iPhone Duo).
+- (void)setupLayouts {
+    UILayoutGuide *safe = self.view.safeAreaLayoutGuide;
     [NSLayoutConstraint activateConstraints:@[
-        [_aspectChips.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
-        [_aspectChips.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
-        [_aspectChips.bottomAnchor constraintEqualToAnchor:_bottomControls.topAnchor
-                                                  constant:-4.0],
-        [_canvas.bottomAnchor constraintEqualToAnchor:_aspectChips.topAnchor
-                                             constant:-4.0],
+        [_canvas.topAnchor constraintEqualToAnchor:safe.topAnchor],
+        [_canvas.leadingAnchor constraintEqualToAnchor:safe.leadingAnchor],
     ]];
+    _bottomLayout = @[
+        [_canvas.trailingAnchor constraintEqualToAnchor:safe.trailingAnchor],
+        [_canvas.bottomAnchor constraintEqualToAnchor:_controls.topAnchor constant:-8.0],
+        [_controls.leadingAnchor constraintEqualToAnchor:safe.leadingAnchor],
+        [_controls.trailingAnchor constraintEqualToAnchor:safe.trailingAnchor],
+        [_controls.bottomAnchor constraintEqualToAnchor:safe.bottomAnchor constant:-8.0],
+    ];
+    _sideLayout = @[
+        [_canvas.trailingAnchor constraintEqualToAnchor:_controls.leadingAnchor constant:-12.0],
+        [_canvas.bottomAnchor constraintEqualToAnchor:safe.bottomAnchor],
+        [_controls.trailingAnchor constraintEqualToAnchor:safe.trailingAnchor constant:-12.0],
+        [_controls.widthAnchor constraintEqualToConstant:kSPKEditorSideControlsWidth],
+        [_controls.centerYAnchor constraintEqualToAnchor:safe.centerYAnchor],
+    ];
+    _usesSideLayout = SPKMediaEditorPrefersSideControls(self.traitCollection, self.view.bounds.size);
+    [NSLayoutConstraint activateConstraints:_usesSideLayout ? _sideLayout : _bottomLayout];
+}
+
+- (void)applyLayoutForSize:(CGSize)size {
+    BOOL side = SPKMediaEditorPrefersSideControls(self.traitCollection, size);
+    if (side == _usesSideLayout)
+        return;
+    _usesSideLayout = side;
+    [NSLayoutConstraint deactivateConstraints:side ? _bottomLayout : _sideLayout];
+    [NSLayoutConstraint activateConstraints:side ? _sideLayout : _bottomLayout];
 }
 
 #pragma mark - SPKChipBarDelegate (aspect)
@@ -260,7 +329,33 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
     _canvas.aspect = SPKCropAspectPresetAtIndex(index);
 }
 
-#pragma mark - Rotate / flip
+#pragma mark - Straighten
+
+- (void)layoutStraightenedImage {
+    CGSize size = _workingImage.size;
+    _contentHost.bounds = (CGRect){CGPointZero, size};
+    _imageView.transform = CGAffineTransformIdentity;
+    _imageView.bounds = (CGRect){CGPointZero, size};
+    _imageView.center = CGPointMake(size.width / 2.0, size.height / 2.0);
+    CGFloat cover = SPKTrimCropStraightenCoverScale(size, _straightenDegrees);
+    CGAffineTransform t = CGAffineTransformMakeRotation(_straightenDegrees * (CGFloat)M_PI / 180.0);
+    _imageView.transform = CGAffineTransformScale(t, cover, cover);
+}
+
+- (void)rulerBegan {
+    [_canvas setGridVisible:YES];
+}
+
+- (void)rulerChanged {
+    _straightenDegrees = _ruler.value;
+    [self layoutStraightenedImage];
+}
+
+- (void)rulerEnded {
+    [_canvas setGridVisible:NO];
+}
+
+#pragma mark - Rotate / flip / reset
 
 - (void)rotateLeftTapped {
     [self applyTransform:^{
@@ -279,11 +374,30 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
 }
 
 // Rotate/flip re-bake the bitmap, so the canvas is handed the new dimensions and
-// re-fits its crop around them.
+// re-fits its crop around them. The straighten angle carries over.
 - (void)applyTransform:(void (^)(void))mutate {
     mutate();
+    _orientationEdited = YES;
     _imageView.image = _workingImage;
+    [self layoutStraightenedImage];
     [_canvas setContentSize:_workingImage.size];
+    UIImpactFeedbackGenerator *fb = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+    [fb impactOccurred];
+}
+
+- (void)resetTapped {
+    _orientationEdited = NO;
+    _workingImage = SPKPhotoEditorNormalized(self.sourceImage);
+    _straightenDegrees = 0.0;
+    _ruler.value = 0.0;
+    _imageView.image = _workingImage;
+    [self layoutStraightenedImage];
+    if (_aspectChips) {
+        _aspectChips.selectedIndex = 0;
+        _canvas.aspect = SPKCropAspectFreeform;
+    }
+    [_canvas setContentSize:_workingImage.size];
+    [_canvas resetCrop];
     UIImpactFeedbackGenerator *fb = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
     [fb impactOccurred];
 }
@@ -291,7 +405,7 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
 #pragma mark - Output
 
 - (UIImage *)editedImage {
-    UIImage *source = _workingImage;
+    UIImage *source = SPKPhotoEditorStraightened(_workingImage, _straightenDegrees);
     if (!source.CGImage)
         return source;
     CGRect normalizedCrop = _canvas.normalizedCropRect;
@@ -329,26 +443,36 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
 
 #pragma mark - Confirm / cancel
 
+- (BOOL)hasChanges {
+    return _orientationEdited || fabs(_straightenDegrees) >= SPKTrimCropStraightenEpsilon || _canvas.userAdjusted ||
+           (_aspectChips && _canvas.aspect != SPKCropAspectFreeform);
+}
+
 - (void)cancelTapped {
+    __weak typeof(self) weakSelf = self;
+    SPKMediaEditorConfirmDiscard(self, [self hasChanges], ^{
+        [weakSelf closeWithoutSaving];
+    });
+}
+
+- (void)closeWithoutSaving {
     // In destination-menu mode, signal the cancel as a nil image so the caller
     // (which retains itself across the async flow) can release. Plain-confirm
     // callers documented that `completion` is not called on cancel, so leave it.
     void (^destinationCompletion)(UIImage *, NSString *) = [self.destinationCompletion copy];
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 if (destinationCompletion)
-                                     destinationCompletion(nil, nil);
-                             }];
+    SPKMediaEditorClose(self, ^{
+        if (destinationCompletion)
+            destinationCompletion(nil, nil);
+    });
 }
 
 - (void)confirmTapped {
     UIImage *image = [self editedImage];
     void (^completion)(UIImage *) = [self.completion copy];
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 if (completion && image)
-                                     completion(image);
-                             }];
+    SPKMediaEditorClose(self, ^{
+        if (completion && image)
+            completion(image);
+    });
 }
 
 - (UIMenu *)buildDoneMenu {
@@ -373,11 +497,10 @@ static UIImage *SPKPhotoEditorFlipped(UIImage *image) {
 - (void)finishWithDestinationTag:(NSString *)destinationTag {
     UIImage *image = [self editedImage];
     void (^completion)(UIImage *, NSString *) = [self.destinationCompletion copy];
-    [self dismissViewControllerAnimated:YES
-                             completion:^{
-                                 if (completion && image)
-                                     completion(image, destinationTag);
-                             }];
+    SPKMediaEditorClose(self, ^{
+        if (completion && image)
+            completion(image, destinationTag);
+    });
 }
 
 @end

@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKToolsSettingsProvider.h"
 #include <UIKit/UIKit.h>
 
@@ -14,8 +15,11 @@
 #import "../SPKWhatsNewViewController.h"
 #import "../SPKSettingsViewController.h"
 #import "../SPKTopicSettingsSupport.h"
+#import "../../Features/Tools/SPKNetworkInterceptorViewController.h"
+#import "../../Features/Tools/SPKNotificationSupportViewController.h"
 #if SPK_DEV
 #import "SPKHookBisectSettingsProvider.h"
+#import "../../Features/Interface/SPKLiquidGlassGatesViewController.h"
 #endif
 #import "SPKInterfaceSettingsProvider.h"
 
@@ -78,15 +82,37 @@ static NSDictionary *SPKSettingsLockSection(void) {
 }
 
 static NSDictionary *SPKDiagnosticsSection(void) {
-    SPKSetting *debugButton = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_TITLE") defaultsKey:kSPKPrefToolsDebugButton],
+    SPKSetting *debugButton = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_TITLE")
+                                                                             icon:SPKSettingsIcon(@"beaker")
+                                                                      defaultsKey:kSPKPrefToolsDebugButton],
                                                  SPKL(@"TOOLS_DEBUG_BUTTON_HELP"));
     debugButton.switchChangeHandler = ^(BOOL isOn) {
         SPKPreferenceSetObject(@(isOn), kSPKPrefToolsDebugButton);
         SPKDebugButtonRefresh();
     };
-    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObject:debugButton];
+    SPKSetting *networkInterceptor = [SPKSetting navigationCellWithTitle:SPKL(@"TOOLS_DIAGNOSTICS_NETWORK_INTERCEPTOR_TITLE")
+                                                                subtitle:@""
+                                                                    icon:SPKSettingsIcon(@"web")
+                                                          viewController:[SPKNetworkInterceptorViewController new]];
+    SPKSettingMarkedNewWithID(networkInterceptor, @"v1.7.0", @"tools_network_interceptor_page");
+    SPKSetting *notificationSupport = [SPKSetting navigationCellWithTitle:SPKL(@"TOOLS_NOTIFICATION_SUPPORT_TITLE")
+                                                                   subtitle:@""
+                                                                       icon:SPKSettingsIcon(@"notification")
+                                                             viewController:[SPKNotificationSupportViewController new]];
+    SPKSettingMarkedNewWithID(notificationSupport, @"v1.7.0", @"tools_notification_support_page");
+    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObjects:debugButton,
+                                                                          SPKSettingWithHelp(networkInterceptor, SPKL(@"TOOLS_DIAGNOSTICS_NETWORK_INTERCEPTOR_HELP")),
+                                                                          SPKSettingWithHelp(notificationSupport, SPKL(@"TOOLS_NOTIFICATION_SUPPORT_HELP")),
+                                                                          nil];
 #if SPK_DEV
     [rows addObject:SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP"))];
+    SPKSetting *liquidGlassGates = [SPKSetting buttonCellWithTitle:SPKL(@"DEV_LG_GATES_TITLE")
+                                                          subtitle:@""
+                                                              icon:SPKSettingsIcon(@"interface")
+                                                            action:^{
+                                                                [SPKLiquidGlassGatesViewController present];
+                                                            }];
+    [rows addObject:SPKSettingWithHelp(liquidGlassGates, SPKL(@"DEV_LG_GATES_HELP"))];
 #endif
     return SPKTopicSection(SPKL(@"TOOLS_DIAGNOSTICS_HEADER"), rows, nil);
 }
@@ -120,10 +146,6 @@ static NSDictionary *SPKDiagnosticsSection(void) {
     NSMutableArray *sections = [NSMutableArray arrayWithArray:@[
         SPKTopicSection(SPKL(@"TOOLS_FLEX_HEADER"), @[ flexOpen, flexGesture, flexLaunch, flexFocus ], flexFooter),
         SPKTopicSection(SPKL(@"TOOLS_TWEAK_HEADER"), @[
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_TITLE")
-                                    defaultsKey:@"tools_settings_shortcut"
-                                requiresRestart:YES],
-                               SPKL(@"TOOLS_TWEAK_QUICK_SETTINGS_ACCESS_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_TWEAK_SHORTCUT_HAPTICS_TITLE")
                                     defaultsKey:@"tools_shortcut_haptics"],
                                SPKL(@"TOOLS_TWEAK_SHORTCUT_HAPTICS_HELP")),
@@ -148,6 +170,10 @@ static NSDictionary *SPKDiagnosticsSection(void) {
                                              [SPKWhatsNewViewController presentFromViewController:nil onFinish:nil];
                                          }],
                                SPKL(@"TOOLS_TWEAK_SHOW_WHATS_NEW_HELP")),
+            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"TOOLS_TWEAK_NEW_BADGES_TITLE")
+                                                    subtitle:@""
+                                                        menu:SPKSettingsNewBadgesMenu()],
+                               SPKL(@"TOOLS_TWEAK_NEW_BADGES_HELP")),
         ],
                         nil),
 

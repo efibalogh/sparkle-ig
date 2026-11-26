@@ -2,6 +2,46 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AUTO_SAVE_FILTER_LIST_EXCLUDED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld исключённых</string>
+			<key>many</key>
+			<string>%ld исключённых</string>
+			<key>one</key>
+			<string>%ld исключённый</string>
+			<key>other</key>
+			<string>%ld исключённых</string>
+		</dict>
+	</dict>
+	<key>AUTO_SAVE_FILTER_LIST_SELECTED_COUNT</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>few</key>
+			<string>%ld выбранных</string>
+			<key>many</key>
+			<string>%ld выбранных</string>
+			<key>one</key>
+			<string>%ld выбранный</string>
+			<key>other</key>
+			<string>%ld выбранных</string>
+		</dict>
+	</dict>
 	<key>COMMON_FILE_COUNT</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -148,12 +188,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld не удалась</string>
 			<key>few</key>
 			<string>%ld не удались</string>
 			<key>many</key>
 			<string>%ld не удались</string>
+			<key>one</key>
+			<string>%ld не удалась</string>
 			<key>other</key>
 			<string>%ld не удались</string>
 		</dict>
@@ -168,12 +208,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>Сохранён %ld объект</string>
 			<key>few</key>
 			<string>Сохранено %ld объекта</string>
 			<key>many</key>
 			<string>Сохранено %ld объектов</string>
+			<key>one</key>
+			<string>Сохранён %ld объект</string>
 			<key>other</key>
 			<string>Сохранено %ld объекта</string>
 		</dict>
@@ -188,12 +228,12 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>ld</string>
-			<key>one</key>
-			<string>%ld история</string>
 			<key>few</key>
 			<string>%ld истории</string>
 			<key>many</key>
 			<string>%ld историй</string>
+			<key>one</key>
+			<string>%ld история</string>
 			<key>other</key>
 			<string>%ld истории</string>
 		</dict>

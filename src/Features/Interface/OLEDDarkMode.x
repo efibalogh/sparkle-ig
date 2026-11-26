@@ -26,9 +26,11 @@
 
 // iOS 26 Liquid Glass. Not in the SDK this builds against; the hook only needs
 // the class name and the tint setter.
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 260000
 @interface UIGlassEffect : UIVisualEffect
 @property (nonatomic, copy) UIColor *tintColor;
 @end
+#endif
 
 typedef UIColor * (^SPKOLEDColorProvider)(UITraitCollection *);
 

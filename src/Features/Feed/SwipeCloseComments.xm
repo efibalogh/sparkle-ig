@@ -19,6 +19,10 @@
 // So the swipe gesture is a runtime subclass of IG's directional pan that
 // activates horizontally but reports its horizontal travel as a downward drag,
 // and it stands in as _verticalPanGesture for the length of one swipe.
+//
+// A swipe that starts on an Expanded sheet can close it completely: the
+// sheet's own skip-partial flag is raised for that swipe, with a dismiss from
+// Partial as the fallback when the sheet still settles there.
 
 static char kSPKSwipeCloseCommentsInstalledKey;
 static char kSPKSwipeCloseCommentsControllerKey;
@@ -30,6 +34,7 @@ static NSString *const kSPKSwipeCloseCommentsDirectionKey = @"general_comments_s
 static NSString *const kSPKSwipeCloseCommentsDirectionLeft = @"left";
 static NSString *const kSPKSwipeCloseCommentsDirectionRight = @"right";
 static NSString *const kSPKSwipeCloseCommentsDirectionBoth = @"both";
+static NSString *const kSPKSwipeCloseCommentsFullyKey = @"general_comments_swipe_close_fully";
 
 typedef NS_OPTIONS(NSUInteger, SPKSwipeCloseCommentsDirection) {
     SPKSwipeCloseCommentsDirectionLeft = 1 << 0,
@@ -309,11 +314,57 @@ static void SPKCommentsSwipeSetActivationDirections(UIPanGestureRecognizer *pan,
     }
 }
 
+#pragma mark - Touch filtering
+
+static BOOL SPKCommentsSwipeViewIsInsideCommentCell(UIView *view, UIView *stopView) {
+    for (UIView *current = view; current && current != stopView; current = current.superview) {
+        if ([current isKindOfClass:[UICollectionViewCell class]] || [current isKindOfClass:[UITableViewCell class]]) {
+            return SPKCommentsSwipeStringLooksCommentRelated(NSStringFromClass([current class]));
+        }
+    }
+    return NO;
+}
+
+// Views whose own interaction a sideways swipe would break.
+static BOOL SPKCommentsSwipeViewKeepsTouch(UIView *view) {
+    if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UISlider class]] || [view isKindOfClass:[UISwitch class]] ||
+        [view isKindOfClass:[UIStepper class]] || [view isKindOfClass:[UISegmentedControl class]] || [view isKindOfClass:[UIDatePicker class]]) {
+        return YES;
+    }
+    return [view isKindOfClass:[UITextView class]] && ((UITextView *)view).isEditable;
+}
+
+#pragma mark - Sheet state
+
+// IGDSPartialModalSheetViewController sheet states.
+static unsigned long long const kSPKCommentsSheetStatePartial = 1;
+static unsigned long long const kSPKCommentsSheetStateExpanded = 2;
+static unsigned long long const kSPKCommentsSheetStateUnknown = NSUIntegerMax;
+
+static unsigned long long SPKCommentsSheetTargetState(UIViewController *sheet) {
+    if ([sheet respondsToSelector:@selector(targetSheetState)]) {
+        return ((IGDSDefaultPartialModalSheetViewController *)sheet).targetSheetState;
+    }
+    Ivar ivar = class_getInstanceVariable(object_getClass(sheet), "_targetSheetState");
+    return ivar ? *(unsigned long long *)((uint8_t *)(__bridge void *)sheet + ivar_getOffset(ivar)) : kSPKCommentsSheetStateUnknown;
+}
+
+// The sheet's own "skip partial on pan" switch makes a released drag from
+// Expanded settle at Closed instead of Partial. The ivar is written directly
+// because 410 has no setter.
+static _Bool *SPKCommentsSheetSkipPartialFlag(UIViewController *sheet) {
+    Ivar ivar = sheet ? class_getInstanceVariable(object_getClass(sheet), "_skipPartialStateOnPan") : NULL;
+    return ivar ? (_Bool *)((uint8_t *)(__bridge void *)sheet + ivar_getOffset(ivar)) : NULL;
+}
+
 #pragma mark - Controller
 
 @interface SPKSwipeCloseCommentsController : NSObject <UIGestureRecognizerDelegate>
 @property (nonatomic, weak) UIViewController *sheet;
 @property (nonatomic, strong) UIPanGestureRecognizer *swappedOutPan;
+// Set for a swipe that starts on an Expanded sheet with Close Fully on.
+@property (nonatomic) BOOL closingFully;
+@property (nonatomic) BOOL savedSkipPartial;
 @end
 
 @implementation SPKSwipeCloseCommentsController
@@ -357,6 +408,7 @@ static void SPKCommentsSwipeSetActivationDirections(UIPanGestureRecognizer *pan,
     UIGestureRecognizerState state = pan.state;
     if (state == UIGestureRecognizerStateBegan) {
         [self swapInPan:pan];
+        [self beginClosingFullyIfNeeded];
     }
 
     [sheet _didPan:pan];
@@ -364,27 +416,67 @@ static void SPKCommentsSwipeSetActivationDirections(UIPanGestureRecognizer *pan,
     if (state == UIGestureRecognizerStateEnded || state == UIGestureRecognizerStateCancelled || state == UIGestureRecognizerStateFailed) {
         [self restoreOriginalPan];
         SPKCommentsSwipeSetActive(pan, NO);
+        [self finishClosingFullyAfterRelease:state == UIGestureRecognizerStateEnded];
     }
 }
 
+- (void)beginClosingFullyIfNeeded {
+    UIViewController *sheet = self.sheet;
+    self.closingFully = NO;
+    if (![SPKUtils getBoolPref:kSPKSwipeCloseCommentsFullyKey] || SPKCommentsSheetTargetState(sheet) != kSPKCommentsSheetStateExpanded) {
+        return;
+    }
+    self.closingFully = YES;
+    _Bool *skipPartial = SPKCommentsSheetSkipPartialFlag(sheet);
+    if (skipPartial) {
+        self.savedSkipPartial = *skipPartial;
+        *skipPartial = true;
+    }
+}
+
+// The sheet settles a release on the next turns of the run loop, so the
+// outcome is read after it. If it still chose Partial (no skip flag on this
+// build, or the flag ignored for this sheet), close it from there.
+- (void)finishClosingFullyAfterRelease:(BOOL)released {
+    if (!self.closingFully)
+        return;
+    self.closingFully = NO;
+
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SPKSwipeCloseCommentsController *strongSelf = weakSelf;
+        UIViewController *sheet = strongSelf.sheet;
+        if (!strongSelf || !sheet)
+            return;
+        _Bool *skipPartial = SPKCommentsSheetSkipPartialFlag(sheet);
+        if (skipPartial) {
+            *skipPartial = strongSelf.savedSkipPartial;
+        }
+        if (released && SPKCommentsSheetTargetState(sheet) == kSPKCommentsSheetStatePartial && sheet.presentingViewController &&
+            !sheet.isBeingDismissed) {
+            SPKLog(@"General", @"[Sparkle CommentsSwipe] Expanded release settled at Partial; closing");
+            [sheet dismissViewControllerAnimated:YES completion:nil];
+        }
+    });
+}
+
+// Comment rows put their buttons (like, reply, view replies) across most of
+// the row, the like column right at the edge a swipe starts from. A swipe may
+// start over those: the pan only begins once the finger travels sideways, and
+// beginning cancels the button's touch, so a tap still works and a swipe never
+// also triggers the button. Controls outside comment rows (composer, header)
+// and controls that track a horizontal drag or take text keep their touches.
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    UIView *view = touch.view;
-    while (view) {
-        if ([view isKindOfClass:[UIControl class]]) {
+    UIView *hostView = gestureRecognizer.view;
+    for (UIView *view = touch.view; view; view = view.superview) {
+        if (SPKCommentsSwipeViewKeepsTouch(view)) {
             return NO;
         }
-        view = view.superview;
-    }
-    return YES;
-}
-
-static BOOL SPKCommentsSwipeViewIsInsideCommentCell(UIView *view, UIView *stopView) {
-    for (UIView *current = view; current && current != stopView; current = current.superview) {
-        if ([current isKindOfClass:[UICollectionViewCell class]] || [current isKindOfClass:[UITableViewCell class]]) {
-            return SPKCommentsSwipeStringLooksCommentRelated(NSStringFromClass([current class]));
+        if ([view isKindOfClass:[UIControl class]] && !SPKCommentsSwipeViewIsInsideCommentCell(view, hostView)) {
+            return NO;
         }
     }
-    return NO;
+    return YES;
 }
 
 // Comment cells have their own horizontal swipe actions, which claim a swipe

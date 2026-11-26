@@ -5,6 +5,7 @@
 #import "../UI/SPKBrandHeroView.h"
 #import "../UI/SPKGlassButton.h"
 #import "../../Utils.h"
+#import "../UI/SPKFont.h"
 
 static const CGFloat kSPKUpdateSheetTopInset = 32.0;
 static const CGFloat kSPKUpdateSheetBottomInset = 10.0;
@@ -68,14 +69,14 @@ static const CGFloat kSPKUpdateSheetActionsBarGap = 12.0;
 
     UILabel *titleLabel = [UILabel new];
     titleLabel.text = [NSString stringWithFormat:SPKL(@"UPDATE_SHEET_TITLE_FORMAT"), latest];
-    titleLabel.font = [UIFont systemFontOfSize:24.0 weight:UIFontWeightBold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleTitle2 weight:UIFontWeightBold] to:titleLabel];
     titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines = 0;
 
     UILabel *bodyLabel = [UILabel new];
     bodyLabel.text = [NSString stringWithFormat:SPKL(@"UPDATE_SHEET_INSTALLED_FORMAT"), installed];
-    bodyLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout] to:bodyLabel];
     bodyLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     bodyLabel.textAlignment = NSTextAlignmentCenter;
     bodyLabel.numberOfLines = 0;
@@ -243,7 +244,7 @@ static const CGFloat kSPKUpdateSheetActionsBarGap = 12.0;
 
     UILabel *label = [UILabel new];
     label.text = SPKL(@"UPDATE_SHEET_CHANGELOG_SWIPE_HINT");
-    label.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightMedium] to:label];
     label.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = 0;
@@ -294,7 +295,7 @@ static const CGFloat kSPKUpdateSheetActionsBarGap = 12.0;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[SPKUtils SPKColor_InstagramSecondaryText] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:button];
     button.titleLabel.adjustsFontSizeToFitWidth = YES;
     button.titleLabel.minimumScaleFactor = 0.75;
     [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];

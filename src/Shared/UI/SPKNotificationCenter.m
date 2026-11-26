@@ -44,6 +44,7 @@ SPK_NOTIF_CONST(kSPKNotificationDownloadAllLinks, "download_all_links");
 SPK_NOTIF_CONST(kSPKNotificationExpand, "expand");
 SPK_NOTIF_CONST(kSPKNotificationViewThumbnail, "view_thumbnail");
 SPK_NOTIF_CONST(kSPKNotificationCopyCaption, "copy_caption");
+SPK_NOTIF_CONST(kSPKNotificationCopyLink, "copy_link");
 SPK_NOTIF_CONST(kSPKNotificationOpenTopicSettings, "open_topic_settings");
 SPK_NOTIF_CONST(kSPKNotificationRepost, "repost");
 
@@ -62,6 +63,7 @@ SPK_NOTIF_CONST(kSPKNotificationAutoSaveSummary, "auto_save_summary");
 SPK_NOTIF_CONST(kSPKNotificationAutoSavePending, "auto_save_pending");
 SPK_NOTIF_CONST(kSPKNotificationDirectVisualMarkSeen, "direct_visual_mark_seen");
 SPK_NOTIF_CONST(kSPKNotificationThreadMessagesMarkSeen, "thread_messages_mark_seen");
+SPK_NOTIF_CONST(kSPKNotificationDirectSeenReceiptBlocked, "direct_seen_receipt_blocked");
 SPK_NOTIF_CONST(kSPKNotificationDirectThreadSeenRule, "direct_thread_seen_rule");
 SPK_NOTIF_CONST(kSPKNotificationDirectHiddenChat, "direct_hidden_chat");
 SPK_NOTIF_CONST(kSPKNotificationShareSheetPin, "share_sheet_pin");
@@ -110,12 +112,15 @@ SPK_NOTIF_CONST(kSPKNotificationPasscodeChanged, "passcode_changed");
 SPK_NOTIF_CONST(kSPKNotificationLanguagePackUpdate, "language_pack_update");
 SPK_NOTIF_CONST(kSPKNotificationCopyDescription, "copy_description");
 SPK_NOTIF_CONST(kSPKNotificationCopyNoteText, "copy_note_text");
+SPK_NOTIF_CONST(kSPKNotificationStoryMentionsCopyUsername, "story_mentions_copy_username");
 SPK_NOTIF_CONST(kSPKNotificationFakeLocation, "fake_location");
 SPK_NOTIF_CONST(kSPKNotificationShareLongPressCopyLink, "share_long_press_copy_link");
 SPK_NOTIF_CONST(kSPKNotificationCopyComment, "copy_comment");
 SPK_NOTIF_CONST(kSPKNotificationCopyGIFLink, "copy_gif_link");
 SPK_NOTIF_CONST(kSPKNotificationCopyGIFTitle, "copy_gif_title");
 SPK_NOTIF_CONST(kSPKNotificationMediaEncodingLogs, "media_encoding_logs");
+SPK_NOTIF_CONST(kSPKNotificationNetworkInterceptor, "network_interceptor");
+SPK_NOTIF_CONST(kSPKNotificationNotificationSupport, "notification_support");
 SPK_NOTIF_CONST(kSPKNotificationFlexUnavailable, "flex_unavailable");
 #undef SPK_NOTIF_CONST
 
@@ -246,6 +251,7 @@ NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(
                 kSPKNotificationDownloadAllClipboard,
                 kSPKNotificationDownloadAllLinks,
                 kSPKNotificationCopyCaption,
+                kSPKNotificationCopyLink,
                 kSPKNotificationCopyAudioURL,
                 kSPKNotificationMediaPreviewCopy,
                 kSPKNotificationProfileCopyInfo,
@@ -254,12 +260,14 @@ NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(
                 kSPKNotificationCopyGIFTitle,
                 kSPKNotificationCopyDescription,
                 kSPKNotificationCopyNoteText,
+                kSPKNotificationStoryMentionsCopyUsername,
                 kSPKNotificationShareLongPressCopyLink,
             ],
             @"seen" : @[
                 kSPKNotificationStoryMarkSeen,
                 kSPKNotificationDirectVisualMarkSeen,
                 kSPKNotificationThreadMessagesMarkSeen,
+                kSPKNotificationDirectSeenReceiptBlocked,
                 kSPKNotificationInstantsMarkSeen,
             ],
             @"lists" : @[
@@ -297,6 +305,8 @@ NSDictionary<NSString *, NSArray<NSString *> *> *SPKNotificationGroupMembership(
                 kSPKNotificationClipboardUsername,
                 kSPKNotificationFakeLocation,
                 kSPKNotificationMediaEncodingLogs,
+                kSPKNotificationNetworkInterceptor,
+                kSPKNotificationNotificationSupport,
                 kSPKNotificationFlexUnavailable,
                 kSPKNotificationPasscodeChanged,
             ],
@@ -388,7 +398,7 @@ NSDictionary<NSString *, id> *SPKNotificationDefaultPreferences(void) {
         kSPKNotificationPillDurationKey : @(kSPKNotificationDefaultPillDuration),
         kSPKNotificationProgressSubtitleStyleKey : @"both",
         kSPKNotificationPillPositionKey : @"top",
-        kSPKNotificationStyleKey : @"pill",
+        kSPKNotificationStyleKey : @"instagram",
         kSPKNotificationErrorHapticKey : @YES,
     } mutableCopy];
     for (NSString *group in SPKNotificationGroupMembership())
@@ -856,9 +866,13 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
             }
             if (tabBarControllerClass && [controller isKindOfClass:tabBarControllerClass] && [controller respondsToSelector:@selector(tabBar)]) {
                 UIView *tabBar = ((UITabBarController *)controller).tabBar;
+                // Only a bottom bar counts. Beside a vertical side bar (foldables,
+                // regular width) the bar's top is mid-screen and says nothing about
+                // the bottom edge.
                 if ([tabBar isKindOfClass:UIView.class] && SPKNotificationViewIsOnScreen(tabBar, window)) {
-                    CGFloat top = CGRectGetMinY([tabBar convertRect:tabBar.bounds toView:nil]);
-                    gap = MAX(gap, screenHeight - top + spacing);
+                    CGRect frame = [tabBar convertRect:tabBar.bounds toView:nil];
+                    if (CGRectGetWidth(frame) > CGRectGetHeight(frame) && screenHeight - CGRectGetMinY(frame) < screenHeight / 2.0)
+                        gap = MAX(gap, screenHeight - CGRectGetMinY(frame) + spacing);
                 }
             }
             if ([NSStringFromClass(controller.class) containsString:@"DirectThread"])
@@ -959,7 +973,7 @@ static UIView *SPKNotificationDirectComposer(UIView *root) {
     [pill setPresentationTopConstraint:anchor];
     [NSLayoutConstraint activateConstraints:@[
         anchor,
-        [pill.centerXAnchor constraintEqualToAnchor:host.centerXAnchor],
+        [pill.centerXAnchor constraintEqualToAnchor:host.safeAreaLayoutGuide.centerXAnchor],
     ]];
 
     SPKNotificationSlot *slot = [SPKNotificationSlot new];

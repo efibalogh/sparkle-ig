@@ -135,6 +135,14 @@
 
 @end
 
+UIViewController *SPKDataGalleryExportViewController(void) {
+    SPKSettingsTransferSelectionViewController *vc = [[SPKSettingsTransferSelectionViewController alloc] initWithImportMode:NO];
+    vc.includeSettings = NO;
+    vc.includeDeletedMessages = NO;
+    vc.includeProfileAnalyzer = NO;
+    return vc;
+}
+
 #pragma mark - Provider
 
 @implementation SPKDataSettingsProvider

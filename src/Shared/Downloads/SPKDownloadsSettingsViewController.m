@@ -11,6 +11,7 @@
 #import "../MediaDownload/SPKMediaQualityManager.h"
 #import "SPKDownloadBackgroundKeeper.h"
 #import "SPKDownloadTypes.h"
+#import "SPKFileNamesSettingsViewController.h"
 
 @implementation SPKDownloadsSettingsViewController
 
@@ -144,6 +145,7 @@
                 album.helpText = SPKL(@"DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP");
                 album;
             }),
+            [SPKFileNamesSettingsViewController navigationSetting],
             SPKSettingWithHelp([SPKSetting stepperCellWithTitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_HISTORY_LIMIT_TITLE")
                                         subtitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_VALUE_SAVED_VALUE_SUBTITLE")
                                             icon:SPKSettingsIcon(@"history")

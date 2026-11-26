@@ -4,6 +4,7 @@
 #import "../../../Utils.h"
 #import "SPKDeletedMessagesAvatarView.h"
 #import "SPKDeletedMessagesDate.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 NSString *const SPKDeletedMessagesSenderCellReuseID = @"SPKDeletedMessagesSenderCell";
 
@@ -35,7 +36,7 @@ static NSString *SPKDeletedMessagesSenderPreview(SPKDeletedMessageGroup *group);
 
         _nameLabel = [UILabel new];
         _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _nameLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_nameLabel];
         _nameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         [_nameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
 
@@ -66,7 +67,7 @@ static NSString *SPKDeletedMessagesSenderPreview(SPKDeletedMessageGroup *group);
 
         _previewLabel = [UILabel new];
         _previewLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _previewLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_previewLabel];
         _previewLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
 
         _previewRow = [[UIStackView alloc] initWithArrangedSubviews:@[ _previewIcon, _previewLabel ]];
@@ -78,7 +79,7 @@ static NSString *SPKDeletedMessagesSenderPreview(SPKDeletedMessageGroup *group);
 
         _timeLabel = [UILabel new];
         _timeLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _timeLabel.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightRegular];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1] to:_timeLabel];
         _timeLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
         _timeLabel.textAlignment = NSTextAlignmentRight;
         [_timeLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];

@@ -35,7 +35,7 @@ SPKAutoSaveFilterConfig *SPKStoryAutoSaveFilterConfig(void) {
         config.includedKey = @"stories_auto_save_included";
         config.identityField = @"pk";
         config.sortField = @"username";
-        config.subjectPlural = SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_USERS_TEXT");
+        config.subject = SPKAutoSaveFilterSubjectUsers;
         config.ruleNotificationIdentifier = kSPKNotificationStoryAutoSaveUserRule;
     });
     return config;
@@ -304,9 +304,11 @@ BOOL SPKStoryToggleAutoSaveCurrentUser(SPKStoryContext *context, NSString **noti
 }
 
 - (void)lookupUsername:(NSString *)rawUsername {
-    NSString *username = [SPKUtils sanitizedInstagramUsername:rawUsername];
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        [self presentError:SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")];
         return;
+    }
 
     __weak typeof(self) weakSelf = self;
     [SPKInstagramAPI resolveUserForUsername:username

@@ -1,8 +1,10 @@
+#import "../Shared/UI/SPKSafeAreaLayout.h"
 #import "SPKIconPickerViewController.h"
 #import "SPKStrings.h"
 
 #import "../AssetUtils.h"
 #import "../Utils.h"
+#import "../Shared/UI/SPKFont.h"
 
 static NSString *const kSPKIconPickerCellIdentifier = @"SPKIconPickerCell";
 static NSString *const kSPKIconPickerPreviewRowCellIdentifier = @"SPKIconPickerPreviewRowCell";
@@ -156,7 +158,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
         self.iconView.layer.cornerRadius = 14.0;
         self.iconWidth.constant = 72.0;
         self.iconHeight.constant = 72.0;
-        self.titleLabel.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
+        self.titleLabel.font = [SPKFont fontForStyle:SPKFontStyleCaption1 weight:UIFontWeightMedium];
         self.titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     } else {
@@ -165,7 +167,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
         self.iconView.layer.cornerRadius = 0.0;
         self.iconWidth.constant = 32.0;
         self.iconHeight.constant = 32.0;
-        self.titleLabel.font = [UIFont systemFontOfSize:10.0 weight:UIFontWeightRegular];
+        self.titleLabel.font = [SPKFont fontForStyle:SPKFontStyleCaption2];
         self.titleLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
         self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
     }
@@ -258,7 +260,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     label.adjustsFontSizeToFitWidth = YES;
     label.minimumScaleFactor = 0.8;
     label.lineBreakMode = NSLineBreakByTruncatingTail;
-    label.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
+    label.font = [SPKFont fontForStyle:SPKFontStyleCaption1 weight:UIFontWeightMedium];
     label.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
 
     UIStackView *column = [[UIStackView alloc] initWithArrangedSubviews:@[ imageView, label ]];
@@ -302,7 +304,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
         return nil;
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _titleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:_titleLabel];
     _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     [self addSubview:_titleLabel];
     [NSLayoutConstraint activateConstraints:@[
@@ -353,11 +355,15 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     return SPKIconPickerCellStyleGlyph;
 }
 - (NSInteger)columnCountForWidth:(CGFloat)width {
-    (void)width;
-    return 3;
+    return SPKAdaptiveColumnCount(3, width);
 }
 - (CGFloat)itemHeight {
-    return [self cellStyle] == SPKIconPickerCellStyleAppIcon ? 124.0 : 96.0;
+    // The cell's title is its only text, so the cell grows by however much the
+    // user's text size grows that line. Read on every layout pass, which a text
+    // size change triggers, and the cells pick up the new font on reuse.
+    BOOL appIcon = [self cellStyle] == SPKIconPickerCellStyleAppIcon;
+    SPKFontStyle style = appIcon ? SPKFontStyleCaption1 : SPKFontStyleCaption2;
+    return (appIcon ? 124.0 : 96.0) + [SPKFont lineGrowthForStyle:style];
 }
 - (NSString *)searchPlaceholder {
     return SPKL(@"SETTINGS_ACTION_SECTION_ICON_PICKER_SEARCH_ICONS_TEXT");
@@ -381,6 +387,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
     layout.sectionInset = UIEdgeInsetsMake(14.0, 14.0, 24.0, 14.0);
     layout.headerReferenceSize = CGSizeMake(1.0, 42.0);
+    SPKFlowLayoutUseSafeArea(layout);
 
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -418,7 +425,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     [super viewWillLayoutSubviews];
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     CGFloat horizontalInset = layout.sectionInset.left + layout.sectionInset.right;
-    CGFloat availableWidth = MAX(1.0, self.view.bounds.size.width - horizontalInset);
+    CGFloat availableWidth = MAX(1.0, SPKCollectionViewUsableWidth(self.collectionView) - horizontalInset);
     NSInteger columns = MAX(1, [self columnCountForWidth:availableWidth]);
     CGFloat itemWidth = floor((availableWidth - (columns - 1) * layout.minimumInteritemSpacing) / columns);
     layout.itemSize = CGSizeMake(itemWidth, [self itemHeight]);
@@ -558,7 +565,7 @@ static NSString *SPKIconPickerWrappedTitle(NSString *title) {
     SPKIconPickerItem *item = self.filteredSections[indexPath.section].items[indexPath.item];
     if (item.previewImages.count == 0)
         return layout.itemSize;
-    CGFloat width = collectionView.bounds.size.width - layout.sectionInset.left - layout.sectionInset.right;
+    CGFloat width = SPKCollectionViewUsableWidth(collectionView) - layout.sectionInset.left - layout.sectionInset.right;
     return CGSizeMake(MAX(1.0, width), [self itemHeight]);
 }
 

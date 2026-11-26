@@ -5,6 +5,7 @@
 #import "SPKStrings.h"
 
 #import <objc/runtime.h>
+#import "SPKFont.h"
 
 // Instagram's own ordinals, device-verified identical on 410.1.0 and 444.0.0:
 // 0 none, 1 loading, 2 follow, 3 following, 4 requested, 5 user not found,
@@ -38,7 +39,7 @@ static const void *kSPKFollowButtonStateKey = &kSPKFollowButtonStateKey;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.titleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightBold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightBold] to:self.titleLabel];
         self.layer.cornerRadius = kSPKFollowButtonCornerRadius;
         self.clipsToBounds = YES;
 

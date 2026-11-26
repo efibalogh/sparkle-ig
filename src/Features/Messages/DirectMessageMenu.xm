@@ -702,6 +702,25 @@ static id SPKDMProcessMenuItems(id menuItems) {
     return config;
 }
 
+// IG 456 appended the More submenu tap handlers.
++ (id)menuConfigurationWithEligibleOptions:(id)options
+                          messageViewModel:(id)viewModel
+                               contentType:(id)contentType
+                                 isSticker:(_Bool)isSticker
+                            isMusicSticker:(_Bool)isMusicSticker
+                          directNuxManager:(id)directNuxManager
+                       sessionUserDefaults:(id)sessionUserDefaults
+                              mobileConfig:(id)mobileConfig
+                               userSession:(id)userSession
+                                tapHandler:(id)tapHandler
+                     moreSubmenuTapHandler:(id)moreSubmenuTapHandler
+                 moreSubmenuItemTapHandler:(id)moreSubmenuItemTapHandler {
+    id config = %orig(options, viewModel, contentType, isSticker, isMusicSticker, directNuxManager, sessionUserDefaults, mobileConfig,
+                      userSession, tapHandler, moreSubmenuTapHandler, moreSubmenuItemTapHandler);
+    SPKDMNoteMessageMenuViewModel(viewModel);
+    return config;
+}
+
 %end
 
 %end

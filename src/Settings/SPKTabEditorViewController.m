@@ -1,20 +1,36 @@
 #import "SPKStrings.h"
 #import "SPKTabEditorViewController.h"
+#import "SPKPreferenceAvailability.h"
+#import "SPKPreferences.h"
 
 #import "../AssetUtils.h"
+#import "../Shared/Navigation/SPKDestinations.h"
 #import "../Shared/Navigation/SPKTabConfiguration.h"
+#import "SPKNewBadges.h"
 #import "../Shared/UI/SPKChipBar.h"
 #import "../Shared/UI/SPKChipGlass.h"
 #import "../Shared/UI/SPKIGAlertPresenter.h"
 #import "../Shared/UI/SPKMediaChrome.h"
 #import "../Shared/UI/SPKSwitch.h"
 #import "../Utils.h"
+#import "../Features/Interface/SPKNativeTabBar.h"
+#import "../Shared/UI/SPKFont.h"
 
 static CGFloat const SPKTabEditorGlyphSize = 24.0;
 
+FOUNDATION_EXPORT BOOL SPKLiquidGlassInstagramEnabled(void);
+FOUNDATION_EXPORT void SPKRefreshTabHolds(void);
+
+NSString *const SPKTabEditorNewItemHolds = @"tab_bar_hold_shortcuts";
+// The interface_native_tab_bar defaults key, the seen identity the switch had
+// as a settings row, so a user who already saw it there does not see it again.
+NSString *const SPKTabEditorNewItemSystemTabBar = @"interface_native_tab_bar";
+
 typedef NS_ENUM(NSInteger, SPKTabEditorSection) {
     SPKTabEditorSectionTabs,
+    SPKTabEditorSectionHolds,
     SPKTabEditorSectionBehavior,
+    SPKTabEditorSectionAppearance,
     SPKTabEditorSectionSingleTab,
     SPKTabEditorSectionDiscard,
     SPKTabEditorSectionReset,
@@ -86,7 +102,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.text = SPKL(@"SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT");
     _emptyLabel.textAlignment = NSTextAlignmentCenter;
-    _emptyLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_emptyLabel];
     _emptyLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
     _emptyLabel.hidden = YES;
     _emptyLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -187,6 +203,353 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 
 @end
 
+// The stored layout as the tab bar can build it: Classic reads as Default where
+// it is not available, so opening the editor there stages no change by itself.
+static NSString *SPKTabEditorStoredLayout(void) {
+    NSString *layout = SPKNormalizedTabLayout(SPKPreferenceObjectForKey(SPKPrefTabLayout));
+    if ([layout isEqualToString:SPKTabLayoutClassic] && !SPKTabClassicLayoutAvailable())
+        return SPKTabLayoutDefault;
+    return layout;
+}
+
+#pragma mark - Column preview
+
+// The system tab bar where it stands as a column on the trailing edge (a side
+// vertical bar, as on a foldable): the status area on top, the feed header's
+// create and notifications buttons that move into the column, the slot Sparkle's
+// feed header button docks into under them, and the tab platter at the bottom
+// with the selection lens. Tabs Instagram adds in wide layouts (Activity,
+// Create) wear a dashed ring, matching the legend.
+static CGFloat const SPKColumnPreviewItemHeight = 34.0;
+static CGFloat const SPKColumnPreviewPlatterWidth = 46.0;
+static CGFloat const SPKColumnPreviewColumnWidth = 60.0;
+
+@interface SPKTabBarColumnPreviewView : UIView
+@property (nonatomic, strong) UIView *card;
+@property (nonatomic, strong) UIView *column;
+@property (nonatomic, strong) UIView *platter;
+@property (nonatomic, strong) UIStackView *platterStack;
+@property (nonatomic, strong) UIView *headerGroup;
+@property (nonatomic, strong) UIView *headerCreateItem;
+@property (nonatomic, strong) NSLayoutConstraint *headerItemsHeight;
+@property (nonatomic, strong) NSLayoutConstraint *headerSlotBelowGroup;
+@property (nonatomic, strong) NSLayoutConstraint *headerSlotBelowStatus;
+@property (nonatomic, strong) UIView *headerSlot;
+@property (nonatomic, strong) CAShapeLayer *headerSlotRing;
+@property (nonatomic, strong) UIImageView *headerMessagesView;
+@property (nonatomic, strong) UIStackView *legend;
+@property (nonatomic, strong) UILabel *emptyLabel;
+@end
+
+@implementation SPKTabBarColumnPreviewView
+
++ (CGFloat)preferredHeightForItemCount:(NSUInteger)count showsLegend:(BOOL)showsLegend {
+    CGFloat platter = MAX((CGFloat)count, 1.0) * SPKColumnPreviewItemHeight + 12.0;
+    // Card insets, status area, header group, header slot and the gap above the platter.
+    return 4.0 + 16.0 + 12.0 + 34.0 + (2.0 * SPKColumnPreviewItemHeight + 12.0 + 8.0) + 40.0 + 14.0 + platter + 12.0 +
+           (showsLegend ? 26.0 : 0.0);
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (!self)
+        return nil;
+
+    UIColor *placeholder = [[SPKUtils SPKColor_InstagramSecondaryText] colorWithAlphaComponent:0.10];
+
+    _card = [[UIView alloc] init];
+    _card.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
+    _card.layer.cornerRadius = 20.0;
+    _card.layer.cornerCurve = kCACornerCurveContinuous;
+    _card.clipsToBounds = YES;
+    _card.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_card];
+
+    // The screen beside the column, sketched: a header line and a post.
+    UIView *wordmark = [[UIView alloc] init];
+    wordmark.backgroundColor = [[SPKUtils SPKColor_InstagramSecondaryText] colorWithAlphaComponent:0.35];
+    wordmark.layer.cornerRadius = 4.0;
+    wordmark.translatesAutoresizingMaskIntoConstraints = NO;
+    [_card addSubview:wordmark];
+
+    _headerMessagesView = [[UIImageView alloc] initWithImage:SPKTabEditorGlyph(@"messages")];
+    _headerMessagesView.contentMode = UIViewContentModeScaleAspectFit;
+    _headerMessagesView.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
+    _headerMessagesView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_card addSubview:_headerMessagesView];
+
+    UIView *post = [[UIView alloc] init];
+    post.backgroundColor = placeholder;
+    post.layer.cornerRadius = 12.0;
+    post.layer.cornerCurve = kCACornerCurveContinuous;
+    post.translatesAutoresizingMaskIntoConstraints = NO;
+    [_card addSubview:post];
+
+    _column = [[UIView alloc] init];
+    _column.translatesAutoresizingMaskIntoConstraints = NO;
+    [_card addSubview:_column];
+
+    UILabel *clock = [[UILabel alloc] init];
+    clock.text = @"9:41";
+    clock.font = [UIFont monospacedDigitSystemFontOfSize:11.0 weight:UIFontWeightSemibold]; // spk-font-fixed: drawn to the miniature phone preview scale
+    clock.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
+    clock.isAccessibilityElement = NO;
+    UIImageView *signal = [[UIImageView alloc] initWithImage:[UIImage systemImageNamed:@"wifi"]];
+    signal.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
+    signal.preferredSymbolConfiguration = [UIImageSymbolConfiguration configurationWithPointSize:10.0 weight:UIImageSymbolWeightSemibold];
+    UIStackView *status = [[UIStackView alloc] initWithArrangedSubviews:@[ clock, signal ]];
+    status.axis = UILayoutConstraintAxisVertical;
+    status.alignment = UIStackViewAlignmentCenter;
+    status.spacing = 3.0;
+    status.translatesAutoresizingMaskIntoConstraints = NO;
+    [_column addSubview:status];
+
+    // Instagram's own header items in the column, one glass group.
+    _headerGroup = [[UIView alloc] init];
+    _headerGroup.backgroundColor = [[SPKUtils SPKColor_InstagramPrimaryText] colorWithAlphaComponent:0.07];
+    _headerGroup.layer.cornerRadius = SPKColumnPreviewPlatterWidth / 2.0;
+    _headerGroup.layer.cornerCurve = kCACornerCurveContinuous;
+    _headerGroup.translatesAutoresizingMaskIntoConstraints = NO;
+    [_column addSubview:_headerGroup];
+    _headerCreateItem = [self itemViewWithIcon:SPKTabIconName(SPKTabIdentifierCreate) selected:NO addedByInstagram:NO];
+    UIStackView *headerItems = [[UIStackView alloc] initWithArrangedSubviews:@[
+        _headerCreateItem,
+        [self itemViewWithIcon:@"heart" selected:NO addedByInstagram:NO],
+    ]];
+    headerItems.axis = UILayoutConstraintAxisVertical;
+    headerItems.distribution = UIStackViewDistributionFillEqually;
+    headerItems.translatesAutoresizingMaskIntoConstraints = NO;
+    [_headerGroup addSubview:headerItems];
+
+    _headerSlot = [[UIView alloc] init];
+    _headerSlot.translatesAutoresizingMaskIntoConstraints = NO;
+    _headerSlot.layer.cornerRadius = 17.0;
+    _headerSlotRing = [CAShapeLayer layer];
+    _headerSlotRing.fillColor = UIColor.clearColor.CGColor;
+    _headerSlotRing.lineWidth = 1.0;
+    _headerSlotRing.lineDashPattern = @[ @3, @3 ];
+    [_headerSlot.layer addSublayer:_headerSlotRing];
+    [_column addSubview:_headerSlot];
+
+    _platter = [[UIView alloc] init];
+    _platter.backgroundColor = [[SPKUtils SPKColor_InstagramPrimaryText] colorWithAlphaComponent:0.07];
+    _platter.layer.cornerRadius = SPKColumnPreviewPlatterWidth / 2.0;
+    _platter.layer.cornerCurve = kCACornerCurveContinuous;
+    _platter.translatesAutoresizingMaskIntoConstraints = NO;
+    [_column addSubview:_platter];
+
+    _platterStack = [[UIStackView alloc] init];
+    _platterStack.axis = UILayoutConstraintAxisVertical;
+    _platterStack.distribution = UIStackViewDistributionFillEqually;
+    _platterStack.alignment = UIStackViewAlignmentFill;
+    _platterStack.translatesAutoresizingMaskIntoConstraints = NO;
+    [_platter addSubview:_platterStack];
+
+    _emptyLabel = [[UILabel alloc] init];
+    _emptyLabel.text = SPKL(@"SETTINGS_TAB_EDITOR_NO_VISIBLE_TABS_TEXT");
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_emptyLabel];
+    _emptyLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
+    _emptyLabel.numberOfLines = 0;
+    _emptyLabel.hidden = YES;
+    _emptyLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [_card addSubview:_emptyLabel];
+
+    UIView *legendRing = [self instagramRingView];
+    UILabel *legendLabel = [[UILabel alloc] init];
+    legendLabel.text = SPKL(@"SETTINGS_TAB_EDITOR_PREVIEW_ADDED_BY_INSTAGRAM_LABEL");
+    legendLabel.font = [SPKFont fontForStyle:SPKFontStyleCaption1];
+    legendLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
+    _legend = [[UIStackView alloc] initWithArrangedSubviews:@[ legendRing, legendLabel ]];
+    _legend.axis = UILayoutConstraintAxisHorizontal;
+    _legend.alignment = UIStackViewAlignmentCenter;
+    _legend.spacing = 8.0;
+    _legend.translatesAutoresizingMaskIntoConstraints = NO;
+    [_card addSubview:_legend];
+
+    _headerItemsHeight = [headerItems.heightAnchor constraintEqualToConstant:2.0 * SPKColumnPreviewItemHeight];
+    _headerItemsHeight.active = YES;
+    _headerSlotBelowGroup = [_headerSlot.topAnchor constraintEqualToAnchor:_headerGroup.bottomAnchor constant:10.0];
+    _headerSlotBelowStatus = [_headerSlot.topAnchor constraintEqualToAnchor:status.bottomAnchor constant:8.0];
+    _headerSlotBelowGroup.active = YES;
+
+    [NSLayoutConstraint activateConstraints:@[
+        [_card.topAnchor constraintEqualToAnchor:self.topAnchor constant:4.0],
+        [_card.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-16.0],
+        [_card.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:16.0],
+        [_card.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-16.0],
+
+        [_column.topAnchor constraintEqualToAnchor:_card.topAnchor constant:12.0],
+        [_column.bottomAnchor constraintEqualToAnchor:_card.bottomAnchor constant:-12.0],
+        [_column.trailingAnchor constraintEqualToAnchor:_card.trailingAnchor constant:-6.0],
+        [_column.widthAnchor constraintEqualToConstant:SPKColumnPreviewColumnWidth],
+
+        [status.topAnchor constraintEqualToAnchor:_column.topAnchor],
+        [status.centerXAnchor constraintEqualToAnchor:_column.centerXAnchor],
+        [status.heightAnchor constraintEqualToConstant:30.0],
+
+        [_headerGroup.topAnchor constraintEqualToAnchor:status.bottomAnchor constant:8.0],
+        [_headerGroup.centerXAnchor constraintEqualToAnchor:_column.centerXAnchor],
+        [_headerGroup.widthAnchor constraintEqualToConstant:SPKColumnPreviewPlatterWidth],
+        [headerItems.topAnchor constraintEqualToAnchor:_headerGroup.topAnchor constant:6.0],
+        [headerItems.bottomAnchor constraintEqualToAnchor:_headerGroup.bottomAnchor constant:-6.0],
+        [headerItems.leadingAnchor constraintEqualToAnchor:_headerGroup.leadingAnchor],
+        [headerItems.trailingAnchor constraintEqualToAnchor:_headerGroup.trailingAnchor],
+
+        [_headerSlot.centerXAnchor constraintEqualToAnchor:_column.centerXAnchor],
+        [_headerSlot.widthAnchor constraintEqualToConstant:34.0],
+        [_headerSlot.heightAnchor constraintEqualToConstant:34.0],
+
+        [_platter.bottomAnchor constraintEqualToAnchor:_column.bottomAnchor],
+        [_platter.centerXAnchor constraintEqualToAnchor:_column.centerXAnchor],
+        [_platter.widthAnchor constraintEqualToConstant:SPKColumnPreviewPlatterWidth],
+        [_platter.topAnchor constraintGreaterThanOrEqualToAnchor:_headerSlot.bottomAnchor constant:14.0],
+
+        [_platterStack.topAnchor constraintEqualToAnchor:_platter.topAnchor constant:6.0],
+        [_platterStack.bottomAnchor constraintEqualToAnchor:_platter.bottomAnchor constant:-6.0],
+        [_platterStack.leadingAnchor constraintEqualToAnchor:_platter.leadingAnchor],
+        [_platterStack.trailingAnchor constraintEqualToAnchor:_platter.trailingAnchor],
+
+        [wordmark.leadingAnchor constraintEqualToAnchor:_card.leadingAnchor constant:16.0],
+        [wordmark.topAnchor constraintEqualToAnchor:_card.topAnchor constant:24.0],
+        [wordmark.widthAnchor constraintEqualToConstant:64.0],
+        [wordmark.heightAnchor constraintEqualToConstant:8.0],
+
+        [_headerMessagesView.trailingAnchor constraintEqualToAnchor:_column.leadingAnchor constant:-12.0],
+        [_headerMessagesView.centerYAnchor constraintEqualToAnchor:wordmark.centerYAnchor],
+        [_headerMessagesView.widthAnchor constraintEqualToConstant:SPKTabEditorGlyphSize],
+        [_headerMessagesView.heightAnchor constraintEqualToConstant:SPKTabEditorGlyphSize],
+
+        [post.leadingAnchor constraintEqualToAnchor:_card.leadingAnchor constant:16.0],
+        [post.trailingAnchor constraintEqualToAnchor:_column.leadingAnchor constant:-12.0],
+        [post.topAnchor constraintEqualToAnchor:wordmark.bottomAnchor constant:22.0],
+        [post.bottomAnchor constraintEqualToAnchor:_legend.topAnchor constant:-12.0],
+
+        [_legend.leadingAnchor constraintEqualToAnchor:_card.leadingAnchor constant:16.0],
+        [_legend.trailingAnchor constraintLessThanOrEqualToAnchor:_column.leadingAnchor constant:-8.0],
+        [_legend.bottomAnchor constraintEqualToAnchor:_card.bottomAnchor constant:-14.0],
+
+        [_emptyLabel.centerYAnchor constraintEqualToAnchor:_platter.centerYAnchor],
+        [_emptyLabel.trailingAnchor constraintEqualToAnchor:_column.leadingAnchor constant:-8.0],
+        [_emptyLabel.leadingAnchor constraintGreaterThanOrEqualToAnchor:_card.leadingAnchor constant:16.0],
+    ]];
+    return self;
+}
+
+- (UIView *)instagramRingView {
+    UIView *ring = [[UIView alloc] init];
+    ring.translatesAutoresizingMaskIntoConstraints = NO;
+    [ring.widthAnchor constraintEqualToConstant:14.0].active = YES;
+    [ring.heightAnchor constraintEqualToConstant:14.0].active = YES;
+    CAShapeLayer *shape = [CAShapeLayer layer];
+    shape.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0.5, 0.5, 13.0, 13.0)].CGPath;
+    shape.fillColor = UIColor.clearColor.CGColor;
+    shape.strokeColor = [SPKUtils SPKColor_InstagramSecondaryText].CGColor;
+    shape.lineWidth = 1.0;
+    shape.lineDashPattern = @[ @2, @2 ];
+    [ring.layer addSublayer:shape];
+    return ring;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.headerSlotRing.frame = self.headerSlot.bounds;
+    self.headerSlotRing.path = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.headerSlot.bounds, 0.5, 0.5)].CGPath;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    // Layer colors do not follow the appearance by themselves.
+    self.headerSlotRing.strokeColor = [[SPKUtils SPKColor_InstagramSecondaryText] colorWithAlphaComponent:0.6].CGColor;
+}
+
+- (UIView *)itemViewWithIcon:(NSString *)iconName selected:(BOOL)selected addedByInstagram:(BOOL)addedByInstagram {
+    UIView *container = [[UIView alloc] init];
+    if (selected) {
+        // The lens: UIKit's selection on the column platter.
+        UIView *lens = [[UIView alloc] init];
+        lens.backgroundColor = [[SPKUtils SPKColor_InstagramPrimaryText] colorWithAlphaComponent:0.12];
+        lens.layer.cornerRadius = 17.0;
+        lens.translatesAutoresizingMaskIntoConstraints = NO;
+        [container addSubview:lens];
+        [NSLayoutConstraint activateConstraints:@[
+            [lens.centerXAnchor constraintEqualToAnchor:container.centerXAnchor],
+            [lens.centerYAnchor constraintEqualToAnchor:container.centerYAnchor],
+            [lens.widthAnchor constraintEqualToConstant:40.0],
+            [lens.heightAnchor constraintEqualToConstant:34.0],
+        ]];
+    }
+    if (addedByInstagram) {
+        UIView *ring = [[UIView alloc] init];
+        ring.translatesAutoresizingMaskIntoConstraints = NO;
+        CAShapeLayer *shape = [CAShapeLayer layer];
+        shape.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0.5, 0.5, 29.0, 29.0)].CGPath;
+        shape.fillColor = UIColor.clearColor.CGColor;
+        shape.strokeColor = [SPKUtils SPKColor_InstagramSecondaryText].CGColor;
+        shape.lineWidth = 1.0;
+        shape.lineDashPattern = @[ @2, @2 ];
+        [ring.layer addSublayer:shape];
+        [container addSubview:ring];
+        [NSLayoutConstraint activateConstraints:@[
+            [ring.centerXAnchor constraintEqualToAnchor:container.centerXAnchor],
+            [ring.centerYAnchor constraintEqualToAnchor:container.centerYAnchor],
+            [ring.widthAnchor constraintEqualToConstant:30.0],
+            [ring.heightAnchor constraintEqualToConstant:30.0],
+        ]];
+    }
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[[SPKAssetUtils instagramIconNamed:iconName pointSize:20.0]
+                                                               imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    icon.contentMode = UIViewContentModeScaleAspectFit;
+    icon.tintColor = selected ? [SPKUtils SPKColor_InstagramPrimaryText]
+                              : [[SPKUtils SPKColor_InstagramSecondaryText] colorWithAlphaComponent:addedByInstagram ? 0.55 : 0.8];
+    icon.translatesAutoresizingMaskIntoConstraints = NO;
+    [container addSubview:icon];
+    [NSLayoutConstraint activateConstraints:@[
+        [icon.centerXAnchor constraintEqualToAnchor:container.centerXAnchor],
+        [icon.centerYAnchor constraintEqualToAnchor:container.centerYAnchor],
+        [icon.widthAnchor constraintEqualToConstant:20.0],
+        [icon.heightAnchor constraintEqualToConstant:20.0],
+    ]];
+    return container;
+}
+
+- (void)configureWithItems:(NSArray<NSDictionary *> *)items
+          showsHeaderStrip:(BOOL)showsHeaderStrip
+         headerButtonShown:(BOOL)headerButtonShown
+       headerItemsInColumn:(BOOL)headerItemsInColumn {
+    self.headerMessagesView.hidden = !showsHeaderStrip;
+    // Classic puts the create button in the tab bar, leaving the heart here.
+    self.headerCreateItem.hidden = showsHeaderStrip;
+    self.headerItemsHeight.constant = (showsHeaderStrip ? 1.0 : 2.0) * SPKColumnPreviewItemHeight;
+    // Where Instagram makes those header items tabs instead, the slot moves up.
+    self.headerGroup.hidden = !headerItemsInColumn;
+    self.headerSlotBelowGroup.active = NO;
+    self.headerSlotBelowStatus.active = NO;
+    (headerItemsInColumn ? self.headerSlotBelowGroup : self.headerSlotBelowStatus).active = YES;
+    self.emptyLabel.hidden = items.count > 0;
+    self.platter.hidden = items.count == 0;
+    self.headerSlot.backgroundColor = headerButtonShown ? [[SPKUtils SPKColor_InstagramPrimaryText] colorWithAlphaComponent:0.12]
+                                                        : UIColor.clearColor;
+    self.headerSlotRing.strokeColor = [[SPKUtils SPKColor_InstagramSecondaryText] colorWithAlphaComponent:0.6].CGColor;
+    BOOL anyInstagram = NO;
+    for (UIView *view in self.platterStack.arrangedSubviews)
+        [view removeFromSuperview];
+    for (NSDictionary *item in items) {
+        BOOL added = [item[@"instagram"] boolValue];
+        anyInstagram = anyInstagram || added;
+        [self.platterStack addArrangedSubview:[self itemViewWithIcon:item[@"icon"]
+                                                            selected:[item[@"selected"] boolValue]
+                                                    addedByInstagram:added]];
+    }
+    for (NSLayoutConstraint *constraint in self.platterStack.constraints) {
+        if (constraint.firstAttribute == NSLayoutAttributeHeight && constraint.firstItem == self.platterStack)
+            constraint.active = NO;
+    }
+    [self.platterStack.heightAnchor constraintEqualToConstant:MAX((CGFloat)items.count, 1.0) * SPKColumnPreviewItemHeight].active = YES;
+    self.legend.hidden = !anyInstagram;
+}
+
+@end
+
 #pragma mark - Cell
 
 @interface SPKTabEditorCell : UITableViewCell
@@ -224,11 +587,11 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     [_glyphView.heightAnchor constraintEqualToConstant:SPKTabEditorGlyphSize].active = YES;
 
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _titleLabel.font = [SPKFont fontForStyle:SPKFontStyleBody];
     _titleLabel.adjustsFontForContentSizeCategory = YES;
 
     _statusLabel = [[UILabel alloc] init];
-    _statusLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    _statusLabel.font = [SPKFont fontForStyle:SPKFontStyleSubheadline];
     _statusLabel.adjustsFontForContentSizeCategory = YES;
     _statusLabel.textAlignment = NSTextAlignmentRight;
     _statusLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
@@ -292,6 +655,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 @property (nonatomic, strong) SPKChipBar *layoutChipBar;
 @property (nonatomic, strong) UILabel *layoutCaption;
 @property (nonatomic, strong) SPKTabBarPreviewView *previewView;
+@property (nonatomic, strong) SPKTabBarColumnPreviewView *columnPreviewView;
 
 @property (nonatomic, copy) NSString *layoutMode;
 @property (nonatomic, strong) NSMutableArray<NSString *> *order;
@@ -301,8 +665,18 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 @property (nonatomic, copy) NSString *savedCarrier;
 @property (nonatomic) BOOL hidesTabBarWhenSingle;
 @property (nonatomic) BOOL showsInboxShortcut;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *holds;
+@property (nonatomic) BOOL nativeTabBar;
+/// The edit signature the table was last drawn from, so a change reloads only
+/// the sections it actually touched.
+@property (nonatomic, copy) NSDictionary *shownSignature;
+@property (nonatomic, copy) NSString *tabBarMode;
+@property (nonatomic, copy) NSString *glassMode;
 @property (nonatomic, strong) NSDictionary *persistedSnapshot;
 @property (nonatomic) BOOL showsApplyItem;
+@property (nonatomic) NSUInteger previewItemCount;
+@property (nonatomic, copy) NSArray *lastPreviewSignature;
+@property (nonatomic) BOOL previewShowsLegend;
 @end
 
 @implementation SPKTabEditorViewController
@@ -310,8 +684,13 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 - (instancetype)init {
     self = [super init];
     if (self)
-        self.title = SPKL(@"INTERFACE_TABS_TAB_EDITOR_TITLE");
+        self.title = SPKL(@"INTERFACE_TAB_BAR_TITLE");
     return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    SPKNewBadgesMarkItemsSeen(@[ SPKTabEditorNewItemHolds, SPKTabEditorNewItemSystemTabBar ], self);
 }
 
 #pragma mark Lifecycle
@@ -319,6 +698,9 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     SPKMigrateTabConfigurationIfNeeded();
+    SPKLog(@"TabBar", @"[Sparkle] Tab editor: systemBarInUse=%d switch=%d instagramChoseSystemBar=%d classicAvailable=%d",
+           SPKSystemTabBarInUse(), [SPKUtils getBoolPref:kSPKPrefInterfaceNativeTabBar],
+           SPKSystemTabBarChosenByInstagram(), SPKTabClassicLayoutAvailable());
     self.view.backgroundColor = [SPKUtils SPKColor_InstagramGroupedBackground];
     self.navigationController.navigationBar.prefersLargeTitles = NO;
     [self loadPersistedValues];
@@ -339,12 +721,16 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     self.layoutChipBar = [[SPKChipBar alloc] init];
     self.layoutChipBar.delegate = self;
     self.layoutChipBar.distributesToFit = YES;
-    [self.layoutChipBar setItems:@[ SPKL(@"MENU_DEFAULT"), SPKL(@"TAB_LAYOUT_CUSTOM"), SPKL(@"SETTINGS_TAB_EDITOR_CLASSIC_TEXT") ] symbols:nil];
+    // Classic is not offered on a foldable (see SPKTabClassicLayoutAvailable).
+    NSMutableArray<NSString *> *layoutTitles = [@[ SPKL(@"MENU_DEFAULT"), SPKL(@"TAB_LAYOUT_CUSTOM") ] mutableCopy];
+    if (SPKTabClassicLayoutAvailable())
+        [layoutTitles addObject:SPKL(@"SETTINGS_TAB_EDITOR_CLASSIC_TEXT")];
+    [self.layoutChipBar setItems:layoutTitles symbols:nil];
     self.layoutChipBar.selectedIndex = [self usesCustomLayout] ? 1 : ([self usesClassicLayout] ? 2 : 0);
     [self.headerContainer addSubview:self.layoutChipBar];
 
     self.layoutCaption = [[UILabel alloc] init];
-    self.layoutCaption.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    self.layoutCaption.font = [SPKFont fontForStyle:SPKFontStyleFootnote];
     self.layoutCaption.adjustsFontForContentSizeCategory = YES;
     self.layoutCaption.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.layoutCaption.numberOfLines = 0;
@@ -352,6 +738,9 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 
     self.previewView = [[SPKTabBarPreviewView alloc] initWithFrame:CGRectZero];
     [self.headerContainer addSubview:self.previewView];
+    self.columnPreviewView = [[SPKTabBarColumnPreviewView alloc] initWithFrame:CGRectZero];
+    self.columnPreviewView.hidden = YES;
+    [self.headerContainer addSubview:self.columnPreviewView];
     self.tableView.tableHeaderView = self.headerContainer;
 
     [self applyEditingState];
@@ -368,7 +757,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         NSDictionary *persisted = self.persistedSnapshot;
         [self loadPersistedValuesKeepingStagedEdits:[self isDirty] &&
                                                     [persisted isEqual:[self persistedValuesSnapshot]]];
-        [self.tableView reloadData];
+        [self reloadTableData];
         [self applyEditingState];
         [self refreshStagedUI];
     }
@@ -379,13 +768,59 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     [self layoutPreviewHeader];
 }
 
+// Folding, unfolding or resizing changes which bar the preview has to draw.
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    if (self.tableView && previousTraitCollection.horizontalSizeClass != self.traitCollection.horizontalSizeClass) {
+        [self reloadTableData];
+        [self refreshStagedUI];
+    }
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    if (self.tableView && [self previewUsesColumn] != !self.columnPreviewView.hidden)
+        [self refreshStagedUI];
+}
+
+#pragma mark Bar shape
+
+// The preview draws the bar this screen's own geometry implies, never the
+// device model. The system tab bar stands as a column on the trailing edge
+// where the window gives that edge a side bar's inset (more than the leading
+// one: a landscape iPhone's insets are symmetric); everywhere else it is a
+// bottom bar like Instagram's own.
+- (BOOL)previewUsesColumn {
+    if (!SPKSystemTabBarInUse())
+        return NO;
+    UIEdgeInsets insets = self.view.safeAreaInsets;
+    BOOL rightToLeft = self.view.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+    CGFloat trailing = rightToLeft ? insets.left : insets.right;
+    CGFloat leading = rightToLeft ? insets.right : insets.left;
+    return trailing > leading + 20.0;
+}
+
+// In regular width the system bar shows Instagram's wide topology: Activity and
+// Create become tabs, and Classic stops applying.
+- (BOOL)previewIsRegularWidth {
+    return SPKSystemTabBarInUse() && self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+}
+
 // Hand-laid out: a table header view is sized by its frame, so the height has to
 // be known up front.
 - (void)layoutPreviewHeader {
     if (!self.headerContainer)
         return;
 
-    CGFloat width = CGRectGetWidth(self.tableView.bounds);
+    // The rows sit on the table's layout margins, which already absorb a side
+    // column's safe-area inset. The chips and preview card are drawn 16pt
+    // inside their frames, so these frames reach 16pt past the margins to line
+    // their edges up with the rows.
+    UIEdgeInsets margins = self.tableView.layoutMargins;
+    CGFloat const contentInset = 16.0;
+    CGFloat fullWidth = CGRectGetWidth(self.tableView.bounds);
+    CGFloat x = MAX(0.0, margins.left - contentInset);
+    CGFloat width = fullWidth - x - MAX(0.0, margins.right - contentInset);
     if (width <= 0.0)
         return;
 
@@ -397,29 +832,69 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     CGSize captionSize = [self.layoutCaption sizeThatFits:CGSizeMake(captionWidth, CGFLOAT_MAX)];
 
     CGFloat y = 4.0;
-    self.layoutChipBar.frame = CGRectMake(0, y, width, chipHeight);
+    self.layoutChipBar.frame = CGRectMake(x, y, width, chipHeight);
     y += chipHeight + 4.0;
 
-    CGFloat previewHeight = [self usesClassicLayout] ? 212.0 : 168.0;
-    self.previewView.frame = CGRectMake(0, y, width, previewHeight);
+    BOOL column = [self previewUsesColumn];
+    self.previewView.hidden = column;
+    self.columnPreviewView.hidden = !column;
+    CGFloat previewHeight;
+    if (column) {
+        CGRect frame = [self columnPreviewFrameInAvailableWidth:width];
+        self.columnPreviewView.frame = CGRectOffset(frame, x, y);
+        previewHeight = CGRectGetHeight(frame);
+    } else {
+        previewHeight = [self usesClassicLayout] && ![self previewIsRegularWidth] ? 212.0 : 168.0;
+        self.previewView.frame = CGRectMake(x, y, width, previewHeight);
+    }
     y += previewHeight;
 
-    self.layoutCaption.frame = CGRectMake(margin, y, captionWidth, captionSize.height);
+    self.layoutCaption.frame = CGRectMake(x + margin, y, captionWidth, captionSize.height);
     y += captionSize.height + 10.0;
 
-    CGRect frame = CGRectMake(0, 0, width, y);
+    CGRect frame = CGRectMake(0, 0, fullWidth, y);
     if (!CGRectEqualToRect(self.headerContainer.frame, frame)) {
         self.headerContainer.frame = frame;
         self.tableView.tableHeaderView = self.headerContainer;
     }
 }
 
+// The column preview is a miniature of the window it describes, so its card takes
+// the window's aspect ratio: portrait when folded, landscape when open. It is
+// as tall as its contents need, grows toward the window's shape up to about half
+// the window's height so the rows stay in reach, and is centered when that
+// leaves it narrower than the table.
+- (CGRect)columnPreviewFrameInAvailableWidth:(CGFloat)availableWidth {
+    CGFloat const horizontalInset = 32.0; // The card sits 16pt inside the view on each side.
+    CGFloat const verticalInset = 20.0;   // 4pt above the card, 16pt below.
+    CGFloat contentHeight = [SPKTabBarColumnPreviewView preferredHeightForItemCount:MAX(self.previewItemCount, (NSUInteger)1)
+                                                                        showsLegend:self.previewShowsLegend];
+    CGFloat minCardHeight = contentHeight - verticalInset;
+    CGFloat maxCardWidth = availableWidth - horizontalInset;
+
+    CGSize window = self.view.window ? self.view.window.bounds.size : self.view.bounds.size;
+    if (maxCardWidth <= 0.0 || window.width <= 0.0 || window.height <= 0.0)
+        return CGRectMake(0.0, 0.0, availableWidth, contentHeight);
+    CGFloat aspect = window.width / window.height;
+
+    CGFloat cardHeight = MIN(maxCardWidth / aspect, window.height * 0.5);
+    cardHeight = MAX(cardHeight, minCardHeight);
+    CGFloat cardWidth = MIN(maxCardWidth, round(cardHeight * aspect));
+    CGFloat viewWidth = cardWidth + horizontalInset;
+    return CGRectMake(round((availableWidth - viewWidth) / 2.0), 0.0, viewWidth, round(cardHeight) + verticalInset);
+}
+
 - (NSString *)layoutCaptionText {
+    NSString *text;
     if ([self usesCustomLayout])
-        return SPKL(@"SETTINGS_TAB_EDITOR_ARRANGE_TAB_BAR_YOURSELF_ONLY_LAYOUT_CAN_HOLD_SAVED_TEXT");
-    if ([self usesClassicLayout])
-        return SPKL(@"SETTINGS_TAB_EDITOR_INSTAGRAM_S_LEGACY_LAYOUT_MESSAGES_MOVES_FEED_HEADER_CREATE_MESSAGE");
-    return SPKL(@"SETTINGS_TAB_EDITOR_INSTAGRAM_DECIDES_ORDER_CAN_STILL_HIDE_TABS_CHOOSE_APP_TEXT");
+        text = SPKL(@"SETTINGS_TAB_EDITOR_ARRANGE_TAB_BAR_YOURSELF_ONLY_LAYOUT_CAN_HOLD_SAVED_TEXT");
+    else if ([self usesClassicLayout])
+        text = SPKL(@"SETTINGS_TAB_EDITOR_INSTAGRAM_S_LEGACY_LAYOUT_MESSAGES_MOVES_FEED_HEADER_CREATE_MESSAGE");
+    else
+        text = SPKL(@"SETTINGS_TAB_EDITOR_INSTAGRAM_DECIDES_ORDER_CAN_STILL_HIDE_TABS_CHOOSE_APP_TEXT");
+    if (!SPKTabClassicLayoutAvailable())
+        text = [NSString stringWithFormat:@"%@ %@", text, SPKL(@"TAB_EDITOR_CLASSIC_FOLDABLE_UNAVAILABLE_TEXT")];
+    return text;
 }
 
 #pragma mark State
@@ -438,7 +913,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     id launch = SPKPreferenceObjectForKey(@"interface_launch_tab");
     id swipe = SPKPreferenceObjectForKey(@"interface_swipe_tabs");
     return @{
-        @"layout" : SPKNormalizedTabLayout(SPKPreferenceObjectForKey(SPKPrefTabLayout)),
+        @"layout" : SPKTabEditorStoredLayout(),
         @"order" : SPKNormalizeTabOrder(SPKPreferenceObjectForKey(SPKPrefCustomTabOrder)),
         @"hidden" : hidden,
         @"launch" : [launch isKindOfClass:[NSString class]] ? launch : @"default",
@@ -446,7 +921,35 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         @"saved" : SPKNormalizedSavedCarrier(SPKPreferenceObjectForKey(SPKPrefSavedTabCarrier)),
         @"hidesBar" : @([self stagedBoolForKey:SPKPrefHideTabBarWhenSingle fallback:NO]),
         @"inboxShortcut" : @([self stagedBoolForKey:SPKPrefInboxHeaderShortcut fallback:YES]),
+        @"holds" : [self persistedHolds],
+        @"nativeTabBar" : @([self stagedBoolForKey:kSPKPrefInterfaceNativeTabBar fallback:NO]),
+        @"tabBarMode" : [self stagedStringForKey:kSPKPrefInterfaceLiquidGlassTabBarMode fallback:@"default"],
+        @"glassMode" : [self stagedStringForKey:kSPKPrefInterfaceLiquidGlassMode fallback:@"follow"],
     };
+}
+
+// Stored holds, normalized the way the tab bar reads them, so a value the bar
+// would ignore shows (and is written back) as Instagram Default.
+- (NSDictionary<NSString *, NSString *> *)persistedHolds {
+    NSMutableDictionary<NSString *, NSString *> *holds = [NSMutableDictionary dictionary];
+    for (NSString *identifier in SPKTabHoldableIdentifiers()) {
+        id value = SPKPreferenceObjectForKey(SPKTabHoldPreferenceKey(identifier));
+        NSString *hold = SPKTabHoldInstagramDefault;
+        if ([value isEqual:SPKTabHoldNone]) {
+            hold = SPKTabHoldNone;
+        } else if ([value isKindOfClass:[NSString class]]) {
+            SPKDestination *destination = SPKDestinationForIdentifier(value);
+            if (destination.placements & SPKDestinationPlacementHold)
+                hold = destination.identifier;
+        }
+        holds[identifier] = hold;
+    }
+    return holds;
+}
+
+- (NSString *)stagedStringForKey:(NSString *)key fallback:(NSString *)fallback {
+    id value = SPKPreferenceObjectForKey(key);
+    return [value isKindOfClass:[NSString class]] && [(NSString *)value length] > 0 ? value : fallback;
 }
 
 - (void)loadPersistedValuesKeepingStagedEdits:(BOOL)keepStaged {
@@ -456,7 +959,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 }
 
 - (void)loadPersistedValues {
-    self.layoutMode = SPKNormalizedTabLayout(SPKPreferenceObjectForKey(SPKPrefTabLayout));
+    self.layoutMode = SPKTabEditorStoredLayout();
     self.order = [SPKNormalizeTabOrder(SPKPreferenceObjectForKey(SPKPrefCustomTabOrder)) mutableCopy];
     self.hidden = [NSMutableSet set];
     for (NSString *identifier in SPKTabEditableIdentifiers()) {
@@ -471,6 +974,10 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     self.savedCarrier = SPKNormalizedSavedCarrier(SPKPreferenceObjectForKey(SPKPrefSavedTabCarrier));
     self.hidesTabBarWhenSingle = [self stagedBoolForKey:SPKPrefHideTabBarWhenSingle fallback:NO];
     self.showsInboxShortcut = [self stagedBoolForKey:SPKPrefInboxHeaderShortcut fallback:YES];
+    self.holds = [[self persistedHolds] mutableCopy];
+    self.nativeTabBar = [self stagedBoolForKey:kSPKPrefInterfaceNativeTabBar fallback:NO];
+    self.tabBarMode = [self stagedStringForKey:kSPKPrefInterfaceLiquidGlassTabBarMode fallback:@"default"];
+    self.glassMode = [self stagedStringForKey:kSPKPrefInterfaceLiquidGlassMode fallback:@"follow"];
 
     self.persistedSnapshot = [self snapshot];
     // A carrier whose tab was un-hidden elsewhere (or imported inconsistently)
@@ -502,11 +1009,25 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         @"saved" : self.savedCarrier ?: SPKTabSavedCarrierNone,
         @"hidesBar" : @(self.hidesTabBarWhenSingle),
         @"inboxShortcut" : @(self.showsInboxShortcut),
+        @"holds" : [self.holds copy] ?: @{},
+        @"nativeTabBar" : @(self.nativeTabBar),
+        @"tabBarMode" : self.tabBarMode ?: @"default",
+        @"glassMode" : self.glassMode ?: @"follow",
     };
 }
 
 - (BOOL)isDirty {
     return ![[self snapshot] isEqual:self.persistedSnapshot];
+}
+
+// Holds are read at every press, so a change to them alone needs no restart.
+// Everything else on this screen is read while Instagram builds its tab bar.
+- (BOOL)stagedChangesNeedRestart {
+    NSMutableDictionary *staged = [[self snapshot] mutableCopy];
+    NSMutableDictionary *persisted = [self.persistedSnapshot mutableCopy];
+    [staged removeObjectForKey:@"holds"];
+    [persisted removeObjectForKey:@"holds"];
+    return ![staged isEqual:persisted];
 }
 
 // How many navigable tabs the bar would still show. Only slots that exist in the
@@ -606,7 +1127,8 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     UIBarButtonItem *apply = SPKMediaChromeTopBarButtonItemWithStyle(@"check", self, @selector(applyTapped),
                                                                     UIBarButtonItemStyleDone,
                                                                     [SPKUtils SPKColor_InstagramBlue],
-                                                                    SPKL(@"SETTINGS_TAB_EDITOR_APPLY_RESTART_TEXT"));
+                                                                    [self stagedChangesNeedRestart] ? SPKL(@"SETTINGS_TAB_EDITOR_APPLY_RESTART_TEXT")
+                                                                                                    : SPKL(@"INTERFACE_TAB_BAR_APPLY_TEXT"));
     SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, dirty ? @[ apply ] : @[]);
 }
 
@@ -617,49 +1139,100 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     self.tableView.dragInteractionEnabled = [self usesCustomLayout];
 }
 
+// The order the bar is built in, as the preview draws it. Classic in regular
+// width is not Classic at all: Instagram builds the wide system bar from its
+// default topology there, with Messages as a tab.
+- (NSArray<NSString *> *)previewIdentifiers {
+    if ([self usesClassicLayout] && [self previewIsRegularWidth])
+        return SPKCanonicalTabIdentifiers();
+    return [self rowIdentifiers];
+}
+
 // Re-renders the preview, the dirty affordances and the back-button override.
 - (void)refreshStagedUI {
     self.layoutChipBar.selectedIndex = [self usesCustomLayout] ? 1 : ([self usesClassicLayout] ? 2 : 0);
-    [self layoutPreviewHeader];
 
     BOOL custom = [self usesCustomLayout];
+    BOOL regular = [self previewIsRegularWidth];
+    BOOL classicBar = [self usesClassicLayout] && !regular;
     NSMutableArray<NSDictionary *> *items = [NSMutableArray array];
     NSString *launchIdentifier = SPKTabIdentifierForLaunchPreference(self.launchTab);
     NSString *firstVisible = nil;
-    for (NSString *identifier in [self rowIdentifiers]) {
+    // Tabs Instagram places ahead of its wide-layout additions: everything but
+    // Profile, counted by the surface a slot shows (Saved shows its carrier's).
+    NSUInteger leadingSlots = 0;
+    for (NSString *identifier in [self previewIdentifiers]) {
         NSString *icon = nil;
+        NSString *surface = identifier;
         if ([identifier isEqualToString:SPKTabIdentifierSaved]) {
             if (![self savedEnabled] || !custom)
                 continue;
             icon = SPKTabIconName(SPKTabIdentifierSaved);
+            surface = self.savedCarrier;
         } else if ([self isIdentifierHidden:identifier]) {
             continue;
         } else {
             icon = [self displayIconForIdentifier:identifier];
         }
-        if ([self usesClassicLayout] && [identifier isEqualToString:SPKTabIdentifierDirect])
+        if (classicBar && [identifier isEqualToString:SPKTabIdentifierDirect])
             continue; // Header, not a bar item.
         if (!firstVisible && ![identifier isEqualToString:SPKTabIdentifierCreate])
             firstVisible = identifier;
+        if (![surface isEqualToString:SPKTabIdentifierProfile] && ![surface isEqualToString:SPKTabIdentifierCreate])
+            leadingSlots++;
         [items addObject:@{ @"icon" : icon, @"id" : identifier }];
+    }
+    BOOL instagramTabs = regular && SPKSystemTabBarRegularWidthAddsInstagramTabs();
+    if (instagramTabs) {
+        // Activity replaces the Feed header heart, so it goes with Feed; Create
+        // follows its own hide flag, as at runtime.
+        NSMutableArray<NSDictionary *> *added = [NSMutableArray array];
+        if (![self.hidden containsObject:SPKTabIdentifierFeed])
+            [added addObject:@{ @"icon" : @"heart", @"id" : @"activity", @"instagram" : @YES }];
+        if (![self.hidden containsObject:SPKTabIdentifierCreate])
+            [added addObject:@{ @"icon" : SPKTabIconName(SPKTabIdentifierCreate), @"id" : SPKTabIdentifierCreate, @"instagram" : @YES }];
+        NSUInteger index = MIN(leadingSlots, items.count);
+        [items insertObjects:added atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, added.count)]];
     }
     // With no explicit launch tab Instagram opens the first destination, which is
     // what the preview should highlight.
     NSString *highlighted = launchIdentifier ?: firstVisible;
     NSMutableArray<NSDictionary *> *decorated = [NSMutableArray array];
+    BOOL anyInstagram = NO;
     for (NSDictionary *item in items) {
+        BOOL added = [item[@"instagram"] boolValue];
+        anyInstagram = anyInstagram || added;
         [decorated addObject:@{ @"icon" : item[@"icon"],
-                                @"selected" : @([item[@"id"] isEqualToString:highlighted ?: @""]) }];
+                                @"instagram" : @(added),
+                                @"selected" : @(!added && [item[@"id"] isEqualToString:highlighted ?: @""]) }];
     }
+    self.previewItemCount = decorated.count;
+    self.previewShowsLegend = anyInstagram;
+    [self layoutPreviewHeader];
 
-    // Classic always keeps Messages in the feed header, so the strip goes with
-    // the layout rather than with any toggle.
-    BOOL showsHeaderStrip = [self usesClassicLayout];
-    [UIView transitionWithView:self.previewView
+    // Classic keeps Messages in the feed header, so the strip goes with the
+    // layout rather than with any toggle.
+    BOOL showsHeaderStrip = classicBar;
+    BOOL headerButton = [SPKUtils getBoolPref:@"feed_header_button"];
+    BOOL column = [self previewUsesColumn];
+    UIView *target = column ? (UIView *)self.columnPreviewView : (UIView *)self.previewView;
+    // Cross-fade only when the preview actually changes: a switch or menu that
+    // does not touch the bar must not redraw it.
+    NSArray *previewSignature = @[ decorated, @(showsHeaderStrip), @(headerButton), @(column), @(instagramTabs) ];
+    BOOL previewChanged = ![previewSignature isEqual:self.lastPreviewSignature];
+    self.lastPreviewSignature = previewSignature;
+    if (previewChanged)
+    [UIView transitionWithView:target
                       duration:0.22
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        [self.previewView configureWithItems:decorated showsHeaderStrip:showsHeaderStrip];
+                        if (column)
+                            [self.columnPreviewView configureWithItems:decorated
+                                                      showsHeaderStrip:showsHeaderStrip
+                                                     headerButtonShown:headerButton
+                                                   headerItemsInColumn:!instagramTabs];
+                        else
+                            [self.previewView configureWithItems:decorated showsHeaderStrip:showsHeaderStrip];
                     }
                     completion:nil];
 
@@ -673,7 +1246,9 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
     case SPKTabEditorSectionTabs: return (NSInteger)[self rowIdentifiers].count;
+    case SPKTabEditorSectionHolds: return (NSInteger)[self holdRowIdentifiers].count;
     case SPKTabEditorSectionBehavior: return (NSInteger)[self behaviorRowKeys].count;
+    case SPKTabEditorSectionAppearance: return (NSInteger)[self appearanceRowKeys].count;
     case SPKTabEditorSectionSingleTab: return (NSInteger)[self singleTabRowKeys].count;
     case SPKTabEditorSectionDiscard: return 1;
     case SPKTabEditorSectionReset: return 1;
@@ -683,7 +1258,9 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == SPKTabEditorSectionTabs) return SPKL(@"INTERFACE_TABS_HEADER");
+    if (section == SPKTabEditorSectionHolds) return SPKL(@"INTERFACE_TAB_BAR_SHORTCUTS_HEADER");
     if (section == SPKTabEditorSectionBehavior) return SPKL(@"REELS_BEHAVIOR_HEADER");
+    if (section == SPKTabEditorSectionAppearance && [self appearanceRowKeys].count > 0) return SPKL(@"INTERFACE_TAB_BAR_APPEARANCE_HEADER");
     if (section == SPKTabEditorSectionSingleTab) return SPKL(@"SETTINGS_TAB_EDITOR_SINGLE_TAB_MODE_TEXT");
     return nil;
 }
@@ -700,8 +1277,19 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         if ([self usesCustomLayout]) {
             [text appendString:SPKL(@"TAB_EDITOR_HELP_SAVED_BORROWS")];
         }
+        // What the system tab bar does differently, said where it matters.
+        if ([self previewIsRegularWidth] && SPKSystemTabBarRegularWidthAddsInstagramTabs())
+            [text appendFormat:@"\n%@", SPKL(@"TAB_EDITOR_HELP_INSTAGRAM_WIDE_TABS")];
         return text;
     }
+    if (section == SPKTabEditorSectionHolds) {
+        NSString *footer = SPKL(@"INTERFACE_TAB_BAR_HOLDS_FOOTER");
+        if (![self anyHoldOpensSettings])
+            footer = [NSString stringWithFormat:@"%@\n\n%@", footer, SPKL(@"INTERFACE_TAB_BAR_HOLDS_NO_SETTINGS_FOOTER")];
+        return footer;
+    }
+    if (section == SPKTabEditorSectionAppearance)
+        return [self appearanceRowKeys].count > 0 ? [self appearanceFooter] : nil;
     if (section == SPKTabEditorSectionSingleTab) {
         NSString *single = [self singleVisibleTab];
         NSMutableString *text = [NSMutableString string];
@@ -725,6 +1313,29 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     if (section == SPKTabEditorSectionReset)
         return SPKL(@"SETTINGS_TAB_EDITOR_STAGES_INSTAGRAM_S_STOCK_LAYOUT_NOTHING_WRITTEN_UNTIL_APPLY_TEXT");
     return nil;
+}
+
+// The hold shortcuts are new, and this page is not built from settings rows, so
+// it draws the pill on the section header itself.
+// A section left without rows collapses instead of leaving a gap.
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [self tableView:tableView numberOfRowsInSection:section] == 0 ? CGFLOAT_MIN : UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return [self tableView:tableView numberOfRowsInSection:section] == 0 ? CGFLOAT_MIN : UITableViewAutomaticDimension;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    if (section != SPKTabEditorSectionHolds || ![view isKindOfClass:[UITableViewHeaderFooterView class]])
+        return;
+    if (!SPKNewBadgeItemIsNew(SPKTabEditorNewItemHolds))
+        return;
+    UILabel *label = ((UITableViewHeaderFooterView *)view).textLabel;
+    if (label.text.length == 0)
+        return;
+    label.attributedText = SPKNewBadgeAttributedTitle(label.text, label.font, label.textColor,
+                                                      SPKNewBadgeStateRow, self.traitCollection);
 }
 
 - (UITableViewCell *)baseCellWithStyle:(UITableViewCellStyle)style {
@@ -756,6 +1367,14 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     button.menu = menu;
     button.showsMenuAsPrimaryAction = YES;
     [button sizeToFit];
+    // A long choice (or a long translation) truncates instead of pushing the
+    // row's own title out of the cell.
+    CGFloat maxWidth = MAX(120.0, floor(CGRectGetWidth(self.tableView.bounds) * 0.5));
+    if (CGRectGetWidth(button.frame) > maxWidth) {
+        CGRect frame = button.frame;
+        frame.size.width = maxWidth;
+        button.frame = frame;
+    }
     return button;
 }
 
@@ -768,7 +1387,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     // slots, so a carrier that was valid a moment ago may own nothing now.
     [self normalizeSavedCarrier];
     [self applyEditingState];
-    [self.tableView reloadData];
+    [self reloadTableData];
     [self refreshStagedUI];
 }
 
@@ -820,7 +1439,31 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     return SPKSingleVisibleTabIdentifier(self.layoutMode, self.hidden, self.savedCarrier);
 }
 
+// The system tab bar has no swipe between tabs: Instagram only builds its
+// swipe container for its own bar. Answered from the running bar, so a
+// foldable that picked the system bar by itself greys the row out too.
+// Answered from the staged switch (and Instagram's own choice), not from the
+// running bar: a bar Sparkle forced keeps running until the restart after the
+// switch is turned off, and the page shows what will apply after Apply.
+- (BOOL)systemTabBarDisablesSwipe {
+    return self.nativeTabBar || SPKSystemTabBarChosenByInstagram();
+}
+
+// Instagram runs the system tab bar by itself on some devices (the foldable
+// iPhone), without the System Tab Bar switch. There the bar cannot be changed,
+// so the rows that only reach Instagram's own bar (the appearance section and
+// swipe between tabs) are left out instead of greyed out: they never apply.
+BOOL SPKTabEditorInstagramOwnsSystemTabBar(void) {
+    return SPKSystemTabBarChosenByInstagram();
+}
+
+- (BOOL)instagramOwnsSystemTabBar {
+    return SPKTabEditorInstagramOwnsSystemTabBar();
+}
+
 - (NSArray<NSString *> *)behaviorRowKeys {
+    if ([self instagramOwnsSystemTabBar])
+        return @[ @"launch" ];
     return @[ @"launch", @"swipe" ];
 }
 
@@ -854,11 +1497,260 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         cell.textLabel.text = SPKL(@"SETTINGS_TAB_EDITOR_SWIPE_BETWEEN_TABS_TEXT");
         cell.imageView.image = SPKTabEditorGlyph(@"left_right");
         cell.imageView.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
-        NSString *title = [self.swipeMode isEqualToString:@"enabled"] ? @"On"
-                        : [self.swipeMode isEqualToString:@"disabled"] ? @"Off" : @"Default";
-        cell.accessoryView = [self menuButtonWithTitle:title menu:[self swipeMenu]];
+        NSString *title = [self.swipeMode isEqualToString:@"enabled"] ? SPKL(@"MENU_ON")
+                        : [self.swipeMode isEqualToString:@"disabled"] ? SPKL(@"MENU_OFF") : SPKL(@"MENU_DEFAULT");
+        UIButton *button = [self menuButtonWithTitle:title menu:[self swipeMenu]];
+        if ([self systemTabBarDisablesSwipe]) {
+            button.enabled = NO;
+            cell.textLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
+        }
+        cell.accessoryView = button;
     }
     return cell;
+}
+
+#pragma mark Holds
+
+// One row per slot the staged bar shows, in bar order, keyed by what the slot
+// shows: Saved has its own hold, Classic's Messages link in the header has none.
+- (NSArray<NSString *> *)holdRowIdentifiers {
+    BOOL classicBar = [self usesClassicLayout] && ![self previewIsRegularWidth];
+    NSMutableArray<NSString *> *identifiers = [NSMutableArray array];
+    for (NSString *identifier in [self previewIdentifiers]) {
+        if ([identifier isEqualToString:SPKTabIdentifierSaved]) {
+            if ([self savedEnabled] && [self usesCustomLayout])
+                [identifiers addObject:identifier];
+            continue;
+        }
+        if ([self.hidden containsObject:identifier])
+            continue;
+        if (classicBar && [identifier isEqualToString:SPKTabIdentifierDirect])
+            continue;
+        [identifiers addObject:identifier];
+    }
+    return identifiers;
+}
+
+- (NSString *)holdForIdentifier:(NSString *)identifier {
+    return self.holds[identifier] ?: SPKTabHoldInstagramDefault;
+}
+
+// A tab without a hold of its own has nothing for Instagram Default to keep, so
+// it reads as None.
+- (NSString *)holdTitleForIdentifier:(NSString *)identifier {
+    NSString *hold = [self holdForIdentifier:identifier];
+    if ([hold isEqualToString:SPKTabHoldInstagramDefault])
+        return SPKTabHasInstagramHold(identifier) ? SPKL(@"INTERFACE_TAB_BAR_HOLD_INSTAGRAM_DEFAULT") : SPKL(@"INTERFACE_TAB_BAR_HOLD_NONE");
+    if ([hold isEqualToString:SPKTabHoldNone])
+        return SPKL(@"INTERFACE_TAB_BAR_HOLD_NONE");
+    return SPKDestinationForIdentifier(hold).shortTitle ?: SPKL(@"INTERFACE_TAB_BAR_HOLD_NONE");
+}
+
+- (BOOL)anyHoldOpensSettings {
+    for (NSString *identifier in [self holdRowIdentifiers]) {
+        if ([[self holdForIdentifier:identifier] isEqualToString:SPKDestinationSettings])
+            return YES;
+    }
+    return NO;
+}
+
+- (UIMenu *)holdMenuForIdentifier:(NSString *)identifier {
+    __weak typeof(self) weakSelf = self;
+    NSString *current = [self holdForIdentifier:identifier];
+    UIAction * (^choice)(NSString *, UIImage *, NSString *, BOOL) = ^UIAction *(NSString *title, UIImage *image, NSString *value, BOOL selected) {
+        UIAction *action = [UIAction actionWithTitle:title
+                                               image:image
+                                          identifier:nil
+                                             handler:^(__unused UIAction *element) {
+                                                 weakSelf.holds[identifier] = value;
+                                                 [weakSelf stagedValueChanged];
+                                             }];
+        action.state = selected ? UIMenuElementStateOn : UIMenuElementStateOff;
+        return action;
+    };
+
+    NSMutableArray<UIMenuElement *> *builtIn = [NSMutableArray array];
+    BOOL instagramHold = SPKTabHasInstagramHold(identifier);
+    if (instagramHold)
+        [builtIn addObject:choice(SPKL(@"INTERFACE_TAB_BAR_HOLD_INSTAGRAM_DEFAULT"), [SPKAssetUtils menuIconNamed:@"app"],
+                                  SPKTabHoldInstagramDefault, [current isEqualToString:SPKTabHoldInstagramDefault])];
+    BOOL noneSelected = [current isEqualToString:SPKTabHoldNone] ||
+                        (!instagramHold && [current isEqualToString:SPKTabHoldInstagramDefault]);
+    [builtIn addObject:choice(SPKL(@"INTERFACE_TAB_BAR_HOLD_NONE"), [SPKAssetUtils menuIconNamed:@"circle_off"],
+                              instagramHold ? SPKTabHoldNone : SPKTabHoldInstagramDefault, noneSelected)];
+
+    NSMutableArray<UIMenuElement *> *groups = [NSMutableArray array];
+    [groups addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:builtIn]];
+    for (NSNumber *group in @[ @(SPKDestinationGroupSparkle), @(SPKDestinationGroupInstagram), @(SPKDestinationGroupAction) ]) {
+        NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
+        for (SPKDestination *destination in SPKDestinationsForPlacement(SPKDestinationPlacementHold)) {
+            if (destination.group != group.integerValue)
+                continue;
+            [actions addObject:choice(destination.title, [SPKAssetUtils menuIconNamed:destination.iconName],
+                                      destination.identifier, [current isEqualToString:destination.identifier])];
+        }
+        if (actions.count > 0)
+            [groups addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:actions]];
+    }
+    return [UIMenu menuWithTitle:@"" children:groups];
+}
+
+- (UITableViewCell *)holdCellForRow:(NSInteger)row {
+    UITableViewCell *cell = [self baseCellWithStyle:UITableViewCellStyleDefault];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSArray<NSString *> *identifiers = [self holdRowIdentifiers];
+    if (row >= (NSInteger)identifiers.count)
+        return cell;
+    NSString *identifier = identifiers[row];
+    cell.textLabel.text = [self displayTitleForIdentifier:identifier];
+    cell.imageView.image = SPKTabEditorGlyph([self displayIconForIdentifier:identifier]);
+    cell.imageView.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
+    cell.accessoryView = [self menuButtonWithTitle:[self holdTitleForIdentifier:identifier]
+                                              menu:[self holdMenuForIdentifier:identifier]];
+    return cell;
+}
+
+#pragma mark Appearance
+
+- (BOOL)supportsSystemTabBar {
+    return SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0");
+}
+
+// iOS 26 and later: the system tab bar and the floating bar's scroll behavior.
+// Earlier: the same glass gates still reshape the bar into the floating pill.
+- (NSArray<NSString *> *)appearanceRowKeys {
+    if ([self instagramOwnsSystemTabBar])
+        return @[];
+    if ([self supportsSystemTabBar]) {
+        if (SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar))
+            return @[ @"systemBar", @"behavior" ];
+        return @[ @"behavior" ];
+    }
+    return @[ @"pill", @"behavior" ];
+}
+
+// Whether the glass interface is staged on: the forced mode when one is picked,
+// otherwise what Instagram itself gives this account.
+- (BOOL)stagedGlassOn {
+    if ([self.glassMode isEqualToString:@"on"])
+        return YES;
+    if ([self.glassMode isEqualToString:@"off"])
+        return NO;
+    return SPKLiquidGlassInstagramEnabled();
+}
+
+// Where Instagram runs the system bar by itself, the switch has nothing to
+// force or give back.
+- (BOOL)systemBarSwitchEnabled {
+    return !SPKSystemTabBarChosenByInstagram();
+}
+
+// The system tab bar is not Instagram's floating bar, so the scroll behavior
+// does not reach it. Asked of the running bar: foldables pick it by themselves.
+- (BOOL)behaviorRowEnabled {
+    if (self.nativeTabBar || SPKSystemTabBarChosenByInstagram())
+        return NO;
+    return [self stagedGlassOn];
+}
+
+// The rows here have no help buttons, so what each does is said below them,
+// followed by why the system tab bar ignores Tab Bar Behavior when it is in use.
+- (NSString *)appearanceFooter {
+    NSMutableArray<NSString *> *lines = [NSMutableArray array];
+    if (![self supportsSystemTabBar]) {
+        [lines addObject:SPKL(@"INTERFACE_PILL_TAB_BAR_HELP")];
+        [lines addObject:SPKL(@"INTERFACE_TAB_BAR_BEHAVIOR_HELP")];
+        return [lines componentsJoinedByString:@"\n\n"];
+    }
+    if ([[self appearanceRowKeys] containsObject:@"systemBar"])
+        [lines addObject:SPKL(@"INTERFACE_NATIVE_TAB_BAR_HELP")];
+    [lines addObject:SPKL(@"INTERFACE_TAB_BAR_BEHAVIOR_HELP")];
+    // Fixed text: a footer that changed with the switch would change height
+    // and shift the page under the finger. What no longer applies is shown by
+    // greying out its row instead.
+    if ([[self appearanceRowKeys] containsObject:@"systemBar"])
+        [lines addObject:SPKL(@"INTERFACE_TAB_BAR_APPEARANCE_SYSTEM_FOOTER")];
+    return [lines componentsJoinedByString:@"\n\n"];
+}
+
+- (UIMenu *)stagedMenuWithChoices:(NSArray<NSArray<NSString *> *> *)choices
+                          current:(NSString *)current
+                            apply:(void (^)(NSString *value))apply {
+    __weak typeof(self) weakSelf = self;
+    NSMutableArray<UIMenuElement *> *fallback = [NSMutableArray array];
+    NSMutableArray<UIMenuElement *> *others = [NSMutableArray array];
+    [choices enumerateObjectsUsingBlock:^(NSArray<NSString *> *choice, NSUInteger index, __unused BOOL *stop) {
+        NSString *value = choice[1];
+        UIAction *action = [UIAction actionWithTitle:choice[0]
+                                               image:nil
+                                          identifier:nil
+                                             handler:^(__unused UIAction *element) {
+                                                 apply(value);
+                                                 [weakSelf stagedValueChanged];
+                                             }];
+        action.state = [current isEqualToString:value] ? UIMenuElementStateOn : UIMenuElementStateOff;
+        [(index == 0 ? fallback : others) addObject:action];
+    }];
+    return [UIMenu menuWithTitle:@"" children:@[
+        [UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:fallback],
+        [UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:others],
+    ]];
+}
+
+- (NSString *)titleForValue:(NSString *)value inChoices:(NSArray<NSArray<NSString *> *> *)choices {
+    for (NSArray<NSString *> *choice in choices) {
+        if ([choice[1] isEqualToString:value])
+            return choice[0];
+    }
+    return choices.firstObject.firstObject;
+}
+
+- (UITableViewCell *)appearanceCellForRow:(NSInteger)row {
+    UITableViewCell *cell = [self baseCellWithStyle:UITableViewCellStyleDefault];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSArray<NSString *> *keys = [self appearanceRowKeys];
+    NSString *key = row < (NSInteger)keys.count ? keys[row] : nil;
+    __weak typeof(self) weakSelf = self;
+
+    if ([key isEqualToString:@"systemBar"]) {
+        BOOL enabled = [self systemBarSwitchEnabled];
+        cell.textLabel.text = SPKL(@"INTERFACE_NATIVE_TAB_BAR_TITLE");
+        cell.textLabel.textColor = enabled ? [SPKUtils SPKColor_InstagramPrimaryText] : [SPKUtils SPKColor_InstagramSecondaryText];
+        if (SPKNewBadgeItemIsNew(SPKTabEditorNewItemSystemTabBar)) {
+            cell.textLabel.attributedText = SPKNewBadgeAttributedTitle(cell.textLabel.text, cell.textLabel.font, cell.textLabel.textColor,
+                                                                       SPKNewBadgeStateRow, self.traitCollection);
+            cell.accessibilityValue = SPKNewBadgeAccessibilityText(SPKNewBadgeStateRow);
+        }
+        cell.accessoryView = [self switchWithValue:self.nativeTabBar action:@selector(systemTabBarSwitchChanged:) enabled:enabled];
+    } else if ([key isEqualToString:@"pill"]) {
+        NSArray *choices = @[ @[ SPKL(@"MENU_DEFAULT"), @"follow" ], @[ SPKL(@"MENU_ON"), @"on" ], @[ SPKL(@"MENU_OFF"), @"off" ] ];
+        cell.textLabel.text = SPKL(@"INTERFACE_TAB_BAR_PILL_SHAPED_TITLE");
+        cell.accessoryView = [self menuButtonWithTitle:[self titleForValue:self.glassMode inChoices:choices]
+                                                  menu:[self stagedMenuWithChoices:choices
+                                                                           current:self.glassMode
+                                                                             apply:^(NSString *value) {
+                                                                                 weakSelf.glassMode = value;
+                                                                             }]];
+    } else if ([key isEqualToString:@"behavior"]) {
+        NSArray *choices = @[ @[ SPKL(@"MENU_DEFAULT"), @"default" ], @[ SPKL(@"MENU_FIXED"), @"fixed" ], @[ SPKL(@"MENU_HIDE_SCROLL"), @"hide" ] ];
+        BOOL enabled = [self behaviorRowEnabled];
+        cell.textLabel.text = SPKL(@"INTERFACE_TAB_BAR_BEHAVIOR_TITLE");
+        cell.textLabel.textColor = enabled ? [SPKUtils SPKColor_InstagramPrimaryText] : [SPKUtils SPKColor_InstagramSecondaryText];
+        UIButton *button = [self menuButtonWithTitle:[self titleForValue:self.tabBarMode inChoices:choices]
+                                                menu:[self stagedMenuWithChoices:choices
+                                                                         current:self.tabBarMode
+                                                                           apply:^(NSString *value) {
+                                                                               weakSelf.tabBarMode = value;
+                                                                           }]];
+        button.enabled = enabled;
+        cell.accessoryView = button;
+    }
+    return cell;
+}
+
+- (void)systemTabBarSwitchChanged:(UISwitch *)toggle {
+    self.nativeTabBar = toggle.isOn;
+    [self stagedValueChanged];
 }
 
 - (UITableViewCell *)singleTabCellForRow:(NSInteger)row {
@@ -907,8 +1799,12 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
             return [self baseCellWithStyle:UITableViewCellStyleDefault];
         return [self tabCellForIdentifier:identifiers[indexPath.row]];
     }
+    case SPKTabEditorSectionHolds:
+        return [self holdCellForRow:indexPath.row];
     case SPKTabEditorSectionBehavior:
         return [self behaviorCellForRow:indexPath.row];
+    case SPKTabEditorSectionAppearance:
+        return [self appearanceCellForRow:indexPath.row];
     case SPKTabEditorSectionSingleTab:
         return [self singleTabCellForRow:indexPath.row];
     default: {
@@ -989,14 +1885,14 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     NSUInteger target = MIN((NSUInteger)destination.row, self.order.count);
     [self.order insertObject:identifier atIndex:target];
 
+    __weak typeof(self) weakSelf = self;
     [tableView performBatchUpdates:^{
         [tableView deleteRowsAtIndexPaths:@[ source ] withRowAnimation:UITableViewRowAnimationAutomatic];
         [tableView insertRowsAtIndexPaths:@[ destination ] withRowAnimation:UITableViewRowAnimationAutomatic];
     } completion:^(__unused BOOL finished) {
-        // Status text ("Opens at launch", the Saved slot) is position-independent
-        // but the moved row was rebuilt mid-drag, so refresh the section once.
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:SPKTabEditorSectionTabs]
-                 withRowAnimation:UITableViewRowAnimationNone];
+        // The moved row was rebuilt mid-drag and the hold rows are listed in bar
+        // order, so both sections refresh once against the pre-drop signature.
+        [weakSelf reloadAfterEditFromSignature:nil];
     }];
     [coordinator dropItem:item.dragItem toRowAtIndexPath:destination];
     [self refreshStagedUI];
@@ -1043,39 +1939,131 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
         if (![self.hidden containsObject:identifier])
             [launchable addObject:identifier];
     }
+    NSArray *hiddenTabs = [self.hidden.allObjects sortedArrayUsingSelector:@selector(compare:)] ?: @[];
     return @{
+        // What the tab rows draw: their order, visibility, locks and the launch
+        // tab marker.
+        @(SPKTabEditorSectionTabs) : @[ self.layoutMode ?: @"", [self.order copy] ?: @[], hiddenTabs,
+                                         self.savedCarrier ?: @"", self.launchTab ?: @"" ],
         @(SPKTabEditorSectionSingleTab) : singleTab,
         // The launch menu lists the visible tabs, so it goes stale when one is
         // hidden even though the chosen value has not changed.
-        @(SPKTabEditorSectionBehavior) : @[ self.launchTab ?: @"", self.swipeMode ?: @"", launchable ],
+        @(SPKTabEditorSectionBehavior) : @[ self.launchTab ?: @"", self.swipeMode ?: @"", launchable,
+                                            @([self systemTabBarDisablesSwipe]) ],
         @(SPKTabEditorSectionDiscard) : @([self isDirty]),
+        // The hold rows follow the visible slots, and the footer whether any of
+        // them still opens Settings.
+        @(SPKTabEditorSectionHolds) : @[ [self holdRowIdentifiers], [self.holds copy] ?: @{} ],
+        @(SPKTabEditorSectionAppearance) : @[ @(self.nativeTabBar), self.tabBarMode ?: @"", self.glassMode ?: @"" ],
     };
 }
 
-// A nil signature means the caller already applied its change and cannot say what
-// it was, so its sections reload unconditionally.
+- (void)reloadTableData {
+    [self.tableView reloadData];
+    self.shownSignature = [self editSignature];
+}
+
+// Updates the sections whose signature changed since `before` (or since the
+// table was last drawn). Rows are updated in place, the way a plain settings
+// page updates a switch, so nothing is rebuilt and nothing flashes. Only a
+// section whose row count changed is reloaded, and the tab rows (their own
+// cell class) are reloaded.
 - (void)reloadAfterEditFromSignature:(NSDictionary *)before {
+    NSDictionary *shown = before ?: self.shownSignature;
     NSDictionary *after = [self editSignature];
-    NSMutableIndexSet *sections = [NSMutableIndexSet indexSet];
+    NSMutableIndexSet *changed = [NSMutableIndexSet indexSet];
     for (NSNumber *section in after) {
-        if (!before || ![before[section] isEqual:after[section]])
-            [sections addIndex:(NSUInteger)section.integerValue];
+        if (!shown || ![shown[section] isEqual:after[section]])
+            [changed addIndex:(NSUInteger)section.integerValue];
     }
+    self.shownSignature = after;
+    if (changed.count == 0)
+        return;
 
-    NSMutableArray<NSIndexPath *> *tabRows = [NSMutableArray array];
-    NSUInteger rowCount = [self rowIdentifiers].count;
-    for (NSUInteger row = 0; row < rowCount; row++)
-        [tabRows addObject:[NSIndexPath indexPathForRow:(NSInteger)row inSection:SPKTabEditorSectionTabs]];
-
-    [UIView performWithoutAnimation:^{
-        if (tabRows.count == (NSUInteger)[self.tableView numberOfRowsInSection:SPKTabEditorSectionTabs])
-            [self.tableView reloadRowsAtIndexPaths:tabRows withRowAnimation:UITableViewRowAnimationNone];
-        else
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:SPKTabEditorSectionTabs]
-                          withRowAnimation:UITableViewRowAnimationNone];
-        if (sections.count > 0)
-            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationNone];
+    NSMutableIndexSet *reloadSections = [NSMutableIndexSet indexSet];
+    NSMutableArray<NSIndexPath *> *reloadRows = [NSMutableArray array];
+    NSMutableArray<NSNumber *> *footers = [NSMutableArray array];
+    [changed enumerateIndexesUsingBlock:^(NSUInteger index, __unused BOOL *stop) {
+        NSInteger section = (NSInteger)index;
+        NSInteger count = [self tableView:self.tableView numberOfRowsInSection:section];
+        if (count != [self.tableView numberOfRowsInSection:section]) {
+            [reloadSections addIndex:index];
+            return;
+        }
+        for (NSInteger row = 0; row < count; row++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            UITableViewCell *existing = [self.tableView cellForRowAtIndexPath:indexPath];
+            if (!existing)
+                continue; // Off screen: built fresh when it scrolls in.
+            if (![self refreshCellInPlace:existing atIndexPath:indexPath])
+                [reloadRows addObject:indexPath];
+        }
+        [footers addObject:@(section)];
     }];
+
+    if (reloadRows.count > 0 || reloadSections.count > 0) {
+        [UIView performWithoutAnimation:^{
+            [self.tableView performBatchUpdates:^{
+                if (reloadRows.count > 0)
+                    [self.tableView reloadRowsAtIndexPaths:reloadRows withRowAnimation:UITableViewRowAnimationNone];
+                if (reloadSections.count > 0)
+                    [self.tableView reloadSections:reloadSections withRowAnimation:UITableViewRowAnimationNone];
+            } completion:nil];
+        }];
+    }
+    BOOL footerChanged = NO;
+    for (NSNumber *section in footers)
+        footerChanged = [self updateFooterTextForSection:section.integerValue] || footerChanged;
+    if (footerChanged)
+        [self.tableView performBatchUpdates:nil completion:nil];
+}
+
+// Copies a freshly built row onto the one on screen. Only plain rows: the tab
+// rows have their own cell class and are reloaded instead.
+- (BOOL)refreshCellInPlace:(UITableViewCell *)existing atIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *fresh = [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+    if (existing.class != [UITableViewCell class] || fresh.class != [UITableViewCell class])
+        return NO;
+    existing.textLabel.text = fresh.textLabel.text;
+    existing.textLabel.textColor = fresh.textLabel.textColor;
+    existing.detailTextLabel.text = fresh.detailTextLabel.text;
+    existing.imageView.image = fresh.imageView.image;
+    existing.imageView.tintColor = fresh.imageView.tintColor;
+    existing.selectionStyle = fresh.selectionStyle;
+    existing.accessoryType = fresh.accessoryType;
+    UIView *accessory = fresh.accessoryView;
+    if ([existing.accessoryView isKindOfClass:[UISwitch class]] && [accessory isKindOfClass:[UISwitch class]]) {
+        // Keep the switch on screen and only carry its state over.
+        UISwitch *onScreen = (UISwitch *)existing.accessoryView;
+        UISwitch *built = (UISwitch *)accessory;
+        if (onScreen.isOn != built.isOn)
+            [onScreen setOn:built.isOn animated:YES];
+        onScreen.enabled = built.enabled;
+    } else {
+        existing.accessoryView = accessory;
+    }
+    [existing setNeedsLayout];
+    return YES;
+}
+
+- (BOOL)updateFooterTextForSection:(NSInteger)section {
+    UITableViewHeaderFooterView *footer = [self.tableView footerViewForSection:section];
+    if (!footer)
+        return NO;
+    NSString *text = [self tableView:self.tableView titleForFooterInSection:section];
+    if ([footer.contentConfiguration isKindOfClass:[UIListContentConfiguration class]]) {
+        UIListContentConfiguration *configuration = [(UIListContentConfiguration *)footer.contentConfiguration copy];
+        if ([configuration.text isEqualToString:text ?: @""] || (configuration.text.length == 0 && text.length == 0))
+            return NO;
+        configuration.text = text;
+        footer.contentConfiguration = configuration;
+    } else {
+        if ([footer.textLabel.text isEqualToString:text ?: @""])
+            return NO;
+        footer.textLabel.text = text;
+    }
+    [footer setNeedsLayout];
+    return YES;
 }
 
 - (void)toggleVisibilityForIdentifier:(NSString *)identifier {
@@ -1172,8 +2160,27 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     self.savedCarrier = SPKTabSavedCarrierNone;
     self.hidesTabBarWhenSingle = NO;
     self.showsInboxShortcut = YES;
+    // Stock holds: Settings on Home, the Gallery on the Messages slot.
+    self.holds = [NSMutableDictionary dictionary];
+    for (NSString *identifier in SPKTabHoldableIdentifiers())
+        self.holds[identifier] = SPKTabHoldInstagramDefault;
+    self.holds[SPKTabIdentifierFeed] = SPKDestinationSettings;
+    self.holds[SPKTabIdentifierDirect] = SPKDestinationGallery;
+    self.holds[SPKTabIdentifierCreate] = SPKDestinationGallery;
+    // Search's stock hold is the clipboard link, as on a fresh install.
+    self.holds[SPKTabIdentifierSearch] = SPKDestinationClipboardLink;
+    // The bar's look and behavior live on this page too, but only the rows it
+    // shows are reset: Pill-Shaped is the Liquid Glass mode, which on iOS 26+
+    // belongs to the Interface page and must not change from here.
+    NSArray<NSString *> *appearance = [self appearanceRowKeys];
+    if ([appearance containsObject:@"systemBar"])
+        self.nativeTabBar = NO;
+    if ([appearance containsObject:@"behavior"])
+        self.tabBarMode = @"default";
+    if ([appearance containsObject:@"pill"])
+        self.glassMode = @"follow";
     [self applyEditingState];
-    [self.tableView reloadData];
+    [self reloadTableData];
     [self refreshStagedUI];
 }
 
@@ -1187,13 +2194,37 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
     SPKPreferenceSetObject(self.savedCarrier, SPKPrefSavedTabCarrier);
     SPKPreferenceSetObject(@(self.hidesTabBarWhenSingle), SPKPrefHideTabBarWhenSingle);
     SPKPreferenceSetObject(@(self.showsInboxShortcut), SPKPrefInboxHeaderShortcut);
+    for (NSString *identifier in SPKTabHoldableIdentifiers())
+        SPKPreferenceSetObject([self holdForIdentifier:identifier], SPKTabHoldPreferenceKey(identifier));
+    // The appearance keys are written only when changed: the page shows a value
+    // an account may inherit from the global one, and writing it back would pin
+    // it to this account. Liquid Glass is not even on the page on iOS 26+.
+    NSDictionary *persisted = self.persistedSnapshot;
+    if ([self supportsSystemTabBar] && SPKPrefIsAvailable(kSPKPrefInterfaceNativeTabBar) &&
+        ![persisted[@"nativeTabBar"] isEqual:@(self.nativeTabBar)])
+        SPKPreferenceSetObject(@(self.nativeTabBar), kSPKPrefInterfaceNativeTabBar);
+    if (![persisted[@"tabBarMode"] isEqual:self.tabBarMode ?: @"default"])
+        SPKPreferenceSetObject(self.tabBarMode, kSPKPrefInterfaceLiquidGlassTabBarMode);
+    if (![persisted[@"glassMode"] isEqual:self.glassMode ?: @"follow"])
+        SPKPreferenceSetObject(self.glassMode, kSPKPrefInterfaceLiquidGlassMode);
+    BOOL needsRestart = [self stagedChangesNeedRestart];
+    BOOL holdsChanged = ![persisted[@"holds"] isEqual:[self snapshot][@"holds"]];
+    SPKRefreshTabHolds();
+    // The system bar decides which tabs can be held when it builds them, so
+    // a new hold needs them rebuilt. A restart rebuilds them anyway.
+    if (holdsChanged && !needsRestart)
+        SPKNativeTabBarRebuildTabs();
     // The restart prompt below can terminate the app, so the staged values have
     // to be on disk before it is presented.
     [NSUserDefaults.standardUserDefaults synchronize];
 
     self.persistedSnapshot = [self snapshot];
+    [self reloadTableData];
     [self refreshStagedUI];
-    [SPKUtils showRestartConfirmation];
+    if (needsRestart)
+        [SPKUtils showRestartConfirmation];
+    else
+        [[[UINotificationFeedbackGenerator alloc] init] notificationOccurred:UINotificationFeedbackTypeSuccess];
 }
 
 - (void)discardTapped {
@@ -1209,7 +2240,7 @@ static UIImage *SPKTabEditorGlyph(NSString *iconName) {
                                                                               handler:^{
                                                                                   [weakSelf loadPersistedValues];
                                                                                   [weakSelf applyEditingState];
-                                                                                  [weakSelf.tableView reloadData];
+                                                                                  [weakSelf reloadTableData];
                                                                                   [weakSelf refreshStagedUI];
                                                                               }],
                                                     [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_KEEP_EDITING")

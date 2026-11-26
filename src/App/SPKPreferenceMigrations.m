@@ -164,6 +164,10 @@ static NSArray<SPKPreferenceMigration *> *SPKPreferenceMigrationList(void) {
             [migrations addObject:SPKMigration([@"notifs_drop_" stringByAppendingString:identifier], SPKPrefNotificationKey(identifier), nil, nil)];
             [migrations addObject:SPKMigration([NSString stringWithFormat:@"notifs_drop_%@_haptic", identifier], SPKPrefNotificationHapticKey(identifier), nil, nil)];
         }
+        // The Account Privacy page is gone; drop its cached server values and
+        // its dev-only failure simulation.
+        [migrations addObject:SPKMigration(@"profile_drop_account_privacy_cache", @"profile_account_privacy_cache", nil, nil)];
+        [migrations addObject:SPKMigration(@"dev_drop_account_privacy_simulate", @"dev_account_privacy_simulate", nil, nil)];
 
         list = [migrations copy];
     });

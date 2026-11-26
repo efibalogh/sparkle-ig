@@ -390,7 +390,7 @@ static UIButton *SPKReelsSpeedIndicator(UIView *verticalUFI) {
     [indicator addSubview:canvas];
 
     UILabel *label = [UILabel new];
-    label.font = [UIFont monospacedDigitSystemFontOfSize:16.0 weight:UIFontWeightBold];
+    label.font = [UIFont monospacedDigitSystemFontOfSize:16.0 weight:UIFontWeightBold]; // spk-font-fixed: sits among Instagram's fixed-size UFI glyphs
     label.textAlignment = NSTextAlignmentCenter;
     label.translatesAutoresizingMaskIntoConstraints = NO;
     // Matches the shadow Instagram puts under the UFI glyphs over bright video.

@@ -4,7 +4,7 @@
 
 # Sparkle for Instagram
 
-`v1.6.1` · Tested on versions **454.1.0** and **410.1.0**
+`v1.7.0` · Tested on versions **457.0.0** and **410.1.0**
 
 [📣 IPA Releases](https://t.me/sparkle_ig) · [💬 Chat & Support](https://t.me/+f-Xo21HnfCY3NmE0) · [📦 Jailbreak Repo](https://efibalogh.github.io/sparkle-ig/) · [📥 DEB Releases](https://github.com/efibalogh/sparkle-ig/releases/latest) · [🐛 Issues](https://github.com/efibalogh/sparkle-ig/issues/new/choose) · [❤️ Support](https://ko-fi.com/sparkle_ig)
 
@@ -15,7 +15,7 @@
 > [!NOTE]
 > - To open Sparkle's settings, see [Opening Sparkle Settings](#opening-sparkle-settings).
 > - IPA releases go out on the [Telegram channel](https://t.me/sparkle_ig); for questions and help join the [chat group](https://t.me/+f-Xo21HnfCY3NmE0).
-> - Feature request or bug report? [Open an issue](https://github.com/efibalogh/sparkle-ig/issues/new/choose).
+> - Feature request or bug report? [Open an issue](https://github.com/efibalogh/sparkle-ig/issues/new/choose), or use **Report a Bug** / **Request a Feature** in Sparkle Settings > About, which fills in your versions and device for you.
 
 ## What is Sparkle?
 
@@ -25,6 +25,7 @@ It started as a fork of [SoCuul's SCInsta](https://github.com/SoCuul/SCInsta), b
 
 - Targets **iOS 15.0+**, built with the iOS 16.2 SDK.
 - Works **jailbroken** (tested via Dopamine on iOS 16.7.16) and **sideloaded** (Feather, SideStore, LiveContainer etc.).
+- Fits **iPhone Duo** folded and unfolded, iPad, and other wide layouts, and Sparkle's own screens follow your text size.
 - Written in Objective-C / Objective-C++ / Logos.
 
 ## Highlights
@@ -36,6 +37,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Auto-save stories, view-once DM media, and instants straight to the Gallery or Photos as you view them.
   - An action-based download manager with a queue, retries, duplicate detection, and configurable concurrency.
   - High-quality DASH video+audio merging via FFmpegKit.
+  - Choose how saved and shared files are named (username, post date and more) instead of random IDs, with a live preview.
 - **Private Gallery**:
   - An on-device media library with folders, search, metadata, source overlays, and an optional passcode / Face ID / Touch ID lock. Nothing ever leaves your device.
   - Import your own media from Files with editable metadata, or bring your whole Regram Media Vault over in one go.
@@ -44,8 +46,8 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Confirm recorded video Instants before Instagram sends them. Photo Instants are not supported.
 - **Built-in editors**:
   - Trim any video down to a clip, a single still frame, or audio-only.
-  - Crop, pan/zoom, rotate, and flip a video's framing, applied in the same pass as the trim.
-  - A photo editor with crop / pan-zoom / rotate / flip.
+  - Crop, pan/zoom, straighten, rotate, and flip a video's framing, applied in the same pass as the trim.
+  - A photo editor with crop / pan-zoom / straighten / rotate / flip.
   - Reachable from the gallery, media preview, or an opt-in action button.
 - **Action buttons everywhere**:
   - Fully customizable action-button menus on feed, reels, stories, DMs, Instants, and profiles.
@@ -60,7 +62,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
 - **Fake location**:
   - Show friends on the Friends Map a place you pick on a map or by search instead of where you are, switch it from a button on the map itself, and keep a list of saved places. Only Instagram sees the fake location, so Maps and other apps keep the real one.
 - **Profile Analyzer**:
-  - Fetches your followers/following and surfaces mutuals, non-followbacks, and a durable change log (new/lost followers, profile updates) across scans.
+  - Fetches your followers/following and surfaces mutuals, non-followbacks, and a durable change log (new/lost followers, profile updates) across scans, with optional automatic refresh every day, 3 days, week or 2 weeks.
 - **Per-account settings**:
   - Each logged-in account keeps its own preferences, gallery scope, and download history, including account-scoped history clearing.
 - **Story viewer tools**:
@@ -68,12 +70,14 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
 - **Playback controls**:
   - A floating panel for stories and reels with playback speed (0.5x to 2x), scrubbing, 5 second skips, and pause, remembered per video, per session, or always.
 - **Privacy & focus**:
-  - Hide ads, Meta AI, and suggested content.
-  - Disable seen receipts, typing status, screenshot detection, and view-once limits.
+  - Hide ads, Meta AI, Muse, and suggested content.
+  - Disable seen receipts, typing status, screenshot detection, and view-once limits, or keep stories and chats seen only on your device.
   - Unlock native message previews from the inbox long-press menu on supported Instagram versions.
   - Block doom-scrolling.
   - Build a custom tab bar with a live preview: reorder or hide destinations, choose launch and swipe behavior, trade a hidden tab for one-tap access to Saved collections in the custom layout, and drop the bar entirely when a single tab is left.
+  - Hold any tab to jump straight to a Sparkle screen, your Saved posts, or a link you copied.
   - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
+  - Hide reels from a profile's posts tab with a menu on the tab, per profile or by default, including posts opened from the grid.
   - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
   - Show exact follower counts on profiles instead of abbreviated ones.
   - Hide your followers and following lists, and keep your account out of other people's lists, both saved to your Instagram account so they apply everywhere you sign in.
@@ -92,6 +96,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
 - **Liquid Glass (iOS 26+)**:
   - Native Liquid Glass integration across Sparkle's own UI, plus an option to force Instagram's on or off.
   - **Scroll Edge Effect** picks how content meets the top bar as you scroll: off (Instagram disables the effect), the iOS default, the soft progressive blur, or a hard edge with a dividing line (iOS 27 defaults to hard). Changes apply live.
+  - **System Tab Bar** swaps Instagram's tab bar for the real iOS tab bar Instagram builds for foldable iPhones, keeping the Tab Editor layout and the tab hold shortcuts.
   - On iOS 18 and lower, a **Pill-Shaped Tab Bar** toggle brings the floating pill tab bar (shape only; the glass material stays iOS 26+).
 
 ## Installation
@@ -105,6 +110,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
 2. Install the IPA with your sideloading tool of choice.
    - Use the **`_no-ext`** build for **AltStore / SideStore / LiveContainer** (or if you don't want to have app extensions).
    - Builds that keep the extensions also work beside other Instagram copies: sharing from another app's share sheet and the **Open in Sparkle** Safari extension both open Sparkle, not whichever copy iOS happens to pick. Turn the Safari extension on under Settings > Apps > Safari > Extensions; it adds an **Open** banner to Instagram pages.
+3. Push notifications not arriving? Sparkle Settings > Tools > **Notification Support** checks whether your install can get them, and what to do if it can't.
 
 > [!NOTE]
 > Sparkle uses Instagram's bundled image assets everywhere. The distributed IPA is a full (un-thinned) build (it contains icons for all screen sizes), so the higher-quality in-app icons render crisply on every device. If you build your own from an IPA that was already thinned to a smaller device, some icon scales may be missing. See [Building from source](#building-from-source).

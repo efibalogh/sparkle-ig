@@ -5,6 +5,7 @@
 #import "SPKDeletedMessagesAvatarView.h"
 #import "SPKDeletedMessagesDate.h"
 #import "../../../App/SPKPerfMeter.h"
+#import "../../../Shared/UI/SPKFont.h"
 
 NSString *const SPKDeletedMessageBubbleCellReuseID = @"SPKDeletedMessageBubbleCell";
 
@@ -113,14 +114,14 @@ static NSString *SPKDeletedFormatDuration(double seconds);
 
     _senderLabel = [UILabel new];
     _senderLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _senderLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2 weight:UIFontWeightSemibold] to:_senderLabel];
     _senderLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _senderLabel.hidden = YES;
     [self.contentView addSubview:_senderLabel];
 
     _timeLabel = [UILabel new];
     _timeLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _timeLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2] to:_timeLabel];
     _timeLabel.textColor = [SPKUtils SPKColor_InstagramTertiaryText];
     [self.contentView addSubview:_timeLabel];
 
@@ -253,7 +254,7 @@ static NSString *SPKDeletedFormatDuration(double seconds);
 
     _kindLabel = [UILabel new];
     _kindLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _kindLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBadge weight:UIFontWeightSemibold] to:_kindLabel];
     _kindLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     [_kindChip addSubview:_kindLabel];
 
@@ -275,7 +276,7 @@ static NSString *SPKDeletedFormatDuration(double seconds);
     _textLabel_ = [UILabel new];
     _textLabel_.translatesAutoresizingMaskIntoConstraints = NO;
     _textLabel_.numberOfLines = 0;
-    _textLabel_.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:_textLabel_];
     _textLabel_.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
 }
 
@@ -309,7 +310,7 @@ static NSString *SPKDeletedFormatDuration(double seconds);
 
     _unavailableLabel = [UILabel new];
     _unavailableLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _unavailableLabel.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption1 weight:UIFontWeightSemibold] to:_unavailableLabel];
     _unavailableLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _unavailableLabel.text = SPKL(@"MESSAGES_DELETED_MESSAGE_BUBBLE_CELL_MEDIA_UNAVAILABLE_TEXT");
     _unavailableLabel.adjustsFontSizeToFitWidth = YES;
@@ -326,7 +327,7 @@ static NSString *SPKDeletedFormatDuration(double seconds);
 
     _durationLabel = [UILabel new];
     _durationLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _durationLabel.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2 weight:UIFontWeightSemibold] to:_durationLabel];
     _durationLabel.textColor = [UIColor whiteColor];
     [_durationPill addSubview:_durationLabel];
 
@@ -384,7 +385,7 @@ static NSString *SPKDeletedFormatDuration(double seconds);
 
     _voiceLabel = [UILabel new];
     _voiceLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _voiceLabel.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightMedium] to:_voiceLabel];
     _voiceLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     [_voicePill addSubview:_voiceLabel];
 
@@ -433,13 +434,13 @@ static NSString *SPKDeletedFormatDuration(double seconds);
 
     _cardTitle = [UILabel new];
     _cardTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    _cardTitle.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_cardTitle];
     _cardTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     _cardTitle.numberOfLines = 2;
 
     _cardURL = [UILabel new];
     _cardURL.translatesAutoresizingMaskIntoConstraints = NO;
-    _cardURL.font = [UIFont systemFontOfSize:11.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCaption2] to:_cardURL];
     _cardURL.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _cardURL.numberOfLines = 1;
 

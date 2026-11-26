@@ -6,6 +6,7 @@
 #import "../Avatars/SPKAvatarView.h"
 #import "../UI/SPKMediaChrome.h"
 #import "SPKStoryViewersFetcher.h"
+#import "../UI/SPKFont.h"
 
 static CGFloat const kSPKViewerAvatarSize = 52.0;
 static NSString *const kSPKStarredStoryViewersKey = @"stories_starred_viewers";
@@ -55,7 +56,7 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
 
     _usernameLabel = [UILabel new];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _usernameLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_usernameLabel];
     _usernameLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     [_usernameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
 
@@ -75,14 +76,14 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
 
     _subtitleLabel = [UILabel new];
     _subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _subtitleLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:_subtitleLabel];
     _subtitleLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _subtitleLabel.numberOfLines = 1;
     [self.contentView addSubview:_subtitleLabel];
 
     _relationshipLabel = [UILabel new];
     _relationshipLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _relationshipLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote weight:UIFontWeightMedium] to:_relationshipLabel];
     _relationshipLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     _relationshipLabel.textAlignment = NSTextAlignmentRight;
     [_relationshipLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
@@ -302,7 +303,7 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
 
     self.countLabel = [UILabel new];
     self.countLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.countLabel.font = [UIFont systemFontOfSize:13.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleFootnote] to:self.countLabel];
     self.countLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     [self.headerContainer addSubview:self.countLabel];
 
@@ -444,7 +445,7 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
 
     self.loadingLabel = [UILabel new];
     self.loadingLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.loadingLabel.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.loadingLabel];
     self.loadingLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.loadingLabel.textAlignment = NSTextAlignmentCenter;
     self.loadingLabel.text = SPKL(@"STORIES_STORY_VIEWERS_SEARCH_LOADING_VIEWERS_TEXT");
@@ -493,7 +494,7 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
 
     self.emptyStateTitle = [UILabel new];
     self.emptyStateTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateTitle.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold] to:self.emptyStateTitle];
     self.emptyStateTitle.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.emptyStateTitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateTitle.numberOfLines = 0;
@@ -501,17 +502,17 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
 
     self.emptyStateSubtitle = [UILabel new];
     self.emptyStateSubtitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emptyStateSubtitle.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.emptyStateSubtitle];
     self.emptyStateSubtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.emptyStateSubtitle.textAlignment = NSTextAlignmentCenter;
     self.emptyStateSubtitle.numberOfLines = 0;
     [self.emptyStateView addSubview:self.emptyStateSubtitle];
 
     [NSLayoutConstraint activateConstraints:@[
-        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [self.emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [self.emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-20.0],
-        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:40.0],
-        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor constant:-40.0],
+        [self.emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:40.0],
+        [self.emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-40.0],
 
         [self.emptyStateIcon.topAnchor constraintEqualToAnchor:self.emptyStateView.topAnchor],
         [self.emptyStateIcon.centerXAnchor constraintEqualToAnchor:self.emptyStateView.centerXAnchor],

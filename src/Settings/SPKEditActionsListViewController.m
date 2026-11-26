@@ -1,4 +1,5 @@
 #import "SPKStrings.h"
+#import "SPKNewBadges.h"
 #import "SPKEditActionsListViewController.h"
 #include <UIKit/UIKit.h>
 
@@ -12,6 +13,7 @@
 #import "SPKPreferences.h"
 #import "SPKSettingsTransferManager.h"
 #import "SPKTopicSettingsSupport.h"
+#import "../Shared/UI/SPKFont.h"
 
 static char kSPKActionsListSwitchAssocKey;
 
@@ -20,6 +22,8 @@ static char kSPKActionsListSwitchAssocKey;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SPKActionButtonConfiguration *configuration;
 @property (nonatomic, assign) SPKActionButtonSource source;
+/// Badge items for actions whose NEW pill was shown, marked seen on leaving.
+@property (nonatomic, strong) NSMutableSet<NSString *> *shownNewActionItems;
 
 @end
 
@@ -177,6 +181,28 @@ static char kSPKActionsListSwitchAssocKey;
     return NO;
 }
 
+- (void)spk_applyNewBadgeForAction:(NSString *)identifier toConfiguration:(UIListContentConfiguration *)config cell:(UITableViewCell *)cell {
+    NSString *item = SPKNewBadgeActionItemIdentifier(self.source, identifier);
+    if (!SPKNewBadgeItemIsNew(item) || config.text.length == 0)
+        return;
+    NSString *title = config.text;
+    UIFont *font = config.textProperties.font ?: [SPKFont fontForStyle:SPKFontStyleBody];
+    config.attributedText = SPKNewBadgeAttributedTitle(title, font, config.textProperties.color, SPKNewBadgeStateRow, self.tableView.traitCollection);
+    cell.accessibilityLabel = [NSString stringWithFormat:@"%@, %@", title, SPKNewBadgeAccessibilityText(SPKNewBadgeStateRow)];
+    if (!self.shownNewActionItems)
+        self.shownNewActionItems = [NSMutableSet set];
+    [self.shownNewActionItems addObject:item];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.shownNewActionItems.count) {
+        NSArray<NSString *> *items = self.shownNewActionItems.allObjects;
+        [self.shownNewActionItems removeAllObjects];
+        SPKNewBadgesMarkItemsSeen(items, self);
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     UIListContentConfiguration *config = cell.defaultContentConfiguration;
@@ -194,7 +220,7 @@ static char kSPKActionsListSwitchAssocKey;
             // Prefix the Collapsible/Inline subtitle with an amber warning triangle so
             // it's obvious — while arranging sections — that this section contains an
             // action switched off in "Available Actions" (hidden from the runtime menu).
-            UIFont *font = config.secondaryTextProperties.font ?: [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+            UIFont *font = config.secondaryTextProperties.font ?: [SPKFont fontForStyle:SPKFontStyleSubheadline];
             UIImage *warning = [[SPKAssetUtils instagramIconNamed:@"warning_filled" pointSize:16.0]
                 imageWithTintColor:[UIColor systemOrangeColor]
                      renderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -234,11 +260,13 @@ static char kSPKActionsListSwitchAssocKey;
     } else if (indexPath.section == [self unassignedSectionIndex]) {
         NSString *identifier = self.configuration.unassignedActions[indexPath.row];
         config.text = SPKActionDescriptorDisplayTitle(identifier, self.configuration.topicTitle);
+        [self spk_applyNewBadgeForAction:identifier toConfiguration:config cell:cell];
         config.image = SPKSettingsIcon(SPKActionDescriptorIconName(identifier));
         config.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
     } else {
         NSString *identifier = self.configuration.supportedActions[indexPath.row];
         config.text = SPKActionDescriptorDisplayTitle(identifier, self.configuration.topicTitle);
+        [self spk_applyNewBadgeForAction:identifier toConfiguration:config cell:cell];
         config.image = SPKSettingsIcon(SPKActionDescriptorIconName(identifier));
         config.imageProperties.tintColor = [SPKUtils SPKColor_InstagramPrimaryText];
 

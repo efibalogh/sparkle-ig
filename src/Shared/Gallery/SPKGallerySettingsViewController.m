@@ -79,19 +79,7 @@ static SPKSetting *SPKGallerySearchChangePasscodeSetting(void) {
 @end
 
 static NSString *const kFavoritesAtTopKey = @"gallery_show_favorites_top";
-static NSString *const kGalleryLongPressTabKey = @"gallery_quick_access_tab";
-static NSString *const kGalleryQuickAccessDisabledValue = @"none";
 
-@interface SPKGalleryStorageStats : NSObject
-@property (nonatomic, assign) NSInteger totalFiles;
-@property (nonatomic, assign) NSInteger imageCount;
-@property (nonatomic, assign) NSInteger videoCount;
-@property (nonatomic, assign) NSInteger audioCount;
-@property (nonatomic, assign) long long totalSize;
-@end
-
-@implementation SPKGalleryStorageStats
-@end
 
 @interface SPKGallerySettingsViewController ()
 @property (nonatomic, strong) SPKGalleryStorageStats *stats;
@@ -196,23 +184,7 @@ static NSString *const kGalleryQuickAccessDisabledValue = @"none";
 }
 
 - (void)reloadStats {
-    NSManagedObjectContext *ctx = [SPKGalleryCoreDataStack shared].viewContext;
-    NSFetchRequest *req = [[NSFetchRequest alloc] initWithEntityName:@"SPKGalleryFile"];
-    NSArray<SPKGalleryFile *> *files = [ctx executeFetchRequest:req error:nil] ?: @[];
-
-    SPKGalleryStorageStats *stats = [SPKGalleryStorageStats new];
-    for (SPKGalleryFile *file in files) {
-        stats.totalFiles += 1;
-        stats.totalSize += file.fileSize;
-        if (file.mediaType == SPKGalleryMediaTypeAudio) {
-            stats.audioCount += 1;
-        } else if (file.mediaType == SPKGalleryMediaTypeVideo) {
-            stats.videoCount += 1;
-        } else {
-            stats.imageCount += 1;
-        }
-    }
-    self.stats = stats;
+    self.stats = [SPKGalleryStorageStats currentStats];
 }
 
 - (NSString *)formattedSize:(long long)bytes {

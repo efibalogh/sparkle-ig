@@ -1,0 +1,13 @@
+---
+Language: ObjC
+BasedOnStyle: LLVM
+AccessModifierOffset: -4
+ContinuationIndentWidth: 4
+ColumnLimit: 0
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ObjCBlockIndentWidth: 4
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: true
+---

@@ -63,7 +63,7 @@ static NSArray<NSDictionary *> *SPKActionButtonDefaultActionSections(SPKActionBu
         @{@"title" : SPKL(@"FEED_MEDIA_HEADER"),
           @"actions" : @[ kSPKActionExpand, kSPKActionViewThumbnail, kSPKActionTrimSave, kSPKActionEditSave ]},
         @{@"title" : SPKL(@"FEED_COMMENT_ACTIONS_COPY_TEXT"),
-          @"actions" : @[ kSPKActionCopyDownloadLink, kSPKActionCopyMedia, kSPKActionCopyCaption, kSPKActionProfileCopyInfo ]},
+          @"actions" : @[ kSPKActionCopyDownloadLink, kSPKActionCopyMedia, kSPKActionCopyCaption, kSPKActionCopyLink, kSPKActionProfileCopyInfo ]},
         @{@"title" : SPKL(@"COMMON_MEDIA_TYPE_AUDIO"),
           @"actions" : @[ kSPKActionDownloadAudio, kSPKActionDownloadAudioShare, kSPKActionDownloadAudioGallery, kSPKActionPlayAudio, kSPKActionCopyAudioURL ]},
         @{@"title" : SPKL(@"STORIES_OTHER_HEADER"),

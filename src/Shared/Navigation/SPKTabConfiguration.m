@@ -1,7 +1,12 @@
 #import "SPKStrings.h"
 #import "SPKTabConfiguration.h"
+#import "SPKDestinations.h"
+#import "../../Features/Interface/SPKNativeTabBar.h"
 
 #import "../../Utils.h"
+
+#import <objc/message.h>
+#import <sys/sysctl.h>
 
 NSString *const SPKTabLayoutDefault = @"default";
 NSString *const SPKTabLayoutCustom = @"custom";
@@ -100,6 +105,39 @@ NSString *SPKNormalizedTabLayout(id value) {
     return SPKTabLayoutDefault;
 }
 
+// Instagram's own foldable check comes first: it knows the device even where
+// the model identifier is new to Sparkle. The identifier is the fallback for
+// builds without it.
+static BOOL SPKDeviceIsFoldable(void) {
+    static BOOL foldable = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class presentation = NSClassFromString(@"_TtC22IGAdaptivePresentation22IGAdaptivePresentation");
+        SEL isFoldable = NSSelectorFromString(@"isFoldable");
+        if (presentation && [presentation respondsToSelector:isFoldable] &&
+            ((BOOL (*)(id, SEL))objc_msgSend)(presentation, isFoldable)) {
+            foldable = YES;
+            return;
+        }
+        char machine[64] = {0};
+        size_t size = sizeof(machine);
+        if (sysctlbyname("hw.machine", machine, &size, NULL, 0) == 0)
+            foldable = strcmp(machine, "iPhone19,4") == 0;
+    });
+    return foldable;
+}
+
+BOOL SPKTabClassicLayoutAvailable(void) {
+    return !SPKDeviceIsFoldable() && !SPKSystemTabBarRunsAsColumn();
+}
+
+NSString *SPKEffectiveTabLayout(void) {
+    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    if ([layout isEqualToString:SPKTabLayoutClassic] && !SPKTabClassicLayoutAvailable())
+        return SPKTabLayoutDefault;
+    return layout;
+}
+
 // The carrier is whichever bar slot Saved is currently borrowing, or "none" when
 // Saved is off. Every identifier that owns a slot in some layout is valid here;
 // whether it owns one in the *current* layout is a separate question that
@@ -125,7 +163,7 @@ static NSString *SPKResolveSavedCarrier(void) {
     NSString *carrier = SPKNormalizedSavedCarrier(SPKPreferenceObjectForKey(SPKPrefSavedTabCarrier));
     if ([carrier isEqualToString:SPKTabSavedCarrierNone])
         return carrier;
-    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    NSString *layout = SPKEffectiveTabLayout();
     if (![layout isEqualToString:SPKTabLayoutCustom] || !SPKTabOccupiesBarSlot(carrier, layout))
         return SPKTabSavedCarrierNone;
     // The carrier's hidden slot is what Saved draws in, so a carrier whose tab is
@@ -188,7 +226,7 @@ NSString *SPKSingleVisibleTabIdentifierFromPreferences(void) {
         if ([SPKUtils getBoolPref:SPKTabHidePreferenceKey(identifier)])
             [hidden addObject:identifier];
     }
-    return SPKSingleVisibleTabIdentifier(SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]),
+    return SPKSingleVisibleTabIdentifier(SPKEffectiveTabLayout(),
                                          hidden,
                                          SPKNormalizedSavedCarrier(SPKPreferenceObjectForKey(SPKPrefSavedTabCarrier)));
 }
@@ -257,7 +295,7 @@ NSString *SPKTabIdentifierForLaunchPreference(NSString *value) {
 }
 
 NSString *SPKEffectiveLaunchTabIdentifierFromPreferences(void) {
-    NSString *layout = SPKNormalizedTabLayout([SPKUtils getStringPref:SPKPrefTabLayout]);
+    NSString *layout = SPKEffectiveTabLayout();
     BOOL custom = [layout isEqualToString:SPKTabLayoutCustom];
     NSString *carrier = SPKEffectiveSavedCarrier();
     BOOL savedEnabled = ![carrier isEqualToString:SPKTabSavedCarrierNone];
@@ -288,6 +326,189 @@ NSString *SPKEffectiveLaunchTabIdentifierFromPreferences(void) {
     return visible.firstObject;
 }
 
+NSString *const SPKTabHoldInstagramDefault = @"default";
+NSString *const SPKTabHoldNone = @"none";
+
+NSArray<NSString *> *SPKTabHoldableIdentifiers(void) {
+    static NSArray<NSString *> *identifiers;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        identifiers = @[ SPKTabIdentifierFeed, SPKTabIdentifierClips, SPKTabIdentifierDirect,
+                         SPKTabIdentifierCreate, SPKTabIdentifierSearch, SPKTabIdentifierProfile,
+                         SPKTabIdentifierSaved ];
+    });
+    return identifiers;
+}
+
+NSString *SPKTabHoldPreferenceKey(NSString *identifier) {
+    if (![SPKTabHoldableIdentifiers() containsObject:identifier])
+        return @"";
+    return [@"interface_tab_hold_" stringByAppendingString:identifier];
+}
+
+NSString *SPKTabHoldValue(NSString *identifier) {
+    NSString *key = SPKTabHoldPreferenceKey(identifier);
+    if (key.length == 0)
+        return SPKTabHoldInstagramDefault;
+    NSString *value = [SPKUtils getStringPref:key];
+    if ([value isEqualToString:SPKTabHoldNone])
+        return SPKTabHoldNone;
+    SPKDestination *destination = SPKDestinationForIdentifier(value);
+    if (destination && (destination.placements & SPKDestinationPlacementHold))
+        return destination.identifier;
+    return SPKTabHoldInstagramDefault;
+}
+
+NSString *SPKSearchTabClipboardHold(void) {
+    // Saved borrowing the Search slot takes its button, and its hold with it.
+    if ([SPKEffectiveSavedCarrier() isEqualToString:SPKTabIdentifierSearch])
+        return nil;
+    NSString *hold = SPKTabHoldValue(SPKTabIdentifierSearch);
+    if ([hold isEqualToString:SPKDestinationClipboardLink] || [hold isEqualToString:SPKDestinationClipboardLinkOrUsername])
+        return hold;
+    return nil;
+}
+
+BOOL SPKTabHasInstagramHold(NSString *identifier) {
+    return [identifier isEqualToString:SPKTabIdentifierFeed] ||
+           [identifier isEqualToString:SPKTabIdentifierSearch] ||
+           [identifier isEqualToString:SPKTabIdentifierProfile];
+}
+
+// The Settings and Gallery shortcuts used to be two settings that each picked a
+// tab at runtime: Settings took the first visible tab, Gallery a chosen one
+// (moving along when Settings already had it, and swapping Messages for Create
+// in Classic). They are now ordinary per-tab holds, so the tabs they resolved to
+// under the stored configuration are written out once and nobody's holds move.
+static NSString *const SPKTabHoldsMigratedKey = @"interface_tab_holds_migrated";
+
+static NSString *SPKTabIdentifierForLegacyAccessibilityIdentifier(NSString *identifier) {
+    if ([identifier isEqualToString:@"mainfeed-tab"]) return SPKTabIdentifierFeed;
+    if ([identifier isEqualToString:@"reels-tab"]) return SPKTabIdentifierClips;
+    if ([identifier isEqualToString:@"direct-inbox-tab"]) return SPKTabIdentifierDirect;
+    if ([identifier isEqualToString:@"camera-tab"]) return SPKTabIdentifierCreate;
+    if ([identifier isEqualToString:@"explore-tab"]) return SPKTabIdentifierSearch;
+    if ([identifier isEqualToString:@"profile-tab"]) return SPKTabIdentifierProfile;
+    return nil;
+}
+
+static void SPKMigrateTabHoldsIfNeeded(NSUserDefaults *defaults) {
+    if ([defaults boolForKey:SPKTabHoldsMigratedKey])
+        return;
+
+    NSString *layout = SPKNormalizedTabLayout([defaults objectForKey:SPKPrefTabLayout]);
+    NSString *carrier = SPKNormalizedSavedCarrier([defaults objectForKey:SPKPrefSavedTabCarrier]);
+    if (![layout isEqualToString:SPKTabLayoutCustom] || ![defaults boolForKey:SPKTabHidePreferenceKey(carrier)])
+        carrier = SPKTabSavedCarrierNone;
+
+    // The slot a tab's button sits in, keyed by what that slot now shows.
+    NSString * (^holdKeyForSlot)(NSString *) = ^NSString *(NSString *identifier) {
+        return [identifier isEqualToString:carrier] ? SPKTabIdentifierSaved : identifier;
+    };
+    BOOL (^visible)(NSString *) = ^BOOL(NSString *identifier) {
+        if (!SPKTabOccupiesBarSlot(identifier, layout))
+            return NO;
+        if ([identifier isEqualToString:carrier])
+            return YES;
+        return ![defaults boolForKey:SPKTabHidePreferenceKey(identifier)];
+    };
+    NSArray<NSString *> *priority = @[ SPKTabIdentifierFeed, SPKTabIdentifierClips, SPKTabIdentifierDirect,
+                                       SPKTabIdentifierCreate, SPKTabIdentifierSearch, SPKTabIdentifierProfile ];
+
+    NSMutableDictionary<NSString *, NSString *> *holds = [NSMutableDictionary dictionary];
+    NSString *settingsHost = nil;
+    // The old settings registered their defaults (Settings on, Gallery on
+    // Messages), which no longer exist, so an untouched value reads as them.
+    id settingsShortcut = [defaults objectForKey:@"tools_settings_shortcut"];
+    if (![settingsShortcut respondsToSelector:@selector(boolValue)] || [settingsShortcut boolValue]) {
+        for (NSString *identifier in priority) {
+            if (visible(identifier)) {
+                settingsHost = identifier;
+                break;
+            }
+        }
+        if (settingsHost)
+            holds[holdKeyForSlot(settingsHost)] = SPKDestinationSettings;
+    }
+
+    NSString *galleryTab = SPKTabIdentifierForLegacyAccessibilityIdentifier([defaults stringForKey:@"gallery_quick_access_tab"] ?: @"direct-inbox-tab");
+    if (galleryTab) {
+        BOOL messagesOwnsSlot = SPKTabOccupiesBarSlot(SPKTabIdentifierDirect, layout);
+        if (!messagesOwnsSlot && [galleryTab isEqualToString:SPKTabIdentifierDirect])
+            galleryTab = SPKTabIdentifierCreate;
+        else if (messagesOwnsSlot && [galleryTab isEqualToString:SPKTabIdentifierCreate])
+            galleryTab = SPKTabIdentifierDirect;
+        if (settingsHost && [galleryTab isEqualToString:settingsHost]) {
+            galleryTab = nil;
+            for (NSString *identifier in priority) {
+                if (visible(identifier) && ![identifier isEqualToString:settingsHost]) {
+                    galleryTab = identifier;
+                    break;
+                }
+            }
+        }
+        if (galleryTab && visible(galleryTab)) {
+            holds[holdKeyForSlot(galleryTab)] = SPKDestinationGallery;
+            // Outside Custom, Messages and Create share one slot and the old
+            // shortcut followed it, so both get the Gallery and switching
+            // between Default and Classic keeps it on the slot.
+            NSString *twin = [galleryTab isEqualToString:SPKTabIdentifierDirect]   ? SPKTabIdentifierCreate
+                             : [galleryTab isEqualToString:SPKTabIdentifierCreate] ? SPKTabIdentifierDirect
+                                                                                    : nil;
+            if (twin && ![layout isEqualToString:SPKTabLayoutCustom] && !holds[twin])
+                holds[twin] = SPKDestinationGallery;
+        }
+    }
+
+    // Every tab is written, so a tab left on Instagram's hold stays there even
+    // if a later default changes.
+    for (NSString *identifier in SPKTabHoldableIdentifiers())
+        [defaults setObject:holds[identifier] ?: SPKTabHoldInstagramDefault forKey:SPKTabHoldPreferenceKey(identifier)];
+    [defaults removeObjectForKey:@"tools_settings_shortcut"];
+    [defaults removeObjectForKey:@"gallery_quick_access_tab"];
+    [defaults setBool:YES forKey:SPKTabHoldsMigratedKey];
+    SPKLog(@"TabBar", @"[Sparkle] Migrated tab shortcuts to per-tab holds: %@", holds);
+}
+
+// Open Clipboard Link and Open Clipboard Username were two switches on the
+// Explore & Search page that took over the Search tab's hold. They are now the
+// Search tab's hold itself. A Search hold the previous migration already gave
+// Settings or Gallery stays: that is where those shortcuts were.
+static NSString *const SPKClipboardHoldMigratedKey = @"interface_clipboard_hold_migrated";
+
+static id SPKStoredAccountPreference(NSUserDefaults *defaults, NSString *key) {
+    return [defaults objectForKey:SPKEffectivePreferenceKey(key)] ?: [defaults objectForKey:key];
+}
+
+static void SPKRemovePreferenceInEveryAccount(NSUserDefaults *defaults, NSString *key) {
+    NSString *suffix = [@"_" stringByAppendingString:key];
+    for (NSString *stored in defaults.dictionaryRepresentation.allKeys) {
+        if ([stored isEqualToString:key] || ([stored hasPrefix:@"u_"] && [stored hasSuffix:suffix]))
+            [defaults removeObjectForKey:stored];
+    }
+}
+
+static void SPKMigrateClipboardHoldIfNeeded(NSUserDefaults *defaults) {
+    if ([defaults boolForKey:SPKClipboardHoldMigratedKey])
+        return;
+    NSString *searchKey = SPKTabHoldPreferenceKey(SPKTabIdentifierSearch);
+    NSString *current = [defaults stringForKey:searchKey];
+    if (current.length == 0 || [current isEqualToString:SPKTabHoldInstagramDefault]) {
+        // The link switch was on out of the box, the username one off.
+        id link = SPKStoredAccountPreference(defaults, @"interface_open_clipboard_link");
+        id username = SPKStoredAccountPreference(defaults, @"interface_open_clipboard_username");
+        BOOL linkOn = ![link respondsToSelector:@selector(boolValue)] || [link boolValue];
+        BOOL usernameOn = [username respondsToSelector:@selector(boolValue)] && [username boolValue];
+        NSString *hold = !linkOn ? SPKTabHoldInstagramDefault
+                       : usernameOn ? SPKDestinationClipboardLinkOrUsername : SPKDestinationClipboardLink;
+        [defaults setObject:hold forKey:searchKey];
+        SPKLog(@"TabBar", @"[Sparkle] Migrated the clipboard shortcuts to the Search hold: %@", hold);
+    }
+    SPKRemovePreferenceInEveryAccount(defaults, @"interface_open_clipboard_link");
+    SPKRemovePreferenceInEveryAccount(defaults, @"interface_open_clipboard_username");
+    [defaults setBool:YES forKey:SPKClipboardHoldMigratedKey];
+}
+
 void SPKMigrateTabConfigurationIfNeeded(void) {
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     id storedLayout = [defaults objectForKey:SPKPrefTabLayout];
@@ -311,4 +532,7 @@ void SPKMigrateTabConfigurationIfNeeded(void) {
     id storedOrder = [defaults objectForKey:SPKPrefCustomTabOrder];
     if (![storedOrder isKindOfClass:[NSArray class]] || ![(NSArray *)storedOrder isEqualToArray:normalized])
         [defaults setObject:normalized forKey:SPKPrefCustomTabOrder];
+
+    SPKMigrateTabHoldsIfNeeded(defaults);
+    SPKMigrateClipboardHoldIfNeeded(defaults);
 }

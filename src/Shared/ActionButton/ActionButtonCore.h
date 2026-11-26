@@ -1,6 +1,7 @@
 #pragma once
 
 #import "../UI/SPKChrome.h"
+#import "../Downloads/SPKDownloadTypes.h"
 #import "ActionButtonLookupUtils.h"
 #import <UIKit/UIKit.h>
 
@@ -37,6 +38,7 @@ FOUNDATION_EXPORT NSString *const kSPKActionDownloadAllLinks;
 FOUNDATION_EXPORT NSString *const kSPKActionExpand;
 FOUNDATION_EXPORT NSString *const kSPKActionViewThumbnail;
 FOUNDATION_EXPORT NSString *const kSPKActionCopyCaption;
+FOUNDATION_EXPORT NSString *const kSPKActionCopyLink;
 FOUNDATION_EXPORT NSString *const kSPKActionOpenTopicSettings;
 FOUNDATION_EXPORT NSString *const kSPKActionDeletedMessagesLog;
 FOUNDATION_EXPORT NSString *const kSPKActionRepost;
@@ -91,6 +93,10 @@ extern "C" {
 UIButton *SPKActionButtonWithTag(UIView *container, NSInteger tag);
 void SPKApplyButtonStyle(UIButton *button, SPKActionButtonSource source);
 BOOL SPKIsDirectVisualViewerAncestor(UIView *view);
+// YES from the moment an action button's menu starts presenting until its
+// dismissal animation completes. UIKit animates a stand-in for the button
+// meanwhile; hosts must not write its frame, alpha, hidden state or z-order.
+BOOL SPKActionButtonMenuIsTransitioning(UIView *button);
 void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context);
 SPKActionButtonContext *SPKActionButtonContextFromButton(UIButton *button);
 NSString *SPKActionButtonTitleForIdentifier(NSString *identifier);
@@ -116,6 +122,19 @@ BOOL SPKResolveGalleryDownloadForMedia(id _Nullable media,
                                        NSURL *_Nullable *_Nullable outVideoURL,
                                        SPKGallerySaveMetadata *_Nullable *_Nullable outMetadata);
 NSArray<NSString *> *SPKConfiguredBulkActionIdentifiersForSource(SPKActionButtonSource source);
+/// Bulk download of already-resolved media objects (a carousel's children) through
+/// the action button's own batch path: the photo-quality setting, Always Ask, 4K
+/// candidates and metadata all apply. `parentMedia` is the post the objects belong
+/// to, used for post-level metadata and the 4K lookup; nil when unknown. Returns NO,
+/// doing nothing, when any object cannot be resolved.
+BOOL SPKPerformBulkDownloadForMediaObjects(NSArray *mediaObjects,
+                                           SPKActionButtonSource source,
+                                           NSString *_Nullable username,
+                                           id _Nullable parentMedia,
+                                           NSString *identifier,
+                                           UIViewController *_Nullable presenter,
+                                           UIView *_Nullable anchorView,
+                                           SPKDownloadSourceSurface surface);
 NSArray *SPKActionButtonCarouselChildren(id _Nullable media);
 void SPKArmPendingRepostFeedback(SPKActionButtonContext *context);
 NSDictionary<NSString *, NSString *> *_Nullable SPKConsumePendingRepostFeedback(SPKActionButtonSource source);

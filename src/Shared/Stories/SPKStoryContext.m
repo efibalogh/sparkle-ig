@@ -82,7 +82,44 @@ static UIViewController *SPKStoryViewerControllerFromOverlay(UIView *overlayView
     return viewer ?: nearest;
 }
 
+// The section controller that owns this overlay's own cell. In regular width
+// (iPad, unfolded iPhone Duo) the viewer keeps neighbouring reels laid out
+// beside the focused one, and the viewer's "currently displayed" section can
+// name a neighbour, so every overlay must resolve through its own cell first.
+static id SPKStoryOwnSectionControllerFromOverlay(UIView *overlayView) {
+    SEL lookupSelector = NSSelectorFromString(@"sectionControllerForView:");
+    SEL itemSelector = NSSelectorFromString(@"currentStoryItem");
+    Class sectionControllerClass = SPKStoryFullscreenSectionControllerClass();
+    for (UIView *walker = overlayView.superview; walker; walker = walker.superview) {
+        if (![walker isKindOfClass:[UICollectionViewCell class]])
+            continue;
+        UIView *collection = walker.superview;
+        while (collection && ![collection isKindOfClass:[UICollectionView class]])
+            collection = collection.superview;
+        if (!collection)
+            return nil;
+        id adapter = ((UICollectionView *)collection).dataSource;
+        if (![adapter respondsToSelector:lookupSelector])
+            continue;
+        id sectionController = nil;
+        @try {
+            sectionController = ((id (*)(id, SEL, id))objc_msgSend)(adapter, lookupSelector, walker);
+        } @catch (__unused NSException *exception) {
+        }
+        if (!sectionController)
+            continue;
+        if ((sectionControllerClass && [sectionController isKindOfClass:sectionControllerClass]) ||
+            [sectionController respondsToSelector:itemSelector])
+            return sectionController;
+    }
+    return nil;
+}
+
 static id SPKStorySectionControllerFromOverlay(UIView *overlayView, UIViewController *viewerController) {
+    id ownSectionController = SPKStoryOwnSectionControllerFromOverlay(overlayView);
+    if (ownSectionController)
+        return ownSectionController;
+
     id sectionController = SPKStoryFirstObjectForSelectors(viewerController, @[ @"currentlyDisplayedSectionController", @"currentSectionController" ]);
     if (!sectionController)
         sectionController = [SPKUtils getIvarForObj:viewerController name:"_currentSectionController"];
@@ -591,20 +628,8 @@ static void SPKStoryResolveAndRememberManualSeenUserName(NSString *username, voi
         return;
     }
 
-    NSString *encodedUsername = [normalized stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
-    if (encodedUsername.length == 0) {
-        if (completion)
-            completion();
-        return;
-    }
-
-    [SPKInstagramAPI sendRequestWithMethod:@"GET"
-                                      path:[NSString stringWithFormat:@"users/web_profile_info/?username=%@", encodedUsername]
-                                      body:nil
-                                completion:^(NSDictionary *response, NSError *error) {
-                                    NSDictionary *user = response[@"data"][@"user"];
-                                    if (![user isKindOfClass:[NSDictionary class]])
-                                        user = response[@"user"];
+    [SPKInstagramAPI resolveUserForUsername:normalized
+                                 completion:^(NSDictionary *user, NSError *error) {
                                     if ([user isKindOfClass:[NSDictionary class]] && !error) {
                                         NSString *resolvedUsername = SPKStringFromValue(user[@"username"]) ?: normalized;
                                         NSString *fullName = SPKStringFromValue(user[@"full_name"] ?: user[@"fullName"]);
@@ -791,17 +816,8 @@ static void SPKStoryEnrichManualSeenUserEntryIfNeeded(NSDictionary *entry, BOOL 
     if (profilePicUrl.length > 0)
         return; // already fully enriched!
 
-    NSString *encodedUsername = [username stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
-    if (encodedUsername.length == 0)
-        return;
-
-    [SPKInstagramAPI sendRequestWithMethod:@"GET"
-                                      path:[NSString stringWithFormat:@"users/web_profile_info/?username=%@", encodedUsername]
-                                      body:nil
-                                completion:^(NSDictionary *response, NSError *error) {
-                                    NSDictionary *resolvedUser = response[@"data"][@"user"];
-                                    if (![resolvedUser isKindOfClass:[NSDictionary class]])
-                                        resolvedUser = response[@"user"];
+    [SPKInstagramAPI resolveUserForUsername:username
+                                 completion:^(NSDictionary *resolvedUser, NSError *error) {
                                     if (![resolvedUser isKindOfClass:[NSDictionary class]] || error) {
                                         return;
                                     }
@@ -986,9 +1002,11 @@ static NSString *SPKStoryManualSeenListHelpText(BOOL manualSeenEnabled) {
 }
 
 - (void)lookupUsername:(NSString *)rawUsername {
-    NSString *username = [SPKUtils sanitizedInstagramUsername:rawUsername];
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        [self presentError:SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")];
         return;
+    }
 
     __weak typeof(self) weakSelf = self;
     [SPKInstagramAPI resolveUserForUsername:username

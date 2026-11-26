@@ -384,6 +384,19 @@ void SPKGalleryApplyImportHeuristicsFromFilename(NSString *fileName, SPKGalleryS
         }
         [parts removeObjectAtIndex:0];
     }
+    // Files the user imported into Regram keep their original name behind an import stamp:
+    // `<epoch>_<UUID>_<original name>`. Drop the UUID so it is not read as a username. When the
+    // original name is itself a saved-media name, its own leading epoch is the real save time and
+    // wins over the stamp. Only a millisecond (13-digit) epoch counts there: a 10-digit user pk
+    // would also parse as seconds.
+    if (hasLeadEpoch && parts.count > 1 && [[NSUUID alloc] initWithUUIDString:parts.firstObject]) {
+        [parts removeObjectAtIndex:0];
+        NSDate *originalEpochDate = (parts.count > 1 && parts.firstObject.length == 13) ? SPKParseEpochDateFromString(parts.firstObject) : nil;
+        if (originalEpochDate) {
+            m.importCapturedDate = originalEpochDate;
+            [parts removeObjectAtIndex:0];
+        }
+    }
     if (parts.count == 0) {
         return;
     }
@@ -493,6 +506,26 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
     }
 
     return [NSString stringWithFormat:@"%@_%@_%@_%@.%@", epoch, user, slug, dateCompact, ext];
+}
+
+BOOL SPKGalleryParseSparkleFilenameDates(NSString *fileName, NSDate **savedDate, NSDate **postedDate) {
+    NSString *stem = fileName.lastPathComponent.stringByDeletingPathExtension;
+    NSArray<NSString *> *parts = [stem componentsSeparatedByString:@"_"];
+    if (parts.count < 3) {
+        return NO;
+    }
+    NSDate *saved = SPKParseEpochDateFromString(parts.firstObject);
+    NSDate *posted = SPKParseCompactDigitDateFromString(parts.lastObject);
+    if (!saved || !posted) {
+        return NO;
+    }
+    if (savedDate) {
+        *savedDate = saved;
+    }
+    if (postedDate) {
+        *postedDate = posted;
+    }
+    return YES;
 }
 
 @implementation SPKGalleryFile
@@ -1045,8 +1078,18 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
     return [NSString stringWithFormat:@"%@_%@", mediaPK, userPK];
 }
 
+/// An audio-page save keeps the audio asset id as its media pk; its page lives at
+/// /reels/audio/<id>/. Older saves may hold no id, so only a numeric one counts.
+- (nullable NSURL *)spk_audioPageURL {
+    if ((SPKGallerySource)self.source != SPKGallerySourceAudioPage || !SPKDigitsOnlyString(self.sourceMediaPK))
+        return nil;
+    return [NSURL URLWithString:[NSString stringWithFormat:@"https://www.instagram.com/reels/audio/%@/", self.sourceMediaPK]];
+}
+
 - (NSURL *)preferredOriginalMediaURL {
     SPKGallerySource source = (SPKGallerySource)self.source;
+    if (source == SPKGallerySourceAudioPage)
+        return [self spk_audioPageURL];
     if (source != SPKGallerySourceFeed &&
         source != SPKGallerySourceStories &&
         source != SPKGallerySourceReels) {
@@ -1145,6 +1188,8 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
         NSURL *url = [self preferredOriginalMediaURL];
         return [url.scheme.lowercaseString hasPrefix:@"http"] ? url : nil;
     }
+    if (source == SPKGallerySourceAudioPage)
+        return [self spk_audioPageURL];
     if (source != SPKGallerySourceFeed && source != SPKGallerySourceReels)
         return nil;
 
@@ -1174,6 +1219,8 @@ NSString *SPKFileNameForMedia(NSURL *fileURL,
     case SPKGallerySourceFeed:
     case SPKGallerySourceProfile:
         return SPKL(@"GALLERY_GALLERY_FILE_OPEN_POST_TEXT");
+    case SPKGallerySourceAudioPage:
+        return SPKL(@"GALLERY_GALLERY_FILE_OPEN_AUDIO_PAGE_TEXT");
     default:
         return SPKL(@"ALERT_ACTION_OPEN_ORIGINAL_POST");
     }
@@ -1546,6 +1593,59 @@ static UIImage *SPKGalleryAudioPlaceholderImage(void) {
     UIGraphicsEndImageContext();
 
     return resized;
+}
+
+@end
+
+@interface SPKGalleryStorageStats ()
+@property (nonatomic, readwrite) NSInteger totalFiles;
+@property (nonatomic, readwrite) NSInteger imageCount;
+@property (nonatomic, readwrite) NSInteger videoCount;
+@property (nonatomic, readwrite) NSInteger audioCount;
+@property (nonatomic, readwrite) long long totalSize;
+@end
+
+@implementation SPKGalleryStorageStats
+
++ (instancetype)currentStats {
+    SPKGalleryStorageStats *stats = [SPKGalleryStorageStats new];
+    NSManagedObjectContext *ctx = [SPKGalleryCoreDataStack shared].viewContext;
+    if (!ctx)
+        return stats;
+
+    NSExpressionDescription *count = [NSExpressionDescription new];
+    count.name = @"count";
+    count.expression = [NSExpression expressionForFunction:@"count:" arguments:@[ [NSExpression expressionForKeyPath:@"mediaType"] ]];
+    count.expressionResultType = NSInteger64AttributeType;
+
+    NSExpressionDescription *size = [NSExpressionDescription new];
+    size.name = @"size";
+    size.expression = [NSExpression expressionForFunction:@"sum:" arguments:@[ [NSExpression expressionForKeyPath:@"fileSize"] ]];
+    size.expressionResultType = NSInteger64AttributeType;
+
+    NSFetchRequest *req = [[NSFetchRequest alloc] initWithEntityName:@"SPKGalleryFile"];
+    req.resultType = NSDictionaryResultType;
+    req.propertiesToGroupBy = @[ @"mediaType" ];
+    req.propertiesToFetch = @[ @"mediaType", count, size ];
+
+    NSArray<NSDictionary *> *rows = [ctx executeFetchRequest:req error:nil] ?: @[];
+    for (NSDictionary *row in rows) {
+        NSInteger rowCount = [row[@"count"] integerValue];
+        stats.totalFiles += rowCount;
+        stats.totalSize += [row[@"size"] longLongValue];
+        switch ((SPKGalleryMediaType)[row[@"mediaType"] integerValue]) {
+        case SPKGalleryMediaTypeAudio:
+            stats.audioCount += rowCount;
+            break;
+        case SPKGalleryMediaTypeVideo:
+            stats.videoCount += rowCount;
+            break;
+        default:
+            stats.imageCount += rowCount;
+            break;
+        }
+    }
+    return stats;
 }
 
 @end

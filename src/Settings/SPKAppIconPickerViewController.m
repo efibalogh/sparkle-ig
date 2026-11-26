@@ -1,3 +1,4 @@
+#import "../Shared/UI/SPKSafeAreaLayout.h"
 #import "SPKStrings.h"
 #import "SPKAppIconPickerViewController.h"
 
@@ -44,7 +45,7 @@
     return SPKIconPickerCellStyleAppIcon;
 }
 - (NSInteger)columnCountForWidth:(CGFloat)width {
-    return width >= 500.0 ? 4 : 3;
+    return SPKAdaptiveColumnCount(3, width);
 }
 
 - (NSArray<SPKIconPickerSection *> *)buildSections {
@@ -91,7 +92,11 @@
     if (!appIcon)
         return;
 
-    if ([identifier isEqualToString:self.selectedIdentifier]) {
+    // The stored choice can be ahead of the system: Instagram reset the icon
+    // before the guard existed. Re-picking it then applies it again.
+    NSString *liveAlternate = UIApplication.sharedApplication.alternateIconName;
+    BOOL liveMatches = appIcon.isPrimary ? liveAlternate.length == 0 : [identifier isEqualToString:liveAlternate];
+    if ([identifier isEqualToString:self.selectedIdentifier] && liveMatches) {
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }
@@ -160,8 +165,8 @@
     SPKLog(@"AppIcon", @"[Sparkle] calling setAlternateIconName:'%@' (attempt %ld/%ld)",
            name ?: @"(nil=primary)", (long)attempt, (long)maxAttempts);
     __weak typeof(self) weakSelf = self;
-    [UIApplication.sharedApplication setAlternateIconName:name
-                                        completionHandler:^(NSError *error) {
+    [SPKAppIconCatalog setSystemAlternateIconName:name
+                                       completion:^(NSError *error) {
                                             BOOL isEAGAIN = error && [error.domain isEqualToString:NSPOSIXErrorDomain] && error.code == EAGAIN;
                                             SPKLog(@"AppIcon", @"[Sparkle] completion attempt %ld/%ld: domain='%@' code=%ld eagain=%d",
                                                    (long)attempt, (long)maxAttempts, error.domain ?: @"(none)", (long)error.code, isEAGAIN);

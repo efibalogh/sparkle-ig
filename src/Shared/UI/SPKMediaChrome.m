@@ -3,6 +3,7 @@
 #import "../../Utils.h"
 #import "../../Settings/SPKPreferences.h"
 #import <objc/message.h>
+#import "SPKFont.h"
 
 CGFloat const SPKMediaChromeTopBarContentHeight = 44.0;
 
@@ -184,22 +185,12 @@ UIBarButtonItem *SPKMediaChromeTopBarMenuButtonItem(NSString *resourceName, UIMe
 }
 
 UIBarButtonItem *SPKMediaChromeTopBarMenuButtonItemWithTint(NSString *resourceName, UIMenu *menu, UIColor *tintColor, NSString *accessibilityLabel) {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    UIButtonConfiguration *config = [UIButtonConfiguration plainButtonConfiguration];
-    config.image = SPKMediaChromeTopBarIcon(resourceName);
-    config.baseForegroundColor = tintColor ?: [SPKUtils SPKColor_InstagramPrimaryText];
-    config.contentInsets = NSDirectionalEdgeInsetsMake(0.0, 6.0, 0.0, 6.0);
-    button.configuration = config;
-    button.menu = menu;
-    button.showsMenuAsPrimaryAction = YES;
-    // Force the menu to keep the order we declare (navigation first, destructive last)
-    // instead of iOS reordering by proximity/priority — which on iOS 26 floated the
-    // destructive group to the top depending on how the popover opened.
-    if (@available(iOS 16.0, *)) {
-        button.preferredMenuElementOrder = UIContextMenuConfigurationElementOrderFixed;
-    }
-    button.accessibilityLabel = accessibilityLabel;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+    // A plain image item with a menu, not a custom-view button: UIKit only moves
+    // real bar items into a vertical side bar (a folded or landscape foldable),
+    // so a custom view stays stranded in the top bar next to its siblings that
+    // moved. The menu opens on a single tap either way.
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:SPKMediaChromeTopBarIcon(resourceName) menu:menu];
+    item.tintColor = tintColor ?: [SPKUtils SPKColor_InstagramPrimaryText];
     item.accessibilityLabel = accessibilityLabel;
     return item;
 }
@@ -328,7 +319,10 @@ NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItems(NSArray<UIBarButton
         return items;
     }
 
-    // Legacy: distribute evenly across a standard full-width bottom bar.
+    // Legacy: distribute evenly across a standard full-width bottom bar. The bar
+    // sizes each item by its glyph and ignores `width`, so items only land on
+    // even, centred slots when their glyphs share a width (Instagram's are all
+    // 24pt).
     [items addObject:SPKMediaChromeFlexibleSpace()];
     for (UIBarButtonItem *item in contentItems) {
         [items addObject:item];
@@ -422,7 +416,7 @@ static CGFloat const kSPKGlassTitleHeight = 36.0;
         [self addSubview:_glassView];
 
         _label = [[UILabel alloc] init];
-        _label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        _label.font = [SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightSemibold];
         _label.adjustsFontForContentSizeCategory = YES;
         _label.textColor = [UIColor labelColor];
         _label.textAlignment = NSTextAlignmentCenter;

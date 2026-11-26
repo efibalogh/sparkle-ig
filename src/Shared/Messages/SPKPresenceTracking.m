@@ -20,6 +20,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import "../UI/SPKFont.h"
 
 static NSString *const kSPKPresenceEnabledKey = @"msgs_presence_notifications";
 static NSString *const kSPKPresenceNotifyOnlineKey = @"msgs_presence_notify_online";
@@ -101,7 +102,7 @@ SPKAutoSaveFilterConfig *SPKPresenceFilterConfig(void) {
         config.includedKey = @"msgs_presence_included";
         config.identityField = @"pk";
         config.sortField = @"username";
-        config.subjectPlural = SPKL(@"SETTINGS_TOPIC_SETTINGS_SUPPORT_USERS_TEXT");
+        config.subject = SPKAutoSaveFilterSubjectUsers;
         config.ruleNotificationIdentifier = kSPKNotificationPresenceUserRule;
         config.alwaysAccountScopedLists = YES;
     });
@@ -131,6 +132,10 @@ BOOL SPKPresenceListContainsUser(NSString *pk) {
 
 BOOL SPKPresenceAppliesToUser(NSString *pk) {
     return SPKAutoSaveFilterApplies(SPKPresenceFilterConfig(), pk);
+}
+
+BOOL SPKPresenceHasAnyTarget(void) {
+    return SPKPresenceAllUsersMode() || SPKPresenceUserList().count > 0;
 }
 
 NSString *SPKPresenceSettingsSummary(void) {
@@ -1028,6 +1033,11 @@ void SPKPresenceHandleDirectThreadUpdates(id applicator, id updates, NSString *o
     }
     if (!SPKPresenceNotificationsEnabled() || ownerPK.length == 0)
         return;
+    // Inbox sync replays a watermark per thread and per reader. With read
+    // notifications off or nobody tracked, nothing below can notify, so skip the
+    // parse entirely instead of filtering each event one by one.
+    if (![SPKUtils getBoolPref:kSPKPresenceNotifyReadKey] || !SPKPresenceHasAnyTarget())
+        return;
     NSArray<NSDictionary *> *ownerMessages = SPKPresenceOwnerMessagesFromUpdates(updates, ownerPK);
     NSArray<NSDictionary *> *events = SPKPresenceReadEvents(updates);
     if (ownerMessages.count == 0 && events.count == 0)
@@ -1043,9 +1053,6 @@ void SPKPresenceHandleDirectThreadUpdates(id applicator, id updates, NSString *o
             NSMutableDictionary *cursors = SPKPresenceReadCursors();
             NSString *previousID = cursors[cursorKey];
 
-            SPKLog(@"Presence", @"[Sparkle Presence] raw read watermark owner=%@ thread=%@ reader=%@ message=%@ prior=%@",
-                   ownerPK, threadID, readerPK, messageID, previousID ?: @"unknown");
-
             BOOL ordered = NO;
             NSComparisonResult advance = previousID.length > 0
                                              ? SPKPresenceCompareMessageIDs(messageID, previousID, &ordered)
@@ -1054,6 +1061,8 @@ void SPKPresenceHandleDirectThreadUpdates(id applicator, id updates, NSString *o
                                            (!ordered && advance == NSOrderedSame)))
                 continue;
             cursors[cursorKey] = messageID;
+            SPKLog(@"Presence", @"[Sparkle Presence] read watermark advanced owner=%@ thread=%@ reader=%@ message=%@ prior=%@",
+                   ownerPK, threadID, readerPK, messageID, previousID ?: @"unknown");
 
             NSString *activeOwnerPK = [SPKUtils currentUserPK];
             if (activeOwnerPK.length > 0 && ![activeOwnerPK isEqualToString:ownerPK]) {
@@ -1294,7 +1303,7 @@ NSString *SPKPresenceDiagnosticsText(void) {
     _textView.editable = NO;
     _textView.backgroundColor = [SPKUtils SPKColor_InstagramSecondaryBackground];
     _textView.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
-    _textView.font = [UIFont monospacedSystemFontOfSize:12.0 weight:UIFontWeightRegular];
+    [SPKFont apply:[SPKFont monospacedFontForStyle:SPKFontStyleCaption1 weight:UIFontWeightRegular] to:_textView];
     _textView.textContainerInset = UIEdgeInsetsMake(16.0, 14.0, 16.0, 14.0);
     _textView.layer.cornerRadius = 14.0;
     [self.view addSubview:_textView];
@@ -1497,30 +1506,24 @@ void SPKPresencePresentChatRuleToggle(SPKDirectThreadContext *context) {
 }
 
 - (void)lookupUsername:(NSString *)rawUsername {
-    NSString *username = SPKAutoSaveFilterNormalizedUsername(rawUsername);
-    if (username.length == 0)
+    NSString *username = [SPKUtils usernameFromUserInput:rawUsername];
+    if (username.length == 0) {
+        [self presentError:SPKL(@"NETWORK_INSTAGRAM_API_INVALID_USERNAME_TEXT")];
         return;
-    NSString *encodedUsername = [username stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
-    if (encodedUsername.length == 0)
-        return;
+    }
 
     __weak typeof(self) weakSelf = self;
-    [SPKInstagramAPI sendRequestWithMethod:@"GET"
-                                      path:[NSString stringWithFormat:@"users/web_profile_info/?username=%@", encodedUsername]
-                                      body:nil
-                                completion:^(NSDictionary *response, NSError *error) {
+    [SPKInstagramAPI resolveUserForUsername:username
+                                 completion:^(NSDictionary *user, NSError *error) {
                                     __strong typeof(weakSelf) strongSelf = weakSelf;
                                     if (!strongSelf)
                                         return;
-                                    NSDictionary *user = response[@"data"][@"user"];
-                                    if (![user isKindOfClass:NSDictionary.class])
-                                        user = response[@"user"];
                                     if (![user isKindOfClass:NSDictionary.class] || error) {
                                         [strongSelf presentError:[NSString stringWithFormat:SPKL(@"INSTANTS_INSTANTS_AUTO_SAVE_USER_VALUE_NOT_FOUND_FORMAT"), username]];
                                         return;
                                     }
 
-                                    NSString *pk = SPKStringFromValue(user[@"id"] ?: user[@"pk"]);
+                                    NSString *pk = SPKStringFromValue(user[@"pk"] ?: user[@"id"]);
                                     if (pk.length == 0) {
                                         [strongSelf presentError:SPKL(@"MESSAGES_DIRECT_AUTO_SAVE_COULD_NOT_RESOLVE_USER_S_INSTAGRAM_ID_TEXT")];
                                         return;

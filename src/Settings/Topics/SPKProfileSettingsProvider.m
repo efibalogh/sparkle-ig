@@ -1,13 +1,13 @@
 #import "SPKStrings.h"
+#import "../SPKNewBadges.h"
 #import "SPKProfileSettingsProvider.h"
 
 #import "../../AssetUtils.h"
 #import "../../Features/Profile/FollowIndicator.h"
+#import "../../Features/Profile/HighlightReorder.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
-#import "../../Shared/Account/SPKAccountPrivacyService.h"
-#import "SPKAccountPrivacySettingsProvider.h"
 
 static NSString *const kSPKProfileActionNone = @"none";
 static NSString *const kSPKProfileActionCopyInfo = @"copy_info";
@@ -124,14 +124,6 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
 
 + (SPKSetting *)rootSetting {
     NSMutableArray *sections = [NSMutableArray array];
-    // Only offered when this Instagram build has the settings builders; an
-    // entry that can only fail is worse than none.
-    if ([SPKAccountPrivacyService isSupported]) {
-        [sections addObject:SPKTopicSection(SPKL(@"PROFILE_PRIVACY_HEADER"), @[
-                                                [SPKAccountPrivacySettingsProvider rootSetting]
-                                            ],
-                                            nil)];
-    }
     [sections addObjectsFromArray:@[
         // Two short explanations, each about one control: they read better as
         // footers under their own rows than behind a shared info button.
@@ -157,15 +149,39 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                                SPKL(@"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP"))
         ],
                         nil),
+        SPKTopicSection(SPKL(@"PROFILE_HIGHLIGHTS_HEADER"), @[
+            ({
+                BOOL available = SPKHighlightReorderIsAvailable();
+                SPKSetting *reorder = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_HIGHLIGHTS_REORDER_TITLE")
+                                                                                    icon:SPKSettingsIcon(@"left_right")
+                                                                             defaultsKey:@"profile_highlight_reorder"],
+                                                         available ? SPKL(@"PROFILE_HIGHLIGHTS_REORDER_HELP")
+                                                                   : SPKL(@"PROFILE_HIGHLIGHTS_REORDER_UNAVAILABLE_HELP"));
+                // Builds without the config have nothing for the switch to turn on.
+                reorder.enabledProvider = ^BOOL {
+                    return available;
+                };
+                SPKSettingMarkedNew(reorder, @"v1.7.0");
+            })
+        ],
+                        nil),
         SPKTopicSection(SPKL(@"PROFILE_TABS_HEADER"), @[
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SAVED_TAB_TITLE")
-                                           icon:SPKSettingsIcon(@"save")
-                                    defaultsKey:@"profile_saved_tab"],
-                               SPKL(@"PROFILE_TABS_SAVED_TAB_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SQUARE_GRID_TITLE")
                                            icon:SPKSettingsIcon(@"grid_square")
                                     defaultsKey:@"profile_square_grid"],
-                               SPKL(@"PROFILE_TABS_SQUARE_GRID_HELP"))
+                               SPKL(@"PROFILE_TABS_SQUARE_GRID_HELP")),
+            SPKSettingMarkedNewWithID(SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_GRID_FILTER_TITLE")
+                                                        icon:SPKSettingsIcon(@"filter")
+                                                        menu:SPKProfileGridFilterModeMenu()],
+                               SPKL(@"PROFILE_TABS_GRID_FILTER_HELP")), @"v1.7.0", @"profile_grid_filter_mode"),
+            SPKSettingMarkedNewWithID(SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"PROFILE_TABS_REELS_SORT_TITLE")
+                                                        icon:SPKSettingsIcon(@"sort")
+                                                        menu:SPKProfileReelsSortModeMenu()],
+                               SPKL(@"PROFILE_TABS_REELS_SORT_HELP")), @"v1.7.0", @"profile_reels_sort_mode"),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SAVED_TAB_TITLE")
+                                                          icon:SPKSettingsIcon(@"save")
+                                                   defaultsKey:@"profile_saved_tab"],
+                               SPKL(@"PROFILE_TABS_SAVED_TAB_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"PROFILE_INDICATORS_HEADER"), @[

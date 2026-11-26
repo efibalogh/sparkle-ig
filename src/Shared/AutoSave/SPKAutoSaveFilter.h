@@ -16,6 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// nothing about their DMs. Instants' Manually-Mark-Seen list reuses the machinery with its
 /// own keys, its mode following its on/off switch through `allModeProvider`.
 
+/// What a surface's list holds. Picks whole localized phrases ("All Chats",
+/// "Excluded Users") so no title is assembled from a noun at runtime.
+typedef NS_ENUM(NSInteger, SPKAutoSaveFilterSubject) {
+    SPKAutoSaveFilterSubjectUsers = 0,
+    SPKAutoSaveFilterSubjectChats = 1,
+};
+
 @interface SPKAutoSaveFilterConfig : NSObject
 
 /// Master switch for the surface (e.g. `stories_auto_save`).
@@ -38,8 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *identityField;
 /// Entry field the list is sorted on (`username` / `threadName`).
 @property (nonatomic, copy) NSString *sortField;
-/// Plural subject for generated titles: "Users", "Chats".
-@property (nonatomic, copy) NSString *subjectPlural;
+/// Subject for generated titles: users or chats.
+@property (nonatomic, assign) SPKAutoSaveFilterSubject subject;
 /// Identifier for list-change notifications (add/remove/toggle).
 @property (nonatomic, copy) NSString *ruleNotificationIdentifier;
 /// Stores the include/exclude lists under the active account namespace even when
@@ -62,6 +69,8 @@ BOOL SPKAutoSaveFilterEnabled(SPKAutoSaveFilterConfig *config);
 BOOL SPKAutoSaveFilterAllMode(SPKAutoSaveFilterConfig *config);
 /// "Excluded Users" / "Selected Chats" -- the active list for the current mode.
 NSString *SPKAutoSaveFilterListTitle(SPKAutoSaveFilterConfig *config);
+/// Filter Mode menu title: "All Users" / "Selected Chats".
+NSString *SPKAutoSaveFilterModeTitle(SPKAutoSaveFilterSubject subject, BOOL allMode);
 
 NSArray<NSDictionary *> *SPKAutoSaveFilterList(SPKAutoSaveFilterConfig *config);
 void SPKAutoSaveFilterSetList(SPKAutoSaveFilterConfig *config, NSArray<NSDictionary *> *entries);

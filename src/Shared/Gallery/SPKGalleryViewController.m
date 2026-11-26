@@ -1,9 +1,14 @@
+#import "../UI/SPKSafeAreaLayout.h"
 #import "SPKStrings.h"
 #import "SPKGalleryViewController.h"
 #import "../../AssetUtils.h"
 #import "../../InstagramHeaders.h"
 #import "../../Utils.h"
 #import "../Account/SPKAccountManager.h"
+#import "../Downloads/SPKDownloadHelpers.h"
+#import "../Downloads/SPKDownloadRequest.h"
+#import "../Downloads/SPKExportFileNaming.h"
+#import "../UI/SPKNotificationCenter.h"
 #import "../MediaPreview/SPKFullScreenMediaPlayer.h"
 #import "../MediaTrim/SPKTrimConfiguration.h"
 #import "../MediaTrim/SPKTrimEditorViewController.h"
@@ -29,6 +34,7 @@
 #import "SPKGallerySettingsViewController.h"
 #import "SPKGallerySortViewController.h"
 #import <CoreData/CoreData.h>
+#import "../UI/SPKFont.h"
 
 static NSString *const kGridCellID = @"SPKGalleryGridCell";
 static NSString *const kListCellID = @"SPKGalleryListCell";
@@ -249,6 +255,13 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 }
 
 #pragma mark - Lifecycle
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    // List row heights follow the text size.
+    if (![previousTraitCollection.preferredContentSizeCategory isEqualToString:self.traitCollection.preferredContentSizeCategory])
+        [self.collectionView.collectionViewLayout invalidateLayout];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -506,13 +519,14 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 
     NSArray<UIBarButtonItem *> *primary;
     if (self.selectionMode) {
+        UIBarButtonItem *savePhotosItem = [self galleryBottomBarItemWithResource:@"download" accessibility:SPKL(@"GALLERY_GALLERY_SAVE_SELECTED_PHOTOS_TEXT") action:@selector(saveSelectedFilesToPhotos)];
         UIBarButtonItem *shareItem = [self galleryBottomBarItemWithResource:@"share" accessibility:SPKL(@"GALLERY_GALLERY_SHARE_SELECTED_TEXT") action:@selector(shareSelectedFiles)];
         UIBarButtonItem *moveItem = [self galleryBottomBarItemWithResource:@"folder_move" accessibility:SPKL(@"GALLERY_GALLERY_MOVE_SELECTED_TEXT") action:@selector(moveSelectedFiles)];
         UIBarButtonItem *favoriteItem = [self galleryBottomBarItemWithResource:@"heart" accessibility:SPKL(@"GALLERY_GALLERY_FAVORITE_SELECTED_TEXT") action:@selector(toggleFavoriteForSelectedFiles)];
         UIBarButtonItem *deleteItem = [self galleryBottomBarItemWithResource:@"trash" accessibility:SPKL(@"GALLERY_GALLERY_DELETE_SELECTED_TEXT") action:@selector(deleteSelectedFiles)];
         deleteItem.tintColor = [SPKUtils SPKColor_InstagramDestructive];
 
-        primary = @[ shareItem, moveItem, favoriteItem, deleteItem ];
+        primary = @[ savePhotosItem, shareItem, moveItem, favoriteItem, deleteItem ];
     } else {
         UIBarButtonItem *filterItem = [self galleryBottomBarItemWithResource:@"filter" accessibility:SPKL(@"GALLERY_GALLERY_FILTER_FILTER_TEXT") action:@selector(presentFilter)];
         UIBarButtonItem *sortItem = [self galleryBottomBarItemWithResource:@"sort" accessibility:SPKL(@"MENU_SORT") action:@selector(presentSort)];
@@ -547,7 +561,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
             @try {
                 UIBarButtonItem *vended = [self.navigationItem valueForKey:@"searchBarPlacementBarButtonItem"];
                 if ([vended isKindOfClass:[UIBarButtonItem class]]) {
-                    searchItem = vended;
+                        searchItem = vended;
                     self.cachedSearchToolbarItem = vended;
                 }
             } @catch (__unused NSException *exception) {
@@ -596,6 +610,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 - (void)viewSafeAreaInsetsDidChange {
     [super viewSafeAreaInsetsDidChange];
     [self updateCollectionInsets];
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)updateCollectionInsets {
@@ -622,6 +637,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
         layout.minimumLineSpacing = 0;
     }
     layout.sectionHeadersPinToVisibleBounds = SPKGalleryFolderBarPinned();
+    SPKFlowLayoutUseSafeArea(layout);
     return layout;
 }
 
@@ -786,7 +802,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     label.translatesAutoresizingMaskIntoConstraints = NO;
     label.text = SPKL(@"GALLERY_GALLERY_NO_FILES_GALLERY_TEXT");
     label.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
-    label.font = [UIFont systemFontOfSize:17 weight:UIFontWeightMedium];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody weight:UIFontWeightMedium] to:label];
     label.textAlignment = NSTextAlignmentCenter;
     [_emptyStateView addSubview:label];
     _emptyStateLabel = label;
@@ -795,19 +811,19 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     subtitle.translatesAutoresizingMaskIntoConstraints = NO;
     subtitle.text = SPKL(@"GALLERY_GALLERY_MEDIA_SAVE_SPARKLE_APPEAR_HERE_TEXT");
     subtitle.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
-    subtitle.font = [UIFont systemFontOfSize:14];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:subtitle];
     subtitle.textAlignment = NSTextAlignmentCenter;
     subtitle.numberOfLines = 0;
     [_emptyStateView addSubview:subtitle];
     _emptyStateSubtitle = subtitle;
 
     [NSLayoutConstraint activateConstraints:@[
-        [_emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [_emptyStateView.centerXAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.centerXAnchor],
         [_emptyStateView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor
                                                       constant:-40],
-        [_emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor
+        [_emptyStateView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor
                                                                    constant:40],
-        [_emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.trailingAnchor
+        [_emptyStateView.trailingAnchor constraintLessThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor
                                                                  constant:-40],
 
         [icon.topAnchor constraintEqualToAnchor:_emptyStateView.topAnchor],
@@ -1303,17 +1319,20 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 - (CGSize)collectionView:(UICollectionView *)cv
                     layout:(UICollectionViewLayout *)layout
     sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = cv.bounds.size.width;
+    CGFloat width = SPKCollectionViewUsableWidth(cv);
     if ([self isFolderIndexPath:indexPath]) {
-        return CGSizeMake(width, 88);
+        return CGSizeMake(width, 88.0 + [SPKFont lineGrowthForStyle:SPKFontStyleSubheadline] + [SPKFont lineGrowthForStyle:SPKFontStyleFootnote]);
     }
     if (self.viewMode == SPKGalleryViewModeGrid) {
-        NSInteger columns = MAX(kSPKGalleryGridColumnsMin, MIN(kSPKGalleryGridColumnsMax, self.gridColumns));
+        NSInteger columns = SPKAdaptiveColumnCount(MAX(kSPKGalleryGridColumnsMin, MIN(kSPKGalleryGridColumnsMax, self.gridColumns)), width);
         CGFloat totalSpacing = kGridSpacing * (columns - 1);
         CGFloat side = floor((width - totalSpacing) / columns);
         return CGSizeMake(side, side);
     }
-    return CGSizeMake(width, 72);
+    // Media rows stack three lines of text; each grows with the user's text size.
+    CGFloat textGrowth = [SPKFont lineGrowthForStyle:SPKFontStyleCallout] + [SPKFont lineGrowthForStyle:SPKFontStyleCaption1] +
+                         [SPKFont lineGrowthForStyle:SPKFontStyleCaption2];
+    return CGSizeMake(width, 72.0 + textGrowth);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)cv
@@ -1529,6 +1548,9 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
         break;
     case SPKGallerySourceReels:
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_REEL_TOAST");
+        break;
+    case SPKGallerySourceAudioPage:
+        failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_AUDIO_PAGE_TOAST");
         break;
     default:
         failureTitle = SPKL(@"GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST");
@@ -1754,6 +1776,43 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     }
 }
 
+- (void)saveSelectedFilesToPhotos {
+    [self saveFilesToPhotos:[self selectedGalleryFiles] notificationID:kSPKNotificationDownloadAllLibrary];
+}
+
+// Saves through the download pipeline rather than the share sheet: the system
+// Save Image action re-encodes photos and Photos names them IMG_xxxx, while this
+// hands Photos the file itself, under its export name. Audio has no place in
+// Photos and is left out.
+- (void)saveFilesToPhotos:(NSArray<SPKGalleryFile *> *)files notificationID:(NSString *)notificationID {
+    NSMutableArray<SPKDownloadItemRequest *> *items = [NSMutableArray array];
+    for (SPKGalleryFile *file in files) {
+        if (file.mediaType == SPKGalleryMediaTypeAudio || ![file fileExists])
+            continue;
+        SPKDownloadMediaKind kind = file.mediaType == SPKGalleryMediaTypeVideo ? SPKDownloadMediaKindVideo : SPKDownloadMediaKindImage;
+        SPKDownloadItemRequest *item = [SPKDownloadItemRequest itemWithLocalPath:[file filePath] mediaKind:kind];
+        item.preferredFileExtension = file.relativePath.pathExtension;
+        item.metadata = [file saveMetadata];
+        item.index = (NSInteger)items.count;
+        // Without custom names the file keeps its Gallery name.
+        item.expectedFilenameStem = file.relativePath.lastPathComponent.stringByDeletingPathExtension;
+        [items addObject:item];
+    }
+    if (items.count == 0) {
+        SPKNotify(notificationID, SPKL(@"DOWNLOADS_DOWNLOAD_DESTINATION_WRITER_AUDIO_CANNOT_SAVED_PHOTOS_TEXT"), nil,
+                  @"error_filled", SPKNotificationToneError);
+        return;
+    }
+    [SPKDownloadHelpers performBulkItems:items
+                             destination:SPKDownloadDestinationPhotos
+                        actionIdentifier:notificationID
+                               presenter:self
+                              anchorView:nil
+                           sourceSurface:SPKDownloadSourceSurfaceGallery
+                      finalizeBatchShare:NO
+                  finalizeBatchClipboard:NO];
+}
+
 - (void)shareSelectedFiles {
     NSArray<SPKGalleryFile *> *files = [self selectedGalleryFiles];
     if (files.count == 0) {
@@ -1761,11 +1820,14 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     }
 
     NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:files.count];
+    NSMutableArray<SPKGallerySaveMetadata *> *metadata = [NSMutableArray arrayWithCapacity:files.count];
     for (SPKGalleryFile *file in files) {
         [urls addObject:file.fileURL];
+        [metadata addObject:[file saveMetadata]];
     }
 
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:urls applicationActivities:nil];
+    NSArray<NSURL *> *shareURLs = SPKExportShareableFileURLs(urls, metadata, SPKDownloadDestinationShare);
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:shareURLs applicationActivities:nil];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -1907,12 +1969,22 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
                                        }];
     }
 
+    UIAction *savePhotosAction = nil;
+    if (file.mediaType != SPKGalleryMediaTypeAudio) {
+        savePhotosAction = [UIAction actionWithTitle:SPKL(@"FEED_COMMENT_ACTIONS_SAVE_PHOTOS_TEXT")
+                                               image:SPKGalleryMenuActionIcon(@"download")
+                                          identifier:nil
+                                             handler:^(__unused UIAction *a) {
+                                                 [weakSelf saveFilesToPhotos:@[ file ] notificationID:kSPKNotificationMediaPreviewSavePhotos];
+                                             }];
+    }
+
     UIImage *shareImg = SPKGalleryMenuActionIcon(@"share");
     UIAction *shareAction = [UIAction actionWithTitle:SPKL(@"ALERT_ACTION_SHARE")
                                                 image:shareImg
                                            identifier:nil
                                               handler:^(UIAction *a) {
-                                                  NSURL *url = [file fileURL];
+                                                  NSURL *url = SPKExportShareableFileURL([file fileURL], [file saveMetadata], SPKDownloadDestinationShare);
                                                   UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[ url ] applicationActivities:nil];
                                                   [weakSelf presentViewController:acVC animated:YES completion:nil];
                                               }];
@@ -2001,7 +2073,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
         [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:openSection]];
     }
     [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:editSection]];
-    [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:@[ shareAction ]]];
+    [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:(savePhotosAction ? @[ savePhotosAction, shareAction ] : @[ shareAction ])]];
     [sections addObject:[UIMenu menuWithTitle:@"" image:nil identifier:nil options:UIMenuOptionsDisplayInline children:@[ deleteAction ]]];
     return [UIMenu menuWithTitle:@"" children:sections];
 }

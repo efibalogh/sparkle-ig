@@ -2,6 +2,7 @@
 #import "SPKStrings.h"
 
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
+#import <CommonCrypto/CommonCrypto.h>
 #import <compression.h>
 
 #import "../App/SPKCore.h"
@@ -159,9 +160,6 @@ static NSSet<NSString *> *SPKTransferExcludedKeys(void) {
         excluded = [NSSet setWithArray:@[
             @"app_safe_startup",
             @"app_startup_profiling",
-            // Cached server state and a dev-only switch, not user settings.
-            @"profile_account_privacy_cache",
-            @"dev_account_privacy_simulate",
             SPKPreferenceMigrationsCompletedKey
         ]];
     });
@@ -547,6 +545,91 @@ static BOOL SPKWriteStoredZipFromDirectory(NSString *root, NSString *zipPath, NS
 }
 
 const NSInteger SPKZipExpandLimitErrorCode = 2010;
+const NSInteger SPKZipPasswordRequiredErrorCode = 2011;
+const NSInteger SPKZipWrongPasswordErrorCode = 2012;
+
+static NSError *SPKZipError(NSInteger code, NSString *message) {
+    NSDictionary *info = message.length ? @{NSLocalizedDescriptionKey : message} : nil;
+    return [NSError errorWithDomain:@"SparkleSettingsTransfer" code:code userInfo:info];
+}
+
+#pragma mark - WinZip AES (method 99)
+
+typedef NS_ENUM(NSInteger, SPKZipAESResult) {
+    SPKZipAESResultOK = 0,
+    SPKZipAESResultWrongPassword,
+    SPKZipAESResultCorrupt,
+};
+
+// Decrypts one WinZip AES entry payload (AE-1/AE-2; the format other zip tools call "AES-256").
+// Payload layout: salt | 2-byte password verifier | ciphertext | 10-byte HMAC-SHA1 tag. Keys come from
+// PBKDF2-HMAC-SHA1 (1000 rounds) over the password; the cipher is AES-CTR with a little-endian
+// counter starting at 1, which CommonCrypto's big-endian CTR mode cannot express, so the keystream
+// is built from ECB blocks here. The tag is checked over the whole ciphertext before a byte is
+// written, so a wrong password or damaged archive never produces output. Writes the still-compressed
+// plaintext to `outputPath`.
+static SPKZipAESResult SPKZipAESDecryptToFile(const uint8_t *src, uint64_t srcLen, uint8_t strength, NSString *password,
+                                              NSString *outputPath) {
+    if (strength < 1 || strength > 3)
+        return SPKZipAESResultCorrupt;
+    size_t keyLen = 8 + 8 * (size_t)strength;  // 16 / 24 / 32
+    size_t saltLen = keyLen / 2;               // 8 / 12 / 16
+    if (srcLen < saltLen + 2 + 10)
+        return SPKZipAESResultCorrupt;
+
+    NSData *pass = [password dataUsingEncoding:NSUTF8StringEncoding] ?: [NSData data];
+    size_t derivedLen = keyLen * 2 + 2;
+    uint8_t derived[66];
+    if (CCKeyDerivationPBKDF(kCCPBKDF2, pass.bytes, pass.length, src, saltLen, kCCPRFHmacAlgSHA1, 1000, derived, derivedLen) !=
+        kCCSuccess)
+        return SPKZipAESResultCorrupt;
+    if (derived[keyLen * 2] != src[saltLen] || derived[keyLen * 2 + 1] != src[saltLen + 1])
+        return SPKZipAESResultWrongPassword;
+
+    const uint8_t *cipher = src + saltLen + 2;
+    uint64_t cipherLen = srcLen - saltLen - 2 - 10;
+    uint8_t mac[CC_SHA1_DIGEST_LENGTH];
+    CCHmac(kCCHmacAlgSHA1, derived + keyLen, keyLen, cipher, (size_t)cipherLen, mac);
+    if (timingsafe_bcmp(mac, cipher + cipherLen, 10) != 0)
+        return SPKZipAESResultCorrupt;
+
+    CCCryptorRef cryptor = NULL;
+    if (CCCryptorCreate(kCCEncrypt, kCCAlgorithmAES, kCCOptionECBMode, derived, keyLen, NULL, &cryptor) != kCCSuccess)
+        return SPKZipAESResultCorrupt;
+
+    [[NSFileManager defaultManager] createFileAtPath:outputPath contents:nil attributes:nil];
+    NSFileHandle *out = [NSFileHandle fileHandleForWritingAtPath:outputPath];
+    const size_t chunk = 256 * 1024;  // multiple of the 16-byte block
+    uint8_t *counters = malloc(chunk);
+    uint8_t *stream = malloc(chunk);
+    BOOL ok = out && counters && stream;
+    uint64_t counter = 1;
+    for (uint64_t pos = 0; ok && pos < cipherLen; pos += chunk) {
+        size_t n = (size_t)MIN((uint64_t)chunk, cipherLen - pos);
+        size_t blocks = (n + 15) / 16;
+        memset(counters, 0, blocks * 16);
+        for (size_t b = 0; b < blocks; b++, counter++) {
+            for (int k = 0; k < 8; k++)
+                counters[b * 16 + k] = (uint8_t)(counter >> (8 * k));
+        }
+        size_t moved = 0;
+        if (CCCryptorUpdate(cryptor, counters, blocks * 16, stream, blocks * 16, &moved) != kCCSuccess || moved != blocks * 16) {
+            ok = NO;
+            break;
+        }
+        for (size_t i = 0; i < n; i++)
+            stream[i] ^= cipher[pos + i];
+        @autoreleasepool {
+            [out writeData:[NSData dataWithBytesNoCopy:stream length:n freeWhenDone:NO]];
+        }
+    }
+    free(counters);
+    free(stream);
+    CCCryptorRelease(cryptor);
+    [out closeFile];
+    memset(derived, 0, sizeof(derived));
+    return ok ? SPKZipAESResultOK : SPKZipAESResultCorrupt;
+}
 
 static BOOL SPKIsSafeZipEntryName(NSString *name) {
     if (name.length == 0 || [name hasPrefix:@"/"] || [name containsString:@"\\"])
@@ -626,7 +709,7 @@ static BOOL SPKInflateRawDeflateToFile(const uint8_t *src, size_t srcLen, size_t
 // Expands into `expandedRoot`. `maxTotalBytes` / `maxEntries` of 0 mean unlimited. Every entry is held
 // to its declared size while it is written, so summing the declared sizes bounds the real output.
 static BOOL SPKExpandZipArchiveIntoDirectory(NSURL *archiveURL, NSString *expandedRoot, unsigned long long maxTotalBytes,
-                                             NSUInteger maxEntries, NSError **error) {
+                                             NSUInteger maxEntries, NSString *password, NSError **error) {
     NSData *zipData = [NSData dataWithContentsOfURL:archiveURL options:NSDataReadingMappedIfSafe error:error];
     if (zipData.length < 22)
         return NO;
@@ -669,6 +752,7 @@ static BOOL SPKExpandZipArchiveIntoDirectory(NSURL *archiveURL, NSString *expand
             return NO;
         }
 
+        uint16_t flags = SPKReadUInt16LE(bytes, cursor + 8);
         uint16_t method = SPKReadUInt16LE(bytes, cursor + 10);
         uint64_t compressedSize = SPKReadUInt32LE(bytes, cursor + 20);
         uint64_t uncompressedSize = SPKReadUInt32LE(bytes, cursor + 24);
@@ -714,6 +798,34 @@ static BOOL SPKExpandZipArchiveIntoDirectory(NSURL *archiveURL, NSString *expand
             }
         }
 
+        // WinZip AES: method 99 with a 0x9901 extra block carrying the key strength and the real
+        // compression method of the decrypted payload.
+        uint8_t aesStrength = 0;
+        if (method == 99) {
+            NSUInteger ep = cursor + 46 + nameLen;
+            NSUInteger extraEnd = ep + extraLen;
+            method = 0xFFFF;
+            while (ep + 4 <= extraEnd) {
+                uint16_t headerID = SPKReadUInt16LE(bytes, ep);
+                uint16_t blockSize = SPKReadUInt16LE(bytes, ep + 2);
+                NSUInteger body = ep + 4;
+                if (body + blockSize > extraEnd)
+                    break;
+                if (headerID == 0x9901 && blockSize >= 7) {
+                    aesStrength = bytes[body + 4];
+                    method = SPKReadUInt16LE(bytes, body + 5);
+                    break;
+                }
+                ep = body + blockSize;
+            }
+        } else if (flags & 0x0001) {
+            // Legacy ZipCrypto (or strong encryption): weak and never written by the exports we read.
+            if (error)
+                *error = SPKZipError(2013, SPKL(@"SETTINGS_TRANSFER_ZIP_UNSUPPORTED_ENCRYPTION_ERROR"));
+            [archiveHandle closeFile];
+            return NO;
+        }
+
         NSData *nameData = [zipData subdataWithRange:NSMakeRange(cursor + 46, nameLen)];
         NSString *entryName = [[NSString alloc] initWithData:nameData encoding:NSUTF8StringEncoding];
         cursor += 46 + nameLen + extraLen + commentLen;
@@ -746,7 +858,7 @@ static BOOL SPKExpandZipArchiveIntoDirectory(NSURL *archiveURL, NSString *expand
             return NO;
         }
 
-        declaredTotal += (method == 8) ? uncompressedSize : compressedSize;
+        declaredTotal += (method == 8 || aesStrength > 0) ? uncompressedSize : compressedSize;
         if (maxTotalBytes > 0 && declaredTotal > maxTotalBytes) {
             if (error)
                 *error = [NSError errorWithDomain:@"SparkleSettingsTransfer" code:SPKZipExpandLimitErrorCode userInfo:nil];
@@ -756,6 +868,39 @@ static BOOL SPKExpandZipArchiveIntoDirectory(NSURL *archiveURL, NSString *expand
 
         NSString *destPath = [expandedRoot stringByAppendingPathComponent:entryName];
         [fm createDirectoryAtPath:[destPath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
+
+        if (aesStrength > 0) {
+            if (password.length == 0) {
+                if (error)
+                    *error = SPKZipError(SPKZipPasswordRequiredErrorCode, SPKL(@"SETTINGS_TRANSFER_ZIP_PASSWORD_REQUIRED_ERROR"));
+                [archiveHandle closeFile];
+                return NO;
+            }
+            NSString *plainPath = [destPath stringByAppendingString:@".spk-aes"];
+            SPKZipAESResult result = SPKZipAESDecryptToFile(bytes + dataOffset, compressedSize, aesStrength, password, plainPath);
+            BOOL ok = (result == SPKZipAESResultOK);
+            if (ok && method == 8) {
+                NSData *plain = [NSData dataWithContentsOfFile:plainPath options:NSDataReadingMappedIfSafe error:nil];
+                ok = plain && SPKInflateRawDeflateToFile(plain.bytes, plain.length, uncompressedSize, destPath);
+                [fm removeItemAtPath:plainPath error:nil];
+            } else if (ok) {
+                [fm removeItemAtPath:destPath error:nil];
+                ok = [fm moveItemAtPath:plainPath toPath:destPath error:nil] &&
+                     [[fm attributesOfItemAtPath:destPath error:nil] fileSize] == uncompressedSize;
+            } else {
+                [fm removeItemAtPath:plainPath error:nil];
+            }
+            if (!ok) {
+                if (error) {
+                    *error = result == SPKZipAESResultWrongPassword
+                                 ? SPKZipError(SPKZipWrongPasswordErrorCode, SPKL(@"SETTINGS_TRANSFER_ZIP_WRONG_PASSWORD_ERROR"))
+                                 : SPKZipError(2007, SPKL(@"SETTINGS_TRANSFER_ZIP_DECOMPRESS_FAILED_ERROR"));
+                }
+                [archiveHandle closeFile];
+                return NO;
+            }
+            continue;
+        }
 
         if (method == 8) {
             // DEFLATE — inflate the compressed payload (mapped, no extra copy).
@@ -797,17 +942,17 @@ static BOOL SPKExpandZipArchiveIntoDirectory(NSURL *archiveURL, NSString *expand
 }
 
 static NSString *SPKExpandZipArchiveLimited(NSURL *archiveURL, unsigned long long maxTotalBytes, NSUInteger maxEntries,
-                                            NSError **error) {
+                                            NSString *password, NSError **error) {
     NSString *tempRoot = SPKTemporaryTransferRoot(@"import");
     NSString *expandedRoot = [tempRoot stringByAppendingPathComponent:@"Expanded"];
-    if (SPKExpandZipArchiveIntoDirectory(archiveURL, expandedRoot, maxTotalBytes, maxEntries, error))
+    if (SPKExpandZipArchiveIntoDirectory(archiveURL, expandedRoot, maxTotalBytes, maxEntries, password, error))
         return expandedRoot;
     [[NSFileManager defaultManager] removeItemAtPath:tempRoot error:nil];  // never leave a partial expansion behind
     return nil;
 }
 
 static NSString *SPKExpandZipArchiveRaw(NSURL *archiveURL, NSError **error) {
-    return SPKExpandZipArchiveLimited(archiveURL, 0, 0, error);
+    return SPKExpandZipArchiveLimited(archiveURL, 0, 0, nil, error);
 }
 
 // Expands a Sparkle export zip and resolves it to the bundle root (the directory that actually holds
@@ -1160,7 +1305,14 @@ static NSString *SPKTransferArchiveFilename(BOOL includeSettings, BOOL includeGa
     if (!archiveURL) {
         return nil;
     }
-    return SPKExpandZipArchiveLimited(archiveURL, maximumBytes, maximumEntries, error);
+    return SPKExpandZipArchiveLimited(archiveURL, maximumBytes, maximumEntries, nil, error);
+}
+
++ (NSString *)expandZipArchiveAtURL:(NSURL *)archiveURL password:(NSString *)password error:(NSError **)error {
+    if (!archiveURL) {
+        return nil;
+    }
+    return SPKExpandZipArchiveLimited(archiveURL, 0, 0, password, error);
 }
 
 - (void)importFromController:(UIViewController *)controller includeSettings:(BOOL)includeSettings includeGallery:(BOOL)includeGallery includeDeletedMessages:(BOOL)includeDeletedMessages includeProfileAnalyzer:(BOOL)includeProfileAnalyzer {

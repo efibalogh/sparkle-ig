@@ -4,8 +4,11 @@
 #import "../../InstagramHeaders.h"
 #import "../../Shared/i18n/SPKStrings.h"
 #import "../../Networking/SPKInstagramAPI.h"
+#import "../../Shared/Navigation/SPKDestinations.h"
+#import "../../Shared/Navigation/SPKTabConfiguration.h"
 #import "../../Shared/Stories/SPKStoryOpener.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
+#import "../../Shared/UI/SPKReplayedLongPressGesture.h"
 #import "../../Utils.h"
 
 extern "C" void SPKBeginSavedTabRoutingBypass(void);
@@ -14,6 +17,14 @@ FOUNDATION_EXPORT BOOL SPKOpenPostPushMediaURL(NSURL *url,
                                                UIViewController *presentingVC,
                                                void (^fallback)(void),
                                                void (^onDismiss)(void));
+
+// The one confirmation a clipboard hold gives, once something opened. It is a
+// tab hold shortcut, so it follows the shortcut haptics switch like the others.
+static void SPKFireClipboardHoldHaptic(void) {
+    if (![SPKUtils getBoolPref:@"tools_shortcut_haptics"])
+        return;
+    [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium] impactOccurred];
+}
 
 static NSString *SPKStringFromClipboardMediaValue(id value) {
     if ([value isKindOfClass:[NSString class]])
@@ -138,6 +149,11 @@ static NSURL *SPKNormalizedInstagramClipboardURL(NSString *raw) {
     if (trimmed.length == 0)
         return nil;
     if (![trimmed containsString:@"://"]) {
+        // Without a scheme only a host-shaped string counts as a link. A copied
+        // handle such as "@instagram" or "instagramfan" is left to the username
+        // shortcut instead of being read as a host.
+        if ([trimmed hasPrefix:@"@"] || ![trimmed containsString:@"."])
+            return nil;
         trimmed = [@"https://" stringByAppendingString:trimmed];
     }
 
@@ -201,33 +217,25 @@ static NSString *SPKClipboardUsername(NSString *raw) {
 }
 
 // The real recognizer has ended by the time a username lookup comes back, so a
-// miss replays a whole press to IG's handler: on some builds Began only arms a
-// flag on the tab bar controller and Ended is what opens search.
-@interface SPKReplayedLongPressGesture : UILongPressGestureRecognizer
-@property (nonatomic, weak) UIGestureRecognizer *spk_original;
-@property (nonatomic) UIGestureRecognizerState spk_state;
-@end
-
-@implementation SPKReplayedLongPressGesture
-- (UIGestureRecognizerState)state {
-    return self.spk_state;
-}
-- (UIView *)view {
-    return self.spk_original.view;
-}
-- (CGPoint)locationInView:(UIView *)view {
-    return self.spk_original ? [self.spk_original locationInView:view] : CGPointZero;
-}
-@end
+// miss replays a whole press to IG's handler (SPKReplayedLongPressGesture): on
+// some builds Began only arms a flag on the tab bar controller and Ended is
+// what opens search.
 
 // Intercept the clipboard link at the moment IG's own long-press handler fires.
 // Returns YES if we consumed the gesture (opened a link), NO to let IG open search.
+static BOOL SPKOpenClipboardLinkIfPresent(void);
+
 static BOOL SPKHandleExploreLongPressClipboard(void) {
-    if (![SPKUtils getBoolPref:@"interface_open_clipboard_link"]) {
-        SPKLog(@"Interface", @"[Sparkle] Explore long-press: clipboard-link feature disabled, falling through to search");
+    if (!SPKSearchTabClipboardHold()) {
+        SPKLog(@"Interface", @"[Sparkle] Explore long-press: no clipboard hold on Search, falling through to search");
         return NO;
     }
+    return SPKOpenClipboardLinkIfPresent();
+}
 
+// Opens the Instagram link on the clipboard. NO when there is none to open, so
+// the caller decides what happens instead.
+static BOOL SPKOpenClipboardLinkIfPresent(void) {
     NSString *clipboard = UIPasteboard.generalPasteboard.string;
     NSURL *url = SPKNormalizedInstagramClipboardURL(clipboard);
     if (!SPKCanAttemptOpenInstagramClipboardURL(url)) {
@@ -276,9 +284,37 @@ static BOOL SPKHandleExploreLongPressClipboard(void) {
     }
 
     SPKLog(@"Interface", @"[Sparkle] Explore long-press: opened clipboard link %@", url);
-    UIImpactFeedbackGenerator *feedback = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
-    [feedback impactOccurred];
+    SPKFireClipboardHoldHaptic();
     return YES;
+}
+
+// A clipboard hold on any tab but Search (Search goes through Instagram's own
+// search hold below). There is no Instagram behavior to fall back to, so a
+// clipboard with nothing to open says so.
+extern "C" void SPKOpenInstagramLinkFromClipboard(BOOL includeUsername) {
+    if (SPKOpenClipboardLinkIfPresent())
+        return;
+    NSString *username = includeUsername ? SPKClipboardUsername(UIPasteboard.generalPasteboard.string) : nil;
+    if (username.length == 0) {
+        SPKNotify(kSPKNotificationClipboardUsername,
+                  SPKL(@"INTERFACE_TAB_BAR_HOLD_CLIPBOARD_EMPTY_TOAST"),
+                  nil,
+                  @"error_filled",
+                  SPKNotificationToneError);
+        return;
+    }
+    [SPKUtils resolvePKForUsername:username
+                        completion:^(NSString *pk, __unused NSString *fullName) {
+                            if (pk.length > 0 && [SPKUtils openInstagramProfileForUser:nil pk:pk username:username fromViewController:topMostController()]) {
+                                SPKFireClipboardHoldHaptic();
+                                return;
+                            }
+                            SPKNotify(kSPKNotificationClipboardUsername,
+                                      SPKL(@"INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_USERNAME_NOT_FOUND_TOAST"),
+                                      [@"@" stringByAppendingString:username],
+                                      @"error_filled",
+                                      SPKNotificationToneError);
+                        }];
 }
 
 %group SPKOpenLinkFromClipboardHooks
@@ -301,7 +337,7 @@ static BOOL SPKHandleExploreLongPressClipboard(void) {
     // to the profile, a miss says so and opens IG's search as if Sparkle had not
     // been asked. Cancelling the lookup pill leaves everything closed.
     NSString *username = nil;
-    if (began && [SPKUtils getBoolPref:@"interface_open_clipboard_username"])
+    if (began && [SPKSearchTabClipboardHold() isEqualToString:SPKDestinationClipboardLinkOrUsername])
         username = SPKClipboardUsername(UIPasteboard.generalPasteboard.string);
     if (username.length == 0) {
         %orig;
@@ -314,7 +350,7 @@ static BOOL SPKHandleExploreLongPressClipboard(void) {
                         completion:^(NSString *pk, __unused NSString *fullName) {
                             if (pk.length > 0 && [SPKUtils openInstagramProfileForUser:nil pk:pk username:username fromViewController:topMostController()]) {
                                 SPKLog(@"Interface", @"[Sparkle] Explore long-press: opened profile @%@ (%@)", username, pk);
-                                [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium] impactOccurred];
+                                SPKFireClipboardHoldHaptic();
                                 return;
                             }
                             SPKLog(@"Interface", @"[Sparkle] Explore long-press: no account for @%@, opening search", username);
@@ -336,10 +372,9 @@ static BOOL SPKHandleExploreLongPressClipboard(void) {
 
 %end
 
+// Always installed: the Search hold is read at the press, so choosing a
+// clipboard hold for Search works without a restart.
 extern "C" void SPKInstallOpenLinkFromClipboardHooksIfEnabled(void) {
-    if (![SPKUtils getBoolPref:@"interface_open_clipboard_link"])
-        return;
-
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         %init(SPKOpenLinkFromClipboardHooks);

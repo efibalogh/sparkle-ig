@@ -5,6 +5,7 @@
 #import "SPKGalleryManager.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "../UI/SPKNotificationCenter.h"
+#import "../UI/SPKFont.h"
 
 static NSInteger const kPasscodeLength = 4;
 
@@ -110,14 +111,14 @@ static NSInteger const kPasscodeLength = 4;
 
 - (void)setupUI {
     self.titleLabel = [[UILabel alloc] init];
-    self.titleLabel.font = [UIFont systemFontOfSize:20 weight:UIFontWeightSemibold];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleTitle3 weight:UIFontWeightSemibold] to:self.titleLabel];
     self.titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.titleLabel];
 
     self.subtitleLabel = [[UILabel alloc] init];
-    self.subtitleLabel.font = [UIFont systemFontOfSize:14];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline] to:self.subtitleLabel];
     self.subtitleLabel.textColor = [SPKUtils SPKColor_InstagramSecondaryText];
     self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
     self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -152,7 +153,7 @@ static NSInteger const kPasscodeLength = 4;
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.cancelButton setTitle:SPKL(@"ALERT_ACTION_CANCEL") forState:UIControlStateNormal];
     [self.cancelButton setTitleColor:[SPKUtils SPKColor_InstagramPrimaryText] forState:UIControlStateNormal];
-    self.cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleBody] to:self.cancelButton.titleLabel];
     self.cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.cancelButton addTarget:self action:@selector(cancelTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.cancelButton];
@@ -270,7 +271,7 @@ static NSInteger const kPasscodeLength = 4;
     if (title) {
         UILabel *digitLabel = [[UILabel alloc] init];
         digitLabel.text = title;
-        digitLabel.font = [UIFont systemFontOfSize:32 weight:UIFontWeightLight];
+        digitLabel.font = [UIFont systemFontOfSize:32 weight:UIFontWeightLight]; // spk-font-fixed: keypad digit sized to its fixed 75pt key
         digitLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         digitLabel.textAlignment = NSTextAlignmentCenter;
         digitLabel.translatesAutoresizingMaskIntoConstraints = NO;

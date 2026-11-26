@@ -4,8 +4,10 @@
 #import "SPKStrings.h"
 #import "../../InstagramHeaders.h"
 #import "../../AssetUtils.h"
+#import "SPKSearchRows.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
+#import "../../Shared/UI/SPKFont.h"
 
 // Pin people in the main search. Holding a person in search toggles their pin. Pinned
 // people get their own section above the recent searches, in the order they were
@@ -136,6 +138,36 @@ static id SPKSearchUserForViewModel(id viewModel) {
     }
     Class userClass = objc_getClass("IGUser");
     return userClass && [item isKindOfClass:userClass] ? item : nil;
+}
+
+/// The pinned person a recent row stands for: the row's own person, or the person
+/// behind an account keyword. Opening a person can leave a keyword recent for them
+/// (their name as a search term, opening a results page first), which would bring a
+/// pinned person back into Recent under another row type.
+static NSString *SPKSearchPinnedPKForRecentRow(id row, NSSet<NSString *> *pinnedPKs, NSDictionary<NSString *, NSString *> *pinnedByUsername) {
+    NSString *pk = [SPKUtils pkFromIGUser:SPKSearchUserForViewModel(row)];
+    if (pk)
+        return [pinnedPKs containsObject:pk] ? pk : nil;
+
+    Class keywordClass = SPKResolveIGClass(@"IGSearchModels.IGKeywordSearchModel", @"IGKeywordSearchModel");
+    if (!keywordClass || ![row respondsToSelector:@selector(searchableItem)])
+        return nil;
+    id keyword = nil;
+    @try {
+        keyword = ((id (*)(id, SEL))objc_msgSend)(row, @selector(searchableItem));
+    } @catch (__unused NSException *exception) {
+        return nil;
+    }
+    if (![keyword isKindOfClass:keywordClass])
+        return nil;
+    if ([keyword respondsToSelector:@selector(user)]) {
+        id user = ((id (*)(id, SEL))objc_msgSend)(keyword, @selector(user));
+        NSString *keywordPK = user ? [SPKUtils pkFromIGUser:user] : nil;
+        if (keywordPK)
+            return [pinnedPKs containsObject:keywordPK] ? keywordPK : nil;
+    }
+    NSString *name = [SPKSearchStringValue(keyword, @"name") lowercaseString];
+    return name ? pinnedByUsername[name] : nil;
 }
 
 static NSDictionary *SPKSearchEntryForUser(id user, NSString *pk) {
@@ -352,7 +384,7 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
     if ((self = [super initWithFrame:frame])) {
         _titleLabel = [UILabel new];
         _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _titleLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleCallout weight:UIFontWeightBold] to:_titleLabel];
         _titleLabel.textColor = [SPKUtils SPKColor_InstagramPrimaryText];
         _titleLabel.text = SPKL(@"INTERFACE_EXPLORE_SEARCH_PIN_PEOPLE_SECTION_TITLE");
         _titleLabel.accessibilityTraits = UIAccessibilityTraitHeader | UIAccessibilityTraitButton;
@@ -369,7 +401,7 @@ static NSArray *SPKSearchHorizontalItems(id viewModel) {
 
         _reorderButton = [UIButton buttonWithType:UIButtonTypeSystem];
         _reorderButton.translatesAutoresizingMaskIntoConstraints = NO;
-        _reorderButton.titleLabel.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightSemibold];
+        [SPKFont apply:[SPKFont fontForStyle:SPKFontStyleSubheadline weight:UIFontWeightSemibold] to:_reorderButton.titleLabel];
         [_reorderButton setTitleColor:[SPKUtils SPKColor_InstagramBlue] forState:UIControlStateNormal];
         [_reorderButton addTarget:self action:@selector(reorderTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_reorderButton];
@@ -485,7 +517,7 @@ static NSString *SPKSearchLastModule;
 static NSDictionary<NSString *, id> *SPKSearchHiddenRecentRows;
 static unsigned long long SPKSearchLastSourceType;
 
-static id SPKSearchRowForUser(id user, NSString *pk, id session) {
+id SPKSearchPersonRow(id user, NSString *sectionType, NSString *module, unsigned long long sourceType, NSString *identifier, id session) {
     Class dataModelClass = SPKResolveIGClass(@"IGSearchViewModels.IGSearchResultDataModel", @"IGSearchResultDataModel");
     Class providerClass = SPKResolveIGClass(@"IGSearchDataSources.IGSearchTypeaheadSearchResultViewModelDefaultProvider",
                                             @"IGSearchTypeaheadSearchResultViewModelDefaultProvider");
@@ -496,24 +528,28 @@ static id SPKSearchRowForUser(id user, NSString *pk, id session) {
     if (![provider isKindOfClass:providerClass])
         provider = [providerClass new];
 
-    NSString *module = SPKSearchLastModule.length > 0 ? SPKSearchLastModule : @"blended_search";
-    NSString *identifier = [@"spk_search_pin_" stringByAppendingString:pk];
     @try {
-        id dataModel = [[dataModelClass alloc] initWithSearchableItem:user sectionType:SPKSearchPinnedSectionType() subtitle:nil];
+        id dataModel = [[dataModelClass alloc] initWithSearchableItem:user sectionType:sectionType ?: @"" subtitle:nil];
         if (!dataModel)
             return nil;
         SEL current = NSSelectorFromString(@"viewModelWithDataModel:sourceType:userSession:analyticsModule:searchText:isPersisting:identifier:rankToken:");
         SEL legacy = NSSelectorFromString(@"viewModelWithDataModel:sourceType:userSession:analyticsModule:searchText:isPersisting:identifier:");
         id row = nil;
         if ([provider respondsToSelector:current])
-            row = ((id (*)(id, SEL, id, unsigned long long, id, id, id, BOOL, id, id))objc_msgSend)(provider, current, dataModel, SPKSearchLastSourceType, session, module, @"", NO, identifier, @"");
+            row = ((id (*)(id, SEL, id, unsigned long long, id, id, id, BOOL, id, id))objc_msgSend)(provider, current, dataModel, sourceType, session, module, @"", NO, identifier, @"");
         else if ([provider respondsToSelector:legacy])
-            row = ((id (*)(id, SEL, id, unsigned long long, id, id, id, BOOL, id))objc_msgSend)(provider, legacy, dataModel, SPKSearchLastSourceType, session, module, @"", NO, identifier);
+            row = ((id (*)(id, SEL, id, unsigned long long, id, id, id, BOOL, id))objc_msgSend)(provider, legacy, dataModel, sourceType, session, module, @"", NO, identifier);
         return SPKSearchIsResultViewModel(row) ? row : nil;
     } @catch (NSException *exception) {
-        SPKLog(@"General", @"[Sparkle SearchPins] building the row for %@ threw: %@", pk, exception);
+        SPKLog(@"General", @"[Sparkle Search] building the row for %@ threw: %@", identifier, exception);
         return nil;
     }
+}
+
+static id SPKSearchRowForUser(id user, NSString *pk, id session) {
+    NSString *module = SPKSearchLastModule.length > 0 ? SPKSearchLastModule : @"blended_search";
+    return SPKSearchPersonRow(user, SPKSearchPinnedSectionType(), module, SPKSearchLastSourceType,
+                              [@"spk_search_pin_" stringByAppendingString:pk], session);
 }
 
 #pragma mark - Null state
@@ -562,6 +598,12 @@ static NSArray *SPKSearchApplyPins(NSArray *models, id owner, BOOL knownEligible
         return models;
     NSArray<NSDictionary *> *entries = SPKSearchCachedEntries();
     NSSet<NSString *> *pinnedPKs = SPKSearchPinnedPKs(entries);
+    NSMutableDictionary<NSString *, NSString *> *pinnedByUsername = [NSMutableDictionary dictionaryWithCapacity:entries.count];
+    for (NSDictionary *entry in entries) {
+        id username = entry[kSPKSearchPinUsernameKey];
+        if ([username isKindOfClass:[NSString class]] && [username length] > 0)
+            pinnedByUsername[[username lowercaseString]] = SPKSearchPinPKForEntry(entry);
+    }
 
     // Pass one: find the recent section and the pinned people in it.
     NSUInteger firstRecentIndex = NSNotFound;
@@ -620,9 +662,11 @@ static NSArray *SPKSearchApplyPins(NSArray *models, id owner, BOOL knownEligible
     for (id model in models) {
         id object = model;
         if (SPKSearchIsRecentRow(object)) {
-            NSString *pk = [SPKUtils pkFromIGUser:SPKSearchUserForViewModel(object)];
-            if (pk && [pinnedPKs containsObject:pk]) {
-                hiddenRows[pk] = object;
+            NSString *pk = SPKSearchPinnedPKForRecentRow(object, pinnedPKs, pinnedByUsername);
+            if (pk) {
+                // Only a person row can take its recent look back after an unpin.
+                if (SPKSearchUserForViewModel(object))
+                    hiddenRows[pk] = object;
                 removedCount++;
                 continue;
             }
@@ -630,8 +674,7 @@ static NSArray *SPKSearchApplyPins(NSArray *models, id owner, BOOL knownEligible
             NSArray *items = SPKSearchHorizontalItems(object);
             NSMutableArray *kept = [NSMutableArray arrayWithCapacity:items.count];
             for (id item in items) {
-                NSString *pk = [SPKUtils pkFromIGUser:SPKSearchUserForViewModel(item)];
-                if (pk && [pinnedPKs containsObject:pk])
+                if (SPKSearchPinnedPKForRecentRow(item, pinnedPKs, pinnedByUsername))
                     removedCount++;
                 else
                     [kept addObject:item];
@@ -1466,6 +1509,75 @@ static id replaced_adapterDequeueCell(id self, SEL _cmd, Class cellClass, id sec
     return orig_adapterDequeueCell(self, _cmd, cellClass, sectionController, index);
 }
 
+#pragma mark - Recent search clicks
+
+// Opening a person from search reports the click to the server, which then brings
+// them back in later recent lists (as the person, or as an account keyword for them).
+// The report keeps its request but loses the person, so it still completes through
+// its own callbacks and the server has nobody to add. It is caught at the network
+// layer because the search screen does not report through any hookable method.
+
+static BOOL SPKSearchIsPinnedPK(NSString *pk) {
+    // Read straight from the store: requests start on any thread, and the list cache
+    // belongs to the main thread.
+    return pk.length > 0 && SPKSearchPinsEnabled() && [SPKSearchPinnedPKs(SPKSearchPinEntries()) containsObject:pk];
+}
+
+// Without the trailing slash, which -[NSURL path] drops.
+static NSString *const kSPKSearchRecentClickPath = @"/fbsearch/register_recent_search_click";
+
+static NSData *SPKSearchStrippedClickBody(NSData *body) {
+    if (body.length == 0 || body.length > 16 * 1024)
+        return nil;
+    NSString *text = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+    if (text.length == 0)
+        return nil;
+
+    NSArray<NSString *> *pairs = [text componentsSeparatedByString:@"&"];
+    NSString *entityType = nil, *entityID = nil;
+    for (NSString *pair in pairs) {
+        NSRange equals = [pair rangeOfString:@"="];
+        if (equals.location == NSNotFound)
+            continue;
+        NSString *name = [pair substringToIndex:equals.location];
+        NSString *value = [[pair substringFromIndex:NSMaxRange(equals)] stringByRemovingPercentEncoding];
+        if ([name isEqualToString:@"entity_type"])
+            entityType = value;
+        else if ([name isEqualToString:@"entity_id"])
+            entityID = value;
+    }
+    if (![entityType isEqualToString:@"user"] || !SPKSearchIsPinnedPK(entityID))
+        return nil;
+
+    NSMutableArray<NSString *> *kept = [NSMutableArray arrayWithCapacity:pairs.count];
+    for (NSString *pair in pairs) {
+        if (![pair hasPrefix:@"entity_"])
+            [kept addObject:pair];
+    }
+    return [[kept componentsJoinedByString:@"&"] dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+static id (*orig_networkStartRequest)(id, SEL, id, id, id);
+static id replaced_networkStartRequest(id self, SEL _cmd, id request, id policy, id callbacks) {
+    @try {
+        id url = request ? [request valueForKey:@"URL"] : nil;
+        if ([url isKindOfClass:[NSString class]])
+            url = [NSURL URLWithString:url];
+        if ([url isKindOfClass:[NSURL class]] && [[(NSURL *)url path] hasSuffix:kSPKSearchRecentClickPath]) {
+            id body = [request valueForKey:@"body"];
+            NSData *data = [body respondsToSelector:@selector(dataBodyData)] ? [body valueForKey:@"dataBodyData"] : nil;
+            NSData *stripped = [data isKindOfClass:[NSData class]] ? SPKSearchStrippedClickBody(data) : nil;
+            if (stripped && [body respondsToSelector:@selector(setDataBodyData:)]) {
+                [body setValue:stripped forKey:@"dataBodyData"];
+                SPKLog(@"General", @"[Sparkle SearchPins] kept a pinned person out of the recent searches");
+            }
+        }
+    } @catch (NSException *exception) {
+        SPKLog(@"General", @"[Sparkle SearchPins] reading a recent search click threw: %@", exception);
+    }
+    return orig_networkStartRequest(self, _cmd, request, policy, callbacks);
+}
+
 static BOOL SPKSearchHook(Class cls, NSString *selectorName, IMP replacement, IMP *original) {
     SEL selector = NSSelectorFromString(selectorName);
     if (!cls || !class_getInstanceMethod(cls, selector))
@@ -1505,6 +1617,9 @@ void SPKInstallSearchPinsHooksIfNeeded(void) {
         SPKSearchHook(resultSection, @"cellForItemAtIndex:", (IMP)replaced_resultCellForItem, (IMP *)&orig_resultCellForItem);
         BOOL longPressHooked = SPKSearchHook(resultSection, @"searchCollectionViewCellDidLongPressCell:viewModel:",
                                              (IMP)replaced_searchRowLongPress, (IMP *)&orig_searchRowLongPress);
+        BOOL clickHooked = SPKSearchHook(objc_getClass("IGTigonNetworkLayer"), @"startRequest:policy:callbacks:",
+                                         (IMP)replaced_networkStartRequest, (IMP *)&orig_networkStartRequest);
+        SPKLog(@"General", @"[Sparkle SearchPins] recent click filter=%d", clickHooked);
 
         SPKLog(@"General", @"[Sparkle SearchPins] hooks listKit=%d typeaheadSections=%d nullState=%d typeaheadModels=%d typeaheadObjects=%d longPress=%d recentType=%@",
                listKitHooked, typeaheadSectionsHooked, nullStateHooked, typeaheadModelsHooked, typeaheadObjectsHooked, longPressHooked, SPKSearchRecentSectionType());

@@ -30,6 +30,10 @@ NSNotificationName const SPKHideExploreGridPreferenceDidChangeNotification = @"S
 // logging the CAAnimations UIKit installs (~/dev/frida/nav-push-timing.js).
 // UIKit uses a spring, not a timing curve, which is why an eased version always
 // felt slower and softer no matter how the duration was adjusted.
+// Implemented in OpenPostNativePush.x: keeps the router from resetting the Home
+// feed (scroll to top, injected-post reset, refresh) behind a route Sparkle opens.
+FOUNDATION_EXPORT void SPKOpenPostArmRouterHomeGuard(void);
+
 static const NSTimeInterval kSPKProfilePushDuration = 0.3508;
 static const CGFloat kSPKProfilePushMass = 2.21;
 static const CGFloat kSPKProfilePushStiffness = 1532.0;
@@ -1065,8 +1069,15 @@ static NSSet<NSString *> *SPKMasterDisableBypassKeys(void) {
     dispatch_once(&onceToken, ^{
         keys = [NSSet setWithArray:@[
             @"tools_disable_all",
-            @"tools_settings_shortcut",
-            @"gallery_quick_access_tab",
+            // Tab holds: a hold set to Settings must keep working while
+            // everything else is off. The hook honors only that one then.
+            @"interface_tab_hold_feed",
+            @"interface_tab_hold_clips",
+            @"interface_tab_hold_direct",
+            @"interface_tab_hold_create",
+            @"interface_tab_hold_search",
+            @"interface_tab_hold_profile",
+            @"interface_tab_hold_saved",
             @"tools_open_settings_on_launch",
             @"app_first_run",
         ]];
@@ -1097,6 +1108,11 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             kSPKPrefPerAccountSettings,
             @"general_app_icon_identifier",
             @"tools_disable_all",
+            // A developer overlay for the whole install. Read whenever a scene
+            // activates, including before the account session resolves, so a
+            // per-account key could read as off and remove the button.
+            @"tools_debug_button",
+            @"tools_debug_button_position",
             // Notification delivery is install-wide, not per-account.
             @"tools_fix_duplicate_notifications",
             @"app_first_run",
@@ -1121,6 +1137,8 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"langpack_catalog_url",
             @"interface_liquid_glass_mode",
             @"interface_liquid_glass_tabbar_mode",
+            // Read while Instagram builds the tab bar, before the session resolves.
+            @"interface_native_tab_bar",
             @"interface_scroll_edge_style",
             @"interface_hide_ui_on_capture",
             @"downloads_adv_encoding",
@@ -1143,13 +1161,19 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"interface_hide_create_tab",
             @"interface_hide_tab_bar_in_messages_only",
             @"interface_saved_tab_carrier",
-            // The Settings quick-access long-press is attached to tab-bar buttons
-            // as they're built during early launch — before the account session
-            // resolves — so a per-account effective key resolves against the
-            // wrong PK and the gesture sticks to whatever account owned the bar at
-            // launch. Kept global so it's reliable and matches the (global)
-            // gallery quick-access shortcut.
-            @"tools_settings_shortcut",
+            // Tab holds are attached to tab-bar buttons as they're built during
+            // early launch, before the account session resolves, so a
+            // per-account key would resolve against the wrong PK. They belong to
+            // the bar, which every account shares.
+            @"interface_tab_hold_feed",
+            @"interface_tab_hold_clips",
+            @"interface_tab_hold_direct",
+            @"interface_tab_hold_create",
+            @"interface_tab_hold_search",
+            @"interface_tab_hold_profile",
+            @"interface_tab_hold_saved",
+            @"interface_tab_holds_migrated",
+            @"interface_clipboard_hold_migrated",
             // Suppressing the TestFlight popup runs early in %ctor before the account
             // session resolves, and is inherently an application/install-wide setting.
             @"tools_hide_testflight_popup",
@@ -1193,6 +1217,10 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
     if ([key hasPrefix:@"tools_perf_"])
         return YES;
 #endif
+    // Network interceptor: read in the launch-critical stage, and a recording
+    // must not stop when the account switches.
+    if ([key hasPrefix:@"tools_netlog_"])
+        return YES;
     if ([key hasPrefix:@"gallery_"])
         return YES;
     return NO;
@@ -1290,10 +1318,6 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
 }
 
 // MARK: Misc
-+ (BOOL)tabOrderSetTo:(NSString *)ordering {
-    return [[[NSUserDefaults standardUserDefaults] stringForKey:@"interface_nav_order"] isEqualToString:ordering];
-};
-
 + (NSString *)IGVersionString {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 };
@@ -2403,6 +2427,44 @@ static const unsigned long long kSPKUserReferenceSubtypeUser = 2;
     [top dismissViewControllerAnimated:YES completion:nil];
 }
 
+static NSString *SPKValidatedUsername(NSString *clean) {
+    if (clean.length == 0 || clean.length > 30)
+        return nil;
+    NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz0123456789._"];
+    if ([[clean stringByTrimmingCharactersInSet:allowed] length] > 0)
+        return nil;
+    return clean;
+}
+
+// instagram.com/<name>, instagram.com/_u/<name> and instagram.com/stories/<name>/...,
+// with or without a scheme or query. Media and app routes are not usernames.
+static NSString *SPKUsernameFromProfileLink(NSString *text) {
+    NSString *lower = text.lowercaseString;
+    if ([lower rangeOfString:@"instagram.com/"].location == NSNotFound && [lower rangeOfString:@"instagr.am/"].location == NSNotFound)
+        return nil;
+    NSString *urlString = [lower containsString:@"://"] ? text : [@"https://" stringByAppendingString:text];
+    NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
+    NSString *host = components.host.lowercaseString;
+    if (!([host isEqualToString:@"instagram.com"] || [host hasSuffix:@".instagram.com"] || [host isEqualToString:@"instagr.am"]))
+        return nil;
+    NSMutableArray<NSString *> *parts = [NSMutableArray array];
+    for (NSString *part in [components.path componentsSeparatedByString:@"/"]) {
+        if (part.length > 0)
+            [parts addObject:part];
+    }
+    if (parts.count == 0)
+        return nil;
+    NSString *first = parts[0].lowercaseString;
+    if ([first isEqualToString:@"_u"] || [first isEqualToString:@"stories"])
+        return parts.count > 1 ? parts[1] : nil;
+    static NSSet<NSString *> *routes;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        routes = [NSSet setWithArray:@[ @"p", @"reel", @"reels", @"tv", @"explore", @"direct", @"accounts", @"s", @"share" ]];
+    });
+    return [routes containsObject:first] ? nil : parts[0];
+}
+
 + (NSString *)sanitizedInstagramUsername:(NSString *)rawUsername {
     if (!rawUsername || ![rawUsername isKindOfClass:[NSString class]])
         return nil;
@@ -2425,11 +2487,28 @@ static const unsigned long long kSPKUserReferenceSubtypeUser = 2;
     if ([dummyUsernames containsObject:clean])
         return nil;
 
-    NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz0123456789._"];
-    if ([[clean stringByTrimmingCharactersInSet:allowed] length] > 0)
-        return nil;
+    return SPKValidatedUsername(clean);
+}
 
-    return clean;
+// Typed or pasted input from an Add User prompt. Unlike the sanitizer above it
+// accepts a copied profile link and drops the invisible format characters that
+// copied text often carries, and it does not apply the metadata deny-list: a
+// person typing "audio" means the account named audio.
++ (NSString *)usernameFromUserInput:(NSString *)input {
+    if (![input isKindOfClass:[NSString class]])
+        return nil;
+    // Cc + Cf: zero-width spaces, bidi marks, BOMs.
+    NSString *clean = [[input componentsSeparatedByCharactersInSet:[NSCharacterSet controlCharacterSet]] componentsJoinedByString:@""];
+    clean = [clean stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString *fromLink = SPKUsernameFromProfileLink(clean);
+    if (fromLink)
+        clean = fromLink;
+
+    clean = clean.lowercaseString;
+    while ([clean hasPrefix:@"@"])
+        clean = [clean substringFromIndex:1];
+    return SPKValidatedUsername(clean);
 }
 
 // Memo of username -> pk for the openInstagramProfile... path. Main thread only,
@@ -2637,6 +2716,7 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
 + (BOOL)spk_openProfileViaURLHandlerForUsername:(NSString *)username session:(id)session {
     if (username.length == 0)
         return NO;
+    SPKOpenPostArmRouterHomeGuard();
     NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://instagram.com/%@", username]];
     Class urlHandlerClass = objc_getClass("IGURLHandler");
     if (!profileURL || !urlHandlerClass)
@@ -2667,9 +2747,32 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
     return [self openInstagramMediaURL:url dismissingPresentedViewControllers:YES];
 }
 
+// A post, reel or IGTV permalink opened through the web route lands in the Home
+// feed as a hoisted post, which needs the router's home tap and scroll. Every
+// other route opens its own page, so the feed reset behind it is unwanted.
+static BOOL SPKInstagramRouteLandsInHomeFeed(NSURL *url) {
+    NSString *scheme = url.scheme.lowercaseString ?: @"";
+    if (![scheme isEqualToString:@"http"] && ![scheme isEqualToString:@"https"])
+        return NO;
+    NSMutableArray<NSString *> *segments = [NSMutableArray array];
+    for (NSString *segment in [url.path componentsSeparatedByString:@"/"]) {
+        if (segment.length > 0)
+            [segments addObject:segment.lowercaseString];
+    }
+    // An audio page (/reels/audio/<id>/) opens its own page, like a profile.
+    if (segments.count >= 2 && [segments[0] isEqualToString:@"reels"] && [segments[1] isEqualToString:@"audio"])
+        return NO;
+    // instagram.com/<username>/p/<code>/ is the same post link with the author in front.
+    if (segments.count >= 3 && [@[ @"p", @"reel", @"reels", @"tv" ] containsObject:segments[1]])
+        return YES;
+    return segments.count >= 2 && [@[ @"p", @"reel", @"reels", @"tv" ] containsObject:segments[0]];
+}
+
 + (BOOL)openInstagramMediaURL:(NSURL *)url dismissingPresentedViewControllers:(BOOL)dismiss {
     if (!url)
         return NO;
+    if (!SPKInstagramRouteLandsInHomeFeed(url))
+        SPKOpenPostArmRouterHomeGuard();
     NSString *scheme = url.scheme.lowercaseString ?: @"";
     UIApplication *application = [UIApplication sharedApplication];
     id<UIApplicationDelegate> delegate = application.delegate;

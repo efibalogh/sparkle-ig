@@ -33,9 +33,17 @@ BOOL SPKAutoSaveFilterAllMode(SPKAutoSaveFilterConfig *config) {
 NSString *SPKAutoSaveFilterListTitle(SPKAutoSaveFilterConfig *config) {
     if (config.listTitleProvider)
         return config.listTitleProvider();
-    return [NSString stringWithFormat:@"%@ %@",
-                                      SPKAutoSaveFilterAllMode(config) ? SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_EXCLUDED_TEXT") : SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_SELECTED_TEXT"),
-                                      config.subjectPlural];
+    BOOL chats = config.subject == SPKAutoSaveFilterSubjectChats;
+    if (SPKAutoSaveFilterAllMode(config))
+        return chats ? SPKL(@"AUTO_SAVE_FILTER_LIST_EXCLUDED_CHATS_TITLE") : SPKL(@"AUTO_SAVE_FILTER_LIST_EXCLUDED_USERS_TITLE");
+    return chats ? SPKL(@"AUTO_SAVE_FILTER_LIST_SELECTED_CHATS_TITLE") : SPKL(@"AUTO_SAVE_FILTER_LIST_SELECTED_USERS_TITLE");
+}
+
+NSString *SPKAutoSaveFilterModeTitle(SPKAutoSaveFilterSubject subject, BOOL allMode) {
+    BOOL chats = subject == SPKAutoSaveFilterSubjectChats;
+    if (allMode)
+        return chats ? SPKL(@"AUTO_SAVE_FILTER_MODE_ALL_CHATS_TITLE") : SPKL(@"AUTO_SAVE_FILTER_MODE_ALL_USERS_TITLE");
+    return chats ? SPKL(@"AUTO_SAVE_FILTER_MODE_SELECTED_CHATS_TITLE") : SPKL(@"AUTO_SAVE_FILTER_MODE_SELECTED_USERS_TITLE");
 }
 
 static NSString *SPKAutoSaveFilterActiveListKey(SPKAutoSaveFilterConfig *config) {
@@ -178,7 +186,7 @@ NSString *SPKAutoSaveFilterSummary(SPKAutoSaveFilterConfig *config) {
         return SPKL(@"MENU_OFF");
     NSUInteger count = SPKAutoSaveFilterList(config).count;
     if (SPKAutoSaveFilterAllMode(config)) {
-        return count == 0 ? [NSString stringWithFormat:@"All %@", config.subjectPlural]
+        return count == 0 ? SPKAutoSaveFilterModeTitle(config.subject, YES)
                           : [NSString stringWithFormat:SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_VALUE_EXCLUDED_FORMAT"), (unsigned long)count];
     }
     return count == 0 ? SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_NONE_SELECTED_TEXT") : [NSString stringWithFormat:SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_VALUE_SELECTED_FORMAT"), (unsigned long)count];
@@ -217,9 +225,12 @@ BOOL SPKAutoSaveFilterListUIVisible(void) {
 }
 
 - (void)listDidUpdateItemCount:(NSUInteger)count {
-    NSString *modeTitle = SPKAutoSaveFilterAllMode(self.config) ? SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_EXCLUDED_TEXT") : SPKL(@"AUTO_SAVE_AUTO_SAVE_FILTER_SELECTED_TEXT");
-    self.title = count > 0 ? [NSString stringWithFormat:@"%lu %@", (unsigned long)count, modeTitle]
-                           : SPKAutoSaveFilterListTitle(self.config);
+    if (count == 0)
+        self.title = SPKAutoSaveFilterListTitle(self.config);
+    else if (SPKAutoSaveFilterAllMode(self.config))
+        self.title = SPKLP(@"AUTO_SAVE_FILTER_LIST_EXCLUDED_COUNT", (NSInteger)count);
+    else
+        self.title = SPKLP(@"AUTO_SAVE_FILTER_LIST_SELECTED_COUNT", (NSInteger)count);
 }
 
 - (void)didDeleteItem:(SPKUserListItem *)item {

@@ -34,7 +34,8 @@ def entries(path: Path) -> dict[str, str]:
 
 
 def main() -> int:
-    english = entries(ENGLISH)
+    # Dev-build-only keys stay in the English catalog alone (see lint-i18n.py).
+    english = {key: line for key, line in entries(ENGLISH).items() if not key.startswith("DEV_")}
     if not english:
         print(f"No English catalog at {ENGLISH.relative_to(ROOT)}", file=sys.stderr)
         return 1
