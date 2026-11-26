@@ -280,10 +280,12 @@ One page for the whole tab bar, with a live preview of the bar you are building:
 
 ### Messaging
 - **Unlock Message Preview (not available in v410.1.0)**: Unlocks the Instagram Plus "Message Preview" (chat peeks): long-pressing a chat shows the real preview instead of the blurred upgrade upsell, and hides the redundant preview upsell menu entry. Follows the current account's setting without a restart; turning it off restores native preview behavior.
-- **Manually Mark Seen**: adds an eye button to mark chats seen.
-- **Mark Seen on Message Send / Reply / Reaction / Typing**: auto-seen triggers; disabled unless Manually Mark Seen is on.
+- **Manually Mark Seen**: adds an eye button to mark chats seen. Any seen receipt that tries to leave for a covered chat without going through Sparkle (the eye button or Mark Seen On) is dropped, and a notification says so.
+- **Mark Seen On**: one page for the automatic seen triggers, **Message Send**, **Reply**, **Reaction** and **Typing**, each explained in its own footer. Disabled unless Manually Mark Seen is on.
 - **Seen Button Position**: choose whether the eye button sits in the top nav bar or as a bubble above the composer. In the nav bar it has its own glass circle beside the call buttons (the name makes room for it); where the call buttons move into the side column (as on a foldable iPhone), it joins them there as the last button, under whatever Instagram puts in the column (a business account's label button, for one), and leaves with the chat. The composer bubble sits within thumb reach and hides while you type; it can be dragged aside to peek underneath and snaps back when you scroll. Disabled unless Manually Mark Seen is on.
 - **Included / Excluded Chats**: two separate per-account lists (Included when off, Excluded when on), same model as stories.
+- **Keep Seen Locally**: chats you open stop showing as unread on this device, without sending a seen receipt. The eye button stays crossed out until you send one. Disabled unless Manually Mark Seen is on.
+- **Seen Locally**: lists the chats you've read only on this device, with a count on the row. Swipe a chat away, or use the trash button, to make it unread again. Receipts you already sent are not affected. It stays available after Keep Seen Locally is turned off.
 
 ### Hidden Chats
 Its own page, reached from a single row on the Messages topic that shows how many chats are currently hidden (nothing while the lock is armed).

@@ -15,7 +15,7 @@
 
 // A patch release that extends the previous release's sheet names both versions.
 // Set to nil when a release gets a sheet of its own.
-static NSString *const SPKWhatsNewPreviousVersion = @"v1.6.0";
+static NSString *const SPKWhatsNewPreviousVersion = nil;
 
 - (NSArray<SPKPagedSheetPage *> *)buildPages {
     NSString *intro = SPKWhatsNewPreviousVersion.length
@@ -25,43 +25,44 @@ static NSString *const SPKWhatsNewPreviousVersion = @"v1.6.0";
         [SPKPagedSheetPage pageWithTitle:SPKL(@"SETTINGS_WHATS_NEW_NEW_FEATURES_TEXT")
                                     body:intro
                                     rows:@[
-                                        @{ @"icon": @"download", @"text": SPKL(@"SETTINGS_WHATS_NEW_UPDATE_CHECKER_TEXT") },
-                                        @{ @"icon": @"moon", @"text": SPKL(@"SETTINGS_WHATS_NEW_OLED_DARK_MODE_TEXT") },
-                                        @{ @"icon": @"pin", @"text": SPKL(@"SETTINGS_WHATS_NEW_SEARCH_PINS_TEXT") },
-                                        @{ @"icon": @"highlights", @"text": SPKL(@"SETTINGS_WHATS_NEW_GALLERY_OPEN_STORIES_TEXT") },
-                                        @{ @"icon": @"instants", @"text": SPKL(@"SETTINGS_WHATS_NEW_INSTANTS_SEEN_USER_LISTS_TEXT") },
-                                        @{ @"icon": @"users", @"text": SPKL(@"SETTINGS_WHATS_NEW_EXACT_FOLLOWER_COUNT_TEXT") },
-                                        @{ @"icon": @"sparkles", @"text": SPKL(@"SETTINGS_WHATS_NEW_LIQUID_GLASS_MODE_TEXT") },
+                                        @{ @"icon": @"device_tablet", @"symbol": @"ipad", @"rotation": @90, @"text": SPKL(@"SETTINGS_WHATS_NEW_IPHONE_DUO_TEXT") },
+                                        @{ @"icon": @"layout", @"text": SPKL(@"SETTINGS_WHATS_NEW_TAB_HOLDS_TEXT") },
+                                        @{ @"icon": @"interface", @"rotation": @180, @"text": SPKL(@"SETTINGS_WHATS_NEW_SYSTEM_TAB_BAR_TEXT") },
+                                        @{ @"icon": @"eye_off", @"text": SPKL(@"SETTINGS_WHATS_NEW_CHATS_SEEN_LOCALLY_TEXT") },
+                                        @{ @"icon": @"web", @"text": SPKL(@"SETTINGS_WHATS_NEW_NETWORK_INTERCEPTOR_TEXT") },
+                                        @{ @"icon": @"grid_tall", @"text": SPKL(@"SETTINGS_WHATS_NEW_POSTS_TAB_FILTER_TEXT") },
+                                        @{ @"icon": @"crop", @"text": SPKL(@"SETTINGS_WHATS_NEW_MEDIA_EDITORS_TEXT") },
+                                        @{ @"icon": @"search", @"text": SPKL(@"SETTINGS_WHATS_NEW_RESTORE_ACCOUNT_SEARCH_TEXT") },
+                                        @{ @"icon": @"profile_analyzer", @"text": SPKL(@"SETTINGS_WHATS_NEW_PROFILE_ANALYZER_AUTO_REFRESH_TEXT") },
                                     ]],
         [SPKPagedSheetPage pageWithTitle:SPKL(@"SETTINGS_WHATS_NEW_MORE_EXPLORE_TEXT")
                                     body:@""
                                     rows:@[
-                                        @{ @"icon": @"user_follow", @"text": SPKL(@"SETTINGS_WHATS_NEW_PROFILE_SUGGESTIONS_BUTTON_TEXT") },
-                                        @{ @"icon": @"mention", @"text": SPKL(@"SETTINGS_WHATS_NEW_CLIPBOARD_USERNAME_TEXT") },
-                                        @{ @"icon": @"arrow_cw", @"text": SPKL(@"SETTINGS_WHATS_NEW_CONFIRM_FEED_REFRESH_TEXT") },
-                                        @{ @"icon": @"reels", @"text": SPKL(@"SETTINGS_WHATS_NEW_CONFIRM_REEL_SEND_TEXT") },
-                                        @{ @"icon": @"meta_ai", @"text": SPKL(@"SETTINGS_WHATS_NEW_HIDE_META_AI_SHARE_TEXT") },
-                                        @{ @"icon": @"story", @"text": SPKL(@"SETTINGS_WHATS_NEW_HIDE_STORY_SUGGESTED_ACCOUNTS_TEXT") },
-                                        @{ @"icon": @"notification", @"text": SPKL(@"SETTINGS_WHATS_NEW_NOTIFICATION_GROUPS_TEXT") },
-                                        @{ @"icon": @"sparkle_gallery", @"text": SPKL(@"SETTINGS_WHATS_NEW_GALLERY_HIGHLIGHT_BADGE_TEXT") },
-                                        @{ @"text": SPKL(@"SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT") },
+                                        @{ @"icon": @"pause", @"text": SPKL(@"SETTINGS_WHATS_NEW_REELS_HOLD_TO_PAUSE_TEXT") },
+                                        @{ @"icon": @"music", @"text": SPKL(@"SETTINGS_WHATS_NEW_KEEP_OTHER_AUDIO_TEXT") },
+                                        @{ @"icon": @"notification", @"text": SPKL(@"SETTINGS_WHATS_NEW_NOTIFICATION_SUPPORT_TEXT") },
+                                        @{ @"icon": @"highlights", @"text": SPKL(@"SETTINGS_WHATS_NEW_REORDER_HIGHLIGHTS_TEXT") },
+                                        @{ @"icon": @"link", @"text": SPKL(@"SETTINGS_WHATS_NEW_COPY_STORY_LINK_TEXT") },
+                                        @{ @"icon": @"download", @"text": SPKL(@"SETTINGS_WHATS_NEW_FILE_NAMES_TEXT") },
+                                        @{ @"icon": @"muse", @"text": SPKL(@"SETTINGS_WHATS_NEW_HIDE_MUSE_TEXT") },
+                                        @{ @"icon": @"sparkle_gallery", @"text": SPKL(@"SETTINGS_WHATS_NEW_GALLERY_HOME_TEXT") },
+                                        @{ @"icon": @"sparkles", @"text": SPKL(@"SETTINGS_WHATS_NEW_NEW_LABELS_TEXT") },
+                                       // @{ @"text": SPKL(@"SETTINGS_WHATS_NEW_PLENTY_MORE_TEXT") },
                                     ]],
         [SPKPagedSheetPage pageWithTitle:SPKL(@"SETTINGS_WHATS_NEW_FIXES_IMPROVEMENTS_TEXT")
                                     body:@""
                                     rows:@[
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_FOLLOWING_FEED_CRASH_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_LANGUAGE_PACKS_VPN_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_DOWNLOAD_FAILURE_REPORT_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_NOTIFICATION_DUPLICATES_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_TOAST_410_TINT_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_454_COMPATIBILITY_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_GALLERY_ORIGINALS_KEPT_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_GALLERY_MISSING_FILE_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_EDIT_PHOTO_QUALITY_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_FEED_DOUBLED_AUDIO_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_HIGHLIGHT_STORY_LINK_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_PROGRESS_CANCEL_TEXT") },
-                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_FASTER_LAUNCH_TAB_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_INSTAGRAM_457_COMPATIBILITY_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_MESSAGE_MENU_DOWNLOADS_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_MESSAGE_PREVIEW_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_INSTANTS_NATIVE_HEADER_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_STORIES_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_REELS_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_HOME_FEED_RESET_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_REGRAM_IMPORT_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_APP_ICON_RESET_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_TEXT_SIZE_TEXT") },
+                                        @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_FIX_SEEN_RECEIPT_GUARD_TEXT") },
                                         @{ @"icon": @"subtract", @"text": SPKL(@"SETTINGS_WHATS_NEW_OTHER_BUG_FIXES_UI_IMPROVEMENTS_TEXT") },
                                     ]],
     ];

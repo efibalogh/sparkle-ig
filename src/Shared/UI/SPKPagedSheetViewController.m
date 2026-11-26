@@ -299,6 +299,12 @@
         icon.translatesAutoresizingMaskIntoConstraints = NO;
         [icon.widthAnchor constraintEqualToConstant:kIconSize].active = YES;
         [icon.heightAnchor constraintEqualToConstant:kIconSize].active = YES;
+        // Optional clockwise turn in degrees, for a glyph drawn in the wrong orientation.
+        // The icon box is square, so the turn never changes the row's layout.
+        NSNumber *rotation = entry[@"rotation"];
+        if ([rotation isKindOfClass:[NSNumber class]] && rotation.doubleValue != 0.0) {
+            icon.transform = CGAffineTransformMakeRotation(rotation.doubleValue * M_PI / 180.0);
+        }
         [row addArrangedSubview:icon];
     } else {
         UIView *spacer = [[UIView alloc] init];
