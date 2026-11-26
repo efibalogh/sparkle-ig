@@ -102,6 +102,7 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                SPKL(@"REELS_LIMITS_PREVENT_DOOM_SCROLLING_HELP")),
             SPKSettingWithHelp([SPKSetting stepperCellWithTitle:SPKL(@"REELS_LIMITS_DOOM_SCROLLING_LIMIT_TITLE")
                                         subtitle:SPKL(@"REELS_LIMITS_ONLY_LOADS_SUBTITLE")
+                                            icon:SPKSettingsIcon(@"circle_off")
                                      defaultsKey:@"reels_doom_scroll_limit"
                                              min:1
                                              max:100

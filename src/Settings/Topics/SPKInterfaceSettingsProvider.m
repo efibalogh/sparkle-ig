@@ -194,7 +194,7 @@ static NSString *SPKSystemTabBarBlackGlassFooter(void) {
         SPKTopicSection(SPKL(@"INTERFACE_CAPTURE_HEADER"), @[
             ({
                 SPKSetting *s = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE")
-                                                           icon:nil
+                                                           icon:SPKSettingsSystemIcon(@"rays", SPKSettingsCellIconPointSize, UIImageSymbolWeightSemibold)
                                                     defaultsKey:@"interface_hide_ui_on_capture"];
                 s.switchChangeHandler = ^(BOOL isOn) {
                     [[NSUserDefaults standardUserDefaults] setBool:isOn forKey:@"interface_hide_ui_on_capture"];
