@@ -339,11 +339,26 @@ static NSSet<NSNumber *> *SPKRegramRuleNumbers(id value) {
     return set;
 }
 
-// Whether a vault row matches a smart folder's rules, mirroring Regram 7.1's
+// User pks as strings, from an array of strings or numbers, or a single value.
+static NSSet<NSString *> *SPKRegramRuleUserIds(id value) {
+    NSMutableSet<NSString *> *set = [NSMutableSet set];
+    NSArray *items = [value isKindOfClass:[NSArray class]] ? value : (value ? @[ value ] : @[]);
+    for (id item in items) {
+        NSString *pk = [item isKindOfClass:[NSString class]] ? item : ([item isKindOfClass:[NSNumber class]] ? [item stringValue] : nil);
+        if (pk.length > 0) {
+            [set addObject:pk];
+        }
+    }
+    return set;
+}
+
+// Whether a vault row matches a smart folder's rules, mirroring Regram's
 // `-[RGVaultFilterQuery predicate]` (every present rule must hold):
 //   types     ZTYPE IN set; asking for GIF (4) also matches images whose file ends in .gif
 //   groups    the row's source group IN set (see SPKRegramGroupForSource)
-//   favorites ZISFAVORITE, autoSave ZISAUTOSAVE, userId the owner's pk
+//   favorites ZISFAVORITE, autoSave ZISAUTOSAVE
+//   userIds   the owner's pk IN set (7.2+; 7.1 wrote a single userId, still read as a fallback)
+//   excludedUserIds  the owner's pk NOT IN set (7.2+)
 //   date      relative to now: 1 today, 2 last 7 days, 3 last 30 days, 4 older than 30 days,
 //             5 older than a year. Evaluated at import time, the same view Regram shows today.
 static BOOL SPKRegramRowMatchesRules(NSDictionary *row, NSDictionary *rules) {
@@ -365,9 +380,15 @@ static BOOL SPKRegramRowMatchesRules(NSDictionary *row, NSDictionary *rules) {
     if ([rules[@"autoSave"] respondsToSelector:@selector(boolValue)] && [rules[@"autoSave"] boolValue] && ![row[@"autoSave"] boolValue]) {
         return NO;
     }
-    id userId = rules[@"userId"];
-    NSString *userIdString = [userId isKindOfClass:[NSString class]] ? userId : ([userId isKindOfClass:[NSNumber class]] ? [userId stringValue] : nil);
-    if (userIdString.length > 0 && ![userIdString isEqualToString:row[@"userPK"] ?: @""]) {
+    NSString *userPK = row[@"userPK"] ?: @"";
+    NSSet<NSString *> *userIds = SPKRegramRuleUserIds(rules[@"userIds"]);
+    if (userIds.count == 0) {
+        userIds = SPKRegramRuleUserIds(rules[@"userId"]);
+    }
+    if (userIds.count > 0 && ![userIds containsObject:userPK]) {
+        return NO;
+    }
+    if ([SPKRegramRuleUserIds(rules[@"excludedUserIds"]) containsObject:userPK]) {
         return NO;
     }
     NSInteger dateRange = [rules[@"date"] respondsToSelector:@selector(integerValue)] ? [rules[@"date"] integerValue] : 0;
