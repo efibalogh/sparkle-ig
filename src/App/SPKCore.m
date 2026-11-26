@@ -213,7 +213,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"reels_playback_controls" : @(NO),
         @"reels_playback_speed_scope" : @"session",
         @"reels_playback_saved_speed" : @(1.0),
-        @"instants_disable_creation" : @(YES),
+        @"instants_disable_creation" : @(NO),
         @"instants_confirm_capture" : @(NO),
         @"instants_disable_camera_control" : @(NO),
         @"instants_skip_camera_after_viewing" : @(NO),
